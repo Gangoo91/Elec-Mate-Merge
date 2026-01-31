@@ -1229,6 +1229,323 @@ Deno.serve(async (req) => {
         break;
       }
 
+      case "get_segmented_leads": {
+        // Get leads segmented by engagement level for the new Early Access page design
+        // Signed Up: converted users (success!) - cross-referenced against auth.users
+        // Hot: clicked at least one email but didn't sign up
+        // Warm: opened but never clicked
+        // Cold: never opened any email
+
+        const { data: allInvites, error: invitesError } = await supabaseAdmin
+          .from("early_access_invites")
+          .select(`
+            id,
+            email,
+            status,
+            sent_at,
+            delivered_at,
+            opened_at,
+            clicked_at,
+            claimed_at,
+            bounced_at,
+            bounce_type,
+            created_at,
+            invite_token,
+            send_count,
+            user_id,
+            launch_email_sent_at,
+            launch_email_opened_at,
+            launch_email_clicked_at
+          `)
+          .order("created_at", { ascending: false });
+
+        if (invitesError) throw invitesError;
+
+        // Get ALL user emails from auth.users to definitively identify who has signed up
+        // This catches users who signed up directly (not through invite link)
+        const { data: authUsersData, error: authUsersError } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000, // Get all users
+        });
+
+        if (authUsersError) {
+          console.error("Error fetching auth users:", authUsersError);
+        }
+
+        // Create a Set of lowercase emails for fast lookup
+        const signedUpEmails = new Set(
+          authUsersData?.users?.map(u => u.email?.toLowerCase()).filter(Boolean) || []
+        );
+
+        console.log(`Found ${signedUpEmails.size} registered users in auth.users`);
+
+        // Get profile data for signed up users (for display purposes)
+        const signedUpUserIds = allInvites?.filter(i => i.user_id).map(i => i.user_id) || [];
+        let profilesMap: Record<string, any> = {};
+
+        if (signedUpUserIds.length > 0) {
+          const { data: profiles } = await supabaseAdmin
+            .from("profiles")
+            .select("id, full_name, role, created_at")
+            .in("id", signedUpUserIds);
+
+          if (profiles) {
+            profilesMap = profiles.reduce((acc, p) => {
+              acc[p.id] = p;
+              return acc;
+            }, {} as Record<string, any>);
+          }
+        }
+
+        // Segment all leads
+        const signedUp: typeof allInvites = [];
+        const hot: typeof allInvites = [];
+        const warm: typeof allInvites = [];
+        const cold: typeof allInvites = [];
+        const bounced: typeof allInvites = [];
+
+        for (const invite of allInvites || []) {
+          const emailLower = invite.email.toLowerCase();
+
+          // Bounced emails go to their own category
+          if (invite.bounced_at) {
+            bounced.push(invite);
+            continue;
+          }
+
+          // Check if this email exists in auth.users (actually signed up)
+          // This is the definitive check - catches direct signups too
+          const hasSignedUp = signedUpEmails.has(emailLower);
+
+          if (hasSignedUp) {
+            signedUp.push(invite);
+            continue;
+          }
+
+          // Has clicked any email?
+          const hasClicked = invite.clicked_at || invite.launch_email_clicked_at;
+          // Has opened any email?
+          const hasOpened = invite.opened_at || invite.launch_email_opened_at;
+
+          if (hasClicked) {
+            hot.push(invite);
+          } else if (hasOpened) {
+            warm.push(invite);
+          } else {
+            cold.push(invite);
+          }
+        }
+
+        // Helper to get last activity description
+        const getLastActivity = (invite: typeof allInvites[0]) => {
+          if (invite.claimed_at) {
+            return { type: "signed_up", date: invite.claimed_at };
+          }
+          if (invite.clicked_at) {
+            return { type: "clicked", date: invite.clicked_at };
+          }
+          if (invite.launch_email_clicked_at) {
+            return { type: "clicked_launch", date: invite.launch_email_clicked_at };
+          }
+          if (invite.opened_at) {
+            return { type: "opened", date: invite.opened_at };
+          }
+          if (invite.launch_email_opened_at) {
+            return { type: "opened_launch", date: invite.launch_email_opened_at };
+          }
+          if (invite.delivered_at) {
+            return { type: "delivered", date: invite.delivered_at };
+          }
+          if (invite.sent_at) {
+            return { type: "sent", date: invite.sent_at };
+          }
+          return { type: "created", date: invite.created_at };
+        };
+
+        // Sort each segment by most recent activity
+        const sortByActivity = (a: typeof allInvites[0], b: typeof allInvites[0]) => {
+          const aActivity = getLastActivity(a);
+          const bActivity = getLastActivity(b);
+          return new Date(bActivity.date).getTime() - new Date(aActivity.date).getTime();
+        };
+
+        signedUp.sort(sortByActivity);
+        hot.sort(sortByActivity);
+        warm.sort(sortByActivity);
+        cold.sort(sortByActivity);
+
+        // Add last_activity and user profile to each lead for display
+        const addActivity = (leads: typeof allInvites) => leads.map(lead => ({
+          ...lead,
+          last_activity: getLastActivity(lead),
+          user: lead.user_id && profilesMap[lead.user_id] ? {
+            id: lead.user_id,
+            full_name: profilesMap[lead.user_id].full_name,
+            role: profilesMap[lead.user_id].role,
+            signed_up_at: profilesMap[lead.user_id].created_at,
+          } : null,
+        }));
+
+        const totalInvites = allInvites?.length || 0;
+
+        result = {
+          segments: {
+            signed_up: addActivity(signedUp),
+            hot: addActivity(hot),
+            warm: addActivity(warm),
+            cold: addActivity(cold),
+            bounced: addActivity(bounced),
+          },
+          stats: {
+            total: totalInvites,
+            total_unconverted: hot.length + warm.length + cold.length,
+            signed_up: signedUp.length,
+            bounced: bounced.length,
+            hot_count: hot.length,
+            warm_count: warm.length,
+            cold_count: cold.length,
+            conversion_rate: totalInvites > 0
+              ? `${((signedUp.length / totalInvites) * 100).toFixed(0)}%`
+              : "0%",
+          }
+        };
+        break;
+      }
+
+      case "send_to_segment": {
+        // Send targeted email to a specific segment with rate limiting
+        // Processes in batches to avoid Resend rate limits and function timeouts
+        const { segment, emailType } = await req.json().catch(() => ({}));
+
+        if (!segment || !["hot", "warm", "cold"].includes(segment)) {
+          throw new Error("Valid segment (hot, warm, cold) is required");
+        }
+
+        // Batch configuration - same as send_launch_campaign
+        const BATCH_SIZE = 10; // Process 10 at a time per function call
+        const DELAY_BETWEEN_EMAILS_MS = 6000; // 6 seconds between emails to stay within rate limits
+
+        // Get ALL user emails from auth.users to definitively identify who has signed up
+        // This catches users who signed up directly (not through invite link)
+        const { data: authUsersData, error: authUsersError } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000,
+        });
+
+        if (authUsersError) {
+          console.error("Error fetching auth users:", authUsersError);
+        }
+
+        // Create a Set of lowercase emails for fast lookup
+        const signedUpEmails = new Set(
+          authUsersData?.users?.map(u => u.email?.toLowerCase()).filter(Boolean) || []
+        );
+
+        console.log(`Found ${signedUpEmails.size} registered users - will exclude from segment sends`);
+
+        // Get leads for the specified segment - exclude bounced AND already sent launch email
+        const { data: allInvites, error: invitesError } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*")
+          .is("bounced_at", null)
+          .is("launch_email_sent_at", null); // Only get those who haven't received launch email
+
+        if (invitesError) throw invitesError;
+
+        // Filter by segment AND exclude anyone who has actually signed up (in auth.users)
+        const segmentLeads = allInvites?.filter(invite => {
+          const emailLower = invite.email.toLowerCase();
+
+          // Skip if this email exists in auth.users (they've signed up)
+          if (signedUpEmails.has(emailLower)) return false;
+
+          const hasClicked = invite.clicked_at || invite.launch_email_clicked_at;
+          const hasOpened = invite.opened_at || invite.launch_email_opened_at;
+
+          if (segment === "hot") return hasClicked;
+          if (segment === "warm") return hasOpened && !hasClicked;
+          if (segment === "cold") return !hasOpened;
+          return false;
+        }) || [];
+
+        const totalInSegment = segmentLeads.length;
+
+        if (totalInSegment === 0) {
+          result = {
+            sent: 0,
+            remaining: 0,
+            total_in_segment: 0,
+            complete: true,
+            message: `No leads in ${segment} segment need emails (all already sent or signed up)`
+          };
+          break;
+        }
+
+        // Take only a batch to process this call
+        const batchToProcess = segmentLeads.slice(0, BATCH_SIZE);
+        const remaining = totalInSegment - batchToProcess.length;
+
+        // Send emails (using launch email template as it's the current campaign)
+        let sentCount = 0;
+        const errors: string[] = [];
+        const sentEmails: string[] = [];
+
+        for (let i = 0; i < batchToProcess.length; i++) {
+          const invite = batchToProcess[i];
+
+          try {
+            const emailHtml = generateLaunchEmailHTML(invite.email, invite.invite_token);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <hello@elec-mate.com>",
+              replyTo: "info@elec-mate.com",
+              to: [invite.email],
+              subject: "🎉 We've Launched! Elec-Mate is Live",
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            await supabaseAdmin
+              .from("early_access_invites")
+              .update({
+                launch_email_sent_at: new Date().toISOString(),
+                launch_email_id: emailData?.id || null,
+              })
+              .eq("id", invite.id);
+
+            sentCount++;
+            sentEmails.push(invite.email);
+
+            // Rate limit: wait between emails (except after the last one)
+            if (i < batchToProcess.length - 1) {
+              await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_EMAILS_MS));
+            }
+          } catch (err: any) {
+            errors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        const complete = remaining === 0;
+        console.log(`Sent ${sentCount} emails to ${segment} segment by admin ${user.id}. ${remaining} remaining.`);
+
+        result = {
+          sent: sentCount,
+          segment,
+          total_in_segment: totalInSegment,
+          remaining,
+          complete,
+          sent_to: sentEmails,
+          errors: errors.length > 0 ? errors : undefined,
+          estimated_calls_remaining: complete ? 0 : Math.ceil(remaining / BATCH_SIZE),
+          message: complete
+            ? `${segment.toUpperCase()} segment complete! Sent ${sentCount} emails.`
+            : `Sent ${sentCount} emails to ${segment} segment. ${remaining} remaining - click again to continue.`
+        };
+        break;
+      }
+
       case "retry_failed": {
         // Retry ONLY the failed sends - people who never actually received the email
         // Failed = attempted but no resend_email_id (email wasn't actually sent)
