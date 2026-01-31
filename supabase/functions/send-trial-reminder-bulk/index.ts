@@ -195,17 +195,46 @@ Deno.serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Get user profiles in bulk including role
+    const emailType = type || "reminder";
+    const today = new Date().toISOString().split('T')[0];
+
+    // Check which users already received email today
+    const { data: existingSends } = await supabase
+      .from("trial_email_sends")
+      .select("user_id")
+      .in("user_id", userIds)
+      .eq("email_type", emailType)
+      .eq("sent_date", today);
+
+    const alreadySentUserIds = new Set((existingSends || []).map(s => s.user_id));
+    const usersToEmail = userIds.filter(id => !alreadySentUserIds.has(id));
+
+    console.log(`Skipping ${alreadySentUserIds.size} users (already sent today), sending to ${usersToEmail.length} users`);
+
+    if (usersToEmail.length === 0) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          sent: 0,
+          failed: 0,
+          skipped: userIds.length,
+          results: userIds.map(id => ({ userId: id, success: false, skipped: true, reason: "Already sent today" }))
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Get user profiles in bulk including role (only for users we need to email)
     const { data: profiles, error: profileError } = await supabase
       .from("profiles")
       .select("id, full_name, username, created_at, role")
-      .in("id", userIds);
+      .in("id", usersToEmail);
 
     if (profileError) {
       throw new Error("Failed to fetch user profiles");
     }
 
-    const results: { userId: string; success: boolean; error?: string }[] = [];
+    const results: { userId: string; success: boolean; error?: string; skipped?: boolean; reason?: string }[] = [];
     const now = new Date();
 
     // Process each user
@@ -247,9 +276,28 @@ Deno.serve(async (req) => {
         });
 
         if (error) {
+          // Log failed send
+          await supabase.from("trial_email_sends").insert({
+            user_id: profile.id,
+            email_type: emailType,
+            sent_date: today,
+            trial_days_remaining: daysLeft,
+            success: false,
+            error_message: error.message,
+          });
           results.push({ userId: profile.id, success: false, error: error.message });
           continue;
         }
+
+        // Log successful send
+        await supabase.from("trial_email_sends").insert({
+          user_id: profile.id,
+          email_type: emailType,
+          resend_email_id: data?.id,
+          sent_date: today,
+          trial_days_remaining: daysLeft,
+          success: true,
+        });
 
         console.log(`Email sent to ${email}: ${data?.id}`);
         results.push({ userId: profile.id, success: true });
@@ -262,16 +310,23 @@ Deno.serve(async (req) => {
       }
     }
 
-    const successCount = results.filter(r => r.success).length;
-    const failCount = results.filter(r => !r.success).length;
+    // Add skipped users to results
+    for (const userId of alreadySentUserIds) {
+      results.push({ userId, success: false, skipped: true, reason: "Already sent today" });
+    }
 
-    console.log(`Bulk email complete: ${successCount} sent, ${failCount} failed`);
+    const successCount = results.filter(r => r.success).length;
+    const failCount = results.filter(r => !r.success && !("skipped" in r)).length;
+    const skippedCount = results.filter(r => "skipped" in r && r.skipped).length;
+
+    console.log(`Bulk email complete: ${successCount} sent, ${failCount} failed, ${skippedCount} skipped`);
 
     return new Response(
       JSON.stringify({
         success: true,
         sent: successCount,
         failed: failCount,
+        skipped: skippedCount,
         results
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }

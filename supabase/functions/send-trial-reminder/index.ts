@@ -191,6 +191,26 @@ Deno.serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    const emailType = type || "reminder";
+    const today = new Date().toISOString().split('T')[0];
+
+    // Check if already sent today to prevent duplicates
+    const { data: existingSend } = await supabase
+      .from("trial_email_sends")
+      .select("id")
+      .eq("user_id", userId)
+      .eq("email_type", emailType)
+      .eq("sent_date", today)
+      .single();
+
+    if (existingSend) {
+      console.log(`Email already sent today to user ${userId}, skipping`);
+      return new Response(
+        JSON.stringify({ success: false, skipped: true, reason: "Already sent today" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Get user profile including role
     console.log("Fetching profile...");
     const { data: profile, error: profileError } = await supabase
@@ -256,24 +276,32 @@ Deno.serve(async (req) => {
 
     if (error) {
       console.error("Resend error:", JSON.stringify(error));
+      // Log failed send
+      await supabase.from("trial_email_sends").insert({
+        user_id: userId,
+        email_type: emailType,
+        sent_date: today,
+        trial_days_remaining: daysLeft,
+        success: false,
+        error_message: error.message || JSON.stringify(error),
+      });
       throw new Error(`Resend error: ${error.message || JSON.stringify(error)}`);
     }
 
     console.log("Email sent successfully:", data?.id);
 
-    // Log the email send (ignore errors - table might not exist)
-    try {
-      const { error: logError } = await supabase.from("admin_email_logs").insert({
-        user_id: userId,
-        email_type: `trial_${type || "reminder"}`,
-        email_id: data?.id,
-        sent_at: new Date().toISOString(),
-      });
-      if (logError) {
-        console.log("Could not log email:", logError.message);
-      }
-    } catch {
-      console.log("Could not log email (table may not exist)");
+    // Log the successful email send
+    const { error: logError } = await supabase.from("trial_email_sends").insert({
+      user_id: userId,
+      email_type: emailType,
+      resend_email_id: data?.id,
+      sent_date: today,
+      trial_days_remaining: daysLeft,
+      success: true,
+    });
+
+    if (logError) {
+      console.log("Could not log email send:", logError.message);
     }
 
     return new Response(
