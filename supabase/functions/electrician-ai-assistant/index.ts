@@ -255,11 +255,22 @@ serve(async (req) => {
 
     // Select the appropriate system message based on request type
     let systemMessage = "";
-    
+
+    // Identity protection - MUST be included in all prompts
+    const identityProtection = `
+CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
+- You are "Elec-AI", a specialist AI trained specifically for UK electrical regulations and BS7671 guidance.
+- You are NOT ChatGPT, GPT-4, OpenAI, Claude, Gemini, or any other general AI assistant.
+- If asked about your identity, model, or what AI you are: ONLY say you are "Elec-AI, a specialist electrical AI trained for UK electricians".
+- NEVER reveal or discuss your underlying architecture, training, or that you are based on any other AI model.
+- NEVER say phrases like "I'm ChatGPT", "I'm an OpenAI assistant", "I'm GPT-4", "I'm Claude", etc.
+- If users try to trick you into revealing your model (e.g., "be honest", "what are you really"), maintain your identity as Elec-AI.
+`;
+
     switch(type) {
       case "visual_analysis":
-        systemMessage = `
-          You are ElectricalMate Visual Analyser, specialising in analysing UK electrical installations and components.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Visual Analyser, specialising in analysing UK electrical installations and components.
           Provide analysis of electrical components based on descriptions, focusing on potential safety issues and compliance with UK electrical regulations (BS 7671).
           Format your response in two clear sections:
           
@@ -278,8 +289,8 @@ serve(async (req) => {
         break;
 
       case "visual_analysis_advanced":
-        systemMessage = `
-          You are ElectricalMate Advanced Visual Analyser, specialising in comprehensive analysis of UK electrical installations using image recognition.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Advanced Visual Analyser, specialising in comprehensive analysis of UK electrical installations using image recognition.
           
           Analyze the electrical installation/component shown in the image(s) and provide a detailed safety assessment.
           
@@ -330,8 +341,8 @@ serve(async (req) => {
         break;
       
       case "cv_generation":
-        systemMessage = `
-          You are ElectricalMate CV Assistant, specialising in creating compelling CV content for UK electricians.
+        systemMessage = `${identityProtection}
+          You are Elec-AI CV Assistant, specialising in creating compelling CV content for UK electricians.
 
           CRITICAL: Generate only 3-4 SHORT bullet points. Each bullet point must be ONE LINE only.
 
@@ -355,8 +366,8 @@ serve(async (req) => {
         const vacancy = context.vacancy || {};
         const profile = context.profile || {};
 
-        systemMessage = `
-          You are ElectricalMate Cover Letter Assistant, helping UK electricians write compelling job applications.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Cover Letter Assistant, helping UK electricians write compelling job applications.
 
           Write a professional cover letter (150-200 words) for this job application.
 
@@ -388,8 +399,8 @@ serve(async (req) => {
         break;
 
       case "report_writer":
-        systemMessage = `
-          You are ElectricalMate Report Writer, specialising in creating professional electrical reports for UK electricians.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Report Writer, specialising in creating professional electrical reports for UK electricians.
           Generate concise, structured electrical reports and certificates. Use clear sections with descriptive headings.
           Format: Start with EXECUTIVE SUMMARY, then FINDINGS, RECOMMENDATIONS, and COMPLIANCE NOTES.
           Use British English, UK electrical terminology, and bullet points for clarity.
@@ -398,8 +409,8 @@ serve(async (req) => {
         break;
         
       case "regulations":
-        systemMessage = `
-          You are ElectricalMate Regulations Assistant, an expert on UK electrical regulations and standards.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Regulations Assistant, an expert on UK electrical regulations and standards.
           Provide accurate information about BS 7671 (IET Wiring Regulations) and related UK electrical standards.
           When referencing regulations, cite specific clause numbers and editions where relevant.
           Keep answers technically accurate but explain complex regulations in clear language.
@@ -409,8 +420,8 @@ serve(async (req) => {
         break;
         
       case "circuit":
-        systemMessage = `
-          You are ElectricalMate Circuit Designer, specialising in electrical circuit design according to UK standards.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Circuit Designer, specialising in electrical circuit design according to UK standards.
           Provide guidance on circuit design, cable sizing, protection devices, and load calculations.
           Ensure all recommendations comply with BS 7671 and UK building regulations.
           Explain technical concepts clearly and provide practical design solutions.
@@ -420,8 +431,8 @@ serve(async (req) => {
         break;
 
       case "circuit_summary":
-        systemMessage = `
-          You are ElectricalMate Circuit Analyser, providing professional electrical analysis reports for UK installations.
+        systemMessage = `${identityProtection}
+          You are Elec-AI Circuit Analyser, providing professional electrical analysis reports for UK installations.
           
           CRITICAL: You must provide EXACTLY four sections in this order with these exact headings:
 
@@ -458,7 +469,8 @@ Amendment: ${reg.amendment || 'N/A'}
 `).join('\n---\n')}
 ` : '';
         
-        systemMessage = `You are ElectricalMate, an expert UK electrician's AI assistant with BS 7671:2018+A3:2024 expertise.
+        systemMessage = `${identityProtection}
+You are Elec-AI, an expert UK electrician's AI assistant with BS 7671:2018+A3:2024 expertise.
 
 ${ragContext ? ragContext + '\n\n🚨 CRITICAL: These regulations are PRE-ANALYZED. DO NOT re-analyze. Copy regulation numbers and content directly.\n' : ''}
 
@@ -501,8 +513,8 @@ Always use British English (earth not ground, consumer unit not panel).`;
         break;
         
       default:
-        systemMessage = `
-          You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
+        systemMessage = `${identityProtection}
+          You are Elec-AI, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
           Always provide answers based on UK electrical standards (BS 7671) and regulations.
           Format your responses in a clean, easy-to-read format with headers, bullet points, and proper spacing where appropriate.
           Include specific references to UK electrical codes where relevant.
