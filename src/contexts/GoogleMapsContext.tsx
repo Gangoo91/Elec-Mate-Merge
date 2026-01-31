@@ -121,10 +121,18 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useGoogleMaps() {
+// Safe default for when hook is used outside provider
+const defaultContextValue: GoogleMapsContextType = {
+  isLoaded: false,
+  loadError: undefined,
+  apiKey: '',
+  setApiKey: async () => {},
+  clearApiKey: async () => {},
+  isLoadingKey: false,
+};
+
+export function useGoogleMaps(): GoogleMapsContextType {
   const context = useContext(GoogleMapsContext);
-  if (!context) {
-    throw new Error('useGoogleMaps must be used within a GoogleMapsProvider');
-  }
-  return context;
+  // Return safe defaults if used outside provider - allows graceful fallback
+  return context ?? defaultContextValue;
 }

@@ -52,7 +52,23 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
       }
     }
 
-    // All retries failed - throw the last error
+    // All retries failed - force page reload for stale chunks
+    // This happens when deployment renamed chunks and user has old bundle
+    console.error('[lazyWithRetry] All retries failed, forcing page reload');
+
+    // Set flag to prevent infinite reload loops
+    const reloadKey = 'lazyRetry_reloaded';
+    const hasReloaded = sessionStorage.getItem(reloadKey);
+
+    if (!hasReloaded) {
+      sessionStorage.setItem(reloadKey, Date.now().toString());
+      window.location.reload();
+      // Return a promise that never resolves to prevent error display during reload
+      return new Promise(() => {});
+    }
+
+    // Already reloaded once - clear flag and throw error
+    sessionStorage.removeItem(reloadKey);
     throw lastError;
   });
 }
