@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
@@ -11,13 +11,47 @@ interface MarkdownViewerProps {
   className?: string;
 }
 
-export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ 
-  content, 
-  className = "" 
+// Error boundary to catch markdown parsing errors (e.g., old Safari regex issues)
+interface MarkdownErrorBoundaryState {
+  hasError: boolean;
+}
+
+class MarkdownErrorBoundary extends Component<
+  { children: ReactNode; fallbackContent: string; className?: string },
+  MarkdownErrorBoundaryState
+> {
+  state: MarkdownErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): MarkdownErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    // Log but don't report to Sentry - this is expected on old browsers
+    console.warn('[MarkdownViewer] Falling back to plain text due to:', error.message);
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      // Fallback: render plain text with basic formatting
+      return (
+        <div className={`whitespace-pre-wrap text-[hsl(var(--text-muted))] leading-relaxed ${this.props.className || ''}`}>
+          {this.props.fallbackContent}
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
+  content,
+  className = ""
 }) => {
   return (
-    <div className={`prose prose-neutral dark:prose-invert max-w-none text-left ${className}`}>
-      <ReactMarkdown
+    <MarkdownErrorBoundary fallbackContent={content} className={className}>
+      <div className={`prose prose-neutral dark:prose-invert max-w-none text-left ${className}`}>
+        <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
         components={{
@@ -196,7 +230,8 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
       >
         {content}
       </ReactMarkdown>
-    </div>
+      </div>
+    </MarkdownErrorBoundary>
   );
 };
 

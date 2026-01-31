@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useEmployerDashboardStats } from "@/hooks/useEmployerDashboardStats";
 import { useVacancyStats } from "@/hooks/useVacancies";
 import type { Section } from "@/pages/employer/EmployerDashboard";
+import { WorkerStatusCard } from "@/components/employer/WorkerStatusCard";
 import {
   Users,
   Briefcase,
@@ -150,6 +151,9 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           </div>
         </div>
       </div>
+
+      {/* My Status - Worker location/status card */}
+      <WorkerStatusCard />
 
       {/* Quick Stats - Hidden on mobile for native app feel */}
       <div className="hidden sm:grid grid-cols-4 gap-2 md:gap-3">

@@ -60,7 +60,7 @@ interface UserData {
   free_access_expires_at?: string | null;
   free_access_reason?: string | null;
   created_at: string;
-  last_sign_in_at?: string | null;
+  last_sign_in?: string | null; // From admin-get-users
 }
 
 // Format seconds into human readable time
@@ -348,7 +348,7 @@ export default function UserManagementSheet({
               {/* Activity Status Banner */}
               {(() => {
                 const hasActivity = activityData && (activityData.loginCount > 0 || activityData.totalSecondsTracked > 0);
-                const lastLogin = user.last_sign_in_at;
+                const lastLogin = user.last_sign_in;
                 const neverLoggedIn = !lastLogin && !hasActivity;
                 const signedUpButLeft = lastLogin && !hasActivity;
 
