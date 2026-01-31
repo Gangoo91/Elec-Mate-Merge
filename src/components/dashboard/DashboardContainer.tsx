@@ -35,8 +35,8 @@ export const DashboardContainer: React.FC<DashboardContainerProps> = ({
           'mx-auto max-w-6xl',
           // Horizontal padding for mobile
           'px-4 sm:px-0',
-          // Vertical spacing
-          'py-4 md:py-6 lg:py-8'
+          // Vertical spacing - minimal on mobile
+          'py-1 sm:py-4 md:py-6 lg:py-8'
         )}
       >
         {children}

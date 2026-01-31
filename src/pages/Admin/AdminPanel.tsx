@@ -49,6 +49,7 @@ const primaryNavItems = [
 
 // Secondary navigation items - in expandable section (More)
 const secondaryNavItems = [
+  { name: "Win-Back", path: "/admin/winback", icon: Gift },
   { name: "Founders", path: "/admin/founders", icon: Crown },
   { name: "Early Access", path: "/admin/early-access", icon: Rocket },
   { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },

@@ -411,7 +411,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto">
       <SuccessOverlay />
 
       {/* Animated background */}
@@ -428,7 +428,7 @@ const SignUp = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative w-full px-4 pt-4 pb-2 z-10"
+        className="relative w-full px-4 pt-[env(safe-area-inset-top)] pb-1 z-10"
       >
         <div className="flex items-center justify-between max-w-md mx-auto">
           {step === 'account' ? (
@@ -458,7 +458,7 @@ const SignUp = () => {
       </motion.header>
 
       {/* Main content */}
-      <main className="relative flex-1 flex flex-col justify-center px-5 py-4 z-10">
+      <main className="relative flex-1 flex flex-col justify-start px-5 py-2 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -513,11 +513,11 @@ const SignUp = () => {
                 )}
 
                 {/* Title */}
-                <div className="text-center mb-6">
-                  <motion.h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
+                <div className="text-center mb-4">
+                  <motion.h1 className="text-[26px] font-bold text-white tracking-tight mb-1">
                     Create Account
                   </motion.h1>
-                  <p className="text-[15px] text-white/50">Start your 7-day free trial</p>
+                  <p className="text-[14px] text-white/50">Start your 7-day free trial</p>
                 </div>
 
                 {/* Error */}
@@ -537,7 +537,7 @@ const SignUp = () => {
                   )}
                 </AnimatePresence>
 
-                <form onSubmit={handleAccountSubmit} className="space-y-4">
+                <form onSubmit={handleAccountSubmit} className="space-y-3">
                   <InputField
                     label="Full Name"
                     value={fullName}
@@ -626,7 +626,7 @@ const SignUp = () => {
                 </form>
 
                 {/* Divider */}
-                <div className="flex items-center gap-4 my-6">
+                <div className="flex items-center gap-4 my-4">
                   <div className="flex-1 h-px bg-white/10" />
                   <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>
                   <div className="flex-1 h-px bg-white/10" />
@@ -634,7 +634,7 @@ const SignUp = () => {
 
                 {/* Sign in link */}
                 <div className="text-center">
-                  <p className="text-[14px] text-white/40 mb-3">Already have an account?</p>
+                  <p className="text-[14px] text-white/40 mb-2">Already have an account?</p>
                   <Link to="/auth/signin">
                     <Button variant="outline" className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5">
                       Sign In
@@ -869,7 +869,7 @@ const SignUp = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="relative px-6 pb-6 z-10"
+        className="relative px-6 pb-4 pt-2 z-10"
       >
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-center gap-4 text-[11px] text-white/30">

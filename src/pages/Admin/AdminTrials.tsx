@@ -930,20 +930,20 @@ export default function AdminTrials() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Stats Overview */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
         <Card
           className={`bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "ending_today" ? "ring-2 ring-red-500" : ""}`}
           onClick={() => setStatusFilter(statusFilter === "ending_today" ? "all" : "ending_today")}
         >
-          <CardContent className="pt-4 pb-4">
+          <CardContent className="p-3 sm:pt-4 sm:pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold">{stats.ending_today}</p>
-                <p className="text-xs text-muted-foreground">Ending Today</p>
+                <p className="text-xl sm:text-2xl font-bold">{stats.ending_today.toLocaleString()}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">Ending Today</p>
               </div>
-              <AlertTriangle className="h-6 w-6 text-red-400" />
+              <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
             </div>
           </CardContent>
         </Card>
@@ -952,13 +952,13 @@ export default function AdminTrials() {
           className={`bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "ending_tomorrow" ? "ring-2 ring-orange-500" : ""}`}
           onClick={() => setStatusFilter(statusFilter === "ending_tomorrow" ? "all" : "ending_tomorrow")}
         >
-          <CardContent className="pt-4 pb-4">
+          <CardContent className="p-3 sm:pt-4 sm:pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold">{stats.ending_tomorrow}</p>
-                <p className="text-xs text-muted-foreground">Ending Tomorrow</p>
+                <p className="text-xl sm:text-2xl font-bold">{stats.ending_tomorrow.toLocaleString()}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">Tomorrow</p>
               </div>
-              <Clock className="h-6 w-6 text-orange-400" />
+              <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400" />
             </div>
           </CardContent>
         </Card>
@@ -967,39 +967,39 @@ export default function AdminTrials() {
           className={`bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "active" ? "ring-2 ring-green-500" : ""}`}
           onClick={() => setStatusFilter(statusFilter === "active" ? "all" : "active")}
         >
-          <CardContent className="pt-4 pb-4">
+          <CardContent className="p-3 sm:pt-4 sm:pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold">{stats.active}</p>
-                <p className="text-xs text-muted-foreground">Active Trials</p>
+                <p className="text-xl sm:text-2xl font-bold">{stats.active.toLocaleString()}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">Active</p>
               </div>
-              <Timer className="h-6 w-6 text-green-400" />
+              <Timer className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-500/20">
-          <CardContent className="pt-4 pb-4">
+          <CardContent className="p-3 sm:pt-4 sm:pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold">{stats.conversion_rate}%</p>
-                <p className="text-xs text-muted-foreground">Conversion</p>
+                <p className="text-xl sm:text-2xl font-bold">{stats.conversion_rate}%</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">Conversion</p>
               </div>
-              <TrendingUp className="h-6 w-6 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Secondary Stats */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
         <Card
           className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "subscribed" ? "ring-2 ring-emerald-500" : ""}`}
           onClick={() => setStatusFilter(statusFilter === "subscribed" ? "all" : "subscribed")}
         >
-          <CardContent className="pt-4 pb-4 text-center">
-            <p className="text-lg font-bold">{stats.converted}</p>
-            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+          <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
+            <p className="text-base sm:text-lg font-bold">{stats.converted.toLocaleString()}</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
               <Crown className="h-3 w-3 text-emerald-400" />
               Converted
             </p>
@@ -1009,9 +1009,9 @@ export default function AdminTrials() {
           className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "expired" ? "ring-2 ring-gray-500" : ""}`}
           onClick={() => setStatusFilter(statusFilter === "expired" ? "all" : "expired")}
         >
-          <CardContent className="pt-4 pb-4 text-center">
-            <p className="text-lg font-bold">{stats.expired}</p>
-            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+          <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
+            <p className="text-base sm:text-lg font-bold">{stats.expired.toLocaleString()}</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
               <XCircle className="h-3 w-3 text-gray-400" />
               Expired
             </p>
@@ -1021,11 +1021,11 @@ export default function AdminTrials() {
           className={`cursor-pointer touch-manipulation active:scale-[0.98] transition-transform ${statusFilter === "all" && engagementFilter === "all" ? "ring-2 ring-blue-500" : ""}`}
           onClick={() => { setStatusFilter("all"); setEngagementFilter("all"); }}
         >
-          <CardContent className="pt-4 pb-4 text-center">
-            <p className="text-lg font-bold">{stats.total_trials}</p>
-            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+          <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
+            <p className="text-base sm:text-lg font-bold">{stats.total_trials.toLocaleString()}</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
               <Users className="h-3 w-3 text-blue-400" />
-              Total Trials
+              Total
             </p>
           </CardContent>
         </Card>
@@ -1074,41 +1074,42 @@ export default function AdminTrials() {
 
       {/* Filters */}
       <Card>
-        <CardContent className="pt-4 pb-4">
+        <CardContent className="pt-4 pb-4 px-3 sm:px-6">
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-2">
+            {/* Search + Action buttons */}
+            <div className="flex items-center gap-2">
               <AdminSearchInput
                 value={search}
                 onChange={setSearch}
-                placeholder="Search trials..."
-                className="flex-1 max-w-xs"
+                placeholder="Search..."
+                className="flex-1"
               />
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 shrink-0">
                 {hiddenUserIds.size > 0 && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={unhideAllUsers}
-                    className="gap-2 h-11 touch-manipulation text-muted-foreground"
+                    className="h-11 px-2.5 touch-manipulation text-muted-foreground"
                   >
                     <Eye className="h-4 w-4" />
-                    <span className="hidden sm:inline">Restore</span> {hiddenUserIds.size}
+                    <span className="ml-1">{hiddenUserIds.size}</span>
                   </Button>
                 )}
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => refetch()}
-                  className="gap-2 h-11 touch-manipulation"
+                  className="h-11 px-2.5 touch-manipulation"
                 >
                   <RefreshCw className="h-4 w-4" />
-                  <span className="hidden sm:inline">Refresh</span>
                 </Button>
               </div>
             </div>
-            <div className="flex gap-2 flex-wrap">
+            {/* Filter dropdowns - grid on mobile for even spacing */}
+            <div className="grid grid-cols-3 gap-2">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[130px] h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent className="z-[100]">
@@ -1120,8 +1121,8 @@ export default function AdminTrials() {
                 </SelectContent>
               </Select>
               <Select value={engagementFilter} onValueChange={setEngagementFilter}>
-                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
-                  <SelectValue placeholder="Engagement" />
+                <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
+                  <SelectValue placeholder="Lead" />
                 </SelectTrigger>
                 <SelectContent className="z-[100]">
                   <SelectItem value="all" className="h-11">All Leads</SelectItem>
@@ -1131,7 +1132,7 @@ export default function AdminTrials() {
                 </SelectContent>
               </Select>
               <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="w-[120px] h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation text-xs sm:text-sm">
                   <SelectValue placeholder="Role" />
                 </SelectTrigger>
                 <SelectContent className="z-[100]">
@@ -1177,76 +1178,81 @@ export default function AdminTrials() {
 
             return (
             <Card key={date} className={isUrgent ? "border-red-500/30" : ""}>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <Calendar className={`h-4 w-4 ${isUrgent ? "text-red-400" : "text-yellow-400"}`} />
-                    {getDayLabel(date)}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {(() => {
-                      const notYetEmailed = users.filter(u => !emailedTodayUserIds.has(u.id));
-                      const alreadyEmailed = users.length - notYetEmailed.length;
+              <CardHeader className="pb-2 px-3 sm:px-6">
+                <CardTitle className="text-sm">
+                  {/* Mobile: Stack vertically, Desktop: Side by side */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <span className="flex items-center gap-2">
+                      <Calendar className={`h-4 w-4 shrink-0 ${isUrgent ? "text-red-400" : "text-yellow-400"}`} />
+                      <span className="text-xs sm:text-sm">{getDayLabel(date)}</span>
+                    </span>
+                    <div className="flex items-center gap-2 ml-6 sm:ml-0">
+                      {(() => {
+                        const notYetEmailed = users.filter(u => !emailedTodayUserIds.has(u.id));
+                        const alreadyEmailed = users.length - notYetEmailed.length;
 
-                      return (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 px-2 gap-1 text-xs text-muted-foreground hover:text-foreground"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const userIds = notYetEmailed.map(u => u.id);
-                            if (userIds.length === 0) {
-                              toast.info("All users in this group have already been emailed today");
-                              return;
+                        return (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 px-2 gap-1 text-xs text-muted-foreground hover:text-foreground touch-manipulation"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const userIds = notYetEmailed.map(u => u.id);
+                              if (userIds.length === 0) {
+                                toast.info("All users in this group have already been emailed today");
+                                return;
+                              }
+                              bulkEmailMutation.mutate({ userIds, type: "reminder" });
+                            }}
+                            disabled={bulkEmailMutation.isPending || notYetEmailed.length === 0}
+                          >
+                            <MailPlus className="h-3.5 w-3.5" />
+                            {notYetEmailed.length === 0
+                              ? "All Sent"
+                              : alreadyEmailed > 0
+                                ? `Email ${notYetEmailed.length}/${users.length}`
+                                : "Email All"
                             }
-                            bulkEmailMutation.mutate({ userIds, type: "reminder" });
-                          }}
-                          disabled={bulkEmailMutation.isPending || notYetEmailed.length === 0}
-                        >
-                          <MailPlus className="h-3.5 w-3.5" />
-                          {notYetEmailed.length === 0
-                            ? "All Sent"
-                            : alreadyEmailed > 0
-                              ? `Email ${notYetEmailed.length}/${users.length}`
-                              : "Email All"
-                          }
-                        </Button>
-                      );
-                    })()}
-                    <Badge variant="outline" className="text-xs">
-                      {users.length} {users.length === 1 ? "user" : "users"}
-                    </Badge>
+                          </Button>
+                        );
+                      })()}
+                      <Badge variant="outline" className="text-xs">
+                        {users.length} {users.length === 1 ? "user" : "users"}
+                      </Badge>
+                    </div>
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
+              <CardContent className="pt-0 px-3 sm:px-6">
                 <div className="space-y-2">
                   {users.map((user) => (
                     <div
                       key={user.id}
-                      className="flex items-center justify-between p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+                      className="p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
                       onClick={() => setSelectedUser(user)}
                     >
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                      {/* Top row: Icon, Name, Chevron */}
+                      <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center shrink-0">
                           {getRoleIcon(user.role)}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="font-medium truncate text-sm">{user.full_name || "Unknown"}</p>
-                          <p className="text-xs text-muted-foreground">@{user.username}</p>
+                          <p className="font-medium text-sm">{user.full_name || "Unknown"}</p>
+                          <p className="text-xs text-muted-foreground truncate">@{user.username}</p>
                         </div>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                       </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
+                      {/* Bottom row: Badges - on their own line for mobile */}
+                      <div className="flex items-center gap-1.5 mt-2 ml-[52px] flex-wrap">
                         {emailedTodayUserIds.has(user.id) && (
-                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] px-1.5 py-0 h-5 flex items-center gap-0.5">
+                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] px-1.5 py-0.5 h-5 flex items-center gap-0.5">
                             <CheckCheck className="h-3 w-3" />
                             Sent
                           </Badge>
                         )}
                         {getEngagementBadge(user.engagement_score)}
                         {getStatusBadge(user.trial_status, user.days_remaining)}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
                   ))}

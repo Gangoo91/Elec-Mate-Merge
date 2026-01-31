@@ -188,6 +188,28 @@
   body {
     @apply bg-background text-foreground dark;
   }
+
+  /* ============================================
+     iOS NATIVE APP LAYOUT - GLOBAL FIX
+     ELIMINATES the gap between header and content
+     ============================================ */
+
+  :root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* iOS Native App Layout - Tighter spacing on mobile */
+  @media (max-width: 639px) {
+    /* Slightly tighter spacing between sections on mobile */
+    .space-y-6 > * + * {
+      margin-top: 1rem;
+    }
+
+    .space-y-8 > * + * {
+      margin-top: 1.25rem;
+    }
+  }
   
   .gradient-text {
     @apply bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent;

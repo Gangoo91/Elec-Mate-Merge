@@ -285,14 +285,29 @@ export const groundingService = {
   async getTodayProgress(): Promise<GroundingProgress | null> {
     const today = new Date().toISOString().split('T')[0];
 
-    const { data, error } = await supabase
-      .from('mental_health_grounding_progress')
-      .select('*')
-      .eq('date', today)
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from('mental_health_grounding_progress')
+        .select('*')
+        .eq('date', today)
+        .single();
 
-    if (error && error.code !== 'PGRST116') throw error;
-    return data;
+      // PGRST116 = no rows found, which is fine
+      // 406 = schema cache not refreshed (happens with new tables)
+      if (error && error.code !== 'PGRST116') {
+        // If it's a 406 error, return null and log it - table exists but cache not refreshed
+        if (error.message?.includes('406') || error.code === '406') {
+          console.warn('Grounding progress: Schema cache not refreshed yet');
+          return null;
+        }
+        throw error;
+      }
+      return data;
+    } catch (err) {
+      // Gracefully handle 406 errors
+      console.warn('Grounding progress fetch error:', err);
+      return null;
+    }
   },
 
   async markComplete(exerciseId: string): Promise<void> {
@@ -301,23 +316,31 @@ export const groundingService = {
 
     const today = new Date().toISOString().split('T')[0];
 
-    // Get current progress
-    const current = await this.getTodayProgress();
-    const exercises = current?.exercises_completed || [];
+    try {
+      // Get current progress
+      const current = await this.getTodayProgress();
+      const exercises = current?.exercises_completed || [];
 
-    if (!exercises.includes(exerciseId)) {
-      exercises.push(exerciseId);
+      if (!exercises.includes(exerciseId)) {
+        exercises.push(exerciseId);
+      }
+
+      const { error } = await supabase
+        .from('mental_health_grounding_progress')
+        .upsert({
+          user_id: user.id,
+          date: today,
+          exercises_completed: exercises
+        }, { onConflict: 'user_id,date' });
+
+      // Gracefully handle 406 schema cache errors
+      if (error && !error.message?.includes('406')) {
+        throw error;
+      }
+    } catch (err) {
+      console.warn('Grounding progress save error:', err);
+      // Don't throw - let the UI continue working
     }
-
-    const { error } = await supabase
-      .from('mental_health_grounding_progress')
-      .upsert({
-        user_id: user.id,
-        date: today,
-        exercises_completed: exercises
-      }, { onConflict: 'user_id,date' });
-
-    if (error) throw error;
   }
 };
 

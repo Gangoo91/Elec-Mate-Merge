@@ -189,14 +189,24 @@
 /* ============================================
    SAFE AREAS
    Account for notches and home indicators
+   IMPORTANT: These add ONLY the safe area, no extra padding
    ============================================ */
 
 .safe-top {
-  padding-top: env(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Minimal safe padding - adds just a tiny bit extra for breathing room */
+.safe-top-minimal {
+  padding-top: max(0.25rem, env(safe-area-inset-top, 0px));
+}
+
+.safe-bottom-minimal {
+  padding-bottom: max(0.25rem, env(safe-area-inset-bottom, 0px));
 }
 
 .safe-left {

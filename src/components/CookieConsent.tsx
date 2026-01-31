@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
-import { Cookie, X, Settings, ChevronDown, ChevronUp } from 'lucide-react';
+import { Cookie, Shield, BarChart3, Megaphone, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CookiePreferences {
@@ -82,133 +82,155 @@ export const CookieConsent = () => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="fixed bottom-0 left-0 right-0 z-[9999] p-4 sm:p-6"
+        className="fixed bottom-0 left-0 right-0 z-[9999] p-3 sm:p-4 md:p-6"
       >
-        <div className="max-w-2xl mx-auto bg-neutral-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-          {/* Main Banner */}
-          <div className="p-4 sm:p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
-                <Cookie className="h-5 w-5 text-yellow-400" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-base font-semibold text-white mb-1">We use cookies</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
-                  We use cookies to improve your experience and analyse how our platform is used.
-                  You can accept all cookies or customise your preferences.{' '}
-                  <Link to="/cookies" className="text-yellow-400 hover:underline">
-                    Learn more
-                  </Link>
-                </p>
-              </div>
+        {/* Backdrop blur on mobile for better visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none sm:hidden" />
+
+        <div className="relative max-w-lg mx-auto">
+          {/* Main Card */}
+          <div className="bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/50 overflow-hidden">
+            {/* Drag handle - mobile only */}
+            <div className="flex justify-center pt-2 pb-1 sm:hidden">
+              <div className="w-8 h-1 rounded-full bg-white/20" />
             </div>
 
-            {/* Quick Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2 mb-3">
-              <Button
-                onClick={handleAcceptAll}
-                className="flex-1 h-11 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold touch-manipulation"
-              >
-                Accept All
-              </Button>
-              <Button
-                onClick={handleRejectNonEssential}
-                variant="outline"
-                className="flex-1 h-11 border-white/20 text-white hover:bg-white/5 touch-manipulation"
-              >
-                Essential Only
-              </Button>
-            </div>
-
-            {/* Manage Preferences Toggle */}
-            <button
-              onClick={() => setShowDetails(!showDetails)}
-              className="w-full flex items-center justify-center gap-2 py-2 text-sm text-gray-400 hover:text-white transition-colors touch-manipulation"
-            >
-              <Settings className="h-4 w-4" />
-              Manage Preferences
-              {showDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
-          </div>
-
-          {/* Detailed Preferences */}
-          <AnimatePresence>
-            {showDetails && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-white/10 pt-4 space-y-4">
-                  {/* Essential Cookies */}
-                  <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-white">Essential Cookies</p>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-yellow-400/20 text-yellow-400 font-medium">
-                          Required
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        Necessary for the platform to function (authentication, security)
-                      </p>
-                    </div>
-                    <Switch
-                      checked={true}
-                      disabled
-                      className="data-[state=checked]:bg-yellow-400"
-                    />
-                  </div>
-
-                  {/* Analytics Cookies */}
-                  <div
-                    className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08]"
-                    onClick={() => setPreferences(p => ({ ...p, analytics: !p.analytics }))}
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-white">Analytics Cookies</p>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        Help us understand how you use the platform to improve it
-                      </p>
-                    </div>
-                    <Switch
-                      checked={preferences.analytics}
-                      onCheckedChange={(checked) => setPreferences(p => ({ ...p, analytics: checked }))}
-                      className="data-[state=checked]:bg-yellow-400"
-                    />
-                  </div>
-
-                  {/* Marketing Cookies */}
-                  <div
-                    className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08]"
-                    onClick={() => setPreferences(p => ({ ...p, marketing: !p.marketing }))}
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-white">Marketing Cookies</p>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        Allow personalised content and advertisements
-                      </p>
-                    </div>
-                    <Switch
-                      checked={preferences.marketing}
-                      onCheckedChange={(checked) => setPreferences(p => ({ ...p, marketing: checked }))}
-                      className="data-[state=checked]:bg-yellow-400"
-                    />
-                  </div>
-
-                  {/* Save Preferences Button */}
-                  <Button
-                    onClick={handleAcceptSelected}
-                    className="w-full h-11 bg-white/10 hover:bg-white/20 text-white font-medium touch-manipulation"
-                  >
-                    Save Preferences
-                  </Button>
+            {/* Header */}
+            <div className="px-4 sm:px-6 pt-2 sm:pt-5 pb-4">
+              {/* Icon and Title Row */}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-yellow-400/20 to-amber-500/20 border border-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                  <Cookie className="h-5 w-5 sm:h-5.5 sm:w-5.5 text-yellow-400" />
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">Cookie Preferences</h3>
+                  <p className="text-xs text-white/50">Manage your privacy settings</p>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-sm text-white/70 leading-relaxed mb-4">
+                We use cookies to enhance your experience and analyse platform usage.{' '}
+                <Link to="/cookies" className="text-yellow-400 hover:text-yellow-300 underline underline-offset-2">
+                  Cookie Policy
+                </Link>
+              </p>
+
+              {/* Primary Actions */}
+              <div className="flex gap-2 mb-3">
+                <Button
+                  onClick={handleAcceptAll}
+                  className="flex-1 h-12 sm:h-11 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-semibold rounded-xl touch-manipulation shadow-lg shadow-yellow-500/20"
+                >
+                  Accept All
+                </Button>
+                <Button
+                  onClick={handleRejectNonEssential}
+                  variant="outline"
+                  className="flex-1 h-12 sm:h-11 border-white/20 bg-white/5 text-white hover:bg-white/10 rounded-xl touch-manipulation"
+                >
+                  Essential Only
+                </Button>
+              </div>
+
+              {/* Customise Toggle */}
+              <button
+                onClick={() => setShowDetails(!showDetails)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-white/60 hover:text-white/90 transition-colors touch-manipulation rounded-lg hover:bg-white/5 active:bg-white/10"
+              >
+                Customise
+                {showDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </button>
+            </div>
+
+            {/* Detailed Preferences Panel */}
+            <AnimatePresence>
+              {showDetails && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-white/10 pt-4 space-y-3">
+                    {/* Essential Cookies */}
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                      <div className="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
+                        <Shield className="h-4 w-4 text-green-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-white">Essential</p>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-green-500/20 text-green-400 font-medium">
+                            Always on
+                          </span>
+                        </div>
+                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                          Authentication &amp; security
+                        </p>
+                      </div>
+                      <Switch
+                        checked={true}
+                        disabled
+                        className="data-[state=checked]:bg-green-500 opacity-50"
+                      />
+                    </div>
+
+                    {/* Analytics Cookies */}
+                    <div
+                      className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08] transition-colors"
+                      onClick={() => setPreferences(p => ({ ...p, analytics: !p.analytics }))}
+                    >
+                      <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+                        <BarChart3 className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white">Analytics</p>
+                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                          Help us improve the platform
+                        </p>
+                      </div>
+                      <Switch
+                        checked={preferences.analytics}
+                        onCheckedChange={(checked) => setPreferences(p => ({ ...p, analytics: checked }))}
+                        className="data-[state=checked]:bg-yellow-400"
+                      />
+                    </div>
+
+                    {/* Marketing Cookies */}
+                    <div
+                      className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08] transition-colors"
+                      onClick={() => setPreferences(p => ({ ...p, marketing: !p.marketing }))}
+                    >
+                      <div className="w-9 h-9 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+                        <Megaphone className="h-4 w-4 text-purple-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white">Marketing</p>
+                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                          Personalised content &amp; ads
+                        </p>
+                      </div>
+                      <Switch
+                        checked={preferences.marketing}
+                        onCheckedChange={(checked) => setPreferences(p => ({ ...p, marketing: checked }))}
+                        className="data-[state=checked]:bg-yellow-400"
+                      />
+                    </div>
+
+                    {/* Save Button */}
+                    <Button
+                      onClick={handleAcceptSelected}
+                      className="w-full h-12 sm:h-11 bg-white/10 hover:bg-white/15 text-white font-medium rounded-xl touch-manipulation mt-1"
+                    >
+                      Save Preferences
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>

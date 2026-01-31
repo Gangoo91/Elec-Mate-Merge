@@ -66,7 +66,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-hidden">
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
@@ -84,7 +84,7 @@ const SignIn = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative w-full px-4 pt-4 pb-2 z-10"
+        className="relative w-full px-4 pt-[env(safe-area-inset-top)] pb-1 z-10"
       >
         <div className="flex items-center justify-between max-w-md mx-auto">
           <Link
@@ -110,7 +110,7 @@ const SignIn = () => {
       </motion.header>
 
       {/* Main content */}
-      <main className="relative flex-1 flex flex-col justify-center px-5 py-8 z-10">
+      <main className="relative flex-1 flex flex-col justify-start sm:justify-center px-5 py-4 sm:py-8 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ const SignIn = () => {
           className="w-full max-w-md mx-auto"
         >
           {/* Welcome text */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6 sm:mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -334,7 +334,7 @@ const SignIn = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex items-center gap-4 my-8"
+            className="flex items-center gap-4 my-5 sm:my-8"
           >
             <div className="flex-1 h-px bg-white/10" />
             <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>

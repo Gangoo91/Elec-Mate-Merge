@@ -151,7 +151,7 @@ const Index = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative max-w-lg mx-auto px-6 pt-8 pb-12"
+          className="relative max-w-lg mx-auto px-6 pt-2 sm:pt-8 pb-12"
         >
           {/* Logo - hidden on mobile to avoid status bar overlap */}
           <motion.div variants={itemVariants} className="hidden sm:flex justify-center mb-8">

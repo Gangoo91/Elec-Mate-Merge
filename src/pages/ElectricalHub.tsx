@@ -45,8 +45,10 @@ import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBa
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
+import { Users } from 'lucide-react';
 
-// Email whitelist for employer features (beta)
+// Email whitelist for Worker Tools (beta testing)
 const EMPLOYER_ALLOWED_EMAILS = [
   'founder@elec-mate.com',
   'andrewgangoo91@gmail.com',
@@ -512,7 +514,12 @@ const ElectricalHub = () => {
 
   const profile = profileData?.profile;
   const userEmail = profileData?.email;
-  const showEmployerCard = userEmail && EMPLOYER_ALLOWED_EMAILS.includes(userEmail);
+  const isWhitelistedEmail = userEmail && EMPLOYER_ALLOWED_EMAILS.includes(userEmail);
+
+  // Check if user has an employee record (for Worker Tools)
+  // Also show for whitelisted emails for testing
+  const { data: employeeRecord } = useMyEmployeeRecord();
+  const showWorkerTools = employeeRecord || isWhitelistedEmail;
 
   useEffect(() => {
     // Show wizard if onboarding not complete and not already shown this session
@@ -585,41 +592,17 @@ const ElectricalHub = () => {
                 {mainResources.map((resource) => (
                   <ToolCard key={resource.link} {...resource} />
                 ))}
+                {/* Worker Tools - visible when user has employee record or is whitelisted */}
+                {showWorkerTools && (
+                  <ToolCard
+                    title="Worker Tools"
+                    description="Status, timesheets, leave & comms"
+                    icon={Users}
+                    link="/electrician/worker-tools"
+                  />
+                )}
               </div>
             </motion.section>
-
-            {/* Company - Employer Tools (email-filtered) */}
-            {showEmployerCard && (
-              <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-                <SectionHeader title="Company" />
-                <Link to="/employer" className="block group touch-manipulation">
-                  <motion.div
-                    whileHover={{ y: -2, scale: 1.01 }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className="relative overflow-hidden glass-premium rounded-2xl active:bg-white/[0.02]"
-                  >
-                    <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
-                    <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
-                    <div className="relative z-10 p-5 sm:p-6 text-center">
-                      <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
-                        <Building2 className="h-8 w-8 text-purple-400" />
-                      </div>
-                      <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                        Employer Tools
-                      </h3>
-                      <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
-                        My Status, Expenses, Timesheets, Team Comms & Elec-ID
-                      </p>
-                      <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-                        <span>Open Employer Hub</span>
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
-                  </motion.div>
-                </Link>
-              </motion.section>
-            )}
 
             {/* Company - Employer Integration (Hidden until employer area launches)
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">

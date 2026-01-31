@@ -169,7 +169,7 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="min-h-[100svh] flex flex-col justify-center px-5 pt-16 lg:pt-20">
+      <section className="min-h-0 sm:min-h-[100svh] flex flex-col justify-start sm:justify-center px-5 pt-[env(safe-area-inset-top)] sm:pt-16 lg:pt-20 pb-8 sm:pb-0">
         <div className="max-w-5xl mx-auto w-full">
           {/* Ambient glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">

@@ -38,8 +38,8 @@ const Layout = () => {
           className="flex-1 overflow-x-hidden"
           style={{ paddingTop: 'var(--header-height, 56px)' }}
         >
-          {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
-          <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
+          {/* iOS Native: Zero gap on mobile, content sits DIRECTLY below header */}
+          <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-3 md:pt-6 pb-4">
             {/* Announcements Banner */}
             <AnnouncementBanner />
 

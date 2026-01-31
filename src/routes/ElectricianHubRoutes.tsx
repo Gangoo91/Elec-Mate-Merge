@@ -78,11 +78,15 @@ const MaintenancePage = lazy(() => import("@/pages/electrician-tools/Maintenance
 const TutorPage = lazy(() => import("@/pages/electrician-tools/TutorPage"));
 const AIMethodStatementPage = lazy(() => import("@/pages/electrician-tools/AIMethodStatementPage"));
 const PremiumCVBuilder = lazy(() => import("@/components/cv-builder/premium/PremiumCVBuilder"));
+const WorkerToolsHub = lazy(() => import("@/pages/electrician/WorkerToolsHub"));
 
 const ElectricianHubRoutes = () => (
   <Routes>
     {/* Default route - show Electrical Hub as the main page */}
     <Route index element={<LazyRoute><ElectricalHub /></LazyRoute>} />
+
+    {/* Worker Tools - self-service for employed electricians */}
+    <Route path="worker-tools" element={<LazyRoute><WorkerToolsHub /></LazyRoute>} />
 
     <Route path="job-vacancies" element={<LazyRoute><JobVacancies /></LazyRoute>} />
     <Route path="cv-builder" element={<LazyRoute><PremiumCVBuilder /></LazyRoute>} />

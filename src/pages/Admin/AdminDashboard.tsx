@@ -195,7 +195,7 @@ export default function AdminDashboard() {
     return (
       <div className="space-y-4 animate-pulse p-1">
         <div className="h-44 bg-gradient-to-br from-emerald-900/50 to-emerald-950/30 rounded-3xl" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="h-20 bg-muted/50 rounded-2xl" />
           ))}
@@ -245,36 +245,38 @@ export default function AdminDashboard() {
             <p className="text-emerald-200/60 text-sm mt-1">Monthly Recurring Revenue</p>
           </div>
 
-          {/* Quick stats */}
-          <div className="grid grid-cols-3 gap-3">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
-              <p className="text-2xl font-bold text-white">{totalSubs}</p>
-              <p className="text-emerald-200/60 text-[11px] uppercase">Paying</p>
+          {/* Quick stats - stack on very small screens */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
+              <p className="text-xl sm:text-2xl font-bold text-white">{totalSubs.toLocaleString()}</p>
+              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">Paying</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
-              <p className="text-2xl font-bold text-white">£{(arr / 1000).toFixed(1)}k</p>
-              <p className="text-emerald-200/60 text-[11px] uppercase">ARR</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
+              <p className="text-xl sm:text-2xl font-bold text-white">
+                {arr >= 10000 ? `£${(arr / 1000).toFixed(0)}k` : `£${(arr / 1000).toFixed(1)}k`}
+              </p>
+              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">ARR</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
-              <div className="flex items-center gap-1">
-                <Crown className="h-4 w-4 text-yellow-400" />
-                <p className="text-2xl font-bold text-white">{stripeStats?.stripe.tierCounts?.founder || 0}</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
+              <div className="flex items-center justify-center gap-1">
+                <Crown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
+                <p className="text-xl sm:text-2xl font-bold text-white">{(stripeStats?.stripe.tierCounts?.founder || 0).toLocaleString()}</p>
               </div>
-              <p className="text-emerald-200/60 text-[11px] uppercase">Founders</p>
+              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">Founders</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Stats Row */}
-      <div className="grid grid-cols-4 gap-2">
+      {/* Quick Stats Row - 2x2 on mobile, 4 cols on tablet+ */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <Card
           className="bg-card/80 border-0 shadow-sm touch-manipulation active:scale-[0.97] transition-transform cursor-pointer"
           onClick={() => navigate("/admin/users")}
         >
-          <CardContent className="p-3 text-center">
+          <CardContent className="p-3 sm:p-3 text-center">
             <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-            <p className="text-xl font-bold">{stats?.totalUsers}</p>
+            <p className="text-2xl sm:text-xl font-bold">{stats?.totalUsers?.toLocaleString()}</p>
             <p className="text-[10px] text-muted-foreground">Users</p>
           </CardContent>
         </Card>
@@ -283,9 +285,9 @@ export default function AdminDashboard() {
           className="bg-card/80 border-0 shadow-sm touch-manipulation active:scale-[0.97] transition-transform cursor-pointer"
           onClick={() => navigate("/admin/users?filter=active")}
         >
-          <CardContent className="p-3 text-center">
+          <CardContent className="p-3 sm:p-3 text-center">
             <Activity className="h-5 w-5 text-green-400 mx-auto mb-1" />
-            <p className="text-xl font-bold">{stats?.activeToday}</p>
+            <p className="text-2xl sm:text-xl font-bold">{stats?.activeToday?.toLocaleString()}</p>
             <p className="text-[10px] text-muted-foreground">Active</p>
           </CardContent>
         </Card>
@@ -294,9 +296,9 @@ export default function AdminDashboard() {
           className="bg-card/80 border-0 shadow-sm touch-manipulation active:scale-[0.97] transition-transform cursor-pointer"
           onClick={() => navigate("/admin/users?filter=today")}
         >
-          <CardContent className="p-3 text-center">
+          <CardContent className="p-3 sm:p-3 text-center">
             <UserPlus className="h-5 w-5 text-purple-400 mx-auto mb-1" />
-            <p className="text-xl font-bold">{stats?.signupsToday}</p>
+            <p className="text-2xl sm:text-xl font-bold">{stats?.signupsToday?.toLocaleString()}</p>
             <p className="text-[10px] text-muted-foreground">Today</p>
           </CardContent>
         </Card>
@@ -305,9 +307,9 @@ export default function AdminDashboard() {
           className="bg-card/80 border-0 shadow-sm touch-manipulation active:scale-[0.97] transition-transform cursor-pointer"
           onClick={() => navigate("/admin/users?filter=trial")}
         >
-          <CardContent className="p-3 text-center">
+          <CardContent className="p-3 sm:p-3 text-center">
             <Clock className="h-5 w-5 text-orange-400 mx-auto mb-1" />
-            <p className="text-xl font-bold">{stats?.trialUsers}</p>
+            <p className="text-2xl sm:text-xl font-bold">{stats?.trialUsers?.toLocaleString()}</p>
             <p className="text-[10px] text-muted-foreground">Trial</p>
           </CardContent>
         </Card>
