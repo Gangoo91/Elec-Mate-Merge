@@ -64,7 +64,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
     certificateType: 'EICR',
     reportId: effectiveReportId,
-    certificateNumber: formData.reportReference,
+    certificateNumber: formData.certificateNumber,
     clientName: formData.clientName,
     clientEmail: formData.clientEmail,
     installationAddress: formData.installationAddress,
@@ -258,7 +258,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           pdfUrlFromResponse,
           user.id,
           savedReportId,
-          formData.reportReference || formData.certificateNumber
+          formData.certificateNumber
         );
         permanentUrl = storageResult.permanentUrl;
         storagePath = storageResult.storagePath;
@@ -419,7 +419,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       clientAddress: formData.clientAddress || '',
       installationAddress: formData.installationAddress || '',
       certificateType: 'EICR',
-      certificateReference: formData.reportReference || '',
+      certificateReference: formData.certificateNumber || '',
       reportId: effectiveReportId || undefined,
       pdfUrl: formData.pdfUrl || undefined,
     });
@@ -436,7 +436,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       clientAddress: formData.clientAddress || '',
       installationAddress: formData.installationAddress || '',
       certificateType: 'EICR',
-      certificateReference: formData.reportReference || '',
+      certificateReference: formData.certificateNumber || '',
       reportId: effectiveReportId || undefined,
       pdfUrl: formData.pdfUrl || undefined,
     });
@@ -1434,9 +1434,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               {isFormComplete() ? 'Ready to generate certificate' : 'Complete all required fields'}
             </p>
           </div>
-          {formData.reportReference && (
+          {formData.certificateNumber && (
             <span className="text-xs font-mono text-muted-foreground hidden sm:block">
-              {formData.reportReference}
+              {formData.certificateNumber}
             </span>
           )}
         </div>
@@ -1674,7 +1674,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         open={showEmailDialog}
         onOpenChange={setShowEmailDialog}
         certificateType="EICR"
-        certificateNumber={formData.reportReference}
+        certificateNumber={formData.certificateNumber}
         clientName={formData.clientName}
         clientEmail={formData.clientEmail}
         installationAddress={formData.installationAddress}

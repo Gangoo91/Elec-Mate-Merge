@@ -500,7 +500,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     ...flatKeys,
 
     metadata: {
-      certificate_number: get('reportReference') || get('certificateNumber'),
+      certificate_number: get('certificateNumber'),
       form_version: '1.0',
       export_timestamp: new Date().toISOString()
     },
