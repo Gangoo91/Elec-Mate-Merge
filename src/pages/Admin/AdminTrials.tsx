@@ -50,6 +50,7 @@ import {
   MailPlus,
 } from "lucide-react";
 import { format, formatDistanceToNow, isToday, isTomorrow, parseISO, startOfDay, addDays, formatDistance } from "date-fns";
+import { CheckCheck } from "lucide-react";
 import AdminSearchInput from "@/components/admin/AdminSearchInput";
 import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import { toast } from "sonner";
@@ -459,6 +460,30 @@ export default function AdminTrials() {
     refetchInterval: 60 * 1000, // Auto-refresh every minute
   });
 
+  // Fetch today's email sends to show which users have been emailed
+  const { data: todayEmailSends } = useQuery({
+    queryKey: ["admin-email-sends-today"],
+    queryFn: async () => {
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from("trial_email_sends")
+        .select("user_id, email_type, sent_at, success")
+        .eq("sent_date", today)
+        .eq("success", true);
+
+      if (error) {
+        console.error("Error fetching email sends:", error);
+        return new Set<string>();
+      }
+
+      return new Set((data || []).map(d => d.user_id));
+    },
+    staleTime: 30 * 1000,
+    refetchInterval: 60 * 1000,
+  });
+
+  const emailedTodayUserIds = todayEmailSends || new Set<string>();
+
   // Calculate stats
   const stats = useMemo<TrialStats>(() => {
     if (!trialUsers) {
@@ -853,6 +878,7 @@ export default function AdminTrials() {
     onSuccess: () => {
       toast.success("Email sent successfully");
       queryClient.invalidateQueries({ queryKey: ["admin-trial-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-email-sends-today"] });
     },
     onError: (error) => {
       toast.error(`Failed to send email: ${error.message}`);
@@ -868,9 +894,16 @@ export default function AdminTrials() {
       if (error) throw error;
       return data;
     },
-    onSuccess: (_, variables) => {
-      toast.success(`Emails sent to ${variables.userIds.length} users`);
+    onSuccess: (data, variables) => {
+      const sent = data?.sent || 0;
+      const skipped = data?.skipped || 0;
+      if (skipped > 0) {
+        toast.success(`${sent} emails sent, ${skipped} skipped (already sent today)`);
+      } else {
+        toast.success(`Emails sent to ${sent} users`);
+      }
       queryClient.invalidateQueries({ queryKey: ["admin-trial-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-email-sends-today"] });
     },
     onError: (error) => {
       toast.error(`Failed to send emails: ${error.message}`);
@@ -1151,20 +1184,36 @@ export default function AdminTrials() {
                     {getDayLabel(date)}
                   </span>
                   <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 px-2 gap-1 text-xs text-muted-foreground hover:text-foreground"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const userIds = users.map(u => u.id);
-                        bulkEmailMutation.mutate({ userIds, type: "reminder" });
-                      }}
-                      disabled={bulkEmailMutation.isPending}
-                    >
-                      <MailPlus className="h-3.5 w-3.5" />
-                      Email All
-                    </Button>
+                    {(() => {
+                      const notYetEmailed = users.filter(u => !emailedTodayUserIds.has(u.id));
+                      const alreadyEmailed = users.length - notYetEmailed.length;
+
+                      return (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 gap-1 text-xs text-muted-foreground hover:text-foreground"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const userIds = notYetEmailed.map(u => u.id);
+                            if (userIds.length === 0) {
+                              toast.info("All users in this group have already been emailed today");
+                              return;
+                            }
+                            bulkEmailMutation.mutate({ userIds, type: "reminder" });
+                          }}
+                          disabled={bulkEmailMutation.isPending || notYetEmailed.length === 0}
+                        >
+                          <MailPlus className="h-3.5 w-3.5" />
+                          {notYetEmailed.length === 0
+                            ? "All Sent"
+                            : alreadyEmailed > 0
+                              ? `Email ${notYetEmailed.length}/${users.length}`
+                              : "Email All"
+                          }
+                        </Button>
+                      );
+                    })()}
                     <Badge variant="outline" className="text-xs">
                       {users.length} {users.length === 1 ? "user" : "users"}
                     </Badge>
@@ -1189,6 +1238,12 @@ export default function AdminTrials() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
+                        {emailedTodayUserIds.has(user.id) && (
+                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] px-1.5 py-0 h-5 flex items-center gap-0.5">
+                            <CheckCheck className="h-3 w-3" />
+                            Sent
+                          </Badge>
+                        )}
                         {getEngagementBadge(user.engagement_score)}
                         {getStatusBadge(user.trial_status, user.days_remaining)}
                         <ChevronRight className="h-4 w-4 text-muted-foreground" />
@@ -1487,18 +1542,29 @@ export default function AdminTrials() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button
-                    className="w-full gap-2 h-12 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 text-black hover:from-yellow-600 hover:to-amber-600"
-                    onClick={() => {
-                      if (selectedUser) {
-                        sendReminderMutation.mutate({ userId: selectedUser.id, type: "reminder" });
-                      }
-                    }}
-                    disabled={sendReminderMutation.isPending}
-                  >
-                    <Mail className="h-4 w-4" />
-                    Send Trial Reminder
-                  </Button>
+                  {selectedUser && emailedTodayUserIds.has(selectedUser.id) ? (
+                    <Button
+                      className="w-full gap-2 h-12 touch-manipulation bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                      variant="outline"
+                      disabled
+                    >
+                      <CheckCheck className="h-4 w-4" />
+                      Email Sent Today
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full gap-2 h-12 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 text-black hover:from-yellow-600 hover:to-amber-600"
+                      onClick={() => {
+                        if (selectedUser) {
+                          sendReminderMutation.mutate({ userId: selectedUser.id, type: "reminder" });
+                        }
+                      }}
+                      disabled={sendReminderMutation.isPending}
+                    >
+                      <Mail className="h-4 w-4" />
+                      Send Trial Reminder
+                    </Button>
+                  )}
                   <Button
                     className="w-full gap-2 h-12 touch-manipulation text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     variant="ghost"
