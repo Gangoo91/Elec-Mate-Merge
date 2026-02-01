@@ -169,7 +169,7 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="min-h-0 sm:min-h-[100svh] flex flex-col justify-start sm:justify-center px-5 pt-[env(safe-area-inset-top)] sm:pt-16 lg:pt-20 pb-8 sm:pb-0">
+      <section className="min-h-0 sm:min-h-[100svh] flex flex-col justify-start sm:justify-center px-5 pt-[calc(env(safe-area-inset-top)+20px)] sm:pt-24 lg:pt-28 pb-8 sm:pb-0">
         <div className="max-w-5xl mx-auto w-full">
           {/* Ambient glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -190,8 +190,21 @@ const LandingPage = () => {
           </div>
 
           <div className="relative z-10 text-center">
+            {/* Logo for mobile */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6"
+              className="sm:hidden flex justify-center mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-yellow-500/30 rounded-2xl blur-xl" />
+                <img src="/logo.jpg" alt="Elec-Mate" className="relative w-16 h-16 rounded-2xl shadow-lg shadow-yellow-500/20" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-5 sm:mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -201,18 +214,18 @@ const LandingPage = () => {
             </motion.div>
 
             <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5"
+              className="text-[32px] sm:text-5xl lg:text-6xl font-bold leading-[1.15] sm:leading-tight mb-4 sm:mb-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               Your complete
               <br />
-              <span className="text-yellow-400">electrical career platform</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500">electrical career platform</span>
             </motion.h1>
 
             <motion.p
-              className="text-white/70 text-lg sm:text-xl max-w-2xl mx-auto mb-8"
+              className="text-white/60 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -227,26 +240,39 @@ const LandingPage = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Link to="/auth/signup">
-                <Button className="w-full sm:w-auto h-14 px-8 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 text-black">
+                <Button className="w-full sm:w-auto h-14 px-8 text-base font-semibold bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black shadow-lg shadow-yellow-500/25 rounded-2xl">
                   Start Free Trial
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
               <Link to="/auth/signin">
-                <Button variant="outline" className="w-full sm:w-auto h-14 px-8 text-base font-semibold border-white/20 text-white hover:bg-white/5">
+                <Button variant="outline" className="w-full sm:w-auto h-14 px-8 text-base font-semibold border-white/20 text-white hover:bg-white/5 rounded-2xl">
                   Sign In
                 </Button>
               </Link>
             </motion.div>
 
-            <motion.p
-              className="text-white/40 text-sm mt-4"
+            <motion.div
+              className="flex items-center justify-center gap-3 text-white/40 text-sm mt-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              7 days free • No card required • Cancel anytime
-            </motion.p>
+              <span className="flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-green-500" />
+                7 days free
+              </span>
+              <span className="w-1 h-1 rounded-full bg-white/20" />
+              <span className="flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-green-500" />
+                No card required
+              </span>
+              <span className="w-1 h-1 rounded-full bg-white/20 hidden sm:block" />
+              <span className="hidden sm:flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-green-500" />
+                Cancel anytime
+              </span>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -502,15 +528,15 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-5 border-t border-white/5">
+      <footer className="py-8 px-5 border-t border-white/5 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="Elec-Mate" className="w-6 h-6 rounded" />
-            <span className="text-sm text-white/50">Elec-Mate © 2025</span>
+          <div className="flex items-center gap-2.5">
+            <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" />
+            <span className="text-sm text-white/50">Elec-Mate © 2026</span>
           </div>
-          <div className="flex gap-4 text-sm text-white/40">
-            <Link to="/privacy" className="hover:text-white/60">Privacy</Link>
-            <Link to="/terms" className="hover:text-white/60">Terms</Link>
+          <div className="flex gap-6 text-sm text-white/40">
+            <Link to="/privacy" className="hover:text-white/60 transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-white/60 transition-colors">Terms</Link>
           </div>
         </div>
       </footer>
