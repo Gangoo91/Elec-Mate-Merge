@@ -84,7 +84,7 @@ const SignIn = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative w-full px-4 pt-[calc(env(safe-area-inset-top)+16px)] pb-1 z-10"
+        className="relative w-full px-4 pt-[calc(env(safe-area-inset-top)+32px)] pb-1 z-10"
       >
         <div className="flex items-center justify-between max-w-md mx-auto">
           <Link

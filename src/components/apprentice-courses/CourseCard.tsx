@@ -24,7 +24,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
   const content = (
     <div
       className={cn(
-        "relative flex items-center gap-4 p-4 rounded-2xl",
+        "relative flex items-center gap-4 p-4 rounded-2xl h-full min-h-[100px]",
         "bg-gradient-to-r from-white/[0.06] to-white/[0.02]",
         "border border-white/10",
         "transition-all duration-200",
@@ -34,25 +34,25 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
       )}
     >
       {/* Icon with glow */}
-      <div className="relative flex-shrink-0">
+      <div className="relative flex-shrink-0 self-start mt-1">
         <div className={cn(
           "absolute inset-0 rounded-xl blur-xl",
           comingSoon ? "bg-elec-yellow/5" : "bg-elec-yellow/20"
         )} />
         <div className={cn(
-          "relative w-14 h-14 rounded-xl flex items-center justify-center",
+          "relative w-12 h-12 rounded-xl flex items-center justify-center",
           "bg-gradient-to-br from-elec-yellow/20 to-amber-600/10",
           "border border-elec-yellow/20"
         )}>
           <Icon className={cn(
-            "h-7 w-7",
+            "h-6 w-6",
             comingSoon ? "text-elec-yellow/40" : "text-elec-yellow"
           )} />
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 self-start">
         {/* Module number */}
         {number && (
           <span className={cn(
@@ -63,9 +63,9 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
           </span>
         )}
 
-        {/* Title */}
+        {/* Title - fixed height for 2 lines */}
         <h3 className={cn(
-          "font-bold text-base leading-tight",
+          "font-bold text-[15px] leading-tight line-clamp-2 min-h-[2.5em]",
           comingSoon ? "text-white/40" : "text-white"
         )}>
           {title}
@@ -73,7 +73,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
 
         {/* Description */}
         <p className={cn(
-          "text-[13px] leading-snug mt-0.5 line-clamp-1",
+          "text-[12px] leading-snug mt-0.5 line-clamp-1",
           comingSoon ? "text-white/20" : "text-white/50"
         )}>
           {description}
@@ -81,7 +81,7 @@ export function CourseCard({ title, description, icon: Icon, href, number, comin
       </div>
 
       {/* Arrow or Coming Soon */}
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 self-start mt-1">
         {comingSoon ? (
           <span className="text-[10px] font-medium text-white/40 bg-white/10 px-2 py-1 rounded-full">
             Soon

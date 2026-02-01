@@ -169,7 +169,7 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="min-h-0 sm:min-h-[100svh] flex flex-col justify-start sm:justify-center px-5 pt-[calc(env(safe-area-inset-top)+20px)] sm:pt-24 lg:pt-28 pb-8 sm:pb-0">
+      <section className="min-h-0 sm:min-h-[100svh] flex flex-col justify-start sm:justify-center px-5 pt-[calc(env(safe-area-inset-top)+40px)] sm:pt-24 lg:pt-28 pb-8 sm:pb-0">
         <div className="max-w-5xl mx-auto w-full">
           {/* Ambient glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -273,42 +273,64 @@ const LandingPage = () => {
                 Cancel anytime
               </span>
             </motion.div>
+
+            {/* Social Proof Banner */}
+            <motion.div
+              className="mt-8 sm:mt-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-500/15 to-green-500/10 border border-emerald-500/30">
+                <div className="flex -space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold text-xs border-2 border-[#0a0a0a]">⚡</div>
+                  <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold text-xs border-2 border-[#0a0a0a]">🔌</div>
+                  <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xs border-2 border-[#0a0a0a]">🔧</div>
+                </div>
+                <div className="text-left">
+                  <p className="text-white font-semibold text-sm">
+                    <span className="text-emerald-400">400+ sparks</span> signed up this week
+                  </p>
+                  <p className="text-white/50 text-xs">Join the UK's fastest growing electrical platform</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Who is this for? */}
-      <section className="py-20 px-5">
+      <section className="py-16 px-5">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">One platform, every stage of your career</h2>
             <p className="text-white/60 max-w-lg mx-auto">Whether you're starting out or running a team, Elec-Mate grows with you</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-3 gap-4">
             <AudienceCard
               icon={<GraduationCap className="w-6 h-6" />}
               title="Apprentices"
-              tagline="Master your trade"
-              description="Comprehensive Level 2 & 3 training with practice exams, progress tracking, and mental health support built in."
-              features={['City & Guilds aligned courses', '1000+ practice questions', 'AM2 exam preparation', 'Mental Health Mates community']}
+              tagline="Everything to ace your training"
+              description="The most comprehensive apprentice platform in the UK. Full curriculum, 2,000+ questions, and dedicated AM2 preparation."
+              features={['Level 2 & 3 complete curriculum', 'AM2 practical & theory prep', '2,000+ practice exam questions', 'Flashcards & mock exams', 'Progress tracking dashboard', 'Mental Health Mates community']}
               color="green"
             />
             <AudienceCard
               icon={<Wrench className="w-6 h-6" />}
               title="Electricians"
-              tagline="Work smarter on site"
-              description="AI assistants trained on BS 7671, voice-to-quote in 2 minutes, and digital certificates ready to send."
-              features={['5 AI specialists (BS 7671 trained)', 'Voice quotes & invoices', 'EICR, EIC & Minor Works forms', '60+ calculators & tools']}
+              tagline="Your complete site companion"
+              description="7 AI specialists compliant with BS 7671:2018 + A3:2024, digital certificates, 50+ calculators, and get paid faster."
+              features={['AI Board Scanner (auto-populate)', 'EICR, EIC & Minor Works certs', 'Voice quote → invoice → paid', '50+ BS 7671 calculators', 'RAMS & method statements', 'Xero & QuickBooks sync']}
               color="yellow"
               highlight
             />
             <AudienceCard
               icon={<Building2 className="w-6 h-6" />}
               title="Employers"
-              tagline="Manage your business"
-              description="Track apprentice progress, manage team compliance, and keep your business running smoothly."
-              features={['Apprentice progress dashboard', 'Team safety compliance', 'Job & project tracking', 'Business analytics']}
+              tagline="Manage your whole team"
+              description="Track apprentice progress, manage team compliance, and run your electrical business from one dashboard."
+              features={['Apprentice progress tracking', 'Team certification management', 'Job & project scheduling', 'Business analytics & reports', 'Multi-user team accounts', 'Compliance documentation']}
               color="purple"
               comingSoon
             />
@@ -316,130 +338,305 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* In Action - Site Photos */}
+      <section className="py-16 px-5 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4">
+              <Zap className="w-4 h-4 text-blue-400" />
+              <span className="text-xs text-blue-400 font-semibold">REAL SPARKS, REAL SITES</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">Elec-Mate in action</h2>
+            <p className="text-white/60 max-w-lg mx-auto">See how electricians are using Elec-Mate on site every day</p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl z-10" />
+              <img
+                src="/images/site-photos/board-scanner.jpg"
+                alt="Board Scanner in use"
+                className="w-full aspect-[3/4] object-cover rounded-xl border border-white/10 group-hover:border-yellow-500/30 transition-all"
+              />
+              <div className="absolute bottom-3 left-3 right-3 z-20">
+                <p className="text-white font-semibold text-sm">AI Board Scanner</p>
+                <p className="text-white/60 text-xs">Scan & auto-populate circuits</p>
+              </div>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl z-10" />
+              <img
+                src="/images/site-photos/site-testing.jpg"
+                alt="Testing on site"
+                className="w-full aspect-[3/4] object-cover rounded-xl border border-white/10 group-hover:border-yellow-500/30 transition-all"
+              />
+              <div className="absolute bottom-3 left-3 right-3 z-20">
+                <p className="text-white font-semibold text-sm">Site Testing</p>
+                <p className="text-white/60 text-xs">Log results as you test</p>
+              </div>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl z-10" />
+              <img
+                src="/images/site-photos/eic-form.jpg"
+                alt="EIC Certificate"
+                className="w-full aspect-[3/4] object-cover rounded-xl border border-white/10 group-hover:border-yellow-500/30 transition-all"
+              />
+              <div className="absolute bottom-3 left-3 right-3 z-20">
+                <p className="text-white font-semibold text-sm">Digital Certificates</p>
+                <p className="text-white/60 text-xs">EIC, EICR & Minor Works</p>
+              </div>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-xl z-10" />
+              <img
+                src="/images/site-photos/dashboard.jpg"
+                alt="Elec-Mate Dashboard"
+                className="w-full aspect-[3/4] object-cover rounded-xl border border-white/10 group-hover:border-yellow-500/30 transition-all"
+              />
+              <div className="absolute bottom-3 left-3 right-3 z-20">
+                <p className="text-white font-semibold text-sm">All-in-One Dashboard</p>
+                <p className="text-white/60 text-xs">Everything at your fingertips</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* AI Agents Section */}
       <section id="ai" className="py-20 px-5 bg-gradient-to-b from-transparent via-yellow-500/[0.03] to-transparent scroll-mt-20">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-4">
               <Brain className="w-4 h-4 text-yellow-400" />
               <span className="text-xs text-yellow-400 font-semibold">POWERED BY AI</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">5 AI specialists at your fingertips</h2>
-            <p className="text-white/60 max-w-lg mx-auto">Trained on BS 7671:2022, IET Wiring Regulations, and UK electrical standards</p>
+            <p className="text-white/60 max-w-xl mx-auto">
+              Fully compliant with <span className="text-yellow-400 font-medium">BS 7671:2018 + A3:2024</span> (18th Edition)
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-            <AIAgentCard
-              icon={<Cpu />}
-              name="Circuit Designer"
-              desc="Cable sizing, volt drop, CU layouts & load calculations"
-              color="blue"
-            />
-            <AIAgentCard
-              icon={<PoundSterling />}
-              name="Cost Engineer"
-              desc="Instant quotes with labour, materials & profit margins"
-              color="emerald"
-            />
-            <AIAgentCard
-              icon={<Hammer />}
-              name="Installation Guide"
-              desc="Step-by-step instructions for any installation"
-              color="yellow"
-            />
-            <AIAgentCard
-              icon={<Settings />}
-              name="Fault Finder"
-              desc="Diagnose faults with guided troubleshooting"
-              color="orange"
-            />
-            <AIAgentCard
-              icon={<Shield />}
-              name="Safety & RAMS"
-              desc="Generate risk assessments & method statements"
-              color="red"
-            />
+          <div className="space-y-4">
+            {/* Top row - 3 cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <EnhancedAICard
+                icon={<Cpu />}
+                name="Circuit Designer"
+                tagline="Design compliant circuits in seconds"
+                features={['Adiabatic cable sizing to BS 7671', 'Volt drop & max length calculations', 'Consumer unit layouts with diversity', 'Full load schedules & protection sizing']}
+                color="blue"
+              />
+              <EnhancedAICard
+                icon={<PoundSterling />}
+                name="Cost Engineer"
+                tagline="Quote jobs accurately, every time"
+                features={['Live material prices from UK suppliers', 'Labour rates with regional adjustments', 'Automatic profit margin calculation', 'Professional PDF quotes in 2 minutes']}
+                color="emerald"
+                highlight
+              />
+              <EnhancedAICard
+                icon={<Hammer />}
+                name="Installation Guide"
+                tagline="BS 7671 compliant installation steps"
+                features={['Step-by-step for any circuit type', 'Cable routes & containment guidance', 'Earthing & bonding requirements', 'Testing sequences after install']}
+                color="yellow"
+              />
+            </div>
+
+            {/* Bottom row - 2 cards centered */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+              <EnhancedAICard
+                icon={<Settings />}
+                name="Maintenance Agent"
+                tagline="Keep installations compliant"
+                features={['Maintenance schedules & intervals', 'Inspection checklists by installation type', 'Compliance reminders & tracking', 'Condition reporting guidance']}
+                color="orange"
+              />
+              <EnhancedAICard
+                icon={<Shield />}
+                name="Health & Safety"
+                tagline="Site-ready RAMS in minutes"
+                features={['Risk assessments for any job type', 'Method statements with sequences', 'Site-specific hazard identification', 'PDF export ready for site induction']}
+                color="red"
+              />
+            </div>
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <p className="text-white/50 text-sm">
               <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />
-              + 3 more specialists coming soon: Commissioning, Inspector & Trainer
+              + 3 more specialists coming soon: Commissioning Engineer, Inspector & Training Coach
             </p>
           </div>
         </div>
       </section>
 
       {/* Get Paid Faster */}
-      <section className="py-20 px-5">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+      <section className="py-14 px-5">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-4">
+              <PoundSterling className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs text-emerald-400 font-semibold">GET PAID FASTER</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Quote to payment in minutes</h2>
-            <p className="text-white/60">Stop chasing payments — get paid the same day</p>
+            <p className="text-white/60 max-w-lg mx-auto">Stop chasing payments. Create professional quotes on site, convert to invoices, and get paid the same day.</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-5">
-            <FeatureBox
-              icon={<Mic className="w-6 h-6" />}
-              title="Voice Quotes"
-              description="Speak your quote on site, AI formats it professionally. Send to customer in under 2 minutes."
-              color="yellow"
-            />
-            <FeatureBox
-              icon={<Send className="w-6 h-6" />}
-              title="Instant Invoices"
-              description="Convert quotes to invoices with one tap. Professional PDFs sent directly to customers."
-              color="blue"
-            />
-            <FeatureBox
-              icon={<CreditCard className="w-6 h-6" />}
-              title="Stripe Payments"
-              description="Payment links in every invoice. Customers pay by card, you get paid today."
-              color="emerald"
-            />
+          <div className="grid sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-yellow-500/20 via-amber-500/10 to-yellow-600/5 border border-yellow-500/30 hover:border-yellow-400/50 transition-all">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-yellow-500/30 border border-yellow-500/40">
+                <Mic className="w-6 h-6 text-yellow-400" />
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Voice Quotes</h3>
+              <p className="text-sm text-white/60 mb-3">Speak your quote on site — AI formats it professionally with line items, labour rates & materials.</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-yellow-400" />
+                  <span>Hands-free on site</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-yellow-400" />
+                  <span>Auto-formats professionally</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-yellow-400" />
+                  <span>Send in under 2 minutes</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-blue-600/5 border border-blue-500/30 hover:border-blue-400/50 transition-all">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-blue-500/30 border border-blue-500/40">
+                <Send className="w-6 h-6 text-blue-400" />
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Instant Invoices</h3>
+              <p className="text-sm text-white/60 mb-3">Convert any quote to an invoice with one tap. Sync automatically with your accounting software.</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-blue-400" />
+                  <span>One-tap quote to invoice</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-blue-400" />
+                  <span>Sync to Xero & QuickBooks</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-blue-400" />
+                  <span>Email or WhatsApp direct</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-green-500/10 to-emerald-600/5 border border-emerald-500/30 hover:border-emerald-400/50 transition-all">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-emerald-500/30 border border-emerald-500/40">
+                <CreditCard className="w-6 h-6 text-emerald-400" />
+              </div>
+              <h3 className="font-bold text-white text-lg mb-2">Stripe Payments</h3>
+              <p className="text-sm text-white/60 mb-3">Payment links in every invoice. Customers pay by card, bank transfer, or Apple Pay.</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-emerald-400" />
+                  <span>Card & bank payments</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-emerald-400" />
+                  <span>Paid directly to your account</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <div className="w-1 h-1 rounded-full bg-emerald-400" />
+                  <span>Track payment status</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Integration logos */}
+          <div className="mt-8 flex flex-col items-center">
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-4">Integrates with</p>
+            <div className="flex items-center justify-center gap-4 sm:gap-6">
+              {/* Stripe */}
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10">
+                <img src="/logos/stripe.svg" alt="Stripe" className="h-5 w-auto" />
+                <span className="text-white/70 text-sm font-medium">Stripe</span>
+              </div>
+              {/* Xero */}
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10">
+                <img src="/logos/xero.svg" alt="Xero" className="h-5 w-auto" />
+                <span className="text-white/70 text-sm font-medium">Xero</span>
+              </div>
+              {/* QuickBooks */}
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10">
+                <img src="/logos/quickbooks.svg" alt="QuickBooks" className="h-5 w-auto" />
+                <span className="text-white/70 text-sm font-medium">QuickBooks</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* What's Inside */}
-      <section id="features" className="py-20 px-5 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent scroll-mt-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+      <section id="features" className="py-16 px-5 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent scroll-mt-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Everything you need, all in one app</h2>
             <p className="text-white/60">Built by electricians, for electricians</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Inspection & Testing */}
             <ContentCard
-              icon={<FileText className="w-5 h-5" />}
-              title="Digital Certificates"
-              items={['EICR (18th Edition)', 'EIC (Electrical Installation)', 'Minor Works Certificate', 'Export & share as PDF']}
+              icon={<ClipboardCheck className="w-5 h-5" />}
+              title="Inspection & Testing"
+              items={['EICR, EIC & Minor Works forms', 'AI Board Scanner (auto-populate)', 'Schedule of tests & defect codes', 'PDF export & digital signatures', 'Certificate dashboard & history']}
               color="blue"
             />
+            {/* Training & Courses */}
             <ContentCard
               icon={<BookOpen className="w-5 h-5" />}
-              title="Training Courses"
-              items={['Level 2 Electrical', 'Level 3 Electrical', 'BS 7671 Revision', 'AM2 Exam Prep']}
+              title="Training & Courses"
+              items={['Level 2 & 3 full curriculum', '14 CPD upskilling courses', 'AM2 practical & theory prep', '2,000+ practice questions', 'HNC diploma modules']}
               color="emerald"
             />
+            {/* Site Safety & RAMS */}
+            <ContentCard
+              icon={<Shield className="w-5 h-5" />}
+              title="Site Safety & RAMS"
+              items={['AI RAMS generator', 'Method statement builder', 'Hazard library & checklists', 'Team briefings & sign-off', 'Near miss reporting']}
+              color="red"
+            />
+            {/* Calculators */}
             <ContentCard
               icon={<Calculator className="w-5 h-5" />}
-              title="Site Calculators"
-              items={['Cable sizing', 'Volt drop', 'Conduit fill', 'Maximum demand']}
+              title="50+ Calculators"
+              items={['Cable sizing (BS 7671)', 'Volt drop & Zs calculations', 'Conduit fill & trunking', 'Solar & renewable sizing', 'Generator & load calculations']}
               color="yellow"
             />
+            {/* Business Tools */}
             <ContentCard
               icon={<TrendingUp className="w-5 h-5" />}
               title="Business Tools"
-              items={['Live material pricing', 'Job profitability tracker', 'VAT & tax calculators', 'Quote templates']}
+              items={['Voice quotes in 2 minutes', 'Invoices → Stripe payments', 'Live UK material pricing', 'Expenses & mileage tracker', 'Customer & job management']}
               color="purple"
+            />
+            {/* Apprentice Hub */}
+            <ContentCard
+              icon={<GraduationCap className="w-5 h-5" />}
+              title="Apprentice Hub"
+              items={['OJT evidence & portfolio', 'Timesheet tracking', 'Flashcards & mock exams', 'EPA preparation tools', 'Career pathway guidance']}
+              color="green"
             />
           </div>
 
-          <div className="mt-8 grid sm:grid-cols-3 gap-4">
-            <StatBox number="60+" label="Calculators & tools" />
-            <StatBox number="13+" label="Training courses" />
-            <StatBox number="1000+" label="Practice questions" />
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <StatBox number="50+" label="Calculators" />
+            <StatBox number="14" label="CPD courses" />
+            <StatBox number="2,000+" label="Practice questions" />
+            <StatBox number="7" label="AI specialists" />
           </div>
         </div>
       </section>
@@ -613,7 +810,84 @@ const AudienceCard = ({ icon, title, tagline, description, features, color, high
   );
 };
 
-// AI Agent Card
+// Enhanced AI Agent Card (new design with features)
+const EnhancedAICard = ({ icon, name, tagline, features, color, highlight }: {
+  icon: React.ReactNode;
+  name: string;
+  tagline: string;
+  features: string[];
+  color: 'yellow' | 'blue' | 'emerald' | 'orange' | 'red';
+  highlight?: boolean;
+}) => {
+  const colorConfig = {
+    yellow: {
+      bg: 'from-yellow-500/20 via-amber-500/10 to-yellow-600/5',
+      border: 'border-yellow-500/30 hover:border-yellow-400/50',
+      icon: 'bg-yellow-500/30 text-yellow-400 border-yellow-500/40',
+      dot: 'bg-yellow-400',
+      glow: 'shadow-yellow-500/20',
+    },
+    blue: {
+      bg: 'from-blue-500/20 via-cyan-500/10 to-blue-600/5',
+      border: 'border-blue-500/30 hover:border-blue-400/50',
+      icon: 'bg-blue-500/30 text-blue-400 border-blue-500/40',
+      dot: 'bg-blue-400',
+      glow: 'shadow-blue-500/20',
+    },
+    emerald: {
+      bg: 'from-emerald-500/20 via-green-500/10 to-emerald-600/5',
+      border: 'border-emerald-500/30 hover:border-emerald-400/50',
+      icon: 'bg-emerald-500/30 text-emerald-400 border-emerald-500/40',
+      dot: 'bg-emerald-400',
+      glow: 'shadow-emerald-500/20',
+    },
+    orange: {
+      bg: 'from-orange-500/20 via-amber-500/10 to-orange-600/5',
+      border: 'border-orange-500/30 hover:border-orange-400/50',
+      icon: 'bg-orange-500/30 text-orange-400 border-orange-500/40',
+      dot: 'bg-orange-400',
+      glow: 'shadow-orange-500/20',
+    },
+    red: {
+      bg: 'from-red-500/20 via-rose-500/10 to-red-600/5',
+      border: 'border-red-500/30 hover:border-red-400/50',
+      icon: 'bg-red-500/30 text-red-400 border-red-500/40',
+      dot: 'bg-red-400',
+      glow: 'shadow-red-500/20',
+    },
+  };
+
+  const config = colorConfig[color];
+
+  return (
+    <div className={`relative p-5 rounded-2xl bg-gradient-to-br ${config.bg} border ${config.border} transition-all duration-300 ${highlight ? `ring-2 ring-emerald-500/40 shadow-lg ${config.glow}` : ''}`}>
+      {highlight && (
+        <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-bold">
+          MOST USED
+        </span>
+      )}
+      <div className="flex items-start gap-4">
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border ${config.icon}`}>
+          {icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-bold text-white text-base mb-0.5">{name}</h4>
+          <p className="text-xs text-white/50 mb-3">{tagline}</p>
+          <div className="space-y-1.5">
+            {features.map((feature) => (
+              <div key={feature} className="flex items-start gap-2 text-xs text-white/70">
+                <div className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${config.dot}`} />
+                <span>{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// AI Agent Card (legacy - keep for backwards compatibility)
 const AIAgentCard = ({ icon, name, desc, color }: {
   icon: React.ReactNode;
   name: string;
@@ -704,7 +978,7 @@ const ContentCard = ({ icon, title, items, color }: {
   icon: React.ReactNode;
   title: string;
   items: string[];
-  color: 'yellow' | 'blue' | 'emerald' | 'purple';
+  color: 'yellow' | 'blue' | 'emerald' | 'purple' | 'red' | 'green';
 }) => {
   const colorConfig = {
     yellow: {
@@ -730,6 +1004,18 @@ const ContentCard = ({ icon, title, items, color }: {
       border: 'border-purple-500/25 hover:border-purple-400/40',
       icon: 'bg-purple-500/25 text-purple-400',
       dot: 'bg-purple-400',
+    },
+    red: {
+      bg: 'from-red-500/15 via-rose-500/8 to-red-600/5',
+      border: 'border-red-500/25 hover:border-red-400/40',
+      icon: 'bg-red-500/25 text-red-400',
+      dot: 'bg-red-400',
+    },
+    green: {
+      bg: 'from-green-500/15 via-emerald-500/8 to-green-600/5',
+      border: 'border-green-500/25 hover:border-green-400/40',
+      icon: 'bg-green-500/25 text-green-400',
+      dot: 'bg-green-400',
     },
   };
 
