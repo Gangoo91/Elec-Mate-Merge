@@ -868,7 +868,7 @@ const BusinessTab = () => {
                   onChange={handleLogoChange}
                   className="hidden"
                 />
-                <p className="text-[11px] text-white/40 mt-1.5 px-1">PNG, JPG or HEIC, max 2MB</p>
+                <p className="text-[11px] text-white/40 mt-1.5 px-1">PNG, JPG or HEIC, max 20MB</p>
               </div>
             </div>
 

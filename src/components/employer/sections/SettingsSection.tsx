@@ -115,9 +115,9 @@ export function SettingsSection() {
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Maximum file size is 5MB.", variant: "destructive" });
+    // Validate file size (max 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      toast({ title: "File too large", description: "Maximum file size is 20MB.", variant: "destructive" });
       return;
     }
 
@@ -273,7 +273,7 @@ export function SettingsSection() {
                       {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
                     </Button>
                     <p className="text-xs text-muted-foreground">
-                      PNG, JPG or SVG. Max 5MB. Recommended: 400x200px
+                      PNG, JPG or SVG. Max 20MB. Recommended: 400x200px
                     </p>
                   </div>
                 </div>

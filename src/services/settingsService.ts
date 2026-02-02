@@ -168,7 +168,7 @@ export async function uploadCompanyLogo(file: File): Promise<string | null> {
   const filePath = `logos/${fileName}`;
 
   const { error: uploadError } = await supabase.storage
-    .from('company-assets')
+    .from('company-branding')
     .upload(filePath, file, { upsert: true });
 
   if (uploadError) {
@@ -177,7 +177,7 @@ export async function uploadCompanyLogo(file: File): Promise<string | null> {
   }
 
   const { data } = supabase.storage
-    .from('company-assets')
+    .from('company-branding')
     .getPublicUrl(filePath);
 
   const logoUrl = data.publicUrl;
