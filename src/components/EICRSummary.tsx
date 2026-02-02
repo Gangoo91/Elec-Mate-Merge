@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -37,7 +37,7 @@ interface EICRSummaryProps {
 const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSummaryProps) => {
   // Use formData and updateFormData from context directly to ensure we always have the latest state
   // (props can be stale due to React's reconciliation timing)
-  const { effectiveReportId, formData: contextFormData, updateFormData } = useEICRForm();
+  const { effectiveReportId, formData: contextFormData, updateFormData, getLatestFormData, syncNow } = useEICRForm();
   const formData = contextFormData; // Use context formData for all operations
   const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
@@ -75,11 +75,12 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   // Ref to always access the latest formData in async callbacks
   // This solves React closure issues where callbacks capture stale state
+  // useLayoutEffect runs SYNCHRONOUSLY to ensure ref is updated before any user clicks
   const formDataRef = useRef(formData);
-  useEffect(() => {
+  useLayoutEffect(() => {
     formDataRef.current = formData;
     // Debug: log when arrays change
-    console.log('[EICRSummary] formData updated:', {
+    console.log('[EICRSummary] formData updated (sync):', {
       inspectionItemsCount: formData.inspectionItems?.length || 0,
       scheduleOfTestsCount: formData.scheduleOfTests?.length || 0,
       defectObservationsCount: formData.defectObservations?.length || 0
@@ -102,12 +103,12 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   };
 
   const handleCopyJson = async () => {
-    // Use ref to get the absolute latest formData (solves closure timing issues)
-    const latestFormData = formDataRef.current;
+    // Use context's getLatestFormData() to get the absolute latest formData
+    const latestFormData = getLatestFormData();
     console.log('[handleCopyJson] Using formData with arrays:', {
-      inspectionItemsCount: latestFormData.inspectionItems?.length || 0,
-      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
-      defectObservationsCount: latestFormData.defectObservations?.length || 0
+      inspectionItemsCount: latestFormData?.inspectionItems?.length || 0,
+      scheduleOfTestsCount: latestFormData?.scheduleOfTests?.length || 0,
+      defectObservationsCount: latestFormData?.defectObservations?.length || 0
     });
     const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
     navigator.clipboard.writeText(JSON.stringify(formattedJson, null, 2));
@@ -134,65 +135,71 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   };
 
   const handleGenerateCertificate = async () => {
+    // IMPORTANT: Get the absolute latest form data at the START of generation
+    // This uses the context's getLatestFormData() which reads from a ref that's always in sync
+    const latestFormData = getLatestFormData();
+    console.log('[PDF Generation] Got latestFormData via getLatestFormData():', {
+      scheduleOfTests: latestFormData?.scheduleOfTests?.length || 0,
+      inspectionItems: latestFormData?.inspectionItems?.length || 0,
+      defectObservations: latestFormData?.defectObservations?.length || 0
+    });
+
     console.log('[PDF Generation] Starting process...');
     console.log('[PDF Generation] effectiveReportId:', effectiveReportId);
-    console.log('[PDF Generation] Form data preview:', { 
-      clientName: formData.clientName,
-      certificateNumber: formData.certificateNumber,
-      inspectionDate: formData.inspectionDate
+    console.log('[PDF Generation] Form data preview (from ref):', {
+      clientName: latestFormData.clientName,
+      certificateNumber: latestFormData.certificateNumber,
+      inspectionDate: latestFormData.inspectionDate,
+      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
+      inspectionItemsCount: latestFormData.inspectionItems?.length || 0
     });
-    
+
     setIsGenerating(true);
     setShowDialog(true);
     setPdfUrl(null);
     setGenerationError(null);
-    
+
     try {
       // Step 1: Ensure report is saved to database first
       console.log('[PDF Generation] Step 1: Ensuring report is saved to database...');
-      
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
-      
-      const { reportCloud } = await import('@/utils/reportCloud');
 
-      // Check if report exists and save/update it (non-blocking)
+      // Sync report to cloud using the sync hook (handles version tracking properly)
       let savedReportId = effectiveReportId;
       try {
-        const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
-
-        if (!existingReport) {
-          console.log('[PDF Generation] Creating new report in database...');
-          const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
-          if (createResult.success && createResult.reportId) {
-            savedReportId = createResult.reportId;
-            console.log('[PDF Generation] Report created with ID:', savedReportId);
-          } else {
-            console.warn('[PDF Generation] Report save failed, continuing with PDF generation...');
-          }
+        console.log('[PDF Generation] Syncing report to cloud before PDF generation...');
+        const syncResult = await syncNow();
+        if (syncResult.success && syncResult.reportId) {
+          savedReportId = syncResult.reportId;
+          console.log('[PDF Generation] Report synced with ID:', savedReportId);
         } else {
-          console.log('[PDF Generation] Updating existing report...');
-          await reportCloud.updateReport(savedReportId, user.id, formData);
-          console.log('[PDF Generation] Report updated with ID:', savedReportId);
+          console.warn('[PDF Generation] Report sync failed, continuing with PDF generation...');
         }
       } catch (saveError) {
         console.warn('[PDF Generation] Report save error (non-blocking):', saveError);
         // Continue with PDF generation anyway
       }
-      
-      // Step 2: Format the EICR data for PDF Monkey
+
+      // Step 2: Format the EICR data for PDF Monkey (using latestFormData from ref)
       console.log('[PDF Generation] Step 2: Formatting data for PDF generation...');
-      console.log('[EICRSummary] Raw formData keys:', Object.keys(formData));
+      console.log('[EICRSummary] Raw formData keys:', Object.keys(latestFormData));
       console.log('[EICRSummary] Critical fields in raw formData:', {
-        clientName: formData.clientName || 'MISSING',
-        installationAddress: formData.installationAddress || 'MISSING',
-        inspectorName: formData.inspectorName || 'MISSING',
-        certificateNumber: formData.certificateNumber || 'MISSING'
+        clientName: latestFormData.clientName || 'MISSING',
+        installationAddress: latestFormData.installationAddress || 'MISSING',
+        inspectorName: latestFormData.inspectorName || 'MISSING',
+        certificateNumber: latestFormData.certificateNumber || 'MISSING'
       });
-      
-      const formattedJson = await formatEICRJson(formData, savedReportId);
+      console.log('[EICRSummary] Array counts:', {
+        scheduleOfTests: latestFormData.scheduleOfTests?.length || 0,
+        inspectionItems: latestFormData.inspectionItems?.length || 0,
+        defectObservations: latestFormData.defectObservations?.length || 0
+      });
+
+      const formattedJson = await formatEICRJson(latestFormData, savedReportId);
       console.log('[PDF Generation] Formatted EICR JSON (first 200 chars):', JSON.stringify(formattedJson).substring(0, 200));
       console.log('[PDF Generation] Required fields check:', {
         clientName: formattedJson.client_details?.client_name,
@@ -211,6 +218,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       console.log('[PDF Generation] insp_3_5_acc:', (formattedJson as any).insp_3_5_acc);
       console.log('[PDF Generation] inspection_debug_test:', (formattedJson as any).inspection_debug_test);
       console.log('[PDF Generation] =================================================');
+
+      // Schedule of Tests debug logging
+      console.log('[PDF Generation] ========== SCHEDULE OF TESTS DEBUG ==========');
+      console.log('[PDF Generation] schedule_of_tests present:', !!(formattedJson as any).schedule_of_tests);
+      console.log('[PDF Generation] schedule_of_tests length:', (formattedJson as any).schedule_of_tests?.length || 0);
+      console.log('[PDF Generation] boards_with_schedules present:', !!(formattedJson as any).boards_with_schedules);
+      console.log('[PDF Generation] boards_with_schedules length:', (formattedJson as any).boards_with_schedules?.length || 0);
+      if ((formattedJson as any).schedule_of_tests?.length > 0) {
+        console.log('[PDF Generation] First circuit keys:', Object.keys((formattedJson as any).schedule_of_tests[0]));
+        console.log('[PDF Generation] First circuit sample:', JSON.stringify((formattedJson as any).schedule_of_tests[0]).substring(0, 500));
+      }
+      if ((formattedJson as any).boards_with_schedules?.length > 0) {
+        console.log('[PDF Generation] First board circuits count:', (formattedJson as any).boards_with_schedules[0]?.circuits?.length || 0);
+      }
+      console.log('[PDF Generation] ================================================');
 
       // Step 3: Call the edge function
       console.log('[PDF Generation] Step 3: Calling edge function generate-eicr-pdf...');
@@ -258,7 +280,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           pdfUrlFromResponse,
           user.id,
           savedReportId,
-          formData.certificateNumber
+          latestFormData.certificateNumber
         );
         permanentUrl = storageResult.permanentUrl;
         storagePath = storageResult.storagePath;
@@ -320,11 +342,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       // Check if customer already exists in pool
       const existingCustomer = customers.find(
-        c => c.name.toLowerCase() === formData.clientName?.toLowerCase()
+        c => c.name.toLowerCase() === latestFormData.clientName?.toLowerCase()
       );
 
       // If customer doesn't exist, show prompt to save
-      if (!existingCustomer && formData.clientName) {
+      if (!existingCustomer && latestFormData.clientName) {
         setSavedReportIdForCustomer(savedReportId);
         setShowCustomerDialog(true);
       }
@@ -355,29 +377,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   // Email send handler - ensures report is saved before emailing
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
-    // First, ensure report is saved to database
+    // First, ensure report is saved to database using sync hook
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('Please log in to send certificates.');
+      console.log('[Email] Syncing report before sending email...');
+      const syncResult = await syncNow();
+      if (!syncResult.success) {
+        throw new Error('Failed to save report before emailing. Please try again.');
       }
-
-      const { reportCloud } = await import('@/utils/reportCloud');
-
-      // Check if report exists, if not save it first
-      const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
-      if (!existingReport) {
-        console.log('[Email] Report not found in database, saving first...');
-        const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
-        if (!createResult.success) {
-          throw new Error('Failed to save report before emailing. Please try again.');
-        }
-        console.log('[Email] Report saved:', createResult.reportId);
-      } else {
-        // Update existing report with latest data
-        await reportCloud.updateReport(effectiveReportId, user.id, formData);
-        console.log('[Email] Report updated before emailing');
-      }
+      console.log('[Email] Report synced:', syncResult.reportId);
     } catch (saveError) {
       console.error('[Email] Failed to save report before emailing:', saveError);
       toast({

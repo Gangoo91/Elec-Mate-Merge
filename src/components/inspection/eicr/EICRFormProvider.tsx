@@ -33,6 +33,7 @@ interface EICRFormContextType {
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
+  syncNow: () => Promise<{ success: boolean; reportId: string | null }>;
 }
 
 const EICRFormContext = createContext<EICRFormContextType | undefined>(undefined);
@@ -211,6 +212,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isAuthenticated,
     authCheckComplete,
     processOfflineQueue,
+    syncNow,
   } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eicr',
@@ -661,6 +663,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    syncNow,
   };
 
   return (

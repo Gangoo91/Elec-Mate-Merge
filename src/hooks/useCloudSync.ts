@@ -59,11 +59,12 @@ export const useCloudSync = ({
 
   // Map new status to old syncState format
   // 'unsaved' is mapped to 'queued' for backwards compatibility
+  // 'conflict' is also mapped to 'queued' (not 'error') since local data is safe
   const syncState: SyncState = {
     status: status.cloud === 'synced' ? 'synced' :
             status.cloud === 'syncing' ? 'syncing' :
             status.cloud === 'unsaved' ? 'queued' :  // Map unsaved to queued for old consumers
-            status.cloud === 'queued' || status.cloud === 'offline' ? 'queued' :
+            status.cloud === 'queued' || status.cloud === 'offline' || status.cloud === 'conflict' ? 'queued' :
             'error',
     lastSyncTime: status.lastCloudSync?.getTime(),
     lastLocalSave: status.lastLocalSave?.getTime(),  // Expose local save time

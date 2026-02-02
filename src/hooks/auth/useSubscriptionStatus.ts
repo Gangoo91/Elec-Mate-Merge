@@ -91,7 +91,13 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
     // Ensure we have a valid session before calling the edge function
     // This prevents the "missing sub claim" error when auth isn't ready
-    const { data: { session } } = await supabase.auth.getSession();
+    let session = (await supabase.auth.getSession()).data.session;
+
+    // If no session or token is about to expire (within 60 seconds), try to refresh
+    if (!session?.access_token || (session.expires_at && session.expires_at * 1000 < Date.now() + 60000)) {
+      const { data: refreshData } = await supabase.auth.refreshSession();
+      session = refreshData.session;
+    }
 
     if (!session?.access_token) {
       // No valid session - skip the Stripe check but keep trial logic working
