@@ -249,9 +249,28 @@ export const useQuoteStorage = () => {
         acceptance_status: quoteData.acceptance_status
       });
 
-      const { error } = await supabase
+      let { error } = await supabase
         .from('quotes')
         .upsert(quoteData, { onConflict: 'id' });
+
+      // Handle duplicate quote number error by generating a unique one
+      if (error?.message?.includes('unique_quote_number_per_user')) {
+        console.log('Quote Storage - Duplicate quote number detected, generating unique one');
+
+        // Generate a unique quote number with timestamp
+        const currentYear = new Date().getFullYear();
+        const uniqueSuffix = Date.now().toString().slice(-6);
+        quoteData.quote_number = `${currentYear}/T${uniqueSuffix}`;
+
+        console.log('Quote Storage - Retrying with new quote number:', quoteData.quote_number);
+
+        // Retry with new quote number
+        const retryResult = await supabase
+          .from('quotes')
+          .upsert(quoteData, { onConflict: 'id' });
+
+        error = retryResult.error;
+      }
 
       if (error) {
         console.error('Quote Storage - Database error:', error);
@@ -307,8 +326,9 @@ export const useQuoteStorage = () => {
         console.error('Quote PDF generation error (non-blocking):', pdfError);
       }
 
-      // Update local state
-      const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
+      // Update local state with potentially updated quote number
+      const savedQuoteData = { ...quote, quoteNumber: quoteData.quote_number };
+      const updatedQuotes = [savedQuoteData, ...savedQuotes.filter(q => q.id !== quote.id)];
       setSavedQuotes(updatedQuotes);
       
       console.log('Quote Storage - Local state updated', {
