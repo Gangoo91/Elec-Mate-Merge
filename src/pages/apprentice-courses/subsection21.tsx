@@ -492,13 +492,13 @@ const Section5_4 = () => {
         {/* Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-border/20">
           <Button variant="outline" asChild>
-            <Link to="5-3">
+            <Link to="/study-centre/apprentice/level2/module1/section5/5-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 5.3
             </Link>
           </Button>
           <Button asChild>
-            <Link to="5-5">
+            <Link to="/study-centre/apprentice/level2/module1/section5/5-5">
               Next: Section 5.5
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

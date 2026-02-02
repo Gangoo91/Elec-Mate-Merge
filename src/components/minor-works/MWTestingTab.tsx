@@ -12,22 +12,22 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Power, Zap, Shield, Wrench, AlertCircle, CheckCircle } from 'lucide-react';
+import { Power, Zap, Shield, Wrench, AlertCircle, CheckCircle, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import {
   RCD_RATINGS,
   TEST_EQUIPMENT,
   INSULATION_TEST_VOLTAGES,
 } from '@/constants/minorWorksOptions';
+import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 interface MWTestingTabProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  isMobile?: boolean;
 }
 
-const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
-  const isMobile = useIsMobile();
+const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobile = false }) => {
   const [openSections, setOpenSections] = useState({
     dead: true,
     live: true,
@@ -35,6 +35,13 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     equipment: true
   });
   const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
+
+  // Smart form hook for saved instruments from Business Settings
+  const { getAvailableInstruments, hasSavedTestEquipment } = useMinorWorksSmartForm();
+  const savedInstruments = getAvailableInstruments();
+
+  // Helper for conditional section card styling - no card on mobile, full card on desktop
+  const sectionCardClass = cn(isMobile ? "" : "eicr-section-card");
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
@@ -108,6 +115,19 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     onUpdate('testEquipmentModel', value);
 
     if (value && value !== 'other') {
+      // Check if this is a saved instrument from Business Settings
+      const savedInstrument = savedInstruments.find(i => i.value === value);
+      if (savedInstrument) {
+        // Auto-fill from Business Settings
+        if (savedInstrument.serialNumber) {
+          onUpdate('testEquipmentSerial', savedInstrument.serialNumber);
+        }
+        if (savedInstrument.calibrationDate) {
+          onUpdate('testEquipmentCalDate', savedInstrument.calibrationDate);
+        }
+        return; // Don't need to check offline storage
+      }
+
       // Save to recent list
       const updated = [
         value,
@@ -127,42 +147,39 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     }
   };
 
-  // Build options list with recent instruments at top
+  // Build options list with saved instruments from Business Settings at top
   const instrumentOptions = useMemo(() => {
-    const recentOptions = recentInstruments.map(instrument => ({
-      value: instrument,
-      label: `⏱️ ${instrument}`,
-      description: 'Recently used'
+    // First: Saved instruments from Business Settings (highest priority)
+    const savedOptions = savedInstruments.map(instrument => ({
+      value: instrument.value,
+      label: instrument.label,
+      description: 'From Business Settings',
+      serialNumber: instrument.serialNumber,
+      calibrationDate: instrument.calibrationDate,
+      isSaved: true
     }));
 
-    // Filter out recent instruments from main list to avoid duplicates
+    // Second: Recently used instruments
+    const recentOptions = recentInstruments
+      .filter(instrument => !savedInstruments.some(s => s.value === instrument))
+      .map(instrument => ({
+        value: instrument,
+        label: instrument,
+        description: 'Recently used',
+        isSaved: false
+      }));
+
+    // Third: Main equipment list (filter out saved and recent)
+    const allUsed = [...savedInstruments.map(s => s.value), ...recentInstruments];
     const mainOptions = TEST_EQUIPMENT.filter(
-      opt => !recentInstruments.includes(opt.value)
-    );
+      opt => !allUsed.includes(opt.value)
+    ).map(opt => ({
+      ...opt,
+      isSaved: false
+    }));
 
-    return [...recentOptions, ...mainOptions];
-  }, [recentInstruments]);
-
-  const getCompletionPercentage = (section: string) => {
-    switch (section) {
-      case 'dead': {
-        const fields = ['continuityR1R2', 'polarity'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'live': {
-        const fields = ['earthFaultLoopImpedance'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'protection':
-        return formData.rcdRating || formData.afddTestButton || formData.spdIndicatorStatus ? 100 : 0;
-      case 'equipment':
-        return formData.testEquipmentModel ? 100 : 0;
-      default:
-        return 0;
-    }
-  };
+    return [...savedOptions, ...recentOptions, ...mainOptions];
+  }, [recentInstruments, savedInstruments]);
 
   // Check if Zs is within limits
   const isZsValid = () => {
@@ -183,9 +200,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
   };
 
   return (
-    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
+    <div className="space-y-4 sm:space-y-6">
       {/* Dead Tests */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.dead} onOpenChange={() => toggleSection('dead')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -193,8 +210,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               icon={Power}
               isOpen={openSections.dead}
               color="orange-500"
-              completionPercentage={getCompletionPercentage('dead')}
-            />
+                          />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
@@ -235,7 +251,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     <Label className="text-sm">Polarity *</Label>
                     <Select value={formData.polarity || ''} onValueChange={(v) => onUpdate('polarity', v)}>
                       <SelectTrigger className={cn(
-                        "h-12 bg-white/5 border-white/10 rounded-xl text-base",
+                        "",
                         !formData.polarity && "border-red-500/50",
                         formData.polarity === 'correct' && "border-green-500/50",
                         formData.polarity === 'incorrect' && "border-red-500"
@@ -332,7 +348,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   <div className="space-y-2">
                     <Label className="text-sm">Test Voltage</Label>
                     <Select value={formData.insulationTestVoltage || '500V'} onValueChange={(v) => onUpdate('insulationTestVoltage', v)}>
-                      <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectTrigger className="">
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent>
@@ -390,7 +406,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
       </div>
 
       {/* Live Tests */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.live} onOpenChange={() => toggleSection('live')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -398,8 +414,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               icon={Zap}
               isOpen={openSections.live}
               color="yellow-500"
-              completionPercentage={getCompletionPercentage('live')}
-            />
+                          />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
@@ -464,7 +479,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Functional Testing</Label>
                   <Select value={formData.functionalTesting || ''} onValueChange={(v) => onUpdate('functionalTesting', v)}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Select result" />
                     </SelectTrigger>
                     <SelectContent>
@@ -497,7 +512,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
 
       {/* Protection Testing (Conditional) */}
       {(formData.protectionRcd || formData.protectionRcbo || formData.protectionAfdd || formData.protectionSpd) && (
-        <div className="eicr-section-card">
+        <div className={sectionCardClass}>
           <Collapsible open={openSections.protection} onOpenChange={() => toggleSection('protection')}>
             <CollapsibleTrigger className="w-full">
               <SectionHeader
@@ -505,8 +520,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 icon={Shield}
                 isOpen={openSections.protection}
                 color="purple-500"
-                completionPercentage={getCompletionPercentage('protection')}
-              />
+                              />
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="p-4 sm:p-5 md:p-6 space-y-4">
@@ -521,7 +535,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">RCD Rating (mA)</Label>
                         <Select value={formData.rcdRating || ''} onValueChange={(v) => onUpdate('rcdRating', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
@@ -564,7 +578,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">Test Button</Label>
                         <Select value={formData.rcdTestButton || ''} onValueChange={(v) => onUpdate('rcdTestButton', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Result" />
                           </SelectTrigger>
                           <SelectContent>
@@ -611,7 +625,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">½× IΔn (No Trip)</Label>
                         <Select value={formData.rcdHalfX || ''} onValueChange={(v) => onUpdate('rcdHalfX', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Result" />
                           </SelectTrigger>
                           <SelectContent>
@@ -645,7 +659,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">Test Button</Label>
                         <Select value={formData.afddTestButton || ''} onValueChange={(v) => onUpdate('afddTestButton', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Result" />
                           </SelectTrigger>
                           <SelectContent>
@@ -679,7 +693,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">Indicator Status</Label>
                         <Select value={formData.spdIndicatorStatus || ''} onValueChange={(v) => onUpdate('spdIndicatorStatus', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Status" />
                           </SelectTrigger>
                           <SelectContent>
@@ -707,7 +721,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-2">
                         <Label className="text-sm">Visual Inspection</Label>
                         <Select value={formData.spdVisualInspection || ''} onValueChange={(v) => onUpdate('spdVisualInspection', v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Result" />
                           </SelectTrigger>
                           <SelectContent>
@@ -748,7 +762,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
       )}
 
       {/* Test Equipment */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.equipment} onOpenChange={() => toggleSection('equipment')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -756,8 +770,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               icon={Wrench}
               isOpen={openSections.equipment}
               color="blue-500"
-              completionPercentage={getCompletionPercentage('equipment')}
-            />
+                          />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
@@ -765,17 +778,25 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Test Instrument</Label>
                   <Select value={formData.testEquipmentModel || ''} onValueChange={handleInstrumentSelect}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Select instrument" />
                     </SelectTrigger>
                     <SelectContent>
+                      {hasSavedTestEquipment && savedInstruments.length > 0 && (
+                        <div className="px-2 py-1.5 text-xs text-blue-400 font-medium border-b border-white/10 mb-1">
+                          Your Saved Instruments
+                        </div>
+                      )}
                       {instrumentOptions.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
-                          <div className="flex flex-col">
-                            <span>{opt.label}</span>
-                            {opt.description && (
-                              <span className="text-xs text-white/50">{opt.description}</span>
-                            )}
+                          <div className="flex items-center gap-2">
+                            {opt.isSaved && <Star className="h-3 w-3 text-blue-400 fill-blue-400" />}
+                            <div className="flex flex-col">
+                              <span>{opt.label}</span>
+                              {opt.description && (
+                                <span className="text-xs text-white/50">{opt.description}</span>
+                              )}
+                            </div>
                           </div>
                         </SelectItem>
                       ))}
@@ -784,7 +805,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   {formData.testEquipmentModel && formData.testEquipmentSerial && (
                     <p className="text-xs text-green-400 flex items-center gap-1">
                       <CheckCircle className="h-3 w-3" />
-                      Serial number saved for next time
+                      {savedInstruments.some(i => i.value === formData.testEquipmentModel)
+                        ? "From Business Settings"
+                        : "Serial number saved for next time"}
                     </p>
                   )}
                 </div>
@@ -794,7 +817,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     value={formData.testEquipmentSerial || ''}
                     onChange={(e) => onUpdate('testEquipmentSerial', e.target.value)}
                     placeholder="Auto-fills if previously entered"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                    
                   />
                 </div>
               </div>
@@ -806,7 +829,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     type="date"
                     value={formData.testEquipmentCalDate || ''}
                     onChange={(e) => onUpdate('testEquipmentCalDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                    
                   />
                   {formData.testEquipmentCalDate && (
                     (() => {
@@ -837,7 +860,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     value={formData.testTemperature || '20°C'}
                     onChange={(e) => onUpdate('testTemperature', e.target.value)}
                     placeholder="e.g., 20°C"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                    
                   />
                 </div>
               </div>

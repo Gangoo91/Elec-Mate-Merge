@@ -72,12 +72,19 @@ const itemVariants = {
   },
 };
 
-// Premium Hero Component
+// Premium Hero Component - Centered layout matching main dashboard
 function ElectricalHero() {
   const { profile } = useAuth();
   const { business } = useDashboardData();
 
   const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
 
   return (
     <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
@@ -87,61 +94,51 @@ function ElectricalHero() {
       {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      <div className="relative z-10 p-4 sm:p-5">
-        {/* Header label */}
-        <div className="flex items-center gap-1.5 text-elec-yellow mb-3">
-          <Sparkles className="h-3 w-3" />
-          <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
-            Electrical Hub
-          </span>
-        </div>
-
-        {/* Main content row - icon and text aligned */}
-        <div className="flex items-center gap-4">
+      {/* Content - centered layout */}
+      <div className="relative z-10 p-5 sm:p-6">
+        <div className="flex flex-col items-center text-center">
           {/* Icon */}
-          <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-            <Zap className="h-8 w-8 text-elec-yellow" />
+          <div className="w-20 h-20 rounded-full bg-elec-yellow/10 border-2 border-elec-yellow/20 flex items-center justify-center mb-3">
+            <Zap className="h-10 w-10 text-elec-yellow" />
           </div>
 
-          {/* Text - vertically centered with icon */}
-          <div className="flex-1 min-w-0 flex flex-col justify-center">
-            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow leading-tight">
-              {firstName.toUpperCase()}
-            </h1>
-            <p className="text-xs sm:text-sm text-white/70 mt-0.5">
-              Professional tools for qualified electricians
-            </p>
-          </div>
-        </div>
+          {/* Greeting and Name */}
+          <p className="text-sm text-white/50 mb-0.5">
+            {getGreeting()}
+          </p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            {firstName}
+          </h1>
 
-        {/* Status badges - aligned below */}
-        <div className="flex items-center gap-2 mt-4 pl-20">
-          {business.activeQuotes > 0 && (
-            <Badge
-              variant="outline"
-              className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
-            >
-              <FileText className="w-3 h-3 mr-1" />
-              {business.activeQuotes} active quotes
-            </Badge>
-          )}
-          {business.overdueInvoices > 0 ? (
-            <Badge
-              variant="outline"
-              className="bg-red-500/10 border-red-500/30 text-red-400 text-[10px] sm:text-xs"
-            >
-              <AlertCircle className="w-3 h-3 mr-1" />
-              {business.overdueInvoices} overdue
-            </Badge>
-          ) : (
-            <Badge
-              variant="outline"
-              className="bg-green-500/10 border-green-500/30 text-green-400 text-[10px] sm:text-xs"
-            >
-              <CheckCircle className="w-3 h-3 mr-1" />
-              All paid
-            </Badge>
-          )}
+          {/* Status badges - horizontal row */}
+          <div className="flex items-center gap-2 mt-3">
+            {business.activeQuotes > 0 && (
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
+              >
+                <FileText className="w-3 h-3 mr-1" />
+                {business.activeQuotes} quotes
+              </Badge>
+            )}
+            {business.overdueInvoices > 0 ? (
+              <Badge
+                variant="outline"
+                className="bg-red-500/10 border-red-500/30 text-red-400 text-[11px]"
+              >
+                <AlertCircle className="w-3 h-3 mr-1" />
+                {business.overdueInvoices} overdue
+              </Badge>
+            ) : (
+              <Badge
+                variant="outline"
+                className="bg-green-500/10 border-green-500/30 text-green-400 text-[11px]"
+              >
+                <CheckCircle className="w-3 h-3 mr-1" />
+                All paid
+              </Badge>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -218,45 +215,43 @@ function ElectricalStatsBar() {
             aria-label={`View ${stat.label}`}
           >
             <div className={cn(
-              'glass-premium rounded-xl p-3 h-[85px]',
+              'glass-premium rounded-xl p-4 h-[100px]',
               'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
               'transition-all duration-200',
               'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
             )}>
-              <div className="flex flex-col h-full">
-                {/* Icon row */}
-                <div className="flex items-center justify-between">
-                  <div className={cn(
-                    'p-1.5 rounded-lg transition-colors',
-                    isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                {/* Icon */}
+                <div className={cn(
+                  'p-2 rounded-lg mb-2 transition-colors',
+                  isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+                )}>
+                  <Icon className={cn(
+                    'h-5 w-5',
+                    isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                  )} />
+                </div>
+                {/* Value and label - centered */}
+                {stat.formatAsCurrency ? (
+                  <span className={cn(
+                    'text-xl font-bold',
+                    isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
                   )}>
-                    <Icon className={cn(
-                      'h-3.5 w-3.5',
+                    {business.formattedQuoteValue}
+                  </span>
+                ) : (
+                  <AnimatedCounter
+                    value={stat.value}
+                    prefix={stat.prefix}
+                    className={cn(
+                      'text-xl font-bold',
                       isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                    )} />
-                  </div>
-                  <ChevronRight className="h-3 w-3 text-white/20 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-                </div>
-                {/* Value and label - left aligned */}
-                <div className="flex-1 flex flex-col justify-end">
-                  {stat.formatAsCurrency ? (
-                    <span className="text-lg sm:text-xl font-bold text-elec-yellow truncate">
-                      {business.formattedQuoteValue}
-                    </span>
-                  ) : (
-                    <AnimatedCounter
-                      value={stat.value}
-                      prefix={stat.prefix}
-                      className={cn(
-                        'text-lg sm:text-xl font-bold',
-                        isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                      )}
-                    />
-                  )}
-                  <p className="text-[11px] text-white/70 truncate">
-                    {stat.label}
-                  </p>
-                </div>
+                    )}
+                  />
+                )}
+                <p className="text-[11px] text-white/60 mt-0.5">
+                  {stat.label}
+                </p>
               </div>
             </div>
           </motion.button>

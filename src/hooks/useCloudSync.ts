@@ -2,9 +2,9 @@
 // Maintains the old API while using the new best-in-class sync system
 // This allows gradual migration without breaking existing components
 
-import { useReportSync, SyncStatus } from './useReportSync';
+import { useReportSync, SyncStatus, SyncNowImmediateResult } from './useReportSync';
 
-export type { SyncStatus };
+export type { SyncStatus, SyncNowImmediateResult };
 
 interface CloudSyncOptions {
   reportId: string | null;
@@ -47,6 +47,7 @@ export const useCloudSync = ({
     recoverDraft,
     discardDraft,
     syncNow,
+    syncNowImmediate,
     onTabChange,
   } = useReportSync({
     reportId,
@@ -107,6 +108,7 @@ export const useCloudSync = ({
     discardDraft,
     // Immediate sync functions
     syncNow,
+    syncNowImmediate,  // For PDF generation - returns the saved data
     onTabChange,
   };
 };

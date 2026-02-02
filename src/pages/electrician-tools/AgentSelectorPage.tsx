@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { SavedResultsCard } from "@/components/electrician-tools/saved-results";
 
 // Animation variants - Smooth, fast entrance
 const containerVariants = {
@@ -173,6 +174,11 @@ const AgentSelectorPage = () => {
             <p className="text-sm text-white/50">Choose your specialist agent</p>
           </div>
         </motion.div>
+        {/* Saved Results Card */}
+        <motion.div variants={itemVariants}>
+          <SavedResultsCard />
+        </motion.div>
+
         {/* Build Partners Section */}
         <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
@@ -183,7 +189,7 @@ const AgentSelectorPage = () => {
             </Badge>
           </div>
 
-          <motion.div variants={containerVariants} className="space-y-2">
+          <motion.div variants={containerVariants} className="space-y-3">
             {availableAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
@@ -194,41 +200,62 @@ const AgentSelectorPage = () => {
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
                   className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
                 >
-                  <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
-                    <div className="p-4">
-                      <div className="flex items-center gap-3">
-                        {/* Icon with gradient background */}
-                        <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient}`}>
-                          <IconComponent className="h-6 w-6 text-white" />
+                  <div className={`relative overflow-hidden rounded-2xl group active:scale-[0.99] transition-all duration-200`}>
+                    {/* Gradient background layer */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-60`} />
+
+                    {/* Glass effect overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent" />
+
+                    {/* Border */}
+                    <div className="absolute inset-0 rounded-2xl border border-white/[0.12]" />
+
+                    {/* Content */}
+                    <div className="relative p-4">
+                      <div className="flex items-center gap-4">
+                        {/* Icon with enhanced styling */}
+                        <div className="relative flex-shrink-0">
+                          {/* Glow effect */}
+                          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${agent.gradient} blur-lg opacity-40`} />
+                          <div className={`relative w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg`}>
+                            <IconComponent className="h-7 w-7 text-white drop-shadow-sm" />
+                          </div>
                         </div>
 
                         <div className="flex-1 min-w-0">
                           {/* Agent Name */}
-                          <h3 className="text-[15px] font-bold text-white">
+                          <h3 className="text-base font-bold text-white tracking-tight">
                             {agent.name}
                           </h3>
                           {/* Description */}
-                          <p className="text-[13px] text-white/70 line-clamp-1">
+                          <p className="text-[13px] text-white/60 line-clamp-1 mt-0.5">
                             {agent.description}
                           </p>
                         </div>
 
-                        {/* Arrow indicator */}
-                        <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                          <ArrowRight className="h-4 w-4 text-white/70" />
+                        {/* Arrow indicator with gradient border */}
+                        <div className="flex-shrink-0 relative">
+                          <div className={`w-10 h-10 rounded-full bg-white/[0.06] backdrop-blur-sm flex items-center justify-center border border-white/[0.1] group-active:bg-white/[0.12] transition-all`}>
+                            <ArrowRight className="h-5 w-5 text-white/80" />
+                          </div>
                         </div>
                       </div>
 
-                      {/* Expertise Tags - horizontal scroll */}
-                      <div className="flex gap-1.5 mt-3 overflow-x-auto scrollbar-hide -mx-1 px-1">
-                        {agent.expertise.map((item, idx) => (
+                      {/* Expertise Tags - enhanced styling */}
+                      <div className="flex gap-2 mt-4 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-0.5">
+                        {agent.expertise.slice(0, 3).map((item, idx) => (
                           <span
                             key={idx}
-                            className="flex-shrink-0 px-2.5 py-1 text-[11px] bg-white/[0.05] text-white/80 rounded-lg border border-white/[0.08]"
+                            className="flex-shrink-0 px-3 py-1.5 text-[11px] font-medium bg-white/[0.08] text-white/90 rounded-full border border-white/[0.1] backdrop-blur-sm"
                           >
                             {item}
                           </span>
                         ))}
+                        {agent.expertise.length > 3 && (
+                          <span className="flex-shrink-0 px-3 py-1.5 text-[11px] font-medium bg-white/[0.05] text-white/50 rounded-full border border-white/[0.08]">
+                            +{agent.expertise.length - 3}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -248,33 +275,39 @@ const AgentSelectorPage = () => {
             </Badge>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             {comingSoonAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
                 <div
                   key={agent.id}
-                  className="relative overflow-hidden bg-white/[0.02] border border-white/[0.05] rounded-2xl opacity-60"
+                  className="relative overflow-hidden rounded-2xl"
                 >
-                  <div className="p-4">
-                    <div className="flex items-center gap-3">
-                      {/* Icon with muted gradient */}
-                      <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-50`}>
-                        <IconComponent className="h-6 w-6 text-white" />
+                  {/* Muted gradient background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-20`} />
+
+                  {/* Border */}
+                  <div className="absolute inset-0 rounded-2xl border border-white/[0.06]" />
+
+                  <div className="relative p-4">
+                    <div className="flex items-center gap-4">
+                      {/* Icon - muted */}
+                      <div className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-30`}>
+                        <IconComponent className="h-7 w-7 text-white/70" />
                       </div>
 
                       <div className="flex-1 min-w-0">
                         {/* Agent Name with Badge */}
                         <div className="flex items-center gap-2">
-                          <h3 className="text-[15px] font-bold text-white/60">
+                          <h3 className="text-base font-bold text-white/50 tracking-tight">
                             {agent.name}
                           </h3>
-                          <Badge variant="secondary" className="bg-white/10 text-white/40 border-white/10 text-[10px]">
-                            Soon
+                          <Badge variant="secondary" className="bg-white/[0.08] text-white/40 border-white/[0.08] text-[10px] font-medium">
+                            Coming Soon
                           </Badge>
                         </div>
                         {/* Description */}
-                        <p className="text-[13px] text-white/40 line-clamp-1">
+                        <p className="text-[13px] text-white/30 line-clamp-1 mt-0.5">
                           {agent.description}
                         </p>
                       </div>

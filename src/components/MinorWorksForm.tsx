@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+// AnimatePresence removed - using SmartTabs animations
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { draftStorage } from '@/utils/draftStorage';
@@ -27,15 +29,17 @@ import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusInd
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
-import MWStepIndicator from '@/components/minor-works/MWStepIndicator';
-import MWTabNavigation from '@/components/minor-works/MWTabNavigation';
 import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
+import MWTabNavigation from '@/components/minor-works/MWTabNavigation';
+import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
   const location = useLocation();
+  const isMobile = useIsMobile();
   const [userId, setUserId] = useState<string | null>(null);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [authChecked, setAuthChecked] = useState(false);
@@ -208,6 +212,19 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   const { defaults, hasDefaults, applyDefaults, saveDefaults } = useSmartDefaults(userId || undefined);
   const validation = useFormValidation(formData);
 
+  // Smart form auto-fill from Business Settings
+  const {
+    loading: smartFormLoading,
+    hasAppliedDefaults: hasAppliedSmartDefaults,
+    hasSavedElectricianDetails,
+    hasSavedTestEquipment,
+    loadElectricianDetails,
+    loadTestEquipment,
+    loadContractorDetails,
+    getAvailableInstruments,
+    applySmartDefaults
+  } = useMinorWorksSmartForm();
+
   // Callback when auto-sync creates a new report - keeps component state in sync
   const handleReportCreated = React.useCallback((newReportId: string) => {
     console.log('[MinorWorks] Auto-sync created report:', newReportId);
@@ -252,6 +269,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       }));
     }
   }, [customerDataFromNav, initialReportId]);
+
+  // Auto-fill from Business Settings for new certificates
+  useEffect(() => {
+    // Only apply smart defaults if:
+    // 1. Not loading an existing report
+    // 2. Smart form has finished loading
+    // 3. Haven't already applied defaults
+    if (!initialReportId && !smartFormLoading && !hasAppliedSmartDefaults) {
+      applySmartDefaults(formData, handleUpdate);
+    }
+  }, [initialReportId, smartFormLoading, hasAppliedSmartDefaults]);
 
   // Fetch user ID on mount
   useEffect(() => {
@@ -838,70 +866,71 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     return 'synced';
   };
 
-  // Render current tab content
-  const renderTabContent = () => {
-    const tabAnimation = {
-      initial: { opacity: 0, y: 10 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -10 },
-      transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
-    };
+  // Build SmartTabs configuration
+  const smartTabs: SmartTab[] = [
+    {
+      value: 'details',
+      label: 'Client & Details',
+      shortLabel: 'Details',
+      content: <MWDetailsTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+    },
+    {
+      value: 'circuit',
+      label: 'Circuit Details',
+      shortLabel: 'Circuit',
+      content: <MWCircuitTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+    },
+    {
+      value: 'testing',
+      label: 'Test Results',
+      shortLabel: 'Tests',
+      content: <MWTestingTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+    },
+    {
+      value: 'declaration',
+      label: 'Declaration',
+      shortLabel: 'Declare',
+      content: (
+        <>
+          <MWDeclarationTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
 
-    switch (currentTab) {
-      case 'details':
-        return (
-          <motion.div key="details" {...tabAnimation}>
-            <MWDetailsTab formData={formData} onUpdate={handleUpdate} />
-          </motion.div>
-        );
-      case 'circuit':
-        return (
-          <motion.div key="circuit" {...tabAnimation}>
-            <MWCircuitTab formData={formData} onUpdate={handleUpdate} />
-          </motion.div>
-        );
-      case 'testing':
-        return (
-          <motion.div key="testing" {...tabAnimation}>
-            <MWTestingTab formData={formData} onUpdate={handleUpdate} />
-          </motion.div>
-        );
-      case 'declaration':
-        return (
-          <motion.div key="declaration" {...tabAnimation}>
-            <MWDeclarationTab formData={formData} onUpdate={handleUpdate} />
-
-            {/* PDF Generation in Declaration tab - Edge-to-edge on mobile */}
-            <div className="-mx-4 sm:mx-0 mt-6">
-              <div className="bg-gradient-to-b from-green-500/10 to-green-500/5 border-t border-b sm:border sm:rounded-xl border-green-500/20 p-4 sm:p-6">
-                <div className="px-0 sm:px-0">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 rounded-xl bg-green-500/20">
-                      <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold text-white">Generate Certificate</h3>
-                      <p className="text-xs text-white/50">Create your official Minor Works PDF</p>
-                    </div>
+          {/* PDF Generation in Declaration tab - Edge-to-edge on mobile */}
+          <div className="-mx-4 sm:mx-0 mt-6">
+            <div className="bg-gradient-to-b from-green-500/10 to-green-500/5 border-t border-b sm:border sm:rounded-xl border-green-500/20 p-4 sm:p-6">
+              <div className="px-0 sm:px-0">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2.5 rounded-xl bg-green-500/20">
+                    <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
-
-                  <MinorWorksPdfGenerator
-                    formData={formData}
-                    isFormValid={true}
-                    reportId={currentReportId || formData.certificateNumber}
-                    userId={userId || undefined}
-                    onSuccess={handlePdfSuccess}
-                  />
+                  <div>
+                    <h3 className="text-base font-semibold text-white">Generate Certificate</h3>
+                    <p className="text-xs text-white/50">Create your official Minor Works PDF</p>
+                  </div>
                 </div>
+
+                <MinorWorksPdfGenerator
+                  formData={formData}
+                  isFormValid={true}
+                  reportId={currentReportId || formData.certificateNumber}
+                  userId={userId || undefined}
+                  onSuccess={handlePdfSuccess}
+                />
               </div>
             </div>
-          </motion.div>
-        );
-      default:
-        return null;
-    }
+          </div>
+        </>
+      ),
+    },
+  ];
+
+  // Build completed tabs map for SmartTabs
+  const completedTabs: Record<string, boolean> = {
+    details: isTabComplete('details'),
+    circuit: isTabComplete('circuit'),
+    testing: isTabComplete('testing'),
+    declaration: isTabComplete('declaration'),
   };
 
   return (
@@ -938,46 +967,35 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           progressPercentage={getProgressPercentage()}
         />
 
-        {/* Main Content */}
-        <div>
-          <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto minor-works-container">
-            {/* Step Indicator */}
-            <div className="-mx-4 px-4 py-3 border-b border-white/5 sm:border-0 sm:mx-0 sm:px-0 sm:py-0">
-              <MWStepIndicator
-                currentTab={currentTab}
-                onTabChange={setTab}
-                isTabComplete={isTabComplete}
-              />
-            </div>
-
-            {/* Tab Content */}
-            <div className="mt-6 pb-6">
-              <AnimatePresence mode="wait">
-                {renderTabContent()}
-              </AnimatePresence>
-            </div>
-
-            {/* Navigation - Flows with content */}
-            <div className="mt-6 pb-8">
-              <MWTabNavigation
-                currentTab={currentTab}
-                currentTabIndex={currentTabIndex}
-                totalTabs={totalTabs}
-                canNavigateNext={canNavigateNext}
-                canNavigatePrevious={canNavigatePrevious}
-                navigateNext={navigateNext}
-                navigatePrevious={navigatePrevious}
-                getProgressPercentage={getProgressPercentage}
-                isCurrentTabComplete={isTabComplete(currentTab)}
-                currentTabHasRequiredFields={currentTabHasRequiredFields()}
-                onToggleComplete={() => {}}
-                onGenerateCertificate={() => {}}
-                canGenerateCertificate={canGenerateCertificate()}
-                showGenerate={currentTab === 'declaration'}
-              />
-            </div>
-          </div>
+        {/* Main Content - Edge-to-edge on mobile, contained on desktop */}
+        <div className={cn(
+          "minor-works-container pb-20 sm:pb-16",
+          isMobile ? "" : "px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto"
+        )}>
+          <SmartTabs
+            tabs={smartTabs}
+            value={currentTab}
+            onValueChange={(value) => {
+              setTab(value as any);
+              onTabChange?.(value);
+            }}
+            completedTabs={completedTabs}
+            showProgress={true}
+          />
         </div>
+
+        {/* Sticky Bottom Navigation */}
+        <MWTabNavigation
+          currentTab={currentTab}
+          currentTabIndex={currentTabIndex}
+          totalTabs={totalTabs}
+          canNavigateNext={canNavigateNext}
+          canNavigatePrevious={canNavigatePrevious}
+          navigateNext={navigateNext}
+          navigatePrevious={navigatePrevious}
+          getProgressPercentage={getProgressPercentage}
+          isCurrentTabComplete={isTabComplete(currentTab)}
+        />
 
         <StartNewEICRDialog
           isOpen={showStartNewDialog}

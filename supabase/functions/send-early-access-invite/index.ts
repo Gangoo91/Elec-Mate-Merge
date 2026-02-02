@@ -33,7 +33,7 @@ function generateLaunchEmailHTML(email: string, inviteToken: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="dark">
   <meta name="supported-color-schemes" content="dark">
-  <title>We've Launched! Elec-Mate is Live</title>
+  <title>What would you do with 5 extra hours a week?</title>
   <!--[if mso]>
   <style type="text/css">
     body, table, td { font-family: Arial, sans-serif !important; }
@@ -46,49 +46,117 @@ function generateLaunchEmailHTML(email: string, inviteToken: string): string {
       <td style="padding: 24px 12px;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; margin: 0 auto; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(251, 191, 36, 0.2);">
 
-          <!-- Header with Party Emoji -->
+          <!-- Header -->
           <tr>
-            <td style="padding: 40px 24px 24px; text-align: center;">
-              <div style="font-size: 56px; line-height: 1; margin-bottom: 16px;">🎉</div>
-              <div style="display: inline-block; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">
-                Now Live
-              </div>
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">
-                We've Launched!
+            <td style="padding: 40px 24px 20px; text-align: center;">
+              <div style="font-size: 48px; line-height: 1; margin-bottom: 16px;">⏱️</div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.3;">
+                How much time do you lose to paperwork each week?
               </h1>
-              <p style="margin: 12px 0 0; font-size: 16px; color: #e2e8f0; line-height: 1.5;">
-                Elec-Mate is officially live - and we saved you a spot
-              </p>
             </td>
           </tr>
 
-          <!-- Message -->
+          <!-- The Problem -->
           <tr>
             <td style="padding: 0 24px 24px;">
               <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7; text-align: center;">
-                You signed up for updates, so we wanted <strong style="color: #fbbf24;">YOU</strong> to be the first to know - Elec-Mate is now officially live!
+                Handwriting certs. Chasing quotes. Flicking through regs books. Calculating cables on scrap paper.
               </p>
-              <p style="margin: 16px 0 0; font-size: 15px; color: #94a3b8; line-height: 1.6; text-align: center;">
-                We've been working hard to build the ultimate platform for UK electricians. Everything you need - certs, quotes, calculators, learning - all in one place.
+              <p style="margin: 16px 0 0; font-size: 16px; color: #fbbf24; line-height: 1.6; text-align: center; font-weight: 600;">
+                That's hours every week you could be spending with the wife, kids, the doggo, or having beers with your pals.
               </p>
             </td>
           </tr>
 
-          <!-- Trial Card -->
+          <!-- Value Props - 3 big ones -->
           <tr>
             <td style="padding: 0 20px 24px;">
-              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 20px; padding: 28px 24px; text-align: center;">
-                <p style="margin: 0; font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
-                  Launch Special
+              <!-- Save Time -->
+              <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 12px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="width: 50px; vertical-align: top;">
+                      <div style="font-size: 32px; line-height: 1;">⚡</div>
+                    </td>
+                    <td>
+                      <p style="margin: 0; font-size: 16px; font-weight: 700; color: #22c55e;">Save Hours Every Week</p>
+                      <p style="margin: 6px 0 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                        Digital certs in minutes. AI writes your RAMS. Instant cable calcs. No more paperwork evenings.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Save Money -->
+              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 12px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="width: 50px; vertical-align: top;">
+                      <div style="font-size: 32px; line-height: 1;">💷</div>
+                    </td>
+                    <td>
+                      <p style="margin: 0; font-size: 16px; font-weight: 700; color: #fbbf24;">Keep More of What You Earn</p>
+                      <p style="margin: 6px 0 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                        One app replaces expensive cert software, quoting tools, and training subscriptions. Just £9.99/month for everything.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Give Back -->
+              <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 20px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="width: 50px; vertical-align: top;">
+                      <div style="font-size: 32px; line-height: 1;">🤝</div>
+                    </td>
+                    <td>
+                      <p style="margin: 0; font-size: 16px; font-weight: 700; color: #a78bfa;">Built to Support Our Industry</p>
+                      <p style="margin: 6px 0 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                        Free Study Centre for apprentices. Mental health resources. Built by sparks, for sparks. We're putting back into the trade.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Elec-AI Feature -->
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 16px; padding: 24px 20px; text-align: center;">
+                <p style="margin: 0; font-size: 32px; line-height: 1;">🧠</p>
+                <p style="margin: 12px 0 0; font-size: 18px; font-weight: 700; color: #10b981;">
+                  Meet Elec-AI
                 </p>
-                <p style="margin: 8px 0 4px; font-size: 42px; font-weight: 800; color: #fbbf24; line-height: 1;">
-                  7 Days Free
+                <p style="margin: 8px 0 0; font-size: 15px; color: #e2e8f0; line-height: 1.5;">
+                  It's like ChatGPT, but built specifically for our industry.
                 </p>
-                <p style="margin: 0 0 16px; font-size: 16px; color: #94a3b8;">
-                  No card required • Cancel anytime
+                <p style="margin: 12px 0 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  Trained over months with <strong style="color: #10b981;">400,000+ pieces of electrical data</strong> — BS7671, installation methods, cable sizing, fault finding, you name it.
                 </p>
-                <p style="margin: 0; font-size: 14px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 8px; display: inline-block;">
-                  Then just £9.99/month
+                <p style="margin: 12px 0 0; font-size: 15px; color: #fbbf24; font-weight: 600;">
+                  Ask it anything. Try it.
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- What's to lose? -->
+          <tr>
+            <td style="padding: 0 24px 20px;">
+              <div style="text-align: center;">
+                <p style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff; line-height: 1.4;">
+                  What's there to lose?
+                </p>
+                <p style="margin: 12px 0 0; font-size: 15px; color: #e2e8f0; line-height: 1.6;">
+                  Give it an hour. Explore. See if it clicks.
+                </p>
+                <p style="margin: 8px 0 0; font-size: 15px; color: #94a3b8; line-height: 1.6;">
+                  If it saves you even one evening of paperwork, it's paid for itself ten times over.
                 </p>
               </div>
             </td>
@@ -96,102 +164,105 @@ function generateLaunchEmailHTML(email: string, inviteToken: string): string {
 
           <!-- CTA Button -->
           <tr>
-            <td style="padding: 0 20px 32px;">
+            <td style="padding: 0 20px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td>
                     <a href="${signupUrl}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 14px; text-align: center; box-shadow: 0 8px 24px rgba(251, 191, 36, 0.35);">
-                      ⚡ Start My Free Trial
+                      Try It Free for 7 Days
                     </a>
                   </td>
                 </tr>
+                <tr>
+                  <td style="padding-top: 12px; text-align: center;">
+                    <p style="margin: 0; font-size: 13px; color: #64748b;">
+                      No card needed · Cancel anytime
+                    </p>
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
 
-          <!-- What's Included -->
+          <!-- Quick Features Grid -->
           <tr>
-            <td style="padding: 0 20px 28px;">
-              <p style="margin: 0 0 16px; font-size: 13px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
-                Everything you need
+            <td style="padding: 0 20px 24px;">
+              <p style="margin: 0 0 12px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
+                All included
               </p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">🔌</span>
-                    <span style="color: #ffffff; font-size: 14px;">EICR, EIC, Minor Works - all BS7671 compliant</span>
+                  <td style="width: 50%; padding: 6px 4px 6px 0;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">📋</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">EICR, EIC, Minor Works</p>
+                    </div>
+                  </td>
+                  <td style="width: 50%; padding: 6px 0 6px 4px;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">🤖</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">AI RAMS & Designs</p>
+                    </div>
                   </td>
                 </tr>
-                <tr><td style="height: 6px;"></td></tr>
                 <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">💰</span>
-                    <span style="color: #ffffff; font-size: 14px;">Professional quotes & invoices with online payments</span>
+                  <td style="width: 50%; padding: 6px 4px 6px 0;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">💰</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">Quotes & Invoices</p>
+                    </div>
+                  </td>
+                  <td style="width: 50%; padding: 6px 0 6px 4px;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">🧮</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">Smart Calculators</p>
+                    </div>
                   </td>
                 </tr>
-                <tr><td style="height: 6px;"></td></tr>
                 <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">🤖</span>
-                    <span style="color: #ffffff; font-size: 14px;">AI Tools - BS7671 assistant, RAMS, circuit designer</span>
+                  <td style="width: 50%; padding: 6px 4px 6px 0;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">📚</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">Study Centre & CPD</p>
+                    </div>
                   </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">🧮</span>
-                    <span style="color: #ffffff; font-size: 14px;">Cable sizing, volt drop, max demand calculators</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">📚</span>
-                    <span style="color: #ffffff; font-size: 14px;">Study Centre with CPD courses & mock exams</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #fbbf24; font-size: 16px; margin-right: 10px;">📱</span>
-                    <span style="color: #ffffff; font-size: 14px;">Mobile-first - works perfectly on site</span>
+                  <td style="width: 50%; padding: 6px 0 6px 4px;">
+                    <div style="background: rgba(30, 41, 59, 0.6); border-radius: 10px; padding: 10px 12px; text-align: center;">
+                      <span style="font-size: 18px;">🧠</span>
+                      <p style="margin: 4px 0 0; font-size: 12px; color: #cbd5e1;">Mental Health Hub</p>
+                    </div>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Social Proof -->
+          <!-- Help Shape the Industry -->
           <tr>
-            <td style="padding: 0 20px 28px;">
-              <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 12px; padding: 14px 20px; text-align: center;">
-                <p style="margin: 0; font-size: 14px; color: #22c55e; font-weight: 600;">
-                  ✓ Join hundreds of UK sparks already using Elec-Mate
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px; text-align: center;">
+                <p style="margin: 0; font-size: 24px; line-height: 1;">💬</p>
+                <p style="margin: 12px 0 0; font-size: 16px; font-weight: 700; color: #60a5fa;">
+                  Help us shape how our industry works
+                </p>
+                <p style="margin: 10px 0 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  We're building this with sparks, not just for them. Your feedback shapes what comes next. Let's make something brilliant together.
                 </p>
               </div>
             </td>
           </tr>
 
-          <!-- Help Section -->
-          <tr>
-            <td style="padding: 24px; background-color: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(148, 163, 184, 0.1); text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 14px; color: #cbd5e1;">
-                Questions? Just reply to this email
-              </p>
-              <a href="mailto:info@elec-mate.com" style="font-size: 15px; color: #fbbf24; text-decoration: none; font-weight: 600;">
-                info@elec-mate.com
-              </a>
-            </td>
-          </tr>
-
           <!-- Footer -->
           <tr>
-            <td style="padding: 20px 24px; text-align: center; background-color: #0f172a;">
+            <td style="padding: 20px 24px; text-align: center; background-color: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(148, 163, 184, 0.1);">
+              <p style="margin: 0 0 8px; font-size: 14px; color: #cbd5e1;">
+                Questions? Just hit reply.
+              </p>
               <p style="margin: 0; font-size: 13px; color: #64748b;">
                 © ${new Date().getFullYear()} Elec-Mate · Made in the UK 🇬🇧
               </p>
               <p style="margin: 8px 0 0; font-size: 11px; color: #475569;">
-                You're receiving this because you signed up for updates at elec-mate.com
+                You signed up for updates at elec-mate.com
               </p>
             </td>
           </tr>
@@ -411,7 +482,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { action, emails, inviteId, token, testEmail } = await req.json();
+    const { action, emails, inviteId, token, testEmail, segment } = await req.json();
 
     // Actions that don't require any auth (for unauthenticated users)
     // send_test_launch_email included for quick testing from CLI
@@ -1062,7 +1133,7 @@ Deno.serve(async (req) => {
           from: "Elec-Mate <hello@elec-mate.com>",
           replyTo: "info@elec-mate.com",
           to: [testEmail],
-          subject: "🎉 [TEST] We've Launched! Elec-Mate is Live",
+          subject: "⚡ [TEST] What would you do with 5 extra hours a week?",
           html: emailHtml,
         });
 
@@ -1133,7 +1204,7 @@ Deno.serve(async (req) => {
               from: "Elec-Mate <hello@elec-mate.com>",
               replyTo: "info@elec-mate.com",
               to: [invite.email],
-              subject: "🎉 We've Launched! Elec-Mate is Live",
+              subject: "⚡ What would you do with 5 extra hours a week?",
               html: emailHtml,
             });
 
@@ -1271,12 +1342,13 @@ Deno.serve(async (req) => {
           console.error("Error fetching auth users:", authUsersError);
         }
 
-        // Create a Set of lowercase emails for fast lookup
+        // Create a Set of lowercase, trimmed emails for fast lookup
         const signedUpEmails = new Set(
-          authUsersData?.users?.map(u => u.email?.toLowerCase()).filter(Boolean) || []
+          authUsersData?.users?.map(u => u.email?.toLowerCase().trim()).filter(Boolean) || []
         );
 
         console.log(`Found ${signedUpEmails.size} registered users in auth.users`);
+        console.log(`Signed up emails: ${Array.from(signedUpEmails).join(', ')}`);
 
         // Get profile data for signed up users (for display purposes)
         const signedUpUserIds = allInvites?.filter(i => i.user_id).map(i => i.user_id) || [];
@@ -1304,7 +1376,7 @@ Deno.serve(async (req) => {
         const bounced: typeof allInvites = [];
 
         for (const invite of allInvites || []) {
-          const emailLower = invite.email.toLowerCase();
+          const emailLower = invite.email.toLowerCase().trim();
 
           // Bounced emails go to their own category
           if (invite.bounced_at) {
@@ -1315,6 +1387,10 @@ Deno.serve(async (req) => {
           // Check if this email exists in auth.users (actually signed up)
           // This is the definitive check - catches direct signups too
           const hasSignedUp = signedUpEmails.has(emailLower);
+
+          if (hasSignedUp) {
+            console.log(`✓ ${emailLower} has signed up - moving to signed_up segment`);
+          }
 
           if (hasSignedUp) {
             signedUp.push(invite);
@@ -1414,7 +1490,7 @@ Deno.serve(async (req) => {
       case "send_to_segment": {
         // Send targeted email to a specific segment with rate limiting
         // Processes in batches to avoid Resend rate limits and function timeouts
-        const { segment, emailType } = await req.json().catch(() => ({}));
+        // Note: segment is already parsed from req.json() at the top of the function
 
         if (!segment || !["hot", "warm", "cold"].includes(segment)) {
           throw new Error("Valid segment (hot, warm, cold) is required");
@@ -1423,6 +1499,9 @@ Deno.serve(async (req) => {
         // Batch configuration - same as send_launch_campaign
         const BATCH_SIZE = 10; // Process 10 at a time per function call
         const DELAY_BETWEEN_EMAILS_MS = 6000; // 6 seconds between emails to stay within rate limits
+
+        // 24-hour cooldown - can re-send to leads after 1 day
+        const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
         // Get ALL user emails from auth.users to definitively identify who has signed up
         // This catches users who signed up directly (not through invite link)
@@ -1441,21 +1520,30 @@ Deno.serve(async (req) => {
 
         console.log(`Found ${signedUpEmails.size} registered users - will exclude from segment sends`);
 
-        // Get leads for the specified segment - exclude bounced AND already sent launch email
+        // Get leads for the specified segment - exclude bounced
+        // Allow re-sending if launch_email_sent_at is null OR older than 24 hours
         const { data: allInvites, error: invitesError } = await supabaseAdmin
           .from("early_access_invites")
           .select("*")
-          .is("bounced_at", null)
-          .is("launch_email_sent_at", null); // Only get those who haven't received launch email
+          .is("bounced_at", null);
 
         if (invitesError) throw invitesError;
 
         // Filter by segment AND exclude anyone who has actually signed up (in auth.users)
+        // Also exclude anyone who received an email in the last 24 hours
         const segmentLeads = allInvites?.filter(invite => {
-          const emailLower = invite.email.toLowerCase();
+          const emailLower = invite.email.toLowerCase().trim();
 
           // Skip if this email exists in auth.users (they've signed up)
-          if (signedUpEmails.has(emailLower)) return false;
+          if (signedUpEmails.has(emailLower)) {
+            console.log(`Excluding ${emailLower} - already signed up`);
+            return false;
+          }
+
+          // Skip if email was sent in the last 24 hours
+          if (invite.launch_email_sent_at && invite.launch_email_sent_at > oneDayAgo) {
+            return false;
+          }
 
           const hasClicked = invite.clicked_at || invite.launch_email_clicked_at;
           const hasOpened = invite.opened_at || invite.launch_email_opened_at;
@@ -1498,7 +1586,7 @@ Deno.serve(async (req) => {
               from: "Elec-Mate <hello@elec-mate.com>",
               replyTo: "info@elec-mate.com",
               to: [invite.email],
-              subject: "🎉 We've Launched! Elec-Mate is Live",
+              subject: "⚡ What would you do with 5 extra hours a week?",
               html: emailHtml,
             });
 

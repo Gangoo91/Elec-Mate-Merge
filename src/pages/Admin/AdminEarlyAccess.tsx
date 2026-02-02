@@ -345,6 +345,14 @@ export default function AdminEarlyAccess() {
     return configs[segment];
   };
 
+  // Check if email was sent within the last 24 hours
+  const wasSentRecently = (sentAt: string | null | undefined): boolean => {
+    if (!sentAt) return false;
+    const sentDate = new Date(sentAt);
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    return sentDate > oneDayAgo;
+  };
+
   const SegmentCard = ({
     segment,
     leads,
@@ -358,6 +366,11 @@ export default function AdminEarlyAccess() {
   }) => {
     const config = getSegmentConfig(segment);
 
+    // Count how many can be emailed: not signed up AND not sent in last 24 hours
+    const canEmailCount = leads.filter(l => !l.user && !wasSentRecently(l.launch_email_sent_at)).length;
+    const signedUpCount = leads.filter(l => l.user).length;
+    const recentlySentCount = leads.filter(l => !l.user && wasSentRecently(l.launch_email_sent_at)).length;
+
     return (
       <Card className={`${config.bgClass} ${config.borderClass}`}>
         <Collapsible open={isOpen} onOpenChange={onOpenChange}>
@@ -367,9 +380,19 @@ export default function AdminEarlyAccess() {
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{config.emoji}</span>
                   <div>
-                    <CardTitle className="text-sm font-bold tracking-wide flex items-center gap-2">
+                    <CardTitle className="text-sm font-bold tracking-wide flex items-center gap-2 flex-wrap">
                       {config.title}
                       <Badge className={config.badgeClass}>{leads.length}</Badge>
+                      {signedUpCount > 0 && (
+                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 bg-purple-500/10 text-purple-400 border-purple-500/30">
+                          {signedUpCount} signed up
+                        </Badge>
+                      )}
+                      {recentlySentCount > 0 && (
+                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 bg-green-500/10 text-green-400 border-green-500/30">
+                          {recentlySentCount} sent today
+                        </Badge>
+                      )}
                     </CardTitle>
                     <p className="text-xs text-muted-foreground mt-0.5">{config.description}</p>
                   </div>
@@ -384,10 +407,13 @@ export default function AdminEarlyAccess() {
                         e.stopPropagation();
                         setConfirmSendSegment(segment as "hot" | "warm" | "cold");
                       }}
-                      disabled={leads.length === 0}
+                      disabled={canEmailCount === 0}
                     >
                       <Send className="h-3.5 w-3.5" />
                       <span className="hidden sm:inline">Email</span>
+                      {canEmailCount > 0 && (
+                        <span className="text-xs">({canEmailCount})</span>
+                      )}
                     </Button>
                   )}
                   {isOpen ? (
@@ -405,24 +431,55 @@ export default function AdminEarlyAccess() {
                 <p className="text-sm text-muted-foreground text-center py-4">No leads in this segment</p>
               ) : (
                 <div className="space-y-1.5">
-                  {leads.map((lead) => (
-                    <div
-                      key={lead.id}
-                      className="flex items-center justify-between p-3 rounded-lg bg-background/50 hover:bg-background/80 cursor-pointer touch-manipulation transition-colors"
-                      onClick={() => setSelectedLead(lead)}
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium truncate">{lead.email}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {lead.user?.full_name ? (
-                            <span className="text-green-400">{lead.user.full_name} · </span>
-                          ) : null}
-                          {getActivityDescription(lead.last_activity)}
-                        </p>
+                  {leads.map((lead) => {
+                    const recentlySent = wasSentRecently(lead.launch_email_sent_at);
+                    const hasSignedUp = lead.user !== null && lead.user !== undefined;
+                    return (
+                      <div
+                        key={lead.id}
+                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer touch-manipulation transition-colors ${
+                          hasSignedUp
+                            ? "bg-purple-500/10 hover:bg-purple-500/15 border border-purple-500/30"
+                            : recentlySent
+                            ? "bg-green-500/5 hover:bg-green-500/10 border border-green-500/20"
+                            : "bg-background/50 hover:bg-background/80"
+                        }`}
+                        onClick={() => setSelectedLead(lead)}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-medium truncate">{lead.email}</p>
+                            {hasSignedUp && (
+                              <Badge className="text-[10px] px-1.5 py-0 h-4 bg-purple-500/20 text-purple-400 border-purple-500/30">
+                                SIGNED UP
+                              </Badge>
+                            )}
+                            {!hasSignedUp && recentlySent && (
+                              <MailCheck className="h-3.5 w-3.5 text-green-400 shrink-0" />
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            {hasSignedUp ? (
+                              <span className="text-purple-400">
+                                {lead.user?.full_name} - already a user (won't be emailed)
+                              </span>
+                            ) : recentlySent ? (
+                              <span className="text-green-400">
+                                Sent {formatDistanceToNow(new Date(lead.launch_email_sent_at!), { addSuffix: true })} (wait 24h)
+                              </span>
+                            ) : lead.launch_email_sent_at ? (
+                              <span className="text-amber-400">
+                                Last sent {formatDistanceToNow(new Date(lead.launch_email_sent_at), { addSuffix: true })} - can resend
+                              </span>
+                            ) : (
+                              getActivityDescription(lead.last_activity)
+                            )}
+                          </p>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                       </div>
-                      <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </CardContent>
@@ -888,8 +945,33 @@ export default function AdminEarlyAccess() {
                 </div>
               ) : (
                 <>
-                  This will send the launch campaign email to all {confirmSendSegment} leads who haven't received it yet.
-                  Emails are sent in batches of 10 to avoid rate limits.
+                  {confirmSendSegment && segmentedData?.segments[confirmSendSegment] && (() => {
+                    const segmentLeads = segmentedData.segments[confirmSendSegment];
+                    const canEmail = segmentLeads.filter(l => !l.user && !wasSentRecently(l.launch_email_sent_at)).length;
+                    const alreadySignedUp = segmentLeads.filter(l => l.user).length;
+                    const recentlySent = segmentLeads.filter(l => !l.user && wasSentRecently(l.launch_email_sent_at)).length;
+                    return (
+                      <span>
+                        {canEmail > 0 ? (
+                          <>
+                            Will send to <strong>{canEmail}</strong> {confirmSendSegment} lead{canEmail !== 1 ? 's' : ''}.
+                            {alreadySignedUp > 0 && (
+                              <span className="text-purple-400"> ({alreadySignedUp} already signed up - skipped)</span>
+                            )}
+                            {recentlySent > 0 && (
+                              <span className="text-green-400"> ({recentlySent} sent in last 24h - skipped)</span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-muted-foreground">
+                            No one to email.
+                            {alreadySignedUp > 0 && <span className="text-purple-400"> {alreadySignedUp} already signed up.</span>}
+                            {recentlySent > 0 && <span className="text-green-400"> {recentlySent} emailed in last 24h.</span>}
+                          </span>
+                        )}
+                      </span>
+                    );
+                  })()}
                 </>
               )}
             </AlertDialogDescription>

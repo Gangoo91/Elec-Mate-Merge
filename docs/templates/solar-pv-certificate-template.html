@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCS Solar PV Installation Certificate - BS EN IEC 62446-1:2016+A1:2018</title>
+    <style>
+        /* Dynamic accent colour - Solar Amber */
+        :root {
+            --accent-color: {{ company_accent_color | default: "#f59e0b" }};
+            --accent-light: {{ company_accent_color | default: "#f59e0b" }}33;
+        }
+
+        @page {
+            size: A4;
+            margin: 3mm 3mm 4mm 3mm;
+        }
+
+        @page landscape {
+            size: A4 landscape;
+            margin: 3mm 3mm 4mm 3mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8.5px;
+            line-height: 1.4;
+            color: #1a1a1a;
+            background: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .doc-header {
+            background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+            color: #fff;
+            padding: 10px 12px;
+            margin-bottom: 2px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), #fbbf24, var(--accent-color));
+        }
+
+        .doc-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-title-section { flex: 1; }
+
+        .doc-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .doc-subtitle {
+            font-size: 7.5px;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+        }
+
+        .doc-meta { text-align: right; }
+
+        .cert-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+
+        .page-number {
+            font-size: 8px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .company-logo {
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+
+        .company-logo img {
+            max-height: 45px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .company-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 12px;
+        }
+
+        .company-brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-brand-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        .company-brand-tagline {
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .company-brand-reg {
+            font-size: 7px;
+            color: var(--accent-color);
+            margin-top: 1px;
+        }
+
+        /* MCS Certification Banner */
+        .mcs-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 2px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .mcs-banner .mcs-logo {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .mcs-banner span {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #92400e;
+            padding: 2px 6px;
+            background: #fff;
+            border: 1px solid #fcd34d;
+            border-radius: 2px;
+        }
+
+        .mcs-banner .mcs-cert {
+            color: #92400e;
+            border-color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .section { margin-bottom: 4px; }
+
+        .section-title {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 8px;
+            margin-bottom: 3px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .section-subtitle {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 8px;
+            font-weight: 600;
+            padding: 3px 10px;
+            margin-bottom: 2px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .form-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2px;
+        }
+
+        .form-row { display: table-row; }
+
+        .form-label {
+            display: table-cell;
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #475569;
+            padding: 4px 6px;
+            width: 120px;
+            vertical-align: middle;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-value {
+            display: table-cell;
+            font-size: 8.5px;
+            color: #1e293b;
+            padding: 4px 6px;
+            vertical-align: middle;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .inline-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px 6px;
+            background: #fafbfc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .inline-group {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .inline-label {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        .inline-value {
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            min-width: 50px;
+            min-height: 18px;
+            line-height: 1.3;
+        }
+
+        .inline-value.wide {
+            min-width: 100px;
+            flex: 1;
+        }
+
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .checkbox-box {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .checkbox-box.checked {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        .two-col { display: flex; gap: 4px; }
+        .two-col > .col { flex: 1; }
+
+        .three-col { display: flex; gap: 4px; }
+        .three-col > .col { flex: 1; }
+
+        /* Data Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+            margin-bottom: 3px;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 7.5px;
+            padding: 4px 6px;
+            text-align: left;
+            border: 1px solid #0f172a;
+        }
+
+        .data-table td {
+            padding: 4px 6px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+            background: #fff;
+        }
+
+        .data-table tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+        }
+
+        .test-table th {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 7.5px;
+            padding: 5px 6px;
+            text-align: center;
+            border: 1px solid #0f172a;
+        }
+
+        .test-table th:first-child {
+            text-align: left;
+        }
+
+        .test-table td {
+            padding: 5px 6px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .test-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: #f8fafc;
+        }
+
+        .test-table .result-pass {
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .test-table .result-fail {
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .test-table .result-na {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        /* Equipment Summary Grid */
+        .equipment-grid {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .equipment-box {
+            flex: 1;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 3px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .equipment-box .count {
+            font-size: 18px;
+            font-weight: 700;
+            color: #92400e;
+            line-height: 1;
+        }
+
+        .equipment-box .label {
+            font-size: 7px;
+            color: #92400e;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .equipment-box .unit {
+            font-size: 10px;
+            font-weight: 400;
+            color: #b45309;
+        }
+
+        /* Defect Cards */
+        .defect-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            padding: 6px;
+            margin-bottom: 4px;
+        }
+
+        .defect-card.critical {
+            border-left: 3px solid #dc2626;
+        }
+
+        .defect-card.non-critical {
+            border-left: 3px solid #f59e0b;
+        }
+
+        .defect-card.recommendation {
+            border-left: 3px solid #3b82f6;
+        }
+
+        .defect-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .defect-number {
+            background: #0f172a;
+            color: #fff;
+            font-size: 7px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .defect-severity {
+            font-size: 7px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .defect-severity.critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .defect-severity.non-critical {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .defect-severity.recommendation {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .defect-description {
+            font-size: 8px;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+
+        .defect-status {
+            font-size: 7px;
+            color: #64748b;
+        }
+
+        .defect-status .rectified {
+            color: #166534;
+            font-weight: 600;
+        }
+
+        /* No Defects Box */
+        .no-defects-box {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            border-left: 3px solid #22c55e;
+            border-radius: 2px;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .no-defects-box .icon {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .no-defects-box .text {
+            font-size: 9px;
+            font-weight: 600;
+            color: #166534;
+        }
+
+        /* Handover Checklist */
+        .handover-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+
+        .handover-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 6px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            font-size: 7.5px;
+        }
+
+        .handover-item .checkbox-box.checked {
+            background: #22c55e;
+        }
+
+        /* Signature Grid */
+        .signature-grid {
+            display: flex;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .signature-box-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 7.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+
+        .sig-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+            gap: 4px;
+        }
+
+        .sig-field:last-child { margin-bottom: 0; }
+
+        .sig-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .sig-field-value {
+            flex: 1;
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1px;
+            min-height: 18px;
+        }
+
+        .sig-field-value.signature {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sig-field-value img { max-height: 30px; }
+
+        .declaration-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 2px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+        }
+
+        .declaration-text {
+            font-size: 7.5px;
+            color: #166534;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .declaration-text strong {
+            color: #14532d;
+        }
+
+        /* Overall Assessment */
+        .assessment-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border: 2px solid #1e293b;
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+
+        .assessment-label { font-size: 9px; font-weight: 600; color: #334155; }
+        .assessment-options { display: flex; gap: 12px; }
+
+        .assessment-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 3px;
+            background: #fff;
+        }
+
+        .assessment-option.pass-selected {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .assessment-option.pass-selected .option-label {
+            color: #fff;
+        }
+
+        .assessment-option.fail-selected {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .assessment-option.fail-selected .option-label {
+            color: #fff;
+        }
+
+        .assessment-option .option-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .assessment-option .pass-label { color: #16a34a; }
+        .assessment-option .fail-label { color: #dc2626; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 7px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge.pass {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .status-badge.fail {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .status-badge.na {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #cbd5e1;
+        }
+
+        .status-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .footer {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 7px;
+            color: #64748b;
+        }
+
+        .footer-left { line-height: 1.5; }
+        .footer-right { text-align: right; }
+
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 600; }
+        .mt-2 { margin-top: 4px; }
+        .mb-2 { margin-bottom: 4px; }
+
+        /* Page 2 Landscape styles */
+        .landscape-page {
+            page: landscape;
+        }
+
+        /* Photos Grid */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .photo-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            font-size: 7px;
+            color: #64748b;
+            padding: 4px 6px;
+            background: #f8fafc;
+            text-align: center;
+        }
+
+        /* Array Card */
+        .array-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .array-header {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 4px 8px;
+            font-weight: 600;
+            font-size: 8px;
+            color: #92400e;
+            border-bottom: 1px solid #fcd34d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .array-body {
+            padding: 6px 8px;
+        }
+
+        /* Inverter Card */
+        .inverter-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .inverter-header {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 4px 8px;
+            font-weight: 600;
+            font-size: 8px;
+            color: #1e40af;
+            border-bottom: 1px solid #93c5fd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .inverter-body {
+            padding: 6px 8px;
+        }
+
+        /* Battery Card */
+        .battery-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .battery-header {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            padding: 4px 8px;
+            font-weight: 600;
+            font-size: 8px;
+            color: #166534;
+            border-bottom: 1px solid #86efac;
+        }
+
+        .battery-body {
+            padding: 6px 8px;
+        }
+
+        /* Grid Connection Box */
+        .grid-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .grid-header {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 4px 8px;
+            font-weight: 600;
+            font-size: 8px;
+            color: #3730a3;
+            border-bottom: 1px solid #a5b4fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-body {
+            padding: 6px 8px;
+        }
+
+        /* G98/G99 Badge */
+        .g-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .g-badge.g98 {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .g-badge.g99 {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        /* MCS Logo Placeholder */
+        .mcs-logo-box {
+            width: 50px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #fbbf24 100%);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: MAIN CERTIFICATE -->
+<div class="doc-header">
+    <div class="doc-header-content">
+        <!-- Company Branding Section -->
+        <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+                <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+                <div class="company-brand-name">{{ company_name }}</div>
+                {% if mcs_details.installer_number %}
+                <div class="company-brand-reg">MCS No: {{ mcs_details.installer_number }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Certificate Title Section -->
+        <div class="doc-title-section">
+            <div class="doc-title">MCS SOLAR PV {{ certificate_type_display | upcase }}</div>
+            <div class="doc-subtitle">In accordance with BS EN IEC 62446-1:2016+A1:2018, BS 7671:2018+A3:2024 & MIS 3002:2025 V5.0</div>
+        </div>
+        <!-- Certificate Number Section -->
+        <div class="doc-meta">
+            <div class="cert-number">{{ certificate_number }}</div>
+            <div class="page-number">Page 1{% if has_photos %} of 3{% else %} of 2{% endif %}</div>
+        </div>
+    </div>
+</div>
+
+<!-- MCS CERTIFICATION BANNER -->
+<div class="mcs-banner">
+    <div class="mcs-logo-box">MCS</div>
+    <span class="mcs-cert">MCS Installation: {{ mcs_details.installation_number }}</span>
+    <span>MCS Installer: {{ mcs_details.installer_number }}</span>
+    <span>Consumer Code: {{ mcs_details.consumer_code_display }}</span>
+    <span>Work Type: {{ work_type_display }}</span>
+</div>
+
+<!-- SECTION A: CERTIFICATE DETAILS -->
+<div class="section">
+    <div class="section-title">Section A: Certificate Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Certificate Type:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if certificate_type == 'installation' %}checked{% endif %}">{% if certificate_type == 'installation' %}&#10003;{% endif %}</span>
+                    <label>Installation</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if certificate_type == 'commissioning' %}checked{% endif %}">{% if certificate_type == 'commissioning' %}&#10003;{% endif %}</span>
+                    <label>Commissioning</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if certificate_type == 'design-only' %}checked{% endif %}">{% if certificate_type == 'design-only' %}&#10003;{% endif %}</span>
+                    <label>Design Only</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Installation Date:</span>
+            <span class="inline-value">{{ installation_date }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Commissioning Date:</span>
+            <span class="inline-value">{{ commissioning_date }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B: CLIENT DETAILS -->
+<div class="section">
+    <div class="section-title">Section B: Client Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Client Name</div>
+            <div class="form-value">{{ client_name }}</div>
+            <div class="form-label">Telephone</div>
+            <div class="form-value">{{ client_phone }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Client Address</div>
+            <div class="form-value" colspan="3">{{ client_address }}, {{ client_postcode }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Email Address</div>
+            <div class="form-value" colspan="3">{{ client_email }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C: INSTALLATION DETAILS -->
+<div class="section">
+    <div class="section-title">Section C: Installation Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Installation Address</div>
+            <div class="form-value" colspan="3">{{ installation_address }}, {{ installation_postcode }}</div>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Property Type:</span>
+            <span class="inline-value">{{ property_type_display }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Ownership:</span>
+            <span class="inline-value">{{ ownership_type }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">System Type:</span>
+            <span class="inline-value">{{ system_type_display }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION D: SYSTEM OVERVIEW -->
+<div class="section">
+    <div class="section-title">Section D: System Overview</div>
+    <div class="equipment-grid">
+        <div class="equipment-box">
+            <div class="count">{{ total_capacity }}<span class="unit"> kWp</span></div>
+            <div class="label">Total Capacity</div>
+        </div>
+        <div class="equipment-box">
+            <div class="count">{{ total_panels }}</div>
+            <div class="label">PV Modules</div>
+        </div>
+        <div class="equipment-box">
+            <div class="count">{{ estimated_annual_yield }}<span class="unit"> kWh</span></div>
+            <div class="label">Est. Annual Yield</div>
+        </div>
+        <div class="equipment-box">
+            <div class="count">{{ estimated_co2_savings }}<span class="unit"> kg</span></div>
+            <div class="label">CO₂ Savings/Year</div>
+        </div>
+        <div class="equipment-box">
+            <div class="count">{{ inverter_count }}</div>
+            <div class="label">Inverter(s)</div>
+        </div>
+    </div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Yield Calculation Method:</span>
+            <span class="inline-value">{{ yield_calculation_method_display }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION E: PV ARRAY SCHEDULE -->
+<div class="section">
+    <div class="section-title">Section E: PV Array Schedule</div>
+    {% for array in arrays %}
+    <div class="array-card">
+        <div class="array-header">
+            <span>Array {{ array.array_number }}: {{ array.panel_make }} {{ array.panel_model }}</span>
+            <span style="font-weight: 700;">{{ array.array_capacity }} kWp</span>
+        </div>
+        <div class="array-body">
+            <div class="three-col">
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Panel Wattage</div>
+                            <div class="form-value">{{ array.panel_wattage }}Wp</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Panel Count</div>
+                            <div class="form-value">{{ array.panel_count }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">MCS Certified</div>
+                            <div class="form-value">{% if array.mcs_certified %}<span class="status-badge pass">Yes</span>{% else %}<span class="status-badge warning">No</span>{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Orientation</div>
+                            <div class="form-value">{{ array.orientation }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Tilt Angle</div>
+                            <div class="form-value">{{ array.tilt_angle }}°</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Shading</div>
+                            <div class="form-value">{{ array.shading_percentage }}% loss</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">String Voc</div>
+                            <div class="form-value">{{ array.string_voc }}V</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">String Isc</div>
+                            <div class="form-value">{{ array.string_isc }}A</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Mounting</div>
+                            <div class="form-value">{{ array.mounting_type_display }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- SECTION F: INVERTER SCHEDULE -->
+<div class="section">
+    <div class="section-title">Section F: Inverter Schedule</div>
+    {% for inverter in inverters %}
+    <div class="inverter-card">
+        <div class="inverter-header">
+            <span>Inverter {{ inverter.inverter_number }}: {{ inverter.make }} {{ inverter.model }}</span>
+            <span style="font-weight: 700;">{{ inverter.rated_power }} kW</span>
+        </div>
+        <div class="inverter-body">
+            <div class="three-col">
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Serial Number</div>
+                            <div class="form-value">{{ inverter.serial_number }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Type</div>
+                            <div class="form-value">{{ inverter.type_display }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">MPPT Inputs</div>
+                            <div class="form-value">{{ inverter.mppt_count }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Phases</div>
+                            <div class="form-value">{{ inverter.phases_display }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Location</div>
+                            <div class="form-value">{{ inverter.location }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">MCS Certified</div>
+                            <div class="form-value">{% if inverter.mcs_certified %}<span class="status-badge pass">Yes</span>{% else %}<span class="status-badge warning">No</span>{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- SECTION G: BATTERY STORAGE (conditional) -->
+{% if has_battery %}
+<div class="section">
+    <div class="section-title">Section G: Battery Storage</div>
+    <div class="battery-card">
+        <div class="battery-header">
+            {{ battery.make }} {{ battery.model }} - {{ battery.capacity }} kWh
+        </div>
+        <div class="battery-body">
+            <div class="two-col">
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Serial Number</div>
+                            <div class="form-value">{{ battery.serial_number }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Chemistry</div>
+                            <div class="form-value">{{ battery.chemistry_display }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Usable Capacity</div>
+                            <div class="form-value">{{ battery.capacity }} kWh</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="section">
+    <div class="section-title">Section G: Battery Storage</div>
+    <div class="inline-form">
+        <span style="color: #64748b; font-style: italic;">No battery storage installed</span>
+    </div>
+</div>
+{% endif %}
+
+<!-- FOOTER PAGE 1 -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name }}</strong><br>
+        {{ company_address }}<br>
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+        {% if company_email %} | {{ company_email }}{% endif %}
+    </div>
+    <div class="footer-right">
+        {% if mcs_details.installer_number %}
+        <strong>MCS Certified</strong><br>
+        Installer No: {{ mcs_details.installer_number }}<br>
+        {% endif %}
+        <span style="color: #94a3b8; font-size: 6.5px;">BS EN IEC 62446-1 | BS 7671:2018+A3:2024 | MIS 3002:2025</span>
+    </div>
+</div>
+
+<!-- PAGE 2: GRID CONNECTION & TEST RESULTS -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+                <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+                <div class="company-brand-name">{{ company_name }}</div>
+            </div>
+        </div>
+        <div class="doc-title-section">
+            <div class="doc-title">GRID CONNECTION & TEST RESULTS</div>
+            <div class="doc-subtitle">{{ certificate_number }} - {{ client_name }}</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">{{ certificate_number }}</div>
+            <div class="page-number">Page 2{% if has_photos %} of 3{% else %} of 2{% endif %}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION H: GRID CONNECTION -->
+<div class="section">
+    <div class="section-title">Section H: Grid Connection & DNO Notification</div>
+    <div class="grid-box">
+        <div class="grid-header">
+            <span>{{ grid_connection.dno_name }}</span>
+            <span class="g-badge {% if grid_connection.application_type == 'G98' %}g98{% else %}g99{% endif %}">{{ grid_connection.application_type_display }}</span>
+        </div>
+        <div class="grid-body">
+            <div class="three-col">
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">MPAN</div>
+                            <div class="form-value">{{ grid_connection.mpan }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Application Ref</div>
+                            <div class="form-value">{{ grid_connection.application_reference }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Application Date</div>
+                            <div class="form-value">{{ grid_connection.application_date }}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Approval Date</div>
+                            <div class="form-value">{{ grid_connection.approval_date }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <div class="form-label">Export Limited</div>
+                            <div class="form-value">{% if grid_connection.export_limited %}Yes - {{ grid_connection.export_limit_kw }} kW{% else %}No{% endif %}</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">Approval Ref</div>
+                            <div class="form-value">{{ grid_connection.approval_reference }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION I: METERING -->
+<div class="section">
+    <div class="section-title">Section I: Metering</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Meter Type</div>
+            <div class="form-value">{{ metering.meter_type_display }}</div>
+            <div class="form-label">Make / Model</div>
+            <div class="form-value">{{ metering.meter_make }} {{ metering.meter_model }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Serial Number</div>
+            <div class="form-value">{{ metering.meter_serial }}</div>
+            <div class="form-label">CT Ratio</div>
+            <div class="form-value">{{ metering.ct_ratio | default: "N/A" }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION J: DC ARRAY TESTS -->
+<div class="section">
+    <div class="section-title">Section J: DC Array Test Results (BS EN IEC 62446-1)</div>
+    <table class="test-table">
+        <thead>
+            <tr>
+                <th style="width: 22%;">Array</th>
+                <th style="width: 13%;">Voc (V)</th>
+                <th style="width: 13%;">Isc (A)</th>
+                <th style="width: 13%;">IR (MΩ)</th>
+                <th style="width: 13%;">Polarity</th>
+                <th style="width: 13%;">Continuity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in array_tests %}
+            <tr>
+                <td>{{ test.array_name }}</td>
+                <td>{{ test.voc_measured }}</td>
+                <td>{{ test.isc_measured }}</td>
+                <td>{{ test.insulation_resistance }}</td>
+                <td class="result-{{ test.polarity_class }}">{{ test.polarity_result }}</td>
+                <td class="result-{{ test.continuity_class }}">{{ test.continuity_result }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION K: INVERTER TESTS -->
+<div class="section">
+    <div class="section-title">Section K: Inverter Protection Tests</div>
+    <table class="test-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Inverter</th>
+                <th style="width: 15%;">DC Isolator</th>
+                <th style="width: 15%;">AC Isolator</th>
+                <th style="width: 20%;">Anti-Islanding</th>
+                <th style="width: 20%;">Earth Fault</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in inverter_tests %}
+            <tr>
+                <td>{{ test.inverter_name }}</td>
+                <td class="result-{{ test.dc_isolator_class }}">{{ test.dc_isolator_result }}</td>
+                <td class="result-{{ test.ac_isolator_class }}">{{ test.ac_isolator_result }}</td>
+                <td class="result-{{ test.anti_islanding_class }}">{{ test.anti_islanding_result }}</td>
+                <td class="result-{{ test.protection_class }}">{{ test.protection_result }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION L: AC TESTS -->
+<div class="section">
+    <div class="section-title">Section L: AC Installation Tests (BS 7671:2018+A3:2024)</div>
+    <div class="two-col">
+        <div class="col">
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-label">Earthing Arrangement</div>
+                    <div class="form-value">{{ ac_tests.earthing_arrangement_display }}</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Ze Value</div>
+                    <div class="form-value">{{ ac_tests.ze_value }} Ω</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Zs Value</div>
+                    <div class="form-value">{{ ac_tests.zs_value }} Ω</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-label">RCD Type / Rating</div>
+                    <div class="form-value">{{ ac_tests.rcd_type }} / {{ ac_tests.rcd_rating }} mA</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">RCD Trip Time</div>
+                    <div class="form-value">{{ ac_tests.rcd_trip_time }} ms</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Insulation Resistance</div>
+                    <div class="form-value">{{ ac_tests.insulation_resistance }} MΩ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-grid" style="margin-top: 4px;">
+        <div class="form-row">
+            <div class="form-label">Polarity Correct</div>
+            <div class="form-value"><span class="status-badge {{ ac_tests.polarity_class }}">{{ ac_tests.polarity_result }}</span></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Bidirectional Protective Device (Reg. 530.3.201)</div>
+            <div class="form-value"><span class="status-badge {{ ac_tests.bidirectional_device_class }}">{{ ac_tests.bidirectional_device_result }}</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION M: COMMISSIONING -->
+<div class="section">
+    <div class="section-title">Section M: Commissioning Checklist</div>
+    <div class="two-col">
+        <div class="col">
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-label">System Operational</div>
+                    <div class="form-value">{% if commissioning.system_operational %}<span class="status-badge pass">Yes</span>{% else %}<span class="status-badge fail">No</span>{% endif %}</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Export Verified</div>
+                    <div class="form-value">{% if commissioning.export_verified %}<span class="status-badge pass">Yes</span>{% else %}<span class="status-badge fail">No</span>{% endif %}</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Meter Reading</div>
+                    <div class="form-value">{{ commissioning.generation_meter_reading }} kWh</div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-grid">
+                <div class="form-row">
+                    <div class="form-label">Customer Briefed</div>
+                    <div class="form-value">{% if commissioning.customer_briefed %}<span class="status-badge pass">Yes</span>{% else %}<span class="status-badge fail">No</span>{% endif %}</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">Documentation</div>
+                    <div class="form-value">{% if commissioning.documentation_provided %}<span class="status-badge pass">Provided</span>{% else %}<span class="status-badge fail">Not Provided</span>{% endif %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION N: DEFECTS & OBSERVATIONS -->
+<div class="section">
+    <div class="section-title">Section N: Defects & Observations</div>
+    {% if no_defects %}
+    <div class="no-defects-box">
+        <div class="icon">&#10003;</div>
+        <div class="text">No defects or observations recorded. Installation complies with all requirements.</div>
+    </div>
+    {% else %}
+    {% for defect in defects %}
+    <div class="defect-card {{ defect.severity_class }}">
+        <div class="defect-header">
+            <span class="defect-number">#{{ defect.number }}</span>
+            <span class="defect-severity {{ defect.severity_class }}">{{ defect.severity }}</span>
+            {% if defect.rectified %}
+            <span class="status-badge pass">RECTIFIED</span>
+            {% endif %}
+        </div>
+        <div class="defect-description">{{ defect.description }}</div>
+        {% if defect.rectified %}
+        <div class="defect-status">Rectified on: <span class="rectified">{{ defect.rectification_date }}</span></div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<!-- SECTION O: HANDOVER DOCUMENTATION -->
+<div class="section">
+    <div class="section-title">Section O: Handover Documentation</div>
+    <div class="handover-grid">
+        <div class="handover-item">
+            <span class="checkbox-box {% if handover.user_manual_provided %}checked{% endif %}">{% if handover.user_manual_provided %}&#10003;{% endif %}</span>
+            <label>User Manual Provided</label>
+        </div>
+        <div class="handover-item">
+            <span class="checkbox-box {% if handover.warranty_docs_provided %}checked{% endif %}">{% if handover.warranty_docs_provided %}&#10003;{% endif %}</span>
+            <label>Warranty Documents</label>
+        </div>
+        <div class="handover-item">
+            <span class="checkbox-box {% if handover.mcs_document_provided %}checked{% endif %}">{% if handover.mcs_document_provided %}&#10003;{% endif %}</span>
+            <label>MCS Certificate</label>
+        </div>
+        <div class="handover-item">
+            <span class="checkbox-box {% if handover.maintenance_schedule_provided %}checked{% endif %}">{% if handover.maintenance_schedule_provided %}&#10003;{% endif %}</span>
+            <label>Maintenance Schedule</label>
+        </div>
+        <div class="handover-item">
+            <span class="checkbox-box {% if handover.emergency_shutdown_explained %}checked{% endif %}">{% if handover.emergency_shutdown_explained %}&#10003;{% endif %}</span>
+            <label>Emergency Shutdown Explained</label>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION P: DECLARATION -->
+<div class="section avoid-break">
+    <div class="section-title">Section P: Declaration</div>
+    <div class="declaration-box">
+        <div class="declaration-text">
+            <strong>Declaration:</strong> I/We certify that the solar PV system detailed in this certificate has been {{ certificate_type_display | downcase }} in accordance with BS EN IEC 62446-1:2016+A1:2018, BS 7671:2018+A3:2024 (including bidirectional protective device requirements), and MCS Installation Standard MIS 3002:2025 V5.0. The system is, to the best of my/our knowledge and belief, in a satisfactory condition for continued use, subject to any observations recorded above.
+        </div>
+    </div>
+</div>
+
+<!-- SECTION Q: SIGNATURES -->
+<div class="section avoid-break">
+    <div class="section-title">Section Q: Signatures</div>
+    <div class="signature-grid">
+        <!-- Installer Declaration -->
+        <div class="signature-box">
+            <div class="signature-box-header">MCS Certified Installer</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value">{{ installer_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Company</span>
+                    <span class="sig-field-value">{{ installer_company }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">MCS Number</span>
+                    <span class="sig-field-value">{{ installer_mcs_number }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ installer_date }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Signature</span>
+                    <span class="sig-field-value signature">
+                        {% if installer_signature %}<img src="{{ installer_signature }}" />{% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% if has_electrician %}
+        <!-- Electrician Declaration -->
+        <div class="signature-box">
+            <div class="signature-box-header">Qualified Electrician (if different)</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value">{{ electrician_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Company</span>
+                    <span class="sig-field-value">{{ electrician_company }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Registration</span>
+                    <span class="sig-field-value">{{ electrician_registration }} ({{ electrician_scheme }})</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ electrician_date }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Signature</span>
+                    <span class="sig-field-value signature">
+                        {% if electrician_signature %}<img src="{{ electrician_signature }}" />{% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- SECTION R: OVERALL ASSESSMENT -->
+<div class="section avoid-break">
+    <div class="section-title">Section R: Overall Assessment</div>
+    <div class="assessment-box">
+        <span class="assessment-label">System Assessment:</span>
+        <div class="assessment-options">
+            <div class="assessment-option {% if no_defects or defects.size == 0 %}pass-selected{% endif %}">
+                <span class="checkbox-box {% if no_defects or defects.size == 0 %}checked{% endif %}" style="{% if no_defects or defects.size == 0 %}background: #fff; color: #22c55e;{% endif %}">{% if no_defects or defects.size == 0 %}&#10003;{% endif %}</span>
+                <span class="option-label {% unless no_defects or defects.size == 0 %}pass-label{% endunless %}">SATISFACTORY</span>
+            </div>
+            <div class="assessment-option {% if has_defects and defects.size > 0 %}fail-selected{% endif %}">
+                <span class="checkbox-box {% if has_defects and defects.size > 0 %}checked{% endif %}" style="{% if has_defects and defects.size > 0 %}background: #fff; color: #dc2626;{% endif %}">{% if has_defects and defects.size > 0 %}&#10003;{% endif %}</span>
+                <span class="option-label {% unless has_defects and defects.size > 0 %}fail-label{% endunless %}">UNSATISFACTORY</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADDITIONAL NOTES -->
+{% if has_additional_notes %}
+<div class="section">
+    <div class="section-title">Additional Notes</div>
+    <div class="inline-form" style="min-height: 40px;">
+        {{ additional_notes }}
+    </div>
+</div>
+{% endif %}
+
+<!-- FOOTER PAGE 2 -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name }}</strong> | {{ company_phone }}
+    </div>
+    <div class="footer-right">
+        <span style="color: #94a3b8; font-size: 6.5px;">BS EN IEC 62446-1 | BS 7671:2018+A3:2024 | MIS 3002:2025</span>
+    </div>
+</div>
+
+<!-- PAGE 3: PHOTOGRAPHIC EVIDENCE (Conditional) -->
+{% if has_photos %}
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+                <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+                <div class="company-brand-name">{{ company_name }}</div>
+            </div>
+        </div>
+        <div class="doc-title-section">
+            <div class="doc-title">PHOTOGRAPHIC EVIDENCE</div>
+            <div class="doc-subtitle">{{ certificate_number }} - {{ client_name }}</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">{{ certificate_number }}</div>
+            <div class="page-number">Page 3 of 3</div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title">Section S: Installation & Equipment Photos</div>
+    <div class="photos-grid">
+        {% for photo in photos %}
+        <div class="photo-item">
+            <img src="{{ photo.url }}" alt="{{ photo.caption }}" />
+            <div class="photo-caption">{{ photo.caption }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- COMPANY FOOTER -->
+<div style="margin-top: 8px; padding: 8px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 3px; color: #fff;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="font-size: 9px; font-weight: 600;">{{ company_name }}</div>
+            <div style="font-size: 7px; opacity: 0.8;">{{ company_address }}</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 7px;">{{ company_phone }}</div>
+            <div style="font-size: 7px;">{{ company_email }}</div>
+            {% if company_website %}
+            <div style="font-size: 7px;">{{ company_website }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER PAGE 3 -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name }}</strong> | MCS Certified Installation
+    </div>
+    <div class="footer-right">
+        <span style="color: #94a3b8;">Certificate: {{ certificate_number }} | {{ commissioning_date }}</span>
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -12,13 +12,14 @@ import {
   EXPENSE_CATEGORIES,
   getCategoryConfig,
 } from '@/types/expense';
+import { AccountingProvider } from '@/types/accounting';
 
 export const useExpensesStorage = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<ExpenseFilters>({
     category: 'all',
-    period: 'this-month',
+    period: 'all',  // Show all expenses by default
   });
 
   // Convert database row to Expense object
@@ -491,6 +492,97 @@ export const useExpensesStorage = () => {
     });
   }, [exportExpenses]);
 
+  // Sync expenses to accounting software
+  const syncExpenses = useCallback(async (
+    expenseIds: string[],
+    provider: AccountingProvider
+  ): Promise<boolean> => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to sync expenses",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      // Validate expense IDs
+      if (!expenseIds.length) {
+        toast({
+          title: "Error",
+          description: "No expenses to sync",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      console.log(`Syncing ${expenseIds.length} expenses to ${provider}`);
+
+      const response = await supabase.functions.invoke('accounting-sync-expense', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+        body: { expenseIds, provider },
+      });
+
+      // Check for error in response data
+      if (response.data?.success === false || response.data?.error) {
+        const errorMsg = response.data?.error || 'Failed to sync expenses';
+        console.error('Sync error:', response.data);
+        toast({
+          title: "Sync Failed",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      if (response.error) {
+        console.error('Sync error:', response.error);
+        toast({
+          title: "Sync Failed",
+          description: response.error.message || 'Failed to sync expenses',
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      const { synced, errors } = response.data;
+      const syncedCount = synced?.length || 0;
+      const errorCount = errors?.length || 0;
+
+      // Update local state to reflect synced expenses
+      if (syncedCount > 0) {
+        const syncedIds = synced.map((s: any) => s.expenseId);
+        setExpenses(prev => prev.map(exp =>
+          syncedIds.includes(exp.id) ? { ...exp, synced_to_accounting: true } : exp
+        ));
+      }
+
+      if (errorCount > 0 && syncedCount > 0) {
+        toast({
+          title: "Partial Sync",
+          description: `Synced ${syncedCount} expense(s), ${errorCount} failed`,
+        });
+      } else if (syncedCount > 0) {
+        toast({
+          title: "Sync Complete",
+          description: `${syncedCount} expense(s) synced to ${provider}`,
+        });
+      }
+
+      return syncedCount > 0;
+    } catch (error) {
+      console.error('Error syncing expenses:', error);
+      toast({
+        title: "Sync Failed",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+      return false;
+    }
+  }, []);
+
   return {
     expenses,
     filteredExpenses,
@@ -505,5 +597,6 @@ export const useExpensesStorage = () => {
     refreshExpenses,
     exportExpenses,
     downloadExport,
+    syncExpenses,
   };
 };

@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
 
 export interface CertificateData {
   id: string;
-  reportType: 'eicr' | 'eic' | 'minor-works';
+  reportType: 'eicr' | 'eic' | 'minor-works' | 'ev-charging' | 'fire-alarm' | 'emergency-lighting' | 'pat-testing';
   clientName?: string;
   installationAddress?: string;
   inspectionDate?: string;
@@ -47,13 +47,21 @@ const getTypeLabel = (type: string) => {
       return 'EIC';
     case 'minor-works':
       return 'MW';
+    case 'ev-charging':
+      return 'EV';
+    case 'fire-alarm':
+      return 'Fire';
+    case 'emergency-lighting':
+      return 'EmLt';
+    case 'pat-testing':
+      return 'PAT';
     default:
       return type.toUpperCase();
   }
 };
 
 const getTypeColor = (type: string) => {
-  // Unified elec-yellow theme with subtle differentiation
+  // Distinct colors for each certificate type
   switch (type) {
     case 'eicr':
       return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40';
@@ -61,6 +69,14 @@ const getTypeColor = (type: string) => {
       return 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/30';
     case 'minor-works':
       return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
+    case 'ev-charging':
+      return 'bg-green-500/15 text-green-400 border-green-500/30';
+    case 'fire-alarm':
+      return 'bg-red-500/15 text-red-400 border-red-500/30';
+    case 'emergency-lighting':
+      return 'bg-orange-500/15 text-orange-400 border-orange-500/30';
+    case 'pat-testing':
+      return 'bg-blue-500/15 text-blue-400 border-blue-500/30';
     default:
       return 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/30';
   }

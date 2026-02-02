@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Download, CheckCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { MWTabValue } from '@/hooks/useMinorWorksTabs';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MWTabNavigationProps {
-  currentTab: MWTabValue;
+  currentTab: string;
   currentTabIndex: number;
   totalTabs: number;
   canNavigateNext: boolean;
@@ -14,11 +14,8 @@ interface MWTabNavigationProps {
   navigatePrevious: () => void;
   getProgressPercentage: () => number;
   isCurrentTabComplete: boolean;
-  currentTabHasRequiredFields: boolean;
-  onToggleComplete: () => void;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
-  showGenerate?: boolean;
 }
 
 const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
@@ -31,99 +28,73 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
   navigatePrevious,
   getProgressPercentage,
   isCurrentTabComplete,
-  currentTabHasRequiredFields,
-  onToggleComplete,
   onGenerateCertificate,
-  canGenerateCertificate = false,
-  showGenerate = false
+  canGenerateCertificate = true,
 }) => {
+  const isMobile = useIsMobile();
+  const progress = getProgressPercentage();
+  const isLastTab = currentTabIndex === totalTabs - 1;
+
   return (
-    <div className="rounded-xl border border-white/10 bg-card/50 backdrop-blur-sm py-4 px-4">
-      <div className="flex items-center justify-between gap-4 max-w-5xl mx-auto">
-        {/* Previous Button */}
-        <Button
-          variant="outline"
-          onClick={navigatePrevious}
-          disabled={!canNavigatePrevious}
-          className={cn(
-            "h-11 gap-2 touch-manipulation border-white/20",
-            !canNavigatePrevious && "opacity-50"
-          )}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Previous</span>
-        </Button>
+    <div className={cn(
+      "fixed bottom-0 left-0 right-0 bg-[#1a1a1c]/95 backdrop-blur-sm border-t border-white/10 z-50",
+      isMobile ? "px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]" : "px-4 py-3"
+    )}>
+      <div className={cn(isMobile ? "" : "max-w-5xl mx-auto")}>
+        {/* Compact progress + navigation row */}
+        <div className="flex items-center gap-3">
+          {/* Back button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={navigatePrevious}
+            disabled={!canNavigatePrevious}
+            className="h-10 px-3 touch-manipulation text-muted-foreground hover:text-foreground"
+          >
+            <ChevronLeft className="h-5 w-5" />
+            <span className="sr-only sm:not-sr-only sm:ml-1">Back</span>
+          </Button>
 
-        {/* Center: Progress Indicator */}
-        <div className="flex-1 flex flex-col items-center gap-2 max-w-xs">
-          <div className="flex items-center gap-2">
-            {Array.from({ length: totalTabs }).map((_, index) => (
+          {/* Center: Progress indicator */}
+          <div className="flex-1 flex flex-col items-center gap-1">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span>{currentTabIndex + 1}/{totalTabs}</span>
+              {isCurrentTabComplete && (
+                <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+              )}
+              <span className="text-foreground font-medium">{progress}%</span>
+            </div>
+            <div className="w-full max-w-[200px] h-1 bg-white/10 rounded-full overflow-hidden">
               <div
-                key={index}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-200",
-                  index === currentTabIndex && "w-6 bg-elec-yellow",
-                  index < currentTabIndex && "bg-green-500",
-                  index > currentTabIndex && "bg-white/20"
-                )}
+                className="h-full bg-elec-yellow transition-all duration-300"
+                style={{ width: `${progress}%` }}
               />
-            ))}
+            </div>
           </div>
-          <span className="text-xs text-white/50">
-            Step {currentTabIndex + 1} of {totalTabs}
-          </span>
-        </div>
 
-        {/* Next/Generate Button */}
-        {showGenerate && currentTabIndex === totalTabs - 1 ? (
-          <Button
-            onClick={onGenerateCertificate}
-            disabled={!canGenerateCertificate}
-            className={cn(
-              "h-11 gap-2 touch-manipulation",
-              canGenerateCertificate
-                ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                : "bg-white/10 text-white/50"
-            )}
-          >
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Generate PDF</span>
-            <span className="sm:hidden">PDF</span>
-          </Button>
-        ) : (
-          <Button
-            onClick={navigateNext}
-            disabled={!canNavigateNext}
-            className={cn(
-              "h-11 gap-2 touch-manipulation",
-              canNavigateNext
-                ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                : "bg-white/10 text-white/50"
-            )}
-          >
-            <span className="hidden sm:inline">Next</span>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        )}
+          {/* Next/Generate button */}
+          {isLastTab ? (
+            <Button
+              onClick={onGenerateCertificate}
+              disabled={!canGenerateCertificate}
+              size="sm"
+              className="h-10 px-4 touch-manipulation bg-green-600 hover:bg-green-700 text-white font-medium"
+            >
+              Generate
+            </Button>
+          ) : (
+            <Button
+              onClick={navigateNext}
+              disabled={!canNavigateNext}
+              size="sm"
+              className="h-10 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+            >
+              <span>Next</span>
+              <ChevronRight className="h-5 w-5 ml-1" />
+            </Button>
+          )}
+        </div>
       </div>
-
-      {/* Quick completion toggle */}
-      {currentTabHasRequiredFields && (
-        <div className="flex justify-center mt-3">
-          <button
-            onClick={onToggleComplete}
-            className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all touch-manipulation",
-              isCurrentTabComplete
-                ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                : "bg-white/5 text-white/50 border border-white/10 hover:border-white/20"
-            )}
-          >
-            <CheckCircle className={cn("h-3.5 w-3.5", isCurrentTabComplete && "fill-green-400")} />
-            {isCurrentTabComplete ? 'Section Complete' : 'Mark as Complete'}
-          </button>
-        </div>
-      )}
     </div>
   );
 };

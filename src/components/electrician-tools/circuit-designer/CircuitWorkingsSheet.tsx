@@ -14,10 +14,12 @@ const fmt = (n: unknown, dp = 1, fallback = '—') =>
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
 export const CircuitWorkingsSheet = ({ circuit, design, isOpen, onClose }: CircuitWorkingsSheetProps) => {
-  if (!circuit) return null;
+  if (!circuit || !design) return null;
 
   const calculations = circuit.calculations;
-  const supplyVoltage = design.consumerUnit?.incomingSupply?.voltage || 230;
+  const incomingSupply = design.consumerUnit?.incomingSupply;
+  const supplyVoltage = incomingSupply?.voltage || 230;
+  const Ze = incomingSupply?.Ze ?? 0.35; // Default Ze if not available
 
   return (
     <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -209,7 +211,7 @@ export const CircuitWorkingsSheet = ({ circuit, design, isOpen, onClose }: Circu
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground/80">External impedance (Ze)</span>
-                    <span className="font-mono text-elec-light">{design.consumerUnit.incomingSupply.Ze}Ω</span>
+                    <span className="font-mono text-elec-light">{Ze}Ω</span>
                   </div>
                   {circuit.expectedTestResults?.r1r2 && (
                     <div className="flex justify-between text-sm">

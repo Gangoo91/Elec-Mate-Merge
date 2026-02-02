@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useHealthSafetyGeneration } from "@/hooks/useHealthSafetyGeneration";
@@ -13,10 +14,24 @@ import { ImportedContextBanner } from "@/components/electrician-tools/shared/Imp
 import { AnimatePresence } from "framer-motion";
 
 const HealthSafetyInterface = () => {
-  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
-  const [showResults, setShowResults] = useState(false);
+  const location = useLocation();
+
+  // Check if we're viewing saved results
+  const savedResultsState = location.state as {
+    fromSavedResults?: boolean;
+    jobId?: string;
+    outputData?: any;
+    inputData?: any;
+  } | null;
+  const [currentJobId, setCurrentJobId] = useState<string | null>(
+    savedResultsState?.fromSavedResults ? savedResultsState.jobId || null : null
+  );
+  const [showResults, setShowResults] = useState(!!savedResultsState?.fromSavedResults);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [celebrationShown, setCelebrationShown] = useState(false);
+  const [celebrationShown, setCelebrationShown] = useState(!!savedResultsState?.fromSavedResults);
+  const [savedOutputData, setSavedOutputData] = useState<any>(
+    savedResultsState?.fromSavedResults ? savedResultsState.outputData : null
+  );
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
   const [initialPrompt, setInitialPrompt] = useState<string>("");
@@ -180,6 +195,7 @@ const HealthSafetyInterface = () => {
     setShowCelebration(false);
     setCelebrationShown(false);
     setCurrentJobId(null);
+    setSavedOutputData(null);
     sessionStorage.removeItem('health-safety-generation-active');
     sessionStorage.removeItem('health-safety-job-id');
     triggerHaptic(50);
@@ -262,14 +278,15 @@ const HealthSafetyInterface = () => {
         />
       )}
       
-      {status === 'complete' && !showCelebration && outputData && (
-        <HealthSafetyResults 
+      {/* Show results - either from fresh generation or saved results */}
+      {((status === 'complete' && !showCelebration && outputData) || savedOutputData) && (
+        <HealthSafetyResults
           data={{
-            ...outputData,
-            projectName: job?.project_info?.projectName || outputData.projectName,
-            location: job?.project_info?.location || outputData.location,
-            clientName: job?.project_info?.clientName || outputData.clientName,
-            workType: job?.work_type || outputData.workType,
+            ...(outputData || savedOutputData),
+            projectName: job?.project_info?.projectName || (outputData || savedOutputData)?.projectName,
+            location: job?.project_info?.location || (outputData || savedOutputData)?.location,
+            clientName: job?.project_info?.clientName || (outputData || savedOutputData)?.clientName,
+            workType: job?.work_type || (outputData || savedOutputData)?.workType,
             assessmentDate: new Date().toISOString().split('T')[0],
             reviewDate: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
           }}

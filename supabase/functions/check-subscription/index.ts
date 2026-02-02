@@ -38,10 +38,24 @@ serve(async (req) => {
       Timeouts.STANDARD, // Increased from QUICK (5s) to STANDARD (30s) to handle slow auth responses
       'user authentication'
     );
-    
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+
+    // Handle auth errors gracefully - return unsubscribed rather than throwing
+    // This prevents Sentry noise from expired/invalid tokens during navigation
+    if (userError) {
+      logger.warn("Auth error (returning unsubscribed)", { error: userError.message });
+      return new Response(JSON.stringify({ subscribed: false, auth_error: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     const user = userData.user;
-    if (!user?.email) throw new ValidationError("User not authenticated or email not available");
+    if (!user?.email) {
+      logger.warn("User not authenticated or email not available");
+      return new Response(JSON.stringify({ subscribed: false, auth_error: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     
     logger.info("User authenticated", { userId: user.id, email: user.email });
 

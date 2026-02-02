@@ -199,7 +199,7 @@ export default function WorkerToolsHub() {
   if (!hasAccess) {
     return (
       <div className="min-h-screen bg-elec-dark">
-        <div className="mx-auto max-w-lg px-4 py-8">
+        <div className="mx-auto max-w-lg md:max-w-2xl px-4 md:px-6 py-8">
           <Link to="/electrician">
             <Button
               variant="ghost"
@@ -240,12 +240,12 @@ export default function WorkerToolsHub() {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="mx-auto max-w-lg px-4">
+      <div className="mx-auto max-w-lg md:max-w-4xl lg:max-w-6xl px-4 md:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-5 pb-20"
+          className="space-y-5 md:space-y-6 pb-20"
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="pt-4">
@@ -262,15 +262,15 @@ export default function WorkerToolsHub() {
 
           {/* Hero */}
           <motion.div variants={itemVariants}>
-            <div className="relative overflow-hidden glass-premium rounded-2xl">
+            <div className="relative overflow-hidden glass-premium rounded-2xl md:max-w-2xl">
               {/* Yellow gradient accent */}
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
               <div className="absolute -top-16 -right-16 w-40 h-40 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
 
-              <div className="relative z-10 p-5">
+              <div className="relative z-10 p-5 md:p-6">
                 <div className="flex items-center gap-4">
                   {/* Avatar */}
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
                     {employee?.photo_url ? (
                       <img
                         src={employee.photo_url}
@@ -278,17 +278,17 @@ export default function WorkerToolsHub() {
                         className="w-full h-full rounded-xl object-cover"
                       />
                     ) : (
-                      <span className="text-lg font-semibold text-elec-yellow">
+                      <span className="text-lg md:text-xl font-semibold text-elec-yellow">
                         {employee?.avatar_initials || '?'}
                       </span>
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-xl font-bold text-white truncate">
+                    <h1 className="text-xl md:text-2xl font-bold text-white truncate">
                       {employee?.name || 'Worker'}
                     </h1>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm md:text-base text-white/60">
                       {employee?.role || 'Electrician'}
                     </p>
                   </div>
@@ -297,9 +297,9 @@ export default function WorkerToolsHub() {
             </div>
           </motion.div>
 
-          {/* Feature Cards Grid - 2 columns, 5 rows */}
+          {/* Feature Cards Grid - responsive columns */}
           <motion.div variants={itemVariants}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
               {/* Row 1 */}
               <WorkerToolCard
                 icon={MapPin}
@@ -388,7 +388,7 @@ export default function WorkerToolsHub() {
             <motion.div variants={itemVariants}>
               <Button
                 onClick={() => setTimesheetSheetOpen(true)}
-                className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
+                className="w-full md:w-auto md:px-8 h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
               >
                 <Clock className="h-5 w-5 mr-2" />
                 Clock In

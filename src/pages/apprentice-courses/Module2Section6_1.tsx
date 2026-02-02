@@ -573,7 +573,7 @@ const Module2Section6_1: React.FC = () => {
             <Link to=".."><ArrowLeft className="w-4 h-4 mr-2" />Back to Section 2.6</Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
-            <Link to="../6-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+            <Link to="/study-centre/apprentice/level2/module2/section6/6-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>
 

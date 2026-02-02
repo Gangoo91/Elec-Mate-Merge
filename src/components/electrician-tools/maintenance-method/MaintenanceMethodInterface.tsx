@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,7 +17,19 @@ type ViewState = 'input' | 'processing' | 'success' | 'results';
 
 export const MaintenanceMethodInterface = () => {
   const { toast } = useToast();
-  const [query, setQuery] = useState('');
+  const routerLocation = useLocation();
+
+  // Check if we're viewing saved results
+  const savedResultsState = routerLocation.state as {
+    fromSavedResults?: boolean;
+    jobId?: string;
+    outputData?: any;
+    inputData?: any;
+  } | null;
+
+  const [query, setQuery] = useState(
+    savedResultsState?.fromSavedResults ? savedResultsState.inputData?.query || '' : ''
+  );
   const [equipmentDetails, setEquipmentDetails] = useState<MaintenanceEquipmentDetails>({
     equipmentType: '',
     location: '',
@@ -25,9 +38,14 @@ export const MaintenanceMethodInterface = () => {
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
-  const [viewState, setViewState] = useState<ViewState>('input');
+  const [viewState, setViewState] = useState<ViewState>(
+    savedResultsState?.fromSavedResults ? 'results' : 'input'
+  );
   const [startTime, setStartTime] = useState<number>(0);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [savedMethodData, setSavedMethodData] = useState<any>(
+    savedResultsState?.fromSavedResults ? savedResultsState.outputData : null
+  );
 
   const { job, isPolling, cancelJob } = useMaintenanceMethodJobPolling(currentJobId);
 
@@ -157,6 +175,7 @@ export const MaintenanceMethodInterface = () => {
       location: '',
       installationType: 'commercial'
     });
+    setSavedMethodData(null);
     setViewState('input');
   };
 
@@ -232,11 +251,12 @@ export const MaintenanceMethodInterface = () => {
     setViewState('results');
   };
 
-  // Show results if completed
-  if (viewState === 'results' && job?.status === 'completed' && job.method_data) {
+  // Show results if completed (either from fresh generation or saved results)
+  const methodDataToShow = savedMethodData || job?.method_data;
+  if (viewState === 'results' && methodDataToShow) {
     return (
-      <MaintenanceMethodResults 
-        methodData={job.method_data} 
+      <MaintenanceMethodResults
+        methodData={methodDataToShow}
         onReset={handleReset}
         onExportPDF={handleExportPDF}
       />

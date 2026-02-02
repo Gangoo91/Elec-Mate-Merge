@@ -688,14 +688,14 @@ const Section3_3 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-border/20">
           <Button variant="outline" asChild>
-            <Link to="3-2" className="flex items-center gap-2">
+            <Link to="/study-centre/apprentice/level2/module1/section3/3-2" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               Previous: Five Steps of Risk Assessment
             </Link>
           </Button>
 
           <Button asChild>
-            <Link to="3-4" className="flex items-center gap-2">
+            <Link to="/study-centre/apprentice/level2/module1/section3/3-4" className="flex items-center gap-2">
               Next: Control Measures
               <ArrowRight className="w-4 h-4" />
             </Link>

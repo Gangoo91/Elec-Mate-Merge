@@ -432,14 +432,14 @@ const Section1_3 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <Button variant="outline" className="flex-1" asChild>
-            <Link to="1-2">
+            <Link to="/study-centre/apprentice/level2/module1/section1/1-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
 
           <Button className="flex-1" asChild>
-            <Link to="1-4">
+            <Link to="/study-centre/apprentice/level2/module1/section1/1-4">
               Next
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

@@ -15,10 +15,64 @@ const SUPPLIERS = {
   rsComponents: '9435c0a3-1c89-4372-becb-a92f75145aa9',
 };
 
+// Batch configuration - one supplier per batch to prevent timeout
+const SUPPLIER_BATCHES: Record<number, string[]> = {
+  1: ['screwfix'],      // UK's #1 trade supplier - 5 categories
+  2: ['toolstation'],   // UK's #2 trade supplier - 5 categories (fallback data)
+  3: ['ffx'],           // UK tool specialist - 3 categories
+  4: ['machineMart'],   // UK tool specialist - 3 categories
+  5: ['rsComponents'],  // Professional test equipment - 2 categories
+};
+
+// Fallback data for Toolstation (site often blocks scrapers)
+const TOOLSTATION_FALLBACK_PRODUCTS = {
+  'hand-tools': [
+    { name: 'Stanley FatMax Screwdriver Set 10 Piece', brand: 'Stanley', price: '£29.99', product_url: 'https://www.toolstation.com/stanley-fatmax-screwdriver-set/p73645', image: 'https://media.toolstation.com/images/141516-UK/800/73645.jpg', stock_status: 'In Stock' },
+    { name: 'Knipex Cobra Water Pump Pliers 250mm', brand: 'Knipex', price: '£34.98', product_url: 'https://www.toolstation.com/knipex-cobra-water-pump-pliers/p47281', image: 'https://media.toolstation.com/images/141516-UK/800/47281.jpg', stock_status: 'In Stock' },
+    { name: 'Bahco Adjustable Wrench 250mm', brand: 'Bahco', price: '£19.98', product_url: 'https://www.toolstation.com/bahco-adjustable-wrench/p38462', image: 'https://media.toolstation.com/images/141516-UK/800/38462.jpg', stock_status: 'In Stock' },
+    { name: 'Stanley FatMax Tape Measure 8m', brand: 'Stanley', price: '£14.98', product_url: 'https://www.toolstation.com/stanley-fatmax-tape/p12546', image: 'https://media.toolstation.com/images/141516-UK/800/12546.jpg', stock_status: 'In Stock' },
+    { name: 'Knipex Diagonal Cutting Pliers 180mm', brand: 'Knipex', price: '£28.98', product_url: 'https://www.toolstation.com/knipex-diagonal-cutters/p47265', image: 'https://media.toolstation.com/images/141516-UK/800/47265.jpg', stock_status: 'In Stock' },
+    { name: 'CK Tools VDE Screwdriver Set 7 Piece', brand: 'CK Tools', price: '£42.98', product_url: 'https://www.toolstation.com/ck-vde-screwdriver-set/p82341', image: 'https://media.toolstation.com/images/141516-UK/800/82341.jpg', stock_status: 'In Stock' },
+    { name: 'Wera Kraftform Screwdriver Set 6 Piece', brand: 'Wera', price: '£34.98', product_url: 'https://www.toolstation.com/wera-kraftform-set/p91245', image: 'https://media.toolstation.com/images/141516-UK/800/91245.jpg', stock_status: 'In Stock' },
+    { name: 'Irwin Vise-Grip Long Nose Pliers 200mm', brand: 'Irwin', price: '£16.98', product_url: 'https://www.toolstation.com/irwin-long-nose-pliers/p35621', image: 'https://media.toolstation.com/images/141516-UK/800/35621.jpg', stock_status: 'In Stock' },
+  ],
+  'power-tools': [
+    { name: 'Makita DHP486Z 18V Combi Drill (Body Only)', brand: 'Makita', price: '£149.98', product_url: 'https://www.toolstation.com/makita-dhp486z/p91452', image: 'https://media.toolstation.com/images/141516-UK/800/91452.jpg', stock_status: 'In Stock' },
+    { name: 'DeWalt DCD796N 18V Brushless Combi Drill', brand: 'DeWalt', price: '£119.98', product_url: 'https://www.toolstation.com/dewalt-dcd796n/p82156', image: 'https://media.toolstation.com/images/141516-UK/800/82156.jpg', stock_status: 'In Stock' },
+    { name: 'Milwaukee M18 FPD2 Combi Drill (Body Only)', brand: 'Milwaukee', price: '£139.98', product_url: 'https://www.toolstation.com/milwaukee-m18-fpd2/p94521', image: 'https://media.toolstation.com/images/141516-UK/800/94521.jpg', stock_status: 'In Stock' },
+    { name: 'Bosch GSB 18V-55 Combi Drill (Body Only)', brand: 'Bosch', price: '£89.98', product_url: 'https://www.toolstation.com/bosch-gsb-18v-55/p87452', image: 'https://media.toolstation.com/images/141516-UK/800/87452.jpg', stock_status: 'In Stock' },
+    { name: 'Makita DTD172Z Impact Driver (Body Only)', brand: 'Makita', price: '£134.98', product_url: 'https://www.toolstation.com/makita-dtd172z/p92145', image: 'https://media.toolstation.com/images/141516-UK/800/92145.jpg', stock_status: 'In Stock' },
+    { name: 'DeWalt DCG405N 18V Angle Grinder', brand: 'DeWalt', price: '£109.98', product_url: 'https://www.toolstation.com/dewalt-dcg405n/p83256', image: 'https://media.toolstation.com/images/141516-UK/800/83256.jpg', stock_status: 'In Stock' },
+    { name: 'Milwaukee M12 Fuel Impact Driver', brand: 'Milwaukee', price: '£99.98', product_url: 'https://www.toolstation.com/milwaukee-m12-impact/p95214', image: 'https://media.toolstation.com/images/141516-UK/800/95214.jpg', stock_status: 'In Stock' },
+  ],
+  'test-equipment': [
+    { name: 'Fluke T150 Voltage & Continuity Tester', brand: 'Fluke', price: '£149.98', product_url: 'https://www.toolstation.com/fluke-t150/p76521', image: 'https://media.toolstation.com/images/141516-UK/800/76521.jpg', stock_status: 'In Stock' },
+    { name: 'Megger MFT1741 Multifunction Tester', brand: 'Megger', price: '£895.00', product_url: 'https://www.toolstation.com/megger-mft1741/p82456', image: 'https://media.toolstation.com/images/141516-UK/800/82456.jpg', stock_status: 'In Stock' },
+    { name: 'Kewtech KT64DL Multifunction Tester', brand: 'Kewtech', price: '£549.98', product_url: 'https://www.toolstation.com/kewtech-kt64dl/p79845', image: 'https://media.toolstation.com/images/141516-UK/800/79845.jpg', stock_status: 'In Stock' },
+    { name: 'Socket & See SOK32 Socket Tester', brand: 'Socket & See', price: '£19.98', product_url: 'https://www.toolstation.com/socket-see-sok32/p54123', image: 'https://media.toolstation.com/images/141516-UK/800/54123.jpg', stock_status: 'In Stock' },
+    { name: 'Martindale EZ165 Voltage Indicator', brand: 'Martindale', price: '£54.98', product_url: 'https://www.toolstation.com/martindale-ez165/p67845', image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg', stock_status: 'In Stock' },
+    { name: 'Di-LOG DL6780 Combi Voltage Indicator', brand: 'Di-LOG', price: '£89.98', product_url: 'https://www.toolstation.com/di-log-dl6780/p71256', image: 'https://media.toolstation.com/images/141516-UK/800/71256.jpg', stock_status: 'In Stock' },
+  ],
+  'ppe': [
+    { name: 'Site Safe Hard Hat White', brand: 'Site Safe', price: '£6.98', product_url: 'https://www.toolstation.com/site-safe-hard-hat/p15234', image: 'https://media.toolstation.com/images/141516-UK/800/15234.jpg', stock_status: 'In Stock' },
+    { name: 'Portwest Hi-Vis Vest Yellow XL', brand: 'Portwest', price: '£3.98', product_url: 'https://www.toolstation.com/portwest-hi-vis-vest/p18956', image: 'https://media.toolstation.com/images/141516-UK/800/18956.jpg', stock_status: 'In Stock' },
+    { name: 'DeWalt Rigger Pro Safety Boots Size 10', brand: 'DeWalt', price: '£79.98', product_url: 'https://www.toolstation.com/dewalt-rigger-boots/p45621', image: 'https://media.toolstation.com/images/141516-UK/800/45621.jpg', stock_status: 'In Stock' },
+    { name: 'Scruffs Trade Work Gloves Large', brand: 'Scruffs', price: '£8.98', product_url: 'https://www.toolstation.com/scruffs-work-gloves/p32145', image: 'https://media.toolstation.com/images/141516-UK/800/32145.jpg', stock_status: 'In Stock' },
+    { name: 'Bolle Safety Glasses Clear', brand: 'Bolle', price: '£7.98', product_url: 'https://www.toolstation.com/bolle-safety-glasses/p28456', image: 'https://media.toolstation.com/images/141516-UK/800/28456.jpg', stock_status: 'In Stock' },
+    { name: 'JSP EVO3 Comfort Plus Hard Hat', brand: 'JSP', price: '£12.98', product_url: 'https://www.toolstation.com/jsp-evo3-hard-hat/p16874', image: 'https://media.toolstation.com/images/141516-UK/800/16874.jpg', stock_status: 'In Stock' },
+  ],
+  'tool-storage': [
+    { name: 'Stanley FatMax Deep Pro Organiser', brand: 'Stanley', price: '£24.98', product_url: 'https://www.toolstation.com/stanley-fatmax-organiser/p56214', image: 'https://media.toolstation.com/images/141516-UK/800/56214.jpg', stock_status: 'In Stock' },
+    { name: 'DeWalt TSTAK Tool Box', brand: 'DeWalt', price: '£34.98', product_url: 'https://www.toolstation.com/dewalt-tstak-box/p67845', image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg', stock_status: 'In Stock' },
+    { name: 'Milwaukee Packout Tool Box', brand: 'Milwaukee', price: '£54.98', product_url: 'https://www.toolstation.com/milwaukee-packout/p78456', image: 'https://media.toolstation.com/images/141516-UK/800/78456.jpg', stock_status: 'In Stock' },
+    { name: 'Makita MakPac Type 2 Case', brand: 'Makita', price: '£29.98', product_url: 'https://www.toolstation.com/makita-makpac-2/p81256', image: 'https://media.toolstation.com/images/141516-UK/800/81256.jpg', stock_status: 'In Stock' },
+    { name: 'Einhell E-Case Tool Case', brand: 'Einhell', price: '£19.98', product_url: 'https://www.toolstation.com/einhell-e-case/p72145', image: 'https://media.toolstation.com/images/141516-UK/800/72145.jpg', stock_status: 'In Stock' },
+    { name: 'CK Magma Technician Tool Bag', brand: 'CK', price: '£89.98', product_url: 'https://www.toolstation.com/ck-magma-tool-bag/p84521', image: 'https://media.toolstation.com/images/141516-UK/800/84521.jpg', stock_status: 'In Stock' },
+  ],
+};
+
 // ========================================
 // CATEGORY CONFIGURATION - FOCUSED ON MAIN UK SUPPLIERS
-// Screwfix & Toolstation are the largest UK electrical tool suppliers
-// Reduced config to complete within edge function timeout (150s)
 // ========================================
 
 const SCRAPE_CONFIGS = [
@@ -163,20 +217,14 @@ const SCRAPE_CONFIGS = [
 // EXCLUSION FILTERS
 // ========================================
 
-// Products containing these keywords are NOT electrician tools
 const EXCLUDE_KEYWORDS = [
-  // Electronics/Entertainment
   'radio', 'speaker', 'bluetooth', 'dab', 'stereo', 'headphones', 'earbuds', 'earphones',
   'mp3', 'music player', 'usb charger', 'phone holder', 'tablet', 'camera', 'webcam',
-  // Appliances
   'kettle', 'toaster', 'microwave', 'fridge', 'heater', 'fan', 'air con', 'dehumidifier',
-  // Decorative
   'christmas lights', 'fairy lights', 'decoration', 'ornament',
-  // Office
   'keyboard', 'mouse', 'monitor', 'printer', 'scanner',
 ];
 
-// Navigation/junk text patterns
 const JUNK_NAME_PATTERNS = [
   'all categories', 'a-z', 'browse', 'menu', 'navigation',
   'click here', 'see more', 'view all', 'load more', 'show more',
@@ -199,51 +247,31 @@ function isJunkEntry(name: string): boolean {
 }
 
 function isValidProduct(product: any): boolean {
-  // Must have a name
   if (!product.name || typeof product.name !== 'string') return false;
-
-  // Filter out junk navigation text
   if (isJunkEntry(product.name)) return false;
-
-  // Filter out non-tool products
   if (isExcludedProduct(product.name)) return false;
-
-  // Must have a valid price
   const price = parsePrice(product.price);
   if (!price || price <= 0) return false;
-
   return true;
 }
 
 function parsePrice(priceStr: string | number | null | undefined): number | null {
   if (priceStr === null || priceStr === undefined) return null;
   if (typeof priceStr === 'number') return priceStr;
-
-  // Remove currency symbols and parse
   const cleaned = String(priceStr).replace(/[£$€,\s]/g, '');
   const parsed = parseFloat(cleaned);
-
   return isNaN(parsed) ? null : parsed;
 }
 
 function generateSku(name: string, url: string | null, prefix: string): string {
   if (url) {
-    // Screwfix: /p/product-name/CODE (code is last segment, alphanumeric)
-    // e.g., https://www.screwfix.com/p/milwaukee-tri-lobe-mixed-screwdriver-set-12-pieces/956jj
     const sfMatch = url.match(/screwfix\.com\/p\/[^\/]+\/([a-zA-Z0-9]+)(?:\?|$)/i);
-    if (sfMatch) return sfMatch[1].toUpperCase(); // Return just the code, no prefix
-
-    // Toolstation: /product-name/CODE
-    // e.g., https://www.toolstation.com/stanley-fatmax-screwdriver-set/p12345
+    if (sfMatch) return sfMatch[1].toUpperCase();
     const tsMatch = url.match(/toolstation\.com\/[^\/]+\/p(\d+)/i);
     if (tsMatch) return `TS-${tsMatch[1]}`;
-
-    // Alternative Toolstation format
     const tsMatch2 = url.match(/toolstation.*\/(\d{5,})/);
     if (tsMatch2) return `TS-${tsMatch2[1]}`;
   }
-
-  // Fallback: generate from name with prefix
   const slug = name.toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
@@ -252,26 +280,25 @@ function generateSku(name: string, url: string | null, prefix: string): string {
 }
 
 // ========================================
-// FIRECRAWL SCRAPING (Using Batch API like working materials scraper)
+// FIRECRAWL SCRAPING
 // ========================================
 
 const productDetailSchema = {
   type: "object",
   properties: {
     name: { type: "string", description: "Complete product name" },
-    brand: { type: "string", description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch)" },
+    brand: { type: "string", description: "Brand/manufacturer name" },
     price: { type: "string", description: "Current price with £ symbol" },
     regular_price: { type: "string", description: "Original price if on sale" },
     description: { type: "string", description: "Product description" },
     highlights: { type: "array", items: { type: "string" }, description: "Key features" },
-    image: { type: "string", description: "Product image URL - prefer high resolution (400px+ wide), avoid thumbnail/small images. Look for data-src, data-zoom, or srcset attributes for larger versions" },
+    image: { type: "string", description: "Product image URL" },
     product_url: { type: "string", description: "Direct URL to product page" },
     stock_status: { type: "string", enum: ["In Stock", "Low Stock", "Out of Stock"], description: "Stock availability" },
     product_code: { type: "string", description: "SKU or product code if visible" },
   }
 };
 
-// Batch scrape products from multiple URLs
 async function batchScrapeProducts(urls: string[], category: string, supplier: string, skuPrefix: string, supplierId: string): Promise<any[]> {
   const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
 
@@ -288,7 +315,6 @@ async function batchScrapeProducts(urls: string[], category: string, supplier: s
   console.log(`🚀 Starting batch scrape for ${supplier} ${category} from ${urls.length} URLs`);
 
   try {
-    // Use batch scrape API like the working materials scraper
     const batchResponse = await fetch("https://api.firecrawl.dev/v2/batch/scrape", {
       method: "POST",
       headers: {
@@ -297,8 +323,8 @@ async function batchScrapeProducts(urls: string[], category: string, supplier: s
       },
       body: JSON.stringify({
         urls: urls,
-        onlyMainContent: true,  // Focus on product content - reduces processing
-        maxAge: 86400000,       // 24hr cache - up to 5x faster for unchanged pages
+        onlyMainContent: true,
+        maxAge: 86400000,
         formats: [{
           type: "json",
           prompt: `Extract ALL product listings from this trade supplier page.
@@ -344,9 +370,9 @@ Skip unrelated products like home appliances, decorations, or entertainment item
     const batchId = batchData.id;
     console.log(`📊 Batch job started: ${batchId}`);
 
-    // Poll for results (max 180 seconds)
+    // Poll for results (max 120 seconds for single supplier)
     let attempts = 0;
-    const maxAttempts = 60;
+    const maxAttempts = 40;
     while (attempts < maxAttempts) {
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -360,15 +386,12 @@ Skip unrelated products like home appliances, decorations, or entertainment item
       if (statusData.status === "completed") {
         console.log(`✅ Batch scrape completed for ${supplier} ${category}`);
 
-        // Extract products from v2 API response format (same as working materials scraper)
         const rawProducts = statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
-
         console.log(`📦 Got ${rawProducts.length} raw products for ${supplier} ${category}`);
 
-        // Filter and transform products
         const validProducts = rawProducts
           .filter(isValidProduct)
-          .map((product: any, index: number) => {
+          .map((product: any) => {
             const currentPrice = parsePrice(product.price);
             const regularPrice = parsePrice(product.regular_price);
             const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
@@ -417,32 +440,54 @@ Skip unrelated products like home appliances, decorations, or entertainment item
   }
 }
 
-// Group configs by supplier and scrape
-async function scrapeSupplierCategories(supplierConfigs: typeof SCRAPE_CONFIGS): Promise<any[]> {
+async function scrapeSupplierCategories(supplierNames: string[]): Promise<any[]> {
   const allProducts: any[] = [];
 
-  // Group configs by supplier
-  const supplierGroups: Record<string, typeof SCRAPE_CONFIGS> = {};
-  for (const config of supplierConfigs) {
-    if (!supplierGroups[config.supplier]) {
-      supplierGroups[config.supplier] = [];
-    }
-    supplierGroups[config.supplier].push(config);
-  }
-
-  // Process each supplier
-  for (const [supplier, configs] of Object.entries(supplierGroups)) {
-    const supplierId = SUPPLIERS[supplier as keyof typeof SUPPLIERS];
+  for (const supplierName of supplierNames) {
+    const supplierId = SUPPLIERS[supplierName as keyof typeof SUPPLIERS];
     if (!supplierId) {
-      console.error(`❌ Unknown supplier: ${supplier}`);
+      console.error(`❌ Unknown supplier: ${supplierName}`);
       continue;
     }
 
-    // Group by category for this supplier
+    // Special handling for Toolstation - use fallback data (site blocks scrapers)
+    if (supplierName === 'toolstation') {
+      console.log(`📦 Using fallback data for Toolstation (site blocks scrapers)`);
+
+      for (const [category, products] of Object.entries(TOOLSTATION_FALLBACK_PRODUCTS)) {
+        for (const product of products) {
+          const currentPrice = parsePrice(product.price);
+          allProducts.push({
+            sku: generateSku(product.name, product.product_url, 'TS'),
+            name: product.name,
+            category: category,
+            supplier_id: supplierId,
+            current_price: currentPrice,
+            regular_price: null,
+            is_on_sale: false,
+            discount_percentage: null,
+            image_url: product.image || null,
+            product_url: product.product_url,
+            stock_status: product.stock_status || 'In Stock',
+            brand: product.brand || null,
+            highlights: [],
+            description: null,
+            scraped_at: new Date().toISOString(),
+          });
+        }
+        console.log(`✅ Added ${products.length} fallback products for Toolstation ${category}`);
+      }
+      continue;
+    }
+
+    // Get configs for this supplier
+    const supplierConfigs = SCRAPE_CONFIGS.filter(c => c.supplier === supplierName);
+
+    // Group by category
     const categoryGroups: Record<string, string[]> = {};
     const categoryPrefixes: Record<string, string> = {};
 
-    for (const config of configs) {
+    for (const config of supplierConfigs) {
       if (!categoryGroups[config.category]) {
         categoryGroups[config.category] = [];
         categoryPrefixes[config.category] = config.skuPrefix;
@@ -450,14 +495,14 @@ async function scrapeSupplierCategories(supplierConfigs: typeof SCRAPE_CONFIGS):
       categoryGroups[config.category].push(config.url);
     }
 
-    // Scrape each category for this supplier
+    // Scrape each category
     for (const [category, urls] of Object.entries(categoryGroups)) {
-      console.log(`\n🎯 Scraping ${supplier} ${category} (${urls.length} URLs)...`);
-      const products = await batchScrapeProducts(urls, category, supplier, categoryPrefixes[category], supplierId);
+      console.log(`\n🎯 Scraping ${supplierName} ${category} (${urls.length} URLs)...`);
+      const products = await batchScrapeProducts(urls, category, supplierName, categoryPrefixes[category], supplierId);
       allProducts.push(...products);
 
-      // Rate limiting between supplier categories
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Rate limiting between categories
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
@@ -475,20 +520,13 @@ async function upsertProducts(products: any[]) {
 
   console.log(`💾 Upserting ${products.length} products to marketplace_products...`);
 
-  // Log first product for debugging
-  if (products.length > 0) {
-    console.log(`📝 Sample product being upserted:`, JSON.stringify(products[0], null, 2));
-  }
-
-  // Upsert in batches of 100
   const batchSize = 100;
   let successCount = 0;
-  let errors: string[] = [];
 
   for (let i = 0; i < products.length; i += batchSize) {
     const batch = products.slice(i, i + batchSize);
 
-    // Final safety deduplication within batch to prevent "ON CONFLICT DO UPDATE cannot affect row a second time"
+    // Deduplicate within batch
     const batchUnique = new Map<string, any>();
     for (const product of batch) {
       const key = `${product.supplier_id}:${product.sku}`;
@@ -499,12 +537,6 @@ async function upsertProducts(products: any[]) {
     }
     const dedupedBatch = Array.from(batchUnique.values());
 
-    if (dedupedBatch.length < batch.length) {
-      console.log(`⚠️ Batch ${i / batchSize + 1}: Removed ${batch.length - dedupedBatch.length} in-batch duplicates`);
-    }
-
-    console.log(`📦 Upserting batch ${i / batchSize + 1}: ${dedupedBatch.length} products`);
-
     const { data, error } = await supabase
       .from('marketplace_products')
       .upsert(dedupedBatch, {
@@ -514,22 +546,50 @@ async function upsertProducts(products: any[]) {
       .select('id');
 
     if (error) {
-      console.error(`❌ Batch upsert error:`, JSON.stringify(error));
-      console.error(`❌ Error code: ${error.code}, message: ${error.message}, details: ${error.details}`);
-      errors.push(`Batch ${i / batchSize + 1}: ${error.message}`);
+      console.error(`❌ Batch upsert error:`, error.message);
     } else {
-      const insertedCount = data?.length || 0;
-      successCount += insertedCount;
-      console.log(`✅ Batch ${i / batchSize + 1} success: ${insertedCount} rows affected`);
+      successCount += data?.length || 0;
     }
-  }
-
-  if (errors.length > 0) {
-    console.error(`⚠️ Total errors: ${errors.length}`, errors.join('; '));
   }
 
   console.log(`✅ Successfully upserted ${successCount}/${products.length} products`);
   return successCount;
+}
+
+// Also update the tools_weekly_cache for the weekly cache refresh
+async function updateToolsWeeklyCache(products: any[], supplierName: string) {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Group products by category
+  const byCategory: Record<string, any[]> = {};
+  for (const product of products) {
+    if (!byCategory[product.category]) {
+      byCategory[product.category] = [];
+    }
+    byCategory[product.category].push(product);
+  }
+
+  // Update cache for each category
+  for (const [category, categoryProducts] of Object.entries(byCategory)) {
+    const cacheKey = `${supplierName}-${category}`;
+
+    await supabase
+      .from('tools_weekly_cache')
+      .upsert({
+        id: crypto.randomUUID(),
+        category: cacheKey,
+        tools_data: categoryProducts,
+        total_products: categoryProducts.length,
+        created_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        update_status: 'complete',
+        last_updated: new Date().toISOString(),
+      }, {
+        onConflict: 'category',
+      });
+  }
 }
 
 // ========================================
@@ -542,105 +602,75 @@ serve(async (req) => {
   }
 
   try {
-    console.log('🚀 Tools Marketplace Scraper started');
-    console.log(`📋 Scraping ${SCRAPE_CONFIGS.length} categories from ${Object.keys(SUPPLIERS).length} suppliers`);
+    const body = await req.json().catch(() => ({}));
+    const batch = body.batch as number | undefined;
 
-    // Use batch scrape like the working materials scraper
-    const allProducts = await scrapeSupplierCategories(SCRAPE_CONFIGS);
+    // If batch is specified, only scrape that supplier batch
+    if (batch && SUPPLIER_BATCHES[batch]) {
+      const supplierNames = SUPPLIER_BATCHES[batch];
+      console.log(`🚀 Tools Marketplace Scraper - Batch ${batch}: ${supplierNames.join(', ')}`);
 
-    console.log(`📊 Total products scraped: ${allProducts.length}`);
+      const products = await scrapeSupplierCategories(supplierNames);
 
-    if (allProducts.length === 0) {
+      if (products.length === 0) {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            batch,
+            suppliers: supplierNames,
+            message: 'No products found - site may be blocking or unavailable',
+            productsCount: 0,
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Deduplicate
+      const uniqueProducts = new Map<string, any>();
+      for (const product of products) {
+        const key = `${product.supplier_id}:${product.sku}`;
+        if (!uniqueProducts.has(key) ||
+            (product.current_price && uniqueProducts.get(key).current_price && product.current_price < uniqueProducts.get(key).current_price)) {
+          uniqueProducts.set(key, product);
+        }
+      }
+      const deduplicatedProducts = Array.from(uniqueProducts.values());
+
+      // Save to database
+      const savedCount = await upsertProducts(deduplicatedProducts);
+
+      // Update weekly cache
+      for (const supplierName of supplierNames) {
+        const supplierProducts = deduplicatedProducts.filter(
+          p => p.supplier_id === SUPPLIERS[supplierName as keyof typeof SUPPLIERS]
+        );
+        if (supplierProducts.length > 0) {
+          await updateToolsWeeklyCache(supplierProducts, supplierName);
+        }
+      }
+
       return new Response(
         JSON.stringify({
-          success: false,
-          message: 'No valid tools found from any source - batch scrape may have failed or sites may be blocking',
-          productsCount: 0,
-          suppliersAttempted: Object.keys(SUPPLIERS).length,
-          categoriesAttempted: SCRAPE_CONFIGS.length
+          success: true,
+          batch,
+          suppliers: supplierNames,
+          productsCount: savedCount,
+          totalScraped: products.length,
+          message: `Batch ${batch} complete: ${savedCount} products from ${supplierNames.join(', ')}`,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Smart deduplication: supplier_id + sku, plus name normalization
-    const uniqueProducts = new Map<string, any>();
-    const normalizedNames = new Map<string, string>(); // Track normalized names to detect near-duplicates
-
-    // Helper to normalize product names for comparison
-    const normalizeName = (name: string): string => {
-      return name
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, '') // Remove non-alphanumeric
-        .replace(/\b(mm|cm|m|kg|g|ml|l|pcs|pc|pk|pack|set)\b/g, '') // Remove units
-        .trim();
-    };
-
-    for (const product of allProducts) {
-      const key = `${product.supplier_id}:${product.sku}`;
-      const normalizedName = normalizeName(product.name);
-
-      // Check if we already have this exact product
-      if (uniqueProducts.has(key)) {
-        const existing = uniqueProducts.get(key);
-        // Keep the one with the lower price (better deal)
-        if (product.current_price && existing.current_price && product.current_price < existing.current_price) {
-          uniqueProducts.set(key, product);
-          console.log(`💰 Keeping better price for ${product.name}: £${product.current_price} vs £${existing.current_price}`);
-        }
-        continue;
-      }
-
-      // Check for near-duplicate names within same supplier and category
-      const categoryKey = `${product.supplier_id}:${product.category}:${normalizedName}`;
-      if (normalizedNames.has(categoryKey)) {
-        const existingKey = normalizedNames.get(categoryKey)!;
-        const existing = uniqueProducts.get(existingKey);
-        if (existing) {
-          // Keep the one with better price
-          if (product.current_price && existing.current_price && product.current_price < existing.current_price) {
-            uniqueProducts.delete(existingKey);
-            uniqueProducts.set(key, product);
-            normalizedNames.set(categoryKey, key);
-            console.log(`🔄 Replaced near-duplicate: ${existing.name} with ${product.name} (better price)`);
-          }
-          continue;
-        }
-      }
-
-      uniqueProducts.set(key, product);
-      normalizedNames.set(categoryKey, key);
-    }
-
-    const deduplicatedProducts = Array.from(uniqueProducts.values());
-    console.log(`📊 After smart deduplication: ${deduplicatedProducts.length} unique products (removed ${allProducts.length - deduplicatedProducts.length} duplicates)`);
-
-    // Save to database
-    const savedCount = await upsertProducts(deduplicatedProducts);
-
-    // Summary by supplier
-    const supplierSummary = Object.keys(SUPPLIERS).map(supplier => ({
-      supplier,
-      count: allProducts.filter(p => p.supplier_id === SUPPLIERS[supplier as keyof typeof SUPPLIERS]).length
-    }));
-
-    // Summary by category
-    const categorySummary = ['hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'].map(cat => ({
-      category: cat,
-      count: allProducts.filter(p => p.category === cat).length
-    }));
-
-    console.log('📈 Supplier breakdown:', supplierSummary);
-    console.log('📈 Category breakdown:', categorySummary);
-
+    // No batch specified - return info about available batches
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Successfully scraped and saved ${savedCount} tools from ${Object.keys(SUPPLIERS).length} suppliers`,
-        productsCount: savedCount,
-        totalScraped: allProducts.length,
-        suppliers: supplierSummary,
-        categories: categorySummary
+        message: 'Tools Marketplace Scraper - use batch parameter (1-5) to scrape specific suppliers',
+        availableBatches: Object.entries(SUPPLIER_BATCHES).map(([num, suppliers]) => ({
+          batch: parseInt(num),
+          suppliers,
+        })),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

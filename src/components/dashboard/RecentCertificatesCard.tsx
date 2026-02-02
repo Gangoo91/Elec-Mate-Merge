@@ -5,31 +5,13 @@ import { FileText, ArrowRight, Clock, ChevronRight, MapPin, Plus, CloudOff, Aler
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
-import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { listAllBackups } from '@/utils/dataIntegrity';
 
 interface RecentCertificatesCardProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
 }
-
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05 }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 8 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 400, damping: 30 }
-  }
-};
 
 // Type for local backups
 interface LocalBackup {
@@ -144,16 +126,13 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   // Loading state
   if (isLoading) {
     return (
-      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
-        <div className="p-3 border-b border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">Recent Certificates</span>
-          </div>
+      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <FileText className="h-4 w-4 text-elec-yellow" />
+          <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
         </div>
-        <div className="p-3">
-          <LoadingSkeleton type="list" count={3} />
-        </div>
+        <Skeleton className="h-16 w-full rounded-xl bg-black/40 mb-2" />
+        <Skeleton className="h-16 w-full rounded-xl bg-black/40" />
       </div>
     );
   }
@@ -161,156 +140,112 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   // Empty state
   if (reports.length === 0) {
     return (
-      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
-        <div className="p-3 border-b border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">Recent Certificates</span>
-          </div>
+      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <FileText className="h-4 w-4 text-elec-yellow" />
+          <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
         </div>
-        <div className="p-3">
-          <div className="py-6 text-center">
-            <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-              <FileText className="h-5 w-5 text-elec-yellow/50" />
-            </div>
-            <p className="text-sm font-medium text-white/70 mb-1">No certificates yet</p>
-            <p className="text-xs text-white/40 mb-3">Create your first certificate to get started</p>
-            <Button
-              onClick={() => onNavigate('minor-works')}
-              className="bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 font-medium rounded-lg h-9 px-4 touch-manipulation"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Create Certificate
-            </Button>
+        <div className="text-center py-6">
+          <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+            <FileText className="h-6 w-6 text-elec-yellow/50" />
           </div>
+          <p className="text-sm text-white/40 mb-4">No certificates yet</p>
+          <Button
+            onClick={() => onNavigate('minor-works')}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-10 px-5 font-semibold rounded-xl"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Certificate
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
-      {/* Unsynced Changes Banner */}
-      {unsyncedCount > 0 && (
-        <div className="px-3 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-center gap-2">
-          <CloudOff className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
-          <span className="text-[11px] text-amber-400">
-            {unsyncedCount} certificate{unsyncedCount > 1 ? 's have' : ' has'} unsynced local changes
-          </span>
-        </div>
-      )}
-
+    <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="p-3 border-b border-elec-yellow/10">
+      <div className="p-4 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">Recent Certificates</span>
+            <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('my-reports')}
-            className="text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 h-7 px-2 text-xs font-medium touch-manipulation"
-          >
-            View All <ArrowRight className="h-3 w-3 ml-1" />
-          </Button>
+          {unsyncedCount > 0 && (
+            <span className="text-[10px] font-medium px-2 py-1 rounded-lg bg-amber-500/20 text-amber-400 flex items-center gap-1">
+              <CloudOff className="h-3 w-3" />
+              {unsyncedCount} unsynced
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Certificate Cards */}
-      <motion.div
-        className="p-2 space-y-1.5"
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
-        <AnimatePresence>
-          {reports.map((report) => {
+      {/* Certificate List */}
+      <div className="px-3 pb-3 space-y-2">
+        <AnimatePresence mode="popLayout">
+          {reports.slice(0, 4).map((report, index) => {
             const localBackup = hasNewerLocalBackup(report);
             return (
-              <motion.button
+              <motion.div
                 key={report.report_id}
-                variants={cardVariants}
-                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: index * 0.03 }}
                 className={cn(
-                  'w-full rounded-lg border bg-elec-yellow/5',
-                  'cursor-pointer transition-all touch-manipulation',
-                  'active:scale-[0.98]',
-                  'p-2.5 text-left',
-                  localBackup
-                    ? 'border-amber-500/30 hover:border-amber-500/50'
-                    : 'border-elec-yellow/10 hover:border-elec-yellow/30'
+                  "relative p-3 rounded-xl cursor-pointer",
+                  "bg-black/40 hover:bg-black/50 border border-white/5",
+                  "active:scale-[0.98] transition-all touch-manipulation"
                 )}
                 onClick={() => handleOpenCertificate(report)}
               >
-                <div className="flex items-center gap-2.5">
-                  {/* Type Badge */}
-                  <div className={cn(
-                    'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative',
-                    localBackup ? 'bg-amber-500/15' : 'bg-elec-yellow/15'
+                {/* Top row: Type badge + Status + Time */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={cn(
+                    "text-[10px] font-bold px-2 py-0.5 rounded-md",
+                    localBackup ? 'bg-amber-500/20 text-amber-400' : 'bg-elec-yellow/20 text-elec-yellow'
                   )}>
-                    <span className={cn(
-                      'text-[10px] font-bold',
-                      localBackup ? 'text-amber-400' : 'text-elec-yellow'
-                    )}>
-                      {getTypeLabel(report.report_type)}
-                    </span>
-                    {/* Local backup indicator dot */}
-                    {localBackup && (
-                      <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-amber-500 rounded-full border border-card" />
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    {/* Name and Status */}
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-xs font-medium text-white truncate">
-                        {report.client_name || 'Untitled'}
-                      </span>
-                      {localBackup ? (
-                        <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 bg-amber-500/15 text-amber-400 flex items-center gap-1">
-                          <AlertCircle className="w-2.5 h-2.5" />
-                          Unsynced
-                        </span>
-                      ) : (
-                        <span className={cn(
-                          'text-[9px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0',
-                          getStatusStyle(report.status)
-                        )}>
-                          {getStatusLabel(report.status)}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Address & Time */}
-                    <div className="flex items-center gap-2 text-[10px] text-white/40">
-                      <span className="flex items-center gap-1 truncate">
-                        <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
-                        <span className="truncate">{report.installation_address || 'No address'}</span>
-                      </span>
-                      <span className="flex items-center gap-1 flex-shrink-0">
-                        <Clock className="w-2.5 h-2.5" />
-                        {localBackup
-                          ? `Local: ${formatTimeAgo(localBackup.savedAt)}`
-                          : formatTimeAgo(report.updated_at)
-                        }
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Chevron */}
-                  <ChevronRight className={cn(
-                    'w-4 h-4 flex-shrink-0',
-                    localBackup ? 'text-amber-400/50' : 'text-elec-yellow/30'
-                  )} />
+                    {getTypeLabel(report.report_type)}
+                  </span>
+                  <span className={cn(
+                    'text-[10px] font-medium px-2 py-0.5 rounded-md',
+                    localBackup ? 'bg-amber-500/15 text-amber-400' : getStatusStyle(report.status)
+                  )}>
+                    {localBackup ? 'Unsynced' : getStatusLabel(report.status)}
+                  </span>
+                  <span className="text-[10px] text-white/30 ml-auto">
+                    {formatTimeAgo(localBackup?.savedAt || report.updated_at)}
+                  </span>
                 </div>
-              </motion.button>
+
+                {/* Client name */}
+                <h4 className="text-sm font-semibold text-white truncate text-left">
+                  {report.client_name || 'Untitled'}
+                </h4>
+
+                {/* Address */}
+                <p className="text-xs text-white/40 truncate text-left mt-0.5">
+                  {report.installation_address || 'No address'}
+                </p>
+
+                {/* Chevron */}
+                <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/20" />
+              </motion.div>
             );
           })}
         </AnimatePresence>
-      </motion.div>
+      </div>
+
+      {reports.length > 4 && (
+        <div className="px-3 pb-3">
+          <button
+            className="w-full py-2 text-xs text-elec-yellow/60 hover:text-elec-yellow transition-colors"
+            onClick={() => onNavigate('my-reports')}
+          >
+            View All ({reports.length})
+          </button>
+        </div>
+      )}
     </div>
   );
 };

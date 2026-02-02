@@ -45,6 +45,20 @@ export const MobileCircuitResults = ({
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [showWorkingsSheet, setShowWorkingsSheet] = useState(false);
 
+  // Guard against incomplete design data
+  if (!design || !design.circuits || design.circuits.length === 0) {
+    return (
+      <div className="min-h-screen bg-elec-dark flex items-center justify-center p-4">
+        <div className="text-center">
+          <p className="text-white/70 mb-4">Unable to load design data</p>
+          <button onClick={onReset} className="text-elec-yellow underline">
+            Start New Design
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Send to Agent handler
   const sendToAgent = (agentType: AgentType) => {
     try {

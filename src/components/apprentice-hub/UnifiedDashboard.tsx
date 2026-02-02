@@ -82,12 +82,15 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     return (
       <div className="px-4 py-6 space-y-6 lg:px-6">
         {/* Welcome Header */}
-        <div className="space-y-1">
-          <h2 className="text-2xl font-bold text-foreground">
-            {getGreeting()}, <span className="text-elec-yellow">{firstName}</span>
+        <div className="space-y-0.5">
+          <p className="text-xs text-muted-foreground font-medium tracking-wide">
+            {getGreeting()}
+          </p>
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+            {firstName}
           </h2>
-          <p className="text-muted-foreground">
-            Let's get started by selecting your qualification
+          <p className="text-sm text-muted-foreground pt-1">
+            Select your qualification to get started
           </p>
         </div>
 
@@ -100,14 +103,17 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   return (
     <div className="px-4 py-6 space-y-6 lg:px-6">
       {/* Welcome Header with Course Badge */}
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-foreground">
-          {getGreeting()}, <span className="text-elec-yellow">{firstName}</span>
+      <div className="space-y-1">
+        <p className="text-xs text-muted-foreground font-medium tracking-wide">
+          {getGreeting()}
+        </p>
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+          {firstName}
         </h2>
         {userSelection && (
           <button
             onClick={() => setShowCourseSelector(true)}
-            className="flex items-center gap-2 h-11 text-sm text-muted-foreground hover:text-foreground transition-colors group touch-manipulation"
+            className="flex items-center gap-2 h-11 text-sm text-muted-foreground hover:text-foreground transition-colors group touch-manipulation mt-1"
           >
             <GraduationCap className="h-4 w-4" />
             <span>{userSelection.qualification?.title}</span>

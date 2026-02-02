@@ -55,11 +55,15 @@ const MobileMetricCard = ({ icon: Icon, label, value, accent }: {
 export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSummaryProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Calculate key metrics
-  const connectedLoadKw = (design.totalLoad / 1000).toFixed(1);
-  const diversifiedLoad = design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad;
+  // Guard against missing data
+  if (!design) return null;
+
+  // Calculate key metrics with safe defaults
+  const totalLoad = design.totalLoad || 0;
+  const connectedLoadKw = (totalLoad / 1000).toFixed(1);
+  const diversifiedLoad = design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || totalLoad;
   const diversifiedLoadKw = (diversifiedLoad / 1000).toFixed(1);
-  const diversityFactor = design.diversityFactor || (diversifiedLoad / design.totalLoad);
+  const diversityFactor = design.diversityFactor || (totalLoad > 0 ? diversifiedLoad / totalLoad : 1);
   const diversityPercent = ((1 - diversityFactor) * 100).toFixed(0);
   
   const mainSwitchRating = design.consumerUnit?.mainSwitchRating || 100;
@@ -74,7 +78,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
     ? (design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1) 
     : '1.5';
   
-  const phaseType = design.circuits.some(c => c.phases === 'three') ? '3-Phase' : 'Single Phase';
+  const phaseType = design.circuits?.some(c => c.phases === 'three') ? '3-Phase' : 'Single Phase';
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);

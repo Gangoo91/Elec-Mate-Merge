@@ -256,30 +256,9 @@ export const AIMethodStatementGenerator: React.FC = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
-      <div className="w-full px-0 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto sm:px-4 md:px-6 lg:px-8">
-        <div className="mb-6 sm:mb-8 px-2 sm:px-0">
-          <div className="relative overflow-hidden rounded-lg border border-emerald-500/10 bg-elec-card/30 backdrop-blur-sm shadow-md hover:shadow-lg hover:border-emerald-500/20 transition-all duration-300">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
-            
-            <div className="p-4 sm:p-6 space-y-3">
-              <div className="flex flex-col items-center text-center space-y-3">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                  <span className="bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-                    AI Method Statement Generator
-                  </span>
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-                  Generate comprehensive method statements with step-by-step procedures and integrated hazard analysis
-                </p>
-              </div>
-              
-              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-6 md:space-y-8">
+    <div className="min-h-screen bg-background">
+      <div className="w-full px-2 sm:px-4 md:px-6 py-4 max-w-4xl mx-auto">
+        <div className="space-y-4">
           {!showResults ? (
             <>
               {/* Imported Circuit Context Banner */}
@@ -304,29 +283,34 @@ export const AIMethodStatementGenerator: React.FC = () => {
             </>
           ) : (
             <>
-              {resumedJob && status !== 'complete' && (
-                <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
-                  <Clock className="h-5 w-5 text-blue-400 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-blue-400">
-                      Resuming generation from earlier...
-                    </p>
-                    <p className="text-xs text-blue-400/70 mt-0.5">
-                      Current progress: {progress}%
-                    </p>
-                  </div>
-                </div>
-              )}
+              {/* Show processing view only while generating */}
+              {(status === 'pending' || status === 'processing') && (
+                <>
+                  {resumedJob && (
+                    <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-blue-400 shrink-0" />
+                      <div>
+                        <p className="text-sm font-semibold text-blue-400">
+                          Resuming generation from earlier...
+                        </p>
+                        <p className="text-xs text-blue-400/70 mt-0.5">
+                          Current progress: {progress}%
+                        </p>
+                      </div>
+                    </div>
+                  )}
 
-              <MethodStatementProcessingView
-                overallProgress={progress}
-                currentStep={currentStep}
-                elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
-                onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
-                isCancelling={isCancelling}
-                jobDescription={currentJobDescription}
-              />
+                  <MethodStatementProcessingView
+                    overallProgress={progress}
+                    currentStep={currentStep}
+                    elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
+                    estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
+                    onCancel={handleCancel}
+                    isCancelling={isCancelling}
+                    jobDescription={currentJobDescription}
+                  />
+                </>
+              )}
 
               {(error || status === 'cancelled') && (
                 <div className={`p-4 border rounded-lg ${

@@ -141,7 +141,7 @@ export function HeroWelcome() {
             </h1>
 
             <p className="text-xs sm:text-sm text-white/40 mt-0.5 line-clamp-1">
-              Your command center for electrical excellence
+              Let's get to work
             </p>
           </div>
 

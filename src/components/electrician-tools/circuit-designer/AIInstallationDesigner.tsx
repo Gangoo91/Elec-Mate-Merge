@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { DesignProcessingView } from "./DesignProcessingView";
@@ -221,12 +222,30 @@ interface ImportedAgentContext {
 }
 
 export const AIInstallationDesigner = () => {
-  const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
+  const routerLocation = useLocation();
+
+  // Check if we're viewing saved results
+  const savedResultsState = routerLocation.state as {
+    fromSavedResults?: boolean;
+    jobId?: string;
+    outputData?: any;
+    inputData?: any;
+  } | null;
+
+  const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>(
+    savedResultsState?.fromSavedResults ? 'results' : 'input'
+  );
   const [userRequest, setUserRequest] = useState<string>('');
   const [totalCircuits, setTotalCircuits] = useState<number>(0);
-  const [designData, setDesignData] = useState<any>(null);
+  const [designData, setDesignData] = useState<any>(() => {
+    // Initialize with saved results if present
+    if (savedResultsState?.fromSavedResults && savedResultsState.outputData) {
+      return savedResultsState.outputData;
+    }
+    return null;
+  });
   const [jobId, setJobId] = useState<string | null>(null);
-  const successToastShown = useRef(false);
+  const successToastShown = useRef(!!savedResultsState?.fromSavedResults);
   // State for context imported from other agents via AgentInbox
   const [importedContext, setImportedContext] = useState<ImportedAgentContext | null>(null);
   const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(undefined);

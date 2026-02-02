@@ -1,6 +1,8 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, User, FileText, Settings, Check, Loader2, Send } from "lucide-react";
+import { draftStorage } from "@/utils/draftStorage";
+import { AutoSaveIndicator } from "../shared/AutoSaveIndicator";
 import { cn } from "@/lib/utils";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
@@ -48,6 +50,35 @@ interface QuoteWizardProps {
 }
 
 export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData, initialCertificateData }: QuoteWizardProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [lastSaved, setLastSaved] = useState<Date | undefined>();
+  const [isSaving, setIsSaving] = useState(false);
+  const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
+  const [recoveredDraft, setRecoveredDraft] = useState<any>(null);
+  const quoteIdRef = useRef<string | null>(null);
+
+  // Wrap onQuoteGenerated to clear draft after successful save
+  const handleQuoteGenerated = useCallback(() => {
+    // Clear drafts since quote was successfully saved
+    draftStorage.clearDraft('quote', quoteIdRef.current);
+    draftStorage.clearDraft('quote', null); // Also clear the "new" draft
+
+    if (onQuoteGenerated) {
+      onQuoteGenerated();
+    }
+  }, [onQuoteGenerated]);
+
+  // Check for recoverable draft on mount
+  useEffect(() => {
+    if (!initialQuote && !initialCostData && !initialCertificateData) {
+      const draft = draftStorage.loadDraft('quote', null);
+      if (draft && draftStorage.hasRecoverableDraft('quote')) {
+        setRecoveredDraft(draft.data);
+        setShowRecoveryBanner(true);
+      }
+    }
+  }, []);
+
   // Merge certificate data into initial quote for proper initialization
   const mergedInitialQuote = initialCertificateData
     ? {
@@ -81,9 +112,63 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData, i
     generateQuote,
     resetQuote,
     isGenerating,
-  } = useQuoteBuilder(onQuoteGenerated, mergedInitialQuote);
+  } = useQuoteBuilder(handleQuoteGenerated, mergedInitialQuote);
+
+  // Keep quoteIdRef updated for use in the handleQuoteGenerated callback
+  useEffect(() => {
+    quoteIdRef.current = quote.id || null;
+  }, [quote.id]);
 
   const voiceForm = useOptionalVoiceFormContext();
+
+  // Scroll to top when step changes
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [currentStep]);
+
+  // Auto-save to localStorage every 10 seconds when data changes
+  useEffect(() => {
+    const saveTimer = setInterval(() => {
+      if (quote.client?.name || quote.jobDetails?.title || (quote.items && quote.items.length > 0)) {
+        setIsSaving(true);
+        draftStorage.saveDraft('quote', quote.id || null, {
+          client: quote.client,
+          jobDetails: quote.jobDetails,
+          items: quote.items,
+          settings: quote.settings,
+          currentStep,
+        });
+        setLastSaved(new Date());
+        setTimeout(() => setIsSaving(false), 500);
+      }
+    }, 10000);
+
+    return () => clearInterval(saveTimer);
+  }, [quote, currentStep]);
+
+  // Handle draft recovery
+  const handleRecoverDraft = useCallback(() => {
+    if (recoveredDraft) {
+      if (recoveredDraft.client) updateClient(recoveredDraft.client);
+      if (recoveredDraft.jobDetails) updateJobDetails(recoveredDraft.jobDetails);
+      if (recoveredDraft.items) {
+        recoveredDraft.items.forEach((item: any) => addItem(item));
+      }
+      if (recoveredDraft.settings) updateSettings(recoveredDraft.settings);
+      setShowRecoveryBanner(false);
+      setRecoveredDraft(null);
+    }
+  }, [recoveredDraft, updateClient, updateJobDetails, addItem, updateSettings]);
+
+  const handleDiscardDraft = useCallback(() => {
+    draftStorage.clearDraft('quote', null);
+    setShowRecoveryBanner(false);
+    setRecoveredDraft(null);
+  }, []);
 
   // Voice form field handler
   const handleVoiceFillField = useCallback((fieldName: string, value: string) => {
@@ -309,9 +394,47 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData, i
   };
 
   return (
-    <div className="space-y-6">
+    <div ref={contentRef} className="space-y-6 pb-32">
+      {/* Recovery Banner */}
+      {showRecoveryBanner && recoveredDraft && (
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Quote?</h3>
+              <p className="text-sm text-white/70">
+                You have an unsaved quote draft
+                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}.
+                Would you like to recover it?
+              </p>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleDiscardDraft}
+                className="text-white/60 hover:text-white"
+              >
+                Discard
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleRecoverDraft}
+                className="bg-amber-500 text-black hover:bg-amber-400"
+              >
+                Recover
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Email Banner */}
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
+
+      {/* Auto-save indicator */}
+      <div className="flex justify-end">
+        <AutoSaveIndicator isSaving={isSaving} lastSaved={lastSaved} />
+      </div>
 
       {/* Step Progress - iOS-style segmented control */}
       <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-1.5">

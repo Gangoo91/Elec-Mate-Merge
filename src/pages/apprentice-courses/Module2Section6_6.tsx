@@ -477,7 +477,7 @@ const Module2Section6_6: React.FC = () => {
         {/* Navigation Footer */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to="../6-5">
+            <Link to="/study-centre/apprentice/level2/module2/section6/6-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: 2.6.5
             </Link>

@@ -82,7 +82,7 @@ interface MyReportsProps {
 }
 
 type StatusFilter = 'all' | 'draft' | 'in-progress' | 'completed';
-type TypeFilter = 'all' | 'eicr' | 'eic' | 'minor-works';
+type TypeFilter = 'all' | 'eicr' | 'eic' | 'minor-works' | 'solar-pv' | 'ev-charging' | 'fire-alarm' | 'emergency-lighting' | 'pat-testing';
 
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
@@ -813,6 +813,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               { value: 'eicr' as TypeFilter, label: 'EICR' },
               { value: 'eic' as TypeFilter, label: 'EIC' },
               { value: 'minor-works' as TypeFilter, label: 'MW' },
+              { value: 'solar-pv' as TypeFilter, label: 'Solar' },
+              { value: 'ev-charging' as TypeFilter, label: 'EV' },
+              { value: 'fire-alarm' as TypeFilter, label: 'Fire' },
+              { value: 'emergency-lighting' as TypeFilter, label: 'EmLt' },
+              { value: 'pat-testing' as TypeFilter, label: 'PAT' },
             ].map(({ value, label }) => (
               <button
                 key={value}

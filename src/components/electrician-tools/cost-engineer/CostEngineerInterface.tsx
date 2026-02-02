@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,9 +26,20 @@ type ProjectType = 'domestic' | 'commercial' | 'industrial';
 
 const CostEngineerInterface = () => {
   const { user } = useAuth();
+  const routerLocation = useLocation();
   const storageKey = useMemo(() => getStorageKey(user?.id), [user?.id]);
 
-  const [viewState, setViewState] = useState<ViewState>('input');
+  // Check if we're viewing saved results
+  const savedResultsState = routerLocation.state as {
+    fromSavedResults?: boolean;
+    jobId?: string;
+    outputData?: any;
+    inputData?: any;
+  } | null;
+
+  const [viewState, setViewState] = useState<ViewState>(
+    savedResultsState?.fromSavedResults ? 'results' : 'input'
+  );
   const [projectType, setProjectType] = useState<ProjectType>('domestic');
   const [prompt, setPrompt] = useState("");
   const [originalQueryFromResponse, setOriginalQueryFromResponse] = useState<string>("");
@@ -61,6 +73,58 @@ const CostEngineerInterface = () => {
       clearStoredCircuitContext();
     }
   }, []);
+
+  // Load saved results from navigation state
+  useEffect(() => {
+    if (savedResultsState?.fromSavedResults && savedResultsState.outputData) {
+      const data = savedResultsState.outputData;
+      const inputData = savedResultsState.inputData;
+
+      // Store original query from input data
+      if (inputData?.query) {
+        setOriginalQueryFromResponse(inputData.query);
+        setPrompt(inputData.query);
+      }
+
+      // Store structured data
+      const coreStructuredData = data.structuredData;
+      setStructuredData(coreStructuredData);
+
+      // Parse results - same logic as handleJobComplete
+      if (coreStructuredData && coreStructuredData.summary) {
+        setParsedResults({
+          totalCost: coreStructuredData.summary.grandTotal,
+          materialsTotal: coreStructuredData.materials?.subtotal || 0,
+          labourTotal: coreStructuredData.labour?.subtotal || 0,
+          materials: coreStructuredData.materials?.items?.map((m: any) => ({
+            item: m.description || m.item || 'Unknown item',
+            quantity: m.quantity,
+            unit: m.unit,
+            unitPrice: m.unitPrice,
+            total: m.total,
+            supplier: m.supplier
+          })) || [],
+          labour: {
+            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+            rate: 50,
+            total: coreStructuredData.labour?.subtotal || 0,
+            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+          },
+          additionalCosts: [],
+          vatAmount: coreStructuredData.summary.vat,
+          vatRate: 20,
+          subtotal: coreStructuredData.summary.subtotal,
+          rawText: data.response
+        });
+      } else if (data.response) {
+        // Fallback to text parsing
+        const parsed = parseCostAnalysis(data.response);
+        setParsedResults(parsed);
+      }
+
+      setViewState('results');
+    }
+  }, [savedResultsState]);
 
   const handleUseImportedContext = () => {
     if (importedContext) {

@@ -1,0 +1,240 @@
+{
+  "certificate_number": "SPV-2026-001234",
+  "certificate_type": "installation",
+  "certificate_type_display": "New Installation",
+  "work_type": "new-installation",
+  "work_type_display": "New Installation",
+  "installation_date": "15 January 2026",
+  "commissioning_date": "16 January 2026",
+
+  "client_name": "Mr John Smith",
+  "client_address": "42 Oak Tree Lane, Wilmslow",
+  "client_postcode": "SK9 5AF",
+  "client_phone": "07700 900123",
+  "client_email": "john.smith@email.com",
+
+  "installation_address": "42 Oak Tree Lane, Wilmslow",
+  "installation_postcode": "SK9 5AF",
+  "property_type_display": "Domestic",
+  "ownership_type": "Owner Occupied",
+
+  "mcs_details": {
+    "installer_number": "MCS 12345",
+    "installation_number": "MCS-SPV-2026-001234",
+    "consumer_code": "RECC",
+    "consumer_code_display": "RECC"
+  },
+
+  "system_type": "hybrid",
+  "system_type_display": "Hybrid (Grid-tied with Battery)",
+  "total_capacity": "8.64",
+  "total_panels": 16,
+  "estimated_annual_yield": "7,344",
+  "estimated_co2_savings": "1,542",
+  "yield_calculation_method_display": "MCS Estimator",
+
+  "array_count": 2,
+  "arrays": [
+    {
+      "array_number": 1,
+      "panel_make": "JA Solar",
+      "panel_model": "JAM54D40-455/GB",
+      "panel_wattage": 455,
+      "panel_count": 10,
+      "array_capacity": "4.55",
+      "orientation": "South",
+      "tilt_angle": 35,
+      "shading_factor": "1.00",
+      "mcs_certified_display": "Yes"
+    },
+    {
+      "array_number": 2,
+      "panel_make": "JA Solar",
+      "panel_model": "JAM54D40-455/GB",
+      "panel_wattage": 455,
+      "panel_count": 6,
+      "array_capacity": "2.73",
+      "orientation": "South-East",
+      "tilt_angle": 30,
+      "shading_factor": "0.95",
+      "mcs_certified_display": "Yes"
+    }
+  ],
+
+  "inverter_count": 1,
+  "inverters": [
+    {
+      "inverter_number": 1,
+      "make": "GivEnergy",
+      "model": "GIV-HY-6.0-1P-Gen3",
+      "serial_number": "GE2026A12345",
+      "rated_power": "6.0",
+      "type_display": "Hybrid",
+      "mppt_count": 2,
+      "location": "Garage - rear wall",
+      "mcs_certified_display": "Yes"
+    }
+  ],
+
+  "has_battery": true,
+  "battery": {
+    "installed": true,
+    "make": "GivEnergy",
+    "model": "All-in-One 9.5kWh",
+    "serial_number": "GEAIO2026B67890",
+    "capacity": "9.5",
+    "chemistry": "lfp",
+    "chemistry_display": "Lithium Iron Phosphate (LFP)"
+  },
+
+  "grid_connection": {
+    "dno_name": "Electricity North West",
+    "mpan": "1200023305967",
+    "application_type": "G98",
+    "application_type_display": "G98 (Single Phase < 16A)",
+    "application_reference": "ENW-G98-2026-12345",
+    "application_date": "5 January 2026",
+    "approval_date": "10 January 2026",
+    "approval_reference": "ENW-APP-67890",
+    "export_limited": false,
+    "export_limit_kw": ""
+  },
+
+  "metering": {
+    "meter_type": "smart",
+    "meter_type_display": "Smart Meter",
+    "meter_make": "Landis+Gyr",
+    "meter_model": "E470",
+    "meter_serial": "LG2026C11223",
+    "ct_ratio": "N/A"
+  },
+
+  "array_tests": [
+    {
+      "array_number": 1,
+      "voc_measured": "425.5",
+      "isc_measured": "14.2",
+      "insulation_resistance": "> 1000",
+      "polarity_result": "PASS",
+      "polarity_class": "pass",
+      "continuity_result": "PASS",
+      "continuity_class": "pass"
+    },
+    {
+      "array_number": 2,
+      "voc_measured": "255.3",
+      "isc_measured": "14.1",
+      "insulation_resistance": "> 1000",
+      "polarity_result": "PASS",
+      "polarity_class": "pass",
+      "continuity_result": "PASS",
+      "continuity_class": "pass"
+    }
+  ],
+
+  "inverter_tests": [
+    {
+      "inverter_number": 1,
+      "dc_isolator_result": "PASS",
+      "dc_isolator_class": "pass",
+      "ac_isolator_result": "PASS",
+      "ac_isolator_class": "pass",
+      "anti_islanding_result": "PASS",
+      "anti_islanding_class": "pass",
+      "protection_result": "PASS",
+      "protection_class": "pass"
+    }
+  ],
+
+  "ac_tests": {
+    "earthing_arrangement": "TN-C-S",
+    "earthing_arrangement_display": "TN-C-S (PME)",
+    "ze_value": "0.18",
+    "zs_value": "0.42",
+    "rcd_type": "Type A",
+    "rcd_rating": "30",
+    "rcd_trip_time": "18",
+    "insulation_resistance": "> 200",
+    "polarity_result": "PASS",
+    "polarity_class": "pass",
+    "bidirectional_device_result": "PASS",
+    "bidirectional_device_class": "pass"
+  },
+
+  "commissioning": {
+    "system_operational": true,
+    "export_verified": true,
+    "generation_meter_reading": "0.0",
+    "customer_briefed": true,
+    "documentation_provided": true
+  },
+
+  "no_defects": true,
+  "defects": [],
+
+  "handover": {
+    "user_manual_provided": true,
+    "warranty_docs_provided": true,
+    "mcs_document_provided": true,
+    "maintenance_schedule_provided": true,
+    "emergency_shutdown_explained": true
+  },
+
+  "overall_satisfactory": true,
+  "overall_assessment_display": "SATISFACTORY",
+  "overall_assessment_class": "pass",
+
+  "installer_name": "David Williams",
+  "installer_company": "SolarTech Installations Ltd",
+  "installer_mcs_number": "MCS 12345",
+  "installer_address": "Unit 5, Solar Park, Manchester, M1 2AB",
+  "installer_phone": "0161 234 5678",
+  "installer_email": "info@solartech.co.uk",
+  "installer_date": "16 January 2026",
+  "installer_signature": "",
+
+  "has_electrician": true,
+  "electrician_name": "James Thompson",
+  "electrician_company": "SolarTech Installations Ltd",
+  "electrician_registration": "NICEIC 54321",
+  "electrician_scheme": "NICEIC",
+  "electrician_date": "16 January 2026",
+  "electrician_signature": "",
+
+  "photos": [
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Array+1",
+      "caption": "Array 1 - South facing roof"
+    },
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Array+2",
+      "caption": "Array 2 - South-East roof"
+    },
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Inverter",
+      "caption": "GivEnergy hybrid inverter"
+    },
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Battery",
+      "caption": "9.5kWh battery unit"
+    },
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Isolator",
+      "caption": "AC/DC isolators"
+    },
+    {
+      "url": "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Labels",
+      "caption": "Warning labels installed"
+    }
+  ],
+
+  "has_additional_notes": true,
+  "additional_notes": "System commissioned successfully. Customer fully briefed on operation including emergency shutdown procedure. App monitoring configured and demonstrated. Annual maintenance recommended.",
+
+  "company_name": "SolarTech Installations Ltd",
+  "company_address": "Unit 5, Solar Park, Manchester, M1 2AB",
+  "company_phone": "0161 234 5678",
+  "company_email": "info@solartech.co.uk",
+  "company_logo": "",
+  "company_accent_color": "#f59e0b"
+}

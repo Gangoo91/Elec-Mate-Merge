@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,6 +17,8 @@ import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { draftStorage } from '@/utils/draftStorage';
+import { AutoSaveIndicator } from '../shared/AutoSaveIndicator';
 
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
@@ -63,6 +65,21 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const [isGenerating, setIsGenerating] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const { companyProfile } = useCompanyProfile();
+  const [lastSaved, setLastSaved] = useState<Date | undefined>();
+  const [isSaving, setIsSaving] = useState(false);
+  const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
+  const [recoveredDraft, setRecoveredDraft] = useState<any>(null);
+
+  // Check for recoverable draft on mount (only for new invoices, not quote conversions)
+  useEffect(() => {
+    if (!sourceQuote && !existingInvoice && !initialCertificateData) {
+      const draft = draftStorage.loadDraft('invoice', null);
+      if (draft && draftStorage.hasRecoverableDraft('invoice')) {
+        setRecoveredDraft(draft.data);
+        setShowRecoveryBanner(true);
+      }
+    }
+  }, []);
 
   // Get default settings from company profile
   const defaultLabourRate = companyProfile?.hourly_rate || 50;
@@ -109,6 +126,53 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
     }
   }, [currentStep]);
 
+  // Auto-save to localStorage every 10 seconds when data changes
+  useEffect(() => {
+    // Don't auto-save if we're converting from a quote (that data is already saved)
+    if (sourceQuote) return;
+
+    const saveTimer = setInterval(() => {
+      const invoice = invoiceBuilder.invoice;
+      if (invoice.client?.name || invoice.jobDetails?.title || (invoice.items && invoice.items.length > 0) || (invoice.additional_invoice_items && invoice.additional_invoice_items.length > 0)) {
+        setIsSaving(true);
+        draftStorage.saveDraft('invoice', invoice.id || null, {
+          client: invoice.client,
+          jobDetails: invoice.jobDetails,
+          items: invoice.items,
+          additional_invoice_items: invoice.additional_invoice_items,
+          settings: invoice.settings,
+          invoice_notes: invoice.invoice_notes,
+          currentStep,
+        });
+        setLastSaved(new Date());
+        setTimeout(() => setIsSaving(false), 500);
+      }
+    }, 10000);
+
+    return () => clearInterval(saveTimer);
+  }, [invoiceBuilder.invoice, currentStep, sourceQuote]);
+
+  // Handle draft recovery
+  const handleRecoverDraft = useCallback(() => {
+    if (recoveredDraft) {
+      if (recoveredDraft.client) invoiceBuilder.updateClientDetails(recoveredDraft.client);
+      if (recoveredDraft.jobDetails) invoiceBuilder.updateJobDetails(recoveredDraft.jobDetails);
+      if (recoveredDraft.additional_invoice_items) {
+        recoveredDraft.additional_invoice_items.forEach((item: any) => invoiceBuilder.addInvoiceItem(item));
+      }
+      if (recoveredDraft.settings) invoiceBuilder.updateInvoiceSettings(recoveredDraft.settings);
+      if (recoveredDraft.invoice_notes) invoiceBuilder.setInvoiceNotes(recoveredDraft.invoice_notes);
+      setShowRecoveryBanner(false);
+      setRecoveredDraft(null);
+    }
+  }, [recoveredDraft, invoiceBuilder]);
+
+  const handleDiscardDraft = useCallback(() => {
+    draftStorage.clearDraft('invoice', null);
+    setShowRecoveryBanner(false);
+    setRecoveredDraft(null);
+  }, []);
+
   // Certificate data is now merged into existingInvoice at the top of the component
   // This ensures proper initialization timing
 
@@ -130,6 +194,10 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
     setIsGenerating(false);
 
     if (success) {
+      // Clear the draft since invoice was successfully saved
+      draftStorage.clearDraft('invoice', invoiceBuilder.invoice.id || null);
+      draftStorage.clearDraft('invoice', null); // Also clear the "new" draft
+
       if (onInvoiceGenerated) {
         onInvoiceGenerated();
       } else {
@@ -225,6 +293,46 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
 
   return (
     <div ref={contentRef} className="space-y-6 pb-32">
+      {/* Recovery Banner */}
+      {showRecoveryBanner && recoveredDraft && (
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Invoice?</h3>
+              <p className="text-sm text-white/70">
+                You have an unsaved invoice draft
+                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}.
+                Would you like to recover it?
+              </p>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleDiscardDraft}
+                className="text-white/60 hover:text-white"
+              >
+                Discard
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleRecoverDraft}
+                className="bg-amber-500 text-black hover:bg-amber-400"
+              >
+                Recover
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Auto-save indicator */}
+      {!sourceQuote && (
+        <div className="flex justify-end">
+          <AutoSaveIndicator isSaving={isSaving} lastSaved={lastSaved} />
+        </div>
+      )}
+
       {/* Step Progress - Clean pills (matching quote wizard) */}
       <div className="flex items-center justify-center gap-2">
         {steps.map((step, index) => {

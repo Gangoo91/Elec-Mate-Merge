@@ -340,7 +340,7 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
   return (
     <div className="flex-1 flex flex-col">
       {/* Results Content */}
-      <div className="flex-1 px-4 pb-48">
+      <div className="flex-1 px-4 pb-48 sm:pb-8">
         <ComprehensiveResultsView
           analysis={analysis}
           structuredData={structuredData}
@@ -348,10 +348,66 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
           originalQuery={originalQuery}
           onNewAnalysis={onNewAnalysis}
         />
+
+        {/* Desktop Actions - Inline at bottom of content */}
+        <div className="hidden sm:block mt-8 max-w-2xl mx-auto">
+          <div className="bg-card/50 border border-white/10 rounded-2xl p-6 space-y-4">
+            {/* Primary Action */}
+            <Button
+              size="lg"
+              className="w-full h-12 bg-gradient-to-r from-elec-yellow to-amber-500 hover:from-elec-yellow/90 hover:to-amber-500/90 text-black font-bold"
+              onClick={handleSendToQuoteHub}
+            >
+              <Send className="h-5 w-5 mr-2" />
+              Send to Quote Hub
+            </Button>
+
+            {/* Secondary Actions */}
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                variant="secondary"
+                size="default"
+                className="h-11"
+                onClick={handleExportPDF}
+                disabled={isGeneratingPDF}
+              >
+                <Download className="h-4 w-4 mr-2" />
+                {isGeneratingPDF ? 'Generating...' : 'Export PDF'}
+              </Button>
+              <Button
+                variant="ghost"
+                size="default"
+                className="h-11 border border-white/20 hover:bg-white/5"
+                onClick={onNewAnalysis}
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                New Analysis
+              </Button>
+            </div>
+
+            {/* Tertiary Actions */}
+            <div className="flex justify-center gap-4 pt-1">
+              <button
+                onClick={handleCopyToClipboard}
+                className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1"
+              >
+                <Copy className="h-3 w-3" />
+                Copy
+              </button>
+              <button
+                onClick={() => setShowPayloadPreview(true)}
+                className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1"
+              >
+                <Eye className="h-3 w-3" />
+                Debug
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Fixed Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 pb-6 bg-gradient-to-t from-background via-background/95 to-transparent z-40">
+      {/* Mobile Only - Fixed Bottom Actions */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 p-4 pb-6 bg-gradient-to-t from-background via-background/95 to-transparent z-40">
         <div className="max-w-md mx-auto space-y-3">
           {/* Primary Action */}
           <Button

@@ -84,7 +84,24 @@ const InspectionIndex = () => {
   const handleEditReport = (reportId: string, reportType?: string) => {
     setCurrentReportId(reportId);
     setCurrentReportType(reportType || null);
+
     // Route to correct form based on report type
+    // New certificate types use dedicated routes (React Router)
+    if (reportType === 'ev-charging') {
+      navigate(`/electrician/inspection-testing/ev-charging/${reportId}`);
+      return;
+    } else if (reportType === 'fire-alarm') {
+      navigate(`/electrician/inspection-testing/fire-alarm/${reportId}`);
+      return;
+    } else if (reportType === 'emergency-lighting') {
+      navigate(`/electrician/inspection-testing/emergency-lighting/${reportId}`);
+      return;
+    } else if (reportType === 'pat-testing') {
+      navigate(`/electrician/inspection-testing/pat-testing/${reportId}`);
+      return;
+    }
+
+    // Legacy certificate types use section-based routing
     if (reportType === 'eic') {
       setCurrentSection('eic');
     } else if (reportType === 'minor-works') {

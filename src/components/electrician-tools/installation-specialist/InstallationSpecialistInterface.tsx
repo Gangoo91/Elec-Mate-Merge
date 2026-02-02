@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle } from "lucide-react";
@@ -18,13 +19,50 @@ interface InstallationSpecialistInterfaceProps {
 }
 
 const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecialistInterfaceProps) => {
-  const [showResults, setShowResults] = useState(false);
+  const routerLocation = useLocation();
+
+  // Check if we're viewing saved results
+  const savedResultsState = routerLocation.state as {
+    fromSavedResults?: boolean;
+    jobId?: string;
+    outputData?: any;
+    inputData?: any;
+  } | null;
+  const [showResults, setShowResults] = useState(!!savedResultsState?.fromSavedResults);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [celebrationShown, setCelebrationShown] = useState(false);
-  const [methodData, setMethodData] = useState<any>(null);
+  const [celebrationShown, setCelebrationShown] = useState(!!savedResultsState?.fromSavedResults);
+  const [methodData, setMethodData] = useState<any>(() => {
+    // Initialize with saved results if present
+    if (savedResultsState?.fromSavedResults && savedResultsState.outputData) {
+      const data = savedResultsState.outputData;
+      return {
+        ...data,
+        steps: data.steps?.map((step: any) => ({
+          stepNumber: step.stepNumber || step.step,
+          title: step.title,
+          content: step.content || step.description,
+          safety: step.safety || step.safetyNotes || [],
+          toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
+          materialsNeeded: step.materialsNeeded || step.materials || [],
+          estimatedDuration: step.estimatedDuration || (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
+          riskLevel: step.riskLevel || 'medium',
+          qualifications: step.qualifications,
+          linkedHazards: step.linkedHazards,
+          notes: step.notes,
+          assignedPersonnel: step.assignedPersonnel,
+          bsReferences: step.bsReferences,
+          inspectionCheckpoints: step.inspectionCheckpoints
+        })) || [],
+        _fullMethodStatement: data
+      };
+    }
+    return null;
+  });
   const [generationStartTime, setGenerationStartTime] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [originalQuery, setOriginalQuery] = useState<string>('');
+  const [originalQuery, setOriginalQuery] = useState<string>(
+    savedResultsState?.fromSavedResults ? savedResultsState.inputData?.query || '' : ''
+  );
   const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',

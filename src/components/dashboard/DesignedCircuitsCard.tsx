@@ -48,7 +48,6 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<StatusTab>('pending');
 
-  // Filter designs by status
   const { pendingDesigns, completedDesigns, archivedDesigns } = useMemo(() => {
     const all = designedCircuits || [];
     return {
@@ -81,7 +80,6 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   const handleDeleteConfirm = async () => {
     if (!deleteId) return;
-
     try {
       await deleteDesign.mutateAsync(deleteId);
       toast.success('Design deleted');
@@ -94,30 +92,24 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-    });
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-4 w-4 rounded" />
-          <Skeleton className="h-4 w-28" />
+      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <CircuitBoard className="h-4 w-4 text-elec-yellow" />
+          <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
         </div>
-        <Skeleton className="h-10 w-full rounded-xl" />
-        <Skeleton className="h-16 w-full rounded-xl" />
+        <Skeleton className="h-16 w-full rounded-xl bg-black/40" />
       </div>
     );
   }
 
-  // Error state
   if (error) {
     return (
-      <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400">
+      <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400">
         <AlertCircle className="h-5 w-5 flex-shrink-0" />
         <p className="text-sm">Failed to load designed circuits</p>
       </div>
@@ -126,97 +118,80 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   const totalCount = pendingDesigns.length + completedDesigns.length + archivedDesigns.length;
 
+  if (totalCount === 0) {
+    return (
+      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <CircuitBoard className="h-4 w-4 text-elec-yellow" />
+          <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
+        </div>
+        <div className="text-center py-6">
+          <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+            <Zap className="h-6 w-6 text-elec-yellow/50" />
+          </div>
+          <p className="text-sm text-white/40 mb-4">No circuit designs yet</p>
+          <Button
+            onClick={() => navigate('/electrician/circuit-designer')}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-10 px-5 font-semibold rounded-xl"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Design
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="space-y-2.5">
+      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CircuitBoard className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">Designed Circuits</span>
+        <div className="p-4 pb-3">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <CircuitBoard className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
+            </div>
+            {pendingDesigns.length > 0 && (
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg bg-elec-yellow/20 text-elec-yellow">
+                {pendingDesigns.length} pending
+              </span>
+            )}
           </div>
-          {pendingDesigns.length > 0 && (
-            <span className="text-xs font-medium text-elec-yellow">
-              {pendingDesigns.length} pending
-            </span>
-          )}
+
+          {/* Tabs */}
+          <div className="flex bg-black/30 rounded-xl p-1">
+            {(['pending', 'completed', 'archived'] as StatusTab[]).map((tab) => {
+              const count = tab === 'pending' ? pendingDesigns.length : tab === 'completed' ? completedDesigns.length : archivedDesigns.length;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={cn(
+                    "flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize",
+                    activeTab === tab
+                      ? "bg-elec-yellow/20 text-elec-yellow"
+                      : "text-white/40 hover:text-white/60"
+                  )}
+                >
+                  {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Segmented Control Tabs */}
-        {totalCount > 0 && (
-          <div className="flex bg-card rounded-lg p-1 border border-elec-yellow/20">
-            <button
-              onClick={() => setActiveTab('pending')}
-              className={cn(
-                "flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all touch-manipulation",
-                activeTab === 'pending'
-                  ? "bg-elec-yellow/20 text-elec-yellow"
-                  : "text-white/50 hover:text-white/70"
-              )}
-            >
-              Pending {pendingDesigns.length > 0 && `(${pendingDesigns.length})`}
-            </button>
-            <button
-              onClick={() => setActiveTab('completed')}
-              className={cn(
-                "flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all touch-manipulation",
-                activeTab === 'completed'
-                  ? "bg-elec-yellow/20 text-elec-yellow"
-                  : "text-white/50 hover:text-white/70"
-              )}
-            >
-              Done {completedDesigns.length > 0 && `(${completedDesigns.length})`}
-            </button>
-            <button
-              onClick={() => setActiveTab('archived')}
-              className={cn(
-                "flex-1 py-1.5 px-2 text-xs font-medium rounded-md transition-all touch-manipulation",
-                activeTab === 'archived'
-                  ? "bg-elec-yellow/20 text-elec-yellow"
-                  : "text-white/50 hover:text-white/70"
-              )}
-            >
-              Archive {archivedDesigns.length > 0 && `(${archivedDesigns.length})`}
-            </button>
+        {/* Empty state for tab */}
+        {currentDesigns.length === 0 && (
+          <div className="text-center py-8 px-4">
+            <p className="text-sm text-white/40">No {activeTab} designs</p>
           </div>
         )}
 
-        {/* Content */}
-        <div className="space-y-2">
-          {/* Empty State */}
-          {currentDesigns.length === 0 && (
-            <div className="py-6 text-center">
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-                {activeTab === 'archived' ? (
-                  <Archive className="h-5 w-5 text-elec-yellow/50" />
-                ) : activeTab === 'completed' ? (
-                  <FileCheck className="h-5 w-5 text-elec-yellow/50" />
-                ) : (
-                  <Zap className="h-5 w-5 text-elec-yellow/50" />
-                )}
-              </div>
-              <p className="text-sm text-white/40 mb-3">
-                {activeTab === 'pending' && 'No pending designs'}
-                {activeTab === 'completed' && 'No completed designs'}
-                {activeTab === 'archived' && 'No archived designs'}
-              </p>
-              {activeTab === 'pending' && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate('/electrician/circuit-designer')}
-                  className="gap-2 bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 h-9 touch-manipulation"
-                >
-                  <Plus className="h-4 w-4" />
-                  Create Design
-                </Button>
-              )}
-            </div>
-          )}
-
-          {/* Design List */}
+        {/* Design List */}
+        <div className="px-3 pb-3 space-y-2">
           <AnimatePresence mode="popLayout">
-            {currentDesigns.slice(0, 5).map((design, index) => {
+            {currentDesigns.slice(0, 3).map((design, index) => {
               const circuitCount = design.schedule_data?.circuits?.length || 0;
               const projectName = design.schedule_data?.projectInfo?.projectName || design.installation_address;
               const isClickable = design.status === 'pending' || design.status === 'in-progress';
@@ -229,113 +204,74 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.03 }}
                   className={cn(
-                    "flex items-center gap-3 p-3 rounded-xl border",
-                    "bg-card border-elec-yellow/20",
-                    isClickable && "hover:border-elec-yellow/40"
+                    "flex items-center gap-3 p-3 rounded-xl",
+                    "bg-black/40",
+                    isClickable && "hover:bg-black/50 cursor-pointer active:scale-[0.98] transition-all touch-manipulation"
                   )}
+                  onClick={() => isClickable && handleUseDesign(design)}
                 >
-                  {/* Main clickable area */}
-                  <button
-                    className={cn(
-                      "flex items-center gap-3 flex-1 min-w-0 text-left touch-manipulation",
-                      isClickable && "active:opacity-70",
-                      !isClickable && "cursor-default"
+                  <div className={cn(
+                    "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
+                    design.status === 'completed' ? 'bg-green-500/15' : 'bg-elec-yellow/15'
+                  )}>
+                    {design.status === 'completed' ? (
+                      <FileCheck className="h-4 w-4 text-green-400" />
+                    ) : design.status === 'archived' ? (
+                      <Archive className="h-4 w-4 text-white/30" />
+                    ) : (
+                      <Zap className="h-4 w-4 text-elec-yellow" />
                     )}
-                    onClick={() => isClickable && handleUseDesign(design)}
-                    disabled={!isClickable}
-                  >
-                    {/* Icon */}
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center">
-                      {design.status === 'archived' ? (
-                        <Archive className="h-4 w-4 text-elec-yellow/50" />
-                      ) : design.status === 'completed' ? (
-                        <FileCheck className="h-4 w-4 text-elec-yellow" />
-                      ) : (
-                        <Zap className="h-4 w-4 text-elec-yellow" />
-                      )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-medium text-white truncate">{projectName}</h4>
+                    <div className="flex items-center gap-2 text-[11px] text-white/40 mt-0.5">
+                      <span>{circuitCount} circuits</span>
+                      <span>•</span>
+                      <span>{formatDate(design.created_at)}</span>
                     </div>
+                  </div>
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-white truncate mb-0.5">
-                        {projectName}
-                      </h4>
-
-                      <div className="flex items-center gap-2 text-[11px] text-white/40">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          <span className="truncate max-w-[80px]">{design.installation_address}</span>
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {formatDate(design.created_at)}
-                        </span>
-                      </div>
-
-                      {/* Tags */}
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <span className="text-[10px] px-1.5 py-0.5 bg-elec-yellow/10 rounded text-elec-yellow/70 font-medium">
-                          {circuitCount} circuits
-                        </span>
-                        {design.schedule_data?.supply?.earthingSystem && (
-                          <span className="text-[10px] px-1.5 py-0.5 bg-elec-yellow/10 rounded text-elec-yellow/70 font-medium">
-                            {design.schedule_data.supply.earthingSystem}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-1 flex-shrink-0">
+                  <div className="flex items-center gap-1">
                     <button
-                      onClick={() => setDeleteId(design.id)}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                      onClick={(e) => { e.stopPropagation(); setDeleteId(design.id); }}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
-                    {isClickable && (
-                      <ChevronRight className="h-5 w-5 text-elec-yellow/40" />
-                    )}
+                    {isClickable && <ChevronRight className="h-5 w-5 text-elec-yellow/40" />}
                   </div>
                 </motion.div>
               );
             })}
           </AnimatePresence>
+        </div>
 
-          {/* View All Link */}
-          {currentDesigns.length > 5 && (
+        {currentDesigns.length > 3 && (
+          <div className="px-3 pb-3">
             <Button
               variant="ghost"
-              className="w-full text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 h-9 text-sm touch-manipulation"
+              className="w-full h-9 text-xs text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 rounded-xl"
               onClick={() => navigate('/electrician/circuit-designer')}
             >
               View All ({currentDesigns.length})
-              <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
-      {/* Delete Confirmation Dialog */}
+      {/* Delete Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent className="bg-card border-elec-yellow/20">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Design?</AlertDialogTitle>
             <AlertDialogDescription className="text-white/60">
-              This will permanently delete this designed circuit schedule. This action cannot be undone.
+              This will permanently delete this circuit design.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white/5 border-white/10 text-white hover:bg-white/10">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteConfirm}
-              className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30"
-            >
-              Delete
-            </AlertDialogAction>
+            <AlertDialogCancel className="bg-white/5 border-white/10 text-white hover:bg-white/10">Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30">Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

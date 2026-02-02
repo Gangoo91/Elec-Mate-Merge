@@ -23,7 +23,7 @@ const SelectTrigger = React.forwardRef<
       "text-[16px] sm:text-[15px] text-white text-left font-medium",
       // Background & border - premium dark glass feel
       "bg-white/[0.06] backdrop-blur-sm",
-      "border border-white/[0.1] rounded-xl",
+      "border border-white/[0.12] rounded-xl",
       // Placeholder
       "[&>span:first-child]:text-white/40 [&>span:first-child:not(:empty)]:text-white",
       // Focus states - elec-yellow glow
@@ -60,7 +60,7 @@ const SelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-2 bg-gradient-to-b from-[#2c2c2e] to-transparent",
+      "flex cursor-default items-center justify-center py-2 bg-gradient-to-b from-[#1c1c1e] to-transparent",
       "sticky top-0 z-10",
       className
     )}
@@ -78,7 +78,7 @@ const SelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-2 bg-gradient-to-t from-[#2c2c2e] to-transparent",
+      "flex cursor-default items-center justify-center py-2 bg-gradient-to-t from-[#1c1c1e] to-transparent",
       "sticky bottom-0 z-10",
       className
     )}
@@ -100,15 +100,15 @@ const SelectContent = React.forwardRef<
       className={cn(
         // Base
         "relative z-[9999] overflow-hidden",
-        // Premium iOS-style styling
+        // Premium iOS-style styling - darker, more contrast
         "rounded-2xl",
-        "border border-white/[0.15] bg-[#2c2c2e]/95 backdrop-blur-xl",
+        "border border-white/[0.12] bg-[#1c1c1e] backdrop-blur-xl",
         "text-foreground",
-        "shadow-2xl shadow-black/60",
+        "shadow-2xl shadow-black/70",
         // Width constraints
-        "min-w-[220px] w-[var(--radix-select-trigger-width)]",
+        "min-w-[260px] w-[var(--radix-select-trigger-width)]",
         // Max height for scrolling
-        "max-h-[min(70vh,400px)]",
+        "max-h-[min(70vh,420px)]",
         // Animations - iOS-style spring
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -125,8 +125,8 @@ const SelectContent = React.forwardRef<
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1.5 overflow-y-auto",
-          "max-h-[min(65vh,380px)]",
+          "p-2 overflow-y-auto",
+          "max-h-[min(65vh,400px)]",
           "touch-manipulation overscroll-contain",
           "[&]:[-webkit-overflow-scrolling:touch]"
         )}
@@ -146,7 +146,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      "py-2.5 pl-4 pr-2 text-[11px] uppercase tracking-wider font-semibold text-white/40",
+      "py-2.5 pl-4 pr-2 text-[11px] uppercase tracking-wider font-semibold text-elec-yellow/70",
       className
     )}
     {...props}
@@ -161,22 +161,24 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      // Base
-      "relative flex w-full cursor-pointer select-none items-center",
+      // Base - allow multi-line content
+      "relative flex w-full cursor-pointer select-none items-start",
       "rounded-xl py-3.5 sm:py-3 pl-11 pr-4",
-      "text-[16px] sm:text-[15px] outline-none font-medium",
+      "text-[16px] sm:text-[15px] outline-none",
       // Touch targets - 52px minimum on mobile
-      "min-h-[52px] sm:min-h-[44px]",
+      "min-h-[52px] sm:min-h-[48px]",
       // Default state
-      "text-white/90",
+      "text-white",
+      // Add subtle bottom border for separation
+      "border-b border-white/[0.04] last:border-b-0",
       // Hover/Focus states - subtle highlight
-      "focus:bg-white/[0.06]",
-      "data-[highlighted]:bg-white/[0.06]",
+      "focus:bg-white/[0.08]",
+      "data-[highlighted]:bg-white/[0.08]",
       // Active state - press feedback like iOS
-      "active:bg-elec-yellow/20 active:scale-[0.98]",
-      // Selected state - yellow accent
+      "active:bg-elec-yellow/15 active:scale-[0.99]",
+      // Selected state - yellow accent with glow
       "data-[state=checked]:bg-elec-yellow/10",
-      "data-[state=checked]:text-elec-yellow",
+      "data-[state=checked]:border-l-2 data-[state=checked]:border-l-elec-yellow",
       // Disabled
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       // Touch & transitions
@@ -186,13 +188,15 @@ const SelectItem = React.forwardRef<
     {...props}
   >
     {/* Check icon - positioned left */}
-    <span className="absolute left-3 flex h-6 w-6 items-center justify-center">
+    <span className="absolute left-3 top-3.5 sm:top-3 flex h-6 w-6 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
         <Check className="h-5 w-5 text-elec-yellow" strokeWidth={2.5} />
       </SelectPrimitive.ItemIndicator>
     </span>
 
-    <SelectPrimitive.ItemText className="flex-1 truncate">{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemText className="flex-1 [&>div]:flex [&>div]:flex-col [&>div]:gap-0.5">
+      {children}
+    </SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ))
 SelectItem.displayName = SelectPrimitive.Item.displayName
@@ -203,7 +207,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn("my-1.5 mx-2 h-px bg-white/[0.08]", className)}
+    className={cn("my-2 mx-3 h-px bg-white/[0.1]", className)}
     {...props}
   />
 ))

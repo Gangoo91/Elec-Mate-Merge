@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/select';
 import { CircuitBoard, Shield, Cable } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import MWSmartDefaults from './MWSmartDefaults';
 import {
   PROTECTIVE_DEVICE_TYPES,
@@ -39,40 +38,21 @@ import {
 interface MWCircuitTabProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  isMobile?: boolean;
 }
 
-const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
-  const isMobile = useIsMobile();
+const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobile = false }) => {
   const [openSections, setOpenSections] = useState({
     circuit: true,
     protection: true,
     cable: true
   });
 
+  // Helper for conditional section card styling - no card on mobile, full card on desktop
+  const sectionCardClass = cn(isMobile ? "" : "eicr-section-card");
+
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  const getCompletionPercentage = (section: string) => {
-    switch (section) {
-      case 'circuit': {
-        const fields = ['circuitDesignation'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'protection': {
-        const fields = ['protectiveDeviceType', 'protectiveDeviceRating'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'cable': {
-        const fields = ['liveConductorSize'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      default:
-        return 0;
-    }
   };
 
   // Handle smart defaults application
@@ -205,17 +185,14 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   };
 
   return (
-    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
+    <div className="space-y-4 sm:space-y-6">
       {/* Smart Defaults Quick Fill */}
-      <div className={cn(
-        "p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-y border-purple-500/20",
-        !isMobile && "rounded-xl border mx-0"
-      )}>
+      <div className="p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl">
         <MWSmartDefaults onApply={handleSmartDefaultApply} />
       </div>
 
       {/* Circuit Details */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -223,7 +200,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               icon={CircuitBoard}
               isOpen={openSections.circuit}
               color="purple-500"
-              completionPercentage={getCompletionPercentage('circuit')}
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
@@ -235,7 +211,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     value={formData.distributionBoard || ''}
                     onChange={(e) => onUpdate('distributionBoard', e.target.value)}
                     placeholder="e.g., Main DB, Sub DB"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                    
                   />
                 </div>
                 <div className="space-y-2">
@@ -244,7 +220,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     value={formData.dbLocationType || ''}
                     onChange={(e) => onUpdate('dbLocationType', e.target.value)}
                     placeholder="e.g., Under stairs, Split-load CU"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                    
                   />
                 </div>
               </div>
@@ -265,7 +241,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     value={formData.circuitDescription || ''}
                     onChange={(e) => onUpdate('circuitDescription', e.target.value)}
                     placeholder="e.g., Kitchen sockets, Lighting circuit"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                    
                   />
                 </div>
               </div>
@@ -273,7 +249,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               <div className="space-y-2">
                 <Label className="text-sm">Circuit Type</Label>
                 <Select value={formData.circuitType || 'radial'} onValueChange={(v) => onUpdate('circuitType', v === '__clear__' ? '' : v)}>
-                  <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                  <SelectTrigger className="">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -292,7 +268,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
       </div>
 
       {/* Protective Device */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.protection} onOpenChange={() => toggleSection('protection')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -300,7 +276,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               icon={Shield}
               isOpen={openSections.protection}
               color="red-500"
-              completionPercentage={getCompletionPercentage('protection')}
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
@@ -309,7 +284,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">BS (EN) Standard</Label>
                   <Select value={formData.overcurrentDeviceBsEn || ''} onValueChange={handleStandardChange}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
@@ -326,7 +301,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">Device Type *</Label>
                   <Select value={formData.protectiveDeviceType || ''} onValueChange={handleDeviceTypeChange}>
                     <SelectTrigger className={cn(
-                      "h-12 bg-white/5 border-white/10 rounded-xl text-base",
+                      "",
                       !formData.protectiveDeviceType && "border-red-500/50"
                     )}>
                       <SelectValue placeholder="Select type" />
@@ -350,7 +325,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">Rating (A) *</Label>
                   <Select value={formData.protectiveDeviceRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceRating', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className={cn(
-                      "h-12 bg-white/5 border-white/10 rounded-xl text-base",
+                      "",
                       !formData.protectiveDeviceRating && "border-red-500/50"
                     )}>
                       <SelectValue placeholder="Rating" />
@@ -373,7 +348,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Breaking Capacity (kA)</Label>
                   <Select value={formData.protectiveDeviceKaRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="kA rating" />
                     </SelectTrigger>
                     <SelectContent>
@@ -426,7 +401,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     <div className="space-y-1.5">
                       <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <Select value={formData.rcdBsEn || ''} onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}>
-                        <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
@@ -456,7 +431,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                       <div className="space-y-1.5">
                         <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
                         <Select value={formData.rcdType || ''} onValueChange={(v) => onUpdate('rcdType', v === '__clear__' ? '' : v)}>
-                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                          <SelectTrigger className="">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
@@ -483,7 +458,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     <div className="space-y-1.5">
                       <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">IΔn (mA)</label>
                       <Select value={formData.rcdIdn || ''} onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}>
-                        <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectTrigger className="">
                           <SelectValue placeholder="Select rating" />
                         </SelectTrigger>
                         <SelectContent>
@@ -510,7 +485,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     <div className="space-y-1.5">
                       <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <Select value={formData.afddBsEn || ''} onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}>
-                        <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
@@ -548,7 +523,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     <div className="space-y-1.5">
                       <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <Select value={formData.spdBsEn || ''} onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}>
-                        <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectTrigger className="">
                           <SelectValue placeholder="Select standard" />
                         </SelectTrigger>
                         <SelectContent>
@@ -565,7 +540,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     <div className="space-y-1.5">
                       <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
                       <Select value={formData.spdType || ''} onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}>
-                        <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectTrigger className="">
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -612,7 +587,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
       </div>
 
       {/* Cable & Installation */}
-      <div className="eicr-section-card">
+      <div className={sectionCardClass}>
         <Collapsible open={openSections.cable} onOpenChange={() => toggleSection('cable')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
@@ -620,7 +595,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               icon={Cable}
               isOpen={openSections.cable}
               color="green-500"
-              completionPercentage={getCompletionPercentage('cable')}
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
@@ -630,7 +604,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">Live Conductor Size *</Label>
                   <Select value={formData.liveConductorSize || ''} onValueChange={(v) => onUpdate('liveConductorSize', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className={cn(
-                      "h-12 bg-white/5 border-white/10 rounded-xl text-base",
+                      "",
                       !formData.liveConductorSize && "border-red-500/50"
                     )}>
                       <SelectValue placeholder="Size" />
@@ -648,7 +622,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">CPC Size</Label>
                   <Select value={formData.cpcSize || ''} onValueChange={(v) => onUpdate('cpcSize', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Size" />
                     </SelectTrigger>
                     <SelectContent>
@@ -669,7 +643,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Cable Type</Label>
                   <Select value={formData.cableType || ''} onValueChange={(v) => onUpdate('cableType', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -688,7 +662,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Installation Method</Label>
                   <Select value={formData.installationMethod || ''} onValueChange={handleInstallationMethodChange}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Method" />
                     </SelectTrigger>
                     <SelectContent>
@@ -704,7 +678,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 <div className="space-y-2">
                   <Label className="text-sm">Reference Method</Label>
                   <Select value={formData.referenceMethod || ''} onValueChange={(v) => onUpdate('referenceMethod', v === '__clear__' ? '' : v)}>
-                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="e.g., A, B, C" />
                     </SelectTrigger>
                     <SelectContent>

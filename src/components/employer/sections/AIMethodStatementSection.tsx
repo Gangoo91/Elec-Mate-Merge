@@ -139,7 +139,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
       <SectionHeader
-        title="AI Method Statement"
+        title="Method Statement Generator"
         description="Generate step-by-step installation procedures"
         icon={ClipboardList}
       />
@@ -286,7 +286,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                     <Sparkles className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground mb-1">AI Method Statement</h3>
+                    <h3 className="font-medium text-foreground mb-1">Method Statement Generator</h3>
                     <p className="text-sm text-muted-foreground">
                       Generate detailed installation procedures following BS 7671 standards.
                     </p>

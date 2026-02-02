@@ -24,6 +24,17 @@ const convertToSnakeCase = (obj: any): any => {
 };
 
 export const formatEICRJson = async (formData: any, reportId: string) => {
+  // CRITICAL DEBUG: Log exactly what's coming in
+  console.log('[formatEICRJson] ===== INPUT DATA DEBUG =====');
+  console.log('[formatEICRJson] scheduleOfTests:', formData.scheduleOfTests?.length || 0, 'circuits');
+  console.log('[formatEICRJson] distributionBoards:', formData.distributionBoards?.length || 0, 'boards');
+  console.log('[formatEICRJson] inspectionItems:', formData.inspectionItems?.length || 0, 'items');
+  console.log('[formatEICRJson] defectObservations:', formData.defectObservations?.length || 0, 'defects');
+  if (formData.scheduleOfTests?.length > 0) {
+    console.log('[formatEICRJson] First circuit sample:', JSON.stringify(formData.scheduleOfTests[0]).substring(0, 200));
+  }
+  console.log('[formatEICRJson] =============================');
+
   // Helper to safely get values and ensure they're strings
   const get = (key: string, defaultValue: any = "") => {
     const value = formData[key] ?? defaultValue;
@@ -291,9 +302,103 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   const formatBoardsWithSchedules = () => {
     const boards = formData['distributionBoards'] || [];
     const testResults = formData['scheduleOfTests'] || [];
-    if (!Array.isArray(boards) || !Array.isArray(testResults)) return [];
+    if (!Array.isArray(testResults)) return [];
 
     const MAIN_BOARD_ID = 'main-board';
+
+    // Helper to format a circuit for PDF output
+    const formatCircuit = (result: any) => ({
+      id: result.id || "N/A",
+      circuit_number: result.circuitNumber || "N/A",
+      circuit_description: result.circuitDescription || "N/A",
+      circuit_type: result.circuitType || "N/A",
+      type_of_wiring: result.typeOfWiring || "N/A",
+      reference_method: result.referenceMethod || "N/A",
+      points_served: result.pointsServed || "N/A",
+      live_size: result.liveSize || "N/A",
+      cpc_size: result.cpcSize || "N/A",
+      bs_standard: result.bsStandard || "N/A",
+      protective_device_type: result.protectiveDeviceType || "N/A",
+      protective_device_curve: result.protectiveDeviceCurve || "N/A",
+      protective_device_rating: result.protectiveDeviceRating || "N/A",
+      protective_device_ka_rating: result.protectiveDeviceKaRating || "N/A",
+      max_zs: result.maxZs || "N/A",
+      protective_device_location: result.protectiveDeviceLocation || "N/A",
+      rcd_bs_standard: result.rcdBsStandard || "N/A",
+      rcd_type: result.rcdType || "N/A",
+      rcd_rating: result.rcdRating || "N/A",
+      rcd_rating_a: result.rcdRatingA || "N/A",
+      ring_r1: result.ringR1 || "N/A",
+      ring_rn: result.ringRn || "N/A",
+      ring_r2: result.ringR2 || "N/A",
+      r1r2: result.r1r2 || "N/A",
+      r2: result.r2 || "N/A",
+      ring_continuity_live: result.ringContinuityLive || "N/A",
+      ring_continuity_neutral: result.ringContinuityNeutral || "N/A",
+      insulation_test_voltage: result.insulationTestVoltage || "N/A",
+      insulation_live_neutral: result.insulationLiveNeutral || "N/A",
+      insulation_live_earth: result.insulationLiveEarth || "N/A",
+      insulation_resistance: result.insulationResistance || "N/A",
+      insulation_neutral_earth: result.insulationNeutralEarth || "N/A",
+      polarity: result.polarity || "N/A",
+      zs: result.zs || "N/A",
+      rcd_one_x: result.rcdOneX || "N/A",
+      rcd_test_button: result.rcdTestButton || "N/A",
+      afdd_test: result.afddTest || "N/A",
+      rcd_half_x: result.rcdHalfX || "N/A",
+      rcd_five_x: result.rcdFiveX || "N/A",
+      pfc: result.pfc || "N/A",
+      pfc_live_neutral: result.pfcLiveNeutral || "N/A",
+      pfc_live_earth: result.pfcLiveEarth || "N/A",
+      functional_testing: result.functionalTesting || "N/A",
+      notes: result.notes || "N/A",
+      source_circuit_id: result.sourceCircuitId || "N/A",
+      auto_filled: result.autoFilled || false,
+      phase_type: result.phaseType || "N/A",
+      phase_rotation: result.phaseRotation || "N/A",
+      phase_balance_l1: result.phaseBalanceL1 || "N/A",
+      phase_balance_l2: result.phaseBalanceL2 || "N/A",
+      phase_balance_l3: result.phaseBalanceL3 || "N/A",
+      line_to_line_voltage: result.lineToLineVoltage || "N/A",
+      circuit_designation: result.circuitDesignation || "N/A",
+      type: result.type || "N/A",
+      cable_size: result.cableSize || "N/A",
+      protective_device: result.protectiveDevice || "N/A"
+    });
+
+    // If no boards defined but we have test results, create a default main board
+    if (!Array.isArray(boards) || boards.length === 0) {
+      if (testResults.length > 0) {
+        console.log('[formatBoardsWithSchedules] No boards defined, creating default Main DB with', testResults.length, 'circuits');
+        return [{
+          db_reference: formData['cuReference'] || 'Main DB',
+          db_location: formData['cuLocation'] || '',
+          db_manufacturer: formData['cuMake'] || '',
+          db_type: formData['cuType'] || '',
+          db_ways: '',
+          db_zdb: formData['zdb'] || '',
+          db_ipf: formData['ipf'] || '',
+          supplied_from: '',
+          incoming_device_bs_en: '',
+          incoming_device_type: '',
+          incoming_device_rating: '',
+          polarity_confirmed: formData['confirmedCorrectPolarity'] ?? false,
+          phase_sequence_confirmed: formData['confirmedPhaseSequence'] ?? false,
+          spd_operational: formData['spdOperationalStatus'] ?? false,
+          spd_na: formData['spdNA'] ?? false,
+          spd_t1: formData['spdT1'] ?? false,
+          spd_t2: formData['spdT2'] ?? false,
+          spd_t3: formData['spdT3'] ?? false,
+          main_switch_bs_en: formData['mainSwitchBsEn'] || '',
+          main_switch_type: formData['mainSwitchType'] || '',
+          main_switch_rating: formData['mainSwitchRating'] || '',
+          main_switch_poles: formData['mainSwitchPoles'] || '',
+          circuit_count: testResults.length,
+          circuits: testResults.map(formatCircuit)
+        }];
+      }
+      return [];
+    }
 
     return boards.map((board: any) => {
       const boardId = board.id || MAIN_BOARD_ID;
@@ -333,64 +438,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         // Circuit count
         circuit_count: boardCircuits.length,
         // Circuits for this board (same format as flat schedule_of_tests)
-        circuits: boardCircuits.map((result: any) => ({
-          id: result.id || "N/A",
-          circuit_number: result.circuitNumber || "N/A",
-          circuit_description: result.circuitDescription || "N/A",
-          circuit_type: result.circuitType || "N/A",
-          type_of_wiring: result.typeOfWiring || "N/A",
-          reference_method: result.referenceMethod || "N/A",
-          points_served: result.pointsServed || "N/A",
-          live_size: result.liveSize || "N/A",
-          cpc_size: result.cpcSize || "N/A",
-          bs_standard: result.bsStandard || "N/A",
-          protective_device_type: result.protectiveDeviceType || "N/A",
-          protective_device_curve: result.protectiveDeviceCurve || "N/A",
-          protective_device_rating: result.protectiveDeviceRating || "N/A",
-          protective_device_ka_rating: result.protectiveDeviceKaRating || "N/A",
-          max_zs: result.maxZs || "N/A",
-          protective_device_location: result.protectiveDeviceLocation || "N/A",
-          rcd_bs_standard: result.rcdBsStandard || "N/A",
-          rcd_type: result.rcdType || "N/A",
-          rcd_rating: result.rcdRating || "N/A",
-          rcd_rating_a: result.rcdRatingA || "N/A",
-          ring_r1: result.ringR1 || "N/A",
-          ring_rn: result.ringRn || "N/A",
-          ring_r2: result.ringR2 || "N/A",
-          r1r2: result.r1r2 || "N/A",
-          r2: result.r2 || "N/A",
-          ring_continuity_live: result.ringContinuityLive || "N/A",
-          ring_continuity_neutral: result.ringContinuityNeutral || "N/A",
-          insulation_test_voltage: result.insulationTestVoltage || "N/A",
-          insulation_live_neutral: result.insulationLiveNeutral || "N/A",
-          insulation_live_earth: result.insulationLiveEarth || "N/A",
-          insulation_resistance: result.insulationResistance || "N/A",
-          insulation_neutral_earth: result.insulationNeutralEarth || "N/A",
-          polarity: result.polarity || "N/A",
-          zs: result.zs || "N/A",
-          rcd_one_x: result.rcdOneX || "N/A",
-          rcd_test_button: result.rcdTestButton || "N/A",
-          afdd_test: result.afddTest || "N/A",
-          rcd_half_x: result.rcdHalfX || "N/A",
-          rcd_five_x: result.rcdFiveX || "N/A",
-          pfc: result.pfc || "N/A",
-          pfc_live_neutral: result.pfcLiveNeutral || "N/A",
-          pfc_live_earth: result.pfcLiveEarth || "N/A",
-          functional_testing: result.functionalTesting || "N/A",
-          notes: result.notes || "N/A",
-          source_circuit_id: result.sourceCircuitId || "N/A",
-          auto_filled: result.autoFilled || false,
-          phase_type: result.phaseType || "N/A",
-          phase_rotation: result.phaseRotation || "N/A",
-          phase_balance_l1: result.phaseBalanceL1 || "N/A",
-          phase_balance_l2: result.phaseBalanceL2 || "N/A",
-          phase_balance_l3: result.phaseBalanceL3 || "N/A",
-          line_to_line_voltage: result.lineToLineVoltage || "N/A",
-          circuit_designation: result.circuitDesignation || "N/A",
-          type: result.type || "N/A",
-          cable_size: result.cableSize || "N/A",
-          protective_device: result.protectiveDevice || "N/A"
-        }))
+        circuits: boardCircuits.map(formatCircuit)
       };
     });
   };
@@ -670,10 +718,22 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     // Additional distribution boards (beyond the main board)
     additional_boards: formatAdditionalBoards(),
 
-    schedule_of_tests: formatCircuits(),
+    schedule_of_tests: (() => {
+      const circuits = formatCircuits();
+      console.log('[formatEICRJson] schedule_of_tests output:', circuits.length, 'circuits');
+      return circuits;
+    })(),
 
     // Multi-board schedule: each board with its own circuits, SPD, and verification data
-    boards_with_schedules: formatBoardsWithSchedules(),
+    boards_with_schedules: (() => {
+      const boards = formatBoardsWithSchedules();
+      console.log('[formatEICRJson] boards_with_schedules output:', boards.length, 'boards');
+      if (boards.length > 0) {
+        console.log('[formatEICRJson] First board circuits:', boards[0]?.circuits?.length || 0);
+        console.log('[formatEICRJson] First board reference:', boards[0]?.db_reference);
+      }
+      return boards;
+    })(),
 
     test_instrument_details: {
       make_model: get('testInstrumentMake') === 'Other' 

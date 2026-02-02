@@ -39,30 +39,31 @@ export const formatContextForAgent = (
   context: CircuitContextSummary,
   agentType: AgentType
 ): string => {
-  const baseContext = `
-## Project: ${context.projectOverview}
+  // Clean format without markdown - better for textarea display
+  const circuitDetails = context.circuitSummaries.map((c, i) => {
+    return `Circuit ${i + 1}: ${c.name}\n  • ${c.description}\n  • ${c.keySpecs}\n  • ${c.installationNotes}`;
+  }).join('\n\n');
 
-## Circuits to Process:
-${context.circuitSummaries.map((c, i) => `
-### Circuit ${i + 1}: ${c.name}
-- ${c.description}
-- Specs: ${c.keySpecs}
-- Installation: ${c.installationNotes}
-`).join('\n')}
-
-## System: ${context.systemDetails}
-`;
-
-  // Add agent-specific instructions
-  const agentInstructions: Record<AgentType, string> = {
-    installer: 'Please provide detailed installation guidance for these circuits.',
-    rams: 'Please generate a RAMS document covering installation of these circuits.',
-    'cost-engineer': 'Please estimate materials and labour costs for these circuits.',
-    'method-statement': 'Please generate a method statement for installing these circuits.',
-    maintenance: 'Please provide maintenance instructions and schedules for these circuits.'
+  // Agent-specific request
+  const agentRequests: Record<AgentType, string> = {
+    installer: 'Generate detailed installation guidance for these circuits.',
+    rams: 'Generate a RAMS document covering installation of these circuits.',
+    'cost-engineer': 'Estimate materials and labour costs for these circuits.',
+    'method-statement': 'Generate a method statement for installing these circuits.',
+    maintenance: 'Provide maintenance instructions and schedules for these circuits.'
   };
 
-  return `${baseContext}\n\n${agentInstructions[agentType]}`;
+  return `PROJECT DETAILS
+${context.projectOverview}
+
+SYSTEM SPECIFICATIONS
+${context.systemDetails}
+
+CIRCUITS (${context.circuitSummaries.length})
+${circuitDetails}
+
+REQUEST
+${agentRequests[agentType]}`;
 };
 
 export interface StoredCircuitContext {

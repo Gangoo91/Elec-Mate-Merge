@@ -31,6 +31,13 @@ interface UseReportSyncOptions {
   onReportCreated?: (reportId: string) => void;  // Called when auto-sync creates a new report
 }
 
+// Return type for syncNowImmediate - includes the saved data for PDF generation
+export interface SyncNowImmediateResult {
+  success: boolean;
+  reportId: string | null;
+  data: any;  // The data that was saved to the database
+}
+
 interface UseReportSyncReturn {
   // Status
   status: SyncStatus;
@@ -47,6 +54,7 @@ interface UseReportSyncReturn {
   forceSave: () => Promise<{ success: boolean; reportId: string | null }>;
   retrySync: () => Promise<void>;
   syncNow: () => Promise<{ success: boolean; reportId: string | null }>;  // Immediate sync (cancels debounce)
+  syncNowImmediate: () => Promise<SyncNowImmediateResult>;  // Immediate sync that returns the saved data
   onTabChange: () => void;  // Trigger sync on tab change
 
   // Draft recovery
@@ -647,6 +655,43 @@ export const useReportSync = ({
     return await syncToCloud(true);
   }, [syncToCloud, debouncedCloudSync]);
 
+  // === SYNC NOW IMMEDIATE (for PDF generation - returns the saved data) ===
+  // This function is specifically for cases where we need the exact data that was saved
+  // to the database, such as PDF generation where we need to ensure we're using
+  // the synced data and not potentially stale in-memory data
+  const syncNowImmediate = useCallback(async (): Promise<SyncNowImmediateResult> => {
+    console.log('[ReportSync] syncNowImmediate called - cancelling debounce and forcing immediate sync');
+
+    // Cancel any pending debounced sync
+    debouncedCloudSync.cancel();
+
+    // Capture the current form data before sync
+    // This is the data that will be saved to the database
+    const dataToSync = { ...formData };
+
+    console.log('[ReportSync] syncNowImmediate - data to sync:', {
+      scheduleOfTestsCount: dataToSync.scheduleOfTests?.length || 0,
+      inspectionItemsCount: dataToSync.inspectionItems?.length || 0,
+      defectObservationsCount: dataToSync.defectObservations?.length || 0,
+      clientName: dataToSync.clientName
+    });
+
+    // Perform the sync
+    const result = await syncToCloud(true);
+
+    console.log('[ReportSync] syncNowImmediate - sync result:', {
+      success: result.success,
+      reportId: result.reportId
+    });
+
+    // Return the result with the data that was synced
+    return {
+      success: result.success,
+      reportId: result.reportId,
+      data: dataToSync  // Return the data that was saved
+    };
+  }, [syncToCloud, debouncedCloudSync, formData]);
+
   // === TAB CHANGE HANDLER (triggers immediate sync) ===
   // Uses isAutoSync=true - tab changes are automatic syncs, not manual saves
   const onTabChange = useCallback(() => {
@@ -676,6 +721,7 @@ export const useReportSync = ({
     forceSave,
     retrySync,
     syncNow,
+    syncNowImmediate,
     onTabChange,
     hasRecoverableDraft,
     draftPreview,

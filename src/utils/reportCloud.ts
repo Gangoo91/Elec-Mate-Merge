@@ -1,9 +1,19 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// All supported certificate types
+export type ReportType =
+  | 'eicr'
+  | 'eic'
+  | 'minor-works'
+  | 'ev-charging'
+  | 'fire-alarm'
+  | 'emergency-lighting'
+  | 'pat-testing';
+
 export interface CloudReport {
   id: string;
   report_id: string;
-  report_type: 'eicr' | 'eic' | 'minor-works';
+  report_type: ReportType;
   certificate_number?: string;
   client_name: string;
   installation_address: string;
@@ -100,9 +110,9 @@ export const reportCloud = {
    * Create a new report
    * @param isAutoSync - If true, creates with 'auto-draft' status (won't show in Recent Certs until manually saved)
    */
-  createReport: async (userId: string, reportType: 'eicr' | 'eic' | 'minor-works', data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; reportId?: string; error?: any }> => {
+  createReport: async (userId: string, reportType: ReportType, data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; reportId?: string; error?: any }> => {
     try {
-      // Calculate status based on form data - handles all report types including Minor Works
+      // Calculate status based on form data - handles all report types
       const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
         // Auto-sync creates 'auto-draft' - won't appear in Recent Certs until manually saved
         if (isAutoSync) return 'auto-draft';
@@ -114,11 +124,21 @@ export const reportCloud = {
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
         // Minor Works specific: check for signature and work completion
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
+        // EV Charging specific: check for installer signature
+        if (reportType === 'ev-charging' && data.installerSignature && data.installationDate) return 'completed';
+        // Fire Alarm specific
+        if (reportType === 'fire-alarm' && data.engineerSignature && data.testDate) return 'completed';
+        // Emergency Lighting specific
+        if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate) return 'completed';
+        // PAT Testing specific
+        if (reportType === 'pat-testing' && data.testerSignature && data.testDate) return 'completed';
         // Check for any meaningful data entry (works for all report types)
         const hasContent = data.clientName ||
                           data.inspectionDate ||
                           data.workDate ||  // Minor Works date field
                           data.dateOfInspection ||  // EICR date field
+                          data.installationDate ||  // EV Charging date field
+                          data.testDate ||  // Fire/Emergency/PAT date field
                           data.installationAddress ||
                           data.propertyAddress;
         return hasContent ? 'in-progress' : 'draft';

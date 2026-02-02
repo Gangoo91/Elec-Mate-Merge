@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Check, Clock, FileText, Sparkles, ArrowRight, LucideIcon } from "lucide-react";
+import { Check, Clock, FileCheck, Sparkles, ArrowRight, Zap, LucideIcon } from "lucide-react";
 import { AgentType, AGENT_CONFIG } from "./AgentConfig";
 import confetti from "canvas-confetti";
 
@@ -36,15 +34,17 @@ export function AgentSuccessDialog({
   timeSavedMinutes = 30,
 }: AgentSuccessDialogProps) {
   const config = AGENT_CONFIG[agentType];
-  const Icon = config.icon;
   const [showContent, setShowContent] = useState(false);
+  const [iconBounced, setIconBounced] = useState(false);
 
   // Trigger effects when dialog opens
   useEffect(() => {
     if (open) {
-      // Delay content appearance for animation
       setShowContent(false);
-      const timer = setTimeout(() => setShowContent(true), 100);
+      setIconBounced(false);
+
+      const timer1 = setTimeout(() => setShowContent(true), 150);
+      const timer2 = setTimeout(() => setIconBounced(true), 400);
 
       // Trigger confetti
       triggerConfetti(config.confettiColors);
@@ -52,161 +52,241 @@ export function AgentSuccessDialog({
       // Trigger haptic feedback
       triggerHaptic();
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     }
   }, [open, config.confettiColors]);
 
   const defaultStats: StatItem[] = stats || [
-    { icon: FileText, value: "1", label: "Document" },
-    { icon: Clock, value: `${timeSavedMinutes}min`, label: "Saved" },
-    { icon: Check, value: "100%", label: "Complete" },
-    { icon: Sparkles, value: "AI", label: "Generated" },
+    { icon: FileCheck, value: "1", label: "Document" },
+    { icon: Sparkles, value: "AI", label: "Powered" },
   ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-card border-white/10 p-0 overflow-hidden">
-        {/* Success Header with Gradient */}
-        <div
-          className="relative pt-8 pb-6 px-6"
-          style={{
-            background: `linear-gradient(135deg, ${config.gradientFrom}15, ${config.gradientTo}15)`,
-          }}
-        >
-          {/* Glow effect behind icon */}
-          <div
-            className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full blur-2xl opacity-40"
-            style={{
-              background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-            }}
-          />
-
-          {/* Animated success icon */}
-          <div
-            className={cn(
-              "relative mx-auto w-20 h-20 rounded-full flex items-center justify-center",
-              "transition-all duration-500 ease-out",
-              showContent ? "scale-100 opacity-100" : "scale-50 opacity-0"
-            )}
-            style={{
-              background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              boxShadow: `0 0 40px ${config.gradientFrom}60`,
-            }}
-          >
-            <Check className="h-10 w-10 text-black animate-bounce-subtle" />
-          </div>
-
-          <DialogHeader className="mt-4">
-            <DialogTitle
-              className={cn(
-                "text-center text-xl font-bold transition-all duration-500 delay-150",
-                showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
+      <DialogContent className="sm:max-w-[380px] bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] border-white/[0.08] p-0 overflow-hidden rounded-3xl shadow-2xl">
+        <AnimatePresence>
+          {showContent && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="relative"
             >
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                }}
-              >
-                {config.successTitle}
-              </span>
-            </DialogTitle>
-          </DialogHeader>
-        </div>
-
-        {/* Stats Grid */}
-        <div
-          className={cn(
-            "px-6 py-4 transition-all duration-500 delay-300",
-            showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          )}
-        >
-          <div className="grid grid-cols-2 gap-3">
-            {defaultStats.map((stat, index) => (
+              {/* Background glow effect */}
               <div
-                key={index}
-                className="bg-white/5 rounded-xl p-3 text-center border border-white/10"
-              >
-                <stat.icon className="h-5 w-5 mx-auto mb-1 text-white/60" />
-                <p className="text-lg font-bold text-white">{stat.value}</p>
-                <p className="text-xs text-white/50">{stat.label}</p>
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[200px] opacity-30 blur-[80px] pointer-events-none"
+                style={{
+                  background: `radial-gradient(ellipse, ${config.gradientFrom}, transparent 70%)`,
+                }}
+              />
+
+              {/* Main content */}
+              <div className="relative px-6 pt-10 pb-8">
+                {/* Success Icon with ring animation */}
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                    delay: 0.1
+                  }}
+                  className="relative mx-auto w-24 h-24 mb-6"
+                >
+                  {/* Outer pulse ring */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1.3, opacity: 0 }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeOut"
+                    }}
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  />
+
+                  {/* Inner glow ring */}
+                  <div
+                    className="absolute inset-0 rounded-full opacity-60 blur-md"
+                    style={{
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                    }}
+                  />
+
+                  {/* Main icon circle */}
+                  <motion.div
+                    animate={iconBounced ? { scale: [1, 1.1, 1] } : {}}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full rounded-full flex items-center justify-center shadow-lg"
+                    style={{
+                      background: `linear-gradient(145deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      boxShadow: `0 8px 32px ${config.gradientFrom}50`,
+                    }}
+                  >
+                    <Check className="h-12 w-12 text-black" strokeWidth={3} />
+                  </motion.div>
+                </motion.div>
+
+                {/* Title */}
+                <motion.h2
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-center text-[22px] font-bold text-white mb-2"
+                >
+                  {config.successTitle.replace('!', '')}
+                </motion.h2>
+
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                  className="text-center text-white/50 text-sm mb-6"
+                >
+                  Your professional document is ready to view
+                </motion.p>
+
+                {/* Stats Row - Compact horizontal */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex items-center justify-center gap-6 mb-6"
+                >
+                  {defaultStats.map((stat, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center"
+                        style={{
+                          background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                        }}
+                      >
+                        <stat.icon
+                          className="h-4 w-4"
+                          style={{ color: config.gradientFrom }}
+                        />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-white leading-tight">{stat.value}</p>
+                        <p className="text-[10px] text-white/40 uppercase tracking-wide">{stat.label}</p>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Time Saved Highlight */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.35 }}
+                  className="mx-auto w-fit px-5 py-2.5 rounded-2xl mb-8"
+                  style={{
+                    background: `linear-gradient(135deg, ${config.gradientFrom}15, ${config.gradientTo}10)`,
+                    border: `1px solid ${config.gradientFrom}30`,
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                    <span className="text-sm font-medium" style={{ color: config.gradientFrom }}>
+                      ~{timeSavedMinutes} minutes saved
+                    </span>
+                    <Zap className="h-3.5 w-3.5" style={{ color: config.gradientFrom }} />
+                  </div>
+                </motion.div>
+
+                {/* CTA Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <Button
+                    onClick={() => {
+                      onOpenChange(false);
+                      onViewResults();
+                    }}
+                    className={cn(
+                      "w-full h-14 text-base font-semibold rounded-2xl",
+                      "touch-manipulation active:scale-[0.98] transition-all duration-150",
+                      "border-0 shadow-lg"
+                    )}
+                    style={{
+                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      boxShadow: `0 8px 24px ${config.gradientFrom}40`,
+                      color: "#000",
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      View {config.resultsTitle}
+                      <ArrowRight className="h-5 w-5" />
+                    </span>
+                  </Button>
+                </motion.div>
               </div>
-            ))}
-          </div>
-
-          {/* Time Saved Badge */}
-          <div className="flex justify-center mt-4">
-            <Badge
-              className="px-4 py-1.5 text-sm font-medium border-0"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                color: config.gradientFrom,
-              }}
-            >
-              <Clock className="h-3.5 w-3.5 mr-1.5" />
-              ~{timeSavedMinutes} minutes saved
-            </Badge>
-          </div>
-        </div>
-
-        {/* Action Button */}
-        <div
-          className={cn(
-            "px-6 pb-6 transition-all duration-500 delay-500",
-            showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            </motion.div>
           )}
-        >
-          <Button
-            onClick={() => {
-              onOpenChange(false);
-              onViewResults();
-            }}
-            className="w-full h-14 text-base font-semibold rounded-xl touch-manipulation active:scale-[0.98] transition-all duration-150"
-            style={{
-              background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-              boxShadow: `0 4px 20px ${config.gradientFrom}40`,
-              color: "#000",
-            }}
-          >
-            View {config.resultsTitle}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
+        </AnimatePresence>
       </DialogContent>
     </Dialog>
   );
 }
 
-// Confetti helper
+// Enhanced confetti with more celebratory burst
 function triggerConfetti(colors: string[]) {
   const defaults = {
     spread: 360,
-    ticks: 100,
-    gravity: 0.5,
+    ticks: 70,
+    gravity: 0.6,
     decay: 0.94,
     startVelocity: 30,
     colors: colors,
+    origin: { y: 0.4 }
   };
 
   function fire(particleRatio: number, opts: confetti.Options) {
     confetti({
       ...defaults,
       ...opts,
-      particleCount: Math.floor(200 * particleRatio),
+      particleCount: Math.floor(150 * particleRatio),
     });
   }
 
+  // Initial burst
   fire(0.25, { spread: 26, startVelocity: 55 });
   fire(0.2, { spread: 60 });
   fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
   fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
   fire(0.1, { spread: 120, startVelocity: 45 });
+
+  // Second wave after short delay
+  setTimeout(() => {
+    confetti({
+      ...defaults,
+      particleCount: 30,
+      spread: 50,
+      startVelocity: 40,
+      origin: { x: 0.3, y: 0.5 }
+    });
+    confetti({
+      ...defaults,
+      particleCount: 30,
+      spread: 50,
+      startVelocity: 40,
+      origin: { x: 0.7, y: 0.5 }
+    });
+  }, 200);
 }
 
 // Haptic feedback helper
 function triggerHaptic() {
   if ("vibrate" in navigator) {
-    navigator.vibrate([50, 50, 100]);
+    navigator.vibrate([50, 30, 80]);
   }
 }

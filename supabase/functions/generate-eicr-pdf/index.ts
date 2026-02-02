@@ -128,6 +128,22 @@ Deno.serve(async (req: Request) => {
     // Debug test value
     console.log('[generate-eicr-pdf] inspection_debug_test =', formData.inspection_debug_test);
 
+    // Debug schedule of tests
+    console.log('[generate-eicr-pdf] ========== SCHEDULE OF TESTS DEBUG ==========');
+    console.log('[generate-eicr-pdf] schedule_of_tests present:', !!formData.schedule_of_tests);
+    console.log('[generate-eicr-pdf] schedule_of_tests length:', formData.schedule_of_tests?.length || 0);
+    console.log('[generate-eicr-pdf] boards_with_schedules present:', !!formData.boards_with_schedules);
+    console.log('[generate-eicr-pdf] boards_with_schedules length:', formData.boards_with_schedules?.length || 0);
+    if (formData.schedule_of_tests?.length > 0) {
+      console.log('[generate-eicr-pdf] First circuit:', JSON.stringify(formData.schedule_of_tests[0]).substring(0, 300));
+      console.log('[generate-eicr-pdf] First circuit keys:', Object.keys(formData.schedule_of_tests[0]));
+    }
+    if (formData.boards_with_schedules?.length > 0) {
+      console.log('[generate-eicr-pdf] First board reference:', formData.boards_with_schedules[0]?.db_reference);
+      console.log('[generate-eicr-pdf] First board circuits count:', formData.boards_with_schedules[0]?.circuits?.length || 0);
+    }
+    console.log('[generate-eicr-pdf] ================================================');
+
     // Create the document
     const document = await createPDFMonkeyDocument(formData);
     console.log('[generate-eicr-pdf] Document created:', document.id);

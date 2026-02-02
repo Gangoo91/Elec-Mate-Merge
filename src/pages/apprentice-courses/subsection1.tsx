@@ -595,7 +595,7 @@ const Section1_1 = () => {
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="1-2">
+            <Link to="/study-centre/apprentice/level2/module1/section1/1-2">
               Next Section
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

@@ -816,7 +816,7 @@ const Module2Section5_1 = () => {
             <Link to=".."><ArrowLeft className="w-4 h-4 mr-2" />Back to Module</Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
-            <Link to="../5-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+            <Link to="/study-centre/apprentice/level2/module2/section5/5-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>
       </div>

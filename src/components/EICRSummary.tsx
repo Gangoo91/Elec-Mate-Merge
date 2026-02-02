@@ -37,7 +37,7 @@ interface EICRSummaryProps {
 const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSummaryProps) => {
   // Use formData and updateFormData from context directly to ensure we always have the latest state
   // (props can be stale due to React's reconciliation timing)
-  const { effectiveReportId, formData: contextFormData, updateFormData, getLatestFormData, syncNow } = useEICRForm();
+  const { effectiveReportId, formData: contextFormData, updateFormData, getLatestFormData, syncNow, syncNowImmediate } = useEICRForm();
   const formData = contextFormData; // Use context formData for all operations
   const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
@@ -135,24 +135,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   };
 
   const handleGenerateCertificate = async () => {
-    // IMPORTANT: Get the absolute latest form data at the START of generation
-    // This uses the context's getLatestFormData() which reads from a ref that's always in sync
-    const latestFormData = getLatestFormData();
-    console.log('[PDF Generation] Got latestFormData via getLatestFormData():', {
-      scheduleOfTests: latestFormData?.scheduleOfTests?.length || 0,
-      inspectionItems: latestFormData?.inspectionItems?.length || 0,
-      defectObservations: latestFormData?.defectObservations?.length || 0
-    });
-
     console.log('[PDF Generation] Starting process...');
     console.log('[PDF Generation] effectiveReportId:', effectiveReportId);
-    console.log('[PDF Generation] Form data preview (from ref):', {
-      clientName: latestFormData.clientName,
-      certificateNumber: latestFormData.certificateNumber,
-      inspectionDate: latestFormData.inspectionDate,
-      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
-      inspectionItemsCount: latestFormData.inspectionItems?.length || 0
-    });
 
     setIsGenerating(true);
     setShowDialog(true);
@@ -160,46 +144,71 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     setGenerationError(null);
 
     try {
-      // Step 1: Ensure report is saved to database first
-      console.log('[PDF Generation] Step 1: Ensuring report is saved to database...');
+      // Step 1: Force immediate sync and get the SAVED data back
+      // This is critical - we use the data that was actually synced to the database,
+      // not potentially stale in-memory data that may not have been saved yet
+      console.log('[PDF Generation] Step 1: Force immediate sync to database...');
 
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
 
-      // Sync report to cloud using the sync hook (handles version tracking properly)
       let savedReportId = effectiveReportId;
-      try {
-        console.log('[PDF Generation] Syncing report to cloud before PDF generation...');
-        const syncResult = await syncNow();
+      let dataForPdf: any;
+
+      if (syncNowImmediate) {
+        // Use the new immediate sync that returns the saved data
+        console.log('[PDF Generation] Using syncNowImmediate for guaranteed data consistency...');
+        const syncResult = await syncNowImmediate();
+
         if (syncResult.success && syncResult.reportId) {
           savedReportId = syncResult.reportId;
+          dataForPdf = syncResult.data;  // Use the data that was actually saved
           console.log('[PDF Generation] Report synced with ID:', savedReportId);
+          console.log('[PDF Generation] Using SYNCED data for PDF generation');
         } else {
-          console.warn('[PDF Generation] Report sync failed, continuing with PDF generation...');
+          console.warn('[PDF Generation] Sync failed, falling back to current form data...');
+          dataForPdf = getLatestFormData();
         }
-      } catch (saveError) {
-        console.warn('[PDF Generation] Report save error (non-blocking):', saveError);
-        // Continue with PDF generation anyway
+      } else {
+        // Fallback to old behavior if syncNowImmediate not available
+        console.warn('[PDF Generation] syncNowImmediate not available, using legacy sync...');
+        try {
+          const syncResult = await syncNow?.();
+          if (syncResult?.success && syncResult?.reportId) {
+            savedReportId = syncResult.reportId;
+          }
+        } catch (saveError) {
+          console.warn('[PDF Generation] Report save error (non-blocking):', saveError);
+        }
+        dataForPdf = getLatestFormData();
       }
 
-      // Step 2: Format the EICR data for PDF Monkey (using latestFormData from ref)
-      console.log('[PDF Generation] Step 2: Formatting data for PDF generation...');
-      console.log('[EICRSummary] Raw formData keys:', Object.keys(latestFormData));
-      console.log('[EICRSummary] Critical fields in raw formData:', {
-        clientName: latestFormData.clientName || 'MISSING',
-        installationAddress: latestFormData.installationAddress || 'MISSING',
-        inspectorName: latestFormData.inspectorName || 'MISSING',
-        certificateNumber: latestFormData.certificateNumber || 'MISSING'
-      });
-      console.log('[EICRSummary] Array counts:', {
-        scheduleOfTests: latestFormData.scheduleOfTests?.length || 0,
-        inspectionItems: latestFormData.inspectionItems?.length || 0,
-        defectObservations: latestFormData.defectObservations?.length || 0
+      // Data verification logging - ensure we're using the right data
+      console.log('[PDF Generation] Data verification:', {
+        scheduleOfTestsCount: dataForPdf?.scheduleOfTests?.length || 0,
+        inspectionItemsCount: dataForPdf?.inspectionItems?.length || 0,
+        defectObservationsCount: dataForPdf?.defectObservations?.length || 0,
+        clientName: dataForPdf?.clientName
       });
 
-      const formattedJson = await formatEICRJson(latestFormData, savedReportId);
+      // Step 2: Format the EICR data for PDF Monkey (using the SYNCED data)
+      console.log('[PDF Generation] Step 2: Formatting data for PDF generation...');
+      console.log('[EICRSummary] Raw formData keys:', Object.keys(dataForPdf));
+      console.log('[EICRSummary] Critical fields in raw formData:', {
+        clientName: dataForPdf.clientName || 'MISSING',
+        installationAddress: dataForPdf.installationAddress || 'MISSING',
+        inspectorName: dataForPdf.inspectorName || 'MISSING',
+        certificateNumber: dataForPdf.certificateNumber || 'MISSING'
+      });
+      console.log('[EICRSummary] Array counts:', {
+        scheduleOfTests: dataForPdf.scheduleOfTests?.length || 0,
+        inspectionItems: dataForPdf.inspectionItems?.length || 0,
+        defectObservations: dataForPdf.defectObservations?.length || 0
+      });
+
+      const formattedJson = await formatEICRJson(dataForPdf, savedReportId);
       console.log('[PDF Generation] Formatted EICR JSON (first 200 chars):', JSON.stringify(formattedJson).substring(0, 200));
       console.log('[PDF Generation] Required fields check:', {
         clientName: formattedJson.client_details?.client_name,
@@ -280,7 +289,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           pdfUrlFromResponse,
           user.id,
           savedReportId,
-          latestFormData.certificateNumber
+          dataForPdf.certificateNumber
         );
         permanentUrl = storageResult.permanentUrl;
         storagePath = storageResult.storagePath;
@@ -342,11 +351,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       // Check if customer already exists in pool
       const existingCustomer = customers.find(
-        c => c.name.toLowerCase() === latestFormData.clientName?.toLowerCase()
+        c => c.name.toLowerCase() === dataForPdf.clientName?.toLowerCase()
       );
 
       // If customer doesn't exist, show prompt to save
-      if (!existingCustomer && latestFormData.clientName) {
+      if (!existingCustomer && dataForPdf.clientName) {
         setSavedReportIdForCustomer(savedReportId);
         setShowCustomerDialog(true);
       }

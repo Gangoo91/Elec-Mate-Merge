@@ -35,63 +35,54 @@ const QuickMetricsCard = ({
   const complexityColors = complexity ? getComplexityColor(complexity.rating) : null;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {/* Complexity */}
+    <div className="grid grid-cols-2 gap-3">
+      {/* Complexity Card */}
       {complexity && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="min-h-[44px] text-left"
+          className={`relative overflow-hidden rounded-xl p-4 ${complexityColors?.bg} border ${complexityColors?.border}`}
         >
-          <div className="flex items-center gap-1.5 mb-1">
-            <TrendingUp className={`h-4 w-4 ${complexityColors?.text}`} />
-            <span className="text-xs text-white/50">Complexity</span>
+          <div className={`absolute top-0 right-0 w-16 h-16 ${complexityColors?.bg} rounded-full blur-2xl -mr-4 -mt-4 opacity-50`} />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className={`p-1.5 rounded-lg ${complexityColors?.bg}`}>
+                <TrendingUp className={`h-4 w-4 ${complexityColors?.text}`} />
+              </div>
+              <span className={`text-xs font-semibold uppercase tracking-wide ${complexityColors?.text} opacity-80`}>Complexity</span>
+            </div>
+            <div className={`text-2xl font-black ${complexityColors?.text} tabular-nums`}>
+              {complexity.rating}/10
+            </div>
+            <p className="text-xs text-white/50 mt-1">{complexity.label}</p>
           </div>
-          <div className={`text-2xl font-bold ${complexityColors?.text}`}>
-            {complexity.rating}/10
-          </div>
-          <p className="text-xs text-white/50 mt-0.5">{complexity.label}</p>
         </motion.div>
       )}
 
-      {/* Confidence */}
-      {confidence && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="min-h-[44px] text-left"
-        >
-          <div className="flex items-center gap-1.5 mb-1">
-            <CheckCircle2 className={`h-4 w-4 ${getConfidenceColor(avgConfidence)}`} />
-            <span className="text-xs text-white/50">Confidence</span>
-          </div>
-          <div className={`text-2xl font-bold ${getConfidenceColor(avgConfidence)}`}>
-            {avgConfidence}%
-          </div>
-          <p className="text-xs text-white/50 mt-0.5">Accuracy</p>
-        </motion.div>
-      )}
-
-      {/* Risk Level */}
+      {/* Risk Level Card */}
       {riskAssessment && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="min-h-[44px] text-left"
+          transition={{ delay: 0.15 }}
+          className={`relative overflow-hidden rounded-xl p-4 ${highRisks > 0 ? 'bg-red-500/10 border-red-500/20' : 'bg-emerald-500/10 border-emerald-500/20'} border`}
         >
-          <div className="flex items-center gap-1.5 mb-1">
-            <AlertTriangle className={`h-4 w-4 ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`} />
-            <span className="text-xs text-white/50">Risk Level</span>
+          <div className={`absolute top-0 right-0 w-16 h-16 ${highRisks > 0 ? 'bg-red-500/10' : 'bg-emerald-500/10'} rounded-full blur-2xl -mr-4 -mt-4 opacity-50`} />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className={`p-1.5 rounded-lg ${highRisks > 0 ? 'bg-red-500/20' : 'bg-emerald-500/20'}`}>
+                <AlertTriangle className={`h-4 w-4 ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`} />
+              </div>
+              <span className={`text-xs font-semibold uppercase tracking-wide ${highRisks > 0 ? 'text-red-300/80' : 'text-emerald-300/80'}`}>Risk Level</span>
+            </div>
+            <div className={`text-2xl font-black tabular-nums ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+              {highRisks > 0 ? 'High' : 'Low'}
+            </div>
+            <p className="text-xs text-white/50 mt-1">
+              {highRisks > 0 ? `${highRisks} Risk${highRisks > 1 ? 's' : ''} identified` : 'No major risks'}
+            </p>
           </div>
-          <div className={`text-2xl font-bold ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
-            {highRisks > 0 ? 'High' : 'Low'}
-          </div>
-          <p className="text-xs text-white/50 mt-0.5">
-            {highRisks > 0 ? `${highRisks} Risk${highRisks > 1 ? 's' : ''}` : 'Clear'}
-          </p>
         </motion.div>
       )}
     </div>

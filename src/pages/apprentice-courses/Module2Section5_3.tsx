@@ -436,7 +436,7 @@ const Module2Section5_3 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to="../5-2"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+            <Link to="/study-centre/apprentice/level2/module2/section5/5-2"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="..">Complete Module<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>

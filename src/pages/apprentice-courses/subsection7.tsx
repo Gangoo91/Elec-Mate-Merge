@@ -494,13 +494,13 @@ const Section2_3 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <Button asChild variant="outline" className="flex-1">
-            <Link to="2-2" className="flex items-center gap-2">
+            <Link to="/study-centre/apprentice/level2/module1/section2/2-2" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Overloads and Short Circuits
             </Link>
           </Button>
           <Button asChild className="flex-1">
-            <Link to="2-4" className="flex items-center gap-2">
+            <Link to="/study-centre/apprentice/level2/module1/section2/2-4" className="flex items-center gap-2">
               Next: Working at Height and Confined Spaces
               <ArrowRight className="h-4 w-4" />
             </Link>

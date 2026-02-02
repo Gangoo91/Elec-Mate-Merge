@@ -84,18 +84,25 @@ export default function AdminWinback() {
   const [manualEmail, setManualEmail] = useState("");
 
   // Fetch campaign stats
-  const { data: stats, isLoading: statsLoading } = useQuery<WinbackStats>({
+  const { data: stats, isLoading: statsLoading, error: statsError } = useQuery<WinbackStats>({
     queryKey: ["admin-winback-stats"],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("send-winback-offer", {
         body: { action: "get_stats" },
       });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
+      if (error) {
+        console.error("Stats invoke error:", error);
+        throw error;
+      }
+      if (data?.error) {
+        console.error("Stats data error:", data.error, data.stack);
+        throw new Error(data.error);
+      }
       return data as WinbackStats;
     },
     staleTime: 30 * 1000,
     refetchInterval: 60 * 1000,
+    retry: false, // Don't retry on error so we see the issue
   });
 
   // Fetch eligible users
@@ -522,7 +529,7 @@ export default function AdminWinback() {
             </Badge>
           </CardTitle>
           <CardDescription>
-            Electricians who haven't subscribed 48+ hours after trial ended
+            Electricians who haven't subscribed 24+ hours after trial ended
           </CardDescription>
         </CardHeader>
         <CardContent>

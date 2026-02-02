@@ -584,10 +584,10 @@ const Module2Section4_6 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../4-5"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+            <Link to="/study-centre/apprentice/level2/module2/section4/4-5"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../5-1">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+            <Link to="/study-centre/apprentice/level2/module2/section5/5-1">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>
       </div>

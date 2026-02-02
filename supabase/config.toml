@@ -259,3 +259,8 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Stripe Subscription Webhook (uses Stripe signature verification, not JWT)
+[functions.stripe-subscription-webhook]
+verify_jwt = false
+
+

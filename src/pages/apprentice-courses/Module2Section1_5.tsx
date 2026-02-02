@@ -821,13 +821,13 @@ const Module2Section1_5 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../1-4">
+            <Link to="/study-centre/apprentice/level2/module2/section1/1-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: SI Prefixes and Conversions
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../2-intro">
+            <Link to="/study-centre/apprentice/level2/module2/section2">
               Next: Module 2.2 Introduction
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

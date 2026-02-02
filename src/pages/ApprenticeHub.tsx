@@ -54,9 +54,16 @@ const itemVariants = {
   },
 };
 
-// Premium Hero Component
+// Premium Hero Component - Centered layout matching main dashboard
 function ApprenticeHero() {
   const { user, stats, isLoading } = useApprenticeData();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
 
   return (
     <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
@@ -66,100 +73,74 @@ function ApprenticeHero() {
       {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      <div className="relative z-10 p-4 sm:p-5">
-        {/* Header label */}
-        <div className="flex items-center gap-1.5 text-elec-yellow mb-3">
-          <Sparkles className="h-3 w-3" />
-          <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
-            Apprentice Hub
-          </span>
-        </div>
-
-        {/* Main content row - icon and text aligned */}
-        <div className="flex items-center gap-4">
+      {/* Content - centered layout */}
+      <div className="relative z-10 p-5 sm:p-6">
+        <div className="flex flex-col items-center text-center">
           {/* Icon */}
-          <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-            <GraduationCap className="h-8 w-8 text-elec-yellow" />
+          <div className="w-20 h-20 rounded-full bg-elec-yellow/10 border-2 border-elec-yellow/20 flex items-center justify-center mb-3">
+            <GraduationCap className="h-10 w-10 text-elec-yellow" />
           </div>
 
-          {/* Text - vertically centered with icon */}
-          <div className="flex-1 min-w-0 flex flex-col justify-center">
-            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow leading-tight">
-              {user.firstName.toUpperCase()}
-            </h1>
-            <p className="text-xs sm:text-sm text-white/70 mt-0.5">
-              Your command center for apprenticeship success
-            </p>
-          </div>
-        </div>
+          {/* Greeting and Name */}
+          <p className="text-sm text-white/50 mb-0.5">
+            {getGreeting()}
+          </p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            {user.firstName}
+          </h1>
 
-        {/* Status badges - aligned below */}
-        <div className="flex items-center gap-2 mt-4 pl-20">
-          {user.apprenticeYear && (
-            <Badge
-              variant="outline"
-              className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
-            >
-              Year {user.apprenticeYear}
-            </Badge>
-          )}
-          {stats.learning.currentStreak > 0 && (
-            <Badge
-              variant="outline"
-              className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs"
-            >
-              <Flame className="w-3 h-3 mr-1" />
-              {stats.learning.currentStreak} day streak
-            </Badge>
-          )}
+          {/* Status badges - horizontal row */}
+          <div className="flex items-center gap-2 mt-3">
+            {user.apprenticeYear && (
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
+              >
+                Year {user.apprenticeYear}
+              </Badge>
+            )}
+            {stats.learning.currentStreak > 0 && (
+              <Badge
+                variant="outline"
+                className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[11px]"
+              >
+                <Flame className="w-3 h-3 mr-1" />
+                {stats.learning.currentStreak} day streak
+              </Badge>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// Stats Bar Component
+// Stats Bar Component - Grid layout matching main dashboard
 function ApprenticeStatsBar() {
   const { stats, isLoading } = useApprenticeData();
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = React.useState(0);
 
   const statItems = [
-    {
-      label: 'OJT Hours',
-      value: stats.ojtHours.logged,
-      suffix: ` / ${stats.ojtHours.target}`,
-      icon: Clock,
-      progress: stats.ojtHours.percentComplete,
-    },
     {
       label: 'Study Streak',
       value: stats.learning.currentStreak,
       suffix: ' days',
       icon: Flame,
-    },
-    {
-      label: 'Portfolio',
-      value: stats.portfolio.evidenceCount,
-      suffix: ' items',
-      icon: FileText,
+      variant: 'orange' as const,
     },
     {
       label: 'Progress',
       value: stats.progress.overallPercent,
       suffix: '%',
       icon: Target,
-      progress: stats.progress.overallPercent,
+      variant: 'green' as const,
     },
   ];
 
-  // Track scroll position for pagination dots
-  const handleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardWidth = 140 + 12; // width + gap
-    const newIndex = Math.round(el.scrollLeft / cardWidth);
-    setActiveIndex(Math.max(0, Math.min(newIndex, statItems.length - 1)));
+  const variantClasses = {
+    yellow: { bg: 'bg-elec-yellow/10', text: 'text-elec-yellow' },
+    orange: { bg: 'bg-orange-500/10', text: 'text-orange-400' },
+    purple: { bg: 'bg-purple-500/10', text: 'text-purple-400' },
+    green: { bg: 'bg-green-500/10', text: 'text-green-400' },
   };
 
   if (isLoading) {
@@ -167,7 +148,7 @@ function ApprenticeStatsBar() {
       <div className="px-4 sm:px-0">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
+            <div key={i} className="h-[90px] rounded-xl glass-premium animate-pulse" />
           ))}
         </div>
       </div>
@@ -175,97 +156,44 @@ function ApprenticeStatsBar() {
   }
 
   return (
-    <div className="relative">
-      <motion.div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className={cn(
-          // Mobile: horizontal scroll carousel
-          'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
-          'snap-x snap-mandatory scrollbar-hide momentum-scroll-x',
-          // Desktop: grid layout
-          'sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
-        )}
-      >
-        {statItems.map((stat, index) => (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="grid grid-cols-2 sm:grid-cols-4 gap-3 px-4 sm:px-0"
+    >
+      {statItems.map((stat) => {
+        const colors = variantClasses[stat.variant];
+        return (
           <motion.div
             key={stat.label}
             variants={itemVariants}
             whileTap={{ scale: 0.97 }}
-            className={cn(
-              'flex-shrink-0 w-[140px] snap-start touch-manipulation',
-              index === statItems.length - 1 && 'mr-4 sm:mr-0',
-              'sm:w-full'
-            )}
+            className="touch-manipulation"
           >
             <div className="glass-premium rounded-xl p-4 h-[100px]">
-              <div className="flex flex-col h-full">
-                {/* Icon row */}
-                <div className="flex items-center justify-between">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10">
-                    <stat.icon className="h-4 w-4 text-elec-yellow" />
-                  </div>
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                {/* Icon */}
+                <div className={cn('p-2 rounded-lg mb-2', colors.bg)}>
+                  <stat.icon className={cn('h-5 w-5', colors.text)} />
                 </div>
-                {/* Value and label - left aligned */}
-                <div className="flex-1 flex flex-col justify-end">
-                  <div className="flex items-baseline">
-                    <AnimatedCounter
-                      value={stat.value}
-                      className="text-xl sm:text-2xl font-bold text-elec-yellow"
-                    />
-                    {stat.suffix && (
-                      <span className="text-xs text-white/50 ml-1">{stat.suffix}</span>
-                    )}
-                  </div>
-                  <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                {/* Value and label */}
+                <div className="flex items-baseline justify-center">
+                  <AnimatedCounter
+                    value={stat.value}
+                    className={cn('text-xl font-bold', colors.text)}
+                  />
+                  {stat.suffix && (
+                    <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                  )}
                 </div>
-                {/* Progress bar */}
-                {stat.progress !== undefined && (
-                  <div className="mt-2 h-1 bg-white/[0.05] rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(stat.progress, 100)}%` }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
-                      className="h-full bg-elec-yellow rounded-full"
-                    />
-                  </div>
-                )}
+                <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
               </div>
             </div>
           </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-0.5 mt-3 sm:hidden">
-        {statItems.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              const el = scrollRef.current;
-              if (el) {
-                const cardWidth = 140 + 12;
-                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
-              }
-            }}
-            className="min-h-11 min-w-8 flex items-center justify-center touch-manipulation active:scale-95"
-            aria-label={`View ${statItems[i].label}`}
-          >
-            <span
-              className={cn(
-                'transition-all duration-200',
-                i === activeIndex
-                  ? 'w-5 h-2 rounded-full bg-elec-yellow'
-                  : 'w-2 h-2 rounded-full bg-white/20'
-              )}
-            />
-          </button>
-        ))}
-      </div>
-    </div>
+        );
+      })}
+    </motion.div>
   );
 }
 
@@ -436,25 +364,12 @@ function SectionHeader({ title }: { title: string }) {
 // Main resources
 const mainResources: ToolCardProps[] = [
   {
-    title: 'Electrical Calculators',
-    description: 'Cable sizing, voltage drop, fault current and more',
-    icon: Calculator,
-    link: '/apprentice/calculators',
-  },
-  {
-    title: 'Portfolio & OJT',
-    description: 'Track hours, log evidence, manage your apprenticeship',
-    icon: Clock,
-    link: '/apprentice/hub',
+    title: 'Study Centre',
+    description: 'Level 2 & 3 courses, practice questions, and exam prep',
+    icon: BookOpen,
+    link: '/study-centre/apprentice',
     featured: true,
-    badges: ['Portfolio', 'OJT Hours', 'Goals'],
-    comingSoon: true,
-  },
-  {
-    title: 'Mental Health Hub',
-    description: 'Wellbeing resources, support networks and guidance',
-    icon: Heart,
-    link: '/apprentice/mental-health',
+    badges: ['2,000+ Questions', 'AM2 Prep'],
   },
   {
     title: 'Inspection & Testing',
@@ -463,6 +378,18 @@ const mainResources: ToolCardProps[] = [
     link: '/apprentice/inspection-testing-hub',
     featured: true,
     badges: ['8 Topics', 'Interactive', 'Exam Ready'],
+  },
+  {
+    title: 'Electrical Calculators',
+    description: 'Cable sizing, voltage drop, fault current and more',
+    icon: Calculator,
+    link: '/apprentice/calculators',
+  },
+  {
+    title: 'Mental Health Hub',
+    description: 'Wellbeing resources, support networks and guidance',
+    icon: Heart,
+    link: '/apprentice/mental-health',
   },
 ];
 
@@ -475,22 +402,22 @@ const additionalResources: ToolCardProps[] = [
     link: '/apprentice/on-job-tools',
   },
   {
-    title: 'Guidance Area',
-    description: 'Tips, guides and best practices',
-    icon: WrenchIcon,
-    link: '/apprentice/toolbox',
-  },
-  {
     title: 'Career Development',
     description: 'Plan your progression pathway',
     icon: GraduationCap,
     link: '/apprentice/professional-development',
   },
   {
-    title: 'Study Centre',
-    description: 'Training materials and quizzes',
-    icon: BookOpen,
-    link: '/study-centre/apprentice',
+    title: 'Guidance Area',
+    description: 'Tips, guides and best practices',
+    icon: WrenchIcon,
+    link: '/apprentice/toolbox',
+  },
+  {
+    title: 'Portfolio & OJT',
+    description: 'Track hours and evidence',
+    icon: Clock,
+    link: '/apprentice/hub',
   },
 ];
 

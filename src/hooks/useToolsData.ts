@@ -23,7 +23,7 @@ export interface ToolItem {
 }
 
 // Tool categories in marketplace_products
-const TOOL_CATEGORIES = ['power-tools', 'hand-tools', 'test-equipment', 'tool-storage'];
+const TOOL_CATEGORIES = ['power-tools', 'hand-tools', 'test-equipment', 'tool-storage', 'ppe'];
 
 const fetchToolsData = async (): Promise<ToolItem[]> => {
   console.log('🔧 Fetching tools data from marketplace_products...');

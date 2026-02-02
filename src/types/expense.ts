@@ -154,5 +154,27 @@ export interface AccountingExportConfig {
   categoryMapping: Record<ExpenseCategory, string>;
 }
 
+// Accounting expense sync status tracking
+export type ExpenseSyncStatus = 'pending' | 'synced' | 'error';
+
+export interface AccountingExpenseSync {
+  id: string;
+  userId: string;
+  expenseId: string;
+  provider: 'xero' | 'quickbooks' | 'sage';
+  externalExpenseId?: string;  // ID in the accounting system
+  externalUrl?: string;        // Link to view in accounting system
+  status: ExpenseSyncStatus;
+  errorMessage?: string;
+  syncedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Expense with sync status details
+export interface ExpenseWithSyncStatus extends Expense {
+  syncStatus?: AccountingExpenseSync[];
+}
+
 // Default HMRC mileage rate
 export const DEFAULT_MILEAGE_RATE = 0.45; // 45p per mile

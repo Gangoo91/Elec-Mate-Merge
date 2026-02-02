@@ -249,7 +249,7 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   smartdocs: { title: "Smart Docs", subtitle: "AI-powered documents", icon: Sparkles, color: "purple" },
   aidesignspec: { title: "AI Design Spec", icon: Cpu, color: "purple" },
   airams: { title: "AI RAMS", icon: ShieldCheck, color: "purple" },
-  aimethodstatement: { title: "AI Method Statement", icon: FileText, color: "purple" },
+  aimethodstatement: { title: "Method Statement Generator", icon: FileText, color: "purple" },
   aibriefingpack: { title: "AI Briefing Pack", icon: ClipboardList, color: "purple" },
   aiquote: { title: "AI Quote", icon: PoundSterling, color: "purple" },
   // Other

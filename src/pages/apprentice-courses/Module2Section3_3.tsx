@@ -406,7 +406,7 @@ export default function Module2Section3_3() {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../3-2">
+            <Link to="/study-centre/apprentice/level2/module2/section3/3-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>

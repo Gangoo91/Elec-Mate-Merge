@@ -32,7 +32,7 @@ interface EligibleUser {
 
 // Generate win-back offer email HTML
 function generateWinbackEmailHTML(user: EligibleUser): string {
-  const firstName = user.full_name?.split(" ")[0] || "there";
+  const firstName = user.full_name?.split(" ")[0] || "mate";
 
   return `
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ function generateWinbackEmailHTML(user: EligibleUser): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="dark">
   <meta name="supported-color-schemes" content="dark">
-  <title>We miss you! Special offer: £7.99/month</title>
+  <title>Elec-Mate has changed - Andrew</title>
   <!--[if mso]>
   <style type="text/css">
     body, table, td { font-family: Arial, sans-serif !important; }
@@ -53,155 +53,156 @@ function generateWinbackEmailHTML(user: EligibleUser): string {
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0f172a;">
     <tr>
       <td style="padding: 24px 12px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 420px; margin: 0 auto; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(251, 191, 36, 0.2);">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 500px; margin: 0 auto; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(251, 191, 36, 0.2);">
 
-          <!-- Header -->
+          <!-- Opening -->
           <tr>
-            <td style="padding: 40px 24px 24px; text-align: center;">
-              <div style="font-size: 56px; line-height: 1; margin-bottom: 16px;">👋</div>
-              <div style="display: inline-block; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">
-                We Miss You
+            <td style="padding: 32px 24px 20px;">
+              <p style="margin: 0 0 18px; font-size: 17px; color: #ffffff; line-height: 1.6;">
+                Hey ${firstName},
+              </p>
+              <p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                You tried Elec-Mate when it first launched. That was version 1 — and things are changing daily. I've squashed the launch bugs, and I'm about to add 4 more certs to Inspection & Testing.
+              </p>
+              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                Now's a good time to jump back in. Here's why:
+              </p>
+            </td>
+          </tr>
+
+          <!-- What's Coming -->
+          <tr>
+            <td style="padding: 0 20px 20px;">
+              <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 14px; padding: 18px;">
+                <p style="margin: 0 0 12px; font-size: 13px; color: #22c55e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                  🚀 Coming in the next few weeks
+                </p>
+                <p style="margin: 0 0 8px; font-size: 15px; color: #ffffff;">
+                  <strong>Native Mobile App</strong> — proper iOS & Android app, not just the web
+                </p>
+                <p style="margin: 0; font-size: 15px; color: #ffffff;">
+                  <strong>Employer Hub</strong> — manage your team, assign jobs, track progress
+                </p>
               </div>
-              <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">
-                Come back to Elec-Mate
-              </h1>
-              <p style="margin: 12px 0 0; font-size: 16px; color: #e2e8f0; line-height: 1.5;">
-                Hi ${firstName}, we noticed you tried Elec-Mate but haven't come back yet.
-              </p>
             </td>
           </tr>
 
-          <!-- Special Offer Message -->
+          <!-- Did you try Elec-AI? -->
           <tr>
-            <td style="padding: 0 24px 20px;">
-              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7; text-align: center;">
-                We'd love to have you back - so here's a <strong style="color: #22c55e;">special offer</strong> just for you:
-              </p>
+            <td style="padding: 0 20px 20px;">
+              <div style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 14px; padding: 16px;">
+                <p style="margin: 0 0 6px; font-size: 14px; color: #a78bfa; font-weight: 600;">
+                  Did you try Elec-AI? 🤖
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  Ask it anything about the regs, wiring, circuits — it's like having a sparky mate who's read BS 7671 cover to cover.
+                </p>
+              </div>
             </td>
           </tr>
 
-          <!-- Price Cards -->
+          <!-- The 3 Things You Get -->
           <tr>
             <td style="padding: 0 20px 24px;">
-              <!-- Monthly Option -->
-              <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 12px;">
-                <p style="margin: 0 0 4px; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
-                  🔥 Monthly Plan
+              <p style="margin: 0 0 16px; font-size: 13px; color: #fbbf24; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                What Elec-Mate actually gives you
+              </p>
+
+              <!-- TIME -->
+              <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; margin-bottom: 10px;">
+                <p style="margin: 0 0 6px; font-size: 20px;">⏰</p>
+                <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 700;">Your Time Back</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  Certs, RAMS, quotes — done on-site in minutes. Your evenings are yours again.
                 </p>
-                <p style="margin: 4px 0; font-size: 36px; font-weight: 800; color: #22c55e; line-height: 1;">
-                  £${WINBACK_CONFIG.monthlyPrice.toFixed(2)}
+              </div>
+
+              <!-- COMPLIANCE -->
+              <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px; margin-bottom: 10px;">
+                <p style="margin: 0 0 6px; font-size: 20px;">✅</p>
+                <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 700;">Compliance Sorted</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  BS 7671 compliant certs. RAMS in 2 minutes — not generic, backed by the regs.
                 </p>
-                <p style="margin: 0 0 12px; font-size: 14px; color: #94a3b8;">
-                  per month
+              </div>
+
+              <!-- MONEY -->
+              <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 16px;">
+                <p style="margin: 0 0 6px; font-size: 20px;">💷</p>
+                <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 700;">More Money in Your Pocket</p>
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">
+                  Ditch 5 separate apps — your cert software, RAMS tool, quoting spreadsheet, invoicing app, and that notes app. One subscription instead of five. Plus pricing that stops you underquoting.
                 </p>
-                <p style="margin: 0 0 16px; font-size: 13px; color: #cbd5e1;">
-                  <span style="text-decoration: line-through; color: #64748b;">£${WINBACK_CONFIG.standardMonthlyPrice.toFixed(2)}</span>
-                  <span style="color: #22c55e; font-weight: 600; margin-left: 8px;">Save ${WINBACK_CONFIG.discountPercent}%</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- The Offer -->
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 2px solid rgba(251, 191, 36, 0.4); border-radius: 16px; padding: 24px 20px; text-align: center;">
+                <p style="margin: 0 0 4px; font-size: 14px; color: #94a3b8;">
+                  Lock in early-adopter pricing
                 </p>
-                <a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 14px 24px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 700; border-radius: 12px; text-align: center;">
-                  Claim Monthly - £${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo
+                <p style="margin: 0; font-size: 48px; font-weight: 800; color: #fbbf24; line-height: 1;">
+                  £${WINBACK_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size: 18px; font-weight: 600; color: #94a3b8;">/mo</span>
+                </p>
+                <p style="margin: 6px 0 12px; font-size: 14px; color: #94a3b8;">
+                  <span style="text-decoration: line-through;">£${WINBACK_CONFIG.standardMonthlyPrice.toFixed(2)}</span> · <span style="color: #22c55e; font-weight: 600;">20% off</span> · price locked forever
+                </p>
+                <p style="margin: 0 0 18px; font-size: 15px; color: #e2e8f0; line-height: 1.5;">
+                  Having something this handy in your pocket for £7.99 is a steal.
+                </p>
+                <a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center; margin-bottom: 12px;">
+                  Get back in at £${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo →
+                </a>
+                <a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 14px 24px; background: rgba(251, 191, 36, 0.15); border: 2px solid rgba(251, 191, 36, 0.5); color: #fbbf24; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 12px; text-align: center;">
+                  Or go yearly: £${WINBACK_CONFIG.yearlyPrice.toFixed(2)} (£${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)
                 </a>
               </div>
-
-              <!-- Yearly Option -->
-              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 16px; padding: 20px; text-align: center;">
-                <p style="margin: 0 0 4px; font-size: 13px; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
-                  🔥 Best Value - Yearly
-                </p>
-                <p style="margin: 4px 0; font-size: 36px; font-weight: 800; color: #fbbf24; line-height: 1;">
-                  £${WINBACK_CONFIG.yearlyPrice.toFixed(2)}
-                </p>
-                <p style="margin: 0 0 12px; font-size: 14px; color: #94a3b8;">
-                  per year (£${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)
-                </p>
-                <p style="margin: 0 0 16px; font-size: 13px; color: #cbd5e1;">
-                  <span style="text-decoration: line-through; color: #64748b;">£${WINBACK_CONFIG.standardYearlyPrice.toFixed(2)}</span>
-                  <span style="color: #fbbf24; font-weight: 600; margin-left: 8px;">Save ${WINBACK_CONFIG.discountPercent}%</span>
-                </p>
-                <a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 14px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 15px; font-weight: 700; border-radius: 12px; text-align: center;">
-                  Claim Yearly - £${WINBACK_CONFIG.yearlyPrice.toFixed(2)}/yr
-                </a>
-              </div>
             </td>
           </tr>
 
-          <!-- What's Included -->
+          <!-- Free Trial Offer -->
           <tr>
-            <td style="padding: 0 20px 28px;">
-              <p style="margin: 0 0 16px; font-size: 13px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
-                What you get
-              </p>
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">Cost Engineer - instant job pricing</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">RAMS in 2 minutes</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">Quotes, invoices & expenses</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">Study Centre for apprentices</span>
-                  </td>
-                </tr>
-                <tr><td style="height: 6px;"></td></tr>
-                <tr>
-                  <td style="padding: 10px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
-                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">And much more...</span>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Exclusive Offer Note -->
-          <tr>
-            <td style="padding: 0 20px 28px;">
-              <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 12px; padding: 14px 20px; text-align: center;">
-                <p style="margin: 0; font-size: 14px; color: #fbbf24; font-weight: 600;">
-                  🎁 This offer is exclusively for you
+            <td style="padding: 0 24px 24px;">
+              <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
+                  Not sure? Reply to this email and I'll give you <strong style="color: #60a5fa;">another free week</strong> to try it properly. No strings.
                 </p>
               </div>
             </td>
           </tr>
 
-          <!-- Help Section -->
+          <!-- Something wasn't right? -->
           <tr>
-            <td style="padding: 24px; background-color: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(148, 163, 184, 0.1); text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 14px; color: #cbd5e1;">
-                Questions? Just reply to this email
+            <td style="padding: 0 24px 28px;">
+              <p style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6; text-align: center;">
+                If something put you off last time, I'd genuinely like to know — I'm updating this thing every day. Just reply.
               </p>
-              <a href="mailto:info@elec-mate.com" style="font-size: 15px; color: #fbbf24; text-decoration: none; font-weight: 600;">
-                info@elec-mate.com
-              </a>
+            </td>
+          </tr>
+
+          <!-- Sign off -->
+          <tr>
+            <td style="padding: 0 24px 32px;">
+              <p style="margin: 0 0 4px; font-size: 15px; color: #e2e8f0;">
+                Cheers,
+              </p>
+              <p style="margin: 0 0 4px; font-size: 16px; color: #ffffff; font-weight: 600;">
+                Andrew
+              </p>
+              <p style="margin: 0; font-size: 13px; color: #64748b;">
+                Founder, Elec-Mate
+              </p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 20px 24px; text-align: center; background-color: #0f172a;">
-              <p style="margin: 0 0 8px; font-size: 13px; color: #64748b;">
-                Cheers,<br>
-                The Elec-Mate Team
-              </p>
+            <td style="padding: 16px 24px; text-align: center; background-color: rgba(15, 23, 42, 0.6); border-top: 1px solid rgba(255,255,255,0.05);">
               <p style="margin: 0; font-size: 12px; color: #475569;">
-                © ${new Date().getFullYear()} Elec-Mate · Made in the UK 🇬🇧
+                © ${new Date().getFullYear()} Elec-Mate · Built for UK Sparks 🇬🇧⚡
               </p>
             </td>
           </tr>
@@ -222,6 +223,7 @@ Deno.serve(async (req) => {
   try {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
+      console.error("No authorization header provided");
       throw new Error("No authorization header");
     }
 
@@ -234,9 +236,16 @@ Deno.serve(async (req) => {
 
     // Verify the caller is an admin
     const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
-    if (userError || !user) {
+    if (userError) {
+      console.error("Auth getUser error:", userError);
+      throw new Error(`Unauthorized: ${userError.message}`);
+    }
+    if (!user) {
+      console.error("No user returned from auth");
       throw new Error("Unauthorized: Could not get user");
     }
+
+    console.log(`User ${user.id} attempting winback action`);
 
     const { data: callerProfile, error: profileError } = await supabaseClient
       .from("profiles")
@@ -244,11 +253,19 @@ Deno.serve(async (req) => {
       .eq("id", user.id)
       .single();
 
-    if (profileError || !callerProfile?.admin_role) {
+    if (profileError) {
+      console.error("Profile fetch error:", profileError);
+      throw new Error(`Profile error: ${profileError.message}`);
+    }
+
+    if (!callerProfile?.admin_role) {
+      console.error(`User ${user.id} does not have admin_role. Profile:`, callerProfile);
       throw new Error("Unauthorized: Admin access required");
     }
 
     const { action, userId, userIds, testEmail, manualEmail, recipientName } = await req.json();
+
+    console.log(`Admin ${user.id} (${callerProfile.full_name}) authorized for winback, action: ${action}`);
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
@@ -263,83 +280,108 @@ Deno.serve(async (req) => {
       case "get_eligible": {
         // Query to find eligible users for win-back offer
         // Electricians whose trial expired 48+ hours ago, not subscribed, not free access, not already sent
-        const { data: eligibleUsers, error: queryError } = await supabaseAdmin.rpc(
-          "get_winback_eligible_users"
-        ).select("*");
+        console.log("get_eligible: Starting query for eligible users");
 
-        // If RPC doesn't exist, fall back to direct query
-        if (queryError?.code === "42883") {
-          // Function doesn't exist, use direct query
-          // Find electricians whose trial ended 48+ hours ago, not subscribed, not already sent
-          const { data: profiles, error: profilesError } = await supabaseAdmin
-            .from("profiles")
-            .select("id, full_name, username, created_at")
-            .eq("role", "electrician")
-            .or("subscribed.is.null,subscribed.eq.false")
-            .or("free_access_granted.is.null,free_access_granted.eq.false")
-            .is("winback_offer_sent_at", null)
-            .order("created_at", { ascending: false });
+        // Direct query approach - get all electricians without winback offer sent
+        // Then filter in code to properly exclude subscribed/free access users
+        const { data: profiles, error: profilesError } = await supabaseAdmin
+          .from("profiles")
+          .select("id, full_name, username, created_at, subscribed, free_access_granted")
+          .eq("role", "electrician")
+          .is("winback_offer_sent_at", null)
+          .order("created_at", { ascending: false });
 
-          if (profilesError) throw profilesError;
-
-          // Filter to only include users whose trial ended 48+ hours ago
-          // Trial = 7 days from signup, so we need created_at + 7 days + 48 hours < now
-          const eligibleCutoff = Date.now() - (7 * 24 * 60 * 60 * 1000) - (48 * 60 * 60 * 1000);
-          const filteredProfiles = profiles?.filter((p: any) => {
-            return new Date(p.created_at).getTime() < eligibleCutoff;
-          }) || [];
-
-          // Get emails from auth.users
-          const userIdsToFetch = filteredProfiles.map((p: any) => p.id);
-          if (userIdsToFetch.length === 0) {
-            result = { users: [] };
-            break;
-          }
-
-          const { data: authUsers, error: authError } = await supabaseAdmin.auth.admin.listUsers({
-            perPage: 1000,
-          });
-
-          if (authError) throw authError;
-
-          const emailMap = new Map<string, string>();
-          authUsers.users.forEach((u: any) => {
-            if (u.email) emailMap.set(u.id, u.email);
-          });
-
-          const usersWithEmails = filteredProfiles.map((p: any) => ({
-            id: p.id,
-            full_name: p.full_name,
-            username: p.username,
-            email: emailMap.get(p.id) || null,
-            created_at: p.created_at,
-            trial_ended_at: new Date(new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-          })).filter((u: any) => u.email) || [];
-
-          result = { users: usersWithEmails };
-        } else if (queryError) {
-          throw queryError;
-        } else {
-          result = { users: eligibleUsers || [] };
+        if (profilesError) {
+          console.error("get_eligible: profiles query error:", profilesError);
+          throw profilesError;
         }
+
+        console.log(`get_eligible: Found ${profiles?.length || 0} potential profiles`);
+
+        // Filter to only include users who:
+        // 1. Are NOT subscribed (subscribed is null or false)
+        // 2. Do NOT have free access (free_access_granted is null or false)
+        // 3. Trial ended 24+ hours ago (created_at + 7 days + 24 hours < now)
+        const eligibleCutoff = Date.now() - (7 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000);
+        const filteredProfiles = profiles?.filter((p: any) => {
+          // Exclude subscribed users
+          if (p.subscribed === true) return false;
+          // Exclude users with free access
+          if (p.free_access_granted === true) return false;
+          // Check trial expiry + 48 hours
+          return new Date(p.created_at).getTime() < eligibleCutoff;
+        }) || [];
+
+        console.log(`get_eligible: ${filteredProfiles.length} after excluding subscribed/free access users`);
+
+        console.log(`get_eligible: ${filteredProfiles.length} profiles after trial cutoff filter`);
+
+        // Get emails from auth.users
+        const userIdsToFetch = filteredProfiles.map((p: any) => p.id);
+        if (userIdsToFetch.length === 0) {
+          console.log("get_eligible: No eligible users found");
+          result = { users: [] };
+          break;
+        }
+
+        // Fetch auth users in batches to avoid issues
+        console.log(`get_eligible: Fetching emails for ${userIdsToFetch.length} users`);
+        const { data: authUsers, error: authError } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000,
+        });
+
+        if (authError) {
+          console.error("get_eligible: auth.admin.listUsers error:", authError);
+          throw authError;
+        }
+
+        console.log(`get_eligible: Got ${authUsers.users?.length || 0} auth users`);
+
+        const emailMap = new Map<string, string>();
+        authUsers.users.forEach((u: any) => {
+          if (u.email) emailMap.set(u.id, u.email);
+        });
+
+        const usersWithEmails = filteredProfiles.map((p: any) => ({
+          id: p.id,
+          full_name: p.full_name,
+          username: p.username,
+          email: emailMap.get(p.id) || null,
+          created_at: p.created_at,
+          trial_ended_at: new Date(new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        })).filter((u: any) => u.email) || [];
+
+        console.log(`get_eligible: Returning ${usersWithEmails.length} users with emails`);
+        result = { users: usersWithEmails };
         break;
       }
 
       case "get_stats": {
         // Get campaign statistics
+        console.log("get_stats: Fetching statistics");
         const { data: stats, error: statsError } = await supabaseAdmin
           .from("profiles")
-          .select("id, winback_offer_sent_at, subscribed, created_at")
-          .eq("role", "electrician")
-          .or("free_access_granted.is.null,free_access_granted.eq.false");
+          .select("id, winback_offer_sent_at, subscribed, free_access_granted, created_at")
+          .eq("role", "electrician");
 
-        if (statsError) throw statsError;
+        if (statsError) {
+          console.error("get_stats: query error:", statsError);
+          throw statsError;
+        }
 
-        // Trial = 7 days from signup, so we need created_at + 7 days + 48 hours < now
-        const eligibleCutoff = Date.now() - (7 * 24 * 60 * 60 * 1000) - (48 * 60 * 60 * 1000);
+        console.log(`get_stats: Found ${stats?.length || 0} electrician profiles`);
+
+        // Trial = 7 days from signup, so we need created_at + 7 days + 24 hours < now
+        const eligibleCutoff = Date.now() - (7 * 24 * 60 * 60 * 1000) - (24 * 60 * 60 * 1000);
 
         const totalEligible = stats?.filter((s: any) => {
-          if (s.subscribed || s.winback_offer_sent_at) return false;
+          // Must NOT be subscribed
+          if (s.subscribed === true) return false;
+          // Must NOT have free access
+          if (s.free_access_granted === true) return false;
+          // Must NOT have already been sent the offer
+          if (s.winback_offer_sent_at) return false;
+          // Trial must have ended 48+ hours ago
           return new Date(s.created_at).getTime() < eligibleCutoff;
         }).length || 0;
 
@@ -349,6 +391,8 @@ Deno.serve(async (req) => {
         const conversions = stats?.filter((s: any) =>
           s.winback_offer_sent_at && s.subscribed
         ).length || 0;
+
+        console.log(`get_stats: eligible=${totalEligible}, sent=${offersSent}, conversions=${conversions}`);
 
         result = {
           totalEligible,
@@ -399,7 +443,7 @@ Deno.serve(async (req) => {
         const { error: emailError } = await resend.emails.send({
           from: "Elec-Mate <offers@elec-mate.com>",
           to: [userWithEmail.email.trim().toLowerCase()],
-          subject: "We miss you! Special offer: £7.99/month",
+          subject: "Fancy another look?",
           html: emailHtml,
         });
 
@@ -421,7 +465,7 @@ Deno.serve(async (req) => {
         // Log to email_logs table
         await supabaseAdmin.from("email_logs").insert({
           recipient_email: userWithEmail.email,
-          subject: "We miss you! Special offer: £7.99/month",
+          subject: "Fancy another look?",
           email_type: "winback_offer",
           status: "sent",
           metadata: { user_id: userId },
@@ -481,7 +525,7 @@ Deno.serve(async (req) => {
             const { error: emailError } = await resend.emails.send({
               from: "Elec-Mate <offers@elec-mate.com>",
               to: [userWithEmail.email.trim().toLowerCase()],
-              subject: "We miss you! Special offer: £7.99/month",
+              subject: "Fancy another look?",
               html: emailHtml,
             });
 
@@ -499,7 +543,7 @@ Deno.serve(async (req) => {
             // Log email
             await supabaseAdmin.from("email_logs").insert({
               recipient_email: userWithEmail.email,
-              subject: "We miss you! Special offer: £7.99/month",
+              subject: "Fancy another look?",
               email_type: "winback_offer",
               status: "sent",
               metadata: { user_id: uid },
@@ -557,7 +601,7 @@ Deno.serve(async (req) => {
         const { error: emailError } = await resend.emails.send({
           from: "Elec-Mate <offers@elec-mate.com>",
           to: [testEmail.trim().toLowerCase()],
-          subject: "[TEST] We miss you! Special offer: £7.99/month",
+          subject: "[TEST] Fancy another look?",
           html: emailHtml,
         });
 
@@ -592,7 +636,7 @@ Deno.serve(async (req) => {
         const { error: manualEmailError } = await resend.emails.send({
           from: "Elec-Mate <offers@elec-mate.com>",
           to: [manualEmail.trim().toLowerCase()],
-          subject: "We miss you! Special offer: £7.99/month",
+          subject: "Fancy another look?",
           html: manualEmailHtml,
         });
 
@@ -604,7 +648,7 @@ Deno.serve(async (req) => {
         // Log to email_logs table
         await supabaseAdmin.from("email_logs").insert({
           recipient_email: manualEmail.trim().toLowerCase(),
-          subject: "We miss you! Special offer: £7.99/month",
+          subject: "Fancy another look?",
           email_type: "winback_offer_manual",
           status: "sent",
           metadata: { sent_by_admin: user.id, recipient_name: recipientName },
@@ -624,8 +668,11 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (error: any) {
-    console.error("Error in send-winback-offer:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error("Error in send-winback-offer:", error.message, error.stack);
+    return new Response(JSON.stringify({
+      error: error.message,
+      stack: error.stack?.split('\n').slice(0, 3).join(' | ')
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
     });

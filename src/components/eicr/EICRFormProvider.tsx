@@ -1,8 +1,8 @@
 
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
-import { useCloudSync } from '@/hooks/useCloudSync';
+import { useCloudSync, SyncNowImmediateResult } from '@/hooks/useCloudSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -27,6 +27,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface EICRFormContextType {
   formData: any;
   updateFormData: (field: string, value: any) => void;
+  getLatestFormData: () => any;  // Returns the absolute latest form data (bypasses closure issues)
   currentReportId: string | null;
   effectiveReportId: string;
   databaseId: string | null;  // The actual database UUID for queries
@@ -44,6 +45,7 @@ interface EICRFormContextType {
   isLoadingReport: boolean;
   lastSavedTime: Date | null;
   syncNow: (() => void) | undefined;
+  syncNowImmediate: (() => Promise<SyncNowImmediateResult>) | undefined;  // For PDF generation - returns saved data
   getSyncIndicatorState: () => SyncState;
 }
 
@@ -90,6 +92,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     reportType: 'eicr',
     currentReportId,
   });
+
+  // Ref to always have the latest formData - bypasses React closure issues
+  const formDataRef = useRef<any>(null);
 
   const [formData, setFormData] = useState(() => {
     // If loading specific report, will be set in useEffect
@@ -246,6 +251,36 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     };
   });
 
+  // CRITICAL: Keep the ref always in sync with the latest formData
+  // useLayoutEffect runs SYNCHRONOUSLY after DOM updates but before paint/user events
+  // This ensures the ref is ALWAYS up-to-date when getLatestFormData() is called
+  useLayoutEffect(() => {
+    formDataRef.current = formData;
+    console.log('[EICRFormProvider] formDataRef updated (sync):', {
+      scheduleOfTests: formData.scheduleOfTests?.length || 0,
+      inspectionItems: formData.inspectionItems?.length || 0,
+      defectObservations: formData.defectObservations?.length || 0,
+      clientName: formData.clientName || 'empty'
+    });
+  }, [formData]);
+
+  // Getter function that returns the absolute latest formData from the ref
+  // Use this in async callbacks (like PDF generation) to avoid stale closure data
+  const getLatestFormData = useCallback(() => {
+    const refData = formDataRef.current;
+    const closureData = formData;
+
+    console.log('[getLatestFormData] ===== DATA COMPARISON =====');
+    console.log('[getLatestFormData] REF scheduleOfTests:', refData?.scheduleOfTests?.length || 0);
+    console.log('[getLatestFormData] CLOSURE scheduleOfTests:', closureData?.scheduleOfTests?.length || 0);
+    console.log('[getLatestFormData] REF clientName:', refData?.clientName || 'empty');
+    console.log('[getLatestFormData] CLOSURE clientName:', closureData?.clientName || 'empty');
+    console.log('[getLatestFormData] Using:', refData ? 'REF' : 'CLOSURE');
+    console.log('[getLatestFormData] ============================');
+
+    return refData || closureData;
+  }, [formData]);
+
   // Callback when auto-sync creates a new report - keeps component state in sync
   const handleReportCreated = React.useCallback((newReportId: string) => {
     console.log('[EICR] Auto-sync created report:', newReportId);
@@ -262,6 +297,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     authCheckComplete,
     processOfflineQueue,
     syncNow,
+    syncNowImmediate,
     onTabChange,
   } = useCloudSync({
     reportId: currentReportId,
@@ -625,10 +661,24 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       console.warn('Certificate number cannot be modified');
       return;
     }
-    
+
     // Sanitize string inputs to prevent XSS
     const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
-    setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
+
+    // DEBUG: Log every form data update
+    console.log('[updateFormData] Updating field:', field,
+      Array.isArray(sanitizedValue) ? `(${sanitizedValue.length} items)` :
+      typeof sanitizedValue === 'object' ? '(object)' : sanitizedValue);
+
+    setFormData(prev => {
+      const newData = { ...prev, [field]: sanitizedValue };
+      console.log('[updateFormData] New state will have:', {
+        scheduleOfTests: newData.scheduleOfTests?.length || 0,
+        inspectionItems: newData.inspectionItems?.length || 0,
+        defectObservations: newData.defectObservations?.length || 0
+      });
+      return newData;
+    });
     setHasUnsavedChanges(true);
   };
 
@@ -949,6 +999,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const contextValue: EICRFormContextType = {
     formData,
     updateFormData,
+    getLatestFormData,
     currentReportId,
     effectiveReportId,
     databaseId,
@@ -966,6 +1017,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isLoadingReport,
     lastSavedTime,
     syncNow,
+    syncNowImmediate,
     getSyncIndicatorState,
   };
 

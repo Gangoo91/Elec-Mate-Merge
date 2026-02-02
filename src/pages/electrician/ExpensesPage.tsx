@@ -10,6 +10,7 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useExpensesStorage } from '@/hooks/useExpensesStorage';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import {
   ExpenseSummaryCard,
   ExpenseCategorySection,
@@ -18,6 +19,7 @@ import {
   ExpenseExportSheet,
 } from '@/components/electrician/expenses';
 import { EXPENSE_CATEGORIES, ExpenseCategory, CreateExpenseInput, Expense, UpdateExpenseInput } from '@/types/expense';
+import { AccountingProvider } from '@/types/accounting';
 import {
   Fuel,
   Wrench,
@@ -60,6 +62,7 @@ const ExpensesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory | 'all'>('all');
+  const [isSyncing, setIsSyncing] = useState(false);
 
   const {
     expenses,
@@ -75,6 +78,26 @@ const ExpensesPage = () => {
     refreshExpenses,
     downloadExport,
   } = useExpensesStorage();
+
+  const {
+    integrations,
+    syncExpenses: syncToAccounting,
+  } = useAccountingIntegrations();
+
+  // Handle syncing expenses to accounting provider
+  const handleSyncToProvider = useCallback(async (provider: AccountingProvider, expenseIds: string[]): Promise<boolean> => {
+    setIsSyncing(true);
+    try {
+      const success = await syncToAccounting(expenseIds, provider);
+      if (success) {
+        // Refresh expenses to update synced_to_accounting flag
+        await refreshExpenses();
+      }
+      return success;
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [syncToAccounting, refreshExpenses]);
 
   // Handle expense creation
   const handleCreateExpense = async (data: CreateExpenseInput) => {
@@ -373,8 +396,12 @@ const ExpensesPage = () => {
         open={showExportSheet}
         onOpenChange={setShowExportSheet}
         onExport={downloadExport}
+        onSyncToProvider={handleSyncToProvider}
         stats={stats}
         expenseCount={filteredExpenses.length}
+        expenses={filteredExpenses}
+        integrations={integrations}
+        isSyncing={isSyncing}
       />
 
       {/* Edit Expense Sheet */}

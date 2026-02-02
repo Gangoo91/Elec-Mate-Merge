@@ -628,7 +628,7 @@ const Section3_1 = () => {
           </Button>
 
           <Button asChild>
-            <Link to="3-2">
+            <Link to="/study-centre/apprentice/level2/module1/section3/3-2">
               Next: The Five Steps of Risk Assessment
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

@@ -189,10 +189,10 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
           />
           <FeatureTile
             icon={ClipboardList}
-            title="AI Method Statement"
+            title="Method Statement"
             description="Step-by-step procedures"
             onClick={() => onNavigate("aimethodstatement")}
-            badge={pendingMethodStatements > 0 ? `${pendingMethodStatements} pending` : "AI"}
+            badge={pendingMethodStatements > 0 ? `${pendingMethodStatements} pending` : undefined}
             badgeVariant={pendingMethodStatements > 0 ? "warning" : "default"}
           />
           <FeatureTile

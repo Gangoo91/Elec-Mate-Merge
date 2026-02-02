@@ -185,70 +185,91 @@ const QuoteHeroCard = ({
         </div>
       </div>
 
-      {/* Metrics Grid - Mobile First, Left Aligned */}
-      <div className="grid grid-cols-2 gap-4 pt-2">
-        {/* Profit */}
+      {/* Metrics Grid - Premium Card Design */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* Profit Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="min-h-[44px]"
+          className="relative overflow-hidden rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Profit</span>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/10 rounded-full blur-2xl -mr-4 -mt-4" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 rounded-lg bg-emerald-500/20">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              </div>
+              <span className="text-xs font-semibold text-emerald-300/80 uppercase tracking-wide">Your Profit</span>
+            </div>
+            <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
+              {formatCurrency(displayProfit)}
+            </p>
           </div>
-          <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
-            {formatCurrency(displayProfit)}
-          </p>
         </motion.div>
 
-        {/* Margin */}
+        {/* Margin Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
-          className="min-h-[44px]"
+          className="relative overflow-hidden rounded-xl bg-amber-500/10 border border-amber-500/20 p-4"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="h-4 w-4 text-elec-yellow" />
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Margin</span>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/10 rounded-full blur-2xl -mr-4 -mt-4" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 rounded-lg bg-amber-500/20">
+                <TrendingUp className="h-4 w-4 text-amber-400" />
+              </div>
+              <span className="text-xs font-semibold text-amber-300/80 uppercase tracking-wide">Margin</span>
+            </div>
+            <p className="text-2xl font-black text-amber-400 tabular-nums tracking-tight">
+              {margin.toFixed(1)}%
+            </p>
           </div>
-          <p className="text-2xl font-black text-elec-yellow tabular-nums tracking-tight">
-            {margin.toFixed(1)}%
-          </p>
         </motion.div>
 
-        {/* Profit Per Hour */}
+        {/* Profit Per Hour Card - CLARIFIED LABEL */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="min-h-[44px]"
+          className="relative overflow-hidden rounded-xl bg-cyan-500/10 border border-cyan-500/20 p-4"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-4 w-4 text-emerald-400" />
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Per Hour</span>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/10 rounded-full blur-2xl -mr-4 -mt-4" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 rounded-lg bg-cyan-500/20">
+                <Clock className="h-4 w-4 text-cyan-400" />
+              </div>
+              <span className="text-xs font-semibold text-cyan-300/80 uppercase tracking-wide">Profit/Hour</span>
+            </div>
+            <p className="text-2xl font-black text-cyan-400 tabular-nums tracking-tight">
+              {formatCurrency(profitPerHour)}<span className="text-lg">/hr</span>
+            </p>
+            <p className="text-[10px] text-cyan-400/60 mt-1">Your hourly earnings</p>
           </div>
-          <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
-            {formatCurrency(profitPerHour)}/hr
-          </p>
         </motion.div>
 
-        {/* Confidence */}
+        {/* Confidence Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="min-h-[44px]"
+          className="relative overflow-hidden rounded-xl bg-blue-500/10 border border-blue-500/20 p-4"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <Target className="h-4 w-4 text-blue-400" />
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Confidence</span>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/10 rounded-full blur-2xl -mr-4 -mt-4" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 rounded-lg bg-blue-500/20">
+                <Target className="h-4 w-4 text-blue-400" />
+              </div>
+              <span className="text-xs font-semibold text-blue-300/80 uppercase tracking-wide">Confidence</span>
+            </div>
+            <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
+              {confidence}%
+            </p>
           </div>
-          <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
-            {confidence}%
-          </p>
         </motion.div>
       </div>
     </div>

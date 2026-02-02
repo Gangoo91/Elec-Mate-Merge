@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Installation Certificate</title>
+    <style>
+        /* Dynamic accent colour - defaults to green, can be overridden */
+        :root {
+            --accent-color: {{ company_accent_color | default: company_details.company_accent_color | default: "#22c55e" }};
+            --accent-light: {{ company_accent_color | default: company_details.company_accent_color | default: "#22c55e" }}33;
+        }
+
+        @page {
+            size: A4;
+            margin: 3mm 3mm 4mm 3mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8.5px;
+            line-height: 1.4;
+            color: #1a1a1a;
+            background: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .doc-header {
+            background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+            color: #fff;
+            padding: 10px 12px;
+            margin-bottom: 2px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-color), var(--accent-color));
+        }
+
+        .doc-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-title-section { flex: 1; }
+
+        .doc-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .doc-subtitle {
+            font-size: 7.5px;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+        }
+
+        .doc-meta { text-align: right; }
+
+        .cert-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+
+        .page-number {
+            font-size: 8px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .company-logo {
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+
+        .company-logo img {
+            max-height: 45px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .company-tagline {
+            font-size: 7px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+            margin-top: 1px;
+            font-style: italic;
+        }
+
+        .company-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 12px;
+        }
+
+        .company-brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-brand-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        .company-brand-tagline {
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .company-brand-reg {
+            font-size: 7px;
+            color: var(--accent-color);
+            margin-top: 1px;
+        }
+
+        .section { margin-bottom: 4px; }
+
+        .section-title {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 8px;
+            margin-bottom: 3px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .section-subtitle {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 8px;
+            font-weight: 600;
+            padding: 3px 10px;
+            margin-bottom: 2px;
+            border-left: 3px solid #64748b;
+        }
+
+        .form-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2px;
+        }
+
+        .form-row { display: table-row; }
+
+        .form-label {
+            display: table-cell;
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #475569;
+            padding: 4px 6px;
+            width: 120px;
+            vertical-align: middle;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-value {
+            display: table-cell;
+            font-size: 8.5px;
+            color: #1e293b;
+            padding: 4px 6px;
+            vertical-align: middle;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .inline-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px 6px;
+            background: #fafbfc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .inline-group {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .inline-label {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        .inline-value {
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            min-width: 50px;
+            min-height: 18px;
+            line-height: 1.3;
+        }
+
+        .inline-value.wide {
+            min-width: 100px;
+            flex: 1;
+        }
+
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .checkbox-box {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .checkbox-box.checked {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        .two-col { display: flex; gap: 4px; }
+        .two-col > .col { flex: 1; }
+
+        .three-col { display: flex; gap: 4px; }
+        .three-col > .col { flex: 1; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+            margin-bottom: 3px;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 7.5px;
+            padding: 4px 6px;
+            text-align: left;
+            border: 1px solid #0f172a;
+        }
+
+        .data-table td {
+            padding: 4px 6px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+            background: #fff;
+        }
+
+        .data-field { margin-bottom: 3px; }
+        .data-field:last-child { margin-bottom: 0; }
+
+        .data-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 1px;
+        }
+
+        .data-field-value {
+            font-size: 8px;
+            color: #1e293b;
+            padding: 2px 4px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 1px;
+        }
+
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+        }
+
+        .test-table th {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 7.5px;
+            padding: 5px 6px;
+            text-align: center;
+            border: 1px solid #0f172a;
+        }
+
+        .test-table th:first-child {
+            text-align: left;
+        }
+
+        .test-table td {
+            padding: 5px 6px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .test-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: #f8fafc;
+        }
+
+        .test-table .result-pass {
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .test-table .result-fail {
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-left: 3px solid #f59e0b;
+            border-radius: 2px;
+            padding: 4px 8px;
+            margin: 4px 0;
+            font-size: 7.5px;
+            color: #92400e;
+        }
+
+        .info-box strong {
+            color: #78350f;
+        }
+
+        .signature-grid {
+            display: flex;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .signature-box-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 7.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+
+        .sig-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+            gap: 4px;
+        }
+
+        .sig-field:last-child { margin-bottom: 0; }
+
+        .sig-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .sig-field-value {
+            flex: 1;
+            font-size: 8px;
+            color: #1e293b;
+            padding: 3px 5px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1px;
+            min-height: 18px;
+        }
+
+        .sig-field-value.signature {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sig-field-value img { max-height: 30px; }
+
+        .declaration-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-left: 3px solid var(--accent-color);
+            border-radius: 2px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+        }
+
+        .declaration-text {
+            font-size: 7.5px;
+            color: #166534;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .declaration-text strong {
+            color: #14532d;
+        }
+
+        .assessment-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 6px 10px;
+            background: #f8fafc;
+            border: 2px solid #1e293b;
+            border-radius: 3px;
+        }
+
+        .assessment-label { font-size: 9px; font-weight: 600; color: #334155; }
+        .assessment-options { display: flex; gap: 12px; }
+
+        .assessment-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 3px;
+            background: #fff;
+        }
+
+        .assessment-option.pass-selected {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .assessment-option.pass-selected .option-label {
+            color: #fff;
+        }
+
+        .assessment-option.fail-selected {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .assessment-option.fail-selected .option-label {
+            color: #fff;
+        }
+
+        .assessment-option .option-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .assessment-option .pass-label { color: #16a34a; }
+        .assessment-option .fail-label { color: #dc2626; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 7px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge.pass {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .status-badge.fail {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .status-badge.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .status-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+
+        .footer {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 7px;
+            color: #64748b;
+        }
+
+        .footer-left { line-height: 1.5; }
+        .footer-right { text-align: right; }
+
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 600; }
+        .mt-2 { margin-top: 4px; }
+        .mb-2 { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: MAIN CERTIFICATE -->
+<div class="doc-header">
+    <div class="doc-header-content">
+        <!-- Company Branding Section -->
+        <div class="company-brand">
+            {% if company_logo or company_details.company_logo %}
+            <div class="company-logo">
+                <img src="{{ company_logo | default: company_details.company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+                <div class="company-brand-name">{{ company_name | default: company_details.company_name }}</div>
+                {% if company_tagline or company_details.company_tagline %}
+                <div class="company-brand-tagline">{{ company_tagline | default: company_details.company_tagline }}</div>
+                {% endif %}
+                {% if registration_scheme or company_details.registration_scheme %}
+                <div class="company-brand-reg">{{ registration_scheme | default: company_details.registration_scheme }}: {{ registration_number | default: company_details.registration_number }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Certificate Title Section -->
+        <div class="doc-title-section">
+            <div class="doc-title">ELECTRICAL INSTALLATION CERTIFICATE</div>
+            <div class="doc-subtitle">EV Charging Equipment Installation in accordance with BS 7671:2018+A3:2024 and IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)</div>
+        </div>
+        <!-- Certificate Number Section -->
+        <div class="doc-meta">
+            <div class="cert-number">{{ metadata.certificate_number | default: certificate_number }}</div>
+            <div class="page-number">Page 1</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION A: CLIENT DETAILS -->
+<div class="section">
+    <div class="section-title">Section A: Details of the Client</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Client Name</div>
+            <div class="form-value">{{ client_details.name | default: client_name }}</div>
+            <div class="form-label">Telephone</div>
+            <div class="form-value">{{ client_details.telephone | default: client_telephone }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Client Address</div>
+            <div class="form-value" colspan="3">{{ client_details.address | default: client_address }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Email Address</div>
+            <div class="form-value" colspan="3">{{ client_details.email | default: client_email }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B: INSTALLATION ADDRESS -->
+<div class="section">
+    <div class="section-title">Section B: Installation Details</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Installation Address</div>
+            <div class="form-value" style="width: 100%;">
+                {% if installation_details.address != client_details.address and installation_details.address != "" %}
+                    {{ installation_details.address | default: installation_address }}
+                {% else %}
+                    As above
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Installation Type:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if installation_details.type == 'domestic' or installation_type == 'domestic' %}checked{% endif %}">{% if installation_details.type == 'domestic' or installation_type == 'domestic' %}&#10003;{% endif %}</span>
+                    <label>Domestic</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if installation_details.type == 'commercial' or installation_type == 'commercial' %}checked{% endif %}">{% if installation_details.type == 'commercial' or installation_type == 'commercial' %}&#10003;{% endif %}</span>
+                    <label>Commercial</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if installation_details.type == 'public' or installation_type == 'public' %}checked{% endif %}">{% if installation_details.type == 'public' or installation_type == 'public' %}&#10003;{% endif %}</span>
+                    <label>Public</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Installation Date:</span>
+            <span class="inline-value">{{ metadata.installation_date | default: installation_date }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C: VEHICLE DETAILS (Optional) -->
+{% if vehicle_details.make != "" or vehicle_make != "" %}
+<div class="section">
+    <div class="section-title">Section C: Vehicle Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Make:</span>
+            <span class="inline-value">{{ vehicle_details.make | default: vehicle_make }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Model:</span>
+            <span class="inline-value">{{ vehicle_details.model | default: vehicle_model }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Registration:</span>
+            <span class="inline-value">{{ vehicle_details.registration | default: vehicle_registration }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION D: EV CHARGING EQUIPMENT DETAILS -->
+<div class="section">
+    <div class="section-title">Section D: EV Charging Equipment Details</div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 50%;">Equipment Identification</th>
+                <th style="width: 50%;">Electrical Characteristics</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="vertical-align: top; padding: 6px;">
+                    <div class="data-field">
+                        <div class="data-field-label">Make</div>
+                        <div class="data-field-value" style="font-weight: 600;">{{ charger_details.make | default: charger_make }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Model</div>
+                        <div class="data-field-value" style="font-weight: 600;">{{ charger_details.model | default: charger_model }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Serial Number</div>
+                        <div class="data-field-value">{{ charger_details.serial | default: charger_serial }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Charging Mode</div>
+                        <div class="data-field-value">{{ charger_details.mode | default: charger_mode }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Connection Type</div>
+                        <div class="data-field-value">{{ charger_details.connection_display | default: charger_connection }}</div>
+                    </div>
+                </td>
+                <td style="vertical-align: top; padding: 6px;">
+                    <div class="data-field">
+                        <div class="data-field-label">Power Rating</div>
+                        <div class="data-field-value" style="font-weight: 600;">{{ charger_details.power_rating_kw | default: power_rating_kw }} <span style="color: #64748b;">kW</span></div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Rated Current</div>
+                        <div class="data-field-value" style="font-weight: 600;">{{ charger_details.rated_current_a | default: rated_current_a }} <span style="color: #64748b;">A</span></div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Number of Phases</div>
+                        <div class="data-field-value">{{ charger_details.phases | default: phases }} Phase</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Socket / Connector Type</div>
+                        <div class="data-field-value">{{ charger_details.socket_type | default: socket_type }}</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION E: SUPPLY CHARACTERISTICS -->
+<div class="section">
+    <div class="section-title">Section E: Supply Characteristics</div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Earthing Arrangement</th>
+                <th style="width: 25%;">Supply Type</th>
+                <th style="width: 50%;">Supply Parameters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="vertical-align: top; padding: 6px;">
+                    <div class="checkbox-item" style="margin-bottom: 3px;">
+                        <span class="checkbox-box {% if supply_details.earthing_arrangement == 'TN-C-S' or earthing_arrangement == 'TN-C-S' %}checked{% endif %}">{% if supply_details.earthing_arrangement == 'TN-C-S' or earthing_arrangement == 'TN-C-S' %}&#10003;{% endif %}</span>
+                        <label>TN-C-S (PME)</label>
+                    </div>
+                    <div class="checkbox-item" style="margin-bottom: 3px;">
+                        <span class="checkbox-box {% if supply_details.earthing_arrangement == 'TN-S' or earthing_arrangement == 'TN-S' %}checked{% endif %}">{% if supply_details.earthing_arrangement == 'TN-S' or earthing_arrangement == 'TN-S' %}&#10003;{% endif %}</span>
+                        <label>TN-S</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <span class="checkbox-box {% if supply_details.earthing_arrangement == 'TT' or earthing_arrangement == 'TT' %}checked{% endif %}">{% if supply_details.earthing_arrangement == 'TT' or earthing_arrangement == 'TT' %}&#10003;{% endif %}</span>
+                        <label>TT</label>
+                    </div>
+                </td>
+                <td style="vertical-align: top; padding: 6px;">
+                    <div class="checkbox-item" style="margin-bottom: 3px;">
+                        <span class="checkbox-box {% if supply_details.phases == 'single' or supply_phases == 'single' %}checked{% endif %}">{% if supply_details.phases == 'single' or supply_phases == 'single' %}&#10003;{% endif %}</span>
+                        <label>Single Phase</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <span class="checkbox-box {% if supply_details.phases == 'three' or supply_phases == 'three' %}checked{% endif %}">{% if supply_details.phases == 'three' or supply_phases == 'three' %}&#10003;{% endif %}</span>
+                        <label>Three Phase</label>
+                    </div>
+                </td>
+                <td style="vertical-align: top; padding: 6px;">
+                    <div class="data-field">
+                        <div class="data-field-label">Nominal Voltage (V)</div>
+                        <div class="data-field-value">{{ supply_details.voltage | default: supply_voltage }} <span style="color: #64748b;">V</span></div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">External Earth Fault Loop Impedance Ze (&Omega;)</div>
+                        <div class="data-field-value">{{ supply_details.ze | default: ze }} <span style="color: #64748b;">&Omega;</span></div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Prospective Fault Current Ipf (kA)</div>
+                        <div class="data-field-value">{{ supply_details.pfc | default: prospective_fault_current }} <span style="color: #64748b;">kA</span></div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">External Loop Impedance (&Omega;)</div>
+                        <div class="data-field-value">{{ supply_details.external_loop_impedance | default: external_loop_impedance }} <span style="color: #64748b;">&Omega;</span></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION F: PME EARTHING CONSIDERATIONS (Regulation 722.411.4.1) -->
+<div class="section">
+    <div class="section-title">Section F: PME Earthing Considerations (Regulation 722.411.4.1)</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">PME Supply:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if pme_details.is_pme or is_pme %}checked{% endif %}">{% if pme_details.is_pme or is_pme %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless pme_details.is_pme or is_pme %}checked{% endunless %}">{% unless pme_details.is_pme or is_pme %}&#10003;{% endunless %}</span>
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Protective Measures Applied:</span>
+            <span class="inline-value wide">{{ pme_details.earthing_measures | default: pme_earthing_measures }}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Earth Electrode Installed:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if pme_details.earth_electrode_installed or earth_electrode_installed %}checked{% endif %}">{% if pme_details.earth_electrode_installed or earth_electrode_installed %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless pme_details.earth_electrode_installed or earth_electrode_installed %}checked{% endunless %}">{% unless pme_details.earth_electrode_installed or earth_electrode_installed %}&#10003;{% endunless %}</span>
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Earth Electrode Resistance Ra (&Omega;):</span>
+            <span class="inline-value">{{ pme_details.earth_electrode_resistance | default: earth_electrode_resistance }}</span>
+        </div>
+    </div>
+    {% if pme_details.is_pme or is_pme %}
+    <div class="info-box">
+        <strong>Note:</strong> For PME supplies, additional protective measures must be applied in accordance with Regulation 722.411.4.1 to mitigate the risk of a broken PEN conductor. These may include provision of an earth electrode, protective equipotential bonding, or use of a TT system.
+    </div>
+    {% endif %}
+</div>
+
+<!-- SECTION G: CIRCUIT DETAILS -->
+<div class="section">
+    <div class="section-title">Section G: Circuit Details</div>
+    <div class="two-col">
+        <div class="col">
+            <div class="section-subtitle">Cable Installation</div>
+            <div class="inline-form" style="border: none; padding: 0;">
+                <div class="inline-group" style="flex: 1;">
+                    <span class="inline-label">Circuit Designation:</span>
+                    <span class="inline-value wide">{{ circuit_details.designation | default: circuit_designation }}</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+                <div class="inline-group">
+                    <span class="inline-label">Cable Type:</span>
+                    <span class="inline-value">{{ circuit_details.cable_type | default: cable_type }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Cable Size:</span>
+                    <span class="inline-value">{{ circuit_details.cable_size_mm2 | default: cable_size_mm2 }} mm&sup2;</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+                <div class="inline-group">
+                    <span class="inline-label">Cable Length:</span>
+                    <span class="inline-value">{{ circuit_details.cable_length_m | default: cable_length_m }} m</span>
+                </div>
+                <div class="inline-group" style="flex: 1;">
+                    <span class="inline-label">Installation Method:</span>
+                    <span class="inline-value wide">{{ circuit_details.installation_method | default: installation_method }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="section-subtitle">Protective Devices (Regulation 722.531.2)</div>
+            <div class="inline-form" style="border: none; padding: 0;">
+                <div class="inline-group">
+                    <span class="inline-label">Device Type:</span>
+                    <span class="inline-value">{{ protection_details.device_type | default: protection_device_type }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Rating:</span>
+                    <span class="inline-value">{{ protection_details.rating_a | default: protection_device_rating_a }} A</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Curve:</span>
+                    <span class="inline-value">{{ protection_details.curve | default: protection_device_curve }}</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+                <div class="inline-group">
+                    <span class="inline-label">RCD Type:</span>
+                    <span class="inline-value">{{ protection_details.rcd_type | default: rcd_type }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">RCD Rating:</span>
+                    <span class="inline-value">{{ protection_details.rcd_rating_ma | default: rcd_rating_ma }} mA</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; margin-top: 2px;">
+                <div class="inline-group">
+                    <span class="inline-label">RCD Location:</span>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <span class="checkbox-box {% if protection_details.rcd_integral or rcd_integral %}checked{% endif %}">{% if protection_details.rcd_integral or rcd_integral %}&#10003;{% endif %}</span>
+                            <label>Integral to Charger</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <span class="checkbox-box {% unless protection_details.rcd_integral or rcd_integral %}checked{% endunless %}">{% unless protection_details.rcd_integral or rcd_integral %}&#10003;{% endunless %}</span>
+                            <label>Separate RCD</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION H: SCHEDULE OF TEST RESULTS -->
+<div class="section">
+    <div class="section-title">Section H: Schedule of Test Results</div>
+    <table class="test-table">
+        <thead>
+            <tr>
+                <th style="width: 35%;">Test</th>
+                <th style="width: 20%;">Result</th>
+                <th style="width: 20%;">Limit</th>
+                <th style="width: 25%;">Satisfactory</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Continuity R1+R2 (&Omega;)</td>
+                <td>{{ test_results.r1r2 }}</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Continuity R2 (&Omega;)</td>
+                <td>{{ test_results.r2 }}</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Earth Fault Loop Impedance Zs (&Omega;)</td>
+                <td>{{ test_results.zs }}</td>
+                <td>&le; {{ test_results.max_zs }} &Omega;</td>
+                <td class="{% if test_results.zs_satisfactory == 'Yes' %}result-pass{% elsif test_results.zs_satisfactory == 'No' %}result-fail{% endif %}">{{ test_results.zs_satisfactory }}</td>
+            </tr>
+            <tr>
+                <td>Insulation Resistance (M&Omega;)</td>
+                <td>{{ test_results.insulation_resistance }}</td>
+                <td>&ge; 1 M&Omega;</td>
+                <td class="{% if test_results.insulation_satisfactory == 'Yes' %}result-pass{% elsif test_results.insulation_satisfactory == 'No' %}result-fail{% endif %}">{{ test_results.insulation_satisfactory }}</td>
+            </tr>
+            <tr>
+                <td>Polarity</td>
+                <td>{{ test_results.polarity_display }}</td>
+                <td>Correct</td>
+                <td class="{% if test_results.polarity_display == 'Correct' %}result-pass{% elsif test_results.polarity_display == 'Incorrect' %}result-fail{% endif %}">{% if test_results.polarity_display == 'Correct' %}Yes{% elsif test_results.polarity_display == 'Incorrect' %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <td>RCD Trip Time @ I&Delta;n (ms)</td>
+                <td>{{ test_results.rcd_trip_time }}</td>
+                <td>&le; 300 ms</td>
+                <td class="{% if test_results.rcd_trip_time_satisfactory == 'Yes' %}result-pass{% elsif test_results.rcd_trip_time_satisfactory == 'No' %}result-fail{% endif %}">{{ test_results.rcd_trip_time_satisfactory }}</td>
+            </tr>
+            <tr>
+                <td>RCD Trip Time @ 5&times;I&Delta;n (ms)</td>
+                <td>{{ test_results.rcd_trip_time_x5 }}</td>
+                <td>&le; 40 ms</td>
+                <td class="{% if test_results.rcd_trip_time_x5_satisfactory == 'Yes' %}result-pass{% elsif test_results.rcd_trip_time_x5_satisfactory == 'No' %}result-fail{% endif %}">{{ test_results.rcd_trip_time_x5_satisfactory }}</td>
+            </tr>
+            {% if pme_details.earth_electrode_installed or earth_electrode_installed %}
+            <tr>
+                <td>Earth Electrode Resistance Ra (&Omega;)</td>
+                <td>{{ test_results.earth_electrode_ra }}</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Functional Test</td>
+                <td>{{ test_results.functional_test_display }}</td>
+                <td>Pass</td>
+                <td class="{% if test_results.functional_test_display == 'Pass' %}result-pass{% elsif test_results.functional_test_display == 'Fail' %}result-fail{% endif %}">{% if test_results.functional_test_display == 'Pass' %}Yes{% elsif test_results.functional_test_display == 'Fail' %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Load Test {% if test_results.load_test_current %}({{ test_results.load_test_current }} A){% endif %}</td>
+                <td>{{ test_results.load_test_display }}</td>
+                <td>Pass</td>
+                <td class="{% if test_results.load_test_display == 'Pass' %}result-pass{% elsif test_results.load_test_display == 'Fail' %}result-fail{% endif %}">{% if test_results.load_test_display == 'Pass' %}Yes{% elsif test_results.load_test_display == 'Fail' %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION I: DNO NOTIFICATION -->
+<div class="section">
+    <div class="section-title">Section I: DNO Notification</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Notification Submitted:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if dno_notification.submitted or dno_notified %}checked{% endif %}">{% if dno_notification.submitted or dno_notified %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless dno_notification.submitted or dno_notified %}checked{% endunless %}">{% unless dno_notification.submitted or dno_notified %}&#10003;{% endunless %}</span>
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Date Notified:</span>
+            <span class="inline-value">{{ dno_notification.date | default: dno_notification_date }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Reference:</span>
+            <span class="inline-value">{{ dno_notification.reference | default: dno_reference }}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">G98 Notification:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if dno_notification.g98_notification or g98_notification %}checked{% endif %}">{% if dno_notification.g98_notification or g98_notification %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless dno_notification.g98_notification or g98_notification %}checked{% endunless %}">{% unless dno_notification.g98_notification or g98_notification %}&#10003;{% endunless %}</span>
+                    <label>N/A</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">G99 Application:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if dno_notification.g99_application or g99_application %}checked{% endif %}">{% if dno_notification.g99_application or g99_application %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless dno_notification.g99_application or g99_application %}checked{% endunless %}">{% unless dno_notification.g99_application or g99_application %}&#10003;{% endunless %}</span>
+                    <label>N/A</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION J: OZEV GRANT DETAILS (if applicable) -->
+{% if ozev_details.applicable or ozev_grant_applicable %}
+<div class="section">
+    <div class="section-title">Section J: OZEV Grant Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Grant Applicable:</span>
+            <span class="status-badge pass">Yes</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Scheme:</span>
+            <span class="inline-value" style="font-weight: 600;">{{ ozev_details.scheme_display | default: ozev_scheme }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Reference Number:</span>
+            <span class="inline-value">{{ ozev_details.reference | default: ozev_grant_ref }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION K: SMART CHARGING FEATURES -->
+<div class="section">
+    <div class="section-title">Section K: Smart Charging Features</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Smart Charging Enabled:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if smart_features.smart_charging_enabled or smart_charging_enabled %}checked{% endif %}">{% if smart_features.smart_charging_enabled or smart_charging_enabled %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless smart_features.smart_charging_enabled or smart_charging_enabled %}checked{% endunless %}">{% unless smart_features.smart_charging_enabled or smart_charging_enabled %}&#10003;{% endunless %}</span>
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Load Management:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if smart_features.load_management or load_management %}checked{% endif %}">{% if smart_features.load_management or load_management %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% unless smart_features.load_management or load_management %}checked{% endunless %}">{% unless smart_features.load_management or load_management %}&#10003;{% endunless %}</span>
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        {% if smart_features.load_management or load_management %}
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Load Management Type:</span>
+            <span class="inline-value wide">{{ smart_features.load_management_type | default: load_management_type }}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- SECTION L: HANDOVER -->
+<div class="section">
+    <div class="section-title">Section L: Handover and Documentation</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if handover.user_instructions_provided or user_instructions_provided %}checked{% endif %}">{% if handover.user_instructions_provided or user_instructions_provided %}&#10003;{% endif %}</span>
+                <label>User instructions provided</label>
+            </div>
+        </div>
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if handover.operating_manual_provided or operating_manual_provided %}checked{% endif %}">{% if handover.operating_manual_provided or operating_manual_provided %}&#10003;{% endif %}</span>
+                <label>Operating manual provided</label>
+            </div>
+        </div>
+    </div>
+    {% if handover.special_conditions != "" or special_conditions != "" %}
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Special Conditions / Notes:</span>
+            <span class="inline-value wide" style="min-height: 30px;">{{ handover.special_conditions | default: special_conditions }}</span>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- SECTION M: DECLARATION -->
+<div class="section">
+    <div class="section-title">Section M: Declaration and Compliance</div>
+    <div class="declaration-box">
+        <div class="declaration-text">
+            <strong>Declaration:</strong> {{ declaration_text | default: "I/We certify that this EV charging equipment has been designed, installed, inspected and tested in accordance with BS 7671:2018+A3:2024 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)." }}
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if compliance.bs7671 or bs7671_compliance %}checked{% endif %}">{% if compliance.bs7671 or bs7671_compliance %}&#10003;{% endif %}</span>
+                <label>BS 7671:2018+A3:2024</label>
+            </div>
+        </div>
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if compliance.iet_cop or iet_cop_compliance %}checked{% endif %}">{% if compliance.iet_cop or iet_cop_compliance %}&#10003;{% endif %}</span>
+                <label>IET Code of Practice (5th Edition)</label>
+            </div>
+        </div>
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if compliance.building_regs or building_regs_compliance %}checked{% endif %}">{% if compliance.building_regs or building_regs_compliance %}&#10003;{% endif %}</span>
+                <label>Building Regulations Part P</label>
+            </div>
+        </div>
+    </div>
+    {% if additional_notes != "" %}
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Additional Notes:</span>
+            <span class="inline-value wide" style="min-height: 30px;">{{ additional_notes }}</span>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- SECTION N: INSTALLER DECLARATION -->
+<div class="section">
+    <div class="section-title">Section N: Installer Declaration</div>
+    <div class="signature-grid">
+        <div class="signature-box" style="flex: 2;">
+            <div class="signature-box-header">Installer Details</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name</span>
+                    <span class="sig-field-value" style="font-weight: 600;">{{ installer.name | default: installer_name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Company</span>
+                    <span class="sig-field-value">{{ installer.company | default: installer_company }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Qualifications</span>
+                    <span class="sig-field-value">{{ installer.qualifications | default: installer_qualifications }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">CP Scheme</span>
+                    <span class="sig-field-value">{{ installer.scheme | default: installer_scheme }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Membership No</span>
+                    <span class="sig-field-value">{{ installer.scheme_number | default: installer_scheme_number }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value">{{ installer.date | default: installer_date }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="signature-box" style="flex: 1;">
+            <div class="signature-box-header">Signature</div>
+            <div class="signature-box-body" style="min-height: 80px; display: flex; align-items: center; justify-content: center;">
+                {% if installer.signature or installer_signature %}
+                <img src="{{ installer.signature | default: installer_signature }}" style="max-height: 60px; max-width: 100%;" />
+                {% else %}
+                <div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div class="footer-left">
+        <strong>{{ company_name | default: company_details.company_name }}</strong><br>
+        {{ company_address | default: company_details.company_address }}<br>
+        {% if company_phone or company_details.company_phone %}Tel: {{ company_phone | default: company_details.company_phone }}{% endif %}
+        {% if company_email or company_details.company_email %} | {{ company_email | default: company_details.company_email }}{% endif %}
+        {% if company_website or company_details.company_website %}<br>{{ company_website | default: company_details.company_website }}{% endif %}
+    </div>
+    <div class="footer-right">
+        {% if registration_scheme or company_details.registration_scheme %}
+        <strong>{{ registration_scheme | default: company_details.registration_scheme }}</strong><br>
+        Reg No: {{ registration_number | default: company_details.registration_number }}<br>
+        {% endif %}
+        <span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP 5th Edition | Section 722</span>
+    </div>
+</div>
+
+</body>
+</html>
