@@ -151,12 +151,12 @@ export const useCompanyProfile = () => {
         return null;
       }
 
-      // Check file size (max 5MB)
-      const maxSize = 5 * 1024 * 1024;
+      // Check file size (max 100MB)
+      const maxSize = 100 * 1024 * 1024;
       if (file.size > maxSize) {
         toast({
           title: "File Too Large",
-          description: "Logo must be under 5MB. Please compress or resize your image.",
+          description: "Logo must be under 100MB. Please compress or resize your image.",
           variant: "destructive"
         });
         return null;
