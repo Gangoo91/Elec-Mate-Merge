@@ -128,20 +128,20 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             <div className="flex items-center gap-2 mt-1 flex-wrap">
               <Badge variant="outline" className={cn(
                 "px-1.5 py-0 border-elec-yellow/30 text-elec-yellow",
-                text-xs
+                "text-xs"
               )}>
                 {getPowerOptionsLabel(charger)}
               </Badge>
-              <span className={cn("text-muted-foreground", text-xs)}>
+              <span className={cn("text-muted-foreground", "text-xs")}>
                 {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
               </span>
-              <span className={cn("text-muted-foreground", text-xs)}>
+              <span className={cn("text-muted-foreground", "text-xs")}>
                 {charger.socketType}
               </span>
               {charger.rcdIntegral && (
                 <Badge variant="outline" className={cn(
                   "px-1.5 py-0 border-green-500/30 text-green-400",
-                  text-xs
+                  "text-xs"
                 )}>
                   RCD Built-in
                 </Badge>
@@ -149,7 +149,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             </div>
 
             {charger.notes && (
-              <p className={cn("text-muted-foreground mt-1 line-clamp-1", text-xs)}>
+              <p className={cn("text-muted-foreground mt-1 line-clamp-1", "text-xs")}>
                 {charger.notes}
               </p>
             )}
