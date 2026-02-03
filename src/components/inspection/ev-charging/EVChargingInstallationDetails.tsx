@@ -390,25 +390,42 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
               "space-y-4",
               isMobile ? "px-4 py-4" : "px-4 pb-4"
             )}>
-              {/* Charger Autocomplete - Smart Selection */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>Charger Make & Model *</Label>
-                  <div className="flex items-center gap-1 text-[10px] text-elec-yellow">
-                    <Sparkles className="h-3 w-3" />
-                    <span>Auto-fills specs</span>
+              {/* Charger Selection with Auto-fill - Mobile-optimised */}
+              <div className={cn(
+                "rounded-xl border overflow-hidden",
+                chargerAutoFilled
+                  ? "border-elec-yellow/40 bg-elec-yellow/5"
+                  : "border-white/10 bg-black/20"
+              )}>
+                {/* Header */}
+                <div className={cn(
+                  "flex items-center justify-between px-4 py-3",
+                  chargerAutoFilled ? "bg-elec-yellow/10" : "bg-white/5"
+                )}>
+                  <div className="flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-elec-yellow" />
+                    <span className="font-medium text-sm">Charger Make & Model *</span>
                   </div>
+                  {chargerAutoFilled ? (
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                      <Sparkles className="h-3 w-3 mr-1" />
+                      Auto-filled
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                      <Sparkles className="h-3 w-3 mr-1" />
+                      Auto-fills specs
+                    </Badge>
+                  )}
                 </div>
-                <ChargerAutocomplete
-                  value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
-                  onChange={handleChargerSelect}
-                />
-                {chargerAutoFilled && (
-                  <p className="text-[10px] text-green-400 flex items-center gap-1">
-                    <Sparkles className="h-3 w-3" />
-                    Charger specifications auto-filled from database
-                  </p>
-                )}
+
+                {/* Autocomplete */}
+                <div className="px-4 py-3">
+                  <ChargerAutocomplete
+                    value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
+                    onChange={handleChargerSelect}
+                  />
+                </div>
               </div>
 
               {/* Manual entry fallback for make/model */}
@@ -451,7 +468,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="chargerType">Charging Mode</Label>
                   <Select

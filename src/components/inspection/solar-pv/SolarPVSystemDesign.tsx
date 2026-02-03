@@ -338,7 +338,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                     </div>
 
                     {/* Orientation & Mounting */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="space-y-2">
                         <Label className="text-xs text-muted-foreground flex items-center gap-1">
                           <Compass className="h-3 w-3" />
@@ -496,7 +496,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       )}
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="space-y-2">
                         <Label className="text-xs text-muted-foreground">Serial Number</Label>
                         <Input

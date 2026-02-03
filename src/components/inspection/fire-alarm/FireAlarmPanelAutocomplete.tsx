@@ -393,64 +393,68 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
 
   return (
     <div className={cn(
-      'p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm',
+      'p-4 bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl',
       className
     )}>
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <p className="font-medium text-foreground">
+      {/* Header with panel name and badge */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-foreground text-base">
             {panel.manufacturer} {panel.model}
           </p>
-          <p className="text-xs text-gray-400 mt-0.5">
-            {panel.type} • {panel.protocol || 'Conventional Protocol'}
+          <p className="text-sm text-muted-foreground mt-0.5">
+            {panel.type}
           </p>
         </div>
-        {panel.yearIntroduced && (
-          <span className="text-xs text-gray-500">
-            Since {panel.yearIntroduced}
+        {panel.networkable && (
+          <span className="flex items-center gap-1 px-2 py-1 bg-green-500/20 border border-green-500/30 rounded-full text-xs font-medium text-green-400 shrink-0">
+            <Zap className="h-3 w-3" />
+            Networkable
           </span>
         )}
       </div>
 
-      <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+      {/* Specs grid */}
+      <div className="mt-3 grid grid-cols-2 gap-3">
         {panel.zones && (
-          <div>
-            <span className="text-gray-400">Zones:</span>{' '}
-            <span className="text-foreground">{panel.zones}</span>
+          <div className="bg-black/20 rounded-lg px-3 py-2">
+            <span className="text-xs text-muted-foreground block">Zones</span>
+            <span className="text-base font-semibold text-foreground">{panel.zones}</span>
           </div>
         )}
         {panel.loops && (
-          <div>
-            <span className="text-gray-400">Loops:</span>{' '}
-            <span className="text-foreground">{panel.loops}</span>
+          <div className="bg-black/20 rounded-lg px-3 py-2">
+            <span className="text-xs text-muted-foreground block">Loops</span>
+            <span className="text-base font-semibold text-foreground">{panel.loops}</span>
           </div>
         )}
         {panel.devices && (
-          <div>
-            <span className="text-gray-400">Devices:</span>{' '}
-            <span className="text-foreground">{panel.devices}</span>
+          <div className="bg-black/20 rounded-lg px-3 py-2">
+            <span className="text-xs text-muted-foreground block">Devices</span>
+            <span className="text-base font-semibold text-foreground">{panel.devices}</span>
           </div>
         )}
-        {panel.networkable && (
-          <div className="flex items-center gap-1 text-green-400">
-            <Zap className="h-3 w-3" />
-            Networkable
+        {panel.protocol && (
+          <div className="bg-black/20 rounded-lg px-3 py-2">
+            <span className="text-xs text-muted-foreground block">Protocol</span>
+            <span className="text-sm font-medium text-foreground">{panel.protocol}</span>
           </div>
         )}
       </div>
 
+      {/* Features */}
       {panel.features && panel.features.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {panel.features.slice(0, 4).map((feature, i) => (
             <span
               key={i}
-              className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs text-gray-400"
+              className="px-2 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-muted-foreground"
             >
               {feature}
             </span>
           ))}
           {panel.features.length > 4 && (
-            <span className="px-1.5 py-0.5 text-xs text-gray-500">
+            <span className="px-2 py-1 text-xs text-muted-foreground">
               +{panel.features.length - 4} more
             </span>
           )}

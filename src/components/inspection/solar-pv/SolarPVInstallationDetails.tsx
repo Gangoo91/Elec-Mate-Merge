@@ -818,7 +818,7 @@ const SolarPVInstallationDetails: React.FC<SolarPVInstallationDetailsProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             <div className="p-3 bg-background/50 rounded-lg border border-white/10">
               <p className="text-xs text-muted-foreground mb-1">Total Capacity</p>
               <p className="text-xl font-bold text-amber-400">

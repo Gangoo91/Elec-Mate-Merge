@@ -322,22 +322,22 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
               {/* Total Equipment Summary */}
               <div className="bg-black/40 rounded-xl p-4 mt-4">
                 <h4 className="font-medium mb-3 text-sm text-elec-yellow">Equipment Summary</h4>
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div className="text-center p-3 bg-red-500/10 rounded-lg">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                  <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-red-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-red-400">
                       {Object.values(detectorCount).reduce((sum: number, val: any) => sum + (parseInt(val) || 0), 0)}
                     </p>
-                    <p className="text-white/60 text-xs">Detectors</p>
+                    <p className="text-white/60 text-sm sm:text-xs">Detectors</p>
                   </div>
-                  <div className="text-center p-3 bg-green-500/10 rounded-lg">
+                  <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-green-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-green-400">{formData.callPointCount || 0}</p>
-                    <p className="text-white/60 text-xs">Call Points</p>
+                    <p className="text-white/60 text-sm sm:text-xs">Call Points</p>
                   </div>
-                  <div className="text-center p-3 bg-orange-500/10 rounded-lg">
+                  <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-orange-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-orange-400">
                       {(formData.sounderCount || 0) + (formData.visualAlarmCount || 0)}
                     </p>
-                    <p className="text-white/60 text-xs">Alarm Devices</p>
+                    <p className="text-white/60 text-sm sm:text-xs">Alarm Devices</p>
                   </div>
                 </div>
               </div>
@@ -418,7 +418,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 mt-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
                     <div className="space-y-2">
                       <Label className="text-sm">Detectors</Label>
                       <Input

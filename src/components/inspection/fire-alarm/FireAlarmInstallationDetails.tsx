@@ -180,18 +180,21 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
               "space-y-4",
               isMobile ? "px-4 py-4" : "px-4 pb-4"
             )}>
-              {/* Certificate Type - Segmented Control Style */}
+              {/* Certificate Type - Mobile-optimised cards */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium">Certificate Type *</Label>
                 <RadioGroup
                   value={formData.certificateType || 'installation'}
                   onValueChange={(value) => onUpdate('certificateType', value)}
-                  className="grid grid-cols-3 gap-1 bg-black/40 p-1 rounded-lg border border-white/10"
+                  className={cn(
+                    "gap-2",
+                    isMobile ? "flex flex-col" : "grid grid-cols-3 gap-2"
+                  )}
                 >
                   {[
-                    { value: 'installation', label: 'Installation' },
-                    { value: 'commissioning', label: 'Commissioning' },
-                    { value: 'periodic', label: 'Periodic Test' },
+                    { value: 'installation', label: 'Installation', desc: 'New system install' },
+                    { value: 'commissioning', label: 'Commissioning', desc: 'System handover' },
+                    { value: 'periodic', label: 'Periodic Test', desc: 'Routine inspection' },
                   ].map((option) => (
                     <div key={option.value} className="relative">
                       <RadioGroupItem
@@ -202,12 +205,32 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                       <Label
                         htmlFor={`cert-${option.value}`}
                         className={cn(
-                          "flex items-center justify-center h-11 px-2 text-sm font-medium text-center rounded-md cursor-pointer touch-manipulation transition-all",
-                          "peer-data-[state=unchecked]:bg-transparent peer-data-[state=unchecked]:text-gray-400 peer-data-[state=unchecked]:hover:text-white/70",
-                          "peer-data-[state=checked]:bg-red-500 peer-data-[state=checked]:text-white peer-data-[state=checked]:shadow-sm"
+                          "flex items-center gap-3 rounded-xl cursor-pointer touch-manipulation transition-all border-2",
+                          isMobile ? "p-4" : "flex-col justify-center p-3 h-20 text-center",
+                          "peer-data-[state=unchecked]:bg-black/30 peer-data-[state=unchecked]:border-white/10 peer-data-[state=unchecked]:text-gray-400",
+                          "peer-data-[state=checked]:bg-red-500/20 peer-data-[state=checked]:border-red-500 peer-data-[state=checked]:text-white"
                         )}
                       >
-                        {option.label}
+                        <div className={cn(
+                          "rounded-full flex items-center justify-center shrink-0",
+                          isMobile ? "w-5 h-5 border-2" : "w-4 h-4 border-2",
+                          "peer-data-[state=unchecked]:border-gray-500",
+                          formData.certificateType === option.value
+                            ? "border-red-500 bg-red-500"
+                            : "border-gray-500"
+                        )}>
+                          {formData.certificateType === option.value && (
+                            <div className="w-2 h-2 rounded-full bg-white" />
+                          )}
+                        </div>
+                        <div className={cn(isMobile ? "flex-1" : "")}>
+                          <span className={cn("font-medium", isMobile ? "text-base" : "text-sm")}>
+                            {option.label}
+                          </span>
+                          {isMobile && (
+                            <p className="text-xs text-muted-foreground mt-0.5">{option.desc}</p>
+                          )}
+                        </div>
                       </Label>
                     </div>
                   ))}
@@ -619,26 +642,52 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </Label>
               </div>
 
-              {/* Panel Selection with Auto-fill */}
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
-                  Control Panel (Auto-fill)
-                </Label>
-                <FireAlarmPanelAutocomplete
-                  value={selectedPanelId || undefined}
-                  onValueChange={(id) => setSelectedPanelId(id)}
-                  onPanelSelect={handlePanelSelect}
-                  placeholder="Search panels by make/model..."
-                  showAutoFillBadge={panelAutoFilled}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Select a panel to auto-fill network type and specifications
-                </p>
+              {/* Panel Selection with Auto-fill - Mobile-optimised */}
+              <div className={cn(
+                "rounded-xl border overflow-hidden",
+                panelAutoFilled
+                  ? "border-elec-yellow/40 bg-elec-yellow/5"
+                  : "border-white/10 bg-black/20"
+              )}>
+                {/* Header */}
+                <div className={cn(
+                  "flex items-center justify-between px-4 py-3",
+                  panelAutoFilled ? "bg-elec-yellow/10" : "bg-white/5"
+                )}>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className={cn(
+                      "h-4 w-4",
+                      panelAutoFilled ? "text-elec-yellow" : "text-muted-foreground"
+                    )} />
+                    <span className="text-sm font-medium">Control Panel</span>
+                  </div>
+                  {panelAutoFilled && (
+                    <span className="flex items-center gap-1 px-2 py-1 bg-elec-yellow/20 rounded-full text-xs font-medium text-elec-yellow">
+                      <Sparkles className="h-3 w-3" />
+                      Auto-filled
+                    </span>
+                  )}
+                </div>
+
+                {/* Autocomplete */}
+                <div className="px-4 py-3">
+                  <FireAlarmPanelAutocomplete
+                    value={selectedPanelId || undefined}
+                    onValueChange={(id) => setSelectedPanelId(id)}
+                    onPanelSelect={handlePanelSelect}
+                    placeholder="Search panels by make/model..."
+                    showAutoFillBadge={false}
+                  />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Select a panel to auto-fill network type and specifications
+                  </p>
+                </div>
 
                 {/* Show panel info if selected */}
                 {selectedPanelId && (
-                  <PanelInfoDisplay panelId={selectedPanelId} className="mt-2" />
+                  <div className="px-4 pb-4">
+                    <PanelInfoDisplay panelId={selectedPanelId} />
+                  </div>
                 )}
               </div>
 
@@ -692,13 +741,12 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     />
                     <Button
                       type="button"
-                      variant="outline"
                       onClick={() => setSerialScannerOpen(true)}
-                      className="h-11 px-3 shrink-0 border-white/30 hover:border-elec-yellow hover:bg-elec-yellow/10 gap-2"
+                      className="h-11 px-4 shrink-0 bg-red-500 hover:bg-red-600 text-white gap-2 touch-manipulation active:scale-[0.98] transition-transform"
                       title="Scan serial number with camera"
                     >
-                      <Scan className="h-4 w-4" />
-                      <span className="hidden sm:inline text-sm">Scan</span>
+                      <Scan className="h-5 w-5" />
+                      <span className="text-sm font-medium">Scan</span>
                     </Button>
                   </div>
                   {/* AI Scanned indicator */}
