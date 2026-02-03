@@ -2,7 +2,7 @@
 // Local-first, offline-capable, never loses data
 // With concurrent edit detection using optimistic locking
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback, useRef, useMemo } from 'react';
 import debounce from 'lodash/debounce';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -105,10 +105,21 @@ export const useReportSync = ({
   const expectedVersionRef = useRef<number>(1);
   const localDataRef = useRef<any>(null);
 
+  // CRITICAL: Ref to always have the latest formData for syncNowImmediate
+  // This solves React closure issues where callbacks capture stale state
+  const latestFormDataRef = useRef<any>(formData);
+
   // Keep reportId ref in sync
   useEffect(() => {
     currentReportIdRef.current = reportId;
   }, [reportId]);
+
+  // CRITICAL: Keep formData ref in sync using useLayoutEffect
+  // useLayoutEffect runs SYNCHRONOUSLY after DOM updates but before paint/user events
+  // This ensures the ref is ALWAYS up-to-date when syncNowImmediate() is called
+  useLayoutEffect(() => {
+    latestFormDataRef.current = formData;
+  }, [formData]);
 
   // === AUTH CHECK ===
   useEffect(() => {
@@ -362,11 +373,15 @@ export const useReportSync = ({
       return { success: false, reportId: null };
     }
 
+    // CRITICAL FIX: Use the ref to get the absolute latest form data
+    // The closure `formData` can be stale if user made changes just before triggering sync
+    const currentFormData = latestFormDataRef.current;
+
     // Check minimum data
     const hasData =
-      formData.clientName ||
-      formData.installationAddress ||
-      formData.propertyAddress;
+      currentFormData.clientName ||
+      currentFormData.installationAddress ||
+      currentFormData.propertyAddress;
 
     if (!hasData) {
       if (showToast) {
@@ -381,7 +396,7 @@ export const useReportSync = ({
 
     isSyncingRef.current = true;
     setStatus(prev => ({ ...prev, cloud: 'syncing' }));
-    localDataRef.current = formData;
+    localDataRef.current = currentFormData;
 
     try {
       let savedReportId = currentReportIdRef.current;
@@ -390,7 +405,7 @@ export const useReportSync = ({
         // Update existing report with version check (unless forcing overwrite)
         if (forceOverwrite) {
           // Force save - skip version check (always promotes from auto-draft)
-          const result = await reportCloud.updateReport(savedReportId, userId, formData, customerId, false);
+          const result = await reportCloud.updateReport(savedReportId, userId, currentFormData, customerId, false);
           if (!result.success) throw new Error(result.error || 'Update failed');
           // Fetch new version after successful update
           const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
@@ -402,7 +417,7 @@ export const useReportSync = ({
           const result = await reportCloud.updateReportWithVersionCheck(
             savedReportId,
             userId,
-            formData,
+            currentFormData,
             expectedVersionRef.current,
             customerId,
             isAutoSync  // Pass through auto-sync flag
@@ -421,7 +436,7 @@ export const useReportSync = ({
 
             // Notify parent component if callback provided
             if (onConflict) {
-              onConflict(result.conflict, formData);
+              onConflict(result.conflict, currentFormData);
             }
 
             if (showToast) {
@@ -443,7 +458,7 @@ export const useReportSync = ({
       } else {
         // Create new report (no version conflict possible)
         // Pass isAutoSync to set 'auto-draft' status for auto-synced reports
-        const result = await reportCloud.createReport(userId, reportType, formData, customerId, isAutoSync);
+        const result = await reportCloud.createReport(userId, reportType, currentFormData, customerId, isAutoSync);
         if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
         savedReportId = result.reportId;
         // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
@@ -492,7 +507,7 @@ export const useReportSync = ({
             type: currentReportIdRef.current ? 'update' : 'create',
             reportType,
             reportId: currentReportIdRef.current,
-            data: formData,
+            data: currentFormData,
             userId,
           });
           await updateQueueCount();
@@ -516,33 +531,35 @@ export const useReportSync = ({
 
       return { success: false, reportId: currentReportIdRef.current };
     }
-  }, [userId, formData, reportType, customerId, isOnline, toast, updateQueueCount, onConflict]);
+  }, [userId, reportType, customerId, isOnline, toast, updateQueueCount, onConflict]);
 
   // === MANUAL SAVE ===
   const saveNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
-    // Always save locally first
-    draftStorage.saveDraft(reportType, currentReportIdRef.current, formData);
+    // Always save locally first - use ref for latest data
+    const currentFormData = latestFormDataRef.current;
+    draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
     setStatus(prev => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
 
     // Then sync to cloud
     return await syncToCloud(true);
-  }, [formData, reportType, syncToCloud]);
+  }, [reportType, syncToCloud]);
 
   // === SAVE INITIAL DRAFT (immediately when form opens, even without meaningful data) ===
   const saveInitialDraft = useCallback(() => {
     // Save draft immediately to local storage (appears in recent certs/drafts)
+    const currentFormData = latestFormDataRef.current;
     draftStorage.saveDraft(reportType, currentReportIdRef.current, {
-      ...formData,
+      ...currentFormData,
       _draftCreatedAt: new Date().toISOString(),
     });
-    lastFormDataRef.current = JSON.stringify(formData);
+    lastFormDataRef.current = JSON.stringify(currentFormData);
     setStatus(prev => ({
       ...prev,
       local: 'saved',
       lastLocalSave: new Date(),
     }));
     console.log('[ReportSync] Initial draft saved for', reportType);
-  }, [reportType, formData]);
+  }, [reportType]);
 
   // === LOAD REPORT ===
   const loadReport = useCallback(async (loadReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
@@ -598,13 +615,14 @@ export const useReportSync = ({
 
   // === FORCE SAVE (skip version check) ===
   const forceSave = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
-    // Save locally first
-    draftStorage.saveDraft(reportType, currentReportIdRef.current, formData);
+    // Save locally first - use ref for latest data
+    const currentFormData = latestFormDataRef.current;
+    draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
     setStatus(prev => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
 
     // Force sync to cloud, overwriting any conflicts
     return await syncToCloud(true, true);
-  }, [formData, reportType, syncToCloud]);
+  }, [reportType, syncToCloud]);
 
   // === RETRY SYNC ===
   const retrySync = useCallback(async (): Promise<void> => {
@@ -665,11 +683,12 @@ export const useReportSync = ({
     // Cancel any pending debounced sync
     debouncedCloudSync.cancel();
 
-    // Capture the current form data before sync
-    // This is the data that will be saved to the database
-    const dataToSync = { ...formData };
+    // CRITICAL FIX: Use the ref to get the absolute latest form data
+    // The closure `formData` can be stale if user made changes just before clicking Generate
+    // The ref is updated synchronously via useLayoutEffect, so it's always current
+    const dataToSync = { ...latestFormDataRef.current };
 
-    console.log('[ReportSync] syncNowImmediate - data to sync:', {
+    console.log('[ReportSync] syncNowImmediate - using REF data (guaranteed latest):', {
       scheduleOfTestsCount: dataToSync.scheduleOfTests?.length || 0,
       inspectionItemsCount: dataToSync.inspectionItems?.length || 0,
       defectObservationsCount: dataToSync.defectObservations?.length || 0,
@@ -690,22 +709,24 @@ export const useReportSync = ({
       reportId: result.reportId,
       data: dataToSync  // Return the data that was saved
     };
-  }, [syncToCloud, debouncedCloudSync, formData]);
+  }, [syncToCloud, debouncedCloudSync]);
 
   // === TAB CHANGE HANDLER (triggers immediate sync) ===
   // Uses isAutoSync=true - tab changes are automatic syncs, not manual saves
   const onTabChange = useCallback(() => {
     // Cancel debounce and sync immediately when user changes tabs
+    // Use ref for latest data
+    const currentFormData = latestFormDataRef.current;
     const hasData =
-      formData.clientName ||
-      formData.installationAddress ||
-      formData.propertyAddress;
+      currentFormData?.clientName ||
+      currentFormData?.installationAddress ||
+      currentFormData?.propertyAddress;
 
     if (hasData && isOnline && isAuthenticated && userId) {
       debouncedCloudSync.cancel();
       syncToCloud(false, false, true);  // isAutoSync = true
     }
-  }, [formData, isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
+  }, [isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
 
   // === RETURN ===
   return {

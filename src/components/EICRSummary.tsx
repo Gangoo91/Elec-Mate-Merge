@@ -87,10 +87,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     });
   }, [formData]);
 
-  // Clear JSON cache when form data arrays change
+  // Clear JSON cache when any form data changes (not just arrays)
+  // This ensures the preview always reflects the current data
   useEffect(() => {
     setFormattedJsonPreview('');
-  }, [formData.inspectionItems, formData.scheduleOfTests, formData.defectObservations]);
+  }, [formData]);
 
   // Load formatted JSON when collapsible is opened
   const handleToggleJsonPreview = async (isOpen: boolean) => {
