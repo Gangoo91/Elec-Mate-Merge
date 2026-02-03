@@ -35,6 +35,20 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
   const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateNext = () => {
+    navigateNext();
+    scrollToTop();
+  };
+
+  const handleNavigatePrevious = () => {
+    navigatePrevious();
+    scrollToTop();
+  };
+
   return (
     <div className={cn(
       "sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border",
@@ -61,7 +75,7 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
         <div className="flex items-center justify-between gap-3">
           <Button
             variant="outline"
-            onClick={navigatePrevious}
+            onClick={handleNavigatePrevious}
             disabled={!canNavigatePrevious}
             className="h-12 px-6 touch-manipulation"
           >
@@ -82,15 +96,21 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
             <Button
               onClick={onGenerateCertificate}
               disabled={!canGenerateCertificate}
-              className="h-12 px-6 touch-manipulation bg-red-600 hover:bg-red-700"
+              className={cn(
+                "touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform",
+                isMobile ? "w-full h-11" : "h-12 px-6"
+              )}
             >
               Generate Certificate
             </Button>
           ) : (
             <Button
-              onClick={navigateNext}
+              onClick={handleNavigateNext}
               disabled={!canNavigateNext}
-              className="h-12 px-6 touch-manipulation"
+              className={cn(
+                "touch-manipulation active:scale-[0.98] transition-transform",
+                isMobile ? "h-11 px-4" : "h-12 px-6"
+              )}
             >
               Next
               <ChevronRight className="h-5 w-5 ml-2" />

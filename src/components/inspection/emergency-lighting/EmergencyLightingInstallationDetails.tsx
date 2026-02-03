@@ -590,15 +590,15 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
               "space-y-4",
               isMobile ? "px-4 py-4" : "px-4 pb-4"
             )}>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="luminaireCount">Luminaire Count</Label>
                   <Input
                     id="luminaireCount"
                     type="number"
                     min="0"
-                    value={formData.luminaireCount || 0}
-                    onChange={(e) => onUpdate('luminaireCount', parseInt(e.target.value) || 0)}
+                    value={formData.luminaireCount ?? ''}
+                    onChange={(e) => onUpdate('luminaireCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -608,8 +608,8 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     id="exitSignCount"
                     type="number"
                     min="0"
-                    value={formData.exitSignCount || 0}
-                    onChange={(e) => onUpdate('exitSignCount', parseInt(e.target.value) || 0)}
+                    value={formData.exitSignCount ?? ''}
+                    onChange={(e) => onUpdate('exitSignCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -620,8 +620,8 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       id="centralBatteryCount"
                       type="number"
                       min="0"
-                      value={formData.centralBatteryCount || 0}
-                      onChange={(e) => onUpdate('centralBatteryCount', parseInt(e.target.value) || 0)}
+                      value={formData.centralBatteryCount ?? ''}
+                      onChange={(e) => onUpdate('centralBatteryCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                   </div>

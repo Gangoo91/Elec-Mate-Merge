@@ -464,7 +464,7 @@ const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({
                       type="number"
                       step="0.1"
                       value={formData.gridConnection?.exportLimitKw || ''}
-                      onChange={(e) => updateGridConnection('exportLimitKw', parseFloat(e.target.value) || 0)}
+                      onChange={(e) => updateGridConnection('exportLimitKw', e.target.value === '' ? '' : parseFloat(e.target.value) || 0)}
                       placeholder="e.g., 3.68"
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                     />

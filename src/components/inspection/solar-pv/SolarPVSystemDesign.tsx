@@ -250,13 +250,13 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       )}
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <div className="space-y-2">
                         <Label className="text-xs text-muted-foreground">Wattage (Wp)</Label>
                         <Input
                           type="number"
                           value={array.panelWattage || ''}
-                          onChange={(e) => updateArray(index, 'panelWattage', parseInt(e.target.value) || 0)}
+                          onChange={(e) => updateArray(index, 'panelWattage', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>
@@ -266,7 +266,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.panelCount || ''}
-                          onChange={(e) => updateArray(index, 'panelCount', parseInt(e.target.value) || 0)}
+                          onChange={(e) => updateArray(index, 'panelCount', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>
@@ -277,7 +277,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           step="0.01"
                           value={array.vocRated || ''}
-                          onChange={(e) => updateArray(index, 'vocRated', parseFloat(e.target.value) || 0)}
+                          onChange={(e) => updateArray(index, 'vocRated', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>
@@ -288,20 +288,20 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           step="0.01"
                           value={array.iscRated || ''}
-                          onChange={(e) => updateArray(index, 'iscRated', parseFloat(e.target.value) || 0)}
+                          onChange={(e) => updateArray(index, 'iscRated', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>
                     </div>
 
                     {/* String Configuration */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <div className="space-y-2">
                         <Label className="text-xs text-muted-foreground">Panels/String</Label>
                         <Input
                           type="number"
                           value={array.panelsPerString || array.panelCount}
-                          onChange={(e) => updateArray(index, 'panelsPerString', parseInt(e.target.value) || 0)}
+                          onChange={(e) => updateArray(index, 'panelsPerString', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>
@@ -311,7 +311,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.stringsInParallel || 1}
-                          onChange={(e) => updateArray(index, 'stringsInParallel', parseInt(e.target.value) || 1)}
+                          onChange={(e) => updateArray(index, 'stringsInParallel', e.target.value === '' ? 1 : parseInt(e.target.value) || 1)}
                           className="h-10 text-base touch-manipulation border-white/30"
                         />
                       </div>

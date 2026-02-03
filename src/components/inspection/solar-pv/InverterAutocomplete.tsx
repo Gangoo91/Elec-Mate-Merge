@@ -9,9 +9,10 @@
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, Sparkles, Zap, Battery } from 'lucide-react';
+import { Check, ChevronsUpDown, Sparkles, Zap, Battery, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
@@ -25,6 +26,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   getInvertersGroupedByManufacturer,
   searchInverters,
@@ -55,6 +58,7 @@ export function InverterAutocomplete({
 }: InverterAutocompleteProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState('');
+  const isMobile = useIsMobile();
 
   // Get inverters grouped by manufacturer
   const invertersGrouped = React.useMemo(() => getInvertersGroupedByManufacturer(), []);
@@ -108,33 +112,171 @@ export function InverterAutocomplete({
     }
   };
 
+  // Trigger button shared between mobile and desktop
+  const triggerButton = (
+    <Button
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      disabled={disabled}
+      onClick={isMobile ? () => setOpen(true) : undefined}
+      className={cn(
+        'w-full justify-between h-11 touch-manipulation',
+        'bg-elec-gray border-white/30 text-foreground',
+        'hover:bg-gray-700 hover:border-white/40',
+        'focus:border-yellow-500 focus:ring-yellow-500',
+        'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
+        disabled && 'opacity-50 cursor-not-allowed',
+        className
+      )}
+    >
+      <span className={cn(
+        'truncate',
+        !selectedInverter && 'text-muted-foreground'
+      )}>
+        {displayValue}
+      </span>
+      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    </Button>
+  );
+
+  // Render inverter item (shared renderer for mobile and desktop)
+  const renderInverterItem = (inverter: SolarInverter, showMake = false, forMobile = false) => {
+    const isSelected = selectedInverter?.id === inverter.id;
+    return (
+      <div
+        key={inverter.id}
+        onClick={() => handleSelect(inverter)}
+        className={cn(
+          "rounded-lg cursor-pointer transition-colors flex items-center",
+          forMobile ? "px-4 py-4 min-h-[56px]" : "px-2 py-2",
+          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
+          isSelected && "bg-elec-yellow/20"
+        )}
+      >
+        <Check
+          className={cn(
+            'shrink-0',
+            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
+            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+          )}
+        />
+        <div className="flex flex-col flex-1 min-w-0">
+          <span className={cn("font-medium truncate", forMobile && "text-base")}>
+            {showMake ? `${inverter.make} ${inverter.model}` : inverter.model}
+          </span>
+          <span className={cn("text-gray-400 truncate", forMobile ? "text-sm" : "text-xs")}>
+            {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} • {inverter.mpptCount} MPPT
+          </span>
+        </div>
+        <div className="ml-2 flex items-center gap-1">
+          <span className={cn(
+            'px-1.5 py-0.5 font-medium rounded',
+            forMobile ? 'text-xs' : 'text-xs',
+            getTypeBadgeColor(inverter.type)
+          )}>
+            {inverter.type}
+          </span>
+          {inverter.hybridCapable && (
+            <Battery className={cn("text-green-400", forMobile ? "h-4 w-4" : "h-3 w-3")} />
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Mobile: Use SwipeableBottomSheet
+  if (isMobile) {
+    return (
+      <div className="relative">
+        {triggerButton}
+
+        <SwipeableBottomSheet
+          open={open}
+          onOpenChange={setOpen}
+          title="Select Solar Inverter"
+          contentClassName="p-0"
+        >
+          <div className="flex flex-col max-h-[70vh]">
+            {/* Search input */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
+              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search inverters..."
+                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                autoFocus
+              />
+              {search && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearch('')}
+                  className="h-9 w-9 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Inverter list */}
+            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+              {filteredInverters && filteredInverters.length > 0 ? (
+                <div className="px-2 py-2">
+                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">Search Results</p>
+                  <div className="space-y-1">
+                    {filteredInverters.map((inverter) => renderInverterItem(inverter, true, true))}
+                  </div>
+                </div>
+              ) : search.trim() ? (
+                <div className="py-12 text-center text-muted-foreground">
+                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p className="text-base">No inverters found</p>
+                  <p className="text-sm mt-1">Try a different search term</p>
+                </div>
+              ) : (
+                <div className="px-2 py-2">
+                  {Object.entries(invertersGrouped).map(([manufacturer, inverters]) => (
+                    <div key={manufacturer} className="mb-4">
+                      <p className="px-4 py-2 text-sm text-muted-foreground font-medium sticky top-0 bg-background">
+                        {manufacturer}
+                      </p>
+                      <div className="space-y-1">
+                        {inverters.map((inverter) => renderInverterItem(inverter, false, true))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
+              <p className="text-xs text-muted-foreground text-center">
+                {getInverterCount()} MCS-certified inverters
+              </p>
+            </div>
+          </div>
+        </SwipeableBottomSheet>
+
+        {/* Auto-fill badge */}
+        {showAutoFillBadge && hasAutoFill && (
+          <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
+            <Sparkles className="h-3 w-3" />
+            Auto-filled
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop: Use Popover
   return (
     <div className="relative">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            disabled={disabled}
-            className={cn(
-              'w-full justify-between h-11 touch-manipulation',
-              'bg-elec-gray border-white/30 text-foreground',
-              'hover:bg-gray-700 hover:border-white/40',
-              'focus:border-yellow-500 focus:ring-yellow-500',
-              'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
-              disabled && 'opacity-50 cursor-not-allowed',
-              className
-            )}
-          >
-            <span className={cn(
-              'truncate',
-              !selectedInverter && 'text-muted-foreground'
-            )}>
-              {displayValue}
-            </span>
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
+          {triggerButton}
         </PopoverTrigger>
         <PopoverContent
           className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
@@ -178,7 +320,7 @@ export function InverterAutocomplete({
                         </span>
                       </div>
                       <div className="ml-2 flex items-center gap-1">
-                        <span className={cn('px-1.5 py-0.5 text-[10px] font-medium rounded', getTypeBadgeColor(inverter.type))}>
+                        <span className={cn('px-1.5 py-0.5 text-xs font-medium rounded', getTypeBadgeColor(inverter.type))}>
                           {inverter.type}
                         </span>
                         {inverter.hybridCapable && (
@@ -233,7 +375,7 @@ export function InverterAutocomplete({
 
       {/* Auto-fill badge - positioned above and to the right */}
       {showAutoFillBadge && hasAutoFill && (
-        <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-[10px] font-semibold text-elec-yellow shadow-sm">
+        <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
           <Sparkles className="h-3 w-3" />
           Auto-filled
         </div>

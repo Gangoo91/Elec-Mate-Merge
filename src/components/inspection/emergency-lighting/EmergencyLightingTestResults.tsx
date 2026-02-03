@@ -983,7 +983,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           </span>
                         )}
                       </Label>
-                      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+                      <div className="flex flex-wrap gap-2">
                         {[
                           { value: 'immediate', label: 'Immediate', shortLabel: 'Now', color: 'red' },
                           { value: 'within-7-days', label: '7 Days', shortLabel: '7d', color: 'orange' },
@@ -995,7 +995,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                             type="button"
                             onClick={() => updateDefect(defect.id, 'priority', priority.value)}
                             className={cn(
-                              "h-10 px-4 rounded-full border text-sm font-medium touch-manipulation transition-all flex items-center gap-2 whitespace-nowrap shrink-0",
+                              "h-10 px-4 rounded-full border text-sm font-medium touch-manipulation transition-all flex items-center gap-2",
                               defect.priority === priority.value
                                 ? priority.color === 'red' ? "bg-red-500/30 border-red-500 text-red-300"
                                 : priority.color === 'orange' ? "bg-orange-500/30 border-orange-500 text-orange-300"

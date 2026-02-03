@@ -476,8 +476,8 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                   id="floorsCount"
                   type="number"
                   min="1"
-                  value={formData.floorsCount || 1}
-                  onChange={(e) => onUpdate('floorsCount', parseInt(e.target.value) || 1)}
+                  value={formData.floorsCount ?? ''}
+                  onChange={(e) => onUpdate('floorsCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                   className="h-11 text-base touch-manipulation w-32 border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                 />
               </div>
@@ -591,8 +591,8 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                     id="zonesCount"
                     type="number"
                     min="1"
-                    value={formData.zonesCount || 1}
-                    onChange={(e) => onUpdate('zonesCount', parseInt(e.target.value) || 1)}
+                    value={formData.zonesCount ?? ''}
+                    onChange={(e) => onUpdate('zonesCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>

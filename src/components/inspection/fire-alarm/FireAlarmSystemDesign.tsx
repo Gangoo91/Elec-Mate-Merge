@@ -189,7 +189,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
                   Specialist Detectors
                 </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="beam" className="text-sm">Beam Detectors</Label>
                     <Input

@@ -264,14 +264,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       <Label className="text-sm font-medium text-foreground">
                         Open Circuit Voltage (Voc)
                       </Label>
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Expected (V)</Label>
                           <Input
                             type="number"
                             step="0.1"
                             value={test.vocExpected || array?.stringVoltageVoc || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'vocExpected', parseFloat(e.target.value) || 0)}
+                            onChange={(e) => updateArrayTest(test.arrayId, 'vocExpected', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                             className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
                           />
                         </div>
@@ -282,7 +282,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             step="0.1"
                             value={test.vocMeasured || ''}
                             onChange={(e) => {
-                              const measured = parseFloat(e.target.value) || 0;
+                              const measured = e.target.value === '' ? 0 : parseFloat(e.target.value) || 0;
                               const expected = test.vocExpected || 0;
                               const tolerance = expected * 0.1; // ±10%
                               const withinTolerance = measured >= (expected - tolerance) && measured <= (expected + tolerance);
@@ -306,14 +306,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       <Label className="text-sm font-medium text-foreground">
                         Short Circuit Current (Isc)
                       </Label>
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Expected (A)</Label>
                           <Input
                             type="number"
                             step="0.01"
                             value={test.iscExpected || array?.stringCurrentIsc || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'iscExpected', parseFloat(e.target.value) || 0)}
+                            onChange={(e) => updateArrayTest(test.arrayId, 'iscExpected', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                             className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
                           />
                         </div>
@@ -401,7 +401,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                           BS EN 62446
                         </Badge>
                       </Label>
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Irradiance (W/m²)</Label>
                           <Input
@@ -442,7 +442,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                     </div>
 
                     {/* Polarity & Continuity */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                         <Checkbox
                           checked={test.polarityCorrect || false}
@@ -564,7 +564,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                           G98/G99
                         </Badge>
                       </Label>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.antiIslandingTest || false}
@@ -616,7 +616,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                     {/* Commissioning */}
                     <div className="space-y-3">
                       <Label className="text-sm font-medium text-foreground">Commissioning Checks</Label>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.commissioning?.powerOnTest || false}
@@ -978,7 +978,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
               {/* Meter Readings */}
               <div className="space-y-3">
                 <Label className="text-sm font-medium text-foreground">Initial Meter Readings</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">Generation Meter (kWh)</Label>
                     <Input

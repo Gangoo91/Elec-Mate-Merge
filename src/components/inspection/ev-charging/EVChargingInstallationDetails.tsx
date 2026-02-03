@@ -533,8 +533,8 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                       id="powerRating"
                       type="number"
                       step="0.1"
-                      value={formData.powerRating || 7.4}
-                      onChange={(e) => handlePowerChange(parseFloat(e.target.value) || 7.4)}
+                      value={formData.powerRating ?? ''}
+                      onChange={(e) => handlePowerChange(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                     <p className="text-[10px] text-muted-foreground">
@@ -546,8 +546,8 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                     <Input
                       id="ratedCurrent"
                       type="number"
-                      value={formData.ratedCurrent || 32}
-                      onChange={(e) => handleCurrentChange(parseInt(e.target.value) || 32)}
+                      value={formData.ratedCurrent ?? ''}
+                      onChange={(e) => handleCurrentChange(e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                     <p className="text-[10px] text-muted-foreground">

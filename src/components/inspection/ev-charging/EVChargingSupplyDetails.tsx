@@ -115,8 +115,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Input
                     id="supplyVoltage"
                     type="number"
-                    value={formData.supplyVoltage || 230}
-                    onChange={(e) => onUpdate('supplyVoltage', parseInt(e.target.value) || 230)}
+                    value={formData.supplyVoltage ?? ''}
+                    onChange={(e) => onUpdate('supplyVoltage', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -489,7 +489,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
               "space-y-4",
               isMobile ? "px-4 py-4" : "px-4 pb-4"
             )}>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="protectionDeviceType">Type *</Label>
                   <Select

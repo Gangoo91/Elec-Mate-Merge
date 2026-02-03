@@ -15,7 +15,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -24,6 +23,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   EV_CHARGERS,
   EVCharger,
@@ -47,6 +48,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const isMobile = useIsMobile();
 
   // Filter chargers based on search query
   const filteredChargers = useMemo(() => {
@@ -86,53 +88,199 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
     ? `${value.make} ${value.model}`
     : null;
 
+  // Shared charger list item renderer
+  const renderChargerItem = (charger: EVCharger, forMobile = false) => {
+    const isSelected = selectedCharger?.id === charger.id;
+    return (
+      <div
+        key={charger.id}
+        onClick={() => handleSelect(charger)}
+        className={cn(
+          "rounded-xl cursor-pointer transition-colors",
+          forMobile ? "p-4 min-h-[56px]" : "p-2.5 mx-1",
+          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
+          isSelected && "bg-elec-yellow/20"
+        )}
+      >
+        <div className="flex items-start gap-3 w-full">
+          <div className={cn(
+            "rounded-lg flex items-center justify-center shrink-0",
+            forMobile ? "w-10 h-10" : "w-8 h-8 mt-0.5",
+            isSelected ? "bg-elec-yellow/30" : "bg-card"
+          )}>
+            {isSelected ? (
+              <Check className={cn("text-elec-yellow", forMobile ? "h-5 w-5" : "h-4 w-4")} />
+            ) : (
+              <Zap className={cn("text-muted-foreground", forMobile ? "h-5 w-5" : "h-4 w-4")} />
+            )}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className={cn("font-medium text-foreground", forMobile && "text-base")}>
+                {charger.make}
+              </span>
+              <span className={cn("text-foreground/80", forMobile && "text-base")}>
+                {charger.model}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 mt-1 flex-wrap">
+              <Badge variant="outline" className={cn(
+                "px-1.5 py-0 border-elec-yellow/30 text-elec-yellow",
+                text-xs
+              )}>
+                {getPowerOptionsLabel(charger)}
+              </Badge>
+              <span className={cn("text-muted-foreground", text-xs)}>
+                {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
+              </span>
+              <span className={cn("text-muted-foreground", text-xs)}>
+                {charger.socketType}
+              </span>
+              {charger.rcdIntegral && (
+                <Badge variant="outline" className={cn(
+                  "px-1.5 py-0 border-green-500/30 text-green-400",
+                  text-xs
+                )}>
+                  RCD Built-in
+                </Badge>
+              )}
+            </div>
+
+            {charger.notes && (
+              <p className={cn("text-muted-foreground mt-1 line-clamp-1", text-xs)}>
+                {charger.notes}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Trigger button (shared between mobile and desktop)
+  const triggerButton = (
+    <Button
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      disabled={disabled}
+      onClick={isMobile ? () => setOpen(true) : undefined}
+      className={cn(
+        "w-full justify-between h-11 touch-manipulation",
+        "bg-elec-gray border-white/30 text-foreground",
+        "hover:bg-elec-gray/80 hover:border-elec-yellow",
+        "focus:border-elec-yellow focus:ring-elec-yellow",
+        "data-[state=open]:border-elec-yellow data-[state=open]:ring-2",
+        !displayLabel && "text-muted-foreground",
+        className
+      )}
+    >
+      <div className="flex items-center gap-2 flex-1 min-w-0">
+        {selectedCharger ? (
+          <>
+            <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
+            <span className="truncate">{displayLabel}</span>
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-elec-yellow/20 text-elec-yellow shrink-0">
+              {getPowerOptionsLabel(selectedCharger)}
+            </Badge>
+          </>
+        ) : (
+          <>
+            <Search className="h-4 w-4 shrink-0" />
+            <span>Search chargers...</span>
+          </>
+        )}
+      </div>
+      <div className="flex items-center gap-1 shrink-0">
+        {selectedCharger && (
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); handleClear(e); }}
+            className="h-9 w-9 flex items-center justify-center hover:bg-white/10 rounded-full touch-manipulation"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+        <ChevronsUpDown className="h-4 w-4 opacity-50" />
+      </div>
+    </Button>
+  );
+
+  // Mobile: Use SwipeableBottomSheet
+  if (isMobile) {
+    return (
+      <>
+        {triggerButton}
+
+        <SwipeableBottomSheet
+          open={open}
+          onOpenChange={setOpen}
+          title="Select EV Charger"
+          contentClassName="p-0"
+        >
+          <div className="flex flex-col max-h-[70vh]">
+            {/* Search input */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
+              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search UK chargers..."
+                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                autoFocus
+              />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchQuery('')}
+                  className="h-9 w-9 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Charger list */}
+            <div className="flex-1 overflow-y-auto momentum-scroll-y px-2 py-2">
+              {filteredChargers.length === 0 ? (
+                <div className="py-12 text-center text-muted-foreground">
+                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p className="text-base">No chargers found</p>
+                  <p className="text-sm mt-1">Try searching by make or model</p>
+                </div>
+              ) : (
+                <>
+                  <div className="px-3 py-2 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Sparkles className="h-4 w-4 text-elec-yellow" />
+                    <span>Auto-fills specs when selected</span>
+                  </div>
+                  <div className="space-y-1">
+                    {filteredChargers.map((charger) => renderChargerItem(charger, true))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
+              <p className="text-xs text-muted-foreground text-center">
+                {EV_CHARGERS.length} UK chargers in database (2025/2026)
+              </p>
+            </div>
+          </div>
+        </SwipeableBottomSheet>
+      </>
+    );
+  }
+
+  // Desktop: Use Popover
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          disabled={disabled}
-          className={cn(
-            "w-full justify-between h-11 touch-manipulation",
-            "bg-elec-gray border-white/30 text-foreground",
-            "hover:bg-elec-gray/80 hover:border-elec-yellow",
-            "focus:border-elec-yellow focus:ring-elec-yellow",
-            "data-[state=open]:border-elec-yellow data-[state=open]:ring-2",
-            !displayLabel && "text-muted-foreground",
-            className
-          )}
-        >
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            {selectedCharger ? (
-              <>
-                <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="truncate">{displayLabel}</span>
-                <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-elec-yellow/20 text-elec-yellow shrink-0">
-                  {getPowerOptionsLabel(selectedCharger)}
-                </Badge>
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4 shrink-0" />
-                <span>Search chargers...</span>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-1 shrink-0">
-            {selectedCharger && (
-              <div
-                role="button"
-                onClick={handleClear}
-                className="p-1 hover:bg-white/10 rounded"
-              >
-                <X className="h-3 w-3" />
-              </div>
-            )}
-            <ChevronsUpDown className="h-4 w-4 opacity-50" />
-          </div>
-        </Button>
+        {triggerButton}
       </PopoverTrigger>
 
       <PopoverContent

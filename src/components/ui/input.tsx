@@ -25,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           // Typography
           "font-sans font-[450] tracking-[0.005em] leading-[1.5] text-left",
           // Placeholder
-          "placeholder:text-muted-foreground/50",
+          "placeholder:text-muted-foreground/70",
           // Focus states - elec-yellow glow
           "focus:outline-none focus:border-elec-yellow focus:ring-0",
           "focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]",

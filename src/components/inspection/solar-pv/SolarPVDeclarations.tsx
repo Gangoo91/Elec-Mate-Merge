@@ -206,7 +206,7 @@ const SignatureCanvas: React.FC<SignatureCanvasProps> = ({ value, onChange, labe
       <div className="border border-white/20 rounded-lg bg-elec-gray/50 overflow-hidden">
         <canvas
           ref={canvasRef}
-          className="w-full h-24 cursor-crosshair touch-none"
+          className="w-full h-40 cursor-crosshair touch-none"
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}

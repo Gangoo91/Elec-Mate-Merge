@@ -51,8 +51,9 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
 
   // Mobile: no max-width, no horizontal spacing - edge-to-edge
   // Desktop: constrained width with spacing
+  // pb-24 on mobile ensures content isn't hidden behind sticky nav
   const contentWrapperClass = cn(
-    isMobile ? "" : "md:max-w-5xl mx-auto space-y-6"
+    isMobile ? "pb-24" : "md:max-w-5xl mx-auto space-y-6"
   );
 
   const smartTabs: SmartTab[] = [

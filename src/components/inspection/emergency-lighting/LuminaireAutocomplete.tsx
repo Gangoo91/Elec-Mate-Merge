@@ -7,9 +7,10 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Check, ChevronsUpDown, Lightbulb, Search, Sparkles } from 'lucide-react';
+import { Check, ChevronsUpDown, Lightbulb, Search, Sparkles, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
@@ -23,6 +24,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Badge } from '@/components/ui/badge';
 import {
   EmergencyLuminaire,
@@ -91,6 +94,7 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const isMobile = useIsMobile();
 
   // Get luminaires grouped by manufacturer
   const luminairesGrouped = useMemo(() => getLuminairesGroupedByMake(), []);
@@ -122,38 +126,176 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
     ? `${value.make} ${value.model}`
     : null;
 
+  // Check if luminaire is selected
+  const isLuminaireSelected = (luminaire: EmergencyLuminaire) => {
+    return value?.make === luminaire.make && value?.model === luminaire.model;
+  };
+
+  // Trigger button shared between mobile and desktop
+  const triggerButton = (
+    <Button
+      variant="outline"
+      role="combobox"
+      aria-expanded={open}
+      disabled={disabled}
+      onClick={isMobile ? () => setOpen(true) : undefined}
+      className={cn(
+        "w-full h-11 justify-between text-left font-normal",
+        "bg-elec-gray border-white/30 hover:bg-elec-gray/80",
+        "focus:border-elec-yellow focus:ring-elec-yellow",
+        "touch-manipulation",
+        !displayValue && "text-muted-foreground",
+        className
+      )}
+    >
+      <div className="flex items-center gap-2 truncate">
+        {displayValue ? (
+          <>
+            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
+            <span className="truncate">{displayValue}</span>
+          </>
+        ) : (
+          <>
+            <Search className="h-4 w-4 shrink-0" />
+            <span>{placeholder}</span>
+          </>
+        )}
+      </div>
+      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+    </Button>
+  );
+
+  // Render luminaire item (shared renderer for mobile and desktop)
+  const renderLuminaireItem = (luminaire: EmergencyLuminaire, forMobile = false) => {
+    const isSelected = isLuminaireSelected(luminaire);
+    return (
+      <div
+        key={luminaire.id}
+        onClick={() => handleSelect(luminaire)}
+        className={cn(
+          "rounded-lg cursor-pointer transition-colors flex items-center",
+          forMobile ? "px-4 py-4 min-h-[56px]" : "px-2 py-2",
+          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
+          isSelected && "bg-elec-yellow/20"
+        )}
+      >
+        <Check
+          className={cn(
+            'shrink-0',
+            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
+            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+          )}
+        />
+        <div className="flex flex-col flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={cn("font-medium truncate", forMobile && "text-base")}>
+              {luminaire.model}
+            </span>
+            <Badge
+              variant="secondary"
+              className={cn(
+                "shrink-0",
+                forMobile ? "text-xs" : "text-xs",
+                getLuminaireTypeBadgeColor(luminaire.luminaireType)
+              )}
+            >
+              {getLuminaireTypeIcon(luminaire.luminaireType)} {luminaire.luminaireType}
+            </Badge>
+          </div>
+          <div className={cn(
+            "text-muted-foreground flex items-center gap-2 flex-wrap",
+            forMobile ? "text-sm mt-1" : "text-xs"
+          )}>
+            <span>{luminaire.wattage}W</span>
+            <span>•</span>
+            <span>{luminaire.lightOutput}lm</span>
+            <span>•</span>
+            <span>{luminaire.ratedDuration === 180 ? '3hr' : '1hr'}</span>
+            <span>•</span>
+            <span>{luminaire.ipRating}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Mobile: Use SwipeableBottomSheet
+  if (isMobile) {
+    return (
+      <>
+        {triggerButton}
+
+        <SwipeableBottomSheet
+          open={open}
+          onOpenChange={setOpen}
+          title="Select Emergency Luminaire"
+          contentClassName="p-0"
+        >
+          <div className="flex flex-col max-h-[70vh]">
+            {/* Search input */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
+              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search luminaires..."
+                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                autoFocus
+              />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchQuery('')}
+                  className="h-9 w-9 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+
+            {/* Luminaire list */}
+            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+              {Object.keys(filteredLuminaires).length === 0 ? (
+                <div className="py-12 text-center text-muted-foreground">
+                  <Lightbulb className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p className="text-base">No luminaires found</p>
+                  <p className="text-sm mt-1">Try a different search term</p>
+                </div>
+              ) : (
+                <div className="px-2 py-2">
+                  {Object.entries(filteredLuminaires).map(([make, luminaires]) => (
+                    <div key={make} className="mb-4">
+                      <p className="px-4 py-2 text-sm text-muted-foreground font-medium sticky top-0 bg-background">
+                        {make}
+                      </p>
+                      <div className="space-y-1">
+                        {luminaires.map((luminaire) => renderLuminaireItem(luminaire, true))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
+              <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1">
+                <Sparkles className="h-3 w-3 text-elec-yellow" />
+                Selecting auto-fills specs from database
+              </p>
+            </div>
+          </div>
+        </SwipeableBottomSheet>
+      </>
+    );
+  }
+
+  // Desktop: Use Popover
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          disabled={disabled}
-          className={cn(
-            "w-full h-11 justify-between text-left font-normal",
-            "bg-elec-gray border-white/30 hover:bg-elec-gray/80",
-            "focus:border-elec-yellow focus:ring-elec-yellow",
-            "touch-manipulation",
-            !displayValue && "text-muted-foreground",
-            className
-          )}
-        >
-          <div className="flex items-center gap-2 truncate">
-            {displayValue ? (
-              <>
-                <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="truncate">{displayValue}</span>
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4 shrink-0" />
-                <span>{placeholder}</span>
-              </>
-            )}
-          </div>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        {triggerButton}
       </PopoverTrigger>
       <PopoverContent
         className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-border"
