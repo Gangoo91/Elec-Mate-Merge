@@ -872,14 +872,12 @@ const AM2Module2Section4 = () => {
       </AM2ContentCard>
 
       <AM2NavigationFooter
-        prevSection={{
-          href: "../section3",
-          label: "Previous: Section 3"
-        }}
-        nextSection={{
-          href: "../section5",
-          label: "Next: Section 5"
-        }}
+        prevHref="../section3"
+        prevLabel="Previous: Section 3"
+        nextHref="../section5"
+        nextLabel="Continue to Section 5"
+        currentSection={4}
+        totalSections={8}
       />
     </AM2SectionLayout>
   );

@@ -273,8 +273,8 @@ const handler = async (req: Request): Promise<Response> => {
     let pdfBase64: string | null = null;
     let pdfAttachmentSuccess = false;
 
-    // Try to regenerate PDF if missing
-    if (!pdfUrl || !invoice.pdf_document_id) {
+    // Helper function to regenerate PDF
+    const regeneratePdf = async (): Promise<string | null> => {
       console.log('🔄 Regenerating PDF...');
       try {
         const pdfResponse = await fetch(
@@ -296,19 +296,20 @@ const handler = async (req: Request): Promise<Response> => {
 
         if (pdfResponse.ok) {
           const pdfData = await pdfResponse.json();
-          pdfUrl = pdfData.downloadUrl;
+          const newPdfUrl = pdfData.downloadUrl;
 
-          if (pdfUrl && pdfData.documentId) {
+          if (newPdfUrl && pdfData.documentId) {
             await supabaseClient
               .from('quotes')
               .update({
-                pdf_url: pdfUrl,
+                pdf_url: newPdfUrl,
                 pdf_document_id: pdfData.documentId,
                 pdf_generated_at: new Date().toISOString(),
                 pdf_version: (invoice.pdf_version || 0) + 1,
               })
               .eq('id', invoiceId);
             console.log('✅ PDF regenerated');
+            return newPdfUrl;
           }
         } else {
           console.warn('⚠️ PDF generation failed - continuing without attachment');
@@ -316,13 +317,14 @@ const handler = async (req: Request): Promise<Response> => {
       } catch (pdfGenError) {
         console.warn('⚠️ PDF generation error (non-fatal):', pdfGenError);
       }
-    }
+      return null;
+    };
 
-    // Try to download PDF for attachment
-    if (pdfUrl) {
+    // Helper function to download PDF and convert to base64
+    const downloadPdf = async (url: string): Promise<boolean> => {
       try {
         console.log('📥 Downloading PDF for attachment...');
-        const pdfFileResponse = await fetch(pdfUrl);
+        const pdfFileResponse = await fetch(url);
         if (pdfFileResponse.ok) {
           const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
           // Safer base64 encoding for large files
@@ -334,17 +336,42 @@ const handler = async (req: Request): Promise<Response> => {
             binary += String.fromCharCode.apply(null, Array.from(chunk));
           }
           pdfBase64 = btoa(binary);
-          pdfAttachmentSuccess = true;
           console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+          return true;
+        } else {
+          console.warn(`⚠️ PDF download failed with status: ${pdfFileResponse.status}`);
+          return false;
         }
       } catch (pdfDownloadError) {
-        console.warn('⚠️ PDF download error (non-fatal):', pdfDownloadError);
+        console.warn('⚠️ PDF download error:', pdfDownloadError);
+        return false;
+      }
+    };
+
+    // If no PDF URL exists, generate one
+    if (!pdfUrl || !invoice.pdf_document_id) {
+      pdfUrl = await regeneratePdf();
+    }
+
+    // Try to download the PDF
+    if (pdfUrl) {
+      pdfAttachmentSuccess = await downloadPdf(pdfUrl);
+
+      // If download failed (likely expired S3 URL), regenerate and try again
+      if (!pdfAttachmentSuccess) {
+        console.log('🔄 PDF URL may be expired, regenerating...');
+        const newPdfUrl = await regeneratePdf();
+        if (newPdfUrl) {
+          pdfUrl = newPdfUrl;
+          pdfAttachmentSuccess = await downloadPdf(newPdfUrl);
+        }
       }
     }
 
     // ========================================================================
-    // STEP 9: Prepare invoice items safely
+    // STEP 9: Parse settings and prepare invoice items safely
     // ========================================================================
+    const settings = safeJsonParse(invoice.settings, {});
     const items = Array.isArray(invoice.items) ? invoice.items : [];
     const showSummaryView = settings.showSummaryView || false;
 
@@ -405,9 +432,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ========================================================================
-    // STEP 10: Parse settings safely
+    // STEP 10: Extract payment settings
     // ========================================================================
-    const settings = safeJsonParse(invoice.settings, {});
     const bankDetails = settings.bankDetails;
     const paymentTerms = settings.paymentTerms || 'Due within 30 days';
 
