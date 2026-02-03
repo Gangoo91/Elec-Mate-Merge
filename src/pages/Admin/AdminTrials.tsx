@@ -113,6 +113,10 @@ interface UserEventSummary {
 // Max days to show expired trials (filter out older ones) - set to 365 to show all
 const MAX_EXPIRED_DAYS = 365;
 
+// Founder cutoff date - exclude early adopters/founders for accurate conversion stats
+// 61 founders subscribed before this date during beta/launch period
+const FOUNDER_CUTOFF_DATE = new Date('2026-01-26T00:00:00Z');
+
 interface TrialStats {
   total_trials: number;
   ending_today: number;
@@ -368,8 +372,14 @@ export default function AdminTrials() {
       const maxExpiredDate = addDays(today, -MAX_EXPIRED_DAYS);
 
       return users.filter((user: any) => {
-        // Filter out users whose trial expired more than MAX_EXPIRED_DAYS ago
         const createdAt = parseISO(user.created_at);
+
+        // Filter out founders (signed up before cutoff date)
+        if (createdAt < FOUNDER_CUTOFF_DATE) {
+          return false;
+        }
+
+        // Filter out users whose trial expired more than MAX_EXPIRED_DAYS ago
         const trialEnds = addDays(createdAt, 7);
         const trialEndsDate = startOfDay(trialEnds);
         // Keep if subscribed, or trial hasn't expired, or expired within MAX_EXPIRED_DAYS

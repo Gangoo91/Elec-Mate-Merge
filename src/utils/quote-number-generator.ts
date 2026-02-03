@@ -9,10 +9,18 @@ export const generateSequentialQuoteNumber = async (): Promise<string> => {
   const yearPrefix = currentYear.toString();
 
   try {
-    // Get user ID for user-specific counting
-    const { data: { user } } = await supabase.auth.getUser();
+    // Get user ID for user-specific counting - retry a few times if not ready
+    let user = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { data } = await supabase.auth.getUser();
+      user = data.user;
+      if (user) break;
+      // Wait a bit before retrying
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
     if (!user) {
-      console.warn('No authenticated user, using timestamp fallback');
+      console.warn('No authenticated user after retries, using timestamp fallback');
       return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
     }
 

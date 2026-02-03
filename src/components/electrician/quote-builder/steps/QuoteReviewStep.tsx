@@ -246,30 +246,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         </div>
       </div>
 
-      {/* Preview PDF Button */}
-      <button
-        type="button"
-        onClick={handleDownloadPDF}
-        disabled={isDownloading}
-        className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.05] transition-colors disabled:opacity-50"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-            {isDownloading ? (
-              <Loader2 className="h-5 w-5 text-black animate-spin" />
-            ) : (
-              <Download className="h-5 w-5 text-black" />
-            )}
-          </div>
-          <div className="text-left">
-            <p className="text-[14px] font-medium text-white">
-              {isDownloading ? "Generating PDF..." : "Preview & Download PDF"}
-            </p>
-            <p className="text-[12px] text-white/70">Generate a professional PDF document</p>
-          </div>
-        </div>
-        <ChevronRight className="h-5 w-5 text-white/30" />
-      </button>
     </div>
   );
 };

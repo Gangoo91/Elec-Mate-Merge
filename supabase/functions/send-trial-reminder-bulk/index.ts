@@ -12,8 +12,9 @@ const corsHeaders = {
 interface BulkReminderRequest {
   userIds: string[];
   type?: "reminder"; // Only reminder type now
-  batchSize?: number; // How many to send at once (default 5)
-  batchDelayMs?: number; // Delay between batches in ms (default 10000 = 10s)
+  batchSize?: number; // How many to send at once (default 3, reduced for rate limits)
+  batchDelayMs?: number; // Delay between batches in ms (default 5000 = 5s)
+  skipAlreadySent?: boolean; // If true, skip users who have EVER received a trial email (not just today)
 }
 
 // Generate trial ending reminder email - matches app design
@@ -181,7 +182,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { userIds, type, batchSize = 5, batchDelayMs = 10000 } = await req.json() as BulkReminderRequest;
+    const { userIds, type, batchSize = 3, batchDelayMs = 5000, skipAlreadySent = true } = await req.json() as BulkReminderRequest;
 
     if (!userIds || !Array.isArray(userIds) || userIds.length === 0) {
       throw new Error("userIds array is required");
@@ -192,7 +193,7 @@ Deno.serve(async (req) => {
       throw new Error("Maximum 100 users per request");
     }
 
-    console.log(`Starting bulk email: ${userIds.length} users, batch size ${batchSize}, delay ${batchDelayMs}ms`);
+    console.log(`Starting bulk email: ${userIds.length} users, batch size ${batchSize}, delay ${batchDelayMs}ms, skipAlreadySent=${skipAlreadySent}`);
 
     // Create Supabase admin client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -202,13 +203,21 @@ Deno.serve(async (req) => {
     const emailType = type || "reminder";
     const today = new Date().toISOString().split('T')[0];
 
-    // Check which users already received email today
-    const { data: existingSends } = await supabase
+    // Check which users have EVER received a trial email (if skipAlreadySent is true)
+    // Otherwise only check same-day duplicates
+    let existingSendsQuery = supabase
       .from("trial_email_sends")
       .select("user_id")
       .in("user_id", userIds)
       .eq("email_type", emailType)
-      .eq("sent_date", today);
+      .eq("success", true); // Only skip if previous send was successful
+
+    if (!skipAlreadySent) {
+      // Only check same-day if not using global skip
+      existingSendsQuery = existingSendsQuery.eq("sent_date", today);
+    }
+
+    const { data: existingSends } = await existingSendsQuery;
 
     const alreadySentUserIds = new Set((existingSends || []).map(s => s.user_id));
     const usersToEmail = userIds.filter(id => !alreadySentUserIds.has(id));
@@ -317,8 +326,8 @@ Deno.serve(async (req) => {
           console.log(`Email sent to ${email}: ${data?.id}`);
           results.push({ userId: profile.id, success: true });
 
-          // Small delay between individual emails (100ms)
-          await new Promise(resolve => setTimeout(resolve, 100));
+          // Delay between individual emails (600ms to stay under Resend's 2/sec rate limit)
+          await new Promise(resolve => setTimeout(resolve, 600));
 
         } catch (err: any) {
           results.push({ userId: profile.id, success: false, error: err.message });

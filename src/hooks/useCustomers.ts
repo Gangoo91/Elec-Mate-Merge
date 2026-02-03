@@ -58,18 +58,56 @@ export const useCustomers = () => {
     loadCustomers();
   }, []);
 
-  // Save customer
+  // Save customer (checks for duplicates first)
   const saveCustomer = async (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
+
+      // Check for existing customer with same email (if email provided)
+      if (customer.email) {
+        const { data: existing } = await supabase
+          .from('customers')
+          .select('id, name')
+          .eq('user_id', user.id)
+          .eq('email', customer.email.trim().toLowerCase())
+          .maybeSingle();
+
+        if (existing) {
+          toast({
+            title: 'Customer already exists',
+            description: `A customer with this email already exists: "${existing.name}". You can find them in your customer list.`,
+            variant: 'destructive',
+          });
+          return;
+        }
+      }
+
+      // Check for existing customer with same name (if no email but name matches)
+      if (!customer.email && customer.name) {
+        const { data: existingByName } = await supabase
+          .from('customers')
+          .select('id, name')
+          .eq('user_id', user.id)
+          .ilike('name', customer.name.trim())
+          .maybeSingle();
+
+        if (existingByName) {
+          toast({
+            title: 'Customer already exists',
+            description: `A customer with this name already exists: "${existingByName.name}". You can find them in your customer list.`,
+            variant: 'destructive',
+          });
+          return;
+        }
+      }
 
       const { error } = await supabase
         .from('customers')
         .insert({
           user_id: user.id,
           name: customer.name,
-          email: customer.email,
+          email: customer.email?.trim().toLowerCase() || null,
           phone: customer.phone,
           address: customer.address,
           notes: customer.notes,
@@ -85,14 +123,20 @@ export const useCustomers = () => {
       await loadCustomers();
     } catch (error: any) {
       console.error('Customer save error:', error);
-      const errorMsg = error?.message || error?.code || 'Unknown error';
-      toast({
-        title: 'Save failed',
-        description: errorMsg.includes('unique_user_customer_email')
-          ? 'A customer with this email already exists.'
-          : `Failed to save customer: ${errorMsg}`,
-        variant: 'destructive',
-      });
+      // Handle duplicate constraint error (fallback if check above missed it)
+      if (error?.code === '23505' || error?.message?.includes('unique')) {
+        toast({
+          title: 'Customer already exists',
+          description: 'A customer with this email already exists in your account.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Save failed',
+          description: `Failed to save customer: ${error?.message || 'Unknown error'}`,
+          variant: 'destructive',
+        });
+      }
     }
   };
 

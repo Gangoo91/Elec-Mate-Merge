@@ -258,19 +258,23 @@ const SignUp = () => {
       }
 
       // IMMEDIATELY save role to database - don't rely on email confirmation flow
+      // This is critical for user experience - await it properly
       if (data?.user?.id) {
-        try {
-          await supabase.from('profiles').update({
-            role: profile.role,
-            ecs_card_type: profile.ecsCardType || null,
-            elec_id_enabled: profile.createElecId || false,
-            onboarding_completed: true,
-            updated_at: new Date().toISOString(),
-          }).eq('id', data.user.id);
-          console.log('Profile role saved immediately during signup');
-        } catch (profileError) {
+        const { error: profileError } = await supabase.from('profiles').update({
+          role: profile.role,
+          ecs_card_type: profile.ecsCardType || null,
+          elec_id_enabled: profile.createElecId || false,
+          onboarding_completed: true,
+          updated_at: new Date().toISOString(),
+        }).eq('id', data.user.id);
+
+        if (profileError) {
           console.error('Error saving profile during signup:', profileError);
-          // Continue anyway - backup will be in localStorage
+          // Store in localStorage as backup - dashboard will retry
+          localStorage.setItem('elec-mate-profile-role', profile.role);
+          localStorage.setItem('elec-mate-onboarding-pending', 'true');
+        } else {
+          console.log('Profile role saved immediately during signup');
         }
       }
 

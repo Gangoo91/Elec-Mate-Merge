@@ -36,6 +36,20 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
   onGenerateCertificate,
   canGenerateCertificate = true
 }) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateNext = () => {
+    navigateNext();
+    scrollToTop();
+  };
+
+  const handleNavigatePrevious = () => {
+    navigatePrevious();
+    scrollToTop();
+  };
+
   const getTabDisplayName = (tab: EICTabValue) => {
     const names = {
       installation: 'Installation Details',
@@ -88,7 +102,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
       <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center pt-2">
         <Button
           variant="outline"
-          onClick={navigatePrevious}
+          onClick={handleNavigatePrevious}
           disabled={!canNavigatePrevious}
           className="h-11 w-full md:w-auto flex items-center justify-center space-x-2 touch-manipulation"
         >
@@ -120,7 +134,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
           </Button>
         ) : (
           <Button
-            onClick={navigateNext}
+            onClick={handleNavigateNext}
             disabled={!canNavigateNext}
             className="h-11 w-full md:w-auto flex items-center justify-center space-x-2 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-gray-darker touch-manipulation"
           >
