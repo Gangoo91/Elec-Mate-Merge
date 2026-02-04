@@ -171,7 +171,7 @@
               <div class="item-desc">{{ item.name }}</div>
               {% if item.description != blank %}<div class="item-notes">{{ item.description }}</div>{% endif %}
             </td>
-            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td class="qty-unit">{{ item.quantity }}</td>
             <td>£{{ item.unitPrice | round: 2 }}</td>
             <td>£{% assign itemTotal = item.quantity | times: item.unitPrice %}{{ itemTotal | round: 2 }}</td>
           </tr>
