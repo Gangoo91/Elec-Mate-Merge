@@ -120,47 +120,76 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   // Compress image inline with optimized settings for better AI accuracy
   const compressImage = async (dataUrl: string, maxSizeMB: number): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const img = new Image();
-      
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        if (!ctx) {
-          reject(new Error('Failed to get canvas context'));
-          return;
-        }
+      // Timeout to prevent hanging on corrupt images
+      const timeout = setTimeout(() => {
+        reject(new Error('Image processing timeout - file may be too large or corrupted'));
+      }, 15000);
 
-        // Optimized resolution for speed while maintaining readability
-        const maxDim = 1600; // Balanced for electrical text clarity
-        let { width, height } = img;
-        
-        if (width > maxDim || height > maxDim) {
-          if (width > height) {
-            height = (height / width) * maxDim;
-            width = maxDim;
-          } else {
-            width = (width / height) * maxDim;
-            height = maxDim;
+      const img = new Image();
+
+      img.onload = () => {
+        clearTimeout(timeout);
+
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          if (!ctx) {
+            reject(new Error('Canvas not supported on this device'));
+            return;
           }
+
+          // Optimized resolution for speed while maintaining readability
+          const maxDim = 1600; // Balanced for electrical text clarity
+          let { width, height } = img;
+
+          // Check for valid dimensions
+          if (width === 0 || height === 0) {
+            reject(new Error('Invalid image dimensions'));
+            return;
+          }
+
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = (height / width) * maxDim;
+              width = maxDim;
+            } else {
+              width = (width / height) * maxDim;
+              height = maxDim;
+            }
+          }
+
+          canvas.width = Math.round(width);
+          canvas.height = Math.round(height);
+
+          // Apply subtle sharpening filter for better text clarity
+          ctx.filter = 'contrast(1.1) brightness(1.05)';
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // Aggressive compression for speed - electrical text is high contrast
+          const quality = 0.78;
+          const compressed = canvas.toDataURL('image/jpeg', quality);
+
+          // Verify the output is valid
+          if (!compressed || compressed === 'data:,') {
+            reject(new Error('Failed to generate compressed image'));
+            return;
+          }
+
+          resolve(compressed);
+        } catch (err) {
+          // Canvas operations can fail on memory-constrained devices
+          console.error('Canvas compression error:', err);
+          reject(new Error('Device memory issue - try a smaller image'));
         }
-        
-        canvas.width = width;
-        canvas.height = height;
-        
-        // Apply subtle sharpening filter for better text clarity
-        ctx.filter = 'contrast(1.1) brightness(1.05)';
-        ctx.drawImage(img, 0, 0, width, height);
-        
-        // Aggressive compression for speed - electrical text is high contrast
-        const quality = 0.78;
-        const compressed = canvas.toDataURL('image/jpeg', quality);
-        const sizeMB = getDataUrlSizeMB(compressed);
-        
-        resolve(compressed);
       };
-      
-      img.onerror = () => reject(new Error('Failed to load image'));
+
+      img.onerror = (e) => {
+        clearTimeout(timeout);
+        console.error('Image load error:', e);
+        reject(new Error('Could not read image - if using iPhone, try taking a new photo instead of selecting from library'));
+      };
+
       img.src = dataUrl;
     });
   };
@@ -350,14 +379,20 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         // Compress in background
         const targetMB = calculateTargetSizePerPhoto(capturedImages.length + 1);
         compressImage(originalDataUrl, targetMB).then(compressed => {
-          setCapturedImages(prev => prev.map(img => 
-            img.url === originalDataUrl 
+          setCapturedImages(prev => prev.map(img =>
+            img.url === originalDataUrl
               ? { url: compressed, status: 'ready' }
               : img
           ));
         }).catch(error => {
-          toast.error('Photo compression failed');
-          setCapturedImages(prev => prev.filter(img => img.url !== originalDataUrl));
+          console.error('Camera photo compression failed:', error);
+          // Keep the original image instead of removing it
+          setCapturedImages(prev => prev.map(img =>
+            img.url === originalDataUrl
+              ? { url: originalDataUrl, status: 'ready' }  // Use original as fallback
+              : img
+          ));
+          toast.error(error?.message || 'Photo processing failed - using original image');
         });
         
         stopCamera();
@@ -393,15 +428,22 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       
       // Compress all in parallel
       Promise.all(
-        loadedFiles.map(({ dataUrl }) => 
+        loadedFiles.map(({ dataUrl }) =>
           compressImage(dataUrl, targetMB)
-            .then(compressed => ({ original: dataUrl, compressed }))
+            .then(compressed => ({ original: dataUrl, compressed, failed: false }))
             .catch(error => {
-              return null;
+              console.error('File compression failed:', error);
+              // Return original as fallback instead of null
+              return { original: dataUrl, compressed: dataUrl, failed: true };
             })
         )
       ).then(results => {
-        setCapturedImages(prev => 
+        const failedCount = results.filter(r => r?.failed).length;
+        if (failedCount > 0) {
+          toast.error(`${failedCount} photo${failedCount > 1 ? 's' : ''} couldn't be compressed - using original${failedCount > 1 ? 's' : ''}`);
+        }
+
+        setCapturedImages(prev =>
           prev.map(img => {
             const result = results.find(r => r?.original === img.url);
             return result ? { url: result.compressed, status: 'ready' as const } : img;
@@ -655,10 +697,11 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   const content = (
     <>
       {/* Hidden file input - always mounted for reliable mobile access */}
+      {/* Note: Restricted to JPEG/PNG/WebP - browsers can't decode HEIC from iPhones */}
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
         multiple
         onChange={handleFileUpload}
         className="hidden"
