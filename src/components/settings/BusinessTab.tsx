@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -406,6 +406,7 @@ const BusinessTab = () => {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [logoSize, setLogoSize] = useState<'small' | 'medium' | 'large'>('medium');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Testing instruments
   const [instruments, setInstruments] = useState<TestingInstrument[]>([]);
@@ -558,7 +559,17 @@ const BusinessTab = () => {
       setValue('insurance_coverage', companyProfile.insurance_coverage || '');
       setValue('insurance_expiry', companyProfile.insurance_expiry || '');
       setValue('signature_data', companyProfile.signature_data || '');
-      setLogoPreview(companyProfile.logo_url || null);
+      // Only set logo preview from profile if user hasn't selected a new file
+      // This prevents the preview from being reset when the profile refetches
+      setLogoPreview(prev => {
+        // If there's already a data URL preview (user selected new file), keep it
+        if (prev && prev.startsWith('data:')) {
+          console.log('[BusinessTab] Keeping user-selected logo preview');
+          return prev;
+        }
+        // Otherwise use the profile URL
+        return companyProfile.logo_url || null;
+      });
       setLogoSize((companyProfile as any).logo_size || 'medium');
 
       if (companyProfile.testing_instruments) {
@@ -588,13 +599,43 @@ const BusinessTab = () => {
   }, [companyProfile, setValue]);
 
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('[BusinessTab] handleLogoChange triggered');
+    console.log('[BusinessTab] event.target.files:', event.target.files);
+
     const file = event.target.files?.[0];
+    console.log('[BusinessTab] Selected file:', file ? { name: file.name, size: file.size, type: file.type } : 'none');
+
     if (file) {
+      // Check file size (max 20MB)
+      const maxSize = 20 * 1024 * 1024;
+      if (file.size > maxSize) {
+        console.error('[BusinessTab] File too large:', file.size);
+        alert('Logo must be under 20MB. Please compress or resize your image.');
+        return;
+      }
+
+      console.log('[BusinessTab] Setting logoFile state...');
       setLogoFile(file);
+
       const reader = new FileReader();
-      reader.onload = () => setLogoPreview(reader.result as string);
+      reader.onload = () => {
+        console.log('[BusinessTab] FileReader loaded, setting preview...');
+        const result = reader.result as string;
+        console.log('[BusinessTab] Preview data URL length:', result?.length);
+        setLogoPreview(result);
+        console.log('[BusinessTab] Preview set successfully');
+      };
+      reader.onerror = (error) => {
+        console.error('[BusinessTab] FileReader error:', error);
+        alert('Failed to read the image file. Please try again.');
+      };
       reader.readAsDataURL(file);
+    } else {
+      console.warn('[BusinessTab] No file selected');
     }
+
+    // Reset input value so the same file can be selected again
+    event.target.value = '';
   };
 
   const handleAddInstrument = () => {
@@ -676,9 +717,18 @@ const BusinessTab = () => {
 
   const onSubmit = async (data: FormData) => {
     setIsSaving(true);
-    let logoData = {};
+    let logoData: Record<string, string | null> = {};
 
-    if (logoFile) {
+    // Handle logo deletion
+    if ((window as any).__deleteLogoOnSave) {
+      logoData = {
+        logo_url: null,
+        logo_data_url: null,
+      };
+      delete (window as any).__deleteLogoOnSave;
+    }
+    // Handle new logo upload
+    else if (logoFile) {
       setUploading(true);
       const uploadResult = await uploadLogo(logoFile);
       setUploading(false);
@@ -834,11 +884,14 @@ const BusinessTab = () => {
         defaultOpen={true}
       >
         <div className="space-y-5">
-          {/* Logo Upload */}
+          {/* Logo Upload - Simple version */}
           <div className="space-y-4">
-            <div className="flex items-center gap-4">
+            <Label className="text-[13px] text-white/50 font-medium">Company Logo</Label>
+
+            <div className="flex items-start gap-4">
+              {/* Logo Preview */}
               <div className={cn(
-                "rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden transition-all",
+                "rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden flex-shrink-0",
                 logoSize === 'small' && "w-16 h-16",
                 logoSize === 'medium' && "w-20 h-20",
                 logoSize === 'large' && "w-28 h-28"
@@ -846,29 +899,51 @@ const BusinessTab = () => {
                 {logoPreview ? (
                   <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
                 ) : (
-                  <Building2 className={cn(
-                    "text-white/20",
-                    logoSize === 'small' && "h-6 w-6",
-                    logoSize === 'medium' && "h-8 w-8",
-                    logoSize === 'large' && "h-10 w-10"
-                  )} />
+                  <Building2 className="h-8 w-8 text-white/20" />
                 )}
               </div>
-              <div className="flex-1">
-                <Label htmlFor="logo-upload" className="cursor-pointer">
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.1] hover:bg-white/[0.1] transition-colors touch-manipulation">
-                    <Upload className="h-4 w-4 text-white/50" />
-                    <span className="text-[14px] text-white/70">Upload Logo</span>
+
+              {/* Upload/Delete Buttons */}
+              <div className="flex flex-col gap-2">
+                <label className="cursor-pointer inline-block">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 transition-colors touch-manipulation">
+                    <Upload className="h-4 w-4 text-blue-400" />
+                    <span className="text-[14px] text-blue-400 font-medium">
+                      {logoPreview ? 'Change Logo' : 'Upload Logo'}
+                    </span>
                   </div>
-                </Label>
-                <Input
-                  id="logo-upload"
-                  type="file"
-                  accept="image/*,.heic,.heif"
-                  onChange={handleLogoChange}
-                  className="hidden"
-                />
-                <p className="text-[11px] text-white/40 mt-1.5 px-1">PNG, JPG or HEIC, max 20MB</p>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/png,image/jpeg,image/jpg,image/webp,.heic,.heif"
+                    onChange={handleLogoChange}
+                    className="hidden"
+                  />
+                </label>
+
+                {logoPreview && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLogoPreview(null);
+                      setLogoFile(null);
+                      // Mark for deletion on save
+                      (window as any).__deleteLogoOnSave = true;
+                    }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 hover:bg-red-500/30 transition-colors touch-manipulation"
+                  >
+                    <Trash2 className="h-4 w-4 text-red-400" />
+                    <span className="text-[14px] text-red-400 font-medium">Delete Logo</span>
+                  </button>
+                )}
+
+                {logoFile && (
+                  <p className="text-[12px] text-amber-400 font-medium px-1">
+                    ✓ New logo ready - Save to apply
+                  </p>
+                )}
+
+                <p className="text-[11px] text-white/40 px-1">PNG, JPG or HEIC, max 20MB</p>
               </div>
             </div>
 

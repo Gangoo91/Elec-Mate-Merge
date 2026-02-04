@@ -582,15 +582,22 @@ const SignUp = () => {
                       onToggle={() => setShowPassword(!showPassword)}
                     />
                     {password && (
-                      <div className="flex gap-1.5 mt-2">
-                        {PASSWORD_REQUIREMENTS.map((req) => (
-                          <div key={req.id} className={cn(
-                            "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
-                            req.test(password) ? "bg-green-500/20 text-green-400" : "bg-white/5 text-white/40"
-                          )}>
-                            {req.label}
-                          </div>
-                        ))}
+                      <div className="space-y-2 mt-2">
+                        <div className="flex gap-1.5">
+                          {PASSWORD_REQUIREMENTS.map((req) => (
+                            <div key={req.id} className={cn(
+                              "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
+                              req.test(password) ? "bg-green-500/20 text-green-400" : "bg-white/5 text-white/40"
+                            )}>
+                              {req.label}
+                            </div>
+                          ))}
+                        </div>
+                        {allPasswordRequirementsMet && (
+                          <p className="text-[11px] text-white/40 text-center">
+                            Avoid common passwords like "Password123"
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>

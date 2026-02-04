@@ -140,9 +140,14 @@ export const useCompanyProfile = () => {
   }, [companyProfile]);
 
   const uploadLogo = useCallback(async (file: File): Promise<{ url?: string; dataUrl?: string } | null> => {
+    console.log('[uploadLogo] Starting upload for file:', file.name, 'size:', file.size, 'type:', file.type);
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      console.log('[uploadLogo] Auth check - user:', user?.id);
+
       if (!user) {
+        console.error('[uploadLogo] No authenticated user');
         toast({
           title: "Authentication Required",
           description: "Please log in to upload a logo.",
@@ -154,6 +159,7 @@ export const useCompanyProfile = () => {
       // Check file size (max 20MB)
       const maxSize = 20 * 1024 * 1024;
       if (file.size > maxSize) {
+        console.error('[uploadLogo] File too large:', file.size);
         toast({
           title: "File Too Large",
           description: "Logo must be under 20MB. Please compress or resize your image.",
@@ -178,6 +184,8 @@ export const useCompanyProfile = () => {
 
       // Upload to storage
       const fileName = `${user.id}/logo-${Date.now()}.${extension}`;
+      console.log('[uploadLogo] Uploading to path:', fileName);
+
       const { data, error } = await supabase.storage
         .from('company-branding')
         .upload(fileName, file, {
@@ -186,7 +194,7 @@ export const useCompanyProfile = () => {
         });
 
       if (error) {
-        console.error('Error uploading logo:', error);
+        console.error('[uploadLogo] Storage upload failed:', error);
         toast({
           title: "Upload Failed",
           description: error.message || "Failed to upload logo. Please try again.",
@@ -195,9 +203,13 @@ export const useCompanyProfile = () => {
         return null;
       }
 
+      console.log('[uploadLogo] Upload successful, path:', data.path);
+
       const { data: { publicUrl } } = supabase.storage
         .from('company-branding')
         .getPublicUrl(data.path);
+
+      console.log('[uploadLogo] Public URL generated:', publicUrl);
 
       toast({
         title: "Logo Uploaded",
@@ -207,10 +219,10 @@ export const useCompanyProfile = () => {
 
       return { url: publicUrl, dataUrl };
     } catch (error) {
-      console.error('Error uploading logo:', error);
+      console.error('[uploadLogo] Unexpected error:', error);
       toast({
         title: "Upload Failed",
-        description: "An unexpected error occurred. Please try again.",
+        description: error instanceof Error ? error.message : "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
       return null;
@@ -221,26 +233,9 @@ export const useCompanyProfile = () => {
     fetchCompanyProfile();
   }, [fetchCompanyProfile]);
 
-  // Refetch when window regains focus (e.g., after editing in settings)
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        fetchCompanyProfile();
-      }
-    };
-
-    const handleFocus = () => {
-      fetchCompanyProfile();
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [fetchCompanyProfile]);
+  // NOTE: Removed automatic refetch on window focus as it was causing issues
+  // with file pickers resetting user selections. The profile is fetched once
+  // on mount and after saves - that's sufficient.
 
   return {
     companyProfile,

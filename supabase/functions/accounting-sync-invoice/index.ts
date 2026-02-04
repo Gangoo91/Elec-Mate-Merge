@@ -294,7 +294,27 @@ Deno.serve(async (req: Request) => {
       console.error('Provider sync error:', syncError);
       const errorMsg = syncError instanceof Error ? syncError.message : String(syncError);
       const errorStack = syncError instanceof Error ? syncError.stack : undefined;
-      return errorResponse(`Failed to sync to ${provider}`, `${errorMsg}\n\nStack: ${errorStack}`, 500);
+
+      // Extract more details from ExternalAPIError
+      let detailMsg = errorMsg;
+      if (syncError instanceof ExternalAPIError && syncError.details) {
+        const details = syncError.details;
+        if (details.error) {
+          // Try to parse QuickBooks error response
+          try {
+            const qbError = typeof details.error === 'string' ? JSON.parse(details.error) : details.error;
+            const faultError = qbError?.Fault?.Error?.[0];
+            if (faultError) {
+              detailMsg = `${provider} Error: ${faultError.Message || faultError.Detail || errorMsg}`;
+            }
+          } catch {
+            detailMsg = `${provider} Error: ${details.error}`;
+          }
+        }
+        console.log('Detailed error:', detailMsg);
+      }
+
+      return errorResponse(`Failed to sync to ${provider}`, `${detailMsg}\n\nStack: ${errorStack}`, 500);
     }
 
     // Update invoice with external reference
@@ -1048,17 +1068,47 @@ async function findOrCreateQBCustomer(
   console.log('Client name:', client.name);
   console.log('Client email:', client.email);
 
-  // Escape single quotes in name for SQL query
-  const escapedName = client.name?.replace(/'/g, "\\'") || 'Unknown Client';
+  // Sanitize and validate client name - QuickBooks has a 100 char limit for DisplayName
+  const rawName = client.name?.trim() || 'Unknown Client';
+  // Remove characters that cause issues in QuickBooks queries
+  const sanitizedName = rawName.replace(/['"]/g, '').substring(0, 100);
+  // Escape single quotes in name for SQL query (after we've removed them, just in case)
+  const escapedName = sanitizedName.replace(/'/g, "\\'");
 
-  // Search for existing customer
-  const query = client.email
-    ? `SELECT * FROM Customer WHERE PrimaryEmailAddr = '${client.email}'`
-    : `SELECT * FROM Customer WHERE DisplayName = '${escapedName}'`;
+  console.log('Sanitized name:', sanitizedName);
 
-  console.log('QB Query:', query);
+  // First try to search by email (more unique)
+  if (client.email) {
+    const emailQuery = `SELECT * FROM Customer WHERE PrimaryEmailAddr = '${client.email}'`;
+    console.log('QB Email Query:', emailQuery);
 
-  const searchUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+    const emailSearchUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(emailQuery)}`;
+
+    try {
+      const emailSearchResponse = await fetch(emailSearchUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/json',
+        },
+      });
+
+      if (emailSearchResponse.ok) {
+        const emailSearchResult = await emailSearchResponse.json();
+        if (emailSearchResult.QueryResponse?.Customer?.length > 0) {
+          console.log('Found existing customer by email:', emailSearchResult.QueryResponse.Customer[0].Id);
+          return emailSearchResult.QueryResponse.Customer[0].Id;
+        }
+      }
+    } catch (emailSearchError) {
+      console.warn('Email search failed, will try name search:', emailSearchError);
+    }
+  }
+
+  // Then search by display name
+  const nameQuery = `SELECT * FROM Customer WHERE DisplayName = '${escapedName}'`;
+  console.log('QB Name Query:', nameQuery);
+
+  const searchUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(nameQuery)}`;
   console.log('Search URL:', searchUrl);
 
   const searchResponse = await fetch(searchUrl, {
@@ -1074,7 +1124,7 @@ async function findOrCreateQBCustomer(
     const searchResult = await searchResponse.json();
     console.log('Search result:', JSON.stringify(searchResult).substring(0, 500));
     if (searchResult.QueryResponse?.Customer?.length > 0) {
-      console.log('Found existing customer:', searchResult.QueryResponse.Customer[0].Id);
+      console.log('Found existing customer by name:', searchResult.QueryResponse.Customer[0].Id);
       return searchResult.QueryResponse.Customer[0].Id;
     }
   } else {
@@ -1085,42 +1135,90 @@ async function findOrCreateQBCustomer(
 
   // Create new customer
   console.log('Creating new customer...');
+
+  // Try to create with the base name first
+  const customerId = await tryCreateQBCustomer(accessToken, realmId, sanitizedName, client);
+  if (customerId) {
+    return customerId;
+  }
+
+  // If creation failed (likely duplicate name), try with a unique suffix
+  const uniqueName = `${sanitizedName.substring(0, 85)} (${Date.now().toString().slice(-6)})`;
+  console.log('Retrying with unique name:', uniqueName);
+
+  const retryCustomerId = await tryCreateQBCustomer(accessToken, realmId, uniqueName, client);
+  if (retryCustomerId) {
+    return retryCustomerId;
+  }
+
+  // If both attempts failed, throw with detailed error
+  throw new Error(`Failed to create customer "${sanitizedName}" in QuickBooks. The name may already exist with different details, or there may be a QuickBooks configuration issue.`);
+}
+
+/**
+ * Attempt to create a customer in QuickBooks
+ * Returns customer ID on success, null on failure
+ */
+async function tryCreateQBCustomer(
+  accessToken: string,
+  realmId: string,
+  displayName: string,
+  client: InvoiceData['client']
+): Promise<string | null> {
   const newCustomer = {
-    DisplayName: client.name || 'Unknown Client',
+    DisplayName: displayName,
     PrimaryEmailAddr: client.email ? { Address: client.email } : undefined,
     PrimaryPhone: client.phone ? { FreeFormNumber: client.phone } : undefined,
   };
 
-  console.log('New customer payload:', JSON.stringify(newCustomer));
+  console.log('Creating customer with payload:', JSON.stringify(newCustomer));
 
-  const createResponse = await fetch(
-    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/customer`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(newCustomer),
+  try {
+    const createResponse = await fetch(
+      `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/customer`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(newCustomer),
+      }
+    );
+
+    console.log('Create response status:', createResponse.status);
+
+    if (createResponse.ok) {
+      const createResult = await createResponse.json();
+      console.log('Created customer:', createResult.Customer?.Id);
+      return createResult.Customer?.Id || null;
     }
-  );
 
-  console.log('Create response status:', createResponse.status);
-
-  if (!createResponse.ok) {
+    // Log the error but don't throw - let caller handle retry
     const errorText = await createResponse.text();
     console.error('QuickBooks customer creation failed:', createResponse.status, errorText);
-    throw new ExternalAPIError('QuickBooks', {
-      status: createResponse.status,
-      error: errorText,
-      message: 'Failed to create customer in QuickBooks'
-    });
-  }
 
-  const createResult = await createResponse.json();
-  console.log('Created customer:', createResult.Customer?.Id);
-  return createResult.Customer.Id;
+    // Parse error to check if it's a duplicate name issue
+    try {
+      const errorJson = JSON.parse(errorText);
+      const errorMessage = errorJson?.Fault?.Error?.[0]?.Message || '';
+      console.log('QuickBooks error message:', errorMessage);
+
+      // If it's a duplicate name error, return null to allow retry with unique name
+      if (errorMessage.includes('Duplicate') || errorMessage.includes('already exists')) {
+        console.log('Duplicate name detected, will retry with unique suffix');
+        return null;
+      }
+    } catch {
+      // Error text wasn't JSON, continue
+    }
+
+    return null;
+  } catch (fetchError) {
+    console.error('Customer creation fetch error:', fetchError);
+    return null;
+  }
 }
 
 async function syncToSage(

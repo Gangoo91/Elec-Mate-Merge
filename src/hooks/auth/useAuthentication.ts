@@ -17,7 +17,7 @@ export function useAuthentication() {
       return 'This email is already registered. Try signing in instead.';
     }
     if (lowerMessage.includes('password') && lowerMessage.includes('weak')) {
-      return 'Password is too weak. Please use at least 6 characters.';
+      return 'This password has been found in data breaches. Please choose a unique password that you haven\'t used elsewhere.';
     }
     if (lowerMessage.includes('rate limit') || lowerMessage.includes('too many')) {
       return 'Too many attempts. Please wait a moment and try again.';
