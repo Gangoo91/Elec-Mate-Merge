@@ -119,6 +119,21 @@ export const useCompanyProfile = () => {
         updated_at: new Date(result.data.updated_at),
       } as CompanyProfile);
 
+      // CRITICAL: Sync logo_url to inspector_profiles so EICR certificates show the logo
+      // The EICR form uses inspector_profiles.company_logo, not company_profiles.logo_url
+      if (cleanProfileData.logo_url !== undefined) {
+        const { error: syncError } = await supabase
+          .from('inspector_profiles')
+          .update({ company_logo: cleanProfileData.logo_url })
+          .eq('user_id', user.id);
+
+        if (syncError) {
+          console.warn('[useCompanyProfile] Failed to sync logo to inspector profiles:', syncError);
+        } else {
+          console.log('[useCompanyProfile] Logo synced to inspector profiles');
+        }
+      }
+
       toast({
         title: "Profile Saved",
         description: "Company profile has been saved successfully.",

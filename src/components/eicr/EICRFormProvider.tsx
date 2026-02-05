@@ -314,9 +314,25 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   };
 
   // Helper function to load default inspector profile
-  const loadDefaultInspectorProfile = () => {
+  const loadDefaultInspectorProfile = async () => {
     const defaultProfile = getDefaultProfile();
     if (defaultProfile) {
+      // If inspector profile doesn't have a logo, try to get it from company_profiles
+      let companyLogo = defaultProfile.companyLogo || '';
+
+      if (!companyLogo) {
+        try {
+          const { data } = await supabase.rpc('get_my_company_profile');
+          const companyProfile = Array.isArray(data) ? data[0] : data;
+          if (companyProfile?.logo_url) {
+            companyLogo = companyProfile.logo_url;
+            console.log('[EICRFormProvider] Using logo from company_profiles:', companyLogo);
+          }
+        } catch (error) {
+          console.warn('[EICRFormProvider] Failed to fetch company profile for logo fallback:', error);
+        }
+      }
+
       setFormData(prev => ({
         ...prev,
         inspectorName: defaultProfile.name,
@@ -333,7 +349,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         companyAddress: defaultProfile.companyAddress || '',
         companyPhone: defaultProfile.companyPhone || '',
         companyEmail: defaultProfile.companyEmail || '',
-        companyLogo: defaultProfile.companyLogo || '',
+        companyLogo: companyLogo,
         companyWebsite: defaultProfile.companyWebsite || '',
         companyRegistrationNumber: defaultProfile.companyRegistrationNumber || '',
         vatNumber: defaultProfile.vatNumber || '',
