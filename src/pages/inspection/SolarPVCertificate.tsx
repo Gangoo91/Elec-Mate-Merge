@@ -28,6 +28,7 @@ import { formatSolarPVJson } from '@/utils/solarPVJsonFormatter';
 import SolarPVFormTabs from '@/components/inspection/solar-pv/SolarPVFormTabs';
 import { useSolarPVTabs, SolarPVTabValue } from '@/hooks/useSolarPVTabs';
 import { getDefaultSolarPVFormData, SolarPVFormData } from '@/types/solar-pv';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 export default function SolarPVCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +45,30 @@ export default function SolarPVCertificate() {
 
   // Hooks for tabs
   const tabProps = useSolarPVTabs(formData);
+
+  // Company profile for branding
+  const { companyProfile } = useCompanyProfile();
+
+  // Check if company branding is available
+  const hasSavedCompanyBranding = !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+
+  // Load company branding for PDF
+  const loadCompanyBranding = () => {
+    if (!companyProfile) return null;
+
+    const fullAddress = companyProfile.company_postcode
+      ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile.company_address || '';
+
+    return {
+      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyName: companyProfile.company_name || '',
+      companyAddress: fullAddress,
+      companyPhone: companyProfile.company_phone || '',
+      companyEmail: companyProfile.company_email || '',
+      companyAccentColor: companyProfile.primary_color || '#f59e0b'
+    };
+  };
 
   // Load existing report
   useEffect(() => {
@@ -124,8 +149,30 @@ export default function SolarPVCertificate() {
     try {
       await handleSaveDraft();
 
+      // Generate certificate number if not set
+      let dataWithCertNumber = {
+        ...formData,
+        certificateNumber: formData.certificateNumber || `SPV-${Date.now()}`,
+      };
+
+      // Merge company branding from Business Settings if available
+      if (hasSavedCompanyBranding) {
+        const branding = loadCompanyBranding();
+        if (branding) {
+          dataWithCertNumber = {
+            ...dataWithCertNumber,
+            companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
+            companyName: branding.companyName || dataWithCertNumber.companyName || dataWithCertNumber.installerCompany,
+            companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
+            companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
+            companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
+            accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
+          };
+        }
+      }
+
       // Format data for PDF generation using MCS compliant formatter
-      const pdfData = formatSolarPVJson(formData);
+      const pdfData = formatSolarPVJson(dataWithCertNumber);
 
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-solar-pv-pdf', {

@@ -28,6 +28,7 @@ import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
 import FireAlarmFormTabs from '@/components/inspection/fire-alarm/FireAlarmFormTabs';
 import { useFireAlarmTabs, FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
+import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 
 export default function FireAlarmCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +45,9 @@ export default function FireAlarmCertificate() {
 
   // Hooks for tabs
   const tabProps = useFireAlarmTabs(formData);
+
+  // Smart form hook for company branding
+  const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
 
   // Load existing report
   useEffect(() => {
@@ -124,8 +128,30 @@ export default function FireAlarmCertificate() {
     try {
       await handleSaveDraft();
 
+      // Generate certificate number if not set
+      let dataWithCertNumber = {
+        ...formData,
+        certificateNumber: formData.certificateNumber || `FA-${Date.now()}`,
+      };
+
+      // Merge company branding from Business Settings if available
+      if (hasSavedCompanyBranding) {
+        const branding = loadCompanyBranding();
+        if (branding) {
+          dataWithCertNumber = {
+            ...dataWithCertNumber,
+            companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
+            companyName: branding.companyName || dataWithCertNumber.companyName || dataWithCertNumber.installerCompany,
+            companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
+            companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
+            companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
+            accentColor: branding.accentColor || dataWithCertNumber.accentColor,
+          };
+        }
+      }
+
       // Format data for PDF generation using BS 5839 compliant formatter
-      const pdfData = formatFireAlarmJson(formData);
+      const pdfData = formatFireAlarmJson(dataWithCertNumber);
 
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-fire-alarm-pdf', {

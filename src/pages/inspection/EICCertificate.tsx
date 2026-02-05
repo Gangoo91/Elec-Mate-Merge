@@ -35,6 +35,7 @@ import { supabase } from '@/integrations/supabase/client';
 import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 // Default empty form data
 const getDefaultFormData = () => ({
@@ -91,6 +92,30 @@ export default function EICCertificate() {
   // Hooks for tabs and observations
   const tabProps = useEICTabs(formData);
   const observationsProps = useEICObservations([]);
+
+  // Company profile for branding
+  const { companyProfile } = useCompanyProfile();
+
+  // Check if company branding is available
+  const hasSavedCompanyBranding = !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+
+  // Load company branding for PDF
+  const loadCompanyBranding = () => {
+    if (!companyProfile) return null;
+
+    const fullAddress = companyProfile.company_postcode
+      ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile.company_address || '';
+
+    return {
+      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyName: companyProfile.company_name || '',
+      companyAddress: fullAddress,
+      companyPhone: companyProfile.company_phone || '',
+      companyEmail: companyProfile.company_email || '',
+      companyAccentColor: companyProfile.primary_color || '#22c55e'
+    };
+  };
 
   // Fetch design data if designId is provided
   const { data: designData, isLoading: isLoadingDesign, error: designError } = useDesignedCircuit(designId || '');
@@ -221,11 +246,20 @@ export default function EICCertificate() {
       // First save the current data
       await handleSaveDraft();
 
+      // Get company branding
+      const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
+
       // Prepare PDF data
       const pdfData = {
         metadata: {
           certificate_number: formData.certificateNumber || `EIC-${Date.now()}`
         },
+        // Company branding for PDF
+        company_logo: branding?.companyLogo || formData.companyLogo || '',
+        company_name: branding?.companyName || '',
+        company_address: branding?.companyAddress || '',
+        company_phone: branding?.companyPhone || '',
+        company_email: branding?.companyEmail || '',
         client_details: {
           client_name: formData.clientName || '',
           client_address: formData.clientAddress || '',

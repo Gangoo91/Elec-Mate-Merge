@@ -103,16 +103,29 @@ export const useFireAlarmSmartForm = () => {
   const loadCompanyBranding = useCallback(() => {
     const profile = getDefaultProfile();
 
+    // Build full address
+    const fullAddress = companyProfile?.company_postcode
+      ? `${companyProfile?.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile?.company_address || profile?.companyAddress || '';
+
     return {
       companyName: companyProfile?.company_name || profile?.companyName || '',
-      companyAddress: companyProfile?.address || profile?.companyAddress || '',
-      companyPhone: companyProfile?.phone || profile?.companyPhone || '',
-      companyEmail: companyProfile?.email || profile?.companyEmail || '',
+      companyAddress: fullAddress,
+      companyPhone: companyProfile?.company_phone || profile?.companyPhone || '',
+      companyEmail: companyProfile?.company_email || profile?.companyEmail || '',
       companyWebsite: companyProfile?.website || profile?.companyWebsite || '',
-      companyLogo: companyProfile?.logo_url || profile?.companyLogo || '',
-      accentColor: companyProfile?.accent_color || '#dc2626'
+      // CRITICAL: Use logo_data_url first (for PDF embedding), then logo_url as fallback
+      companyLogo: companyProfile?.logo_data_url || companyProfile?.logo_url || profile?.companyLogo || '',
+      accentColor: companyProfile?.primary_color || '#dc2626'
     };
   }, [getDefaultProfile, companyProfile]);
+
+  /**
+   * Check if company branding is available
+   */
+  const hasSavedCompanyBranding = useMemo(() => {
+    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+  }, [companyProfile]);
 
   /**
    * Apply panel defaults when a panel is selected
@@ -337,6 +350,7 @@ export const useFireAlarmSmartForm = () => {
     loadInstallerDetails,
     loadCommissionerDetails,
     loadCompanyBranding,
+    hasSavedCompanyBranding,
     hasDefaultProfile,
     availableProfiles,
 

@@ -27,6 +27,7 @@ import { supabase } from '@/integrations/supabase/client';
 import PATTestingFormTabs from '@/components/inspection/pat-testing/PATTestingFormTabs';
 import { usePATTestingTabs, PATTestingTabValue } from '@/hooks/usePATTestingTabs';
 import { getDefaultPATTestingFormData } from '@/types/pat-testing';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 export default function PATTestingCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -43,6 +44,30 @@ export default function PATTestingCertificate() {
 
   // Hooks for tabs
   const tabProps = usePATTestingTabs(formData);
+
+  // Company profile for branding
+  const { companyProfile } = useCompanyProfile();
+
+  // Check if company branding is available
+  const hasSavedCompanyBranding = !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+
+  // Load company branding for PDF
+  const loadCompanyBranding = () => {
+    if (!companyProfile) return null;
+
+    const fullAddress = companyProfile.company_postcode
+      ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile.company_address || '';
+
+    return {
+      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyName: companyProfile.company_name || '',
+      companyAddress: fullAddress,
+      companyPhone: companyProfile.company_phone || '',
+      companyEmail: companyProfile.company_email || '',
+      companyAccentColor: companyProfile.primary_color || '#3b82f6'
+    };
+  };
 
   // Load existing report
   useEffect(() => {
@@ -123,6 +148,9 @@ export default function PATTestingCertificate() {
     try {
       await handleSaveDraft();
 
+      // Get company branding
+      const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
+
       // Prepare PDF data
       const pdfData = {
         metadata: {
@@ -184,6 +212,12 @@ export default function PATTestingCertificate() {
           },
         },
         additional_notes: formData.additionalNotes || '',
+        // Company branding for PDF
+        company_logo: branding?.companyLogo || formData.companyLogo || '',
+        company_name: branding?.companyName || formData.testerCompany || '',
+        company_address: branding?.companyAddress || '',
+        company_phone: branding?.companyPhone || '',
+        company_email: branding?.companyEmail || '',
       };
 
       // Call edge function
