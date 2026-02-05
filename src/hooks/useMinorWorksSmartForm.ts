@@ -151,6 +151,30 @@ export function useMinorWorksSmartForm() {
     return !!(companyProfile?.company_name);
   }, [companyProfile]);
 
+  const hasSavedCompanyBranding = useMemo(() => {
+    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+  }, [companyProfile]);
+
+  // ---------------------------------------------------------------------------
+  // Load Company Branding for PDF
+  // ---------------------------------------------------------------------------
+  const loadCompanyBranding = useCallback(() => {
+    if (!companyProfile) return null;
+
+    const fullAddress = companyProfile.company_postcode
+      ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile.company_address || '';
+
+    return {
+      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyName: companyProfile.company_name || '',
+      companyAddress: fullAddress,
+      companyPhone: companyProfile.company_phone || '',
+      companyEmail: companyProfile.company_email || '',
+      companyAccentColor: companyProfile.primary_color || '#f59e0b'
+    };
+  }, [companyProfile]);
+
   // ---------------------------------------------------------------------------
   // Auto-Apply Defaults on Form Mount
   // ---------------------------------------------------------------------------
@@ -225,11 +249,13 @@ export function useMinorWorksSmartForm() {
     hasSavedElectricianDetails,
     hasSavedTestEquipment,
     hasSavedContractorDetails,
+    hasSavedCompanyBranding,
 
     // Loaders
     loadElectricianDetails,
     loadTestEquipment,
     loadContractorDetails,
+    loadCompanyBranding,
     getAvailableInstruments,
     getInitialFormDefaults,
 

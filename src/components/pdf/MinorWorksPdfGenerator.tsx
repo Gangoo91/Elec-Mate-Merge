@@ -14,6 +14,7 @@ import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWork
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
 import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 interface MinorWorksPdfGeneratorProps {
   formData: any;
@@ -46,6 +47,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Get company branding for PDF
+  const { loadCompanyBranding, hasSavedCompanyBranding } = useMinorWorksSmartForm();
 
   // Handle automatic Part P notification creation
   const handleNotificationCreation = async () => {
@@ -245,8 +249,24 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       console.log('[MinorWorks PDF] Using template ID:', savedTemplateId || 'default');
       setProgress(30);
       
+      // Merge company branding into form data
+      let dataWithBranding = { ...formData };
+      if (hasSavedCompanyBranding) {
+        const branding = loadCompanyBranding();
+        if (branding) {
+          dataWithBranding = {
+            ...dataWithBranding,
+            companyLogo: branding.companyLogo || dataWithBranding.companyLogo || '',
+            companyName: branding.companyName || dataWithBranding.companyName || dataWithBranding.contractorName || '',
+            companyAddress: branding.companyAddress || dataWithBranding.companyAddress || dataWithBranding.contractorAddress || '',
+            companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
+            companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
+          };
+        }
+      }
+
       // Format form data for better PDF presentation
-      const formattedFormData = { ...formData };
+      const formattedFormData = { ...dataWithBranding };
       Object.keys(formattedFormData).forEach(key => {
         if (formattedFormData[key]) {
           formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
