@@ -269,3 +269,8 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Check Subscription (handles auth internally for graceful error handling)
+[functions.check-subscription]
+verify_jwt = false
+
+
