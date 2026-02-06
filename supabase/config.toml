@@ -274,3 +274,8 @@ verify_jwt = false
 verify_jwt = false
 
 
+# PDF Monkey Invoice Generation (handles auth internally)
+[functions.generate-pdf-monkey]
+verify_jwt = false
+
+
