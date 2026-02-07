@@ -92,7 +92,7 @@ export default function UserManagementSheet({
 }: UserManagementSheetProps) {
   const queryClient = useQueryClient();
   const [selectedTier, setSelectedTier] = useState<string>("Employer");
-  const [expiresOption, setExpiresOption] = useState<string>("never");
+  const [expiresOption, setExpiresOption] = useState<string>("7days");
   const [customExpiry, setCustomExpiry] = useState<string>("");
   const [reason, setReason] = useState<string>("");
   const [messageSheetOpen, setMessageSheetOpen] = useState(false);
@@ -168,7 +168,11 @@ export default function UserManagementSheet({
       if (!user) throw new Error("No user selected");
 
       let expires_at: string | null = null;
-      if (expiresOption === "30days") {
+      if (expiresOption === "7days") {
+        const date = new Date();
+        date.setDate(date.getDate() + 7);
+        expires_at = date.toISOString();
+      } else if (expiresOption === "30days") {
         const date = new Date();
         date.setDate(date.getDate() + 30);
         expires_at = date.toISOString();
@@ -535,10 +539,11 @@ export default function UserManagementSheet({
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="never">Never expires</SelectItem>
+                          <SelectItem value="7days">1 week (Free trial)</SelectItem>
                           <SelectItem value="30days">30 days</SelectItem>
                           <SelectItem value="90days">90 days</SelectItem>
                           <SelectItem value="1year">1 year</SelectItem>
+                          <SelectItem value="never">Never expires</SelectItem>
                           <SelectItem value="custom">Custom date</SelectItem>
                         </SelectContent>
                       </Select>

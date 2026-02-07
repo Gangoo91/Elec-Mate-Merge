@@ -279,3 +279,8 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Admin Subscription Management (grant/revoke free access)
+[functions.admin-manage-subscription]
+verify_jwt = false
+
+
