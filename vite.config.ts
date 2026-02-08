@@ -102,34 +102,47 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 3000,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (!id.includes('node_modules')) return;
-
-          // Core framework — always loaded
-          if (/[\\/](react|react-dom|react-router|react-router-dom)[\\/]/.test(id)) return 'vendor-react';
-
-          // UI primitives
-          if (id.includes('@radix-ui')) return 'vendor-radix';
-
-          // Heavy libs — split individually for lazy loading
-          if (id.includes('recharts')) return 'vendor-charts';
-          if (id.includes('jspdf')) return 'vendor-pdf';
-          if (id.includes('fabric') || id.includes('html2canvas')) return 'vendor-canvas';
-          if (id.includes('framer-motion')) return 'vendor-motion';
-          if (id.includes('@tiptap')) return 'vendor-editor';
-          if (id.includes('xlsx') || id.includes('papaparse')) return 'vendor-excel';
-          if (id.includes('@huggingface')) return 'vendor-ml';
-          if (id.includes('@react-google-maps')) return 'vendor-maps';
-          if (id.includes('react-markdown') || id.includes('rehype-') || id.includes('remark-')) return 'vendor-markdown';
-
-          // Services
-          if (id.includes('@supabase')) return 'vendor-supabase';
-          if (id.includes('@tanstack')) return 'vendor-query';
-          if (id.includes('posthog') || id.includes('@sentry')) return 'vendor-analytics';
-          if (id.includes('@capacitor')) return 'vendor-capacitor';
-
-          // Small utils — let Vite tree-shake and bundle naturally
-          // (grouping these caused circular init errors)
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-radix': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-label',
+            '@radix-ui/react-switch',
+            '@radix-ui/react-slider',
+            '@radix-ui/react-progress',
+            '@radix-ui/react-scroll-area',
+            '@radix-ui/react-separator',
+            '@radix-ui/react-tooltip'
+          ],
+          'vendor-charts': ['recharts'],
+          'vendor-pdf': ['jspdf', 'jspdf-autotable'],
+          'vendor-canvas': ['fabric', 'html2canvas'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-editor': ['@tiptap/react', '@tiptap/starter-kit', '@tiptap/extension-placeholder'],
+          'vendor-excel': ['xlsx', 'papaparse'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-query': ['@tanstack/react-query'],
+          'vendor-utils': ['lodash', 'date-fns', 'zod', 'uuid', 'clsx', 'tailwind-merge'],
+          'vendor-ml': ['@huggingface/transformers'],
+          'vendor-analytics': ['posthog-js', '@sentry/react'],
+          'vendor-maps': ['@react-google-maps/api'],
+          'vendor-capacitor': [
+            '@capacitor/core',
+            '@capacitor/camera',
+            '@capacitor/filesystem',
+            '@capacitor/haptics',
+            '@capacitor/keyboard',
+            '@capacitor/share',
+            '@capacitor/browser'
+          ],
+          'vendor-markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
         }
       }
     }
