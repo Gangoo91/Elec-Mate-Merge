@@ -1,6 +1,10 @@
 // Debug logging for production troubleshooting
 console.log("[Elec-Mate] main.tsx loading...");
 
+declare global {
+  interface Window { __chunkLoadRetried?: boolean; }
+}
+
 import { createRoot } from "react-dom/client";
 import { Capacitor } from "@capacitor/core";
 import App from "./App.tsx";
@@ -39,11 +43,17 @@ const initAnalyticsDeferred = () => {
 // Global handler for chunk loading failures (stale deployment cache)
 // This catches errors before they reach React's ErrorBoundary
 const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
-  const error = 'reason' in event ? event.reason : event.error;
+  // Skip if already handled by index.html handler
+  if (window.__chunkLoadRetried) return;
+
+  const error = 'reason' in event ? event.reason : (event as ErrorEvent).error;
+  const filename = (event as ErrorEvent).filename || '';
   const errorString = `${error?.message || ''} ${error?.toString() || ''}`.toLowerCase();
 
+  // Ignore third-party script errors
+  if (filename && !filename.includes(location.hostname)) return;
+
   if (errorString.includes('dynamically imported module') ||
-      errorString.includes('failed to fetch') ||
       errorString.includes('loading chunk') ||
       errorString.includes('loading css chunk') ||
       errorString.includes('failed to load module script') ||
@@ -51,7 +61,7 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
       errorString.includes('text/html')) {
     console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();
-    // Clear caches and reload
+    sessionStorage.setItem('__chunkRetried', '1');
     if ('caches' in window) {
       caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
         .finally(() => window.location.reload());
