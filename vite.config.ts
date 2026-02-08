@@ -128,8 +128,8 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('posthog') || id.includes('@sentry')) return 'vendor-analytics';
           if (id.includes('@capacitor')) return 'vendor-capacitor';
 
-          // Utils bucket
-          if (/[\\/](lodash|date-fns|zod|uuid|clsx|tailwind-merge)[\\/]/.test(id)) return 'vendor-utils';
+          // Small utils — let Vite tree-shake and bundle naturally
+          // (grouping these caused circular init errors)
         }
       }
     }
