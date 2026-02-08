@@ -19,6 +19,7 @@ const ResetPassword = lazyWithRetry(() => import("@/pages/auth/ResetPassword"));
 const ConfirmEmail = lazyWithRetry(() => import("@/pages/auth/ConfirmEmail"));
 const CheckEmail = lazyWithRetry(() => import("@/pages/auth/CheckEmail"));
 const CompleteProfile = lazyWithRetry(() => import("@/pages/auth/CompleteProfile"));
+const CheckoutTrial = lazyWithRetry(() => import("@/pages/auth/CheckoutTrial"));
 const Dashboard = lazyWithRetry(() => import("@/pages/Dashboard"));
 const Profile = lazyWithRetry(() => import("@/pages/Profile"));
 const Settings = lazyWithRetry(() => import("@/pages/Settings"));
@@ -149,6 +150,7 @@ const AppRouter = () => {
           <Layout />
         </ProtectedRoute>
       }>
+        <Route path="checkout-trial" element={<LazyRoute><CheckoutTrial /></LazyRoute>} />
         <Route path="dashboard" element={<LazyRoute><Dashboard /></LazyRoute>} />
         <Route path="profile" element={<LazyRoute><Profile /></LazyRoute>} />
         <Route path="settings" element={<LazyRoute><Settings /></LazyRoute>} />

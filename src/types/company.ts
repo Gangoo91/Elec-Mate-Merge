@@ -54,6 +54,7 @@ export interface CompanyProfile {
   registration_scheme?: string;
   registration_number?: string;
   registration_expiry?: string;
+  scheme_logo_data_url?: string;
   insurance_provider?: string;
   insurance_policy_number?: string;
   insurance_coverage?: string;

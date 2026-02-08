@@ -164,8 +164,9 @@ serve(async (req) => {
         },
       ],
       mode: mode,
-      success_url: `${origin}/payment-success?plan=${planId}`,
-      cancel_url: `${origin}/subscriptions`,
+      payment_method_collection: 'always',
+      success_url: `${origin}/payment-success?plan=${planId}&trial=true`,
+      cancel_url: `${origin}/checkout-trial`,
       client_reference_id: user.id,
       metadata: {
         userId: user.id,
@@ -175,6 +176,16 @@ serve(async (req) => {
       billing_address_collection: 'auto',
       // If we have a specific discount to apply, use that; otherwise allow manual promo codes
       ...(discounts ? { discounts } : { allow_promotion_codes: true }),
+      // Add 7-day free trial for subscription mode
+      ...(mode === 'subscription' ? {
+        subscription_data: {
+          trial_period_days: 7,
+          metadata: {
+            userId: user.id,
+            planId: planId,
+          },
+        },
+      } : {}),
     };
     
     logger.info('Creating checkout session with options', checkoutOptions);

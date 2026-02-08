@@ -22,6 +22,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { supabase } from '@/integrations/supabase/client';
 import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
 
@@ -146,6 +147,8 @@ export default function FireAlarmCertificate() {
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.accentColor || dataWithCertNumber.accentColor,
+            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }
@@ -282,6 +285,16 @@ export default function FireAlarmCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
+
+              <WhatsAppShareButton
+                type="fire-alarm"
+                id={savedReportId || id || 'new'}
+                recipientPhone={formData.clientTelephone || ''}
+                recipientName={formData.clientName || ''}
+                documentLabel="Fire Alarm Certificate"
+                variant="ghost"
+                className="h-9 w-9"
+              />
             </div>
           </div>
 

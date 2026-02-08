@@ -1034,7 +1034,197 @@ const MOETModule7Section2 = lazy(() => withTimeout(() => trackImport('MOETModule
 const MOETModule7Section3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section3', () => import('@/pages/apprentice-courses/MOETModule7Section3'))));
 const MOETModule7Section4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4', () => import('@/pages/apprentice-courses/MOETModule7Section4'))));
 const MOETModule7Section5 = lazy(() => withTimeout(() => trackImport('MOETModule7Section5', () => import('@/pages/apprentice-courses/MOETModule7Section5'))));
-const NotFound = lazy(() => withTimeout(() => trackImport('NotFound', () => import('@/pages/apprentice-courses/NotFound'))));
+const MOETModule1Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section1_2', () => import('@/pages/apprentice-courses/MOETModule1Section1_2'))));
+const MOETModule1Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section1_3', () => import('@/pages/apprentice-courses/MOETModule1Section1_3'))));
+const MOETModule1Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section1_4', () => import('@/pages/apprentice-courses/MOETModule1Section1_4'))));
+const MOETModule1Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section1_5', () => import('@/pages/apprentice-courses/MOETModule1Section1_5'))));
+const MOETModule1Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule1Section2_1', () => import('@/pages/apprentice-courses/MOETModule1Section2_1'))));
+const MOETModule1Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section2_2', () => import('@/pages/apprentice-courses/MOETModule1Section2_2'))));
+const MOETModule1Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section2_3', () => import('@/pages/apprentice-courses/MOETModule1Section2_3'))));
+const MOETModule1Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section2_4', () => import('@/pages/apprentice-courses/MOETModule1Section2_4'))));
+const MOETModule1Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section2_5', () => import('@/pages/apprentice-courses/MOETModule1Section2_5'))));
+const MOETModule1Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule1Section3_1', () => import('@/pages/apprentice-courses/MOETModule1Section3_1'))));
+const MOETModule1Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section3_2', () => import('@/pages/apprentice-courses/MOETModule1Section3_2'))));
+const MOETModule1Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section3_3', () => import('@/pages/apprentice-courses/MOETModule1Section3_3'))));
+const MOETModule1Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section3_4', () => import('@/pages/apprentice-courses/MOETModule1Section3_4'))));
+const MOETModule1Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section3_5', () => import('@/pages/apprentice-courses/MOETModule1Section3_5'))));
+const MOETModule1Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_1', () => import('@/pages/apprentice-courses/MOETModule1Section4_1'))));
+const MOETModule1Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_2', () => import('@/pages/apprentice-courses/MOETModule1Section4_2'))));
+const MOETModule1Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_3', () => import('@/pages/apprentice-courses/MOETModule1Section4_3'))));
+const MOETModule1Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_4', () => import('@/pages/apprentice-courses/MOETModule1Section4_4'))));
+const MOETModule1Section4_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_5', () => import('@/pages/apprentice-courses/MOETModule1Section4_5'))));
+const MOETModule1Section4_6 = lazy(() => withTimeout(() => trackImport('MOETModule1Section4_6', () => import('@/pages/apprentice-courses/MOETModule1Section4_6'))));
+const MOETModule1Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule1Section5_1', () => import('@/pages/apprentice-courses/MOETModule1Section5_1'))));
+const MOETModule1Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section5_2', () => import('@/pages/apprentice-courses/MOETModule1Section5_2'))));
+const MOETModule1Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section5_3', () => import('@/pages/apprentice-courses/MOETModule1Section5_3'))));
+const MOETModule1Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section5_4', () => import('@/pages/apprentice-courses/MOETModule1Section5_4'))));
+const MOETModule1Section5_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section5_5', () => import('@/pages/apprentice-courses/MOETModule1Section5_5'))));
+const MOETModule1Section6_1 = lazy(() => withTimeout(() => trackImport('MOETModule1Section6_1', () => import('@/pages/apprentice-courses/MOETModule1Section6_1'))));
+const MOETModule1Section6_2 = lazy(() => withTimeout(() => trackImport('MOETModule1Section6_2', () => import('@/pages/apprentice-courses/MOETModule1Section6_2'))));
+const MOETModule1Section6_3 = lazy(() => withTimeout(() => trackImport('MOETModule1Section6_3', () => import('@/pages/apprentice-courses/MOETModule1Section6_3'))));
+const MOETModule1Section6_4 = lazy(() => withTimeout(() => trackImport('MOETModule1Section6_4', () => import('@/pages/apprentice-courses/MOETModule1Section6_4'))));
+const MOETModule1Section6_5 = lazy(() => withTimeout(() => trackImport('MOETModule1Section6_5', () => import('@/pages/apprentice-courses/MOETModule1Section6_5'))));
+const MOETModule2Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule2Section1_2', () => import('@/pages/apprentice-courses/MOETModule2Section1_2'))));
+const MOETModule2Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule2Section1_3', () => import('@/pages/apprentice-courses/MOETModule2Section1_3'))));
+const MOETModule2Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule2Section1_4', () => import('@/pages/apprentice-courses/MOETModule2Section1_4'))));
+const MOETModule2Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule2Section1_5', () => import('@/pages/apprentice-courses/MOETModule2Section1_5'))));
+const MOETModule2Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_1', () => import('@/pages/apprentice-courses/MOETModule2Section2_1'))));
+const MOETModule2Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_2', () => import('@/pages/apprentice-courses/MOETModule2Section2_2'))));
+const MOETModule2Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_3', () => import('@/pages/apprentice-courses/MOETModule2Section2_3'))));
+const MOETModule2Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_4', () => import('@/pages/apprentice-courses/MOETModule2Section2_4'))));
+const MOETModule2Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_5', () => import('@/pages/apprentice-courses/MOETModule2Section2_5'))));
+const MOETModule2Section2_6 = lazy(() => withTimeout(() => trackImport('MOETModule2Section2_6', () => import('@/pages/apprentice-courses/MOETModule2Section2_6'))));
+const MOETModule2Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule2Section3_1', () => import('@/pages/apprentice-courses/MOETModule2Section3_1'))));
+const MOETModule2Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule2Section3_2', () => import('@/pages/apprentice-courses/MOETModule2Section3_2'))));
+const MOETModule2Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule2Section3_3', () => import('@/pages/apprentice-courses/MOETModule2Section3_3'))));
+const MOETModule2Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule2Section3_4', () => import('@/pages/apprentice-courses/MOETModule2Section3_4'))));
+const MOETModule2Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule2Section3_5', () => import('@/pages/apprentice-courses/MOETModule2Section3_5'))));
+const MOETModule2Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_1', () => import('@/pages/apprentice-courses/MOETModule2Section4_1'))));
+const MOETModule2Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_2', () => import('@/pages/apprentice-courses/MOETModule2Section4_2'))));
+const MOETModule2Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_3', () => import('@/pages/apprentice-courses/MOETModule2Section4_3'))));
+const MOETModule2Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_4', () => import('@/pages/apprentice-courses/MOETModule2Section4_4'))));
+const MOETModule2Section4_5 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_5', () => import('@/pages/apprentice-courses/MOETModule2Section4_5'))));
+const MOETModule2Section4_6 = lazy(() => withTimeout(() => trackImport('MOETModule2Section4_6', () => import('@/pages/apprentice-courses/MOETModule2Section4_6'))));
+const MOETModule2Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule2Section5_1', () => import('@/pages/apprentice-courses/MOETModule2Section5_1'))));
+const MOETModule2Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule2Section5_2', () => import('@/pages/apprentice-courses/MOETModule2Section5_2'))));
+const MOETModule2Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule2Section5_3', () => import('@/pages/apprentice-courses/MOETModule2Section5_3'))));
+const MOETModule2Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule2Section5_4', () => import('@/pages/apprentice-courses/MOETModule2Section5_4'))));
+const MOETModule3Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section1_2', () => import('@/pages/apprentice-courses/MOETModule3Section1_2'))));
+const MOETModule3Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section1_3', () => import('@/pages/apprentice-courses/MOETModule3Section1_3'))));
+const MOETModule3Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section1_4', () => import('@/pages/apprentice-courses/MOETModule3Section1_4'))));
+const MOETModule3Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule3Section1_5', () => import('@/pages/apprentice-courses/MOETModule3Section1_5'))));
+const MOETModule3Section1_6 = lazy(() => withTimeout(() => trackImport('MOETModule3Section1_6', () => import('@/pages/apprentice-courses/MOETModule3Section1_6'))));
+const MOETModule3Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule3Section2_1', () => import('@/pages/apprentice-courses/MOETModule3Section2_1'))));
+const MOETModule3Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section2_2', () => import('@/pages/apprentice-courses/MOETModule3Section2_2'))));
+const MOETModule3Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section2_3', () => import('@/pages/apprentice-courses/MOETModule3Section2_3'))));
+const MOETModule3Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section2_4', () => import('@/pages/apprentice-courses/MOETModule3Section2_4'))));
+const MOETModule3Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule3Section2_5', () => import('@/pages/apprentice-courses/MOETModule3Section2_5'))));
+const MOETModule3Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule3Section3_1', () => import('@/pages/apprentice-courses/MOETModule3Section3_1'))));
+const MOETModule3Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section3_2', () => import('@/pages/apprentice-courses/MOETModule3Section3_2'))));
+const MOETModule3Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section3_3', () => import('@/pages/apprentice-courses/MOETModule3Section3_3'))));
+const MOETModule3Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section3_4', () => import('@/pages/apprentice-courses/MOETModule3Section3_4'))));
+const MOETModule3Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule3Section3_5', () => import('@/pages/apprentice-courses/MOETModule3Section3_5'))));
+const MOETModule3Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule3Section4_1', () => import('@/pages/apprentice-courses/MOETModule3Section4_1'))));
+const MOETModule3Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section4_2', () => import('@/pages/apprentice-courses/MOETModule3Section4_2'))));
+const MOETModule3Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section4_3', () => import('@/pages/apprentice-courses/MOETModule3Section4_3'))));
+const MOETModule3Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section4_4', () => import('@/pages/apprentice-courses/MOETModule3Section4_4'))));
+const MOETModule3Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule3Section5_1', () => import('@/pages/apprentice-courses/MOETModule3Section5_1'))));
+const MOETModule3Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section5_2', () => import('@/pages/apprentice-courses/MOETModule3Section5_2'))));
+const MOETModule3Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section5_3', () => import('@/pages/apprentice-courses/MOETModule3Section5_3'))));
+const MOETModule3Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section5_4', () => import('@/pages/apprentice-courses/MOETModule3Section5_4'))));
+const MOETModule3Section5_5 = lazy(() => withTimeout(() => trackImport('MOETModule3Section5_5', () => import('@/pages/apprentice-courses/MOETModule3Section5_5'))));
+const MOETModule3Section6_1 = lazy(() => withTimeout(() => trackImport('MOETModule3Section6_1', () => import('@/pages/apprentice-courses/MOETModule3Section6_1'))));
+const MOETModule3Section6_2 = lazy(() => withTimeout(() => trackImport('MOETModule3Section6_2', () => import('@/pages/apprentice-courses/MOETModule3Section6_2'))));
+const MOETModule3Section6_3 = lazy(() => withTimeout(() => trackImport('MOETModule3Section6_3', () => import('@/pages/apprentice-courses/MOETModule3Section6_3'))));
+const MOETModule3Section6_4 = lazy(() => withTimeout(() => trackImport('MOETModule3Section6_4', () => import('@/pages/apprentice-courses/MOETModule3Section6_4'))));
+const MOETModule3Section6_5 = lazy(() => withTimeout(() => trackImport('MOETModule3Section6_5', () => import('@/pages/apprentice-courses/MOETModule3Section6_5'))));
+const MOETModule4Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section1_2', () => import('@/pages/apprentice-courses/MOETModule4Section1_2'))));
+const MOETModule4Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section1_3', () => import('@/pages/apprentice-courses/MOETModule4Section1_3'))));
+const MOETModule4Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section1_4', () => import('@/pages/apprentice-courses/MOETModule4Section1_4'))));
+const MOETModule4Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section1_5', () => import('@/pages/apprentice-courses/MOETModule4Section1_5'))));
+const MOETModule4Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_1', () => import('@/pages/apprentice-courses/MOETModule4Section2_1'))));
+const MOETModule4Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_2', () => import('@/pages/apprentice-courses/MOETModule4Section2_2'))));
+const MOETModule4Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_3', () => import('@/pages/apprentice-courses/MOETModule4Section2_3'))));
+const MOETModule4Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_4', () => import('@/pages/apprentice-courses/MOETModule4Section2_4'))));
+const MOETModule4Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_5', () => import('@/pages/apprentice-courses/MOETModule4Section2_5'))));
+const MOETModule4Section2_6 = lazy(() => withTimeout(() => trackImport('MOETModule4Section2_6', () => import('@/pages/apprentice-courses/MOETModule4Section2_6'))));
+const MOETModule4Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_1', () => import('@/pages/apprentice-courses/MOETModule4Section3_1'))));
+const MOETModule4Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_2', () => import('@/pages/apprentice-courses/MOETModule4Section3_2'))));
+const MOETModule4Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_3', () => import('@/pages/apprentice-courses/MOETModule4Section3_3'))));
+const MOETModule4Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_4', () => import('@/pages/apprentice-courses/MOETModule4Section3_4'))));
+const MOETModule4Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_5', () => import('@/pages/apprentice-courses/MOETModule4Section3_5'))));
+const MOETModule4Section3_6 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_6', () => import('@/pages/apprentice-courses/MOETModule4Section3_6'))));
+const MOETModule4Section3_7 = lazy(() => withTimeout(() => trackImport('MOETModule4Section3_7', () => import('@/pages/apprentice-courses/MOETModule4Section3_7'))));
+const MOETModule4Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section4_1', () => import('@/pages/apprentice-courses/MOETModule4Section4_1'))));
+const MOETModule4Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section4_2', () => import('@/pages/apprentice-courses/MOETModule4Section4_2'))));
+const MOETModule4Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section4_3', () => import('@/pages/apprentice-courses/MOETModule4Section4_3'))));
+const MOETModule4Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section4_4', () => import('@/pages/apprentice-courses/MOETModule4Section4_4'))));
+const MOETModule4Section4_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section4_5', () => import('@/pages/apprentice-courses/MOETModule4Section4_5'))));
+const MOETModule4Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_1', () => import('@/pages/apprentice-courses/MOETModule4Section5_1'))));
+const MOETModule4Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_2', () => import('@/pages/apprentice-courses/MOETModule4Section5_2'))));
+const MOETModule4Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_3', () => import('@/pages/apprentice-courses/MOETModule4Section5_3'))));
+const MOETModule4Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_4', () => import('@/pages/apprentice-courses/MOETModule4Section5_4'))));
+const MOETModule4Section5_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_5', () => import('@/pages/apprentice-courses/MOETModule4Section5_5'))));
+const MOETModule4Section5_6 = lazy(() => withTimeout(() => trackImport('MOETModule4Section5_6', () => import('@/pages/apprentice-courses/MOETModule4Section5_6'))));
+const MOETModule4Section6_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section6_1', () => import('@/pages/apprentice-courses/MOETModule4Section6_1'))));
+const MOETModule4Section6_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section6_2', () => import('@/pages/apprentice-courses/MOETModule4Section6_2'))));
+const MOETModule4Section6_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section6_3', () => import('@/pages/apprentice-courses/MOETModule4Section6_3'))));
+const MOETModule4Section6_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section6_4', () => import('@/pages/apprentice-courses/MOETModule4Section6_4'))));
+const MOETModule4Section6_5 = lazy(() => withTimeout(() => trackImport('MOETModule4Section6_5', () => import('@/pages/apprentice-courses/MOETModule4Section6_5'))));
+const MOETModule4Section7_1 = lazy(() => withTimeout(() => trackImport('MOETModule4Section7_1', () => import('@/pages/apprentice-courses/MOETModule4Section7_1'))));
+const MOETModule4Section7_2 = lazy(() => withTimeout(() => trackImport('MOETModule4Section7_2', () => import('@/pages/apprentice-courses/MOETModule4Section7_2'))));
+const MOETModule4Section7_3 = lazy(() => withTimeout(() => trackImport('MOETModule4Section7_3', () => import('@/pages/apprentice-courses/MOETModule4Section7_3'))));
+const MOETModule4Section7_4 = lazy(() => withTimeout(() => trackImport('MOETModule4Section7_4', () => import('@/pages/apprentice-courses/MOETModule4Section7_4'))));
+const MOETModule5Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section1_2', () => import('@/pages/apprentice-courses/MOETModule5Section1_2'))));
+const MOETModule5Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section1_3', () => import('@/pages/apprentice-courses/MOETModule5Section1_3'))));
+const MOETModule5Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section1_4', () => import('@/pages/apprentice-courses/MOETModule5Section1_4'))));
+const MOETModule5Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule5Section1_5', () => import('@/pages/apprentice-courses/MOETModule5Section1_5'))));
+const MOETModule5Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_1', () => import('@/pages/apprentice-courses/MOETModule5Section2_1'))));
+const MOETModule5Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_2', () => import('@/pages/apprentice-courses/MOETModule5Section2_2'))));
+const MOETModule5Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_3', () => import('@/pages/apprentice-courses/MOETModule5Section2_3'))));
+const MOETModule5Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_4', () => import('@/pages/apprentice-courses/MOETModule5Section2_4'))));
+const MOETModule5Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_5', () => import('@/pages/apprentice-courses/MOETModule5Section2_5'))));
+const MOETModule5Section2_6 = lazy(() => withTimeout(() => trackImport('MOETModule5Section2_6', () => import('@/pages/apprentice-courses/MOETModule5Section2_6'))));
+const MOETModule5Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule5Section3_1', () => import('@/pages/apprentice-courses/MOETModule5Section3_1'))));
+const MOETModule5Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section3_2', () => import('@/pages/apprentice-courses/MOETModule5Section3_2'))));
+const MOETModule5Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section3_3', () => import('@/pages/apprentice-courses/MOETModule5Section3_3'))));
+const MOETModule5Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section3_4', () => import('@/pages/apprentice-courses/MOETModule5Section3_4'))));
+const MOETModule5Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule5Section3_5', () => import('@/pages/apprentice-courses/MOETModule5Section3_5'))));
+const MOETModule5Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_1', () => import('@/pages/apprentice-courses/MOETModule5Section4_1'))));
+const MOETModule5Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_2', () => import('@/pages/apprentice-courses/MOETModule5Section4_2'))));
+const MOETModule5Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_3', () => import('@/pages/apprentice-courses/MOETModule5Section4_3'))));
+const MOETModule5Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_4', () => import('@/pages/apprentice-courses/MOETModule5Section4_4'))));
+const MOETModule5Section4_5 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_5', () => import('@/pages/apprentice-courses/MOETModule5Section4_5'))));
+const MOETModule5Section4_6 = lazy(() => withTimeout(() => trackImport('MOETModule5Section4_6', () => import('@/pages/apprentice-courses/MOETModule5Section4_6'))));
+const MOETModule5Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule5Section5_1', () => import('@/pages/apprentice-courses/MOETModule5Section5_1'))));
+const MOETModule5Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section5_2', () => import('@/pages/apprentice-courses/MOETModule5Section5_2'))));
+const MOETModule5Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section5_3', () => import('@/pages/apprentice-courses/MOETModule5Section5_3'))));
+const MOETModule5Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section5_4', () => import('@/pages/apprentice-courses/MOETModule5Section5_4'))));
+const MOETModule5Section5_5 = lazy(() => withTimeout(() => trackImport('MOETModule5Section5_5', () => import('@/pages/apprentice-courses/MOETModule5Section5_5'))));
+const MOETModule5Section6_1 = lazy(() => withTimeout(() => trackImport('MOETModule5Section6_1', () => import('@/pages/apprentice-courses/MOETModule5Section6_1'))));
+const MOETModule5Section6_2 = lazy(() => withTimeout(() => trackImport('MOETModule5Section6_2', () => import('@/pages/apprentice-courses/MOETModule5Section6_2'))));
+const MOETModule5Section6_3 = lazy(() => withTimeout(() => trackImport('MOETModule5Section6_3', () => import('@/pages/apprentice-courses/MOETModule5Section6_3'))));
+const MOETModule5Section6_4 = lazy(() => withTimeout(() => trackImport('MOETModule5Section6_4', () => import('@/pages/apprentice-courses/MOETModule5Section6_4'))));
+const MOETModule6Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule6Section1_3', () => import('@/pages/apprentice-courses/MOETModule6Section1_3'))));
+const MOETModule6Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule6Section1_4', () => import('@/pages/apprentice-courses/MOETModule6Section1_4'))));
+const MOETModule6Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule6Section1_5', () => import('@/pages/apprentice-courses/MOETModule6Section1_5'))));
+const MOETModule6Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule6Section2_1', () => import('@/pages/apprentice-courses/MOETModule6Section2_1'))));
+const MOETModule6Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule6Section2_2', () => import('@/pages/apprentice-courses/MOETModule6Section2_2'))));
+const MOETModule6Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule6Section2_3', () => import('@/pages/apprentice-courses/MOETModule6Section2_3'))));
+const MOETModule6Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule6Section2_4', () => import('@/pages/apprentice-courses/MOETModule6Section2_4'))));
+const MOETModule6Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule6Section3_1', () => import('@/pages/apprentice-courses/MOETModule6Section3_1'))));
+const MOETModule6Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule6Section3_2', () => import('@/pages/apprentice-courses/MOETModule6Section3_2'))));
+const MOETModule6Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule6Section3_3', () => import('@/pages/apprentice-courses/MOETModule6Section3_3'))));
+const MOETModule6Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule6Section3_4', () => import('@/pages/apprentice-courses/MOETModule6Section3_4'))));
+const MOETModule6Section3_5 = lazy(() => withTimeout(() => trackImport('MOETModule6Section3_5', () => import('@/pages/apprentice-courses/MOETModule6Section3_5'))));
+const MOETModule6Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule6Section4_1', () => import('@/pages/apprentice-courses/MOETModule6Section4_1'))));
+const MOETModule6Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule6Section4_2', () => import('@/pages/apprentice-courses/MOETModule6Section4_2'))));
+const MOETModule6Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule6Section4_3', () => import('@/pages/apprentice-courses/MOETModule6Section4_3'))));
+const MOETModule6Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule6Section4_4', () => import('@/pages/apprentice-courses/MOETModule6Section4_4'))));
+const MOETModule7MockExam = lazy(() => withTimeout(() => trackImport('MOETModule7MockExam', () => import('@/pages/apprentice-courses/MOETModule7MockExam'))));
+const MOETModule7Section1_2 = lazy(() => withTimeout(() => trackImport('MOETModule7Section1_2', () => import('@/pages/apprentice-courses/MOETModule7Section1_2'))));
+const MOETModule7Section1_3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section1_3', () => import('@/pages/apprentice-courses/MOETModule7Section1_3'))));
+const MOETModule7Section1_4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section1_4', () => import('@/pages/apprentice-courses/MOETModule7Section1_4'))));
+const MOETModule7Section1_5 = lazy(() => withTimeout(() => trackImport('MOETModule7Section1_5', () => import('@/pages/apprentice-courses/MOETModule7Section1_5'))));
+const MOETModule7Section2_1 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_1', () => import('@/pages/apprentice-courses/MOETModule7Section2_1'))));
+const MOETModule7Section2_2 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_2', () => import('@/pages/apprentice-courses/MOETModule7Section2_2'))));
+const MOETModule7Section2_3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_3', () => import('@/pages/apprentice-courses/MOETModule7Section2_3'))));
+const MOETModule7Section2_4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_4', () => import('@/pages/apprentice-courses/MOETModule7Section2_4'))));
+const MOETModule7Section2_5 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_5', () => import('@/pages/apprentice-courses/MOETModule7Section2_5'))));
+const MOETModule7Section2_6 = lazy(() => withTimeout(() => trackImport('MOETModule7Section2_6', () => import('@/pages/apprentice-courses/MOETModule7Section2_6'))));
+const MOETModule7Section3_1 = lazy(() => withTimeout(() => trackImport('MOETModule7Section3_1', () => import('@/pages/apprentice-courses/MOETModule7Section3_1'))));
+const MOETModule7Section3_2 = lazy(() => withTimeout(() => trackImport('MOETModule7Section3_2', () => import('@/pages/apprentice-courses/MOETModule7Section3_2'))));
+const MOETModule7Section3_3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section3_3', () => import('@/pages/apprentice-courses/MOETModule7Section3_3'))));
+const MOETModule7Section3_4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section3_4', () => import('@/pages/apprentice-courses/MOETModule7Section3_4'))));
+const MOETModule7Section4_1 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4_1', () => import('@/pages/apprentice-courses/MOETModule7Section4_1'))));
+const MOETModule7Section4_2 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4_2', () => import('@/pages/apprentice-courses/MOETModule7Section4_2'))));
+const MOETModule7Section4_3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4_3', () => import('@/pages/apprentice-courses/MOETModule7Section4_3'))));
+const MOETModule7Section4_4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4_4', () => import('@/pages/apprentice-courses/MOETModule7Section4_4'))));
+const MOETModule7Section4_5 = lazy(() => withTimeout(() => trackImport('MOETModule7Section4_5', () => import('@/pages/apprentice-courses/MOETModule7Section4_5'))));
+const MOETModule7Section5_1 = lazy(() => withTimeout(() => trackImport('MOETModule7Section5_1', () => import('@/pages/apprentice-courses/MOETModule7Section5_1'))));
+const MOETModule7Section5_2 = lazy(() => withTimeout(() => trackImport('MOETModule7Section5_2', () => import('@/pages/apprentice-courses/MOETModule7Section5_2'))));
+const MOETModule7Section5_3 = lazy(() => withTimeout(() => trackImport('MOETModule7Section5_3', () => import('@/pages/apprentice-courses/MOETModule7Section5_3'))));
+const MOETModule7Section5_4 = lazy(() => withTimeout(() => trackImport('MOETModule7Section5_4', () => import('@/pages/apprentice-courses/MOETModule7Section5_4'))));const NotFound = lazy(() => withTimeout(() => trackImport('NotFound', () => import('@/pages/apprentice-courses/NotFound'))));
 const Section1 = lazy(() => withTimeout(() => trackImport('Section1', () => import('@/pages/apprentice-courses/Section1'))));
 const Section2 = lazy(() => withTimeout(() => trackImport('Section2', () => import('@/pages/apprentice-courses/Section2'))));
 const Section2_1_ElectricShock = lazy(() => withTimeout(() => trackImport('Section2_1_ElectricShock', () => import('@/pages/apprentice-courses/Section2_1_ElectricShock'))));
@@ -2084,7 +2274,197 @@ export default function ApprenticeCourseRoutes() {
         <Route path="m-o-e-t-module7-section3" element={<MOETModule7Section3 />} />
         <Route path="m-o-e-t-module7-section4" element={<MOETModule7Section4 />} />
         <Route path="m-o-e-t-module7-section5" element={<MOETModule7Section5 />} />
-        <Route path="not-found" element={<NotFound />} />
+        <Route path="m-o-e-t-module1-section1-2" element={<MOETModule1Section1_2 />} />
+        <Route path="m-o-e-t-module1-section1-3" element={<MOETModule1Section1_3 />} />
+        <Route path="m-o-e-t-module1-section1-4" element={<MOETModule1Section1_4 />} />
+        <Route path="m-o-e-t-module1-section1-5" element={<MOETModule1Section1_5 />} />
+        <Route path="m-o-e-t-module1-section2-1" element={<MOETModule1Section2_1 />} />
+        <Route path="m-o-e-t-module1-section2-2" element={<MOETModule1Section2_2 />} />
+        <Route path="m-o-e-t-module1-section2-3" element={<MOETModule1Section2_3 />} />
+        <Route path="m-o-e-t-module1-section2-4" element={<MOETModule1Section2_4 />} />
+        <Route path="m-o-e-t-module1-section2-5" element={<MOETModule1Section2_5 />} />
+        <Route path="m-o-e-t-module1-section3-1" element={<MOETModule1Section3_1 />} />
+        <Route path="m-o-e-t-module1-section3-2" element={<MOETModule1Section3_2 />} />
+        <Route path="m-o-e-t-module1-section3-3" element={<MOETModule1Section3_3 />} />
+        <Route path="m-o-e-t-module1-section3-4" element={<MOETModule1Section3_4 />} />
+        <Route path="m-o-e-t-module1-section3-5" element={<MOETModule1Section3_5 />} />
+        <Route path="m-o-e-t-module1-section4-1" element={<MOETModule1Section4_1 />} />
+        <Route path="m-o-e-t-module1-section4-2" element={<MOETModule1Section4_2 />} />
+        <Route path="m-o-e-t-module1-section4-3" element={<MOETModule1Section4_3 />} />
+        <Route path="m-o-e-t-module1-section4-4" element={<MOETModule1Section4_4 />} />
+        <Route path="m-o-e-t-module1-section4-5" element={<MOETModule1Section4_5 />} />
+        <Route path="m-o-e-t-module1-section4-6" element={<MOETModule1Section4_6 />} />
+        <Route path="m-o-e-t-module1-section5-1" element={<MOETModule1Section5_1 />} />
+        <Route path="m-o-e-t-module1-section5-2" element={<MOETModule1Section5_2 />} />
+        <Route path="m-o-e-t-module1-section5-3" element={<MOETModule1Section5_3 />} />
+        <Route path="m-o-e-t-module1-section5-4" element={<MOETModule1Section5_4 />} />
+        <Route path="m-o-e-t-module1-section5-5" element={<MOETModule1Section5_5 />} />
+        <Route path="m-o-e-t-module1-section6-1" element={<MOETModule1Section6_1 />} />
+        <Route path="m-o-e-t-module1-section6-2" element={<MOETModule1Section6_2 />} />
+        <Route path="m-o-e-t-module1-section6-3" element={<MOETModule1Section6_3 />} />
+        <Route path="m-o-e-t-module1-section6-4" element={<MOETModule1Section6_4 />} />
+        <Route path="m-o-e-t-module1-section6-5" element={<MOETModule1Section6_5 />} />
+        <Route path="m-o-e-t-module2-section1-2" element={<MOETModule2Section1_2 />} />
+        <Route path="m-o-e-t-module2-section1-3" element={<MOETModule2Section1_3 />} />
+        <Route path="m-o-e-t-module2-section1-4" element={<MOETModule2Section1_4 />} />
+        <Route path="m-o-e-t-module2-section1-5" element={<MOETModule2Section1_5 />} />
+        <Route path="m-o-e-t-module2-section2-1" element={<MOETModule2Section2_1 />} />
+        <Route path="m-o-e-t-module2-section2-2" element={<MOETModule2Section2_2 />} />
+        <Route path="m-o-e-t-module2-section2-3" element={<MOETModule2Section2_3 />} />
+        <Route path="m-o-e-t-module2-section2-4" element={<MOETModule2Section2_4 />} />
+        <Route path="m-o-e-t-module2-section2-5" element={<MOETModule2Section2_5 />} />
+        <Route path="m-o-e-t-module2-section2-6" element={<MOETModule2Section2_6 />} />
+        <Route path="m-o-e-t-module2-section3-1" element={<MOETModule2Section3_1 />} />
+        <Route path="m-o-e-t-module2-section3-2" element={<MOETModule2Section3_2 />} />
+        <Route path="m-o-e-t-module2-section3-3" element={<MOETModule2Section3_3 />} />
+        <Route path="m-o-e-t-module2-section3-4" element={<MOETModule2Section3_4 />} />
+        <Route path="m-o-e-t-module2-section3-5" element={<MOETModule2Section3_5 />} />
+        <Route path="m-o-e-t-module2-section4-1" element={<MOETModule2Section4_1 />} />
+        <Route path="m-o-e-t-module2-section4-2" element={<MOETModule2Section4_2 />} />
+        <Route path="m-o-e-t-module2-section4-3" element={<MOETModule2Section4_3 />} />
+        <Route path="m-o-e-t-module2-section4-4" element={<MOETModule2Section4_4 />} />
+        <Route path="m-o-e-t-module2-section4-5" element={<MOETModule2Section4_5 />} />
+        <Route path="m-o-e-t-module2-section4-6" element={<MOETModule2Section4_6 />} />
+        <Route path="m-o-e-t-module2-section5-1" element={<MOETModule2Section5_1 />} />
+        <Route path="m-o-e-t-module2-section5-2" element={<MOETModule2Section5_2 />} />
+        <Route path="m-o-e-t-module2-section5-3" element={<MOETModule2Section5_3 />} />
+        <Route path="m-o-e-t-module2-section5-4" element={<MOETModule2Section5_4 />} />
+        <Route path="m-o-e-t-module3-section1-2" element={<MOETModule3Section1_2 />} />
+        <Route path="m-o-e-t-module3-section1-3" element={<MOETModule3Section1_3 />} />
+        <Route path="m-o-e-t-module3-section1-4" element={<MOETModule3Section1_4 />} />
+        <Route path="m-o-e-t-module3-section1-5" element={<MOETModule3Section1_5 />} />
+        <Route path="m-o-e-t-module3-section1-6" element={<MOETModule3Section1_6 />} />
+        <Route path="m-o-e-t-module3-section2-1" element={<MOETModule3Section2_1 />} />
+        <Route path="m-o-e-t-module3-section2-2" element={<MOETModule3Section2_2 />} />
+        <Route path="m-o-e-t-module3-section2-3" element={<MOETModule3Section2_3 />} />
+        <Route path="m-o-e-t-module3-section2-4" element={<MOETModule3Section2_4 />} />
+        <Route path="m-o-e-t-module3-section2-5" element={<MOETModule3Section2_5 />} />
+        <Route path="m-o-e-t-module3-section3-1" element={<MOETModule3Section3_1 />} />
+        <Route path="m-o-e-t-module3-section3-2" element={<MOETModule3Section3_2 />} />
+        <Route path="m-o-e-t-module3-section3-3" element={<MOETModule3Section3_3 />} />
+        <Route path="m-o-e-t-module3-section3-4" element={<MOETModule3Section3_4 />} />
+        <Route path="m-o-e-t-module3-section3-5" element={<MOETModule3Section3_5 />} />
+        <Route path="m-o-e-t-module3-section4-1" element={<MOETModule3Section4_1 />} />
+        <Route path="m-o-e-t-module3-section4-2" element={<MOETModule3Section4_2 />} />
+        <Route path="m-o-e-t-module3-section4-3" element={<MOETModule3Section4_3 />} />
+        <Route path="m-o-e-t-module3-section4-4" element={<MOETModule3Section4_4 />} />
+        <Route path="m-o-e-t-module3-section5-1" element={<MOETModule3Section5_1 />} />
+        <Route path="m-o-e-t-module3-section5-2" element={<MOETModule3Section5_2 />} />
+        <Route path="m-o-e-t-module3-section5-3" element={<MOETModule3Section5_3 />} />
+        <Route path="m-o-e-t-module3-section5-4" element={<MOETModule3Section5_4 />} />
+        <Route path="m-o-e-t-module3-section5-5" element={<MOETModule3Section5_5 />} />
+        <Route path="m-o-e-t-module3-section6-1" element={<MOETModule3Section6_1 />} />
+        <Route path="m-o-e-t-module3-section6-2" element={<MOETModule3Section6_2 />} />
+        <Route path="m-o-e-t-module3-section6-3" element={<MOETModule3Section6_3 />} />
+        <Route path="m-o-e-t-module3-section6-4" element={<MOETModule3Section6_4 />} />
+        <Route path="m-o-e-t-module3-section6-5" element={<MOETModule3Section6_5 />} />
+        <Route path="m-o-e-t-module4-section1-2" element={<MOETModule4Section1_2 />} />
+        <Route path="m-o-e-t-module4-section1-3" element={<MOETModule4Section1_3 />} />
+        <Route path="m-o-e-t-module4-section1-4" element={<MOETModule4Section1_4 />} />
+        <Route path="m-o-e-t-module4-section1-5" element={<MOETModule4Section1_5 />} />
+        <Route path="m-o-e-t-module4-section2-1" element={<MOETModule4Section2_1 />} />
+        <Route path="m-o-e-t-module4-section2-2" element={<MOETModule4Section2_2 />} />
+        <Route path="m-o-e-t-module4-section2-3" element={<MOETModule4Section2_3 />} />
+        <Route path="m-o-e-t-module4-section2-4" element={<MOETModule4Section2_4 />} />
+        <Route path="m-o-e-t-module4-section2-5" element={<MOETModule4Section2_5 />} />
+        <Route path="m-o-e-t-module4-section2-6" element={<MOETModule4Section2_6 />} />
+        <Route path="m-o-e-t-module4-section3-1" element={<MOETModule4Section3_1 />} />
+        <Route path="m-o-e-t-module4-section3-2" element={<MOETModule4Section3_2 />} />
+        <Route path="m-o-e-t-module4-section3-3" element={<MOETModule4Section3_3 />} />
+        <Route path="m-o-e-t-module4-section3-4" element={<MOETModule4Section3_4 />} />
+        <Route path="m-o-e-t-module4-section3-5" element={<MOETModule4Section3_5 />} />
+        <Route path="m-o-e-t-module4-section3-6" element={<MOETModule4Section3_6 />} />
+        <Route path="m-o-e-t-module4-section3-7" element={<MOETModule4Section3_7 />} />
+        <Route path="m-o-e-t-module4-section4-1" element={<MOETModule4Section4_1 />} />
+        <Route path="m-o-e-t-module4-section4-2" element={<MOETModule4Section4_2 />} />
+        <Route path="m-o-e-t-module4-section4-3" element={<MOETModule4Section4_3 />} />
+        <Route path="m-o-e-t-module4-section4-4" element={<MOETModule4Section4_4 />} />
+        <Route path="m-o-e-t-module4-section4-5" element={<MOETModule4Section4_5 />} />
+        <Route path="m-o-e-t-module4-section5-1" element={<MOETModule4Section5_1 />} />
+        <Route path="m-o-e-t-module4-section5-2" element={<MOETModule4Section5_2 />} />
+        <Route path="m-o-e-t-module4-section5-3" element={<MOETModule4Section5_3 />} />
+        <Route path="m-o-e-t-module4-section5-4" element={<MOETModule4Section5_4 />} />
+        <Route path="m-o-e-t-module4-section5-5" element={<MOETModule4Section5_5 />} />
+        <Route path="m-o-e-t-module4-section5-6" element={<MOETModule4Section5_6 />} />
+        <Route path="m-o-e-t-module4-section6-1" element={<MOETModule4Section6_1 />} />
+        <Route path="m-o-e-t-module4-section6-2" element={<MOETModule4Section6_2 />} />
+        <Route path="m-o-e-t-module4-section6-3" element={<MOETModule4Section6_3 />} />
+        <Route path="m-o-e-t-module4-section6-4" element={<MOETModule4Section6_4 />} />
+        <Route path="m-o-e-t-module4-section6-5" element={<MOETModule4Section6_5 />} />
+        <Route path="m-o-e-t-module4-section7-1" element={<MOETModule4Section7_1 />} />
+        <Route path="m-o-e-t-module4-section7-2" element={<MOETModule4Section7_2 />} />
+        <Route path="m-o-e-t-module4-section7-3" element={<MOETModule4Section7_3 />} />
+        <Route path="m-o-e-t-module4-section7-4" element={<MOETModule4Section7_4 />} />
+        <Route path="m-o-e-t-module5-section1-2" element={<MOETModule5Section1_2 />} />
+        <Route path="m-o-e-t-module5-section1-3" element={<MOETModule5Section1_3 />} />
+        <Route path="m-o-e-t-module5-section1-4" element={<MOETModule5Section1_4 />} />
+        <Route path="m-o-e-t-module5-section1-5" element={<MOETModule5Section1_5 />} />
+        <Route path="m-o-e-t-module5-section2-1" element={<MOETModule5Section2_1 />} />
+        <Route path="m-o-e-t-module5-section2-2" element={<MOETModule5Section2_2 />} />
+        <Route path="m-o-e-t-module5-section2-3" element={<MOETModule5Section2_3 />} />
+        <Route path="m-o-e-t-module5-section2-4" element={<MOETModule5Section2_4 />} />
+        <Route path="m-o-e-t-module5-section2-5" element={<MOETModule5Section2_5 />} />
+        <Route path="m-o-e-t-module5-section2-6" element={<MOETModule5Section2_6 />} />
+        <Route path="m-o-e-t-module5-section3-1" element={<MOETModule5Section3_1 />} />
+        <Route path="m-o-e-t-module5-section3-2" element={<MOETModule5Section3_2 />} />
+        <Route path="m-o-e-t-module5-section3-3" element={<MOETModule5Section3_3 />} />
+        <Route path="m-o-e-t-module5-section3-4" element={<MOETModule5Section3_4 />} />
+        <Route path="m-o-e-t-module5-section3-5" element={<MOETModule5Section3_5 />} />
+        <Route path="m-o-e-t-module5-section4-1" element={<MOETModule5Section4_1 />} />
+        <Route path="m-o-e-t-module5-section4-2" element={<MOETModule5Section4_2 />} />
+        <Route path="m-o-e-t-module5-section4-3" element={<MOETModule5Section4_3 />} />
+        <Route path="m-o-e-t-module5-section4-4" element={<MOETModule5Section4_4 />} />
+        <Route path="m-o-e-t-module5-section4-5" element={<MOETModule5Section4_5 />} />
+        <Route path="m-o-e-t-module5-section4-6" element={<MOETModule5Section4_6 />} />
+        <Route path="m-o-e-t-module5-section5-1" element={<MOETModule5Section5_1 />} />
+        <Route path="m-o-e-t-module5-section5-2" element={<MOETModule5Section5_2 />} />
+        <Route path="m-o-e-t-module5-section5-3" element={<MOETModule5Section5_3 />} />
+        <Route path="m-o-e-t-module5-section5-4" element={<MOETModule5Section5_4 />} />
+        <Route path="m-o-e-t-module5-section5-5" element={<MOETModule5Section5_5 />} />
+        <Route path="m-o-e-t-module5-section6-1" element={<MOETModule5Section6_1 />} />
+        <Route path="m-o-e-t-module5-section6-2" element={<MOETModule5Section6_2 />} />
+        <Route path="m-o-e-t-module5-section6-3" element={<MOETModule5Section6_3 />} />
+        <Route path="m-o-e-t-module5-section6-4" element={<MOETModule5Section6_4 />} />
+        <Route path="m-o-e-t-module6-section1-3" element={<MOETModule6Section1_3 />} />
+        <Route path="m-o-e-t-module6-section1-4" element={<MOETModule6Section1_4 />} />
+        <Route path="m-o-e-t-module6-section1-5" element={<MOETModule6Section1_5 />} />
+        <Route path="m-o-e-t-module6-section2-1" element={<MOETModule6Section2_1 />} />
+        <Route path="m-o-e-t-module6-section2-2" element={<MOETModule6Section2_2 />} />
+        <Route path="m-o-e-t-module6-section2-3" element={<MOETModule6Section2_3 />} />
+        <Route path="m-o-e-t-module6-section2-4" element={<MOETModule6Section2_4 />} />
+        <Route path="m-o-e-t-module6-section3-1" element={<MOETModule6Section3_1 />} />
+        <Route path="m-o-e-t-module6-section3-2" element={<MOETModule6Section3_2 />} />
+        <Route path="m-o-e-t-module6-section3-3" element={<MOETModule6Section3_3 />} />
+        <Route path="m-o-e-t-module6-section3-4" element={<MOETModule6Section3_4 />} />
+        <Route path="m-o-e-t-module6-section3-5" element={<MOETModule6Section3_5 />} />
+        <Route path="m-o-e-t-module6-section4-1" element={<MOETModule6Section4_1 />} />
+        <Route path="m-o-e-t-module6-section4-2" element={<MOETModule6Section4_2 />} />
+        <Route path="m-o-e-t-module6-section4-3" element={<MOETModule6Section4_3 />} />
+        <Route path="m-o-e-t-module6-section4-4" element={<MOETModule6Section4_4 />} />
+        <Route path="m-o-e-t-module7-mock-exam" element={<MOETModule7MockExam />} />
+        <Route path="m-o-e-t-module7-section1-2" element={<MOETModule7Section1_2 />} />
+        <Route path="m-o-e-t-module7-section1-3" element={<MOETModule7Section1_3 />} />
+        <Route path="m-o-e-t-module7-section1-4" element={<MOETModule7Section1_4 />} />
+        <Route path="m-o-e-t-module7-section1-5" element={<MOETModule7Section1_5 />} />
+        <Route path="m-o-e-t-module7-section2-1" element={<MOETModule7Section2_1 />} />
+        <Route path="m-o-e-t-module7-section2-2" element={<MOETModule7Section2_2 />} />
+        <Route path="m-o-e-t-module7-section2-3" element={<MOETModule7Section2_3 />} />
+        <Route path="m-o-e-t-module7-section2-4" element={<MOETModule7Section2_4 />} />
+        <Route path="m-o-e-t-module7-section2-5" element={<MOETModule7Section2_5 />} />
+        <Route path="m-o-e-t-module7-section2-6" element={<MOETModule7Section2_6 />} />
+        <Route path="m-o-e-t-module7-section3-1" element={<MOETModule7Section3_1 />} />
+        <Route path="m-o-e-t-module7-section3-2" element={<MOETModule7Section3_2 />} />
+        <Route path="m-o-e-t-module7-section3-3" element={<MOETModule7Section3_3 />} />
+        <Route path="m-o-e-t-module7-section3-4" element={<MOETModule7Section3_4 />} />
+        <Route path="m-o-e-t-module7-section4-1" element={<MOETModule7Section4_1 />} />
+        <Route path="m-o-e-t-module7-section4-2" element={<MOETModule7Section4_2 />} />
+        <Route path="m-o-e-t-module7-section4-3" element={<MOETModule7Section4_3 />} />
+        <Route path="m-o-e-t-module7-section4-4" element={<MOETModule7Section4_4 />} />
+        <Route path="m-o-e-t-module7-section4-5" element={<MOETModule7Section4_5 />} />
+        <Route path="m-o-e-t-module7-section5-1" element={<MOETModule7Section5_1 />} />
+        <Route path="m-o-e-t-module7-section5-2" element={<MOETModule7Section5_2 />} />
+        <Route path="m-o-e-t-module7-section5-3" element={<MOETModule7Section5_3 />} />
+        <Route path="m-o-e-t-module7-section5-4" element={<MOETModule7Section5_4 />} />        <Route path="not-found" element={<NotFound />} />
         <Route path="section1" element={<Section1 />} />
         <Route path="section2" element={<Section2 />} />
         <Route path="section2-1--electric-shock" element={<Section2_1_ElectricShock />} />

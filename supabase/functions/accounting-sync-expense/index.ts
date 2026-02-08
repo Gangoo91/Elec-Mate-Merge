@@ -557,8 +557,9 @@ async function syncExpenseToQuickBooks(
   console.log('=== syncExpenseToQuickBooks START ===');
   console.log('Expense:', expense.id, expense.category, expense.amount);
 
-  // Get an expense account for this category
-  const accountRef = await getOrCreateQBExpenseAccount(accessToken, realmId, expense.category);
+  // Get the bank/cash account (where money comes from) and expense account (where money goes)
+  const bankAccountRef = await getQBBankAccount(accessToken, realmId);
+  const expenseAccountRef = await getOrCreateQBExpenseAccount(accessToken, realmId, expense.category);
 
   // Build description
   let description = expense.description || getCategoryLabel(expense.category);
@@ -572,8 +573,11 @@ async function syncExpenseToQuickBooks(
     : expense.amount;
 
   // Create purchase (expense)
+  // AccountRef = bank/cash account the money comes from (required for Cash payment type)
+  // Line AccountRef = expense category account the money goes to
   const purchase: any = {
     PaymentType: 'Cash',
+    AccountRef: bankAccountRef,
     TotalAmt: expense.amount,
     TxnDate: expense.date?.split('T')[0] || new Date().toISOString().split('T')[0],
     EntityRef: expense.vendor ? {
@@ -584,7 +588,7 @@ async function syncExpenseToQuickBooks(
       DetailType: 'AccountBasedExpenseLineDetail',
       Amount: netAmount,
       AccountBasedExpenseLineDetail: {
-        AccountRef: accountRef,
+        AccountRef: expenseAccountRef,
         TaxCodeRef: expense.vat_amount ? { value: 'TAX' } : { value: 'NON' },
       },
       Description: description,
@@ -635,6 +639,68 @@ async function syncExpenseToQuickBooks(
     externalExpenseId: createdPurchase.Id,
     externalUrl: `https://app.qbo.intuit.com/app/expense?txnId=${createdPurchase.Id}`,
   };
+}
+
+async function getQBBankAccount(
+  accessToken: string,
+  realmId: string
+): Promise<{ value: string; name: string }> {
+  // Query for Bank accounts (checking/savings) - this is where the money comes from
+  const query = `SELECT * FROM Account WHERE AccountType = 'Bank' MAXRESULTS 10`;
+  const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+
+  const response = await fetch(queryUrl, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (response.ok) {
+    const result = await response.json();
+    const accounts = result.QueryResponse?.Account;
+
+    if (accounts && accounts.length > 0) {
+      // Prefer active checking account
+      const checking = accounts.find((acc: any) =>
+        acc.Active && acc.AccountSubType === 'Checking'
+      );
+      if (checking) {
+        console.log('Using QB bank account:', checking.Id, checking.Name);
+        return { value: String(checking.Id), name: checking.Name };
+      }
+      // Fall back to first active bank account
+      const active = accounts.find((acc: any) => acc.Active);
+      if (active) {
+        console.log('Using QB bank account:', active.Id, active.Name);
+        return { value: String(active.Id), name: active.Name };
+      }
+      console.log('Using QB bank account (first):', accounts[0].Id, accounts[0].Name);
+      return { value: String(accounts[0].Id), name: accounts[0].Name };
+    }
+  }
+
+  // Fallback - try to find any account that can serve as payment source
+  console.warn('No bank accounts found, trying Credit Card accounts');
+  const ccQuery = `SELECT * FROM Account WHERE AccountType = 'Credit Card' MAXRESULTS 5`;
+  const ccUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(ccQuery)}`;
+
+  const ccResponse = await fetch(ccUrl, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (ccResponse.ok) {
+    const ccResult = await ccResponse.json();
+    const ccAccounts = ccResult.QueryResponse?.Account;
+    if (ccAccounts && ccAccounts.length > 0) {
+      return { value: String(ccAccounts[0].Id), name: ccAccounts[0].Name };
+    }
+  }
+
+  throw new Error('No bank or credit card account found in QuickBooks. Please add a bank account first.');
 }
 
 async function getOrCreateQBExpenseAccount(

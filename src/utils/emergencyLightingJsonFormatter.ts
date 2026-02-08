@@ -379,7 +379,9 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       email: get('companyEmail'),
       website: get('companyWebsite'),
       logo: get('companyLogo'),
-      accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b'
+      accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
+      registration_scheme_logo: get('registrationSchemeLogo'),
+      registration_scheme: get('registrationScheme')
     },
 
     // ============================================
@@ -438,7 +440,9 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
     company_logo: get('companyLogo'),
-    company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b'
+    company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
+    registration_scheme_logo: get('registrationSchemeLogo'),
+    registration_scheme: get('registrationScheme')
   };
 };
 

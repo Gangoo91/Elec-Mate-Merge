@@ -195,6 +195,95 @@ const AM2Module4Section1 = () => {
         <AM2LearningOutcomes outcomes={learningOutcomes} />
       </AM2ContentCard>
 
+      {/* Dead vs Live Testing Sequence Diagram */}
+      <div className="my-8 flex justify-center">
+        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+          <svg viewBox="0 0 500 450" className="w-full h-auto" role="img" aria-label="Dead vs Live testing sequence diagram showing dead tests must pass before live tests commence">
+            {/* Title */}
+            <text x="250" y="24" textAnchor="middle" fill="#F3F4F6" fontSize="15" fontFamily="system-ui, sans-serif" fontWeight="bold">BS 7671 / GN3 Test Sequence</text>
+
+            {/* Left Column - DEAD TESTS */}
+            <rect x="10" y="42" width="200" height="36" rx="8" fill="#D97706" />
+            <text x="110" y="66" textAnchor="middle" fill="white" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="bold">DEAD TESTS</text>
+
+            <rect x="10" y="86" width="200" height="40" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
+            <text x="22" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">1.</text>
+            <text x="36" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Continuity of Protective</text>
+            <text x="36" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Conductors (R1+R2)</text>
+
+            <rect x="10" y="132" width="200" height="40" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
+            <text x="22" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">2.</text>
+            <text x="36" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Continuity of Ring Final</text>
+            <text x="36" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Circuit Conductors</text>
+
+            <rect x="10" y="178" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
+            <text x="22" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">3.</text>
+            <text x="36" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Insulation Resistance</text>
+
+            <rect x="10" y="218" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
+            <text x="22" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">4.</text>
+            <text x="36" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Polarity</text>
+
+            <rect x="10" y="258" width="200" height="34" rx="6" fill="#1F2937" stroke="#D97706" strokeWidth="1" />
+            <text x="22" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">5.</text>
+            <text x="36" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Earth Electrode Resistance</text>
+
+            {/* Right Column - LIVE TESTS */}
+            <rect x="290" y="42" width="200" height="36" rx="8" fill="#DC2626" />
+            <text x="390" y="66" textAnchor="middle" fill="white" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="bold">LIVE TESTS</text>
+
+            <rect x="290" y="86" width="200" height="40" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="302" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">6.</text>
+            <text x="316" y="103" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Earth Fault Loop</text>
+            <text x="316" y="118" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Impedance (Zs)</text>
+
+            <rect x="290" y="132" width="200" height="40" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="302" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">7.</text>
+            <text x="316" y="149" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Prospective Fault</text>
+            <text x="316" y="164" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Current (PFC)</text>
+
+            <rect x="290" y="178" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="302" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">8.</text>
+            <text x="316" y="200" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">RCD Operation</text>
+
+            <rect x="290" y="218" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="302" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">9.</text>
+            <text x="316" y="240" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Phase Sequence</text>
+
+            <rect x="290" y="258" width="200" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="302" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif" fontWeight="bold">10.</text>
+            <text x="320" y="280" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Functional Testing</text>
+
+            {/* Central barrier / arrow */}
+            <line x1="250" y1="86" x2="250" y2="292" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="6,4" />
+
+            {/* Arrow from dead to live */}
+            <rect x="218" y="310" width="64" height="24" rx="4" fill="none" />
+            <line x1="220" y1="322" x2="270" y2="322" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="266,316 276,322 266,328" fill="#9CA3AF" />
+
+            {/* Central message box */}
+            <rect x="80" y="350" width="340" height="50" rx="8" fill="#1F2937" stroke="#D97706" strokeWidth="2" />
+            <text x="250" y="372" textAnchor="middle" fill="#FCD34D" fontSize="12" fontFamily="system-ui, sans-serif" fontWeight="bold">ALL DEAD TESTS MUST PASS FIRST</text>
+            <text x="250" y="390" textAnchor="middle" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Live testing without dead test completion = automatic fail</text>
+
+            {/* Checkmark on dead side */}
+            <circle cx="110" cy="330" r="12" fill="#22C55E" fillOpacity="0.2" stroke="#22C55E" strokeWidth="1.5" />
+            <path d="M103 330 L108 335 L117 325" stroke="#22C55E" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <text x="110" y="355" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">Complete</text>
+
+            {/* Lock on live side — SVG padlock shape */}
+            <circle cx="390" cy="330" r="12" fill="#DC2626" fillOpacity="0.2" stroke="#DC2626" strokeWidth="1.5" />
+            <rect x="384" y="329" width="12" height="9" rx="1.5" fill="#DC2626" />
+            <path d="M387 329 V326 A3 3 0 0 1 393 326 V329" stroke="#DC2626" strokeWidth="1.5" fill="none" />
+            <text x="390" y="355" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">Locked</text>
+
+            {/* Bottom note */}
+            <text x="250" y="430" textAnchor="middle" fill="#9CA3AF" fontSize="10" fontFamily="system-ui, sans-serif">IET Guidance Note 3 / BS 7671 Part 6</text>
+          </svg>
+        </div>
+      </div>
+
       {/* NET AM2 GN3 Testing Sequence */}
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">

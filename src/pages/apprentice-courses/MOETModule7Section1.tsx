@@ -16,35 +16,35 @@ const MOETModule7Section1 = () => {
       title: "Multiple-Choice Question Banks",
       description: "Practice question banks covering all module topics and learning outcomes",
       icon: HelpCircle,
-      href: "../m-o-e-t-module7-section1-1"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section1-1"
     },
     {
       number: "7.1.2",
       title: "Timed Mock Tests",
       description: "Full-length practice tests under exam conditions with time constraints",
       icon: Clock,
-      href: "../m-o-e-t-module7-section1-2"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section1-2"
     },
     {
       number: "7.1.3",
       title: "Feedback and Explanations",
       description: "Detailed explanations for answers and performance feedback",
       icon: MessageSquare,
-      href: "../m-o-e-t-module7-section1-3"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section1-3"
     },
     {
       number: "7.1.4",
       title: "Identifying Knowledge Gaps",
       description: "Self-assessment techniques and identifying areas for improvement",
       icon: Search,
-      href: "../m-o-e-t-module7-section1-4"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section1-4"
     },
     {
       number: "7.1.5",
       title: "Exam Techniques and Strategies",
       description: "Test-taking strategies, time management and approach techniques",
       icon: Target,
-      href: "../m-o-e-t-module7-section1-5"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section1-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule7Section1 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module7">
+            <Link to="/study-centre/apprentice/m-o-e-t-module7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
             </Link>
@@ -68,7 +68,7 @@ const MOETModule7Section1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 7.1: Knowledge Test Practice
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Multiple-choice questions, mock tests, feedback and exam techniques.
           </p>
         </div>

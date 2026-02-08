@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft } from "lucide-react";
+import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -101,7 +101,7 @@ export default function StudyCentreIndex() {
             className="mt-6 grid grid-cols-4 gap-2 touch-grid"
           >
             {[
-              { value: "22", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
+              { value: "36", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
               { value: totalQuizzesTaken || "0", label: "Quizzes", icon: Target, color: "from-purple-500 to-pink-400" },
               { value: averageScore > 0 ? `${averageScore}%` : "—", label: "Score", icon: Award, color: "from-emerald-500 to-teal-400" },
               { value: currentStreak || "0", label: "Streak", icon: Flame, color: "from-orange-500 to-red-400" },
@@ -284,6 +284,83 @@ export default function StudyCentreIndex() {
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/20 flex items-center justify-center group-hover:from-elec-yellow group-hover:to-amber-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
                 <ChevronRight className="h-5 w-5 text-elec-yellow/60 group-hover:text-elec-dark transition-colors" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* General Upskilling Card - Emerald/Green Theme */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          onClick={() => navigate("/study-centre/general-upskilling")}
+          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
+        >
+          {/* Multi-layer background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/15 via-transparent to-green-500/10" />
+
+          {/* Animated mesh gradient */}
+          <div className="absolute inset-0 opacity-40">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-500/30 to-transparent rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-500" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-green-500/20 to-transparent rounded-full blur-2xl transform -translate-x-5 translate-y-5 group-hover:scale-110 transition-transform duration-500" />
+          </div>
+
+          {/* Accent border glow */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent" />
+
+          <div className="relative p-5">
+            {/* Header Row */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/20 backdrop-blur-sm">
+                <Shield className="h-6 w-6 text-emerald-400" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 backdrop-blur-sm">
+                  14 Courses
+                </span>
+              </div>
+            </div>
+
+            {/* Title & Description */}
+            <h3 className="text-xl font-bold text-white mb-1.5 group-hover:text-emerald-300 transition-colors">
+              General Upskilling
+            </h3>
+            <p className="text-sm text-white/50 mb-4 leading-relaxed">
+              Cross-industry safety training — IPAF, first aid, working at height, and essential site skills
+            </p>
+
+            {/* Feature Tags */}
+            <div className="flex flex-wrap gap-1.5 mb-5">
+              {[
+                { label: "IPAF Scaffold", color: "from-emerald-500/20 to-green-500/20 border-emerald-500/30 text-emerald-400" },
+                { label: "First Aid", color: "from-red-500/20 to-rose-500/20 border-red-500/30 text-red-400" },
+                { label: "COSHH", color: "from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-400" },
+                { label: "Fire Safety", color: "from-yellow-500/20 to-amber-500/20 border-yellow-500/30 text-yellow-400" },
+              ].map((tag) => (
+                <span
+                  key={tag.label}
+                  className={cn(
+                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    tag.color
+                  )}
+                >
+                  {tag.label}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-lg bg-emerald-500/20">
+                  <Play className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400" />
+                </div>
+                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/20 flex items-center justify-center group-hover:from-emerald-500 group-hover:to-green-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
+                <ChevronRight className="h-5 w-5 text-emerald-400/60 group-hover:text-white transition-colors" />
               </div>
             </div>
           </div>

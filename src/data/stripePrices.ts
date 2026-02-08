@@ -39,7 +39,7 @@ export const stripePriceData = {
       name: "Apprentice",
       price: "£4.99",
       period: "/month",
-      description: "Ace your exams and fast-track your career",
+      description: "Study guides, calculators & exam prep for apprentices",
       features: [
         "2,000+ practice questions",
         "AM2 exam preparation",
@@ -63,7 +63,7 @@ export const stripePriceData = {
       name: "Electrician",
       price: "£9.99",
       period: "/month",
-      description: "AI-powered tools that save you hours every day",
+      description: "Certs, testing, quoting & AI agents for qualified sparks",
       features: [
         "Everything in Apprentice",
         "8 AI Specialist Agents",
@@ -84,7 +84,7 @@ export const stripePriceData = {
       name: "Employer",
       price: "£29.99",
       period: "/month",
-      description: "Run your electrical business efficiently",
+      description: "Team management, job tracking & business tools",
       features: [
         "Everything in Electrician",
         "Team GPS & job tracking",
@@ -108,7 +108,7 @@ export const stripePriceData = {
       name: "Apprentice",
       price: "£49.99",
       period: "/year",
-      description: "Ace your exams and fast-track your career",
+      description: "Study guides, calculators & exam prep for apprentices",
       features: [
         "2,000+ practice questions",
         "AM2 exam preparation",
@@ -133,7 +133,7 @@ export const stripePriceData = {
       name: "Electrician",
       price: "£99.99",
       period: "/year",
-      description: "AI-powered tools that save you hours every day",
+      description: "Certs, testing, quoting & AI agents for qualified sparks",
       features: [
         "Everything in Apprentice",
         "8 AI Specialist Agents",
@@ -155,7 +155,7 @@ export const stripePriceData = {
       name: "Employer",
       price: "£299.99",
       period: "/year",
-      description: "Run your electrical business efficiently",
+      description: "Team management, job tracking & business tools",
       features: [
         "Everything in Electrician",
         "Team GPS & job tracking",

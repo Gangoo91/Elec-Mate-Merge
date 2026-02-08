@@ -16,28 +16,28 @@ const MOETModule5Section6 = () => {
       title: "Fieldbus and Profibus Systems",
       description: "Fieldbus protocols, Profibus networks and device integration",
       icon: Cable,
-      href: "../m-o-e-t-module5-section6-1"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section6-1"
     },
     {
       number: "5.6.2",
       title: "Industrial Ethernet",
       description: "Ethernet protocols, network topology and industrial applications",
       icon: Globe,
-      href: "../m-o-e-t-module5-section6-2"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section6-2"
     },
     {
       number: "5.6.3",
       title: "Wireless and IoT in Industry",
       description: "Wireless technologies, IoT devices and Industry 4.0 concepts",
       icon: Wifi,
-      href: "../m-o-e-t-module5-section6-3"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section6-3"
     },
     {
       number: "5.6.4",
       title: "Cybersecurity in Industrial Networks",
       description: "Network security, firewalls and protection strategies",
       icon: Shield,
-      href: "../m-o-e-t-module5-section6-4"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section6-4"
     }
   ];
 
@@ -47,7 +47,7 @@ const MOETModule5Section6 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module5">
+            <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5
             </Link>
@@ -61,7 +61,7 @@ const MOETModule5Section6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 5.6: Networking and Industrial Communication
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks.
           </p>
         </div>

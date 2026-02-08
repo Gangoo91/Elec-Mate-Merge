@@ -17,49 +17,49 @@ const MOET = () => {
       title: "Health, Safety and Compliance",
       description: "Essential health and safety requirements, risk management and regulatory compliance for maintenance operations",
       icon: Shield,
-      href: "../m-o-e-t-module1"
+      href: "/study-centre/apprentice/m-o-e-t-module1"
     },
     {
       number: "Module 2",
       title: "Engineering Principles and Electrical Theory",
       description: "Fundamental engineering principles, electrical theory and mathematical applications for maintenance engineering",
       icon: Zap,
-      href: "../m-o-e-t-module2"
+      href: "/study-centre/apprentice/m-o-e-t-module2"
     },
     {
       number: "Module 3",
       title: "Electrical Plant, Equipment and Systems",
       description: "Understanding electrical plant, equipment specifications, system operations and maintenance requirements",
       icon: Cog,
-      href: "../m-o-e-t-module3"
+      href: "/study-centre/apprentice/m-o-e-t-module3"
     },
     {
       number: "Module 4",
       title: "Maintenance Techniques and Fault Diagnosis",
       description: "Systematic maintenance approaches, fault finding techniques and diagnostic procedures for engineering systems",
       icon: Wrench,
-      href: "../m-o-e-t-module4"
+      href: "/study-centre/apprentice/m-o-e-t-module4"
     },
     {
       number: "Module 5",
       title: "Control, Automation and Instrumentation",
       description: "Control systems, automation technology, instrumentation and monitoring systems for industrial applications",
       icon: Settings,
-      href: "../m-o-e-t-module5"
+      href: "/study-centre/apprentice/m-o-e-t-module5"
     },
     {
       number: "Module 6",
       title: "Technical Documentation and Communication",
       description: "Technical reporting, documentation standards, communication skills and professional development",
       icon: FileText,
-      href: "../m-o-e-t-module6"
+      href: "/study-centre/apprentice/m-o-e-t-module6"
     },
     {
       number: "Module 7",
       title: "End Point Assessment Preparation",
       description: "Comprehensive preparation for MOET end point assessment including practical tasks and knowledge evaluation",
       icon: Award,
-      href: "../m-o-e-t-module7"
+      href: "/study-centre/apprentice/m-o-e-t-module7"
     }
   ];
 

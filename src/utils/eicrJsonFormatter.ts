@@ -843,7 +843,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       insurance_provider: get('insuranceProvider'),
       insurance_policy_number: get('insurancePolicyNumber'),
       insurance_coverage: get('insuranceCoverage'),
-      insurance_expiry: get('insuranceExpiry')
+      insurance_expiry: get('insuranceExpiry'),
+      registration_scheme_logo: get('registrationSchemeLogo')
     },
 
     observations: await formatDefects(),
@@ -1024,6 +1025,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     registrationNumber: get('registrationNumber'),
     registration_expiry: get('registrationExpiry'),
     registrationExpiry: get('registrationExpiry'),
+    registration_scheme_logo: get('registrationSchemeLogo'),
+    registrationSchemeLogo: get('registrationSchemeLogo'),
 
     // Insurance (flat)
     insurance_provider: get('insuranceProvider'),

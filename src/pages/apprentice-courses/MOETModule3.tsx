@@ -16,42 +16,42 @@ const MOETModule3 = () => {
       title: "Switchgear and Distribution Systems",
       description: "LV/HV switchgear, distribution boards, busbars, isolation and protection coordination",
       icon: Zap,
-      href: "../m-o-e-t-module3-section1"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section1"
     },
     {
       number: "3.2", 
       title: "Motors, Drives and Starters",
       description: "Motor operation, DOL/star-delta starters, VSDs and motor maintenance",
       icon: Cog,
-      href: "../m-o-e-t-module3-section2"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section2"
     },
     {
       number: "3.3",
       title: "Control Panels and Wiring Systems", 
       description: "Panel design, cable selection, terminations, containment and labelling",
       icon: Settings,
-      href: "../m-o-e-t-module3-section3"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section3"
     },
     {
       number: "3.4",
       title: "Lighting and Power Installations",
       description: "General lighting, emergency systems, socket circuits and energy efficiency",
       icon: Lightbulb,
-      href: "../m-o-e-t-module3-section4"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section4"
     },
     {
       number: "3.5",
       title: "Auxiliary Systems (UPS, Batteries, Emergency Supplies)",
       description: "UPS systems, battery technologies, generators and critical load management",
       icon: Battery,
-      href: "../m-o-e-t-module3-section5"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5"
     },
     {
       number: "3.6",
       title: "Emerging Technologies (Renewables, Smart Systems)",
       description: "Solar PV, renewables, energy storage, smart grids and EV charging",
       icon: Leaf,
-      href: "../m-o-e-t-module3-section6"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6"
     }
   ];
 
@@ -61,7 +61,7 @@ const MOETModule3 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t">
+            <Link to="/study-centre/apprentice/moet">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to MOET Course
             </Link>
@@ -75,7 +75,7 @@ const MOETModule3 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 3: Electrical Plant, Equipment and Systems
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Understanding electrical plant, equipment specifications, system operations and maintenance requirements.
           </p>
         </div>

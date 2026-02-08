@@ -562,7 +562,7 @@ export const useReportSync = ({
   }, [reportType]);
 
   // === LOAD REPORT ===
-  const loadReport = useCallback(async (loadReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
+  const loadReport = useCallback(async (loadReportId: string): Promise<{ data: any; databaseId: string | null; updatedAt?: string; lastSyncedAt?: string } | null> => {
     if (!userId) return null;
 
     try {
@@ -585,6 +585,8 @@ export const useReportSync = ({
       return {
         data: reportResult.data,
         databaseId: reportResult.databaseId,
+        updatedAt: reportResult.updatedAt,
+        lastSyncedAt: reportResult.lastSyncedAt,
       };
     } catch (error) {
       toast({

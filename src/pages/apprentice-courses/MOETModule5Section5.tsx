@@ -16,35 +16,35 @@ const MOETModule5Section5 = () => {
       title: "Calibration Procedures and Standards",
       description: "Calibration methodologies, standards and traceability requirements",
       icon: Clipboard,
-      href: "../m-o-e-t-module5-section5-1"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section5-1"
     },
     {
       number: "5.5.2",
       title: "Test Instruments for Control Systems",
       description: "Selection and use of calibration and test equipment",
       icon: TestTube,
-      href: "../m-o-e-t-module5-section5-2"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section5-2"
     },
     {
       number: "5.5.3",
       title: "Zero, Span and Linearity Adjustments",
       description: "Calibration adjustments and accuracy verification procedures",
       icon: Settings,
-      href: "../m-o-e-t-module5-section5-3"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section5-3"
     },
     {
       number: "5.5.4",
       title: "Functional Testing of Loops",
       description: "End-to-end testing of control loops and system verification",
       icon: RotateCcw,
-      href: "../m-o-e-t-module5-section5-4"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section5-4"
     },
     {
       number: "5.5.5",
       title: "Documenting Calibration Results",
       description: "Record keeping, certificates and calibration documentation",
       icon: FileText,
-      href: "../m-o-e-t-module5-section5-5"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section5-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule5Section5 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module5">
+            <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5
             </Link>
@@ -68,7 +68,7 @@ const MOETModule5Section5 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 5.5: Testing and Calibration of Systems
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Calibration procedures, test instruments, adjustments and documentation.
           </p>
         </div>

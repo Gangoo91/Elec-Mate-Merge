@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FormSection } from "./FormSection";
-import { RegistrationSchemeSelect } from "./RegistrationSchemeSelect";
+import { SchemeLogoPicker } from "./SchemeLogoPicker";
 import { InsuranceDetailsForm } from "./InsuranceDetailsForm";
 import { SignatureGenerator } from "./SignatureGenerator";
 import SignaturePad, { SignaturePadRef } from "@/components/signature/SignaturePad";
@@ -49,6 +49,7 @@ export default function InspectorProfileForm() {
     registrationScheme: "none",
     registrationNumber: "",
     registrationExpiry: "",
+    schemeLogoDataUrl: "",
     insuranceProvider: "none",
     insurancePolicyNumber: "",
     insuranceCoverage: "",
@@ -83,6 +84,7 @@ export default function InspectorProfileForm() {
         registrationScheme: currentProfile.registrationScheme || "none",
         registrationNumber: currentProfile.registrationNumber || "",
         registrationExpiry: currentProfile.registrationExpiry || "",
+        schemeLogoDataUrl: currentProfile.schemeLogoDataUrl || "",
         insuranceProvider: currentProfile.insuranceProvider || "none",
         insurancePolicyNumber: currentProfile.insurancePolicyNumber || "",
         insuranceCoverage: currentProfile.insuranceCoverage || "",
@@ -374,13 +376,14 @@ export default function InspectorProfileForm() {
           title="4. Registration & Insurance"
           description="Professional registration and insurance details"
         >
-          <RegistrationSchemeSelect
+          <SchemeLogoPicker
             scheme={formData.registrationScheme}
             registrationNumber={formData.registrationNumber}
             registrationExpiry={formData.registrationExpiry}
             onSchemeChange={(value) => setFormData({ ...formData, registrationScheme: value })}
             onNumberChange={(value) => setFormData({ ...formData, registrationNumber: value })}
             onExpiryChange={(value) => setFormData({ ...formData, registrationExpiry: value })}
+            onLogoDataUrlChange={(dataUrl) => setFormData({ ...formData, schemeLogoDataUrl: dataUrl || '' })}
           />
 
           <div className="pt-4 border-t border-elec-gray-light">

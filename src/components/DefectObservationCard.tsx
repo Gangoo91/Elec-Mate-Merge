@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, CheckCircle, XCircle, FileText, Trash2, Minus, Info, Camera, Check } from 'lucide-react';
+import { AlertTriangle, CheckCircle, XCircle, FileText, Trash2, Minus, Info, Camera, Check, Sparkles, BookOpen } from 'lucide-react';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import { useEnhanceObservation } from '@/hooks/useEnhanceObservation';
 import InspectionPhotoUpload from './inspection/InspectionPhotoUpload';
 import InspectionPhotoGallery from './inspection/InspectionPhotoGallery';
+import AIEnhanceObservationSheet from './inspection/eicr/AIEnhanceObservationSheet';
 import { cn } from '@/lib/utils';
 
 interface DefectObservation {
@@ -17,6 +19,7 @@ interface DefectObservation {
   description: string;
   recommendation: string;
   rectified: boolean;
+  regulation?: string;
   inspectionItemId?: string;
 }
 
@@ -24,7 +27,7 @@ interface DefectObservationCardProps {
   defect: DefectObservation;
   reportId: string;
   index: number;
-  onUpdate: (id: string, field: keyof DefectObservation, value: any) => void;
+  onUpdate: (id: string, field: keyof DefectObservation | '__BULK__', value: any) => void;
   onRemove: (id: string) => void;
   certificateContext?: {
     certificateNumber?: string;
@@ -86,6 +89,9 @@ const defectCodeConfig = {
 };
 
 const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, certificateContext }: DefectObservationCardProps) => {
+  const [showAISheet, setShowAISheet] = useState(false);
+  const { enhance, retry, isEnhancing, suggestions, progressStep } = useEnhanceObservation();
+
   const {
     photos,
     isUploading,
@@ -240,6 +246,40 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
           </div>
         )}
 
+        {/* BS 7671 References (read-only, populated by AI) */}
+        {defect.regulation && (
+          <div className="rounded-xl p-3 border border-white/10 bg-white/[0.03]">
+            <div className="flex items-center gap-1.5 mb-2">
+              <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
+              <span className="text-xs font-semibold text-white">BS 7671 References</span>
+            </div>
+            <p className="text-xs text-white/70 font-mono leading-relaxed">{defect.regulation}</p>
+          </div>
+        )}
+
+        {/* AI Enhance Button */}
+        {defect.defectCode !== 'N/A' && defect.description.length >= 5 && (
+          <Button
+            type="button"
+            onClick={async () => {
+              setShowAISheet(true);
+              await enhance({
+                description: defect.description,
+                location: defect.item,
+                currentCode: defect.defectCode,
+              });
+            }}
+            disabled={isEnhancing}
+            className="h-11 w-full gap-2 bg-gradient-to-r from-elec-yellow/20 to-amber-500/20
+                       border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/30
+                       touch-manipulation"
+            variant="outline"
+          >
+            <Sparkles className="h-4 w-4" />
+            AI Enhance Observation
+          </Button>
+        )}
+
         {/* Photo Evidence */}
         <div className="pt-3 border-t border-white/5">
           <div className="flex items-center justify-between mb-3">
@@ -313,6 +353,44 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
           </div>
         )}
       </div>
+
+      <AIEnhanceObservationSheet
+        open={showAISheet}
+        onOpenChange={setShowAISheet}
+        isEnhancing={isEnhancing}
+        progressStep={progressStep}
+        suggestions={suggestions}
+        currentCode={defect.defectCode}
+        currentDescription={defect.description}
+        onAcceptCode={(code) => onUpdate(defect.id, 'defectCode', code)}
+        onAcceptDescription={(desc) => onUpdate(defect.id, 'description', desc)}
+        onAcceptRecommendation={(rec) => onUpdate(defect.id, 'recommendation', rec)}
+        onAcceptRegulations={(regulation) => onUpdate(defect.id, 'regulation', regulation)}
+        onAcceptAll={() => {
+          if (suggestions) {
+            // Build merged updates and apply in a SINGLE onUpdate call
+            // to avoid race condition where rapid sequential calls
+            // each read the same stale state and only the last one sticks
+            const mergedUpdates: Partial<DefectObservation> = {};
+            if (suggestions.suggestedCode && suggestions.suggestedCode !== defect.defectCode) {
+              mergedUpdates.defectCode = suggestions.suggestedCode;
+            }
+            if (suggestions.enhancedDescription) {
+              mergedUpdates.description = suggestions.enhancedDescription;
+            }
+            if (suggestions.recommendation) {
+              mergedUpdates.recommendation = suggestions.recommendation;
+            }
+            if (suggestions.regulationRefs?.length > 0) {
+              mergedUpdates.regulation = suggestions.regulationRefs.map(r => `${r.number}: ${r.title}`).join('; ');
+            }
+            // Use special '__BULK__' field to apply all updates atomically
+            onUpdate(defect.id, '__BULK__', mergedUpdates);
+            setShowAISheet(false);
+          }
+        }}
+        onRetry={retry}
+      />
     </div>
   );
 };

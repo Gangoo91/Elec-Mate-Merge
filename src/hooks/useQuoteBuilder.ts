@@ -317,38 +317,23 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
         toast({
           title: "Quote Generated Successfully",
-          description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
+          description: `Quote ${updatedQuote.quoteNumber} has been generated and saved.`,
           variant: "success"
         });
-
-        // If callback provided (e.g., for navigation), call it and return early
-        // This prevents state updates on a component that's about to unmount
-        if (onQuoteGenerated) {
-          logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
-          onQuoteGenerated();
-          return;
-        }
       } else {
         logger.warn('Quote save failed', { quoteId: updatedQuote.id, quoteNumber: updatedQuote.quoteNumber });
         toast({
           title: "Quote Generated",
-          description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded, but could not be saved to recent quotes.`,
-          variant: "default"
+          description: `Quote ${updatedQuote.quoteNumber} has been generated but could not be saved. Please try again from the quotes page.`,
+          variant: "destructive"
         });
       }
 
-      // Only update step and scroll if we're staying on this page (no callback)
-      // Move to review step if not already there
-      if (currentStep < 2) {
-        setCurrentStep(2);
-      }
-
-      // Scroll to the Card content
-      const cardElement = document.querySelector('[data-quote-step="content"]');
-      if (cardElement) {
-        cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Always navigate away after generation — don't leave user stuck in the builder
+      if (onQuoteGenerated) {
+        logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+        onQuoteGenerated();
+        return;
       }
 
       logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });

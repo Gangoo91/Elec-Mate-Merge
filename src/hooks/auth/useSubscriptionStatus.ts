@@ -34,17 +34,11 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   // Track previous state to prevent unnecessary re-renders during scroll
   const previousStateRef = useRef<SubscriptionState | null>(null);
 
-  // Handle profile updates - calculate trial status from profile data
-  // This runs synchronously and doesn't cause loading states
-  // IMPORTANT: Don't reset state when profile is null to prevent "trial ended" flash
+  // Handle profile updates - subscription status comes from Stripe via webhook
+  // Trial is now Stripe-managed: webhook sets subscribed=true for both 'active' and 'trialing'
+  // IMPORTANT: Don't reset state when profile is null to prevent flash
   useEffect(() => {
     if (profile) {
-      const createdAt = new Date(profile.created_at || new Date());
-      const trialEndDate = new Date(createdAt);
-      trialEndDate.setDate(trialEndDate.getDate() + 7); // 7-day trial
-
-      const now = new Date();
-      const isActive = now < trialEndDate;
       // Check both subscribed AND free_access_granted for beta testers
       const isUserSubscribed = profile.subscribed || profile.free_access_granted || false;
 
@@ -58,10 +52,10 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       setState(prev => {
         const newState: SubscriptionState = {
           ...prev,
-          isTrialActive: isUserSubscribed ? false : (isActive && !isUserSubscribed),
-          trialEndsAt: trialEndDate,
+          isTrialActive: false, // Trial is now Stripe-managed (shows as subscribed)
+          trialEndsAt: profile.subscription_end ? new Date(profile.subscription_end) : null,
           isSubscribed: isUserSubscribed,
-          subscriptionTier: profile.subscription_tier || prev.subscriptionTier, // Use profile tier if available
+          subscriptionTier: profile.subscription_tier || prev.subscriptionTier,
         };
 
         // Store the new state for future comparison

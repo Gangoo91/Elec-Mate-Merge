@@ -35,6 +35,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
   isSaving,
   onStartNew,
   onManualSave,
+  formData,
   syncStatus = 'synced',
   lastSyncTime,
   isOnline = true,
@@ -94,25 +95,6 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
     );
   }
 
-  // Format certificate number for display (truncate old ugly format)
-  const formatCertNumber = (certNumber: string | null) => {
-    if (!certNumber) return null;
-    // If it's the new clean format (EICR-2026-0001), show as-is
-    if (/^(EICR|EIC|MW)-\d{4}-\d{4,6}$/.test(certNumber)) {
-      return certNumber;
-    }
-    // If it's the fallback format with 6 chars (EICR-2026-A1B2C3), show as-is
-    if (/^(EICR|EIC|MW)-\d{4}-[A-Z0-9]{6}$/.test(certNumber)) {
-      return certNumber;
-    }
-    // For old ugly timestamps, just show shortened version
-    const parts = certNumber.split('-');
-    if (parts.length >= 2) {
-      return `${parts[0]}-${parts[1]?.substring(0, 4) || ''}...`;
-    }
-    return certNumber.substring(0, 15) + '...';
-  };
-
   // Desktop layout - clean professional header
   return (
     <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border/30">
@@ -132,9 +114,9 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
         </div>
         <div className="flex flex-col">
           <h1 className="text-base font-semibold leading-tight">EICR - Condition Report</h1>
-          {currentReportId && (
+          {formData?.certificateNumber && (
             <span className="text-xs text-muted-foreground font-mono">
-              {formatCertNumber(currentReportId)}
+              {formData.certificateNumber}
             </span>
           )}
         </div>

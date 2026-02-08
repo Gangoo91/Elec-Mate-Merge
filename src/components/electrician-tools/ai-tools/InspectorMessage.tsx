@@ -1,7 +1,7 @@
-import { memo, useState } from "react";
+import React, { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Copy, Check, Zap, Sparkles } from "lucide-react";
+import { Copy, Check, Zap, Sparkles, AlertTriangle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
@@ -74,6 +74,9 @@ export const InspectorMessage = memo(function InspectorMessage({
     );
   }
 
+  // Strip any ---FOLLOWUP--- block from display (shown as clickable chips instead)
+  const displayContent = message.content.replace(/---FOLLOWUP---[\s\S]*?(?:---END_FOLLOWUP---|$)/g, '').trim();
+
   // Assistant message - premium design
   return (
     <div className="flex justify-start w-full">
@@ -110,7 +113,8 @@ export const InspectorMessage = memo(function InspectorMessage({
             // Premium glassmorphism
             "bg-gradient-to-br from-card/95 via-card/90 to-card/85",
             "backdrop-blur-xl",
-            "border border-border/50",
+            "border",
+            isStreaming ? "border-elec-yellow/20" : "border-border/50",
             "shadow-xl shadow-black/5"
           )}
         >
@@ -132,6 +136,7 @@ export const InspectorMessage = memo(function InspectorMessage({
                   ),
                   h2: ({ children }) => (
                     <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-foreground pb-2 border-b border-elec-yellow/20 flex items-center gap-2">
+                      <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-elec-yellow/40 rounded-full shrink-0" />
                       {children}
                     </h2>
                   ),
@@ -146,23 +151,38 @@ export const InspectorMessage = memo(function InspectorMessage({
                       {children}
                     </p>
                   ),
-                  // Lists - Clear spacing
+                  // Lists - Clear spacing with native markers
                   ul: ({ children }) => (
-                    <ul className="space-y-2 my-4 ml-1">
+                    <ul className="my-4 ml-5 space-y-1.5 list-disc marker:text-elec-yellow">
                       {children}
                     </ul>
                   ),
                   ol: ({ children }) => (
-                    <ol className="space-y-2 my-4 ml-1 list-decimal list-inside">
+                    <ol className="my-4 ml-5 space-y-1.5 list-decimal marker:text-elec-yellow marker:font-semibold">
                       {children}
                     </ol>
                   ),
-                  li: ({ children }) => (
-                    <li className="text-sm sm:text-[15px] leading-relaxed text-foreground/90 flex items-start gap-2">
-                      <span className="text-elec-yellow mt-1.5 shrink-0">•</span>
-                      <span>{children}</span>
-                    </li>
-                  ),
+                  li: ({ children }) => {
+                    const childArray = React.Children.toArray(children);
+                    const firstChild = childArray[0];
+                    const isSubheading = React.isValidElement(firstChild) && firstChild.type === 'strong';
+
+                    if (isSubheading) {
+                      return (
+                        <li className="text-sm sm:text-[15px] leading-relaxed text-foreground list-none -ml-5 mt-3 first:mt-0 mb-1">
+                          <div className="font-semibold text-foreground flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
+                            {children}
+                          </div>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li className="text-sm sm:text-[15px] leading-relaxed text-foreground/90">
+                        {children}
+                      </li>
+                    );
+                  },
                   // Strong - Accent color
                   strong: ({ children }) => (
                     <strong className="font-semibold text-foreground">
@@ -189,10 +209,11 @@ export const InspectorMessage = memo(function InspectorMessage({
                       </code>
                     );
                   },
-                  // Blockquote - Important notes
+                  // Blockquote - Important notes with warning icon
                   blockquote: ({ children }) => (
-                    <blockquote className="border-l-3 border-elec-yellow bg-elec-yellow/5 rounded-r-lg pl-4 pr-3 py-2 my-4 text-foreground/90">
-                      {children}
+                    <blockquote className="border-l-3 border-elec-yellow bg-elec-yellow/5 rounded-r-lg pl-4 pr-3 py-3 my-4 text-foreground/90 flex gap-2">
+                      <AlertTriangle className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
+                      <div>{children}</div>
                     </blockquote>
                   ),
                   // Tables - Clean professional look
@@ -220,7 +241,7 @@ export const InspectorMessage = memo(function InspectorMessage({
                   ),
                 }}
               >
-                {message.content}
+                {displayContent}
               </ReactMarkdown>
 
               {/* Streaming cursor */}

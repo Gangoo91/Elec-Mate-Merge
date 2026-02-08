@@ -59,6 +59,7 @@ import { toast } from 'sonner';
 import { Link2Off, RefreshCw, Calculator } from 'lucide-react';
 import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
 import { saveOfficeLocation } from '@/services/settingsService';
+import { SchemeLogoPicker } from '@/components/settings/settings/SchemeLogoPicker';
 
 // ============================================================================
 // CONSTANTS & CONFIG
@@ -80,15 +81,7 @@ const DEFAULT_WORKER_RATES: WorkerRates = {
   owner: 75,
 };
 
-const REGISTRATION_SCHEMES = [
-  { value: 'NICEIC', label: 'NICEIC' },
-  { value: 'NAPIT', label: 'NAPIT' },
-  { value: 'ELECSA', label: 'ELECSA' },
-  { value: 'STROMA', label: 'STROMA' },
-  { value: 'BRE', label: 'BRE' },
-  { value: 'OFTEC', label: 'OFTEC' },
-  { value: 'other', label: 'Other' },
-];
+// Registration schemes moved to SchemeLogoPicker component
 
 const INSTRUMENT_TYPES = [
   { value: 'multifunction', label: 'Multifunction Tester (MFT)' },
@@ -408,6 +401,9 @@ const BusinessTab = () => {
   const [logoSize, setLogoSize] = useState<'small' | 'medium' | 'large'>('medium');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Scheme logo data URL for PDF embedding
+  const [schemeLogoDataUrl, setSchemeLogoDataUrl] = useState<string | null>(null);
+
   // Testing instruments
   const [instruments, setInstruments] = useState<TestingInstrument[]>([]);
 
@@ -554,6 +550,7 @@ const BusinessTab = () => {
       setValue('registration_scheme', companyProfile.registration_scheme || '');
       setValue('registration_number', companyProfile.registration_number || '');
       setValue('registration_expiry', companyProfile.registration_expiry || '');
+      setSchemeLogoDataUrl(companyProfile.scheme_logo_data_url || null);
       setValue('insurance_provider', companyProfile.insurance_provider || '');
       setValue('insurance_policy_number', companyProfile.insurance_policy_number || '');
       setValue('insurance_coverage', companyProfile.insurance_coverage || '');
@@ -792,6 +789,8 @@ const BusinessTab = () => {
       registration_scheme: data.registration_scheme || null,
       registration_number: data.registration_number || null,
       registration_expiry: data.registration_expiry || null,
+      registration_scheme_logo: schemeLogoDataUrl || null,
+      scheme_logo_data_url: schemeLogoDataUrl || null,
       insurance_provider: data.insurance_provider || null,
       insurance_policy_number: data.insurance_policy_number || null,
       insurance_coverage: data.insurance_coverage || null,
@@ -1860,28 +1859,15 @@ const BusinessTab = () => {
                 className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
-            <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Registration Scheme</Label>
-              <Select
-                value={watch('registration_scheme') || ''}
-                onValueChange={(value) => setValue('registration_scheme', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select scheme" />
-                </SelectTrigger>
-                <SelectContent>
-                  {REGISTRATION_SCHEMES.map((scheme) => (
-                    <SelectItem key={scheme.value} value={scheme.value}>{scheme.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Registration Number</Label>
-              <Input
-                {...register('registration_number')}
-                placeholder="NICEIC/12345"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+            <div className="sm:col-span-2">
+              <SchemeLogoPicker
+                scheme={watch('registration_scheme') || ''}
+                registrationNumber={watch('registration_number') || ''}
+                registrationExpiry={watch('registration_expiry') || ''}
+                onSchemeChange={(value) => setValue('registration_scheme', value)}
+                onNumberChange={(value) => setValue('registration_number', value)}
+                onExpiryChange={(value) => setValue('registration_expiry', value)}
+                onLogoDataUrlChange={(dataUrl) => setSchemeLogoDataUrl(dataUrl)}
               />
             </div>
           </div>

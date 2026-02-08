@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User, Mail, PenTool, Code, Receipt } from 'lucide-react';
+import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User, Mail, PenTool, Code, Receipt, Sparkles } from 'lucide-react';
 import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
 import { cn } from '@/lib/utils';
 
@@ -28,6 +28,13 @@ import { useCustomers } from '@/hooks/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
+import { useEstimateRemedialCosts } from '@/hooks/useEstimateRemedialCosts';
+import type { EstimateResult } from '@/hooks/useEstimateRemedialCosts';
+import type { RemedialQuoteItem } from '@/utils/defectToQuoteItems';
+import { mapDefectsToQuoteItems } from '@/utils/defectToQuoteItems';
+import QuoteOptionsSheet from '@/components/inspection/eicr/QuoteOptionsSheet';
+import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
 
 interface EICRSummaryProps {
   formData: any;
@@ -55,6 +62,12 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const [savedReportIdForCustomer, setSavedReportIdForCustomer] = useState<string | null>(null);
   const { saveCustomer, customers } = useCustomers();
   const [showEmailDialog, setShowEmailDialog] = useState(false);
+
+  // AI Estimator state
+  const [showQuoteOptions, setShowQuoteOptions] = useState(false);
+  const [showEstimatorSheet, setShowEstimatorSheet] = useState(false);
+  const [estimateResult, setEstimateResult] = useState<EstimateResult | null>(null);
+  const { estimate, isEstimating, progressStep, elapsedSeconds, cancel } = useEstimateRemedialCosts();
 
   // Collapsible sections for mobile
   const [inspectedByOpen, setInspectedByOpen] = useState(true);
@@ -458,6 +471,131 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       pdfUrl: formData.pdfUrl || undefined,
     });
     navigate(url);
+  };
+
+  // AI Estimator handlers
+  const handleAIEstimate = async () => {
+    setShowQuoteOptions(false);
+    setShowEstimatorSheet(true);
+    setEstimateResult(null);
+
+    const defects = (formData.defectObservations || [])
+      .filter((d: any) => ['C1', 'C2', 'C3', 'FI'].includes(d.defectCode))
+      .map((d: any) => ({
+        code: d.defectCode,
+        description: d.description,
+        location: d.item || '',
+        circuitRef: '',
+      }));
+
+    if (defects.length === 0) {
+      toast({ title: 'No defects found', description: 'Add defect observations before estimating.' });
+      setShowEstimatorSheet(false);
+      return;
+    }
+
+    const result = await estimate(defects);
+    if (result) {
+      setEstimateResult(result);
+    } else {
+      // Fallback to static mapping
+      const staticItems = mapDefectsToQuoteItems(defects);
+      if (staticItems.length > 0) {
+        const totalMaterials = staticItems.filter(i => i.category === 'materials').reduce((s, i) => s + i.totalPrice, 0);
+        const totalLabour = staticItems.filter(i => i.category === 'labour').reduce((s, i) => s + i.totalPrice, 0);
+        setEstimateResult({
+          items: staticItems,
+          summary: { totalMaterials, totalLabour, totalExVat: totalMaterials + totalLabour, defectsProcessed: defects.length },
+        });
+      }
+    }
+  };
+
+  const handleSendToQuote = () => {
+    setShowQuoteOptions(false);
+    handleCreateQuote();
+  };
+
+  const handleUpdateEstimateItem = (index: number, updates: Partial<RemedialQuoteItem>) => {
+    if (!estimateResult) return;
+    const newItems = [...estimateResult.items];
+    newItems[index] = { ...newItems[index], ...updates };
+    const totalMaterials = newItems.filter(i => i.category === 'materials').reduce((s, i) => s + i.totalPrice, 0);
+    const totalLabour = newItems.filter(i => i.category === 'labour').reduce((s, i) => s + i.totalPrice, 0);
+    setEstimateResult({
+      ...estimateResult,
+      items: newItems,
+      summary: { ...estimateResult.summary, totalMaterials, totalLabour, totalExVat: totalMaterials + totalLabour },
+    });
+  };
+
+  const handleDeleteEstimateItem = (index: number) => {
+    if (!estimateResult) return;
+    const newItems = estimateResult.items.filter((_, i) => i !== index);
+    const totalMaterials = newItems.filter(i => i.category === 'materials').reduce((s, i) => s + i.totalPrice, 0);
+    const totalLabour = newItems.filter(i => i.category === 'labour').reduce((s, i) => s + i.totalPrice, 0);
+    setEstimateResult({
+      ...estimateResult,
+      items: newItems,
+      summary: { ...estimateResult.summary, totalMaterials, totalLabour, totalExVat: totalMaterials + totalLabour },
+    });
+  };
+
+  const handleUpdateScopeOfWorks = (text: string) => {
+    if (!estimateResult) return;
+    setEstimateResult({ ...estimateResult, scopeOfWorks: text });
+  };
+
+  const handleEstimateToQuote = () => {
+    if (!estimateResult) return;
+    haptics.tap();
+
+    const materialItems = estimateResult.items.filter(i => i.category === 'materials');
+    const labourItems = estimateResult.items.filter(i => i.category === 'labour');
+    const totalLabourHours = labourItems.reduce((s, i) => s + (i.labourHours || i.quantity), 0);
+    const labourRate = labourItems.length > 0 ? labourItems[0].unitPrice : 45;
+
+    const costData = {
+      materials: materialItems.map(m => ({
+        item: m.description,
+        quantity: m.quantity,
+        unitPrice: m.unitPrice,
+        supplier: 'Estimated',
+        total: m.totalPrice,
+      })),
+      labour: { hours: totalLabourHours, rate: labourRate, total: labourItems.reduce((s, i) => s + i.totalPrice, 0) },
+      totalCost: estimateResult.summary.totalExVat,
+      valueEngineering: estimateResult.scopeOfWorks ? [estimateResult.scopeOfWorks] : undefined,
+    };
+
+    const costSessionId = `estimate-${Date.now()}`;
+    sessionStorage.setItem(costSessionId, JSON.stringify({ costData }));
+
+    const certUrl = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EICR',
+      certificateReference: formData.certificateNumber || '',
+      reportId: effectiveReportId || undefined,
+    });
+    const certSessionId = new URL(certUrl, window.location.origin).searchParams.get('certificateSessionId');
+
+    // Inject scope of works into job description so QuoteWizard picks it up
+    if (certSessionId && estimateResult.scopeOfWorks) {
+      const stored = sessionStorage.getItem(certSessionId);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.certificateData?.jobDetails) {
+          parsed.certificateData.jobDetails.description = estimateResult.scopeOfWorks;
+          sessionStorage.setItem(certSessionId, JSON.stringify(parsed));
+        }
+      }
+    }
+
+    navigate(`/electrician/quote-builder/create?costSessionId=${costSessionId}${certSessionId ? `&certificateSessionId=${certSessionId}` : ''}`);
   };
 
   // Allow PDF generation without strict field validation
@@ -1499,15 +1637,15 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           </div>
 
           {/* Quote & Invoice Buttons */}
+          <Button
+            variant="outline"
+            className="w-full h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
+            onClick={() => { haptics.tap(); setShowQuoteOptions(true); }}
+          >
+            <FileText className="h-4 w-4" />
+            Quote
+          </Button>
           <div className="grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              className="h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
-              onClick={handleCreateQuote}
-            >
-              <FileText className="h-4 w-4" />
-              Quote
-            </Button>
             <Button
               variant="outline"
               className="h-12 gap-2 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 transition-all duration-200 active:scale-95 touch-manipulation"
@@ -1516,6 +1654,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               <Receipt className="h-4 w-4" />
               Invoice
             </Button>
+            <WhatsAppShareButton
+              type="eicr"
+              id={effectiveReportId || 'new'}
+              recipientPhone={formData.clientPhone || formData.clientTelephone || ''}
+              recipientName={formData.clientName || ''}
+              documentLabel={`EICR ${formData.certificateNumber || ''}`}
+              className="h-12"
+            />
           </div>
 
           {/* DEV ONLY: Quick fill button for testing */}
@@ -1700,6 +1846,29 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         companyName={formData.companyName}
         onSend={handleSendEmail}
         isLoading={isEmailSending}
+      />
+
+      {/* Quote Options Sheet */}
+      <QuoteOptionsSheet
+        open={showQuoteOptions}
+        onOpenChange={setShowQuoteOptions}
+        onAIEstimate={handleAIEstimate}
+        onSendToQuote={handleSendToQuote}
+      />
+
+      {/* AI Estimator Sheet */}
+      <AIEstimatorSheet
+        open={showEstimatorSheet}
+        onOpenChange={(open) => { if (!open) cancel(); setShowEstimatorSheet(open); }}
+        isEstimating={isEstimating}
+        progressStep={progressStep}
+        elapsedSeconds={elapsedSeconds}
+        estimateResult={estimateResult}
+        onUpdateItem={handleUpdateEstimateItem}
+        onDeleteItem={handleDeleteEstimateItem}
+        onUpdateScopeOfWorks={handleUpdateScopeOfWorks}
+        onCreateQuote={handleEstimateToQuote}
+        onCancel={() => { cancel(); setShowEstimatorSheet(false); }}
       />
     </div>
   );

@@ -16,42 +16,42 @@ const MOETModule1 = () => {
       title: "Safe Systems of Work",
       description: "Permit to work, isolation procedures, LOTO, work at height and confined spaces",
       icon: Shield,
-      href: "../m-o-e-t-module1-section1"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section1"
     },
     {
       number: "1.2", 
       title: "Electrical Safety",
       description: "Electrical dangers, safe use of tools, PPE, approach distances and earthing",
       icon: Zap,
-      href: "../m-o-e-t-module1-section2"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section2"
     },
     {
       number: "1.3",
       title: "Risk Assessment & Method Statements", 
       description: "Hazard identification, risk evaluation, controls and dynamic assessments",
       icon: FileCheck,
-      href: "../m-o-e-t-module1-section3"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section3"
     },
     {
       number: "1.4",
       title: "Regulations and Standards",
       description: "HSWA, Electricity at Work, BS7671, PUWER, LOLER and industry guidance",
       icon: BookOpen,
-      href: "../m-o-e-t-module1-section4"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section4"
     },
     {
       number: "1.5",
       title: "Environmental and Sustainability Practices",
       description: "Waste management, COSHH, energy efficiency and environmental legislation",
       icon: Leaf,
-      href: "../m-o-e-t-module1-section5"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section5"
     },
     {
       number: "1.6",
       title: "Emergency Procedures & First Aid",
       description: "Fire safety, electrical first aid, evacuation and incident reporting",
       icon: AlertTriangle,
-      href: "../m-o-e-t-module1-section6"
+      href: "/study-centre/apprentice/m-o-e-t-module1-section6"
     }
   ];
 
@@ -61,7 +61,7 @@ const MOETModule1 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t">
+            <Link to="/study-centre/apprentice/moet">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to MOET Course
             </Link>
@@ -75,7 +75,7 @@ const MOETModule1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 1: Health, Safety and Compliance
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Essential health and safety requirements, risk management and regulatory compliance for maintenance operations.
           </p>
         </div>

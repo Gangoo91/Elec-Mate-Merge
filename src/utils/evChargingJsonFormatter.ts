@@ -337,7 +337,8 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor') || '#22c55e',
       registration_scheme: get('registrationScheme'),
-      registration_number: get('registrationNumber')
+      registration_number: get('registrationNumber'),
+      registration_scheme_logo: get('registrationSchemeLogo')
     },
 
     // Company (flat for template)
@@ -350,6 +351,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
     company_tagline: get('companyTagline'),
     company_accent_color: get('companyAccentColor') || '#22c55e',
     registration_scheme: get('registrationScheme'),
-    registration_number: get('registrationNumber')
+    registration_number: get('registrationNumber'),
+    registration_scheme_logo: get('registrationSchemeLogo')
   };
 };

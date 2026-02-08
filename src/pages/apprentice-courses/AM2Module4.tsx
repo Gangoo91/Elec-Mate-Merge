@@ -65,8 +65,8 @@ const AM2Module4 = () => {
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 safe-top">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+      <header className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 safe-top">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -78,7 +78,7 @@ const AM2Module4 = () => {
               )}
               asChild
             >
-              <Link to="..">
+              <Link to="/study-centre/apprentice/am2">
                 <ArrowLeft className="w-5 h-5" />
               </Link>
             </Button>
@@ -89,7 +89,7 @@ const AM2Module4 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 py-6 safe-bottom">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Hero Section */}
           <div className="pb-6 sm:pb-8">
             {/* Icon with Glow Effect */}

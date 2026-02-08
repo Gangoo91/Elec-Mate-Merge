@@ -66,7 +66,9 @@ export default function SolarPVCertificate() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      companyAccentColor: companyProfile.primary_color || '#f59e0b'
+      companyAccentColor: companyProfile.primary_color || '#f59e0b',
+      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationScheme: companyProfile.registration_scheme || ''
     };
   };
 
@@ -167,6 +169,8 @@ export default function SolarPVCertificate() {
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
+            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }

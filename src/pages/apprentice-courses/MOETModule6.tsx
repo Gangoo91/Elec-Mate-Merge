@@ -16,28 +16,28 @@ const MOETModule6 = () => {
       title: "Reading and Producing Technical Drawings",
       description: "Engineering conventions, electrical schematics, mechanical drawings and revision control",
       icon: FileText,
-      href: "../m-o-e-t-module6-section1"
+      href: "/study-centre/apprentice/m-o-e-t-module6-section1"
     },
     {
       number: "6.2", 
       title: "Electrical Schematics and Wiring Diagrams",
       description: "Circuit diagrams, single-line diagrams, control circuits and labelling standards",
       icon: Zap,
-      href: "../m-o-e-t-module6-section2"
+      href: "/study-centre/apprentice/m-o-e-t-module6-section2"
     },
     {
       number: "6.3",
       title: "Maintenance Records and Reporting", 
       description: "Work recording, fault reports, digital reporting and maintenance management systems",
       icon: ClipboardList,
-      href: "../m-o-e-t-module6-section3"
+      href: "/study-centre/apprentice/m-o-e-t-module6-section3"
     },
     {
       number: "6.4",
       title: "Handovers and Stakeholder Communication",
       description: "Shift handovers, stakeholder communication, professional behaviour and teamwork",
       icon: Users,
-      href: "../m-o-e-t-module6-section4"
+      href: "/study-centre/apprentice/m-o-e-t-module6-section4"
     }
   ];
 
@@ -47,7 +47,7 @@ const MOETModule6 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t">
+            <Link to="/study-centre/apprentice/moet">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to MOET Course
             </Link>
@@ -61,7 +61,7 @@ const MOETModule6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 6: Technical Documentation and Communication
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Technical drawings, electrical schematics, maintenance records and stakeholder communication.
           </p>
         </div>

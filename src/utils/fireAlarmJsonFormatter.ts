@@ -540,6 +540,8 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
     company_logo: get('companyLogo'),
-    company_accent_color: get('accentColor') || get('companyAccentColor') || '#dc2626'
+    company_accent_color: get('accentColor') || get('companyAccentColor') || '#dc2626',
+    registration_scheme_logo: get('registrationSchemeLogo'),
+    registration_scheme: get('registrationScheme')
   };
 };

@@ -29,14 +29,13 @@ const courses = [
     icon: GraduationCap,
     href: "hnc",
   },
-  // Coming soon
   {
     title: "MOET",
     description: "Maintenance Operations Engineering Technician training",
     icon: Shield,
     href: "moet",
-    comingSoon: true,
   },
+  // Coming soon
   {
     title: "Functional Skills",
     description: "Essential maths, English and IT skills for electrical apprentices",

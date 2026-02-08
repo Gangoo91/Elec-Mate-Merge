@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { X, Sparkles, Loader2, ZoomIn, CheckCircle, AlertTriangle, AlertCircle, HelpCircle, ArrowRight } from 'lucide-react';
+import { X, Sparkles, Loader2, ZoomIn, CheckCircle, AlertTriangle, AlertCircle, HelpCircle, ArrowRight, Trash2, Expand } from 'lucide-react';
 import { InspectionPhoto } from '@/types/inspection';
 import {
   Dialog,
@@ -89,10 +89,11 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
       <div className="space-y-3">
         {photos.map((photo) => (
           <div key={photo.id} className="space-y-2">
-            {/* Photo Thumbnail */}
-            <div className="relative">
-              <div 
-                className="relative group w-32 sm:w-40 md:w-48 aspect-square rounded-lg overflow-hidden bg-muted border-2 border-border cursor-pointer hover:border-primary transition-all"
+            {/* Photo Thumbnail + Actions */}
+            <div className="flex gap-3 items-start">
+              {/* Photo */}
+              <div
+                className="relative w-32 sm:w-40 md:w-48 aspect-square rounded-xl overflow-hidden bg-muted border-2 border-white/10 cursor-pointer active:scale-[0.98] transition-all touch-manipulation flex-shrink-0"
                 onClick={() => setSelectedPhoto(photo)}
               >
                 <img
@@ -101,51 +102,50 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                
+
                 {/* AI Agreement Badge Overlay */}
                 {photo.aiAnalysis && (
                   <div className="absolute top-2 right-2">
                     {getAgreementBadge(photo.aiAnalysis, photo.faultCode)}
                   </div>
                 )}
-
-                {/* Zoom Indicator */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <ZoomIn className="h-8 w-8 text-foreground" />
-                </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="absolute top-1 left-1 flex gap-1">
+              {/* Action Buttons — vertical stack beside photo */}
+              <div className="flex flex-col gap-2 pt-0.5">
+                {/* Expand */}
+                <button
+                  type="button"
+                  className="h-11 w-11 rounded-xl bg-white/[0.08] border border-white/10 flex items-center justify-center text-white/60 active:scale-95 active:bg-white/15 touch-manipulation transition-all"
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <Expand className="h-5 w-5" />
+                </button>
+
+                {/* AI Scan */}
                 {!photo.aiAnalysis && (
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-7 w-7 bg-primary/90 hover:bg-primary text-primary-foreground"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleScanClick(photo);
-                    }}
+                  <button
+                    type="button"
+                    className="h-11 w-11 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 active:scale-95 active:bg-amber-500/30 touch-manipulation transition-all disabled:opacity-40"
+                    onClick={() => handleScanClick(photo)}
                     disabled={isScanning === photo.id}
                   >
                     {isScanning === photo.id ? (
-                      <Loader2 className="h-3 w-3 animate-spin" />
+                      <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      <Sparkles className="h-3 w-3" />
+                      <Sparkles className="h-5 w-5" />
                     )}
-                  </Button>
+                  </button>
                 )}
-                <Button
-                  size="icon"
-                  variant="destructive"
-                  className="h-7 w-7"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDeletePhoto(photo.id);
-                  }}
+
+                {/* Delete */}
+                <button
+                  type="button"
+                  className="h-11 w-11 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 active:scale-95 active:bg-red-500/20 touch-manipulation transition-all"
+                  onClick={() => onDeletePhoto(photo.id)}
                 >
-                  <X className="h-3 w-3" />
-                </Button>
+                  <Trash2 className="h-5 w-5" />
+                </button>
               </div>
             </div>
 

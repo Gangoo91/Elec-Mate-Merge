@@ -274,7 +274,8 @@ serve(async (req) => {
       subscribed: boolean,
       customerId: string,
       tier: string | null,
-      periodEnd: Date | null
+      periodEnd: Date | null,
+      setOnboardingCompleted: boolean = false
     ) {
       const updateData: any = {
         subscribed,
@@ -291,6 +292,11 @@ serve(async (req) => {
 
       if (!subscribed) {
         updateData.subscription_end = new Date().toISOString();
+      }
+
+      // Mark onboarding as completed when user gets their first subscription
+      if (setOnboardingCompleted) {
+        updateData.onboarding_completed = true;
       }
 
       const { error } = await supabase
@@ -338,7 +344,9 @@ serve(async (req) => {
           ? new Date(subscription.current_period_end * 1000)
           : null;
 
-        await updateSubscriptionStatus(userId, isActive, customerId, tier, periodEnd);
+        // Pass setOnboardingCompleted=true for new subscriptions to mark signup flow as done
+        const isNewSubscription = event.type === 'customer.subscription.created';
+        await updateSubscriptionStatus(userId, isActive, customerId, tier, periodEnd, isNewSubscription && isActive);
 
         // Handle founder invite completion (mark as claimed)
         // Check if this is a founder subscription by looking at the price ID

@@ -312,11 +312,11 @@ export const reportCloud = {
    * Get report data along with the database UUID
    * Returns both the form data and the database ID needed for related queries
    */
-  getReportDataWithId: async (reportId: string, userId: string): Promise<{ data: any; databaseId: string } | null> => {
+  getReportDataWithId: async (reportId: string, userId: string): Promise<{ data: any; databaseId: string; updatedAt?: string; lastSyncedAt?: string } | null> => {
     try {
       const { data: report, error } = await supabase
         .from('reports')
-        .select('id, data')
+        .select('id, data, updated_at, last_synced_at')
         .eq('report_id', reportId)
         .eq('user_id', userId)
         .is('deleted_at', null)
@@ -328,6 +328,8 @@ export const reportCloud = {
       return {
         data: report.data || {},
         databaseId: report.id,
+        updatedAt: report.updated_at,
+        lastSyncedAt: report.last_synced_at,
       };
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report data with ID:', error);

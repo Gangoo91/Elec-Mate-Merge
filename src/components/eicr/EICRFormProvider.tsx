@@ -353,6 +353,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         companyWebsite: defaultProfile.companyWebsite || '',
         companyRegistrationNumber: defaultProfile.companyRegistrationNumber || '',
         vatNumber: defaultProfile.vatNumber || '',
+        registrationSchemeLogo: companyProfile?.registration_scheme_logo || defaultProfile.registrationSchemeLogo || '',
       }));
     }
   };
@@ -465,7 +466,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       // Step 3: Compare timestamps - use whichever is NEWER
       if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
         const loadedCloudData = cloudResult.data as any;
-        const cloudTime = new Date(loadedCloudData.updated_at || loadedCloudData.last_synced_at || 0).getTime();
+        const cloudTime = new Date(cloudResult.updatedAt || cloudResult.lastSyncedAt || 0).getTime();
         const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
 
         // Store the database UUID for photo queries

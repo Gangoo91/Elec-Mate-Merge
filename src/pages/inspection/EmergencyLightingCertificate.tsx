@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -412,6 +413,8 @@ export default function EmergencyLightingCertificate() {
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
+            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }
@@ -593,6 +596,16 @@ export default function EmergencyLightingCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
+
+              <WhatsAppShareButton
+                type="emergency-lighting"
+                id={savedReportId || id || 'new'}
+                recipientPhone={formData.clientTelephone || ''}
+                recipientName={formData.clientName || ''}
+                documentLabel="Emergency Lighting Certificate"
+                variant="ghost"
+                className="h-9 w-9"
+              />
             </div>
           </div>
 

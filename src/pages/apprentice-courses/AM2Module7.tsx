@@ -49,9 +49,9 @@ const AM2Module7 = () => {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
       <div className="border-b border-white/10 bg-card/50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
           <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
+            <Link to="/study-centre/apprentice/am2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to AM2 Course
             </Link>
@@ -61,7 +61,7 @@ const AM2Module7 = () => {
 
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="mb-8">
             <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
               Module 7: Exam Strategy and Success Tips

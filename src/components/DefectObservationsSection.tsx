@@ -24,7 +24,7 @@ interface DefectObservationsSectionProps {
   defectObservations: DefectObservation[];
   reportId: string;
   onAddObservation: () => void;
-  onUpdateObservation: (id: string, field: keyof DefectObservation, value: any) => void;
+  onUpdateObservation: (id: string, field: keyof DefectObservation | '__BULK__', value: any) => void;
   onRemoveObservation: (id: string) => void;
   formData?: any;
   onUpdateFormData?: (data: any) => void;

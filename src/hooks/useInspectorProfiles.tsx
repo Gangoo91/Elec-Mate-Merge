@@ -22,6 +22,8 @@ export interface InspectorProfile {
   registrationScheme?: string;
   registrationNumber?: string;
   registrationExpiry?: string;
+  registrationSchemeLogo?: string;
+  schemeLogoDataUrl?: string;
   // Insurance details
   insuranceProvider?: string;
   insurancePolicyNumber?: string;
@@ -103,6 +105,8 @@ export const useInspectorProfiles = () => {
         registrationScheme: profile.registration_scheme,
         registrationNumber: profile.registration_number,
         registrationExpiry: profile.registration_expiry || undefined,
+        registrationSchemeLogo: profile.registration_scheme_logo || undefined,
+        schemeLogoDataUrl: profile.scheme_logo_data_url || undefined,
         insuranceProvider: profile.insurance_provider,
         insurancePolicyNumber: profile.insurance_policy_number,
         insuranceCoverage: profile.insurance_coverage,
@@ -160,6 +164,8 @@ export const useInspectorProfiles = () => {
           registration_scheme: profile.registrationScheme,
           registration_number: profile.registrationNumber,
           registration_expiry: profile.registrationExpiry,
+          registration_scheme_logo: profile.registrationSchemeLogo,
+          scheme_logo_data_url: profile.schemeLogoDataUrl,
           insurance_provider: profile.insuranceProvider,
           insurance_policy_number: profile.insurancePolicyNumber,
           insurance_coverage: profile.insuranceCoverage,
@@ -168,7 +174,7 @@ export const useInspectorProfiles = () => {
           is_default: profile.isDefault,
         });
       }
-      
+
       toast({
         title: 'Data Migrated',
         description: 'Your profiles have been migrated to the cloud',
@@ -224,6 +230,8 @@ export const useInspectorProfiles = () => {
           insurance_policy_number: profile.insurancePolicyNumber,
           insurance_coverage: profile.insuranceCoverage,
           insurance_expiry: profile.insuranceExpiry,
+          registration_scheme_logo: profile.registrationSchemeLogo,
+          scheme_logo_data_url: profile.schemeLogoDataUrl,
           signature_data: profile.signatureData,
           is_default: profile.isDefault,
         })
@@ -292,6 +300,8 @@ export const useInspectorProfiles = () => {
           insurance_policy_number: updates.insurancePolicyNumber,
           insurance_coverage: updates.insuranceCoverage,
           insurance_expiry: updates.insuranceExpiry,
+          registration_scheme_logo: updates.registrationSchemeLogo,
+          scheme_logo_data_url: updates.schemeLogoDataUrl,
           signature_data: updates.signatureData,
           is_default: updates.isDefault,
         })

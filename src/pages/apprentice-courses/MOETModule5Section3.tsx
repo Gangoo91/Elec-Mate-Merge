@@ -16,35 +16,35 @@ const MOETModule5Section3 = () => {
       title: "Emergency Stop Circuits",
       description: "E-stop requirements, wiring methods and testing procedures",
       icon: Square,
-      href: "../m-o-e-t-module5-section3-1"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section3-1"
     },
     {
       number: "5.3.2",
       title: "Guarding and Interlocking Devices",
       description: "Safety switches, light curtains and guard interlocking systems",
       icon: Shield,
-      href: "../m-o-e-t-module5-section3-2"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section3-2"
     },
     {
       number: "5.3.3",
       title: "Safety Relays and Controllers",
       description: "Safety relay modules, monitoring relays and safety controllers",
       icon: Zap,
-      href: "../m-o-e-t-module5-section3-3"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section3-3"
     },
     {
       number: "5.3.4",
       title: "Category and Performance Levels (ISO 13849)",
       description: "Safety categories, performance levels and risk assessment",
       icon: Star,
-      href: "../m-o-e-t-module5-section3-4"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section3-4"
     },
     {
       number: "5.3.5",
       title: "Functional Safety Principles",
       description: "SIL levels, safety lifecycle and functional safety management",
       icon: AlertTriangle,
-      href: "../m-o-e-t-module5-section3-5"
+      href: "/study-centre/apprentice/m-o-e-t-module5-section3-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule5Section3 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module5">
+            <Link to="/study-centre/apprentice/m-o-e-t-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5
             </Link>
@@ -68,7 +68,7 @@ const MOETModule5Section3 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 5.3: Safety Circuits and Interlocks
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Emergency stops, interlocking devices, safety relays and functional safety principles.
           </p>
         </div>

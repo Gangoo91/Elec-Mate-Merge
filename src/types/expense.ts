@@ -124,6 +124,15 @@ export interface ExpenseStats {
   count: number;
 }
 
+// Grouped expenses by date (for chronological display)
+export interface DateGroup {
+  label: string;
+  date: string;
+  expenses: Expense[];
+  total: number;
+  count: number;
+}
+
 // Grouped expenses by category
 export interface ExpenseGroup {
   category: ExpenseCategory;

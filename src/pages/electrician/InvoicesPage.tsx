@@ -397,7 +397,7 @@ const InvoicesPage = () => {
               {/* Row 1: Navigation bar */}
               <div className="flex items-center h-14 px-4 gap-2">
                 <button
-                  onClick={() => navigate('/electrician')}
+                  onClick={() => navigate('/electrician/business')}
                   className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <ArrowLeft className="h-5 w-5" />

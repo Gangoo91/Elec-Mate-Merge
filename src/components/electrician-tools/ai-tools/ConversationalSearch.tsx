@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2 } from 'lucide-react';
+import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2, SquarePen } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { InspectorMessage } from './InspectorMessage';
@@ -16,6 +16,7 @@ import {
   SearchingSkeleton,
   FollowUpChips,
   MobileChatInput,
+  WelcomeScreen,
 } from './chat';
 
 interface Message {
@@ -327,7 +328,8 @@ export default function ConversationalSearch() {
         if (done) {
           const finalContent = streaming.flush();
 
-          const followUpMatch = finalContent.match(/---FOLLOWUP---([\s\S]*?)---END_FOLLOWUP---/);
+          // Match ---FOLLOWUP--- with optional ---END_FOLLOWUP--- (may run to end of content)
+          const followUpMatch = finalContent.match(/---FOLLOWUP---([\s\S]*?)(?:---END_FOLLOWUP---|$)/);
           let questions: string[] = [];
           let cleanedContent = finalContent;
 
@@ -335,10 +337,10 @@ export default function ConversationalSearch() {
             questions = followUpMatch[1]
               .trim()
               .split('\n')
-              .map(q => q.replace(/^[•\-*]\s*/, '').trim())
+              .map(q => q.replace(/^[\s•\-*]*\d*[.)]*\s*/, '').trim())
               .filter(q => q.length > 0 && q.endsWith('?'));
 
-            cleanedContent = finalContent.replace(/---FOLLOWUP---[\s\S]*?---END_FOLLOWUP---/g, '').trim();
+            cleanedContent = finalContent.replace(/---FOLLOWUP---[\s\S]*?(?:---END_FOLLOWUP---|$)/g, '').trim();
           }
 
           setMessages(prev => {
@@ -441,13 +443,24 @@ export default function ConversationalSearch() {
             <h1 className="text-base font-semibold text-white truncate">Elec-AI</h1>
             <p className="text-[11px] text-white/50">Your electrical advisor</p>
           </div>
+          {messages.length > 0 && !isStreaming && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClearConversation}
+              className="h-10 w-10 -mr-2 touch-manipulation active:scale-95 hover:bg-white/5"
+              aria-label="New chat"
+            >
+              <SquarePen className="h-5 w-5 text-white/70" />
+            </Button>
+          )}
         </div>
       </header>
 
-      {/* Empty State - Clean spacer */}
+      {/* Empty State - Welcome Screen */}
       {messages.length === 0 && (
         <ChatMessagesArea className="px-4 md:px-6">
-          <div className="flex-1" />
+          <WelcomeScreen onSelectQuery={(q) => handleSend(q)} />
         </ChatMessagesArea>
       )}
 

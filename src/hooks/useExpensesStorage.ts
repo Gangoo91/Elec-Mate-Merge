@@ -8,6 +8,7 @@ import {
   UpdateExpenseInput,
   ExpenseStats,
   ExpenseGroup,
+  DateGroup,
   ExpenseFilters,
   EXPENSE_CATEGORIES,
   getCategoryConfig,
@@ -371,6 +372,49 @@ export const useExpensesStorage = () => {
       .sort((a, b) => b.total - a.total);
   }, [filteredExpenses]);
 
+  // Count unsynced expenses
+  const unsyncedCount = useMemo(() => {
+    return expenses.filter(exp => !exp.synced_to_accounting).length;
+  }, [expenses]);
+
+  // Group filtered expenses by date (chronological)
+  const dateGroupedExpenses = useMemo((): DateGroup[] => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const todayStr = today.toISOString().split('T')[0];
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+    const groupMap = new Map<string, { label: string; sortKey: string; expenses: Expense[] }>();
+    const sorted = [...filteredExpenses].sort((a, b) => b.date.localeCompare(a.date));
+    sorted.forEach(exp => {
+      const dateStr = exp.date;
+      let label: string;
+      if (dateStr === todayStr) { label = 'Today'; }
+      else if (dateStr === yesterdayStr) { label = 'Yesterday'; }
+      else if (dateStr >= sevenDaysAgoStr) { label = dayNames[new Date(dateStr + 'T00:00:00').getDay()]; }
+      else { label = new Date(dateStr + 'T00:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); }
+      const groupKey = dateStr >= sevenDaysAgoStr ? dateStr : dateStr.slice(0, 7);
+      if (!groupMap.has(groupKey)) {
+        groupMap.set(groupKey, { label, sortKey: dateStr, expenses: [] });
+      }
+      groupMap.get(groupKey)!.expenses.push(exp);
+    });
+    return Array.from(groupMap.entries())
+      .sort(([, a], [, b]) => b.sortKey.localeCompare(a.sortKey))
+      .map(([key, group]) => ({
+        label: group.label,
+        date: key,
+        expenses: group.expenses,
+        total: group.expenses.reduce((sum, exp) => sum + exp.amount, 0),
+        count: group.expenses.length,
+      }));
+  }, [filteredExpenses]);
+
   // Calculate expense statistics
   const stats = useMemo((): ExpenseStats => {
     const now = new Date();
@@ -587,6 +631,8 @@ export const useExpensesStorage = () => {
     expenses,
     filteredExpenses,
     groupedExpenses,
+    dateGroupedExpenses,
+    unsyncedCount,
     stats,
     loading,
     filters,

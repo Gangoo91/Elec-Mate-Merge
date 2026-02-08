@@ -1,74 +1,59 @@
 import { motion } from 'framer-motion';
-import { TrendingUp, Calendar, Receipt, PoundSterling } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { TrendingUp, Receipt, CloudOff } from 'lucide-react';
 import { ExpenseStats } from '@/types/expense';
 import { cn } from '@/lib/utils';
 
 interface ExpenseSummaryCardProps {
   stats: ExpenseStats;
+  unsyncedCount?: number;
+  hasConnectedProvider?: boolean;
   className?: string;
 }
 
-export function ExpenseSummaryCard({ stats, className }: ExpenseSummaryCardProps) {
+export function ExpenseSummaryCard({
+  stats,
+  unsyncedCount = 0,
+  hasConnectedProvider = false,
+  className,
+}: ExpenseSummaryCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      className={cn(
+        "rounded-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08] p-4",
+        className
+      )}
     >
-      <Card className={cn("bg-gradient-to-br from-elec-card to-elec-card/80 border-white/[0.08] overflow-hidden", className)}>
-        {/* Main Amount */}
-        <div className="p-4 pb-3 border-b border-white/[0.06]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                This Month
-              </p>
-              <p className="text-3xl font-bold text-elec-yellow">
-                £{stats.monthlyAmount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              </p>
-            </div>
-            <div className="w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-              <PoundSterling className="h-6 w-6 text-elec-yellow" />
-            </div>
-          </div>
-        </div>
+      {/* Row 1: Label + Amount */}
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground uppercase tracking-wider">This Month</span>
+        <span className="text-2xl font-bold text-elec-yellow">
+          £{stats.monthlyAmount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </span>
+      </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-          {/* YTD */}
-          <div className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">Year to Date</span>
-            </div>
-            <p className="text-lg font-semibold text-foreground">
-              £{stats.yearToDateAmount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </p>
-          </div>
-
-          {/* Tax Deductible */}
-          <div className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <TrendingUp className="h-3.5 w-3.5 text-green-400" />
-              <span className="text-xs text-muted-foreground">Tax Deductible</span>
-            </div>
-            <p className="text-lg font-semibold text-green-400">
-              £{stats.totalTaxDeductible.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </p>
-          </div>
-        </div>
-
-        {/* Receipt Count */}
-        <div className="px-4 py-2 bg-white/[0.02] border-t border-white/[0.06]">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <Receipt className="h-3.5 w-3.5" />
-              {stats.count} {stats.count === 1 ? 'expense' : 'expenses'} recorded
-            </span>
-          </div>
-        </div>
-      </Card>
+      {/* Row 2: Inline pills */}
+      <div className="flex items-center gap-2 mt-2.5 flex-wrap">
+        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground">
+          YTD £{stats.yearToDateAmount.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+        </span>
+        <span className="text-[11px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 flex items-center gap-1">
+          <TrendingUp className="h-2.5 w-2.5" />
+          £{stats.totalTaxDeductible.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} deductible
+        </span>
+        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground flex items-center gap-1">
+          <Receipt className="h-2.5 w-2.5" />
+          {stats.count} {stats.count === 1 ? 'expense' : 'expenses'}
+        </span>
+        {hasConnectedProvider && unsyncedCount > 0 && (
+          <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 flex items-center gap-1">
+            <CloudOff className="h-2.5 w-2.5" />
+            {unsyncedCount} unsynced
+          </span>
+        )}
+      </div>
     </motion.div>
   );
 }

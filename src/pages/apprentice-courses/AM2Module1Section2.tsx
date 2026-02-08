@@ -13,12 +13,12 @@ const AM2Module1Section2 = () => {
 
   const assessmentStats = [
     {
-      number: "6",
+      number: "5",
       label: "Assessment Sections",
-      description: "Six distinct parts testing different skills"
+      description: "Five main sections (A-E) testing different skills"
     },
     {
-      number: "16.25",
+      number: "~16.5",
       label: "Total Hours",
       description: "Spread across 2.5 days"
     },
@@ -36,23 +36,15 @@ const AM2Module1Section2 = () => {
 
   const assessmentSections = [
     {
-      section: "A1",
-      title: "Safe Isolation & Risk Assessment",
-      duration: "45 minutes",
-      description: "Demonstrate risk assessment and correct circuit isolation procedures. Assessors are strict - shortcuts can lead to immediate failure.",
-      icon: AlertTriangle,
-      color: "text-elec-yellow"
-    },
-    {
-      section: "A2-A5",
+      section: "A (A1-A5)",
       title: "Composite Installation",
       duration: "8.5 hours",
-      description: "Install and terminate circuits including ring finals, lighting, three-phase distribution, data cabling, protective bonding, and heating controls.",
+      description: "Install and terminate circuits including ring finals, lighting, three-phase distribution, data cabling, protective bonding, and heating controls. Split into sub-tasks A1-A5 covering different installation elements.",
       icon: Settings,
       color: "text-elec-yellow"
     },
     {
-      section: "C",
+      section: "B",
       title: "Inspection, Testing & Certification",
       duration: "3.5 hours",
       description: "Complete testing suite: continuity, insulation resistance, polarity, earth fault loop impedance, RCD testing, and certification paperwork.",
@@ -60,15 +52,15 @@ const AM2Module1Section2 = () => {
       color: "text-green-500"
     },
     {
-      section: "D",
+      section: "C",
       title: "Safe Isolation of Circuits",
-      duration: "30 minutes",
+      duration: "45 minutes",
       description: "Isolate different circuit types in specific scenarios - single-phase equipment, three-phase isolators, distribution board isolation.",
       icon: Zap,
       color: "text-elec-yellow"
     },
     {
-      section: "E",
+      section: "D",
       title: "Fault Diagnosis & Rectification",
       duration: "2 hours",
       description: "Find pre-programmed faults, identify fault types, explain corrections, and rectify with retesting. Logic over guessing.",
@@ -76,7 +68,7 @@ const AM2Module1Section2 = () => {
       color: "text-elec-yellow"
     },
     {
-      section: "F",
+      section: "E",
       title: "Assessment of Applied Knowledge",
       duration: "1 hour",
       description: "Online multiple-choice exam covering health & safety, BS 7671 Wiring Regulations, building regulations, and safe practices.",
@@ -109,7 +101,7 @@ const AM2Module1Section2 = () => {
   ];
 
   const checklistItems = [
-    "The AM2 is divided into six main sections, totalling about 16.25 hours",
+    "The AM2 is divided into five main sections (A-E), totalling about ~16.5 hours",
     "Installation is the largest part (8.5 hours) - plan carefully and pace yourself",
     "Safe isolation tasks are short but crucial; failure here is often automatic",
     "Testing and certification is 3.5 hours - don't underestimate paperwork time",
@@ -154,7 +146,7 @@ const AM2Module1Section2 = () => {
           How the AM2 Is Structured
         </h2>
         <p className="text-ios-body text-white/90 mb-6">
-          The AM2 is divided into six main parts. Each section tests a different set of skills,
+          The AM2 is divided into five main sections (A through E). Each section tests a different set of skills,
           but together they prove you are safe, competent, and ready for industry.
         </p>
 
@@ -192,7 +184,7 @@ const AM2Module1Section2 = () => {
           Total Time
         </h3>
         <p className="text-ios-body text-white/90">
-          The overall duration of the AM2 is around <span className="text-elec-yellow font-semibold">16.25 hours</span>,
+          The overall duration of the AM2 is around <span className="text-elec-yellow font-semibold">~16.5 hours</span>,
           normally spread across <span className="text-elec-yellow font-semibold">two and a half days</span>.
           Some centres allow short breaks between sections, but you should be prepared for long sessions of focused work.
         </p>
@@ -258,11 +250,7 @@ const AM2Module1Section2 = () => {
             <ul className="space-y-2 text-ios-callout text-white/80">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span>Safe Isolation & Risk Assessment (45 min)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-elec-yellow">•</span>
-                <span>Installation Work begins (5-6 hours)</span>
+                <span>Installation Work begins (6-7 hours)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -296,7 +284,7 @@ const AM2Module1Section2 = () => {
             <ul className="space-y-2 text-ios-callout text-white/80">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span>Circuit Isolation (30 min)</span>
+                <span>Safe Isolation of Circuits (45 min)</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>

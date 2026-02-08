@@ -65,7 +65,9 @@ export default function PATTestingCertificate() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      companyAccentColor: companyProfile.primary_color || '#3b82f6'
+      companyAccentColor: companyProfile.primary_color || '#3b82f6',
+      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationScheme: companyProfile.registration_scheme || ''
     };
   };
 
@@ -218,6 +220,8 @@ export default function PATTestingCertificate() {
         company_address: branding?.companyAddress || '',
         company_phone: branding?.companyPhone || '',
         company_email: branding?.companyEmail || '',
+        registration_scheme_logo: branding?.registrationSchemeLogo || '',
+        registration_scheme: branding?.registrationScheme || '',
       };
 
       // Call edge function

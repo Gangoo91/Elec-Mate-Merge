@@ -16,28 +16,28 @@ const MOETModule7Section5 = () => {
       title: "Employer and Training Provider Sign-Off",
       description: "Securing employer and training provider approval for EPA gateway",
       icon: CheckSquare,
-      href: "../m-o-e-t-module7-section5-1"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section5-1"
     },
     {
       number: "7.5.2",
       title: "EPA Gateway Requirements",
       description: "Understanding and completing all EPA gateway documentation",
       icon: DoorOpen,
-      href: "../m-o-e-t-module7-section5-2"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section5-2"
     },
     {
       number: "7.5.3",
       title: "Final Revision and Confidence Building",
       description: "Final preparation strategies and building confidence for assessment",
       icon: BookOpen,
-      href: "../m-o-e-t-module7-section5-3"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section5-3"
     },
     {
       number: "7.5.4",
       title: "What to Expect on EPA Day",
       description: "EPA day procedures, assessment format and what to expect",
       icon: Calendar,
-      href: "../m-o-e-t-module7-section5-4"
+      href: "/study-centre/apprentice/m-o-e-t-module7-section5-4"
     }
   ];
 
@@ -47,7 +47,7 @@ const MOETModule7Section5 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module7">
+            <Link to="/study-centre/apprentice/m-o-e-t-module7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
             </Link>
@@ -61,7 +61,7 @@ const MOETModule7Section5 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 7.5: EPA Readiness and Final Review
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Gateway requirements, final revision and EPA day preparation.
           </p>
         </div>

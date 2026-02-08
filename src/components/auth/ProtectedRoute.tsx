@@ -10,23 +10,27 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, profile, isLoading, isTrialActive, isSubscribed, isCheckingStatus, hasCompletedInitialCheck } = useAuth();
+  const { user, profile, isLoading, isSubscribed, hasCompletedInitialCheck } = useAuth();
   const location = useLocation();
 
   // Development mode - full access during development only
-  // This is automatically false in production builds
   const isDevelopment = import.meta.env.DEV === true;
 
-  // Check if the current route is the subscription page
+  // Pages that authenticated users can always access (even without subscription)
   const isSubscriptionPage = location.pathname === '/subscriptions';
+  const isCheckoutPage = location.pathname === '/checkout-trial';
+  const isPaymentPage = location.pathname === '/payment-success';
 
   // Check profile directly as fallback - this prevents flash during refresh
-  // when derived state (isSubscribed) hasn't updated yet from the new profile
   const hasProfileAccess = profile?.subscribed || profile?.free_access_granted;
 
-  // Check if user can access the page based on subscription/trial status
-  // In development mode, always allow access for testing
-  const canAccess = isDevelopment || isSubscribed || isTrialActive || hasProfileAccess || isSubscriptionPage;
+  // User can access if they have an active subscription (including Stripe trialing)
+  const canAccess = isDevelopment
+    || isSubscribed
+    || hasProfileAccess
+    || isSubscriptionPage
+    || isCheckoutPage
+    || isPaymentPage;
 
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
@@ -34,12 +38,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Show loading indicator during initial authentication and first subscription check
-  // IMPORTANT: Do NOT include isCheckingStatus in loading condition!
-  // When isCheckingStatus causes loading state, it unmounts all children (Layout, routes),
-  // which loses navigation state and can cause infinite loops on pages like
-  // /electrician/live-pricing (components remount, re-fetch data, trigger more checks).
-  // Instead, wait only for: auth load, profile fetch, and first subscription check completion.
-  // After initial check completes, the app stays stable during any background re-checks.
   if (isLoading || (user && !profile) || (profile && !hasCompletedInitialCheck)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
@@ -49,8 +47,12 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  // Check if user can access based on trial/subscription status
-  // Show paywall instead of hard redirect for better UX
+  // User signed up but never completed checkout — redirect to checkout
+  if (user && !canAccess && profile?.onboarding_completed === false) {
+    return <Navigate to="/checkout-trial" replace />;
+  }
+
+  // User had a subscription that expired — show paywall
   if (user && !canAccess) {
     return <TrialExpiredPaywall />;
   }

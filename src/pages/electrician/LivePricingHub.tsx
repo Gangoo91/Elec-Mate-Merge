@@ -177,7 +177,7 @@ const LivePricingHub = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/electrician')}
+            onClick={() => navigate('/electrician/business')}
             className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95]"
           >
             <ArrowLeft className="h-5 w-5" />

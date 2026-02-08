@@ -16,35 +16,35 @@ const MOETModule3Section5 = () => {
       title: "Uninterruptible Power Supply (UPS)",
       description: "UPS types, operation principles and system configurations",
       icon: Shield,
-      href: "../m-o-e-t-module3-section5-5-1"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5-1"
     },
     {
       number: "3.5.2", 
       title: "Battery Technologies and Maintenance",
       description: "Battery types, characteristics and maintenance procedures",
       icon: Battery,
-      href: "../m-o-e-t-module3-section5-5-2"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5-2"
     },
     {
       number: "3.5.3",
       title: "Emergency Generators", 
       description: "Generator types, installation and maintenance requirements",
       icon: Zap,
-      href: "../m-o-e-t-module3-section5-5-3"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5-3"
     },
     {
       number: "3.5.4",
       title: "Transfer Switches and Changeover Systems",
       description: "Automatic transfer switches and changeover procedures",
       icon: RefreshCw,
-      href: "../m-o-e-t-module3-section5-5-4"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5-4"
     },
     {
       number: "3.5.5",
       title: "Critical Load Management",
       description: "Load prioritisation and management during emergency conditions",
       icon: BarChart3,
-      href: "../m-o-e-t-module3-section5-5-5"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section5-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule3Section5 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module3">
+            <Link to="/study-centre/apprentice/m-o-e-t-module3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3
             </Link>
@@ -68,7 +68,7 @@ const MOETModule3Section5 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             3.5 Auxiliary Systems (UPS, Batteries, Emergency Supplies)
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             UPS systems, battery technologies, generators and critical load management.
           </p>
         </div>

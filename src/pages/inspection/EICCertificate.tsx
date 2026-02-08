@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { supabase } from '@/integrations/supabase/client';
 
 // Import EIC form components
@@ -113,7 +114,9 @@ export default function EICCertificate() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      companyAccentColor: companyProfile.primary_color || '#22c55e'
+      companyAccentColor: companyProfile.primary_color || '#22c55e',
+      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationScheme: companyProfile.registration_scheme || ''
     };
   };
 
@@ -260,6 +263,8 @@ export default function EICCertificate() {
         company_address: branding?.companyAddress || '',
         company_phone: branding?.companyPhone || '',
         company_email: branding?.companyEmail || '',
+        registration_scheme_logo: branding?.registrationSchemeLogo || '',
+        registration_scheme: branding?.registrationScheme || '',
         client_details: {
           client_name: formData.clientName || '',
           client_address: formData.clientAddress || '',
@@ -516,6 +521,16 @@ export default function EICCertificate() {
                 <Receipt className="h-4 w-4 mr-2" />
                 Invoice
               </Button>
+
+              <WhatsAppShareButton
+                type="eic"
+                id={savedReportId || id || 'new'}
+                recipientPhone={formData.clientTelephone || ''}
+                recipientName={formData.clientName || ''}
+                documentLabel="EIC Certificate"
+                variant="outline"
+                className="h-9"
+              />
             </div>
           </div>
         </div>

@@ -7,6 +7,10 @@ import { cn } from '@/lib/utils';
 interface AM2NavigationFooterProps {
   prevHref?: string;
   prevLabel?: string;
+  /** Alias for prevHref — accepted by 18+ section files */
+  previousHref?: string;
+  /** Alias for prevLabel — accepted by 18+ section files */
+  previousLabel?: string;
   nextHref?: string;
   nextLabel?: string;
   currentSection: number;
@@ -21,13 +25,18 @@ interface AM2NavigationFooterProps {
  */
 export const AM2NavigationFooter = memo(function AM2NavigationFooter({
   prevHref,
-  prevLabel = 'Previous',
+  prevLabel,
+  previousHref,
+  previousLabel,
   nextHref,
   nextLabel = 'Next',
   currentSection,
   totalSections,
   className,
 }: AM2NavigationFooterProps) {
+  // Resolve aliased props — section files use previousHref/previousLabel
+  const resolvedPrevHref = prevHref || previousHref;
+  const resolvedPrevLabel = prevLabel || previousLabel || 'Previous';
   return (
     <nav
       className={cn(
@@ -55,7 +64,7 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
       {/* Navigation Buttons */}
       <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3">
         {/* Previous Button */}
-        {prevHref ? (
+        {resolvedPrevHref ? (
           <Button
             variant="ghost"
             size="lg"
@@ -67,9 +76,9 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
             )}
             asChild
           >
-            <Link to={prevHref}>
+            <Link to={resolvedPrevHref}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              {prevLabel}
+              {resolvedPrevLabel}
             </Link>
           </Button>
         ) : (

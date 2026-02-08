@@ -16,35 +16,35 @@ const MOETModule4Section1 = () => {
       title: "Principles of PPM",
       description: "Understanding preventive maintenance philosophy, benefits and implementation strategies",
       icon: Calendar,
-      href: "../m-o-e-t-module4-section1-1"
+      href: "/study-centre/apprentice/m-o-e-t-module4-section1-1"
     },
     {
       number: "4.1.2",
       title: "Maintenance Scheduling and Records",
       description: "Creating maintenance schedules, record keeping and documentation systems",
       icon: FileText,
-      href: "../m-o-e-t-module4-section1-2"
+      href: "/study-centre/apprentice/m-o-e-t-module4-section1-2"
     },
     {
       number: "4.1.3",
       title: "Lubrication, Cleaning and Adjustments",
       description: "Routine maintenance tasks including lubrication schedules and equipment adjustments",
       icon: Settings,
-      href: "../m-o-e-t-module4-section1-3"
+      href: "/study-centre/apprentice/m-o-e-t-module4-section1-3"
     },
     {
       number: "4.1.4",
       title: "Electrical Inspection Routines",
       description: "Systematic electrical inspection procedures and safety checks",
       icon: CheckSquare,
-      href: "../m-o-e-t-module4-section1-4"
+      href: "/study-centre/apprentice/m-o-e-t-module4-section1-4"
     },
     {
       number: "4.1.5",
       title: "Legal and Regulatory Compliance in PPM",
       description: "Regulatory requirements, standards compliance and legal obligations",
       icon: Scale,
-      href: "../m-o-e-t-module4-section1-5"
+      href: "/study-centre/apprentice/m-o-e-t-module4-section1-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule4Section1 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module4">
+            <Link to="/study-centre/apprentice/m-o-e-t-module4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 4
             </Link>
@@ -68,7 +68,7 @@ const MOETModule4Section1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 4.1: Planned Preventive Maintenance (PPM)
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance.
           </p>
         </div>

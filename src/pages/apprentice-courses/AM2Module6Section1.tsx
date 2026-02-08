@@ -26,13 +26,13 @@ const AM2Module6Section1 = () => {
       id: "test-duration",
       question: "How long is allocated for the AM2 knowledge test?",
       options: [
+        "45 minutes",
         "60 minutes",
-        "75 minutes",
         "90 minutes",
         "120 minutes"
       ],
-      correctIndex: 2,
-      explanation: "The AM2 online knowledge test has a duration of 90 minutes for 30 questions."
+      correctIndex: 1,
+      explanation: "The AM2 online knowledge test has a duration of 60 minutes for 30 questions."
     },
     {
       id: "unsure-strategy",
@@ -64,9 +64,9 @@ const AM2Module6Section1 = () => {
     {
       id: 1,
       question: "How long does the AM2 online knowledge test last?",
-      options: ["60 minutes", "75 minutes", "90 minutes", "120 minutes"],
-      correctAnswer: 2,
-      explanation: "The AM2 online knowledge test has a duration of 90 minutes to complete 30 questions."
+      options: ["45 minutes", "60 minutes", "90 minutes", "120 minutes"],
+      correctAnswer: 1,
+      explanation: "The AM2 online knowledge test has a duration of 60 minutes to complete 30 questions."
     },
     {
       id: 2,
@@ -79,8 +79,8 @@ const AM2Module6Section1 = () => {
       id: 3,
       question: "What is the approximate pass mark?",
       options: ["50-55%", "60-65%", "70-75%", "80-85%"],
-      correctAnswer: 1,
-      explanation: "The pass mark is 60%, requiring 18 correct answers out of 30 questions."
+      correctAnswer: 2,
+      explanation: "The pass mark is 70%, requiring 21 correct answers out of 30 questions."
     },
     {
       id: 4,
@@ -109,9 +109,9 @@ const AM2Module6Section1 = () => {
     {
       id: 6,
       question: "How much time should you spend per question on average?",
-      options: ["1-2 minutes", "2-3 minutes", "4-5 minutes", "5-10 minutes"],
+      options: ["30-60 seconds", "1-2 minutes", "3-4 minutes", "5-10 minutes"],
       correctAnswer: 1,
-      explanation: "With 90 minutes for 30 questions, 3 minutes per question allows time for review and flagged questions."
+      explanation: "With 60 minutes for 30 questions, 2 minutes per question allows time for review and flagged questions."
     },
     {
       id: 7,
@@ -183,7 +183,7 @@ const AM2Module6Section1 = () => {
       <AM2HeroSection
         icon={Clock}
         title="Format and Structure of the Online Test"
-        description="The AM2 online knowledge test is a computer-based, multiple-choice exam. It assesses your knowledge of electrical regulations, science, and safety, alongside your ability to apply theory to real-world situations. The test lasts 90 minutes and contains 30 questions."
+        description="The AM2 online knowledge test is a computer-based, multiple-choice exam. It assesses your knowledge of electrical regulations, science, and safety, alongside your ability to apply theory to real-world situations. The test lasts 60 minutes and contains 30 questions."
         badge="Module 6 - Section 1"
       />
 
@@ -227,7 +227,7 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80"><strong className="text-white">Duration:</strong> Exactly 90 minutes from when you start the test</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Duration:</strong> Exactly 60 minutes from when you start the test</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -239,7 +239,7 @@ const AM2Module6Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80"><strong className="text-white">Pass Mark:</strong> 60% (18 correct answers out of 30)</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Pass Mark:</strong> 70% (21 correct answers out of 30)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -255,7 +255,7 @@ const AM2Module6Section1 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Time Management Breakdown:</h4>
               <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
-                With 90 minutes for 30 questions, you have exactly 3 minutes per question. However, this doesn't mean you should spend exactly this time on each question. The most effective approach is:
+                With 60 minutes for 30 questions, you have exactly 2 minutes per question. However, this doesn't mean you should spend exactly this time on each question. The most effective approach is:
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
@@ -264,15 +264,15 @@ const AM2Module6Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Standard questions:</strong> Take 2-3 minutes for typical questions</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Standard questions:</strong> Take 1-2 minutes for typical questions</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Complex scenarios:</strong> Allow up to 4-5 minutes for challenging questions</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Complex scenarios:</strong> Allow up to 3-4 minutes for challenging questions</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Review time:</strong> Reserve 10-15 minutes at the end for flagged questions</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Review time:</strong> Reserve 5-10 minutes at the end for flagged questions</span>
                 </li>
               </ul>
             </div>
@@ -529,15 +529,15 @@ const AM2Module6Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Set time checkpoints:</strong> 50% in 40 minutes, 75% in 60 minutes</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Set time checkpoints:</strong> 50% in 25 minutes, 75% in 40 minutes</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Don't get stuck:</strong> If more than 4-5 minutes on a question, flag it and move on</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Don't get stuck:</strong> If more than 3 minutes on a question, flag it and move on</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Save time for review:</strong> Finish with 10-15 minutes for flagged questions</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Save time for review:</strong> Finish with 5-10 minutes for flagged questions</span>
                 </li>
               </ul>
             </div>
@@ -594,12 +594,12 @@ const AM2Module6Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-2">Q2: How long do I have?</h4>
-              <p className="text-ios-callout text-white/80">A: 90 minutes.</p>
+              <p className="text-ios-callout text-white/80">A: 60 minutes.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-2">Q3: What's the pass mark?</h4>
-              <p className="text-ios-callout text-white/80">A: 60% (18 correct answers out of 30).</p>
+              <p className="text-ios-callout text-white/80">A: 70% (21 correct answers out of 30).</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
@@ -621,7 +621,7 @@ const AM2Module6Section1 = () => {
           accent
         >
           <p className="text-ios-body text-white/80 leading-relaxed">
-            The AM2 online knowledge test is a 90-minute, multiple-choice exam with 30 questions covering regs, science, and safety. Success depends not only on knowledge but also on managing your time and answering every question. Assessors expect candidates to work methodically, avoid rushing, and use strategies like flagging tricky questions.
+            The AM2 online knowledge test is a 60-minute, multiple-choice exam with 30 questions covering regs, science, and safety. You need 70% (21/30) to pass. Success depends not only on knowledge but also on managing your time and answering every question. Assessors expect candidates to work methodically, avoid rushing, and use strategies like flagging tricky questions.
           </p>
         </AM2ContentCard>
 

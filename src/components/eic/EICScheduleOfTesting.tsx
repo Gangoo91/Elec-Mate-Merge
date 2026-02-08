@@ -960,16 +960,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     if (migratedCircuits && migratedCircuits.length > 0) {
       // Normalize legacy data - remove K/Z curves for MCB/RCBO devices
       const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
-      const normalizedResults = migratedCircuits.map((result: TestResult) => {
+      const normalizedResults = migratedCircuits.map((result: TestResult, index: number) => {
         const needsCurve = bsStandardRequiresCurve(result.bsStandard || '');
         const validCurves = ['B', 'C', 'D'];
 
+        // Ensure every circuit has a unique ID (fix for null/missing IDs from older saves)
+        const id = result.id || crypto.randomUUID();
+
         if (needsCurve && result.protectiveDeviceCurve && !validCurves.includes(result.protectiveDeviceCurve)) {
-          return { ...result, protectiveDeviceCurve: '' };
+          return { ...result, id, protectiveDeviceCurve: '' };
         } else if (!needsCurve && result.protectiveDeviceCurve) {
-          return { ...result, protectiveDeviceCurve: '' };
+          return { ...result, id, protectiveDeviceCurve: '' };
         }
-        return result;
+        return result.id ? result : { ...result, id };
       });
       setTestResults(normalizedResults);
     } else {
@@ -1338,6 +1341,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Convert Circuit[] format to Partial<TestResult>[] format
   const convertCircuitsToTestResults = (circuits: any[]): Partial<TestResult>[] => {
     return circuits.map(circuit => ({
+      id: crypto.randomUUID(),
       circuitDescription: circuit.label || '',
       protectiveDeviceType: circuit.device || 'MCB',
       bsStandard: getDefaultBsStandard(circuit.device || 'MCB'),
@@ -1714,6 +1718,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const updateTestResult = useCallback((id: string, field: keyof TestResult, value: string) => {
+    if (!id) return; // Guard against null/undefined IDs matching all rows
     setTestResults(prev => {
       const updatedResults = prev.map(result => {
         if (result.id === id) {
@@ -1748,6 +1753,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   }, [onUpdate]);
 
   const handleBulkUpdate = useCallback((id: string, updates: Partial<TestResult>) => {
+    if (!id) return; // Guard against null/undefined IDs matching all rows
     setTestResults(prev => {
       const updatedResults = prev.map(result => {
         if (result.id === id) {

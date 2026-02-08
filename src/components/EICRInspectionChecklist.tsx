@@ -250,10 +250,12 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
     onUpdate('defectObservations', [...observations, newObservation]);
   };
 
-  const updateDefectObservation = (id: string, field: keyof DefectObservation, value: any) => {
+  const updateDefectObservation = (id: string, field: keyof DefectObservation | '__BULK__', value: any) => {
     const observations = getDefectObservations();
     const updatedObservations = observations.map(obs =>
-      obs.id === id ? { ...obs, [field]: value } : obs
+      obs.id === id
+        ? field === '__BULK__' ? { ...obs, ...value } : { ...obs, [field]: value }
+        : obs
     );
     onUpdate('defectObservations', updatedObservations);
   };

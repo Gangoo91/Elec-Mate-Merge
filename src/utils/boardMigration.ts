@@ -53,6 +53,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
       distributionBoards: boardsWithDefaults,
       scheduleOfTests: (formData.scheduleOfTests || []).map((circuit: TestResult) => ({
         ...circuit,
+        id: circuit.id || crypto.randomUUID(),
         boardId: circuit.boardId || MAIN_BOARD_ID,
       })),
     };
@@ -76,6 +77,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
   // Assign all existing circuits to main board
   const migratedCircuits = (formData.scheduleOfTests || []).map((circuit: TestResult) => ({
     ...circuit,
+    id: circuit.id || crypto.randomUUID(),
     boardId: circuit.boardId || MAIN_BOARD_ID,
   }));
 

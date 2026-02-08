@@ -6,7 +6,7 @@
  * Yellow/gold theme throughout.
  */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import useSEO from '@/hooks/useSEO';
@@ -24,13 +24,9 @@ import {
   ArrowRight,
   ArrowLeft,
   ChevronRight,
-  Clock,
   AlertCircle,
   CheckCircle,
-  Receipt,
-  MessageSquare,
-  BadgeCheck,
-  Building2,
+  Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -39,14 +35,12 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
-import { ElecAiBanner } from '@/components/elec-ai/ElecAiBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
-import { Users } from 'lucide-react';
 
 // Email whitelist for Worker Tools (beta testing)
 const EMPLOYER_ALLOWED_EMAILS = [
@@ -261,33 +255,33 @@ function ElectricalStatsBar() {
   );
 }
 
-// Featured Card Component
+// Featured Card Component - Elec-AI
 function FeaturedCard() {
   return (
-    <Link to="/electrician/agent-selector" className="block group touch-manipulation active:opacity-90">
+    <Link to="/electrician-tools/ai-tooling/assistant" className="block group touch-manipulation active:opacity-90">
       <motion.div
         whileHover={{ y: -2, scale: 1.01 }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         className="relative overflow-hidden glass-premium rounded-2xl active:bg-white/[0.02]"
       >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-        <div className="absolute -top-16 -right-16 w-32 h-32 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-violet-400 to-purple-500" />
+        <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
 
         <div className="relative z-10 p-5 sm:p-6 text-center">
-          <div className="inline-flex p-3 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
-            <Sparkles className="h-8 w-8 text-elec-yellow" />
+          <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
+            <Brain className="h-8 w-8 text-purple-400" />
           </div>
 
           <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-            Build Partners
+            Elec-AI
           </h3>
           <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
-            AI specialists for circuit design, costing, installation, safety, testing & project management
+            Your personal electrical adviser — circuit design, fault finding, regs queries & more
           </p>
 
-          <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-            <span>Choose Partner</span>
+          <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
+            <span>Start Chat</span>
             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
         </div>
@@ -379,28 +373,10 @@ const mainResources: ToolCardProps[] = [
     link: '/electrician/inspection-testing',
   },
   {
-    title: 'Quote Builder',
-    description: 'Create professional quotes',
-    icon: FileText,
-    link: '/electrician/quotes',
-  },
-  {
-    title: 'AI Tooling',
-    description: 'Smart analysis and design tools',
-    icon: Brain,
-    link: '/electrician-tools/ai-tooling',
-  },
-  {
-    title: 'Invoices',
-    description: 'Manage billing & payments',
-    icon: PoundSterling,
-    link: '/electrician/invoices',
-  },
-  {
-    title: 'Expenses',
-    description: 'Track receipts & mileage',
-    icon: Receipt,
-    link: '/electrician/expenses',
+    title: 'Business',
+    description: 'Quotes, invoices, customers, expenses & pricing',
+    icon: Briefcase,
+    link: '/electrician/business',
   },
   {
     title: 'Site Safety & RAMS',
@@ -414,7 +390,20 @@ const mainResources: ToolCardProps[] = [
     icon: Calculator,
     link: '/electrician/calculations',
   },
+  {
+    title: 'Build Partners',
+    description: 'AI specialists for design, costing, safety & testing',
+    icon: Sparkles,
+    link: '/electrician/agent-selector',
+  },
+  {
+    title: 'AI Tooling',
+    description: 'Smart analysis and design tools',
+    icon: Brain,
+    link: '/electrician-tools/ai-tooling',
+  },
 ];
+
 
 // Company resources - employer integration features (Hidden until employer area launches)
 // const companyResources: ToolCardProps[] = [
@@ -444,20 +433,8 @@ const mainResources: ToolCardProps[] = [
 //   },
 // ];
 
-// Additional resources - business development (Quote Builder & Invoices moved to Core Daily Tools)
+// Additional resources - business development
 const additionalResources: ToolCardProps[] = [
-  {
-    title: 'Business Hub',
-    description: 'Business management',
-    icon: Briefcase,
-    link: '/electrician/business',
-  },
-  {
-    title: 'Live Pricing',
-    description: 'Market rates',
-    icon: PoundSterling,
-    link: '/electrician/live-pricing',
-  },
   {
     title: 'Industry Updates',
     description: 'News and changes',
@@ -564,19 +541,14 @@ const ElectricalHub = () => {
               <ElecIdBanner variant="electrician" />
             </motion.section>
 
-            {/* Elec-AI Banner */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <ElecAiBanner />
-            </motion.section>
-
             {/* Setup Incomplete Banner */}
             <motion.section variants={itemVariants} className="px-4 sm:px-0">
               <SetupIncompleteBanner />
             </motion.section>
 
-            {/* Featured AI Card */}
+            {/* Elec-AI Featured Card */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="AI-Powered Tools" />
+              <SectionHeader title="Elec-AI" />
               <FeaturedCard />
             </motion.section>
 
@@ -598,21 +570,6 @@ const ElectricalHub = () => {
                 )}
               </div>
             </motion.section>
-
-            {/* Company - Employer Integration (Hidden until employer area launches)
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <div className="flex items-center gap-2 px-1">
-                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                <h2 className="text-lg sm:text-xl font-semibold text-white">Company</h2>
-                <span className="text-xs text-white/50 ml-1">Employer tools</span>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
-                {companyResources.map((resource) => (
-                  <CompactToolCard key={resource.link} {...resource} />
-                ))}
-              </div>
-            </motion.section>
-            */}
 
             {/* Business & Development */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">

@@ -15,6 +15,7 @@ export type ProfileType = {
   website?: string;
   subscribed?: boolean;
   subscription_tier?: string | null;
+  subscription_end?: string | null;
   free_access_granted?: boolean;
   onboarding_completed?: boolean;
   ecs_card_type?: string;

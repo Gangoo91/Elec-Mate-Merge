@@ -134,6 +134,27 @@ export const useCompanyProfile = () => {
         }
       }
 
+      // Sync scheme logos to inspector profiles for PDF embedding
+      if (cleanProfileData.registration_scheme_logo !== undefined) {
+        const { error: syncError } = await supabase
+          .from('inspector_profiles')
+          .update({ registration_scheme_logo: cleanProfileData.registration_scheme_logo })
+          .eq('user_id', user.id);
+        if (syncError) {
+          console.warn('[useCompanyProfile] Failed to sync registration scheme logo to inspector profiles:', syncError);
+        }
+      }
+
+      if (cleanProfileData.scheme_logo_data_url !== undefined) {
+        const { error: syncError } = await supabase
+          .from('inspector_profiles')
+          .update({ scheme_logo_data_url: cleanProfileData.scheme_logo_data_url })
+          .eq('user_id', user.id);
+        if (syncError) {
+          console.warn('[useCompanyProfile] Failed to sync scheme logo data URL to inspector profiles:', syncError);
+        }
+      }
+
       toast({
         title: "Profile Saved",
         description: "Company profile has been saved successfully.",

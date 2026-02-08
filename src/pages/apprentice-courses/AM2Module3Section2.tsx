@@ -246,6 +246,90 @@ const AM2Module3Section2 = () => {
       {/* Learning Outcomes */}
       <AM2LearningOutcomes outcomes={learningOutcomes} />
 
+      {/* Ring Final Circuit Wiring Topology Diagram */}
+      <div className="my-8 flex justify-center">
+        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+          <svg viewBox="0 0 450 300" className="w-full h-auto" role="img" aria-label="Ring final circuit wiring topology diagram showing a consumer unit with a ring loop through socket outlets with line, neutral and CPC conductors">
+            {/* Title */}
+            <text x="225" y="22" textAnchor="middle" fill="#F3F4F6" fontSize="15" fontFamily="system-ui, sans-serif" fontWeight="bold">Ring Final Circuit Topology</text>
+
+            {/* Consumer Unit */}
+            <rect x="10" y="70" width="70" height="140" rx="6" fill="#374151" stroke="#9CA3AF" strokeWidth="2" />
+            <text x="45" y="95" textAnchor="middle" fill="#F3F4F6" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Consumer</text>
+            <text x="45" y="110" textAnchor="middle" fill="#F3F4F6" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Unit</text>
+            <text x="45" y="132" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">32A MCB</text>
+
+            {/* Outgoing terminals (top) */}
+            <circle cx="80" cy="100" r="4" fill="#8B6914" />
+            <circle cx="80" cy="115" r="4" fill="#2563EB" />
+            <circle cx="80" cy="130" r="4" fill="#22C55E" />
+
+            {/* Return terminals (bottom) */}
+            <circle cx="80" cy="160" r="4" fill="#8B6914" />
+            <circle cx="80" cy="175" r="4" fill="#2563EB" />
+            <circle cx="80" cy="190" r="4" fill="#22C55E" />
+
+            {/* Socket 1 */}
+            <rect x="150" y="50" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
+            <text x="180" y="75" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 1</text>
+
+            {/* Socket 2 */}
+            <rect x="260" y="50" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
+            <text x="290" y="75" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 2</text>
+
+            {/* Socket 3 */}
+            <rect x="370" y="110" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
+            <text x="400" y="135" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 3</text>
+
+            {/* Socket 4 */}
+            <rect x="260" y="190" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
+            <text x="290" y="215" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 4</text>
+
+            {/* TOP PATH (outgoing) - Line conductor (brown) */}
+            <path d="M 84 100 L 150 70" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+            <path d="M 210 70 L 260 70" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+            <path d="M 320 70 L 400 110" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+
+            {/* TOP PATH - Neutral conductor (blue) */}
+            <path d="M 84 115 L 150 77" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+            <path d="M 210 77 L 260 77" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+            <path d="M 320 77 L 400 118" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+
+            {/* TOP PATH - CPC/Earth (green dashed) */}
+            <path d="M 84 130 L 150 84" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path d="M 210 84 L 260 84" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path d="M 320 84 L 400 126" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+
+            {/* BOTTOM PATH (return) - Line conductor (brown) */}
+            <path d="M 84 160 L 150 200" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+            <path d="M 210 200 L 260 200" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+            <path d="M 320 200 L 400 150" stroke="#8B6914" strokeWidth="2.5" fill="none" />
+
+            {/* BOTTOM PATH - Neutral conductor (blue) */}
+            <path d="M 84 175 L 150 207" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+            <path d="M 210 207 L 260 207" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+            <path d="M 320 207 L 400 142" stroke="#2563EB" strokeWidth="2.5" fill="none" />
+
+            {/* BOTTOM PATH - CPC/Earth (green dashed) */}
+            <path d="M 84 190 L 150 214" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path d="M 210 214 L 260 214" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path d="M 320 214 L 400 148" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+
+            {/* Legend */}
+            <rect x="80" y="252" width="290" height="36" rx="6" fill="#1F2937" stroke="#374151" strokeWidth="1" />
+            <line x1="100" y1="270" x2="130" y2="270" stroke="#8B6914" strokeWidth="2.5" />
+            <text x="135" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Line (L)</text>
+            <line x1="185" y1="270" x2="215" y2="270" stroke="#2563EB" strokeWidth="2.5" />
+            <text x="220" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Neutral (N)</text>
+            <line x1="290" y1="270" x2="320" y2="270" stroke="#22C55E" strokeWidth="2" strokeDasharray="6,3" />
+            <text x="325" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">CPC</text>
+
+            {/* Bottom label */}
+            <text x="225" y="298" textAnchor="middle" fill="#9CA3AF" fontSize="10" fontFamily="system-ui, sans-serif">Complete loop -- both ends must return to origin</text>
+          </svg>
+        </div>
+      </div>
+
       {/* Ring Final Circuit */}
       <AM2ContentCard
         title="1. Ring Final Circuit"

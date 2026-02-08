@@ -51,6 +51,8 @@ export interface CompanyBranding {
   companyPhone: string;
   companyEmail: string;
   companyAccentColor: string;
+  registrationSchemeLogo: string;
+  registrationScheme: string;
 }
 
 export interface LuminaireDefaults {
@@ -148,7 +150,9 @@ export function useEmergencyLightingSmartForm() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      companyAccentColor: companyProfile.primary_color || '#f59e0b'
+      companyAccentColor: companyProfile.primary_color || '#f59e0b',
+      registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
+      registrationScheme: companyProfile.registration_scheme || ''
     };
   }, [companyProfile]);
 

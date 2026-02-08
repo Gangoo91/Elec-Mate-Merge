@@ -48,10 +48,10 @@ const AM2Module6 = () => {
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-white/10 backdrop-blur-md bg-black/20 sticky top-0 z-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+      <div className="border-b border-white/10 backdrop-blur-md bg-black/20 sticky top-0 z-30">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
           <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
+            <Link to="/study-centre/apprentice/am2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to AM2 Course
             </Link>
@@ -61,7 +61,7 @@ const AM2Module6 = () => {
 
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
         {/* Hero Section */}
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full mb-4">

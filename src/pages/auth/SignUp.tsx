@@ -3,7 +3,6 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Loader2,
@@ -11,7 +10,6 @@ import {
   CheckCircle2,
   GraduationCap,
   Zap,
-  BadgeCheck,
   Gift,
   User,
   Mail,
@@ -27,7 +25,7 @@ import {
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
-import { journeys, addBreadcrumb } from '@/lib/sentry';
+import { addBreadcrumb } from '@/lib/sentry';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -36,7 +34,7 @@ const PASSWORD_REQUIREMENTS = [
   { id: 'number', label: '0-9', test: (p: string) => /[0-9]/.test(p) },
 ];
 
-type OnboardingStep = 'account' | 'profile' | 'elec-id' | 'consent' | 'complete';
+type OnboardingStep = 'account' | 'profile' | 'consent';
 
 // InputField component - MUST be outside SignUp to prevent re-creation on every render
 interface InputFieldProps {
@@ -131,40 +129,26 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [profile, setProfile] = useState({ role: '' as string, ecsCardType: '', createElecId: true });
+  const [profile, setProfile] = useState({ role: '' as string });
   const [consent, setConsent] = useState({
     termsAccepted: false,
     privacyAccepted: false,
     marketingOptIn: false,
     dataProcessingAccepted: false,
   });
-  const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [offerCode, setOfferCode] = useState<string | null>(null);
-  const [earlyAccessToken, setEarlyAccessToken] = useState<string | null>(null);
-  const [isEarlyAccess, setIsEarlyAccess] = useState(false);
 
-  // Capture offer code and early access params from URL
+  // Capture offer code from URL
   useEffect(() => {
     const code = searchParams.get('offer');
     if (code) {
       localStorage.setItem('elec-mate-offer-code', code);
       setOfferCode(code);
       console.log('Offer code captured:', code);
-    }
-
-    // Check for early access invite
-    const ref = searchParams.get('ref');
-    const token = searchParams.get('token');
-    if (ref === 'early-access' && token) {
-      setEarlyAccessToken(token);
-      setIsEarlyAccess(true);
-      localStorage.setItem('elec-mate-early-access-token', token);
-      console.log('Early access token captured:', token);
     }
   }, [searchParams]);
 
@@ -231,13 +215,13 @@ const SignUp = () => {
     }
     setError(null);
     addBreadcrumb('Signup step: profile completed', 'signup', { role: profile.role });
-    setStep('elec-id');
+    setStep('consent');
   };
 
-  const handleElecIdSubmit = () => {
-    setError(null);
-    addBreadcrumb('Signup step: elec-id completed', 'signup', { createElecId: profile.createElecId });
-    setStep('consent');
+  // Stripe price IDs mapped by role
+  const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
+    electrician: { planId: 'electrician-monthly', priceId: 'price_1SqJVr2RKw5t5RAmaiTGelLN' },
+    apprentice: { planId: 'apprentice-monthly', priceId: 'price_1SmUef2RKw5t5RAmRIMTWTqU' },
   };
 
   const handleFinalSubmit = async () => {
@@ -257,22 +241,17 @@ const SignUp = () => {
         return;
       }
 
-      // IMMEDIATELY save role to database - don't rely on email confirmation flow
-      // This is critical for user experience - await it properly
+      // Save role to database with onboarding_completed = false (they haven't paid yet)
       if (data?.user?.id) {
         const { error: profileError } = await supabase.from('profiles').update({
           role: profile.role,
-          ecs_card_type: profile.ecsCardType || null,
-          elec_id_enabled: profile.createElecId || false,
-          onboarding_completed: true,
+          onboarding_completed: false,
           updated_at: new Date().toISOString(),
         }).eq('id', data.user.id);
 
         if (profileError) {
           console.error('Error saving profile during signup:', profileError);
-          // Store in localStorage as backup - dashboard will retry
           localStorage.setItem('elec-mate-profile-role', profile.role);
-          localStorage.setItem('elec-mate-onboarding-pending', 'true');
         } else {
           console.log('Profile role saved immediately during signup');
         }
@@ -290,39 +269,7 @@ const SignUp = () => {
       });
 
       if (!consentResult.success) {
-        // Log but don't block - consent is also stored in localStorage/onboarding data
         console.warn('Consent DB storage failed (non-critical):', consentResult.error);
-      }
-
-      // Generate Elec-ID immediately if user opted for it
-      if (profile.createElecId && data?.user?.id) {
-        try {
-          const { data: elecIdResult } = await supabase.functions.invoke('generate-elec-id', {
-            body: {
-              user_id: data.user.id,
-              ecs_card_type: profile.ecsCardType || null
-            }
-          });
-          if (elecIdResult?.elec_id_number) {
-            setGeneratedElecId(elecIdResult.elec_id_number);
-            console.log('Elec-ID generated:', elecIdResult.elec_id_number);
-          }
-        } catch (elecIdError) {
-          console.error('Error generating Elec-ID:', elecIdError);
-        }
-      }
-
-      // Handle early access invite claim (non-blocking)
-      if (earlyAccessToken) {
-        try {
-          await supabase.functions.invoke('send-early-access-invite', {
-            body: { action: 'claim', token: earlyAccessToken },
-          });
-          console.log('Early access invite claimed');
-          localStorage.setItem('elec-mate-early-access-claimed', 'true');
-        } catch (claimErr) {
-          console.warn('Early access claim failed (non-critical):', claimErr);
-        }
       }
 
       // Send welcome email (non-blocking)
@@ -336,15 +283,20 @@ const SignUp = () => {
         console.warn('Welcome email failed (non-critical):', emailErr);
       });
 
+      // Store planId + priceId for checkout page based on role
+      const rolePrice = ROLE_TO_PRICE[profile.role];
+      if (rolePrice) {
+        localStorage.setItem('elec-mate-checkout-planId', rolePrice.planId);
+        localStorage.setItem('elec-mate-checkout-priceId', rolePrice.priceId);
+      }
+
       // Clean up localStorage items used during onboarding
       localStorage.removeItem('elec-mate-offer-code');
-      localStorage.removeItem('elec-mate-early-access-token');
-      localStorage.removeItem('elec-mate-early-access-claimed');
       localStorage.removeItem('elec-mate-onboarding-data');
       localStorage.removeItem('elec-mate-profile-role');
 
-      // Go straight to dashboard - no email confirmation needed
-      navigate('/dashboard');
+      // Redirect to checkout trial page to collect card details
+      navigate('/checkout-trial');
     } catch (err: any) {
       setError(err.message || 'An error occurred');
     } finally {
@@ -355,68 +307,11 @@ const SignUp = () => {
   const goBack = () => {
     setError(null);
     if (step === 'profile') setStep('account');
-    else if (step === 'elec-id') setStep('profile');
-    else if (step === 'consent') setStep('elec-id');
+    else if (step === 'consent') setStep('profile');
   };
-
-  useEffect(() => {
-    if (step === 'complete') {
-      const timer = setTimeout(() => navigate('/dashboard'), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [step, navigate]);
-
-  // Success overlay
-  const SuccessOverlay = () => (
-    <AnimatePresence>
-      {showSuccess && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex flex-col items-center gap-4"
-          >
-            <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center">
-              <CheckCircle2 className="h-10 w-10 text-green-400" />
-            </div>
-            <p className="text-lg text-white font-semibold">Welcome to Elec-Mate!</p>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-
-  // Completion screen
-  if (step === 'complete') {
-    return (
-      <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex items-center justify-center p-6">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-          <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 className="h-10 w-10 text-green-400" />
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Welcome to Elec-Mate!</h1>
-          <p className="text-white/60 mb-6">Taking you to your dashboard...</p>
-          {generatedElecId && (
-            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
-              <p className="text-sm text-white/70 mb-1">Your Elec-ID</p>
-              <p className="text-xl font-bold text-elec-yellow">{generatedElecId}</p>
-            </div>
-          )}
-          <Loader2 className="h-6 w-6 animate-spin text-elec-yellow mx-auto" />
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto">
-      <SuccessOverlay />
 
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
@@ -478,27 +373,8 @@ const SignUp = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                {/* Early Access Banner */}
-                {isEarlyAccess && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-blue-500/20 to-sky-500/20 border border-blue-500/30"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                        <Sparkles className="h-5 w-5 text-blue-400" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-blue-400">Early Access Invite</p>
-                        <p className="text-xs text-white/60">Your 7-day free trial will start automatically</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-
                 {/* Offer Banner */}
-                {offerCode && !isEarlyAccess && (
+                {offerCode && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -721,84 +597,7 @@ const SignUp = () => {
               </motion.div>
             )}
 
-            {/* Step 3: Elec-ID */}
-            {step === 'elec-id' && (
-              <motion.div
-                key="elec-id"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <div className="text-center mb-4 sm:mb-6">
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-2">
-                    <h1 className="text-2xl sm:text-[28px] font-bold text-white tracking-tight">
-                      Get Your Elec-ID
-                    </h1>
-                    <span className="px-2.5 py-1 text-[10px] font-bold bg-green-500 text-white rounded-full">
-                      FREE
-                    </span>
-                  </div>
-                  <p className="text-sm sm:text-[15px] text-white/50">Your digital credential - no cost, ever</p>
-                </div>
-
-                <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {['Store qualifications', 'Share via QR', 'Find work', 'Verifiable credential'].map((item) => (
-                      <div key={item} className="flex items-center gap-2 text-xs sm:text-[13px] text-white/70">
-                        <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
-                        <span className="leading-snug">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setProfile({ ...profile, createElecId: !profile.createElecId })}
-                  className={cn(
-                    "w-full p-3 sm:p-4 rounded-2xl border-2 text-left transition-all touch-manipulation mb-4",
-                    profile.createElecId
-                      ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                      : "border-white/10 bg-white/[0.03]"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <Checkbox checked={profile.createElecId} className="h-5 w-5 sm:h-6 sm:w-6 border-2 border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold text-white text-[15px] sm:text-[16px]">Yes, create my Elec-ID</p>
-                      <p className="text-xs sm:text-[13px] text-white/50">It's free forever</p>
-                    </div>
-                  </div>
-                </button>
-
-                {profile.createElecId && (
-                  <div className="mb-4 sm:mb-6">
-                    <label className="block text-xs sm:text-[13px] font-medium text-white/70 ml-1 mb-2">ECS Card Type (optional)</label>
-                    <MobileSelectPicker
-                      value={profile.ecsCardType}
-                      onValueChange={(value) => setProfile({ ...profile, ecsCardType: value })}
-                      options={[
-                        { value: 'none', label: 'No ECS card yet' },
-                        { value: 'apprentice', label: 'Apprentice' },
-                        { value: 'installation', label: 'Installation Electrician' },
-                        { value: 'approved', label: 'Approved Electrician' }
-                      ]}
-                      placeholder="Select card type..."
-                      title="ECS Card Type"
-                    />
-                  </div>
-                )}
-
-                <Button
-                  onClick={handleElecIdSubmit}
-                  className="w-full h-12 sm:h-14 rounded-2xl text-[15px] sm:text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25"
-                >
-                  Continue <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </motion.div>
-            )}
-
-            {/* Step 4: Consent */}
+            {/* Step 3: Consent */}
             {step === 'consent' && (
               <motion.div
                 key="consent"

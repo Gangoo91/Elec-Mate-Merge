@@ -16,35 +16,35 @@ const MOETModule3Section6 = () => {
       title: "Solar PV Integration",
       description: "Solar photovoltaic systems, installation and grid connection",
       icon: Sun,
-      href: "../m-o-e-t-module3-section6-6-1"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6-1"
     },
     {
       number: "3.6.2", 
       title: "Wind and Other Renewables (overview)",
       description: "Wind power, hydro and other renewable energy technologies",
       icon: Wind,
-      href: "../m-o-e-t-module3-section6-6-2"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6-2"
     },
     {
       number: "3.6.3",
       title: "Energy Storage Systems", 
       description: "Battery storage, grid-scale storage and integration methods",
       icon: Battery,
-      href: "../m-o-e-t-module3-section6-6-3"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6-3"
     },
     {
       number: "3.6.4",
       title: "Smart Grids and Smart Meters",
       description: "Smart grid technology, smart metering and demand management",
       icon: Zap,
-      href: "../m-o-e-t-module3-section6-6-4"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6-4"
     },
     {
       number: "3.6.5",
       title: "Electric Vehicle Charging Infrastructure",
       description: "EV charging systems, installation and grid integration",
       icon: Car,
-      href: "../m-o-e-t-module3-section6-6-5"
+      href: "/study-centre/apprentice/m-o-e-t-module3-section6-5"
     }
   ];
 
@@ -54,7 +54,7 @@ const MOETModule3Section6 = () => {
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
-            <Link to="../m-o-e-t-module3">
+            <Link to="/study-centre/apprentice/m-o-e-t-module3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3
             </Link>
@@ -68,7 +68,7 @@ const MOETModule3Section6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             3.6 Emerging Technologies (Renewables, Smart Systems)
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-5xl">
             Solar PV, renewables, energy storage, smart grids and EV charging.
           </p>
         </div>

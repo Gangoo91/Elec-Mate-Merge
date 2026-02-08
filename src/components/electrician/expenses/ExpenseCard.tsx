@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import { Trash2, Receipt, Calendar, MapPin, ChevronRight, Pencil, CheckCircle2, Coins } from 'lucide-react';
+import { Trash2, Receipt, Calendar, MapPin, ChevronRight, Pencil, CheckCircle2, Coins, CloudUpload, Loader2 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { useHaptics } from '@/hooks/useHaptics';
 import { Expense, getCategoryConfig } from '@/types/expense';
@@ -43,6 +43,9 @@ interface ExpenseCardProps {
   onDelete: () => void;
   onEdit?: () => void;
   onClick?: () => void;
+  onSync?: () => void;
+  isSyncing?: boolean;
+  showSyncButton?: boolean;
   delay?: number;
 }
 
@@ -51,6 +54,9 @@ export function ExpenseCard({
   onDelete,
   onEdit,
   onClick,
+  onSync,
+  isSyncing = false,
+  showSyncButton = false,
   delay = 0,
 }: ExpenseCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
@@ -275,10 +281,26 @@ export function ExpenseCard({
             )}
           </div>
 
-          {/* Chevron */}
-          {onClick && (
+          {/* Sync / Chevron */}
+          {showSyncButton && !expense.synced_to_accounting ? (
+            <button
+              onClick={(e) => { e.stopPropagation(); onSync?.(); }}
+              disabled={isSyncing}
+              className="w-11 h-11 flex items-center justify-center rounded-xl bg-amber-500/15 active:scale-[0.95] transition-all touch-manipulation flex-shrink-0"
+            >
+              {isSyncing ? (
+                <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
+              ) : (
+                <CloudUpload className="h-5 w-5 text-amber-400" />
+              )}
+            </button>
+          ) : showSyncButton && expense.synced_to_accounting ? (
+            <div className="w-11 h-11 flex items-center justify-center flex-shrink-0">
+              <CheckCircle2 className="h-5 w-5 text-green-400" />
+            </div>
+          ) : onClick ? (
             <ChevronRight className="h-5 w-5 text-muted-foreground/40 flex-shrink-0" />
-          )}
+          ) : null}
         </div>
       </motion.div>
     </motion.div>

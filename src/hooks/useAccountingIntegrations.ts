@@ -288,7 +288,8 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
 
       // Log full response for debugging
       console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
-      console.warn('Full response object:', response);
+      console.log('Response data:', JSON.stringify(response.data, null, 2));
+      console.log('Response error:', response.error);
 
       // Check for error in response data
       if (response.data?.success === false || response.data?.error) {

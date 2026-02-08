@@ -16,10 +16,15 @@ const AM2Module1Section3 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What percentage is generally required to pass the AM2 overall?",
-      options: ["70%", "75%", "80%", "85%"],
+      question: "How is the AM2 assessment marked?",
+      options: [
+        "Percentage scoring with 80% pass mark",
+        "Graded A-F like a university exam",
+        "Competent or Not Yet Competent on each criterion",
+        "Points-based with weighted sections"
+      ],
       correctAnswer: 2,
-      explanation: "The AM2 generally requires around 80% overall, but you must also demonstrate competence in each main section."
+      explanation: "The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or Not Yet Competent using objective Yes/No marking, not percentage scores."
     },
     {
       id: 2,
@@ -82,8 +87,8 @@ const AM2Module1Section3 = () => {
       {/* Key Statistics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <AM2ContentCard className="text-center">
-          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">80%</div>
-          <div className="text-ios-footnote text-white/70">Overall pass threshold</div>
+          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">Yes/No</div>
+          <div className="text-ios-footnote text-white/70">Competence-based marking</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">5</div>
@@ -115,7 +120,7 @@ const AM2Module1Section3 = () => {
           </li>
           <li className="flex items-start gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-            <span>Identify the pass mark threshold and the importance of meeting standards across all sections</span>
+            <span>Understand the competence-based pass criteria and the importance of meeting standards across all sections</span>
           </li>
           <li className="flex items-start gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -189,10 +194,10 @@ const AM2Module1Section3 = () => {
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
-          2. Pass Threshold Requirements
+          2. Competence-Based Pass Requirements
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Candidates usually need <strong className="text-elec-yellow">80% overall</strong> across the assessment. However:
+          The AM2 uses <strong className="text-elec-yellow">competence-based assessment</strong> - assessors judge each criterion as Competent or Not Yet Competent. There is no percentage pass mark. You must demonstrate competence across all sections:
         </p>
         <ul className="space-y-2 text-ios-body text-white/80">
           <li className="flex items-start gap-2">

@@ -411,6 +411,8 @@ export default function EVChargingCertificate() {
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
+            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }

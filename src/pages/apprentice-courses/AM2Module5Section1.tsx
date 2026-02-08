@@ -172,6 +172,115 @@ const AM2Module5Section1 = () => {
       {/* Learning Outcomes */}
       <AM2LearningOutcomes outcomes={learningOutcomes} />
 
+      {/* Fault Diagnosis Decision Tree Diagram */}
+      <div className="my-8 flex justify-center">
+        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+          <svg viewBox="0 0 500 500" className="w-full h-auto" role="img" aria-label="Fault diagnosis decision tree showing four common symptoms, the appropriate test for each, and the resulting fault type identified">
+            {/* Title */}
+            <text x="250" y="24" textAnchor="middle" fill="#F3F4F6" fontSize="15" fontFamily="system-ui, sans-serif" fontWeight="bold">Fault Diagnosis Decision Tree</text>
+
+            {/* Column headers */}
+            <text x="80" y="52" textAnchor="middle" fill="#9CA3AF" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">SYMPTOM</text>
+            <text x="250" y="52" textAnchor="middle" fill="#9CA3AF" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">TEST</text>
+            <text x="420" y="52" textAnchor="middle" fill="#9CA3AF" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">FAULT TYPE</text>
+
+            {/* Row 1: Dead Circuit */}
+            <rect x="10" y="70" width="140" height="44" rx="8" fill="#2563EB" />
+            <text x="80" y="88" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Dead Circuit</text>
+            <text x="80" y="104" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">(No power at all)</text>
+
+            <line x1="150" y1="92" x2="180" y2="92" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="176,86 186,92 176,98" fill="#9CA3AF" />
+
+            <rect x="185" y="70" width="130" height="44" rx="8" fill="#D97706" />
+            <text x="250" y="88" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Continuity</text>
+            <text x="250" y="104" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Test R1+R2</text>
+
+            <line x1="315" y1="92" x2="345" y2="92" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="341,86 351,92 341,98" fill="#9CA3AF" />
+
+            <rect x="350" y="70" width="140" height="44" rx="8" fill="#DC2626" />
+            <text x="420" y="88" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Open Circuit</text>
+            <text x="420" y="104" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Fault</text>
+
+            {/* Row 2: MCB Trips */}
+            <rect x="10" y="130" width="140" height="44" rx="8" fill="#2563EB" />
+            <text x="80" y="148" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">MCB Trips</text>
+            <text x="80" y="164" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">(Immediately)</text>
+
+            <line x1="150" y1="152" x2="180" y2="152" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="176,146 186,152 176,158" fill="#9CA3AF" />
+
+            <rect x="185" y="130" width="130" height="44" rx="8" fill="#D97706" />
+            <text x="250" y="148" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Insulation</text>
+            <text x="250" y="164" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Resistance (IR)</text>
+
+            <line x1="315" y1="152" x2="345" y2="152" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="341,146 351,152 341,158" fill="#9CA3AF" />
+
+            <rect x="350" y="130" width="140" height="44" rx="8" fill="#DC2626" />
+            <text x="420" y="148" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Short Circuit</text>
+            <text x="420" y="164" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Fault</text>
+
+            {/* Row 3: RCD Trips */}
+            <rect x="10" y="190" width="140" height="44" rx="8" fill="#2563EB" />
+            <text x="80" y="208" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">RCD Trips</text>
+            <text x="80" y="224" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">(On energisation)</text>
+
+            <line x1="150" y1="212" x2="180" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="176,206 186,212 176,218" fill="#9CA3AF" />
+
+            <rect x="185" y="190" width="130" height="44" rx="8" fill="#D97706" />
+            <text x="250" y="208" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">IR Line-Earth</text>
+            <text x="250" y="224" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">L-E and N-E</text>
+
+            <line x1="315" y1="212" x2="345" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="341,206 351,212 341,218" fill="#9CA3AF" />
+
+            <rect x="350" y="190" width="140" height="44" rx="8" fill="#DC2626" />
+            <text x="420" y="208" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Earth Fault</text>
+            <text x="420" y="224" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">(Insulation breakdown)</text>
+
+            {/* Row 4: Poor Performance */}
+            <rect x="10" y="250" width="140" height="44" rx="8" fill="#2563EB" />
+            <text x="80" y="268" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Poor Performance</text>
+            <text x="80" y="284" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">(Dim lights, heat)</text>
+
+            <line x1="150" y1="272" x2="180" y2="272" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="176,266 186,272 176,278" fill="#9CA3AF" />
+
+            <rect x="185" y="250" width="130" height="44" rx="8" fill="#D97706" />
+            <text x="250" y="268" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Zs (Loop</text>
+            <text x="250" y="284" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Impedance)</text>
+
+            <line x1="315" y1="272" x2="345" y2="272" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="341,266 351,272 341,278" fill="#9CA3AF" />
+
+            <rect x="350" y="250" width="140" height="44" rx="8" fill="#DC2626" />
+            <text x="420" y="268" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">High Resistance</text>
+            <text x="420" y="284" textAnchor="middle" fill="white" fontSize="10" fontFamily="system-ui, sans-serif">Joint</text>
+
+            {/* Bottom guidance box */}
+            <rect x="50" y="320" width="400" height="60" rx="8" fill="#1F2937" stroke="#D97706" strokeWidth="1.5" />
+            <text x="250" y="344" textAnchor="middle" fill="#FCD34D" fontSize="12" fontFamily="system-ui, sans-serif" fontWeight="bold">Systematic Approach:</text>
+            <text x="250" y="362" textAnchor="middle" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Identify Symptom  &rarr;  Select Correct Test  &rarr;  Diagnose Fault Type</text>
+            <text x="250" y="376" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">Never guess -- always test methodically</text>
+
+            {/* Colour legend */}
+            <rect x="115" y="400" width="270" height="44" rx="6" fill="#1F2937" stroke="#374151" strokeWidth="1" />
+            <rect x="130" y="414" width="16" height="16" rx="3" fill="#2563EB" />
+            <text x="152" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Symptom</text>
+            <rect x="210" y="414" width="16" height="16" rx="3" fill="#D97706" />
+            <text x="232" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Test</text>
+            <rect x="275" y="414" width="16" height="16" rx="3" fill="#DC2626" />
+            <text x="297" y="426" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Fault Type</text>
+
+            {/* Bottom label */}
+            <text x="250" y="470" textAnchor="middle" fill="#9CA3AF" fontSize="10" fontFamily="system-ui, sans-serif">AM2 Module 5 -- Fault Diagnosis Methodology</text>
+          </svg>
+        </div>
+      </div>
+
       {/* Common Fault Types */}
       <AM2ContentCard
         title="1. Common Fault Types in AM2"

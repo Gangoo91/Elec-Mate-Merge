@@ -56,23 +56,27 @@ const AM2Module1Section1 = () => {
 
   const assessmentSteps = [
     {
-      title: "Safe Isolation & Risk Assessment (30 minutes)",
-      description: "Lock off and tag out procedures, prove dead testing using approved test equipment, risk assessment completion and hazard identification, safe working method statements."
+      title: "Section A1 - Risk Assessment & Initial Setup",
+      description: "Risk assessment completion and hazard identification, safe working method statements, PPE selection and workspace preparation before installation begins."
     },
     {
-      title: "Installation Work (8 hours) - Main Component",
+      title: "Section A2-A5 - Composite Installation (8 hours 30 minutes) - Main Component",
       description: "Cable installation using various methods (conduit, trunking, clipping), SWA cable termination techniques, mechanical protection and support systems, accessory installation and final connections."
     },
     {
-      title: "Inspection & Testing (3.5 hours)",
+      title: "Section B - Inspection, Testing & Certification (3.5 hours)",
       description: "Complete sequence of electrical tests, earth fault loop impedance measurements, insulation resistance testing, RCD testing and verification, certificate completion."
     },
     {
-      title: "Fault Finding (2.5 hours)",
+      title: "Section C - Safe Isolation of Circuits (45 minutes)",
+      description: "Three scenarios requiring safe isolation procedures covering single-phase equipment isolation, three-phase isolator procedures, and distribution board isolation."
+    },
+    {
+      title: "Section D - Fault Diagnosis & Rectification (2 hours)",
       description: "Systematic fault diagnosis using test equipment, circuit analysis and problem identification, safe fault rectification procedures, verification testing after repairs."
     },
     {
-      title: "Online Knowledge Test (1 hour)",
+      title: "Section E - Online Knowledge Test (1 hour)",
       description: "BS 7671 Wiring Regulations questions, cable calculations and protective device selection, health and safety requirements, inspection and testing procedures."
     }
   ];
@@ -129,7 +133,7 @@ const AM2Module1Section1 = () => {
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">AM2 Assessment Components</h2>
         <p className="text-ios-body text-white/90 mb-6">
-          The AM2 assessment comprises 5 distinct components totalling 16.5 hours over 2½ days.
+          The AM2 assessment comprises 6 distinct sections totalling ~16.5 hours over 2½ days.
           Most of your time is spent on installation work, while other sections test how you finish, check, and fix your work.
         </p>
         <AM2TestSequence steps={assessmentSteps} />
@@ -146,12 +150,32 @@ const AM2Module1Section1 = () => {
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">How You'll Be Assessed</h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Assessors evaluate you across multiple criteria. Understanding these helps you prepare effectively:
+          The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or Not Yet Competent using objective Yes/No marking rather than percentage scores:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Safety & Compliance (30%)</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Practical Skills</h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">Each task assessed as Competent / Not Yet Competent</p>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Installation techniques and cable management</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>SWA termination and accessory connections</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Workmanship to professional standards</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Safe Working Practices</h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">Must demonstrate safe isolation and compliance throughout</p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -159,29 +183,11 @@ const AM2Module1Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>PPE usage and safe working</span>
+                  <span>PPE usage and safe working methods</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>BS 7671 regulation compliance</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Technical Skills (40%)</h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Installation techniques</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Cable selection and calculations</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Testing procedures and accuracy</span>
+                  <span>Correct isolation and prove-dead procedures</span>
                 </li>
               </ul>
             </div>
@@ -189,37 +195,39 @@ const AM2Module1Section1 = () => {
 
           <div className="space-y-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Quality & Presentation (20%)</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Testing & Results</h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">All test results must be within acceptable tolerances</p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>Workmanship standards</span>
+                  <span>Correct testing sequence per GN3</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>Cable management</span>
+                  <span>Accurate and complete test results</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>Professional appearance</span>
+                  <span>Properly completed certification paperwork</span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Time Management (10%)</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Professional Standards</h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">Work must meet BS 7671 requirements</p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Compliance with wiring regulations</span>
+                </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Task completion within timeframes</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span>Efficient working methods</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Planning and organisation</span>
+                  <span>Planning, organisation and workmanlike finish</span>
                 </li>
               </ul>
             </div>

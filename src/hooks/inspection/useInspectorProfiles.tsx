@@ -19,6 +19,7 @@ export interface InspectorProfile {
   registrationScheme: string;
   registrationNumber: string;
   registrationExpiry?: string;
+  schemeLogoDataUrl?: string;
   insuranceProvider: string;
   insurancePolicyNumber: string;
   insuranceCoverage: string;
@@ -99,6 +100,7 @@ export const useInspectorProfiles = () => {
         registrationScheme: profile.registration_scheme,
         registrationNumber: profile.registration_number,
         registrationExpiry: profile.registration_expiry || undefined,
+        schemeLogoDataUrl: profile.scheme_logo_data_url || undefined,
         insuranceProvider: profile.insurance_provider,
         insurancePolicyNumber: profile.insurance_policy_number,
         insuranceCoverage: profile.insurance_coverage,
@@ -155,6 +157,7 @@ export const useInspectorProfiles = () => {
           registration_scheme: profile.registrationScheme,
           registration_number: profile.registrationNumber,
           registration_expiry: profile.registrationExpiry,
+          scheme_logo_data_url: profile.schemeLogoDataUrl,
           insurance_provider: profile.insuranceProvider,
           insurance_policy_number: profile.insurancePolicyNumber,
           insurance_coverage: profile.insuranceCoverage,
@@ -215,6 +218,7 @@ export const useInspectorProfiles = () => {
           registration_scheme: profile.registrationScheme,
           registration_number: profile.registrationNumber,
           registration_expiry: profile.registrationExpiry,
+          scheme_logo_data_url: profile.schemeLogoDataUrl,
           insurance_provider: profile.insuranceProvider,
           insurance_policy_number: profile.insurancePolicyNumber,
           insurance_coverage: profile.insuranceCoverage,
@@ -283,6 +287,7 @@ export const useInspectorProfiles = () => {
           registration_scheme: updates.registrationScheme,
           registration_number: updates.registrationNumber,
           registration_expiry: updates.registrationExpiry,
+          scheme_logo_data_url: updates.schemeLogoDataUrl,
           insurance_provider: updates.insuranceProvider,
           insurance_policy_number: updates.insurancePolicyNumber,
           insurance_coverage: updates.insuranceCoverage,

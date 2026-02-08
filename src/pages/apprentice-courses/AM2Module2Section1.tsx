@@ -392,6 +392,70 @@ const AM2Module2Section1 = () => {
         explanation="The Electricity at Work Regulations 1989 specifically require safe isolation procedures to be followed when working on electrical systems."
       />
 
+      {/* Safe Isolation Procedure Flowchart */}
+      <div className="my-8 flex justify-center">
+        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
+          <svg viewBox="0 0 400 620" className="w-full h-auto" role="img" aria-label="Safe Isolation Procedure - 6-step vertical flowchart showing the mandatory sequence from identifying the circuit through to re-proving the tester">
+            {/* Title */}
+            <text x="200" y="28" textAnchor="middle" fill="#F3F4F6" fontSize="16" fontFamily="system-ui, sans-serif" fontWeight="bold">Safe Isolation Procedure</text>
+
+            {/* Step 1 - IDENTIFY */}
+            <rect x="75" y="50" width="250" height="56" rx="10" fill="#2563EB" />
+            <text x="200" y="72" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 1</text>
+            <text x="200" y="92" textAnchor="middle" fill="white" fontSize="13" fontFamily="system-ui, sans-serif">IDENTIFY circuit</text>
+
+            {/* Arrow 1-2 */}
+            <line x1="200" y1="106" x2="200" y2="126" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="192,122 200,132 208,122" fill="#9CA3AF" />
+
+            {/* Step 2 - ISOLATE */}
+            <rect x="75" y="136" width="250" height="56" rx="10" fill="#2563EB" />
+            <text x="200" y="158" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 2</text>
+            <text x="200" y="178" textAnchor="middle" fill="white" fontSize="13" fontFamily="system-ui, sans-serif">ISOLATE supply</text>
+
+            {/* Arrow 2-3 */}
+            <line x1="200" y1="192" x2="200" y2="212" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="192,208 200,218 208,208" fill="#9CA3AF" />
+
+            {/* Step 3 - SECURE */}
+            <rect x="75" y="222" width="250" height="56" rx="10" fill="#2563EB" />
+            <text x="200" y="244" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 3</text>
+            <text x="200" y="264" textAnchor="middle" fill="white" fontSize="13" fontFamily="system-ui, sans-serif">SECURE isolation (lock-off + signs)</text>
+
+            {/* Arrow 3-4 */}
+            <line x1="200" y1="278" x2="200" y2="298" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="192,294 200,304 208,294" fill="#9CA3AF" />
+
+            {/* Step 4 - PROVE tester */}
+            <rect x="75" y="308" width="250" height="56" rx="10" fill="#D97706" />
+            <text x="200" y="330" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 4</text>
+            <text x="200" y="350" textAnchor="middle" fill="white" fontSize="13" fontFamily="system-ui, sans-serif">PROVE tester on known source</text>
+
+            {/* Arrow 4-5 */}
+            <line x1="200" y1="364" x2="200" y2="384" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="192,380 200,390 208,380" fill="#9CA3AF" />
+
+            {/* Step 5 - TEST circuit */}
+            <rect x="75" y="394" width="250" height="56" rx="10" fill="#D97706" />
+            <text x="200" y="416" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 5</text>
+            <text x="200" y="436" textAnchor="middle" fill="white" fontSize="13" fontFamily="system-ui, sans-serif">TEST circuit for dead</text>
+
+            {/* Arrow 5-6 */}
+            <line x1="200" y1="450" x2="200" y2="470" stroke="#9CA3AF" strokeWidth="2" />
+            <polygon points="192,466 200,476 208,466" fill="#9CA3AF" />
+
+            {/* Step 6 - RE-PROVE (red emphasis) */}
+            <rect x="55" y="480" width="290" height="72" rx="10" fill="#DC2626" stroke="#FCA5A5" strokeWidth="2" />
+            <text x="200" y="504" textAnchor="middle" fill="white" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">STEP 6</text>
+            <text x="200" y="524" textAnchor="middle" fill="white" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="bold">RE-PROVE tester on known source</text>
+
+            {/* Warning note for Step 6 */}
+            <rect x="75" y="565" width="250" height="34" rx="6" fill="#1F2937" stroke="#DC2626" strokeWidth="1" />
+            <text x="200" y="587" textAnchor="middle" fill="#FCA5A5" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Forgetting this step = automatic fail</text>
+          </svg>
+        </div>
+      </div>
+
       {/* Step-by-Step Procedure */}
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">

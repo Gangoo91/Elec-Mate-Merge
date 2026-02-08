@@ -17,6 +17,7 @@ import {
   Loader2,
   ExternalLink,
 } from 'lucide-react';
+import { CustomerDetailAnalytics } from './CustomerDetailAnalytics';
 
 interface CustomerOverviewTabProps {
   customer: Customer;
@@ -164,6 +165,9 @@ export const CustomerOverviewTab = ({
           Add Note
         </Button>
       </div>
+
+      {/* Analytics */}
+      <CustomerDetailAnalytics customerId={customer.id} />
 
       {/* Notes */}
       {customer.notes && (

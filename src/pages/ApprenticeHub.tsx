@@ -28,6 +28,8 @@ import {
   ChevronRight,
   Brain,
   FileText,
+  Video,
+  BookMarked,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -35,6 +37,14 @@ import { Badge } from '@/components/ui/badge';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
+import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
+import { DiaryDashboardWidget } from '@/components/apprentice/site-diary/DiaryDashboardWidget';
+import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
+import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { VideosWatchedDetailSheet } from '@/components/apprentice/stats-detail/VideosWatchedDetailSheet';
+import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/DiaryEntriesDetailSheet';
+import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
+import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 
 // Animation variants - Smooth, fast entrance
 const containerVariants = {
@@ -115,9 +125,15 @@ function ApprenticeHero() {
   );
 }
 
-// Stats Bar Component - Grid layout matching main dashboard
+// Stats Bar Component - 4 tappable stat cards with detail sheets
 function ApprenticeStatsBar() {
   const { stats, isLoading } = useApprenticeData();
+  const { watchedCount, totalVideos } = useVideoInsights();
+  const { entries } = useSiteDiaryEntries();
+  const [streakSheetOpen, setStreakSheetOpen] = useState(false);
+  const [progressSheetOpen, setProgressSheetOpen] = useState(false);
+  const [videosSheetOpen, setVideosSheetOpen] = useState(false);
+  const [diarySheetOpen, setDiarySheetOpen] = useState(false);
 
   const statItems = [
     {
@@ -126,6 +142,7 @@ function ApprenticeStatsBar() {
       suffix: ' days',
       icon: Flame,
       variant: 'orange' as const,
+      onTap: () => setStreakSheetOpen(true),
     },
     {
       label: 'Progress',
@@ -133,6 +150,23 @@ function ApprenticeStatsBar() {
       suffix: '%',
       icon: Target,
       variant: 'green' as const,
+      onTap: () => setProgressSheetOpen(true),
+    },
+    {
+      label: 'Videos',
+      value: watchedCount,
+      suffix: `/${totalVideos}`,
+      icon: Video,
+      variant: 'purple' as const,
+      onTap: () => setVideosSheetOpen(true),
+    },
+    {
+      label: 'Diary Entries',
+      value: entries.length,
+      suffix: '',
+      icon: BookMarked,
+      variant: 'yellow' as const,
+      onTap: () => setDiarySheetOpen(true),
     },
   ];
 
@@ -156,44 +190,51 @@ function ApprenticeStatsBar() {
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="grid grid-cols-2 sm:grid-cols-4 gap-3 px-4 sm:px-0"
-    >
-      {statItems.map((stat) => {
-        const colors = variantClasses[stat.variant];
-        return (
-          <motion.div
-            key={stat.label}
-            variants={itemVariants}
-            whileTap={{ scale: 0.97 }}
-            className="touch-manipulation"
-          >
-            <div className="glass-premium rounded-xl p-4 h-[100px]">
-              <div className="flex flex-col items-center justify-center h-full text-center">
-                {/* Icon */}
-                <div className={cn('p-2 rounded-lg mb-2', colors.bg)}>
-                  <stat.icon className={cn('h-5 w-5', colors.text)} />
+    <>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-2 sm:grid-cols-4 gap-3 px-4 sm:px-0"
+      >
+        {statItems.map((stat) => {
+          const colors = variantClasses[stat.variant];
+          return (
+            <motion.button
+              key={stat.label}
+              variants={itemVariants}
+              whileTap={{ scale: 0.96 }}
+              onClick={stat.onTap}
+              className="touch-manipulation cursor-pointer w-full"
+            >
+              <div className="glass-premium rounded-xl p-4 h-[100px] hover:bg-white/[0.04] active:bg-white/[0.02] transition-all">
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <div className={cn('p-2 rounded-lg mb-2', colors.bg)}>
+                    <stat.icon className={cn('h-5 w-5', colors.text)} />
+                  </div>
+                  <div className="flex items-baseline justify-center">
+                    <AnimatedCounter
+                      value={stat.value}
+                      className={cn('text-xl font-bold', colors.text)}
+                    />
+                    {stat.suffix && (
+                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
                 </div>
-                {/* Value and label */}
-                <div className="flex items-baseline justify-center">
-                  <AnimatedCounter
-                    value={stat.value}
-                    className={cn('text-xl font-bold', colors.text)}
-                  />
-                  {stat.suffix && (
-                    <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
-                  )}
-                </div>
-                <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
               </div>
-            </div>
-          </motion.div>
-        );
-      })}
-    </motion.div>
+            </motion.button>
+          );
+        })}
+      </motion.div>
+
+      {/* Detail Sheets */}
+      <StudyStreakDetailSheet open={streakSheetOpen} onOpenChange={setStreakSheetOpen} />
+      <ProgressDetailSheet open={progressSheetOpen} onOpenChange={setProgressSheetOpen} />
+      <VideosWatchedDetailSheet open={videosSheetOpen} onOpenChange={setVideosSheetOpen} />
+      <DiaryEntriesDetailSheet open={diarySheetOpen} onOpenChange={setDiarySheetOpen} entries={entries} />
+    </>
   );
 }
 
@@ -419,6 +460,12 @@ const additionalResources: ToolCardProps[] = [
     icon: Clock,
     link: '/apprentice/hub',
   },
+  {
+    title: 'Learning Videos',
+    description: 'Watch curated electrical content',
+    icon: Video,
+    link: '/apprentice/learning-videos',
+  },
 ];
 
 const ApprenticeHub = () => {
@@ -480,13 +527,25 @@ const ApprenticeHub = () => {
               <FeaturedCard />
             </motion.section>
 
-            {/* Essential Tools */}
+            {/* Learning Videos - Above Essential Tools */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Learning Videos" />
+              <LearningVideosSection />
+            </motion.section>
+
+            {/* Essential Tools - includes Site Diary as a card */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
               <SectionHeader title="Essential Tools" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
                 {mainResources.map((resource) => (
                   <ToolCard key={resource.link} {...resource} />
                 ))}
+                <ToolCard
+                  title="Site Diary"
+                  description="Log daily site activities, track hours and build evidence"
+                  icon={BookMarked}
+                  link="/apprentice/site-diary"
+                />
               </div>
             </motion.section>
 
