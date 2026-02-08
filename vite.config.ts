@@ -45,34 +45,45 @@ export default defineConfig(({ mode }) => ({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{css,html,ico,png,jpg,jpeg,svg,woff2}'], // JS cached via runtimeCaching instead
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB fallback
-        navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/auth/],
+        globPatterns: ['**/*.{css,ico,png,jpg,jpeg,svg,woff2}'], // NO html — always fetch fresh from network
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        navigateFallback: null, // Disable — let navigation requests hit the network
         runtimeCaching: [
           {
-            // JS files: NetworkFirst ensures fresh chunks after deployments
-            // Falls back to cache only if network fails (offline support)
+            // HTML: always network-first so new deploys are picked up immediately
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-cache',
+              networkTimeoutSeconds: 3,
+              expiration: {
+                maxEntries: 1,
+                maxAgeSeconds: 60 * 60 // 1 hour max
+              }
+            }
+          },
+          {
+            // JS chunks: network-first with short cache
             urlPattern: /\.js$/,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'js-cache',
-              networkTimeoutSeconds: 5, // Fallback to cache after 5s on slow networks
+              networkTimeoutSeconds: 5,
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 24 * 60 * 60 // 1 day max (reduced from 7 days)
+                maxAgeSeconds: 24 * 60 * 60
               }
             }
           },
           {
             urlPattern: /^https:\/\/.*supabase\.co\/.*/i,
-            handler: 'NetworkFirst', // Network with fallback, times out after 8s
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'supabase-cache',
-              networkTimeoutSeconds: 8, // Timeout after 8s instead of hanging forever
+              networkTimeoutSeconds: 8,
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 // Only cache for 1 minute (auth needs to be fresh)
+                maxAgeSeconds: 60
               }
             }
           }
