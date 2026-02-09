@@ -305,22 +305,22 @@ const QualificationConfirmationDialog = ({
                         </button>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
-                        <div className="ml-4 mr-1 mt-2 mb-1 space-y-3">
+                        <div className="ml-4 mr-1 mt-2 mb-1 space-y-3 text-left">
                           {unit.learningOutcomes.map((lo) => (
                             <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-1.5">
-                              <p className="text-xs font-medium text-blue-400">
+                              <p className="text-xs font-medium text-blue-400 text-left">
                                 LO{lo.loNumber}: {lo.loText}
                               </p>
                               <div className="space-y-1 ml-3">
                                 {lo.acs.map((ac) => (
                                   <div
                                     key={`${unit.unitCode}-${ac.code}`}
-                                    className="flex items-start gap-2 text-xs text-white/70"
+                                    className="flex items-start gap-2 text-xs text-white/70 text-left"
                                   >
                                     <span className="text-elec-yellow/70 flex-shrink-0 mt-px">
                                       •
                                     </span>
-                                    <span>
+                                    <span className="text-left">
                                       <span className="font-medium text-white/90">{ac.code}</span>{' '}
                                       {ac.text}
                                     </span>

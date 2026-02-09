@@ -33,7 +33,6 @@ import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
-import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
@@ -50,8 +49,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const { entries: timeEntries, totalTime } = useTimeEntries();
   const { otjGoal } = useComplianceTracking();
   const { userSelection, loading: qualLoading } = useQualifications();
-  const { requirementCode, isLoading: studentLoading } = useStudentQualification();
-  const { tree, isLoading: acLoading } = useQualificationACs(requirementCode);
+  const courseCode = userSelection?.qualification?.code ?? null;
+  const { tree, isLoading: acLoading } = useQualificationACs(courseCode);
 
   const [showCourseSelector, setShowCourseSelector] = useState(false);
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
@@ -127,7 +126,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       </div>
 
       {/* No-data guard */}
-      {userSelection && !acLoading && !studentLoading && tree.totalACs === 0 && (
+      {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
         <div className="flex items-start gap-3 p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
           <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
@@ -199,7 +198,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       </div>
 
       {/* Course Requirements — Units with LOs & ACs */}
-      {(acLoading || studentLoading) && userSelection && (
+      {(acLoading || qualLoading) && userSelection && (
         <div className="flex items-center justify-center py-8">
           <div className="h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
           <span className="ml-2 text-sm text-white/60">Loading course data...</span>
@@ -273,12 +272,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                     </button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="ml-4 mr-1 mt-2 mb-1 space-y-4">
+                    <div className="ml-4 mr-1 mt-2 mb-1 space-y-4 text-left">
                       {unit.learningOutcomes.map((lo) => (
                         <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-2">
-                          <div className="flex items-start gap-2">
+                          <div className="flex items-start gap-2 text-left">
                             <BookOpen className="h-3.5 w-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
-                            <p className="text-xs font-medium text-blue-400 leading-snug">
+                            <p className="text-xs font-medium text-blue-400 leading-snug text-left">
                               LO{lo.loNumber}: {lo.loText}
                             </p>
                           </div>
@@ -286,10 +285,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                             {lo.assessmentCriteria.map((ac) => (
                               <div
                                 key={ac.acFullRef}
-                                className="flex items-start gap-2 text-xs text-white/70"
+                                className="flex items-start gap-2 text-xs text-white/70 text-left"
                               >
                                 <span className="text-elec-yellow/60 flex-shrink-0 mt-px">•</span>
-                                <span>
+                                <span className="text-left">
                                   <span className="font-medium text-white/90">{ac.acRef}</span>{' '}
                                   {ac.acText.replace(`${ac.acRef} `, '')}
                                 </span>
