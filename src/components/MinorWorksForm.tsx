@@ -995,6 +995,13 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           navigatePrevious={navigatePrevious}
           getProgressPercentage={getProgressPercentage}
           isCurrentTabComplete={isTabComplete(currentTab)}
+          whatsApp={{
+            type: 'minor-works',
+            id: currentReportId || formData.certificateNumber || 'new',
+            recipientPhone: '',
+            recipientName: formData.clientName || '',
+            documentLabel: 'Minor Works Certificate',
+          }}
         />
 
         <StartNewEICRDialog

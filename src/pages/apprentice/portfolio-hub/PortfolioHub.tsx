@@ -6,6 +6,7 @@ import { NavSection } from '@/components/portfolio-hub/PortfolioHubNav';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
 
 // Placeholder components for other sections (to be built in Phase 2-5)
 import { EvidenceSection } from './sections/EvidenceSection';
@@ -47,6 +48,11 @@ export default function PortfolioHub() {
     otjGoal,
     isLoading: complianceLoading,
   } = useComplianceTracking();
+
+  const {
+    qualificationName,
+    requirementCode,
+  } = useStudentQualification();
 
   // Sync URL with active section - use replace: false to create history entries for back button
   useEffect(() => {
@@ -118,6 +124,8 @@ export default function PortfolioHub() {
             nextAction={nextAction}
             onNavigate={handleSectionChange}
             onQuickCapture={handleQuickCapture}
+            requirementCode={requirementCode}
+            qualificationName={qualificationName}
           />
         );
       case 'evidence':

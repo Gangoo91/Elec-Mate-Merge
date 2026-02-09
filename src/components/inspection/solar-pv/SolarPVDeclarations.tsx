@@ -15,11 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -67,17 +63,19 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => (
   <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
     <div className="flex items-center gap-3">
-      <div className={cn(
-        'w-10 h-10 rounded-xl flex items-center justify-center',
-        `bg-${color}/15`
-      )}>
+      <div
+        className={cn('w-10 h-11 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
+      >
         <Icon className={cn('h-5 w-5', `text-${color}`)} />
       </div>
       <div className="text-left">
         <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
           {title}
           {badge && (
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30">
+            <Badge
+              variant="outline"
+              className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30"
+            >
               {badge}
             </Badge>
           )}
@@ -221,10 +219,7 @@ const SignatureCanvas: React.FC<SignatureCanvasProps> = ({ value, onChange, labe
   );
 };
 
-const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onUpdate }) => {
   const [openSections, setOpenSections] = useState({
     defects: true,
     handover: true,
@@ -250,53 +245,72 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
   }, [formData.defects, onUpdate]);
 
   // Update defect
-  const updateDefect = useCallback((id: string, field: string, value: any) => {
-    const updatedDefects = (formData.defects || []).map(defect => {
-      if (defect.id === id) {
-        return { ...defect, [field]: value };
-      }
-      return defect;
-    });
-    onUpdate('defects', updatedDefects);
-  }, [formData.defects, onUpdate]);
+  const updateDefect = useCallback(
+    (id: string, field: string, value: any) => {
+      const updatedDefects = (formData.defects || []).map((defect) => {
+        if (defect.id === id) {
+          return { ...defect, [field]: value };
+        }
+        return defect;
+      });
+      onUpdate('defects', updatedDefects);
+    },
+    [formData.defects, onUpdate]
+  );
 
   // Remove defect
-  const removeDefect = useCallback((id: string) => {
-    const updatedDefects = (formData.defects || []).filter(d => d.id !== id);
-    onUpdate('defects', updatedDefects);
-  }, [formData.defects, onUpdate]);
+  const removeDefect = useCallback(
+    (id: string) => {
+      const updatedDefects = (formData.defects || []).filter((d) => d.id !== id);
+      onUpdate('defects', updatedDefects);
+    },
+    [formData.defects, onUpdate]
+  );
 
   // Update installer declaration
-  const updateInstaller = useCallback((field: string, value: any) => {
-    onUpdate('installerDeclaration', {
-      ...formData.installerDeclaration,
-      [field]: value,
-    });
-  }, [formData.installerDeclaration, onUpdate]);
+  const updateInstaller = useCallback(
+    (field: string, value: any) => {
+      onUpdate('installerDeclaration', {
+        ...formData.installerDeclaration,
+        [field]: value,
+      });
+    },
+    [formData.installerDeclaration, onUpdate]
+  );
 
   // Update electrician declaration
-  const updateElectrician = useCallback((field: string, value: any) => {
-    onUpdate('electricianDeclaration', {
-      ...formData.electricianDeclaration,
-      [field]: value,
-    });
-  }, [formData.electricianDeclaration, onUpdate]);
+  const updateElectrician = useCallback(
+    (field: string, value: any) => {
+      onUpdate('electricianDeclaration', {
+        ...formData.electricianDeclaration,
+        [field]: value,
+      });
+    },
+    [formData.electricianDeclaration, onUpdate]
+  );
 
   // Update handover
-  const updateHandover = useCallback((field: string, value: any) => {
-    onUpdate('handover', {
-      ...formData.handover,
-      [field]: value,
-    });
-  }, [formData.handover, onUpdate]);
+  const updateHandover = useCallback(
+    (field: string, value: any) => {
+      onUpdate('handover', {
+        ...formData.handover,
+        [field]: value,
+      });
+    },
+    [formData.handover, onUpdate]
+  );
 
   // Get severity badge color
   const getSeverityColor = (severity: DefectSeverity) => {
     switch (severity) {
-      case 'critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'non-critical': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'recommendation': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'critical':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'non-critical':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'recommendation':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
@@ -325,9 +339,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                   className="p-4 bg-muted/30 rounded-xl border border-white/10 space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <Badge className={getSeverityColor(defect.severity)}>
-                      {defect.severity}
-                    </Badge>
+                    <Badge className={getSeverityColor(defect.severity)}>{defect.severity}</Badge>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -345,7 +357,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                         value={defect.description}
                         onChange={(e) => updateDefect(defect.id, 'description', e.target.value)}
                         placeholder="Describe the defect..."
-                        className="min-h-[60px] touch-manipulation text-base border-white/30"
+                        className="min-h-[120px] touch-manipulation text-base border-white/30"
                       />
                     </div>
 
@@ -353,9 +365,11 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                       <Label className="text-xs text-muted-foreground">Severity</Label>
                       <Select
                         value={defect.severity}
-                        onValueChange={(value) => updateDefect(defect.id, 'severity', value as DefectSeverity)}
+                        onValueChange={(value) =>
+                          updateDefect(defect.id, 'severity', value as DefectSeverity)
+                        }
                       >
-                        <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -372,7 +386,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                         value={defect.location}
                         onChange={(e) => updateDefect(defect.id, 'location', e.target.value)}
                         placeholder="Where is the defect?"
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
                   </div>
@@ -383,7 +397,11 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                       onCheckedChange={(checked) => {
                         updateDefect(defect.id, 'rectified', checked);
                         if (checked) {
-                          updateDefect(defect.id, 'rectificationDate', new Date().toISOString().split('T')[0]);
+                          updateDefect(
+                            defect.id,
+                            'rectificationDate',
+                            new Date().toISOString().split('T')[0]
+                          );
                         }
                       }}
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
@@ -393,8 +411,10 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                       <Input
                         type="date"
                         value={defect.rectificationDate || ''}
-                        onChange={(e) => updateDefect(defect.id, 'rectificationDate', e.target.value)}
-                        className="h-10 w-40 text-sm border-white/30"
+                        onChange={(e) =>
+                          updateDefect(defect.id, 'rectificationDate', e.target.value)
+                        }
+                        className="h-11 w-40 text-sm border-white/30"
                       />
                     )}
                   </div>
@@ -437,8 +457,11 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                   { field: 'performanceEstimateProvided', label: 'Performance Estimate' },
                   { field: 'dnoNotificationCopyProvided', label: 'DNO Notification Copy' },
                   { field: 'emergencyShutdownExplained', label: 'Emergency Shutdown Explained' },
-                ].map(item => (
-                  <div key={item.field} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]">
+                ].map((item) => (
+                  <div
+                    key={item.field}
+                    className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]"
+                  >
                     <Checkbox
                       checked={(formData.handover as any)?.[item.field] || false}
                       onCheckedChange={(checked) => updateHandover(item.field, checked)}
@@ -467,7 +490,10 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
             <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
               {/* Declaration text */}
               <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-sm text-amber-200">
-                I certify that this Solar PV system has been designed, installed and commissioned in accordance with BS 7671, BS EN 62446, and MCS Installation Standard MIS-3002. The system is safe to use and appropriate documentation has been provided to the customer.
+                I certify that this Solar PV system has been designed, installed and commissioned in
+                accordance with BS 7671, BS EN 62446, and MCS Installation Standard MIS-3002. The
+                system is safe to use and appropriate documentation has been provided to the
+                customer.
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -547,7 +573,10 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
 
       {/* Electrician Declaration (if different) */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.electrician} onOpenChange={() => toggleSection('electrician')}>
+        <Collapsible
+          open={openSections.electrician}
+          onOpenChange={() => toggleSection('electrician')}
+        >
           <SectionHeader
             title="Electrician Declaration"
             icon={PenLine}
@@ -570,12 +599,16 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
               {formData.electricianDeclaration?.required && (
                 <>
                   <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-sm text-blue-200">
-                    I certify that the AC electrical installation has been designed, installed and tested in accordance with BS 7671. The installation is safe to be connected to the electricity supply.
+                    I certify that the AC electrical installation has been designed, installed and
+                    tested in accordance with BS 7671. The installation is safe to be connected to
+                    the electricity supply.
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Electrician Name</Label>
+                      <Label className="text-sm font-medium text-foreground">
+                        Electrician Name
+                      </Label>
                       <Input
                         value={formData.electricianDeclaration?.electricianName || ''}
                         onChange={(e) => updateElectrician('electricianName', e.target.value)}
@@ -595,10 +628,14 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Registration Number</Label>
+                      <Label className="text-sm font-medium text-foreground">
+                        Registration Number
+                      </Label>
                       <Input
                         value={formData.electricianDeclaration?.electricianRegistration || ''}
-                        onChange={(e) => updateElectrician('electricianRegistration', e.target.value)}
+                        onChange={(e) =>
+                          updateElectrician('electricianRegistration', e.target.value)
+                        }
                         placeholder="e.g., NICEIC/NAPIT number"
                         className="h-11 text-base touch-manipulation border-white/30"
                       />
@@ -656,7 +693,7 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({
             value={formData.additionalNotes || ''}
             onChange={(e) => onUpdate('additionalNotes', e.target.value)}
             placeholder="Any additional notes, special conditions, or comments..."
-            className="min-h-[100px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
+            className="min-h-[120px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
           />
         </div>
       </Card>

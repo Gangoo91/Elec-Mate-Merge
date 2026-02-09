@@ -52,14 +52,14 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
   });
 
   const prevMonth = () => {
-    setCurrentMonth(prev => {
+    setCurrentMonth((prev) => {
       if (prev.month === 0) return { year: prev.year - 1, month: 11 };
       return { ...prev, month: prev.month - 1 };
     });
   };
 
   const nextMonth = () => {
-    setCurrentMonth(prev => {
+    setCurrentMonth((prev) => {
       if (prev.month === 11) return { year: prev.year + 1, month: 0 };
       return { ...prev, month: prev.month + 1 };
     });
@@ -88,7 +88,7 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
 
       {/* Day headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
-        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
           <div key={day} className="text-center text-[10px] text-white font-medium py-1">
             {day}
           </div>
@@ -112,12 +112,14 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
           const isSelected = dateStr === selectedDate;
 
           // Get up to 3 dots with mood colours
-          const dots = dayEntries.slice(0, 3).map((e, idx) => (
-            <div
-              key={idx}
-              className={`w-1.5 h-1.5 rounded-full ${moodDotColour(e.mood_rating)}`}
-            />
-          ));
+          const dots = dayEntries
+            .slice(0, 3)
+            .map((e, idx) => (
+              <div
+                key={idx}
+                className={`w-1.5 h-1.5 rounded-full ${moodDotColour(e.mood_rating)}`}
+              />
+            ));
 
           return (
             <button
@@ -130,15 +132,11 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
                     ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold'
                     : hasEntries
                       ? 'text-white active:bg-white/15'
-                      : 'text-white/30'
+                      : 'text-white/50'
               }`}
             >
               <span>{day}</span>
-              {hasEntries && (
-                <div className="flex items-center gap-0.5 mt-0.5">
-                  {dots}
-                </div>
-              )}
+              {hasEntries && <div className="flex items-center gap-0.5 mt-0.5">{dots}</div>}
             </button>
           );
         })}

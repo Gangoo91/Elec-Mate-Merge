@@ -28,14 +28,18 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
   formData,
   syncState,
   isOnline = true,
-  isAuthenticated = false
+  isAuthenticated = false,
 }) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
       <div className="flex items-center gap-3 mb-6">
-        <Button variant="ghost" onClick={onBack} className="p-2 flex-shrink-0 hover:bg-accent/10 transition-colors duration-200">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="p-2 flex-shrink-0 hover:bg-accent/10 transition-colors duration-200"
+        >
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <div className="flex-1 min-w-0">
@@ -43,14 +47,16 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
             <div className="p-1.5 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm">
               <FileText className="h-4 w-4 text-black flex-shrink-0" />
             </div>
-            <span className="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">EIC</span>
+            <span className="bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">
+              EIC
+            </span>
           </h1>
         </div>
         {onStartNew && (
-          <Button 
-            onClick={onStartNew} 
-            variant="outline" 
-            size="sm" 
+          <Button
+            onClick={onStartNew}
+            variant="outline"
+            size="sm"
             className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
             aria-label="Start New Report"
             title="Start New"
@@ -59,11 +65,11 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
           </Button>
         )}
         {onManualSave && (
-          <Button 
-            onClick={onManualSave} 
-            disabled={isSaving || syncState?.status === 'syncing'} 
-            variant="outline" 
-            size="sm" 
+          <Button
+            onClick={onManualSave}
+            disabled={isSaving || syncState?.status === 'syncing'}
+            variant="outline"
+            size="sm"
             className="h-11 w-11 p-2 flex-shrink-0 border-border hover:bg-accent/10 hover:border-border transition-all duration-200 touch-manipulation"
             aria-label="Save Now"
             title="Save Now"
@@ -80,48 +86,43 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
       <div className="flex items-center justify-between gap-4">
         {/* Left: Back Button + Title */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <Button 
-            variant="ghost" 
-            onClick={onBack}
-            size="icon"
-            className="flex-shrink-0"
-          >
+          <Button variant="ghost" onClick={onBack} size="icon" className="flex-shrink-0">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          
+
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex-shrink-0 w-12 h-12 rounded-lg elec-gradient-bg flex items-center justify-center">
               <FileText className="h-6 w-6 text-black" />
             </div>
-            
+
             <div className="flex-1 min-w-0">
-          <span className="truncate bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent text-2xl font-bold">
-            EIC - Electrical Installation Certificate
-          </span>
+              <span className="truncate bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent text-2xl font-bold">
+                EIC - Electrical Installation Certificate
+              </span>
               <p className="text-sm text-muted-foreground">
                 BS7671:2018 New Installation Certificate
               </p>
             </div>
           </div>
         </div>
-        
+
         {/* Right: Action Buttons */}
         <div className="flex items-center gap-2 flex-shrink-0">
           {onStartNew && (
             <Button
               variant="outline"
               onClick={onStartNew}
-              className="h-10"
+              className="h-11 touch-manipulation active:scale-[0.98] transition-transform"
             >
               Start New
             </Button>
           )}
-          
+
           {onManualSave && (
             <Button
               onClick={onManualSave}
               disabled={isSaving || syncState?.status === 'syncing'}
-              className="elec-gradient-bg hover:opacity-90 text-black font-semibold h-10 px-6"
+              className="elec-gradient-bg hover:opacity-90 text-black font-semibold h-11 px-6 touch-manipulation active:scale-[0.98] transition-transform"
             >
               <Save className="h-4 w-4 mr-2" />
               Save Now
@@ -129,7 +130,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
           )}
         </div>
       </div>
-      
+
       {/* Save Status - Separate Row */}
       <div className="flex justify-end mt-2 items-center gap-3">
         {!isOnline && (
@@ -138,10 +139,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
             Offline Mode
           </Badge>
         )}
-        <SaveStatusIndicator
-          hasUnsavedChanges={hasUnsavedChanges}
-          isSaving={isSaving}
-        />
+        <SaveStatusIndicator hasUnsavedChanges={hasUnsavedChanges} isSaving={isSaving} />
         {syncState && (
           <SyncStatusIndicator
             status={syncState.status}

@@ -1,0 +1,7 @@
+dist
+node_modules
+.capacitor
+android
+ios
+*.min.js
+*.min.css

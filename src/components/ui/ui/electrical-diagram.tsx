@@ -20,7 +20,7 @@ export const ElectricalDiagram = ({
   caption,
   className,
   showZoom = true,
-  showDownload = false
+  showDownload = false,
 }: ElectricalDiagramProps) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -54,25 +54,26 @@ export const ElectricalDiagram = ({
   }
 
   return (
-    <div className={cn("bg-card/50 border border-border rounded-lg overflow-hidden", className)}>
+    <div className={cn('bg-card/50 border border-border rounded-lg overflow-hidden', className)}>
       {title && (
         <div className="px-4 py-3 border-b border-border">
           <h4 className="font-medium text-foreground">{title}</h4>
         </div>
       )}
-      
+
       <div className="relative group">
         <img
+          loading="lazy"
           src={src}
           alt={alt}
           onError={handleImageError}
           onLoad={handleImageLoad}
           className={cn(
-            "w-full h-auto transition-opacity duration-200",
-            !imageLoaded && "opacity-0"
+            'w-full h-auto transition-opacity duration-200',
+            !imageLoaded && 'opacity-0'
           )}
         />
-        
+
         {!imageLoaded && !imageError && (
           <div className="absolute inset-0 flex items-center justify-center bg-card">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -89,14 +90,12 @@ export const ElectricalDiagram = ({
                   </button>
                 </DialogTrigger>
                 <DialogContent className="max-w-6xl w-full">
-                  <img src={src} alt={alt} className="w-full h-auto" />
-                  {caption && (
-                    <p className="text-sm text-muted-foreground mt-2">{caption}</p>
-                  )}
+                  <img loading="lazy" src={src} alt={alt} className="w-full h-auto" />
+                  {caption && <p className="text-sm text-muted-foreground mt-2">{caption}</p>}
                 </DialogContent>
               </Dialog>
             )}
-            
+
             {showDownload && (
               <button
                 onClick={handleDownload}

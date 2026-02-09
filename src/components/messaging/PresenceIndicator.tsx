@@ -50,9 +50,7 @@ export function PresenceIndicator({
           status === 'online' && 'animate-pulse'
         )}
       />
-      {showLabel && (
-        <span className="text-xs text-muted-foreground">{getLabel()}</span>
-      )}
+      {showLabel && <span className="text-xs text-muted-foreground">{getLabel()}</span>}
     </div>
   );
 }
@@ -66,11 +64,7 @@ interface AvatarWithPresenceProps {
   className?: string;
 }
 
-export function AvatarWithPresence({
-  children,
-  status,
-  className,
-}: AvatarWithPresenceProps) {
+export function AvatarWithPresence({ children, status, className }: AvatarWithPresenceProps) {
   return (
     <div className={cn('relative', className)}>
       {children}
@@ -129,12 +123,7 @@ export function StatusBadge({ status, lastSeen, className }: StatusBadgeProps) {
         className
       )}
     >
-      <span
-        className={cn(
-          'w-1.5 h-1.5 rounded-full',
-          getStatusColor(status)
-        )}
-      />
+      <span className={cn('w-1.5 h-1.5 rounded-full', getStatusColor(status))} />
       {getLabel()}
     </span>
   );
@@ -149,17 +138,18 @@ interface PresenceNotificationProps {
   avatarUrl?: string;
 }
 
-export function PresenceNotification({
-  userName,
-  status,
-  avatarUrl,
-}: PresenceNotificationProps) {
+export function PresenceNotification({ userName, status, avatarUrl }: PresenceNotificationProps) {
   return (
     <div className="flex items-center gap-3">
       <div className="relative">
         <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
           {avatarUrl ? (
-            <img src={avatarUrl} alt={userName} className="w-full h-full object-cover" />
+            <img
+              loading="lazy"
+              src={avatarUrl}
+              alt={userName}
+              className="w-full h-full object-cover"
+            />
           ) : (
             <span className="text-lg font-medium">{userName.charAt(0).toUpperCase()}</span>
           )}

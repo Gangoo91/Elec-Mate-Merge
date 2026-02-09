@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+} from '@/components/ui/select';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
 import {
   User,
@@ -29,7 +29,7 @@ import {
   ChevronRight,
   Check,
   Camera,
-} from "lucide-react";
+} from 'lucide-react';
 
 // UK Job Titles for electricians
 const UK_JOB_TITLES = [
@@ -92,7 +92,7 @@ const COMPANY_SIZES = [
 
 // Helper to get label from value
 const getLabel = (options: { value: string; label: string }[], value: string) => {
-  return options.find(opt => opt.value === value)?.label || 'Not set';
+  return options.find((opt) => opt.value === value)?.label || 'Not set';
 };
 
 const AccountTab = () => {
@@ -114,10 +114,14 @@ const AccountTab = () => {
   const [uploading, setUploading] = useState(false);
 
   // Profile fields state
-  const [displayName, setDisplayName] = useState(profile?.full_name || user?.email?.split('@')[0] || '');
+  const [displayName, setDisplayName] = useState(
+    profile?.full_name || user?.email?.split('@')[0] || ''
+  );
 
   // Apprentice fields
-  const [apprenticeYear, setApprenticeYear] = useState<string>(String(profile?.apprentice_year || 1));
+  const [apprenticeYear, setApprenticeYear] = useState<string>(
+    String(profile?.apprentice_year || 1)
+  );
   const [apprenticeLevel, setApprenticeLevel] = useState(profile?.apprentice_level || '');
   const [trainingProvider, setTrainingProvider] = useState(profile?.training_provider || '');
   const [ecsCardStatus, setEcsCardStatus] = useState(profile?.ecs_card_status || 'not_applied');
@@ -126,7 +130,9 @@ const AccountTab = () => {
   // Electrician fields
   const [jobTitle, setJobTitle] = useState(profile?.job_title || '');
   const [specialisation, setSpecialisation] = useState(profile?.specialisation || '');
-  const [yearsExperience, setYearsExperience] = useState(profile?.years_experience?.toString() || '');
+  const [yearsExperience, setYearsExperience] = useState(
+    profile?.years_experience?.toString() || ''
+  );
   const [ecsCardType, setEcsCardType] = useState(profile?.ecs_card_type || '');
 
   // Employer fields
@@ -159,10 +165,7 @@ const AccountTab = () => {
     setIsSaving(true);
 
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update(updateData)
-        .eq('id', user.id);
+      const { error } = await supabase.from('profiles').update(updateData).eq('id', user.id);
 
       if (error) throw error;
 
@@ -173,7 +176,7 @@ const AccountTab = () => {
       addNotification({
         title: 'Saved',
         message: 'Your changes have been saved.',
-        type: 'success'
+        type: 'success',
       });
       setTimeout(() => {
         setShowSuccess(false);
@@ -184,7 +187,7 @@ const AccountTab = () => {
       addNotification({
         title: 'Update Failed',
         message: 'Could not save changes. Please try again.',
-        type: 'error'
+        type: 'error',
       });
     } finally {
       setIsSaving(false);
@@ -196,44 +199,44 @@ const AccountTab = () => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
-    if (!file.type.startsWith("image/")) {
-      addNotification({ title: "Invalid file", message: "Please select an image", type: "error" });
+    if (!file.type.startsWith('image/')) {
+      addNotification({ title: 'Invalid file', message: 'Please select an image', type: 'error' });
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      addNotification({ title: "File too large", message: "Max 2MB", type: "error" });
+      addNotification({ title: 'File too large', message: 'Max 2MB', type: 'error' });
       return;
     }
 
     setUploading(true);
     try {
-      const fileExt = file.name.split(".").pop();
+      const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
       // Use user.id as folder for RLS policy compliance
       const filePath = `${user.id}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("avatars")
+        .from('avatars')
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('avatars').getPublicUrl(filePath);
 
       const { error: updateError } = await supabase
-        .from("profiles")
+        .from('profiles')
         .update({ avatar_url: publicUrl })
-        .eq("id", user.id);
+        .eq('id', user.id);
 
       if (updateError) throw updateError;
 
       await fetchProfile(user.id);
-      addNotification({ title: "Photo updated", message: "Profile photo saved", type: "success" });
+      addNotification({ title: 'Photo updated', message: 'Profile photo saved', type: 'success' });
     } catch (error: any) {
-      addNotification({ title: "Upload failed", message: error.message, type: "error" });
+      addNotification({ title: 'Upload failed', message: error.message, type: 'error' });
     } finally {
       setUploading(false);
     }
@@ -244,31 +247,39 @@ const AccountTab = () => {
   };
 
   const handleSaveApprentice = () => {
-    handleSave({
-      apprentice_year: parseInt(apprenticeYear),
-      apprentice_level: apprenticeLevel,
-      training_provider: trainingProvider,
-      ecs_card_status: ecsCardStatus,
-      supervisor_name: supervisorName,
-    }, () => setIsEditingApprentice(false));
+    handleSave(
+      {
+        apprentice_year: parseInt(apprenticeYear),
+        apprentice_level: apprenticeLevel,
+        training_provider: trainingProvider,
+        ecs_card_status: ecsCardStatus,
+        supervisor_name: supervisorName,
+      },
+      () => setIsEditingApprentice(false)
+    );
   };
 
   const handleSaveElectrician = () => {
-    handleSave({
-      job_title: jobTitle,
-      specialisation: specialisation,
-      years_experience: yearsExperience ? parseInt(yearsExperience) : null,
-      ecs_card_type: ecsCardType,
-    }, () => setIsEditingElectrician(false));
+    handleSave(
+      {
+        job_title: jobTitle,
+        specialisation: specialisation,
+        years_experience: yearsExperience ? parseInt(yearsExperience) : null,
+        ecs_card_type: ecsCardType,
+      },
+      () => setIsEditingElectrician(false)
+    );
   };
 
   const handleSaveEmployer = () => {
-    handleSave({
-      business_position: businessPosition,
-      company_size: companySize,
-    }, () => setIsEditingEmployer(false));
+    handleSave(
+      {
+        business_position: businessPosition,
+        company_size: companySize,
+      },
+      () => setIsEditingEmployer(false)
+    );
   };
-
 
   // Row renderer for cards
   const renderRow = (
@@ -286,7 +297,9 @@ const AccountTab = () => {
         key={label}
         className={`flex items-center gap-3 px-4 py-3 ${!isLast ? 'border-b border-white/[0.04]' : ''}`}
       >
-        <div className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0`}>
+        <div
+          className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0`}
+        >
           <Icon className={`h-4 w-4 ${iconColor}`} />
         </div>
         <div className="flex-1 min-w-0 text-left">
@@ -312,7 +325,11 @@ const AccountTab = () => {
       {isSaving ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : showSuccess ? (
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500 }}
+        >
           <Check className="h-5 w-5 text-green-400" />
         </motion.div>
       ) : (
@@ -344,11 +361,19 @@ const AccountTab = () => {
             {/* Avatar with camera button */}
             <div className="relative">
               <div
-                onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
                 className={`w-10 h-10 rounded-xl overflow-hidden bg-white/[0.05] border border-white/10 flex items-center justify-center cursor-pointer ${uploading ? 'animate-pulse' : ''}`}
               >
                 {profile?.avatar_url ? (
-                  <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                  <img
+                    loading="lazy"
+                    src={profile.avatar_url}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <User className="w-5 h-5 text-white/40" />
                 )}
@@ -366,8 +391,23 @@ const AccountTab = () => {
         </button>
 
         <div className="border-t border-white/[0.06]">
-          {renderRow(User, 'bg-blue-500/15', 'text-blue-400', 'Display Name', displayName || 'Not set', false)}
-          {renderRow(Mail, 'bg-green-500/15', 'text-green-400', 'Email', user?.email || 'Not set', true, 'Verified')}
+          {renderRow(
+            User,
+            'bg-blue-500/15',
+            'text-blue-400',
+            'Display Name',
+            displayName || 'Not set',
+            false
+          )}
+          {renderRow(
+            Mail,
+            'bg-green-500/15',
+            'text-green-400',
+            'Email',
+            user?.email || 'Not set',
+            true,
+            'Verified'
+          )}
         </div>
       </motion.div>
 
@@ -390,11 +430,50 @@ const AccountTab = () => {
           </button>
 
           <div className="border-t border-white/[0.06]">
-            {renderRow(Award, 'bg-amber-500/15', 'text-amber-400', 'Course Level', getLabel(APPRENTICE_LEVELS, apprenticeLevel), false)}
-            {renderRow(Calendar, 'bg-blue-500/15', 'text-blue-400', 'Current Year', `Year ${apprenticeYear}`, false)}
-            {renderRow(Building2, 'bg-cyan-500/15', 'text-cyan-400', 'Training Provider', trainingProvider || 'Not set', false)}
-            {renderRow(CreditCard, 'bg-green-500/15', 'text-green-400', 'ECS Card Status', ecsCardStatus === 'not_applied' ? 'Not Applied' : ecsCardStatus === 'applied' ? 'Applied' : 'Received', false)}
-            {renderRow(UserCheck, 'bg-rose-500/15', 'text-rose-400', 'Supervisor', supervisorName || 'Not set', true)}
+            {renderRow(
+              Award,
+              'bg-amber-500/15',
+              'text-amber-400',
+              'Course Level',
+              getLabel(APPRENTICE_LEVELS, apprenticeLevel),
+              false
+            )}
+            {renderRow(
+              Calendar,
+              'bg-blue-500/15',
+              'text-blue-400',
+              'Current Year',
+              `Year ${apprenticeYear}`,
+              false
+            )}
+            {renderRow(
+              Building2,
+              'bg-cyan-500/15',
+              'text-cyan-400',
+              'Training Provider',
+              trainingProvider || 'Not set',
+              false
+            )}
+            {renderRow(
+              CreditCard,
+              'bg-green-500/15',
+              'text-green-400',
+              'ECS Card Status',
+              ecsCardStatus === 'not_applied'
+                ? 'Not Applied'
+                : ecsCardStatus === 'applied'
+                  ? 'Applied'
+                  : 'Received',
+              false
+            )}
+            {renderRow(
+              UserCheck,
+              'bg-rose-500/15',
+              'text-rose-400',
+              'Supervisor',
+              supervisorName || 'Not set',
+              true
+            )}
           </div>
         </motion.div>
       )}
@@ -418,10 +497,38 @@ const AccountTab = () => {
           </button>
 
           <div className="border-t border-white/[0.06]">
-            {renderRow(Briefcase, 'bg-blue-500/15', 'text-blue-400', 'Job Title', getLabel(UK_JOB_TITLES, jobTitle), false)}
-            {renderRow(Target, 'bg-purple-500/15', 'text-purple-400', 'Specialisation', getLabel(UK_SPECIALISATIONS, specialisation), false)}
-            {renderRow(Clock, 'bg-green-500/15', 'text-green-400', 'Years Experience', yearsExperience ? `${yearsExperience} years` : 'Not set', false)}
-            {renderRow(CreditCard, 'bg-amber-500/15', 'text-amber-400', 'ECS Card Type', getLabel(UK_ECS_CARD_TYPES, ecsCardType), true)}
+            {renderRow(
+              Briefcase,
+              'bg-blue-500/15',
+              'text-blue-400',
+              'Job Title',
+              getLabel(UK_JOB_TITLES, jobTitle),
+              false
+            )}
+            {renderRow(
+              Target,
+              'bg-purple-500/15',
+              'text-purple-400',
+              'Specialisation',
+              getLabel(UK_SPECIALISATIONS, specialisation),
+              false
+            )}
+            {renderRow(
+              Clock,
+              'bg-green-500/15',
+              'text-green-400',
+              'Years Experience',
+              yearsExperience ? `${yearsExperience} years` : 'Not set',
+              false
+            )}
+            {renderRow(
+              CreditCard,
+              'bg-amber-500/15',
+              'text-amber-400',
+              'ECS Card Type',
+              getLabel(UK_ECS_CARD_TYPES, ecsCardType),
+              true
+            )}
           </div>
         </motion.div>
       )}
@@ -445,15 +552,32 @@ const AccountTab = () => {
           </button>
 
           <div className="border-t border-white/[0.06]">
-            {renderRow(User, 'bg-purple-500/15', 'text-purple-400', 'Position', getLabel(EMPLOYER_POSITIONS, businessPosition), false)}
-            {renderRow(Users, 'bg-green-500/15', 'text-green-400', 'Company Size', getLabel(COMPANY_SIZES, companySize), true)}
+            {renderRow(
+              User,
+              'bg-purple-500/15',
+              'text-purple-400',
+              'Position',
+              getLabel(EMPLOYER_POSITIONS, businessPosition),
+              false
+            )}
+            {renderRow(
+              Users,
+              'bg-green-500/15',
+              'text-green-400',
+              'Company Size',
+              getLabel(COMPANY_SIZES, companySize),
+              true
+            )}
           </div>
         </motion.div>
       )}
 
       {/* Profile Edit Sheet */}
       <Sheet open={isEditingProfile} onOpenChange={setIsEditingProfile}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -497,7 +621,10 @@ const AccountTab = () => {
 
       {/* Apprentice Edit Sheet */}
       <Sheet open={isEditingApprentice} onOpenChange={setIsEditingApprentice}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -594,7 +721,10 @@ const AccountTab = () => {
 
       {/* Electrician Edit Sheet */}
       <Sheet open={isEditingElectrician} onOpenChange={setIsEditingElectrician}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -685,7 +815,10 @@ const AccountTab = () => {
 
       {/* Employer Edit Sheet */}
       <Sheet open={isEditingEmployer} onOpenChange={setIsEditingEmployer}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>

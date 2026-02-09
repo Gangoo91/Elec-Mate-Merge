@@ -17,6 +17,8 @@ import { SmartCaptureFlow } from '@/components/portfolio-hub/ai/SmartCaptureFlow
 import { KSBMappingAssistant } from '@/components/portfolio-hub/ai/KSBMappingAssistant';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 
 interface EvidenceSectionProps {
   onQuickCapture: () => void;
@@ -43,6 +45,8 @@ const STATUS_OPTIONS = [
 export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
   const { entries, categories, updateEntry, deleteEntry, isLoading, addEntry } = useUltraFastPortfolio();
   const { toast } = useToast();
+  const { requirementCode } = useStudentQualification();
+  const { tree } = useQualificationACs(requirementCode);
   const [showCaptureSheet, setShowCaptureSheet] = useState(false);
   const [showKSBAssistant, setShowKSBAssistant] = useState(false);
   const [showFilterSheet, setShowFilterSheet] = useState(false);
@@ -140,7 +144,7 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
           </div>
         </div>
 
-        {/* KSB Progress Summary */}
+        {/* Assessment Criteria Progress */}
         <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/5 to-transparent">
           <CardContent className="p-3">
             <div className="flex items-center justify-between">
@@ -149,9 +153,9 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
                   <Brain className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground">KSB Progress</p>
+                  <p className="text-sm font-medium text-foreground">Assessment Criteria</p>
                   <p className="text-xs text-muted-foreground">
-                    {completedKSBs.length} criteria evidenced
+                    {completedKSBs.length} of {tree.totalACs || '–'} criteria evidenced
                   </p>
                 </div>
               </div>
@@ -159,12 +163,14 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
                 variant="outline"
                 className={cn(
                   "text-xs",
-                  completedKSBs.length >= 30
+                  tree.totalACs > 0 && completedKSBs.length >= tree.totalACs * 0.75
                     ? "bg-green-500/20 text-green-500 border-green-500/30"
                     : "bg-amber-500/20 text-amber-500 border-amber-500/30"
                 )}
               >
-                {Math.round((completedKSBs.length / 35) * 100)}%
+                {tree.totalACs > 0
+                  ? `${Math.round((completedKSBs.length / tree.totalACs) * 100)}%`
+                  : '–'}
               </Badge>
             </div>
           </CardContent>

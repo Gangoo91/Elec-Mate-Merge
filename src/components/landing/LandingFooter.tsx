@@ -31,7 +31,12 @@ export const LandingFooter = () => {
           <div className="col-span-2 sm:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
-                <img src="/logo.jpg" alt="Elec-Mate" className="w-full h-full object-cover" />
+                <img
+                  loading="lazy"
+                  src="/logo.jpg"
+                  alt="Elec-Mate"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="text-lg font-bold text-white">
                 Elec-<span className="text-yellow-400">Mate</span>

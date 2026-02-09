@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, ChevronRight, CheckCircle, Circle } from 'lucide-react';
 import { EICTabValue } from '@/hooks/useEICTabs';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface EICTabNavigationProps {
   currentTab: EICTabValue;
@@ -19,6 +20,13 @@ interface EICTabNavigationProps {
   onToggleComplete: () => void;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  whatsApp?: {
+    type: string;
+    id: string;
+    recipientPhone: string;
+    recipientName: string;
+    documentLabel: string;
+  };
 }
 
 const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
@@ -34,7 +42,8 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
   currentTabHasRequiredFields,
   onToggleComplete,
   onGenerateCertificate,
-  canGenerateCertificate = true
+  canGenerateCertificate = true,
+  whatsApp,
 }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -124,14 +133,27 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
         </div>
 
         {currentTabIndex === totalTabs - 1 ? (
-          <Button
-            onClick={onGenerateCertificate}
-            disabled={!canGenerateCertificate}
-            className="h-11 w-full md:w-auto flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-foreground touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <CheckCircle className="h-4 w-4" />
-            <span>Generate Certificate</span>
-          </Button>
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <Button
+              onClick={onGenerateCertificate}
+              disabled={!canGenerateCertificate}
+              className="h-11 flex-1 md:flex-initial flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-foreground touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <CheckCircle className="h-4 w-4" />
+              <span>Generate Certificate</span>
+            </Button>
+            {whatsApp && (
+              <WhatsAppShareButton
+                type={whatsApp.type}
+                id={whatsApp.id}
+                recipientPhone={whatsApp.recipientPhone}
+                recipientName={whatsApp.recipientName}
+                documentLabel={whatsApp.documentLabel}
+                variant="ghost"
+                className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform flex-shrink-0"
+              />
+            )}
+          </div>
         ) : (
           <Button
             onClick={handleNavigateNext}

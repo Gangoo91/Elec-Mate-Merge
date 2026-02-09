@@ -34,8 +34,17 @@ export function useNativeApp() {
           await StatusBar.setOverlaysWebView({ overlay: true });
         }
 
-        // Hide splash screen after app is ready
-        await SplashScreen.hide();
+        // Hide splash screen after first React paint — requestAnimationFrame
+        // ensures the browser has committed at least one frame so the user
+        // transitions directly from the native splash to rendered content.
+        await new Promise<void>((resolve) => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(async () => {
+              await SplashScreen.hide({ fadeOutDuration: 300 });
+              resolve();
+            });
+          });
+        });
 
         // Set up keyboard listeners
         Keyboard.addListener('keyboardWillShow', () => {
@@ -50,6 +59,16 @@ export function useNativeApp() {
           if (isActive) {
             // App came to foreground - refresh data if needed
             console.log('App resumed');
+          }
+        });
+
+        // Handle Android hardware back button — navigate back or minimise app
+        App.addListener('backButton', ({ canGoBack }) => {
+          if (canGoBack || window.history.length > 1) {
+            window.history.back();
+          } else {
+            // At root — minimise instead of exiting
+            App.minimizeApp();
           }
         });
 
@@ -150,17 +169,18 @@ export function useNativePushNotifications() {
       const platform = Capacitor.getPlatform(); // 'ios' or 'android'
 
       // Save to your push_subscriptions table
-      const { error } = await supabase
-        .from('push_subscriptions')
-        .upsert({
+      const { error } = await supabase.from('push_subscriptions').upsert(
+        {
           user_id: userId,
           endpoint: `native:${platform}:${token}`,
           keys: { token, platform },
           device_type: platform,
           is_active: true,
-        }, {
-          onConflict: 'user_id,endpoint'
-        });
+        },
+        {
+          onConflict: 'user_id,endpoint',
+        }
+      );
 
       if (error) throw error;
       console.log('Push token saved for', platform);

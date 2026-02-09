@@ -15,11 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -68,17 +64,19 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => (
   <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
     <div className="flex items-center gap-3">
-      <div className={cn(
-        'w-10 h-10 rounded-xl flex items-center justify-center',
-        `bg-${color}/15`
-      )}>
+      <div
+        className={cn('w-10 h-11 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
+      >
         <Icon className={cn('h-5 w-5', `text-${color}`)} />
       </div>
       <div className="text-left">
         <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
           {title}
           {badge && (
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30">
+            <Badge
+              variant="outline"
+              className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30"
+            >
               {badge}
             </Badge>
           )}
@@ -94,7 +92,10 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 );
 
 // Result badge component
-const ResultBadge: React.FC<{ value: boolean | null | undefined; className?: string }> = ({ value, className }) => {
+const ResultBadge: React.FC<{ value: boolean | null | undefined; className?: string }> = ({
+  value,
+  className,
+}) => {
   if (value === true) {
     return (
       <Badge className={cn('bg-green-500/20 text-green-400 border-green-500/30', className)}>
@@ -119,10 +120,7 @@ const ResultBadge: React.FC<{ value: boolean | null | undefined; className?: str
   );
 };
 
-const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({ formData, onUpdate }) => {
   const [openSections, setOpenSections] = useState({
     arrayTests: true,
     inverterTests: true,
@@ -141,8 +139,8 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
     // Initialize array tests
     if (formData.arrays?.length > 0 && currentArrayTests.length !== formData.arrays.length) {
-      const newArrayTests = formData.arrays.map(array => {
-        const existing = currentArrayTests.find(t => t.arrayId === array.id);
+      const newArrayTests = formData.arrays.map((array) => {
+        const existing = currentArrayTests.find((t) => t.arrayId === array.id);
         if (existing) return existing;
         const test = getDefaultArrayTestResult(array.id);
         test.vocExpected = array.stringVoltageVoc || 0;
@@ -156,9 +154,12 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
     }
 
     // Initialize inverter tests
-    if (formData.inverters?.length > 0 && currentInverterTests.length !== formData.inverters.length) {
-      const newInverterTests = formData.inverters.map(inverter => {
-        const existing = currentInverterTests.find(t => t.inverterId === inverter.id);
+    if (
+      formData.inverters?.length > 0 &&
+      currentInverterTests.length !== formData.inverters.length
+    ) {
+      const newInverterTests = formData.inverters.map((inverter) => {
+        const existing = currentInverterTests.find((t) => t.inverterId === inverter.id);
         if (existing) return existing;
         return getDefaultInverterTestResult(inverter.id);
       });
@@ -172,7 +173,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
   // Update array test
   const updateArrayTest = (arrayId: string, field: string, value: any) => {
     const currentTests = formData.testResults?.arrayTests || [];
-    const updatedTests = currentTests.map(test => {
+    const updatedTests = currentTests.map((test) => {
       if (test.arrayId === arrayId) {
         return { ...test, [field]: value };
       }
@@ -187,7 +188,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
   // Update inverter test
   const updateInverterTest = (inverterId: string, field: string, value: any) => {
     const currentTests = formData.testResults?.inverterTests || [];
-    const updatedTests = currentTests.map(test => {
+    const updatedTests = currentTests.map((test) => {
       if (test.inverterId === inverterId) {
         return { ...test, [field]: value };
       }
@@ -223,19 +224,22 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
   // Get array by ID
   const getArrayById = (arrayId: string) => {
-    return formData.arrays?.find(a => a.id === arrayId);
+    return formData.arrays?.find((a) => a.id === arrayId);
   };
 
   // Get inverter by ID
   const getInverterById = (inverterId: string) => {
-    return formData.inverters?.find(i => i.id === inverterId);
+    return formData.inverters?.find((i) => i.id === inverterId);
   };
 
   return (
     <div className="space-y-4 px-4 sm:px-0">
       {/* DC Array Tests */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.arrayTests} onOpenChange={() => toggleSection('arrayTests')}>
+        <Collapsible
+          open={openSections.arrayTests}
+          onOpenChange={() => toggleSection('arrayTests')}
+        >
           <SectionHeader
             title="DC Array Tests"
             icon={TestTube}
@@ -271,8 +275,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.1"
                             value={test.vocExpected || array?.stringVoltageVoc || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'vocExpected', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
-                            className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'vocExpected',
+                                e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
+                              )
+                            }
+                            className="h-11 text-base touch-manipulation border-white/30 bg-muted/50"
                           />
                         </div>
                         <div className="space-y-1">
@@ -282,19 +292,22 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             step="0.1"
                             value={test.vocMeasured || ''}
                             onChange={(e) => {
-                              const measured = e.target.value === '' ? 0 : parseFloat(e.target.value) || 0;
+                              const measured =
+                                e.target.value === '' ? 0 : parseFloat(e.target.value) || 0;
                               const expected = test.vocExpected || 0;
                               const tolerance = expected * 0.1; // ±10%
-                              const withinTolerance = measured >= (expected - tolerance) && measured <= (expected + tolerance);
+                              const withinTolerance =
+                                measured >= expected - tolerance &&
+                                measured <= expected + tolerance;
                               updateArrayTest(test.arrayId, 'vocMeasured', measured);
                               updateArrayTest(test.arrayId, 'vocWithinTolerance', withinTolerance);
                             }}
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Result</Label>
-                          <div className="h-10 flex items-center">
+                          <div className="h-11 flex items-center">
                             <ResultBadge value={test.vocWithinTolerance} />
                           </div>
                         </div>
@@ -313,8 +326,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.01"
                             value={test.iscExpected || array?.stringCurrentIsc || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'iscExpected', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
-                            className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'iscExpected',
+                                e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
+                              )
+                            }
+                            className="h-11 text-base touch-manipulation border-white/30 bg-muted/50"
                           />
                         </div>
                         <div className="space-y-1">
@@ -327,16 +346,18 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                               const measured = parseFloat(e.target.value) || 0;
                               const expected = test.iscExpected || 0;
                               const tolerance = expected * 0.1; // ±10%
-                              const withinTolerance = measured >= (expected - tolerance) && measured <= (expected + tolerance);
+                              const withinTolerance =
+                                measured >= expected - tolerance &&
+                                measured <= expected + tolerance;
                               updateArrayTest(test.arrayId, 'iscMeasured', measured);
                               updateArrayTest(test.arrayId, 'iscWithinTolerance', withinTolerance);
                             }}
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Result</Label>
-                          <div className="h-10 flex items-center">
+                          <div className="h-11 flex items-center">
                             <ResultBadge value={test.iscWithinTolerance} />
                           </div>
                         </div>
@@ -355,8 +376,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.1"
                             value={test.irPositiveToEarth || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'irPositiveToEarth', parseFloat(e.target.value) || 0)}
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'irPositiveToEarth',
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
@@ -365,8 +392,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.1"
                             value={test.irNegativeToEarth || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'irNegativeToEarth', parseFloat(e.target.value) || 0)}
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'irNegativeToEarth',
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
@@ -374,18 +407,27 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                           <Input
                             type="number"
                             value={test.irMinimumRequired || 1}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'irMinimumRequired', parseFloat(e.target.value) || 1)}
-                            className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'irMinimumRequired',
+                                parseFloat(e.target.value) || 1
+                              )
+                            }
+                            className="h-11 text-base touch-manipulation border-white/30 bg-muted/50"
                           />
                         </div>
                         <div className="space-y-1">
                           <Label className="text-xs text-muted-foreground">Result</Label>
-                          <div className="h-10 flex items-center">
+                          <div className="h-11 flex items-center">
                             <ResultBadge
                               value={
-                                (test.irPositiveToEarth >= (test.irMinimumRequired || 1)) &&
-                                (test.irNegativeToEarth >= (test.irMinimumRequired || 1))
-                                  ? true : (test.irPositiveToEarth > 0 ? false : null)
+                                test.irPositiveToEarth >= (test.irMinimumRequired || 1) &&
+                                test.irNegativeToEarth >= (test.irMinimumRequired || 1)
+                                  ? true
+                                  : test.irPositiveToEarth > 0
+                                    ? false
+                                    : null
                               }
                             />
                           </div>
@@ -408,9 +450,15 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="10"
                             value={test.irradiance || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'irradiance', parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'irradiance',
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
                             placeholder="e.g., 800"
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
@@ -419,9 +467,15 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.5"
                             value={test.ambientTemp || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'ambientTemp', parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'ambientTemp',
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
                             placeholder="e.g., 20"
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                         <div className="space-y-1">
@@ -430,14 +484,21 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                             type="number"
                             step="0.5"
                             value={test.moduleTemp || ''}
-                            onChange={(e) => updateArrayTest(test.arrayId, 'moduleTemp', parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                              updateArrayTest(
+                                test.arrayId,
+                                'moduleTemp',
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
                             placeholder="e.g., 35"
-                            className="h-10 text-base touch-manipulation border-white/30"
+                            className="h-11 text-base touch-manipulation border-white/30"
                           />
                         </div>
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        Record irradiance &gt;400 W/m² for valid Isc measurements. Temperature affects Voc readings.
+                        Record irradiance &gt;400 W/m² for valid Isc measurements. Temperature
+                        affects Voc readings.
                       </p>
                     </div>
 
@@ -446,7 +507,9 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                         <Checkbox
                           checked={test.polarityCorrect || false}
-                          onCheckedChange={(checked) => updateArrayTest(test.arrayId, 'polarityCorrect', checked)}
+                          onCheckedChange={(checked) =>
+                            updateArrayTest(test.arrayId, 'polarityCorrect', checked)
+                          }
                           className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                         />
                         <Label className="text-sm text-foreground cursor-pointer">
@@ -457,7 +520,9 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                         <Checkbox
                           checked={test.stringContinuity || false}
-                          onCheckedChange={(checked) => updateArrayTest(test.arrayId, 'stringContinuity', checked)}
+                          onCheckedChange={(checked) =>
+                            updateArrayTest(test.arrayId, 'stringContinuity', checked)
+                          }
                           className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                         />
                         <Label className="text-sm text-foreground cursor-pointer">
@@ -473,14 +538,15 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                         value={test.notes || ''}
                         onChange={(e) => updateArrayTest(test.arrayId, 'notes', e.target.value)}
                         placeholder="Any observations or issues..."
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
                   </div>
                 );
               })}
 
-              {(!formData.testResults?.arrayTests || formData.testResults.arrayTests.length === 0) && (
+              {(!formData.testResults?.arrayTests ||
+                formData.testResults.arrayTests.length === 0) && (
                 <div className="p-6 text-center text-muted-foreground">
                   <AlertTriangle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   <p>No arrays configured. Add arrays in the System Design tab first.</p>
@@ -493,7 +559,10 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
       {/* Inverter Tests */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.inverterTests} onOpenChange={() => toggleSection('inverterTests')}>
+        <Collapsible
+          open={openSections.inverterTests}
+          onOpenChange={() => toggleSection('inverterTests')}
+        >
           <SectionHeader
             title="Inverter Tests"
             icon={Zap}
@@ -524,16 +593,26 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.dcIsolatorOperational || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'dcIsolatorOperational', checked)}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'dcIsolatorOperational', checked)
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Operational</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Operational
+                          </Label>
                         </div>
                         <Input
                           value={test.dcIsolatorLocation || ''}
-                          onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorLocation', e.target.value)}
+                          onChange={(e) =>
+                            updateInverterTest(
+                              test.inverterId,
+                              'dcIsolatorLocation',
+                              e.target.value
+                            )
+                          }
                           placeholder="Location"
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -542,16 +621,26 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.acIsolatorOperational || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'acIsolatorOperational', checked)}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'acIsolatorOperational', checked)
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Operational</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Operational
+                          </Label>
                         </div>
                         <Input
                           value={test.acIsolatorLocation || ''}
-                          onChange={(e) => updateInverterTest(test.inverterId, 'acIsolatorLocation', e.target.value)}
+                          onChange={(e) =>
+                            updateInverterTest(
+                              test.inverterId,
+                              'acIsolatorLocation',
+                              e.target.value
+                            )
+                          }
                           placeholder="Location"
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
                     </div>
@@ -568,46 +657,68 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.antiIslandingTest || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'antiIslandingTest', checked)}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'antiIslandingTest', checked)
+                            }
                             className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Anti-Islanding Verified</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Anti-Islanding Verified
+                          </Label>
                         </div>
 
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.earthFaultProtection || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'earthFaultProtection', checked)}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'earthFaultProtection', checked)
+                            }
                             className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Earth Fault Protection</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Earth Fault Protection
+                          </Label>
                         </div>
 
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.overvoltageProtection || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'overvoltageProtection', checked)}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'overvoltageProtection', checked)
+                            }
                             className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Overvoltage Protection</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Overvoltage Protection
+                          </Label>
                         </div>
                       </div>
 
                       {/* Anti-Islanding Test Method */}
                       <div className="space-y-1">
-                        <Label className="text-xs text-muted-foreground">Anti-Islanding Verification Method</Label>
+                        <Label className="text-xs text-muted-foreground">
+                          Anti-Islanding Verification Method
+                        </Label>
                         <Select
                           value={test.antiIslandingMethod || ''}
-                          onValueChange={(value) => updateInverterTest(test.inverterId, 'antiIslandingMethod', value)}
+                          onValueChange={(value) =>
+                            updateInverterTest(test.inverterId, 'antiIslandingMethod', value)
+                          }
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue placeholder="Select method" />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                            <SelectItem value="mains-isolation">Mains isolation test (switch off supply)</SelectItem>
-                            <SelectItem value="manufacturer-cert">G98/G99 certificate verified</SelectItem>
+                            <SelectItem value="mains-isolation">
+                              Mains isolation test (switch off supply)
+                            </SelectItem>
+                            <SelectItem value="manufacturer-cert">
+                              G98/G99 certificate verified
+                            </SelectItem>
                             <SelectItem value="type-tested">Type-tested to EN 50549</SelectItem>
-                            <SelectItem value="visual-display">Verified via inverter display</SelectItem>
+                            <SelectItem value="visual-display">
+                              Verified via inverter display
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -615,12 +726,19 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
                     {/* Commissioning */}
                     <div className="space-y-3">
-                      <Label className="text-sm font-medium text-foreground">Commissioning Checks</Label>
+                      <Label className="text-sm font-medium text-foreground">
+                        Commissioning Checks
+                      </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.commissioning?.powerOnTest || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'commissioning', { ...test.commissioning, powerOnTest: checked })}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'commissioning', {
+                                ...test.commissioning,
+                                powerOnTest: checked,
+                              })
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
                           <Label className="text-sm text-foreground cursor-pointer">Power On</Label>
@@ -629,25 +747,44 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.commissioning?.gridSyncTest || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'commissioning', { ...test.commissioning, gridSyncTest: checked })}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'commissioning', {
+                                ...test.commissioning,
+                                gridSyncTest: checked,
+                              })
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Grid Sync</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Grid Sync
+                          </Label>
                         </div>
 
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.commissioning?.displayFunctional || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'commissioning', { ...test.commissioning, displayFunctional: checked })}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'commissioning', {
+                                ...test.commissioning,
+                                displayFunctional: checked,
+                              })
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
-                          <Label className="text-sm text-foreground cursor-pointer">Display OK</Label>
+                          <Label className="text-sm text-foreground cursor-pointer">
+                            Display OK
+                          </Label>
                         </div>
 
                         <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
                           <Checkbox
                             checked={test.commissioning?.communicationsTest || false}
-                            onCheckedChange={(checked) => updateInverterTest(test.inverterId, 'commissioning', { ...test.commissioning, communicationsTest: checked })}
+                            onCheckedChange={(checked) =>
+                              updateInverterTest(test.inverterId, 'commissioning', {
+                                ...test.commissioning,
+                                communicationsTest: checked,
+                              })
+                            }
                             className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                           />
                           <Label className="text-sm text-foreground cursor-pointer">Comms OK</Label>
@@ -658,7 +795,8 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                 );
               })}
 
-              {(!formData.testResults?.inverterTests || formData.testResults.inverterTests.length === 0) && (
+              {(!formData.testResults?.inverterTests ||
+                formData.testResults.inverterTests.length === 0) && (
                 <div className="p-6 text-center text-muted-foreground">
                   <AlertTriangle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   <p>No inverters configured. Add inverters in the System Design tab first.</p>
@@ -689,9 +827,11 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                     <Label className="text-xs text-muted-foreground">Arrangement</Label>
                     <Select
                       value={formData.testResults?.acTests?.earthingArrangement || 'TN-C-S'}
-                      onValueChange={(value) => updateAcTest('earthingArrangement', value as EarthingArrangement)}
+                      onValueChange={(value) =>
+                        updateAcTest('earthingArrangement', value as EarthingArrangement)
+                      }
                     >
-                      <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -709,7 +849,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       step="0.01"
                       value={formData.testResults?.acTests?.zeValue || ''}
                       onChange={(e) => updateAcTest('zeValue', parseFloat(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -720,7 +860,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       step="0.01"
                       value={formData.testResults?.acTests?.zsValue || ''}
                       onChange={(e) => updateAcTest('zsValue', parseFloat(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
                 </div>
@@ -736,7 +876,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       value={formData.testResults?.acTests?.rcdType || 'Type A'}
                       onValueChange={(value) => updateAcTest('rcdType', value)}
                     >
-                      <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -754,7 +894,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       value={formData.testResults?.acTests?.rcdRating || 30}
                       onChange={(e) => updateAcTest('rcdRating', parseInt(e.target.value) || 30)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -764,13 +904,13 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       value={formData.testResults?.acTests?.rcdTripTime || ''}
                       onChange={(e) => updateAcTest('rcdTripTime', parseInt(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">Result</Label>
-                    <div className="h-10 flex items-center">
+                    <div className="h-11 flex items-center">
                       <ResultBadge
                         value={
                           formData.testResults?.acTests?.rcdTripTime
@@ -785,7 +925,9 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
               {/* Continuity & Insulation */}
               <div className="space-y-3">
-                <Label className="text-sm font-medium text-foreground">Continuity & Insulation</Label>
+                <Label className="text-sm font-medium text-foreground">
+                  Continuity & Insulation
+                </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">R1+R2 (Ω)</Label>
@@ -794,7 +936,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       step="0.01"
                       value={formData.testResults?.acTests?.r1r2Value || ''}
                       onChange={(e) => updateAcTest('r1r2Value', parseFloat(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -804,8 +946,10 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       step="0.1"
                       value={formData.testResults?.acTests?.insulationResistance || ''}
-                      onChange={(e) => updateAcTest('insulationResistance', parseFloat(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      onChange={(e) =>
+                        updateAcTest('insulationResistance', parseFloat(e.target.value) || 0)
+                      }
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -815,7 +959,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       value={String(formData.testResults?.acTests?.irTestVoltage || 500)}
                       onValueChange={(value) => updateAcTest('irTestVoltage', parseInt(value))}
                     >
-                      <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -828,7 +972,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">IR Result</Label>
-                    <div className="h-10 flex items-center">
+                    <div className="h-11 flex items-center">
                       <ResultBadge
                         value={
                           formData.testResults?.acTests?.insulationResistance
@@ -851,7 +995,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       value={formData.testResults?.acTests?.mcbRating || ''}
                       onChange={(e) => updateAcTest('mcbRating', parseInt(e.target.value) || 0)}
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -861,7 +1005,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       value={formData.testResults?.acTests?.mcbType || 'B'}
                       onValueChange={(value) => updateAcTest('mcbType', value)}
                     >
-                      <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -880,7 +1024,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       value={formData.testResults?.acTests?.pfc || ''}
                       onChange={(e) => updateAcTest('pfc', parseFloat(e.target.value) || 0)}
                       placeholder="Prospective"
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
 
@@ -897,12 +1041,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
               {/* MCB Location */}
               <div className="space-y-1">
-                <Label className="text-xs text-muted-foreground">MCB Location / Consumer Unit</Label>
+                <Label className="text-xs text-muted-foreground">
+                  MCB Location / Consumer Unit
+                </Label>
                 <Input
                   value={formData.testResults?.acTests?.mcbLocation || ''}
                   onChange={(e) => updateAcTest('mcbLocation', e.target.value)}
                   placeholder="e.g., Main CU, Way 12"
-                  className="h-10 text-base touch-manipulation border-white/30"
+                  className="h-11 text-base touch-manipulation border-white/30"
                 />
               </div>
             </div>
@@ -912,7 +1058,10 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
 
       {/* Commissioning Checklist */}
       <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.commissioning} onOpenChange={() => toggleSection('commissioning')}>
+        <Collapsible
+          open={openSections.commissioning}
+          onOpenChange={() => toggleSection('commissioning')}
+        >
           <SectionHeader
             title="Commissioning Checklist"
             icon={CheckCircle2}
@@ -934,9 +1083,11 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       step="0.1"
                       value={formData.testResults?.commissioning?.initialPowerOutput || ''}
-                      onChange={(e) => updateCommissioning('initialPowerOutput', parseFloat(e.target.value) || 0)}
+                      onChange={(e) =>
+                        updateCommissioning('initialPowerOutput', parseFloat(e.target.value) || 0)
+                      }
                       placeholder="Observed power"
-                      className="h-10 text-base touch-manipulation border-white/30 bg-background/50"
+                      className="h-11 text-base touch-manipulation border-white/30 bg-background/50"
                     />
                   </div>
                   <div className="space-y-1 sm:col-span-2">
@@ -945,7 +1096,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       value={formData.testResults?.commissioning?.weatherConditions || ''}
                       onChange={(e) => updateCommissioning('weatherConditions', e.target.value)}
                       placeholder="e.g., Clear sky, full sun, midday"
-                      className="h-10 text-base touch-manipulation border-white/30 bg-background/50"
+                      className="h-11 text-base touch-manipulation border-white/30 bg-background/50"
                     />
                   </div>
                 </div>
@@ -958,10 +1109,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
                       checked={formData.testResults?.commissioning?.systemOperational || false}
-                      onCheckedChange={(checked) => updateCommissioning('systemOperational', checked)}
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('systemOperational', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">System Operational & Generating</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      System Operational & Generating
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
@@ -970,14 +1125,18 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       onCheckedChange={(checked) => updateCommissioning('exportVerified', checked)}
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Export to Grid Verified</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Export to Grid Verified
+                    </Label>
                   </div>
                 </div>
               </div>
 
               {/* Meter Readings */}
               <div className="space-y-3">
-                <Label className="text-sm font-medium text-foreground">Initial Meter Readings</Label>
+                <Label className="text-sm font-medium text-foreground">
+                  Initial Meter Readings
+                </Label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">Generation Meter (kWh)</Label>
@@ -985,9 +1144,14 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       step="0.1"
                       value={formData.testResults?.commissioning?.generationMeterReading || ''}
-                      onChange={(e) => updateCommissioning('generationMeterReading', parseFloat(e.target.value) || 0)}
+                      onChange={(e) =>
+                        updateCommissioning(
+                          'generationMeterReading',
+                          parseFloat(e.target.value) || 0
+                        )
+                      }
                       placeholder="Initial reading"
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
                   <div className="space-y-1">
@@ -996,9 +1160,11 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       type="number"
                       step="0.1"
                       value={formData.testResults?.commissioning?.exportMeterReading || ''}
-                      onChange={(e) => updateCommissioning('exportMeterReading', parseFloat(e.target.value) || 0)}
+                      onChange={(e) =>
+                        updateCommissioning('exportMeterReading', parseFloat(e.target.value) || 0)
+                      }
                       placeholder="If fitted"
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
                 </div>
@@ -1014,61 +1180,98 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                       onCheckedChange={(checked) => updateCommissioning('customerBriefed', checked)}
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Customer Briefed on System</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Customer Briefed on System
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
-                      checked={formData.testResults?.commissioning?.shutdownProcedureExplained || false}
-                      onCheckedChange={(checked) => updateCommissioning('shutdownProcedureExplained', checked)}
+                      checked={
+                        formData.testResults?.commissioning?.shutdownProcedureExplained || false
+                      }
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('shutdownProcedureExplained', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Emergency Shutdown Explained</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Emergency Shutdown Explained
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
-                      checked={formData.testResults?.commissioning?.systemPerformanceExplained || false}
-                      onCheckedChange={(checked) => updateCommissioning('systemPerformanceExplained', checked)}
+                      checked={
+                        formData.testResults?.commissioning?.systemPerformanceExplained || false
+                      }
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('systemPerformanceExplained', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Performance Expectations Set</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Performance Expectations Set
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
-                      checked={formData.testResults?.commissioning?.maintenanceRequirementsExplained || false}
-                      onCheckedChange={(checked) => updateCommissioning('maintenanceRequirementsExplained', checked)}
+                      checked={
+                        formData.testResults?.commissioning?.maintenanceRequirementsExplained ||
+                        false
+                      }
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('maintenanceRequirementsExplained', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Maintenance Requirements Explained</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Maintenance Requirements Explained
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
-                      checked={formData.testResults?.commissioning?.warrantyDetailsExplained || false}
-                      onCheckedChange={(checked) => updateCommissioning('warrantyDetailsExplained', checked)}
+                      checked={
+                        formData.testResults?.commissioning?.warrantyDetailsExplained || false
+                      }
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('warrantyDetailsExplained', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Warranty Details Explained</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Warranty Details Explained
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
                       checked={formData.testResults?.commissioning?.documentationProvided || false}
-                      onCheckedChange={(checked) => updateCommissioning('documentationProvided', checked)}
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('documentationProvided', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">All Documentation Provided</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      All Documentation Provided
+                    </Label>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                     <Checkbox
-                      checked={formData.testResults?.commissioning?.emergencyContactProvided || false}
-                      onCheckedChange={(checked) => updateCommissioning('emergencyContactProvided', checked)}
+                      checked={
+                        formData.testResults?.commissioning?.emergencyContactProvided || false
+                      }
+                      onCheckedChange={(checked) =>
+                        updateCommissioning('emergencyContactProvided', checked)
+                      }
                       className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
                     />
-                    <Label className="text-sm text-foreground cursor-pointer">Emergency Contact Details Given</Label>
+                    <Label className="text-sm text-foreground cursor-pointer">
+                      Emergency Contact Details Given
+                    </Label>
                   </div>
                 </div>
               </div>
@@ -1080,7 +1283,7 @@ const SolarPVTestSchedule: React.FC<SolarPVTestScheduleProps> = ({
                   value={formData.testResults?.commissioning?.notes || ''}
                   onChange={(e) => updateCommissioning('notes', e.target.value)}
                   placeholder="Any observations, issues resolved, or follow-up required..."
-                  className="min-h-[80px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
+                  className="min-h-[120px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
                 />
               </div>
             </div>

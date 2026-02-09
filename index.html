@@ -73,10 +73,13 @@
     <link rel="dns-prefetch" href="https://plausible.io">
     <link rel="dns-prefetch" href="https://o4508788935344128.ingest.de.sentry.io">
 
-    <!-- Inter Font for Professional Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font — self-hosted for instant rendering on native (no CDN dependency) -->
+    <style>
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-400.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-500.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-600.woff2') format('woff2'); }
+      @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/inter-700.woff2') format('woff2'); }
+    </style>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -156,12 +159,21 @@
   <body>
     <div id="root">
       <!-- Initial loading state - replaced by React when it mounts -->
+      <!-- Hidden on native (Capacitor) since the native splash screen covers loading -->
       <div id="initial-loading" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #0a1628 0%, #0a0a0a 100%); color: #e5e7eb; font-family: Inter, system-ui, sans-serif; text-align: center; padding: 20px;">
         <div>
           <div style="width: 48px; height: 48px; margin: 0 auto 16px; border: 3px solid #facc15; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
           <p style="font-size: 16px; margin: 0;">Loading Elec-Mate...</p>
         </div>
       </div>
+      <script>
+        // On native (Capacitor), the native splash screen covers the loading period,
+        // so hide the HTML spinner to prevent a flash between splash → spinner → app.
+        if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
+          var il = document.getElementById('initial-loading');
+          if (il) il.style.display = 'none';
+        }
+      </script>
       <style>
         @keyframes spin { to { transform: rotate(360deg); } }
         #load-error { display: none; }

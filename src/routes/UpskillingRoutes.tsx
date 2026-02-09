@@ -1,29 +1,22 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { Suspense, useEffect } from "react";
-import { useLastStudyLocation } from "@/hooks/useLastStudyLocation";
-import { lazyWithRetry } from "@/utils/lazyWithRetry";
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
+import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
 // Import sub-route files
-import { bmsRoutes } from "./upskilling/bmsRoutes";
-import { bs7671Routes } from "./upskilling/bs7671Routes";
-import { fireAlarmRoutes } from "./upskilling/fireAlarmRoutes";
-import { industrialDataRoutes } from "./upskilling/industrialDataRoutes";
-import { inspectionTestingRoutes } from "./upskilling/inspectionTestingRoutes";
-import { patTestingRoutes } from "./upskilling/patTestingRoutes";
-import { specialisedCoursesRoutes } from "./upskilling/specialisedCoursesRoutes";
+import { bmsRoutes } from './upskilling/bmsRoutes';
+import { bs7671Routes } from './upskilling/bs7671Routes';
+import { fireAlarmRoutes } from './upskilling/fireAlarmRoutes';
+import { industrialDataRoutes } from './upskilling/industrialDataRoutes';
+import { inspectionTestingRoutes } from './upskilling/inspectionTestingRoutes';
+import { patTestingRoutes } from './upskilling/patTestingRoutes';
+import { specialisedCoursesRoutes } from './upskilling/specialisedCoursesRoutes';
 
 // Lazy load with retry for chunk failures
-const UpskillingIndex = lazyWithRetry(() => import("@/pages/upskilling/Index"));
+const UpskillingIndex = lazyWithRetry(() => import('@/pages/upskilling/Index'));
 
-// Loading component
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen bg-elec-dark">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mx-auto mb-4" />
-      <p className="text-gray-400">Loading course content...</p>
-    </div>
-  </div>
-);
+const LoadingFallback = CourseSkeleton;
 
 // Study location tracker component - tracks all upskilling page visits
 function UpskillingTracker() {
@@ -32,7 +25,10 @@ function UpskillingTracker() {
 
   useEffect(() => {
     // Don't track the index page itself
-    if (location.pathname === '/electrician/upskilling' || location.pathname === '/electrician/upskilling/') {
+    if (
+      location.pathname === '/electrician/upskilling' ||
+      location.pathname === '/electrician/upskilling/'
+    ) {
       return;
     }
 

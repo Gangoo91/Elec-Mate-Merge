@@ -181,7 +181,7 @@ export function OJTProgressSection() {
       {/* Header */}
       <div className="space-y-1">
         <h2 className="text-xl font-bold text-foreground">Off-the-Job Training</h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/80">
           Track your 20% off-the-job training hours
         </p>
       </div>
@@ -193,10 +193,10 @@ export function OJTProgressSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="text-sm text-muted-foreground">This Week</p>
+                <p className="text-sm text-white/80">This Week</p>
                 <p className="text-3xl font-bold text-foreground">
                   {weeklyHours.toFixed(1)}
-                  <span className="text-lg text-muted-foreground">/{weeklyTarget}h</span>
+                  <span className="text-lg text-white/80">/{weeklyTarget}h</span>
                 </p>
               </div>
               <div
@@ -232,7 +232,7 @@ export function OJTProgressSection() {
                   style={{ width: `${Math.min(weeklyPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {weeklyPercent >= 100
                   ? 'Target achieved!'
                   : `${(weeklyTarget - weeklyHours).toFixed(1)}h remaining`}
@@ -246,10 +246,10 @@ export function OJTProgressSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="text-sm text-muted-foreground">This Year</p>
+                <p className="text-sm text-white/80">This Year</p>
                 <p className="text-3xl font-bold text-foreground">
                   {yearlyHours}
-                  <span className="text-lg text-muted-foreground">/{yearlyTarget}h</span>
+                  <span className="text-lg text-white/80">/{yearlyTarget}h</span>
                 </p>
               </div>
               <div className="p-2 rounded-lg bg-blue-500/10">
@@ -263,7 +263,7 @@ export function OJTProgressSection() {
                   style={{ width: `${Math.min(yearlyPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {yearlyPercent}% complete • {yearlyTarget - yearlyHours}h remaining
               </p>
             </div>
@@ -338,7 +338,7 @@ export function OJTProgressSection() {
         </CardHeader>
         <CardContent className="pt-0">
           {recentSessions.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-4">
+            <p className="text-sm text-white/80 text-center py-4">
               No sessions logged yet
             </p>
           ) : (
@@ -349,13 +349,13 @@ export function OJTProgressSection() {
                   className="flex items-center gap-3 py-2 border-b border-border last:border-0"
                 >
                   <div className="p-2 rounded-lg bg-muted">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <Clock className="h-4 w-4 text-white/80" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">
                       {session.activity}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/80">
                       {new Date(session.date).toLocaleDateString('en-GB', {
                         weekday: 'short',
                         day: 'numeric',
@@ -373,7 +373,7 @@ export function OJTProgressSection() {
                         'text-[10px]',
                         session.isAutomatic
                           ? 'border-blue-500/30 text-blue-500'
-                          : 'border-muted-foreground/30 text-muted-foreground'
+                          : 'border-muted-foreground/30 text-white/80'
                       )}
                     >
                       {session.isAutomatic ? 'Auto' : 'Manual'}

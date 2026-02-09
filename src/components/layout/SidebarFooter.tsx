@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Star, CheckCircle, Sparkles, Crown } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Star, CheckCircle, Sparkles, Crown } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const SidebarFooter = () => {
   const { isTrialActive, isSubscribed, profile, subscriptionTier } = useAuth();
@@ -16,7 +15,10 @@ const SidebarFooter = () => {
 
   if (isSubscribed) {
     return (
-      <div className="p-3 border-t border-white/10">
+      <div
+        className="p-3 border-t border-white/10"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
         <div className="p-3 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/5 border border-green-500/30">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-green-500/20">
@@ -37,7 +39,10 @@ const SidebarFooter = () => {
   }
 
   return (
-    <div className="p-3 border-t border-white/10">
+    <div
+      className="p-3 border-t border-white/10"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+    >
       <div className="p-3 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-amber-500/5 border border-elec-yellow/20">
         <div className="flex items-center gap-2 mb-2">
           <div className="p-1.5 rounded-lg bg-elec-yellow/20">

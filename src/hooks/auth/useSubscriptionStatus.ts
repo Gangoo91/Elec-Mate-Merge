@@ -1,8 +1,11 @@
-
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Purchases } from '@revenuecat/purchases-capacitor';
 import { ProfileType } from './types';
 import { supabase } from '@/integrations/supabase/client';
 import { capturePaymentError, captureEdgeFunctionError, addBreadcrumb } from '@/lib/sentry';
+
+const RC_ENTITLEMENT_ID = 'Elec-Mate Pro';
 
 // Combined state to prevent multiple re-renders
 interface SubscriptionState {
@@ -49,7 +52,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       }
 
       // Use functional setState to get latest state and avoid stale closures
-      setState(prev => {
+      setState((prev) => {
         const newState: SubscriptionState = {
           ...prev,
           isTrialActive: false, // Trial is now Stripe-managed (shows as subscribed)
@@ -68,14 +71,49 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     // This prevents the "free trial has ended" flash
   }, [profile]);
 
-  // Function to check subscription status with Stripe
-  // Includes timeout and retry logic to handle transient iOS Safari failures
+  // Function to check subscription status
+  // On native: checks RevenueCat entitlements (handles Apple/Google receipt validation)
+  // On web: calls check-subscription edge function (Stripe)
   const checkSubscriptionStatus = useCallback(async () => {
     if (!profile) return;
 
     // Prevent duplicate checks for same profile
     if (hasCheckedRef.current && profileIdRef.current === profile.id) {
       return;
+    }
+
+    // On native platforms, check RevenueCat entitlements instead of Stripe
+    if (Capacitor.isNativePlatform()) {
+      setState((prev) => ({ ...prev, isCheckingStatus: true, lastError: null }));
+      try {
+        const { customerInfo } = await Purchases.getCustomerInfo();
+        const isEntitled = customerInfo.entitlements.active[RC_ENTITLEMENT_ID] !== undefined;
+
+        hasCheckedRef.current = true;
+        profileIdRef.current = profile.id;
+
+        setState((prev) => ({
+          ...prev,
+          isSubscribed: isEntitled || prev.isSubscribed,
+          subscriptionTier: isEntitled
+            ? Capacitor.getPlatform() === 'ios'
+              ? 'Pro (iOS)'
+              : 'Pro (Android)'
+            : prev.subscriptionTier,
+          isCheckingStatus: false,
+          hasCompletedInitialCheck: true,
+          lastError: null,
+          lastCheckedAt: new Date(),
+        }));
+        return;
+      } catch (err) {
+        console.error('RevenueCat entitlement check error:', err);
+        // Fall through to profile-based check — don't block the user
+        setState((prev) => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+        hasCheckedRef.current = true;
+        profileIdRef.current = profile.id;
+        return;
+      }
     }
 
     // OPTIMISATION: Skip Stripe API call for trial users who haven't subscribed yet
@@ -87,11 +125,11 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       // Mark as checked so we don't keep trying
       hasCheckedRef.current = true;
       profileIdRef.current = profile.id;
-      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+      setState((prev) => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
       return;
     }
 
-    setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
+    setState((prev) => ({ ...prev, isCheckingStatus: true, lastError: null }));
 
     const MAX_RETRIES = 2;
     let lastError: string | null = null;
@@ -101,7 +139,10 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     let session = (await supabase.auth.getSession()).data.session;
 
     // If no session or token is about to expire (within 60 seconds), try to refresh
-    if (!session?.access_token || (session.expires_at && session.expires_at * 1000 < Date.now() + 60000)) {
+    if (
+      !session?.access_token ||
+      (session.expires_at && session.expires_at * 1000 < Date.now() + 60000)
+    ) {
       const { data: refreshData } = await supabase.auth.refreshSession();
       session = refreshData.session;
     }
@@ -109,7 +150,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     if (!session?.access_token) {
       // No valid session - skip the Stripe check but keep trial logic working
       // Trial status is calculated from profile.created_at, not from this edge function
-      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+      setState((prev) => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
       return;
     }
 
@@ -117,7 +158,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       try {
         if (attempt > 0) {
           // Brief delay before retry (500ms, then 1000ms)
-          await new Promise(resolve => setTimeout(resolve, attempt * 500));
+          await new Promise((resolve) => setTimeout(resolve, attempt * 500));
           addBreadcrumb('subscription', `Retrying subscription check (attempt ${attempt + 1})`);
         }
 
@@ -132,7 +173,10 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         if (error) {
           lastError = error.message;
           // Retry on fetch/network errors, not on auth or server logic errors
-          if (attempt < MAX_RETRIES && /failed to send|fetch|network|timed out/i.test(error.message)) {
+          if (
+            attempt < MAX_RETRIES &&
+            /failed to send|fetch|network|timed out/i.test(error.message)
+          ) {
             continue;
           }
           console.error('Error checking subscription:', error);
@@ -141,12 +185,17 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
             'check-subscription',
             { userId: profile?.id, attempt: attempt + 1 }
           );
-          setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: error.message }));
+          setState((prev) => ({
+            ...prev,
+            isCheckingStatus: false,
+            hasCompletedInitialCheck: true,
+            lastError: error.message,
+          }));
           return;
         }
 
         if (data) {
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             isSubscribed: data.subscribed,
             subscriptionTier: data.subscription_tier,
@@ -160,7 +209,11 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           hasCheckedRef.current = true;
           profileIdRef.current = profile.id;
         } else {
-          setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+          setState((prev) => ({
+            ...prev,
+            isCheckingStatus: false,
+            hasCompletedInitialCheck: true,
+          }));
         }
         return; // Success — exit retry loop
       } catch (error) {
@@ -171,11 +224,17 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           continue;
         }
         console.error('Error in checkSubscriptionStatus:', message);
-        capturePaymentError(
-          error instanceof Error ? error : new Error(message),
-          { userId: profile?.id, context: 'checkSubscriptionStatus', attempt: attempt + 1 }
-        );
-        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: message }));
+        capturePaymentError(error instanceof Error ? error : new Error(message), {
+          userId: profile?.id,
+          context: 'checkSubscriptionStatus',
+          attempt: attempt + 1,
+        });
+        setState((prev) => ({
+          ...prev,
+          isCheckingStatus: false,
+          hasCompletedInitialCheck: true,
+          lastError: message,
+        }));
         return;
       }
     }
@@ -187,7 +246,12 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         'check-subscription',
         { userId: profile?.id, attempts: MAX_RETRIES + 1 }
       );
-      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError }));
+      setState((prev) => ({
+        ...prev,
+        isCheckingStatus: false,
+        hasCompletedInitialCheck: true,
+        lastError,
+      }));
     }
   }, [profile]);
 
@@ -215,6 +279,6 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     hasCompletedInitialCheck: state.hasCompletedInitialCheck,
     lastError: state.lastError,
     lastCheckedAt: state.lastCheckedAt,
-    checkSubscriptionStatus
+    checkSubscriptionStatus,
   };
 }

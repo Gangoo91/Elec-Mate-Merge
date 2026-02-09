@@ -14,7 +14,17 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, User, Building2, Lightbulb, Settings, Info, Clock, Copy, History } from 'lucide-react';
+import {
+  ChevronDown,
+  User,
+  Building2,
+  Lightbulb,
+  Settings,
+  Info,
+  Clock,
+  Copy,
+  History,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
@@ -56,7 +66,9 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
   const { data: existingClients } = useQuery({
     queryKey: ['emergency-lighting-existing-clients'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
@@ -70,7 +82,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
 
       // Extract unique clients from report_data
       const clientMap = new Map<string, ExistingClient>();
-      data.forEach(report => {
+      data.forEach((report) => {
         const rd = report.report_data as any;
         if (!rd?.clientName) return;
         const key = `${rd.clientName}-${rd.clientAddress || ''}`;
@@ -84,7 +96,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
             premisesName: rd.premisesName || '',
             premisesAddress: rd.premisesAddress || '',
             premisesType: rd.premisesType || '',
-            occupancyType: rd.occupancyType || ''
+            occupancyType: rd.occupancyType || '',
           });
         }
       });
@@ -95,7 +107,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
 
   // Handle selecting an existing client
   const handleSelectExistingClient = (clientId: string) => {
-    const client = existingClients?.find(c => c.id === clientId);
+    const client = existingClients?.find((c) => c.id === clientId);
     if (client) {
       onUpdate('clientName', client.clientName);
       onUpdate('clientAddress', client.clientAddress);
@@ -136,9 +148,9 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
   };
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Client Details */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -150,10 +162,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   <h3 className="font-semibold text-foreground">Client Details</h3>
                   <span className="text-xs text-muted-foreground">Name, contact & address</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.client && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.client && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -163,15 +177,17 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   </div>
                   <span className="text-white font-semibold">Client Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.client && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.client && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Existing Client Dropdown */}
               {existingClients && existingClients.length > 0 && (
                 <div className="space-y-2">
@@ -184,7 +200,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       <SelectValue placeholder="Select existing client..." />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-background border-border text-foreground">
-                      {existingClients.map(client => (
+                      {existingClients.map((client) => (
                         <SelectItem key={client.id} value={client.id}>
                           <div className="flex flex-col">
                             <span className="font-medium">{client.clientName}</span>
@@ -252,7 +268,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
       </div>
 
       {/* Premises Details */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.premises} onOpenChange={() => toggleSection('premises')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -264,10 +280,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   <h3 className="font-semibold text-foreground">Premises Details</h3>
                   <span className="text-xs text-muted-foreground">Address, type & risk</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.premises && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.premises && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -277,15 +295,17 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   </div>
                   <span className="text-white font-semibold">Premises Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.premises && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.premises && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="space-y-2">
                 <Label htmlFor="premisesName">Premises Name</Label>
                 <Input
@@ -305,7 +325,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       variant="ghost"
                       size="sm"
                       onClick={copyClientAddress}
-                      className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                      className="h-11 text-xs text-muted-foreground hover:text-foreground touch-manipulation"
                     >
                       <Copy className="h-3 w-3 mr-1" />
                       Same as client
@@ -370,7 +390,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
       </div>
 
       {/* System Classification */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.system} onOpenChange={() => toggleSection('system')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -382,10 +402,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   <h3 className="font-semibold text-foreground">System Classification</h3>
                   <span className="text-xs text-muted-foreground">BS 5266 settings</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.system && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.system && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -395,15 +417,17 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   </div>
                   <span className="text-white font-semibold">System Classification (BS 5266)</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.system && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.system && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="testType">Test Type</Label>
@@ -446,19 +470,25 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     <SelectItem value="maintained">
                       <div className="flex flex-col">
                         <span className="font-medium">Maintained</span>
-                        <span className="text-xs text-muted-foreground">Continuously lit, battery backup</span>
+                        <span className="text-xs text-muted-foreground">
+                          Continuously lit, battery backup
+                        </span>
                       </div>
                     </SelectItem>
                     <SelectItem value="non-maintained">
                       <div className="flex flex-col">
                         <span className="font-medium">Non-Maintained</span>
-                        <span className="text-xs text-muted-foreground">Only lit on mains failure</span>
+                        <span className="text-xs text-muted-foreground">
+                          Only lit on mains failure
+                        </span>
                       </div>
                     </SelectItem>
                     <SelectItem value="combined">
                       <div className="flex flex-col">
                         <span className="font-medium">Combined (Sustained)</span>
-                        <span className="text-xs text-muted-foreground">Both maintained and non-maintained</span>
+                        <span className="text-xs text-muted-foreground">
+                          Both maintained and non-maintained
+                        </span>
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -490,20 +520,26 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
 
                 {/* Duration Guidance Alert */}
                 {durationGuidance && (
-                  <Alert className={cn(
-                    "mt-2",
-                    durationGuidance.duration === 180
-                      ? "border-purple-500/30 bg-purple-500/10"
-                      : "border-blue-500/30 bg-blue-500/10"
-                  )}>
-                    <Clock className={cn(
-                      "h-4 w-4",
-                      durationGuidance.duration === 180 ? "text-purple-400" : "text-blue-400"
-                    )} />
-                    <AlertDescription className={cn(
-                      "text-sm",
-                      durationGuidance.duration === 180 ? "text-purple-200" : "text-blue-200"
-                    )}>
+                  <Alert
+                    className={cn(
+                      'mt-2',
+                      durationGuidance.duration === 180
+                        ? 'border-purple-500/30 bg-purple-500/10'
+                        : 'border-blue-500/30 bg-blue-500/10'
+                    )}
+                  >
+                    <Clock
+                      className={cn(
+                        'h-4 w-4',
+                        durationGuidance.duration === 180 ? 'text-purple-400' : 'text-blue-400'
+                      )}
+                    />
+                    <AlertDescription
+                      className={cn(
+                        'text-sm',
+                        durationGuidance.duration === 180 ? 'text-purple-200' : 'text-blue-200'
+                      )}
+                    >
                       <strong>{durationGuidance.title}</strong>
                       <p className="text-xs mt-1 opacity-80">{durationGuidance.content}</p>
                       <p className="text-xs mt-1 opacity-60">{durationGuidance.reference}</p>
@@ -520,7 +556,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     onCheckedChange={(checked) => onUpdate('selfContainedUnits', checked)}
                     className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="selfContainedUnits" className="cursor-pointer text-base leading-relaxed">
+                  <Label
+                    htmlFor="selfContainedUnits"
+                    className="cursor-pointer text-base leading-relaxed"
+                  >
                     Self-contained luminaires (integrated battery)
                   </Label>
                 </div>
@@ -532,7 +571,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     onCheckedChange={(checked) => onUpdate('centralBatterySystem', checked)}
                     className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="centralBatterySystem" className="cursor-pointer text-base leading-relaxed">
+                  <Label
+                    htmlFor="centralBatterySystem"
+                    className="cursor-pointer text-base leading-relaxed"
+                  >
                     Central battery system installed
                   </Label>
                 </div>
@@ -556,7 +598,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
       </div>
 
       {/* Equipment Summary */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.equipment} onOpenChange={() => toggleSection('equipment')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -568,10 +610,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   <h3 className="font-semibold text-foreground">Equipment Summary</h3>
                   <span className="text-xs text-muted-foreground">Luminaire & sign counts</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.equipment && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.equipment && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -581,15 +625,17 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   </div>
                   <span className="text-white font-semibold">Equipment Summary</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.equipment && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.equipment && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="luminaireCount">Luminaire Count</Label>
@@ -598,7 +644,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     type="number"
                     min="0"
                     value={formData.luminaireCount ?? ''}
-                    onChange={(e) => onUpdate('luminaireCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'luminaireCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -609,7 +660,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     type="number"
                     min="0"
                     value={formData.exitSignCount ?? ''}
-                    onChange={(e) => onUpdate('exitSignCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'exitSignCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
@@ -621,7 +677,12 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       type="number"
                       min="0"
                       value={formData.centralBatteryCount ?? ''}
-                      onChange={(e) => onUpdate('centralBatteryCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                      onChange={(e) =>
+                        onUpdate(
+                          'centralBatteryCount',
+                          e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                        )
+                      }
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
                   </div>
@@ -634,7 +695,8 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   {(formData.luminaireCount || 0) + (formData.exitSignCount || 0)} units
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit signs
+                  {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit
+                  signs
                 </p>
               </div>
             </div>

@@ -4,16 +4,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import {
-  Loader2,
-  CreditCard,
-  Shield,
-  Zap,
-  Check,
-  LogOut,
-  ArrowRight,
-} from 'lucide-react';
+import { Loader2, CreditCard, Shield, Zap, Check, LogOut, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Capacitor } from '@capacitor/core';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
 
 // Role → Stripe price mapping
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
@@ -27,6 +21,8 @@ const CheckoutTrial = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasAttempted, setHasAttempted] = useState(false);
+
+  const { isNative, availablePackages, isPurchasing, purchasePackage } = useRevenueCat(user?.id);
 
   // Determine plan from profile role or localStorage fallback
   const role = profile?.role || localStorage.getItem('elec-mate-profile-role') || 'electrician';
@@ -67,6 +63,21 @@ const CheckoutTrial = () => {
     }
   }, [isRedirecting, priceInfo]);
 
+  // Native IAP purchase handler
+  const startNativePurchase = useCallback(async () => {
+    if (!availablePackages.length) {
+      setError('No subscription packages available. Please try again.');
+      return;
+    }
+
+    const pkg = availablePackages[0];
+    const success = await purchasePackage(pkg);
+
+    if (success) {
+      navigate('/dashboard');
+    }
+  }, [availablePackages, purchasePackage, navigate]);
+
   // Auto-trigger checkout on first mount if user is authenticated
   useEffect(() => {
     if (!user) {
@@ -83,9 +94,12 @@ const CheckoutTrial = () => {
     // Auto-trigger checkout once
     if (!hasAttempted) {
       setHasAttempted(true);
-      startCheckout();
+      // On native, don't auto-trigger — let user tap the button
+      if (!isNative) {
+        startCheckout();
+      }
     }
-  }, [user, profile, hasAttempted, navigate, startCheckout]);
+  }, [user, profile, hasAttempted, navigate, startCheckout, isNative]);
 
   const handleSignOut = async () => {
     localStorage.removeItem('elec-mate-checkout-planId');
@@ -127,7 +141,7 @@ const CheckoutTrial = () => {
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.1, 0.06] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/20 blur-[150px]"
         />
       </div>
@@ -163,8 +177,8 @@ const CheckoutTrial = () => {
               Complete your free trial setup
             </h1>
             <p className="text-[15px] text-white/50 leading-relaxed">
-              Enter your card details to start your 7-day free trial.
-              You won't be charged until <span className="text-white/70 font-medium">{trialEndDate}</span>.
+              Enter your card details to start your 7-day free trial. You won't be charged until{' '}
+              <span className="text-white/70 font-medium">{trialEndDate}</span>.
             </p>
           </div>
 
@@ -204,19 +218,25 @@ const CheckoutTrial = () => {
 
           {/* CTA */}
           <Button
-            onClick={startCheckout}
-            disabled={isRedirecting}
+            onClick={isNative ? startNativePurchase : startCheckout}
+            disabled={isRedirecting || isPurchasing}
             className={cn(
-              "w-full h-14 rounded-2xl text-[16px] font-semibold",
-              "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-              "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
-              "touch-manipulation disabled:opacity-50"
+              'w-full h-14 rounded-2xl text-[16px] font-semibold',
+              'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
+              'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
+              'touch-manipulation disabled:opacity-50'
             )}
           >
-            {isRedirecting ? (
-              <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Redirecting...</>
+            {isRedirecting || isPurchasing ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />{' '}
+                {isNative ? 'Processing...' : 'Redirecting...'}
+              </>
             ) : (
-              <>Continue to Checkout <ArrowRight className="ml-2 h-5 w-5" /></>
+              <>
+                {isNative ? 'Start Free Trial' : 'Continue to Checkout'}{' '}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </>
             )}
           </Button>
 
@@ -224,11 +244,21 @@ const CheckoutTrial = () => {
           <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-white/30">
             <span className="flex items-center gap-1.5">
               <Shield className="h-3.5 w-3.5 text-green-500/60" />
-              Secured by Stripe
+              {isNative ? 'Secured by Apple / Google' : 'Secured by Stripe'}
             </span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             <span>Cancel anytime</span>
           </div>
+
+          {/* Native IAP disclosure text (required by Apple/Google) */}
+          {isNative && (
+            <p className="text-[10px] text-white/25 text-center mt-3 leading-relaxed">
+              Payment will be charged to your{' '}
+              {Capacitor.getPlatform() === 'ios' ? 'Apple ID' : 'Google account'} at confirmation of
+              purchase. Subscription automatically renews unless cancelled at least 24 hours before
+              the end of the current period. 7-day free trial. Cancel anytime.
+            </p>
+          )}
 
           {/* Sign out */}
           <div className="mt-8 text-center">

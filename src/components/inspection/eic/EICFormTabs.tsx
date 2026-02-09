@@ -34,6 +34,13 @@ interface EICFormTabsProps {
     onToggleComplete: () => void;
     onGenerateCertificate?: () => void;
     canGenerateCertificate?: boolean;
+    whatsApp?: {
+      type: string;
+      id: string;
+      recipientPhone: string;
+      recipientName: string;
+      documentLabel: string;
+    };
   };
   observationsProps: {
     observations: EICObservation[];

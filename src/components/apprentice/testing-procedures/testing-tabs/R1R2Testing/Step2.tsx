@@ -1,4 +1,3 @@
-
 const R1R2Step2 = () => {
   return (
     <div className="space-y-4">
@@ -11,7 +10,12 @@ const R1R2Step2 = () => {
         <li>Record all readings in a systematic manner</li>
       </ul>
       <div className="mt-4 bg-white/5 border border-white/10 p-4 rounded-md">
-        <img src="/placeholder.svg" alt="R1+R2 Testing Process" className="mx-auto max-h-64" />
+        <img
+          loading="lazy"
+          src="/placeholder.svg"
+          alt="R1+R2 Testing Process"
+          className="mx-auto max-h-64"
+        />
         <p className="text-xs text-center mt-2 text-white">
           Testing process diagram showing proper testing technique
         </p>

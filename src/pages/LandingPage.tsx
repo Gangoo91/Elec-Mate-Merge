@@ -1,13 +1,28 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
-  Menu, X, Check, ArrowRight, Zap,
-  GraduationCap, Wrench, Building2,
-  Cpu, PoundSterling, Hammer, Settings, Shield,
+  Menu,
+  X,
+  Check,
+  ArrowRight,
+  Zap,
+  GraduationCap,
+  Wrench,
+  Building2,
+  Cpu,
+  PoundSterling,
+  Hammer,
+  Settings,
+  Shield,
   Clock,
-  Mic, CreditCard, Send, Sparkles, Brain,
-  Heart, ChevronDown
+  Mic,
+  CreditCard,
+  Send,
+  Sparkles,
+  Brain,
+  Heart,
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,22 +34,31 @@ const LandingPage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
+  // Redirect first-time visitors to walkthrough (before they've signed in)
+  if (!user && !localStorage.getItem('walkthrough_completed')) {
+    return <Navigate to="/walkthrough" replace />;
+  }
+
   const faqs = [
     {
       question: 'Will I be charged during the free trial?',
-      answer: 'Your card details are required to start your free trial, but you won\'t be charged for 7 days. Cancel anytime before the trial ends and you pay nothing.',
+      answer:
+        "Your card details are required to start your free trial, but you won't be charged for 7 days. Cancel anytime before the trial ends and you pay nothing.",
     },
     {
       question: 'Is the AI compliant with current regs?',
-      answer: 'Yes. All 5 AI specialists are trained on BS 7671:2018 + Amendment 3:2024 (18th Edition). We update them when regulations change.',
+      answer:
+        'Yes. All 5 AI specialists are trained on BS 7671:2018 + Amendment 3:2024 (18th Edition). We update them when regulations change.',
     },
     {
       question: 'What certificates can I create?',
-      answer: 'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging — all with digital signatures and PDF export.',
+      answer:
+        'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging — all with digital signatures and PDF export.',
     },
     {
       question: 'Do you sync with my accounting software?',
-      answer: 'Yes. We integrate with Xero and QuickBooks. Invoices sync automatically when you send them.',
+      answer:
+        'Yes. We integrate with Xero and QuickBooks. Invoices sync automatically when you send them.',
     },
     {
       question: 'Can I cancel anytime?',
@@ -47,14 +71,23 @@ const LandingPage = () => {
       {/* SEO Meta Tags */}
       <Helmet>
         <title>Elec-Mate | The Complete Platform for UK Electricians</title>
-        <meta name="description" content="Training, AI tools, certificates & business management for UK electricians. Level 2 & 3 courses, BS 7671 AI assistants, EICR forms, voice quotes & Stripe payments. Start your free trial." />
-        <meta name="keywords" content="electrician app, electrical training, EICR certificate, EIC form, Minor Works, BS 7671, 18th edition, electrical apprentice, UK electrician, cable sizing calculator, volt drop calculator, electrical quotes, AI electrician" />
+        <meta
+          name="description"
+          content="Training, AI tools, certificates & business management for UK electricians. Level 2 & 3 courses, BS 7671 AI assistants, EICR forms, voice quotes & Stripe payments. Start your free trial."
+        />
+        <meta
+          name="keywords"
+          content="electrician app, electrical training, EICR certificate, EIC form, Minor Works, BS 7671, 18th edition, electrical apprentice, UK electrician, cable sizing calculator, volt drop calculator, electrical quotes, AI electrician"
+        />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://elec-mate.com/" />
         <meta property="og:title" content="Elec-Mate | The Complete Platform for UK Electricians" />
-        <meta property="og:description" content="Training, AI tools, certificates & business management for UK electricians. From apprentice to employer — everything you need to learn, work smarter, and grow." />
+        <meta
+          property="og:description"
+          content="Training, AI tools, certificates & business management for UK electricians. From apprentice to employer — everything you need to learn, work smarter, and grow."
+        />
         <meta property="og:image" content="https://elec-mate.com/og-image.jpg" />
         <meta property="og:site_name" content="Elec-Mate" />
         <meta property="og:locale" content="en_GB" />
@@ -62,8 +95,14 @@ const LandingPage = () => {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://elec-mate.com/" />
-        <meta name="twitter:title" content="Elec-Mate | The Complete Platform for UK Electricians" />
-        <meta name="twitter:description" content="Training, AI tools, certificates & business management for UK electricians. 5 AI specialists trained on BS 7671. Start free today." />
+        <meta
+          name="twitter:title"
+          content="Elec-Mate | The Complete Platform for UK Electricians"
+        />
+        <meta
+          name="twitter:description"
+          content="Training, AI tools, certificates & business management for UK electricians. 5 AI specialists trained on BS 7671. Start free today."
+        />
         <meta name="twitter:image" content="https://elec-mate.com/og-image.jpg" />
 
         {/* Additional SEO */}
@@ -76,44 +115,45 @@ const LandingPage = () => {
         {/* Schema.org structured data */}
         <script type="application/ld+json">
           {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Elec-Mate",
-            "applicationCategory": "BusinessApplication",
-            "operatingSystem": "Web, iOS, Android",
-            "description": "The complete platform for UK electricians - training, AI tools, certificates, and business management.",
-            "offers": {
-              "@type": "AggregateOffer",
-              "lowPrice": "4.99",
-              "highPrice": "9.99",
-              "priceCurrency": "GBP",
-              "offerCount": "2"
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'Elec-Mate',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web, iOS, Android',
+            description:
+              'The complete platform for UK electricians - training, AI tools, certificates, and business management.',
+            offers: {
+              '@type': 'AggregateOffer',
+              lowPrice: '4.99',
+              highPrice: '9.99',
+              priceCurrency: 'GBP',
+              offerCount: '2',
             },
-            "featureList": [
-              "Level 2 & 3 Electrical Training",
-              "BS 7671 AI Assistants",
-              "8 Certificate Types",
-              "Voice Quotes & Invoices",
-              "Stripe Payment Integration",
-              "50+ Electrical Calculators"
-            ]
+            featureList: [
+              'Level 2 & 3 Electrical Training',
+              'BS 7671 AI Assistants',
+              '8 Certificate Types',
+              'Voice Quotes & Invoices',
+              'Stripe Payment Integration',
+              '50+ Electrical Calculators',
+            ],
           })}
         </script>
 
         {/* Organization schema */}
         <script type="application/ld+json">
           {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Elec-Mate",
-            "url": "https://elec-mate.com",
-            "logo": "https://elec-mate.com/logo.jpg",
-            "description": "The complete platform for UK electricians",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "GB"
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Elec-Mate',
+            url: 'https://elec-mate.com',
+            logo: 'https://elec-mate.com/logo.jpg',
+            description: 'The complete platform for UK electricians',
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'GB',
             },
-            "sameAs": []
+            sameAs: [],
           })}
         </script>
       </Helmet>
@@ -129,28 +169,62 @@ const LandingPage = () => {
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="relative">
               <div className="absolute inset-0 bg-yellow-500/20 rounded-xl blur-md group-hover:bg-yellow-500/30 transition-all" />
-              <img src="/logo.jpg" alt="Elec-Mate" className="relative w-9 h-9 lg:w-10 lg:h-10 rounded-xl" />
+              <img
+                src="/logo.jpg"
+                alt="Elec-Mate"
+                className="relative w-9 h-9 lg:w-10 lg:h-10 rounded-xl"
+              />
             </div>
-            <span className="font-bold text-lg lg:text-xl">Elec-<span className="text-yellow-400">Mate</span></span>
+            <span className="font-bold text-lg lg:text-xl">
+              Elec-<span className="text-yellow-400">Mate</span>
+            </span>
           </Link>
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1">
-            <a href="#features" className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5">Features</a>
-            <a href="#pricing" className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5">Pricing</a>
-            <a href="#ai" className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5">AI Tools</a>
+            <a
+              href="#features"
+              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+            >
+              Features
+            </a>
+            <a
+              href="#pricing"
+              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+            >
+              Pricing
+            </a>
+            <a
+              href="#ai"
+              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+            >
+              AI Tools
+            </a>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden sm:flex items-center gap-3">
             {user ? (
-              <Button asChild size="sm" className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl">
+              <Button
+                asChild
+                size="sm"
+                className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl"
+              >
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
             ) : (
               <>
-                <Link to="/auth/signin" className="text-sm text-white/60 hover:text-white px-4 py-2 transition-colors">Sign in</Link>
-                <Button asChild size="sm" className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/30 transition-all">
+                <Link
+                  to="/auth/signin"
+                  className="text-sm text-white/60 hover:text-white px-4 py-2 transition-colors"
+                >
+                  Sign in
+                </Link>
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/30 transition-all"
+                >
                   <Link to="/auth/signup">Start 7-Day Free Trial</Link>
                 </Button>
               </>
@@ -170,15 +244,25 @@ const LandingPage = () => {
         {isNavOpen && (
           <div className="sm:hidden relative border-t border-white/10 bg-black/95 backdrop-blur-xl p-4 space-y-3">
             {user ? (
-              <Button asChild className="w-full h-12 bg-yellow-500 text-black font-semibold rounded-xl">
+              <Button
+                asChild
+                className="w-full h-12 bg-yellow-500 text-black font-semibold rounded-xl"
+              >
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
             ) : (
               <>
-                <Button asChild className="w-full h-12 bg-yellow-500 text-black font-semibold rounded-xl">
+                <Button
+                  asChild
+                  className="w-full h-12 bg-yellow-500 text-black font-semibold rounded-xl"
+                >
                   <Link to="/auth/signup">Start 7-Day Free Trial</Link>
                 </Button>
-                <Button asChild variant="outline" className="w-full h-12 border-white/20 text-white rounded-xl">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full h-12 border-white/20 text-white rounded-xl"
+                >
                   <Link to="/auth/signin">Sign In</Link>
                 </Button>
               </>
@@ -218,7 +302,11 @@ const LandingPage = () => {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-yellow-500/30 rounded-2xl blur-xl" />
-                <img src="/logo.jpg" alt="Elec-Mate" className="relative w-16 h-16 rounded-2xl shadow-lg shadow-yellow-500/20" />
+                <img
+                  src="/logo.jpg"
+                  alt="Elec-Mate"
+                  className="relative w-16 h-16 rounded-2xl shadow-lg shadow-yellow-500/20"
+                />
               </div>
             </motion.div>
 
@@ -243,7 +331,9 @@ const LandingPage = () => {
             >
               Stop Losing Hours
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500">on Paperwork</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500">
+                on Paperwork
+              </span>
             </motion.h1>
 
             <motion.p
@@ -252,7 +342,8 @@ const LandingPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Certificates, quotes, invoices, RAMS — done in minutes, not hours. Built for BS 7671 by UK electricians.
+              Certificates, quotes, invoices, RAMS — done in minutes, not hours. Built for BS 7671
+              by UK electricians.
             </motion.p>
 
             <motion.div
@@ -268,7 +359,10 @@ const LandingPage = () => {
                 </Button>
               </Link>
               <Link to="/auth/signin">
-                <Button variant="outline" className="w-full sm:w-auto h-14 px-8 text-base font-semibold border-white/20 text-white hover:bg-white/5 active:scale-[0.97] rounded-2xl touch-manipulation transition-transform">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto h-14 px-8 text-base font-semibold border-white/20 text-white hover:bg-white/5 active:scale-[0.97] rounded-2xl touch-manipulation transition-transform"
+                >
                   Sign In
                 </Button>
               </Link>
@@ -281,8 +375,7 @@ const LandingPage = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <span className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-green-500" />
-                7 days free
+                <Check className="w-3.5 h-3.5 text-green-500" />7 days free
               </span>
               <span className="w-1 h-1 rounded-full bg-white/20" />
               <span className="flex items-center gap-1.5">
@@ -345,8 +438,12 @@ const LandingPage = () => {
       <section id="features" className="py-10 sm:py-16 px-5 scroll-mt-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3">One platform, every stage of your career</h2>
-            <p className="text-white/60 max-w-lg mx-auto">Whether you're starting out or running a team, Elec-Mate grows with you</p>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+              One platform, every stage of your career
+            </h2>
+            <p className="text-white/60 max-w-lg mx-auto">
+              Whether you're starting out or running a team, Elec-Mate grows with you
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
@@ -355,7 +452,14 @@ const LandingPage = () => {
               title="Apprentices"
               painPoint="Training courses cost thousands and revision materials are scattered everywhere"
               tagline="Everything to ace your training — from £4.99/mo"
-              features={['Level 2 & 3 complete curriculum', 'AM2 practical & theory prep', '2,000+ practice questions', 'HNC diploma modules', 'Flashcards & mock exams', 'Mental Health Mates community']}
+              features={[
+                'Level 2 & 3 complete curriculum',
+                'AM2 practical & theory prep',
+                '2,000+ practice questions',
+                'HNC diploma modules',
+                'Flashcards & mock exams',
+                'Mental Health Mates community',
+              ]}
               color="green"
             />
             <AudienceCard
@@ -363,7 +467,14 @@ const LandingPage = () => {
               title="Electricians"
               painPoint="Paperwork, pricing and compliance eat into your billable hours"
               tagline="Your complete site companion"
-              features={['8 digital certificate types', '5 AI specialists (BS 7671)', 'Voice quote → invoice → paid', '50+ electrical calculators', 'AI RAMS & method statements', 'Xero & QuickBooks sync']}
+              features={[
+                '8 digital certificate types',
+                '5 AI specialists (BS 7671)',
+                'Voice quote → invoice → paid',
+                '50+ electrical calculators',
+                'AI RAMS & method statements',
+                'Xero & QuickBooks sync',
+              ]}
               color="yellow"
               highlight
             />
@@ -372,7 +483,14 @@ const LandingPage = () => {
               title="Employers"
               painPoint="Managing apprentices, compliance and teams across multiple sites is chaos"
               tagline="Manage your whole team from one dashboard"
-              features={['Apprentice progress tracking', 'Team certification management', 'Job & project scheduling', 'Business analytics & reports', 'Multi-user team accounts', 'Compliance documentation']}
+              features={[
+                'Apprentice progress tracking',
+                'Team certification management',
+                'Job & project scheduling',
+                'Business analytics & reports',
+                'Multi-user team accounts',
+                'Compliance documentation',
+              ]}
               color="purple"
               comingSoon
             />
@@ -389,7 +507,9 @@ const LandingPage = () => {
               <span className="text-xs text-blue-400 font-semibold">REAL SPARKS, REAL SITES</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Elec-Mate in action</h2>
-            <p className="text-white/60 max-w-lg mx-auto">See how electricians are using Elec-Mate on site every day</p>
+            <p className="text-white/60 max-w-lg mx-auto">
+              See how electricians are using Elec-Mate on site every day
+            </p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -477,7 +597,9 @@ const LandingPage = () => {
                 </div>
               </div>
               <blockquote className="text-white/70 text-sm leading-relaxed">
-                "Everything is practical, easy to use, and actually useful on site. It saves time, takes the hassle out of calculations and checks, and just makes day-to-day work smoother. I genuinely love using it — it's an absolute game-changer."
+                "Everything is practical, easy to use, and actually useful on site. It saves time,
+                takes the hassle out of calculations and checks, and just makes day-to-day work
+                smoother. I genuinely love using it — it's an absolute game-changer."
               </blockquote>
             </div>
 
@@ -497,7 +619,10 @@ const LandingPage = () => {
                 </div>
               </div>
               <blockquote className="text-white/70 text-sm leading-relaxed">
-                "Elec-Mate has replaced 2/3 other apps and merged them into one. It's streamlined all aspects of our business from apprentices to the QS signing jobs off. The AI circuit designer in our handover packs has already won us additional contracts — a step above the rest."
+                "Elec-Mate has replaced 2/3 other apps and merged them into one. It's streamlined
+                all aspects of our business from apprentices to the QS signing jobs off. The AI
+                circuit designer in our handover packs has already won us additional contracts — a
+                step above the rest."
               </blockquote>
             </div>
           </div>
@@ -505,7 +630,10 @@ const LandingPage = () => {
       </section>
 
       {/* AI Agents Section */}
-      <section id="ai" className="py-12 sm:py-20 px-5 bg-gradient-to-b from-transparent via-yellow-500/[0.03] to-transparent scroll-mt-20">
+      <section
+        id="ai"
+        className="py-12 sm:py-20 px-5 bg-gradient-to-b from-transparent via-yellow-500/[0.03] to-transparent scroll-mt-20"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-4">
@@ -514,7 +642,9 @@ const LandingPage = () => {
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Stop Googling regs</h2>
             <p className="text-white/60 max-w-xl mx-auto">
-              5 AI specialists trained on <span className="text-yellow-400 font-medium">BS 7671:2018 + A3:2024</span> — ask anything
+              5 AI specialists trained on{' '}
+              <span className="text-yellow-400 font-medium">BS 7671:2018 + A3:2024</span> — ask
+              anything
             </p>
           </div>
 
@@ -525,14 +655,24 @@ const LandingPage = () => {
                 icon={<Cpu />}
                 name="Circuit Designer"
                 tagline="Design compliant circuits in seconds"
-                features={['Adiabatic cable sizing to BS 7671', 'Volt drop & max length calculations', 'Consumer unit layouts with diversity', 'Full load schedules & protection sizing']}
+                features={[
+                  'Adiabatic cable sizing to BS 7671',
+                  'Volt drop & max length calculations',
+                  'Consumer unit layouts with diversity',
+                  'Full load schedules & protection sizing',
+                ]}
                 color="blue"
               />
               <EnhancedAICard
                 icon={<PoundSterling />}
                 name="Cost Engineer"
                 tagline="Quote jobs accurately, every time"
-                features={['Live material prices from UK suppliers', 'Labour rates with regional adjustments', 'Automatic profit margin calculation', 'Professional PDF quotes in 2 minutes']}
+                features={[
+                  'Live material prices from UK suppliers',
+                  'Labour rates with regional adjustments',
+                  'Automatic profit margin calculation',
+                  'Professional PDF quotes in 2 minutes',
+                ]}
                 color="emerald"
                 highlight
               />
@@ -540,7 +680,12 @@ const LandingPage = () => {
                 icon={<Hammer />}
                 name="Installation Guide"
                 tagline="BS 7671 compliant installation steps"
-                features={['Step-by-step for any circuit type', 'Cable routes & containment guidance', 'Earthing & bonding requirements', 'Testing sequences after install']}
+                features={[
+                  'Step-by-step for any circuit type',
+                  'Cable routes & containment guidance',
+                  'Earthing & bonding requirements',
+                  'Testing sequences after install',
+                ]}
                 color="yellow"
               />
             </div>
@@ -551,14 +696,24 @@ const LandingPage = () => {
                 icon={<Settings />}
                 name="Maintenance Agent"
                 tagline="Keep installations compliant"
-                features={['Maintenance schedules & intervals', 'Inspection checklists by installation type', 'Compliance reminders & tracking', 'Condition reporting guidance']}
+                features={[
+                  'Maintenance schedules & intervals',
+                  'Inspection checklists by installation type',
+                  'Compliance reminders & tracking',
+                  'Condition reporting guidance',
+                ]}
                 color="orange"
               />
               <EnhancedAICard
                 icon={<Shield />}
                 name="Health & Safety"
                 tagline="Site-ready RAMS in minutes"
-                features={['Risk assessments for any job type', 'Method statements with sequences', 'Site-specific hazard identification', 'PDF export ready for site induction']}
+                features={[
+                  'Risk assessments for any job type',
+                  'Method statements with sequences',
+                  'Site-specific hazard identification',
+                  'PDF export ready for site induction',
+                ]}
                 color="red"
               />
             </div>
@@ -566,8 +721,8 @@ const LandingPage = () => {
 
           <div className="mt-8 text-center">
             <p className="text-white/50 text-sm">
-              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />
-              + 3 more specialists coming soon: Commissioning Engineer, Inspector & Training Coach
+              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />+ 3 more specialists
+              coming soon: Commissioning Engineer, Inspector & Training Coach
             </p>
           </div>
         </div>
@@ -582,7 +737,10 @@ const LandingPage = () => {
               <span className="text-xs text-emerald-400 font-semibold">GET PAID FASTER</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Quote to payment in minutes</h2>
-            <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto">Create a quote by hand or voice, scan materials, send it for signing, do the work, convert to invoice, get paid — all from your phone.</p>
+            <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto">
+              Create a quote by hand or voice, scan materials, send it for signing, do the work,
+              convert to invoice, get paid — all from your phone.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
@@ -591,7 +749,10 @@ const LandingPage = () => {
                 <Mic className="w-6 h-6 text-yellow-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Create Quotes Your Way</h3>
-              <p className="text-sm text-white/60 mb-3">Type it, speak it, or scan materials with your camera — get a professional quote ready to send in minutes.</p>
+              <p className="text-sm text-white/60 mb-3">
+                Type it, speak it, or scan materials with your camera — get a professional quote
+                ready to send in minutes.
+              </p>
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 text-xs text-white/50">
                   <div className="w-1 h-1 rounded-full bg-yellow-400" />
@@ -613,7 +774,10 @@ const LandingPage = () => {
                 <Send className="w-6 h-6 text-blue-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Send, Sign & Start Work</h3>
-              <p className="text-sm text-white/60 mb-3">Clients get accept or reject buttons straight in their email. Chase signatures with automatic reminders.</p>
+              <p className="text-sm text-white/60 mb-3">
+                Clients get accept or reject buttons straight in their email. Chase signatures with
+                automatic reminders.
+              </p>
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 text-xs text-white/50">
                   <div className="w-1 h-1 rounded-full bg-blue-400" />
@@ -635,7 +799,10 @@ const LandingPage = () => {
                 <CreditCard className="w-6 h-6 text-emerald-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Get Paid the Same Day</h3>
-              <p className="text-sm text-white/60 mb-3">Convert any signed quote to an invoice in one tap. Stripe payment links mean customers pay instantly by card.</p>
+              <p className="text-sm text-white/60 mb-3">
+                Convert any signed quote to an invoice in one tap. Stripe payment links mean
+                customers pay instantly by card.
+              </p>
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 text-xs text-white/50">
                   <div className="w-1 h-1 rounded-full bg-emerald-400" />
@@ -657,7 +824,12 @@ const LandingPage = () => {
           <div className="mt-8 flex items-center justify-center gap-6">
             <img src="/logos/stripe.svg" alt="Stripe" loading="lazy" className="h-6 w-auto" />
             <img src="/logos/xero.svg" alt="Xero" loading="lazy" className="h-6 w-auto" />
-            <img src="/logos/quickbooks.svg" alt="QuickBooks" loading="lazy" className="h-6 w-auto" />
+            <img
+              src="/logos/quickbooks.svg"
+              alt="QuickBooks"
+              loading="lazy"
+              className="h-6 w-auto"
+            />
           </div>
         </div>
       </section>
@@ -675,14 +847,28 @@ const LandingPage = () => {
               name="Apprentice"
               price="£4.99"
               description="Everything to ace your training"
-              features={['22 courses (Level 2, 3, AM2, HNC)', '2,000+ practice questions', 'Progress tracking', 'Mental Health Mates access', 'Flashcards & mock exams']}
+              features={[
+                '22 courses (Level 2, 3, AM2, HNC)',
+                '2,000+ practice questions',
+                'Progress tracking',
+                'Mental Health Mates access',
+                'Flashcards & mock exams',
+              ]}
               color="green"
             />
             <PricingCard
               name="Electrician"
               price="£9.99"
               description="Your complete site companion"
-              features={['Everything in Apprentice', '5 AI specialists', 'Voice quotes & invoices', '8 certificate types', '50+ electrical calculators', '14 business calculators', 'Stripe payments']}
+              features={[
+                'Everything in Apprentice',
+                '5 AI specialists',
+                'Voice quotes & invoices',
+                '8 certificate types',
+                '50+ electrical calculators',
+                '14 business calculators',
+                'Stripe payments',
+              ]}
               popular
               color="yellow"
             />
@@ -690,7 +876,13 @@ const LandingPage = () => {
               name="Employer"
               price="Coming Soon"
               description="Manage your whole team from one dashboard"
-              features={['Everything in Electrician', 'Team member seats', 'Apprentice tracking', 'Compliance dashboard', 'Business analytics']}
+              features={[
+                'Everything in Electrician',
+                'Team member seats',
+                'Apprentice tracking',
+                'Compliance dashboard',
+                'Business analytics',
+              ]}
               comingSoon
               color="purple"
             />
@@ -705,7 +897,9 @@ const LandingPage = () => {
       {/* FAQ */}
       <section className="pb-10 sm:pb-16 px-5">
         <div className="max-w-2xl mx-auto">
-          <h3 className="text-xl sm:text-2xl font-bold text-center mb-8">Frequently asked questions</h3>
+          <h3 className="text-xl sm:text-2xl font-bold text-center mb-8">
+            Frequently asked questions
+          </h3>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
               <div
@@ -716,8 +910,12 @@ const LandingPage = () => {
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
                   className="w-full flex items-center justify-between p-4 sm:p-5 text-left touch-manipulation"
                 >
-                  <span className="font-medium text-white text-sm sm:text-base pr-4">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 text-white/50 flex-shrink-0 transition-transform ${openFaqIndex === index ? 'rotate-180' : ''}`} />
+                  <span className="font-medium text-white text-sm sm:text-base pr-4">
+                    {faq.question}
+                  </span>
+                  <ChevronDown
+                    className={`w-5 h-5 text-white/50 flex-shrink-0 transition-transform ${openFaqIndex === index ? 'rotate-180' : ''}`}
+                  />
                 </button>
                 {openFaqIndex === index && (
                   <div className="px-4 sm:px-5 pb-4 sm:pb-5">
@@ -757,13 +955,22 @@ const LandingPage = () => {
               <div>
                 <h3 className="font-bold text-white text-base mb-1">Mental Health Mates</h3>
                 <p className="text-white/60 text-sm mb-3">
-                  Construction has the highest suicide rate of any sector. We've built a safe space with mood tracking, breathing exercises, journals, and crisis resources.
+                  Construction has the highest suicide rate of any sector. We've built a safe space
+                  with mood tracking, breathing exercises, journals, and crisis resources.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">Mood Tracking</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">Breathing Exercises</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">Crisis Resources</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">Peer Support</span>
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                    Mood Tracking
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                    Breathing Exercises
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                    Crisis Resources
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                    Peer Support
+                  </span>
                 </div>
               </div>
             </div>
@@ -775,12 +982,22 @@ const LandingPage = () => {
       <footer className="py-8 px-5 border-t border-white/5 pb-20 sm:pb-4">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" />
+            <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" loading="lazy" />
             <span className="text-sm text-white/50">Elec-Mate © 2026</span>
           </div>
           <div className="flex gap-1 text-sm text-white/40">
-            <Link to="/privacy" className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg">Privacy</Link>
-            <Link to="/terms" className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg">Terms</Link>
+            <Link
+              to="/privacy"
+              className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg"
+            >
+              Privacy
+            </Link>
+            <Link
+              to="/terms"
+              className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg"
+            >
+              Terms
+            </Link>
           </div>
         </div>
       </footer>
@@ -801,7 +1018,16 @@ const LandingPage = () => {
 };
 
 // Audience Card
-const AudienceCard = ({ icon, title, painPoint, tagline, features, color, highlight, comingSoon }: {
+const AudienceCard = ({
+  icon,
+  title,
+  painPoint,
+  tagline,
+  features,
+  color,
+  highlight,
+  comingSoon,
+}: {
   icon: React.ReactNode;
   title: string;
   painPoint: string;
@@ -847,15 +1073,21 @@ const AudienceCard = ({ icon, title, painPoint, tagline, features, color, highli
   const config = colorConfig[color];
 
   return (
-    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${config.hoverBorder} ${highlight ? 'ring-2 ring-yellow-500/50 shadow-xl shadow-yellow-500/10' : ''}`}>
+    <div
+      className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${config.hoverBorder} ${highlight ? 'ring-2 ring-yellow-500/50 shadow-xl shadow-yellow-500/10' : ''}`}
+    >
       {comingSoon && (
-        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}>
+        <span
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}
+        >
           <Clock className="w-3 h-3" />
           COMING SOON
         </span>
       )}
 
-      <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 border ${config.icon}`}>
+      <div
+        className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 border ${config.icon}`}
+      >
         {icon}
       </div>
 
@@ -880,7 +1112,14 @@ const AudienceCard = ({ icon, title, painPoint, tagline, features, color, highli
 };
 
 // Enhanced AI Agent Card
-const EnhancedAICard = ({ icon, name, tagline, features, color, highlight }: {
+const EnhancedAICard = ({
+  icon,
+  name,
+  tagline,
+  features,
+  color,
+  highlight,
+}: {
   icon: React.ReactNode;
   name: string;
   tagline: string;
@@ -929,14 +1168,18 @@ const EnhancedAICard = ({ icon, name, tagline, features, color, highlight }: {
   const config = colorConfig[color];
 
   return (
-    <div className={`relative p-5 rounded-2xl bg-gradient-to-br text-left ${config.bg} border ${config.border} transition-all duration-300 ${highlight ? `ring-2 ring-emerald-500/40 shadow-lg ${config.glow}` : ''}`}>
+    <div
+      className={`relative p-5 rounded-2xl bg-gradient-to-br text-left ${config.bg} border ${config.border} transition-all duration-300 ${highlight ? `ring-2 ring-emerald-500/40 shadow-lg ${config.glow}` : ''}`}
+    >
       {highlight && (
         <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-black text-[10px] font-bold">
           POPULAR
         </span>
       )}
       <div className="flex items-start gap-4">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border ${config.icon}`}>
+        <div
+          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border ${config.icon}`}
+        >
           {icon}
         </div>
         <div className="flex-1 min-w-0">
@@ -957,7 +1200,15 @@ const EnhancedAICard = ({ icon, name, tagline, features, color, highlight }: {
 };
 
 // Pricing Card
-const PricingCard = ({ name, price, description, features, popular, comingSoon, color }: {
+const PricingCard = ({
+  name,
+  price,
+  description,
+  features,
+  popular,
+  comingSoon,
+  color,
+}: {
   name: string;
   price: string;
   description: string;
@@ -993,14 +1244,20 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
   const config = colorConfig[color || 'green'];
 
   return (
-    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${popular ? 'ring-2 ring-yellow-500/50 shadow-xl shadow-yellow-500/10' : ''}`}>
+    <div
+      className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${popular ? 'ring-2 ring-yellow-500/50 shadow-xl shadow-yellow-500/10' : ''}`}
+    >
       {popular && (
-        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-block px-4 py-1 rounded-full text-xs font-bold ${config.badge}`}>
+        <span
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-block px-4 py-1 rounded-full text-xs font-bold ${config.badge}`}
+        >
           MOST POPULAR
         </span>
       )}
       {comingSoon && (
-        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${config.badge}`}>
+        <span
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${config.badge}`}
+        >
           <Clock className="w-3 h-3" />
           COMING SOON
         </span>
@@ -1021,13 +1278,17 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
 
       {comingSoon ? (
         <a href="mailto:hello@elec-mate.com?subject=Employer%20Early%20Access">
-          <Button className={`w-full h-12 font-semibold rounded-xl touch-manipulation ${config.button}`}>
+          <Button
+            className={`w-full h-12 font-semibold rounded-xl touch-manipulation ${config.button}`}
+          >
             Get Early Access
           </Button>
         </a>
       ) : (
         <Link to="/auth/signup">
-          <Button className={`w-full h-12 font-semibold rounded-xl touch-manipulation ${config.button}`}>
+          <Button
+            className={`w-full h-12 font-semibold rounded-xl touch-manipulation ${config.button}`}
+          >
             Start 7-Day Free Trial
           </Button>
         </Link>

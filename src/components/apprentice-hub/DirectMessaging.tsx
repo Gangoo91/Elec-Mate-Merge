@@ -117,10 +117,10 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
       {connections.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <div className="p-4 rounded-full bg-muted mb-4">
-            <MessageSquare className="h-8 w-8 text-muted-foreground" />
+            <MessageSquare className="h-8 w-8 text-white/80" />
           </div>
           <p className="font-medium text-foreground">No conversations yet</p>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-white/80 mt-1">
             Connect with a tutor to start messaging
           </p>
         </div>
@@ -149,12 +149,12 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
                     {mentor?.full_name || 'Tutor'}
                   </p>
                   {lastMessage && (
-                    <span className="text-xs text-muted-foreground shrink-0 ml-2">
+                    <span className="text-xs text-white/80 shrink-0 ml-2">
                       {formatMessageTime(lastMessage.created_at)}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground truncate">
+                <p className="text-sm text-white/80 truncate">
                   {mentor?.role || 'Training Provider'}
                 </p>
               </div>
@@ -194,7 +194,7 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
             <span
               className={cn(
                 'text-xs',
-                isOwn ? 'text-black/60' : 'text-muted-foreground'
+                isOwn ? 'text-black/60' : 'text-white/80'
               )}
             >
               {formatMessageTime(message.created_at)}
@@ -238,7 +238,7 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
             <p className="font-medium text-foreground truncate">
               {mentor?.full_name || 'Tutor'}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white/80">
               {mentor?.role || 'Training Provider'}
             </p>
           </div>
@@ -252,8 +252,8 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
           <div className="space-y-3">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <User className="h-12 w-12 text-muted-foreground/30 mb-3" />
-                <p className="text-sm text-muted-foreground">
+                <User className="h-12 w-12 text-white/80/30 mb-3" />
+                <p className="text-sm text-white/80">
                   No messages yet. Start the conversation!
                 </p>
               </div>
@@ -301,8 +301,8 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-full">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <p className="text-sm text-muted-foreground mt-2">Loading messages...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-white/80" />
+            <p className="text-sm text-white/80 mt-2">Loading messages...</p>
           </div>
         ) : activeConnectionId ? (
           <ConversationView />

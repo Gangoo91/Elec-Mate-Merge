@@ -12,10 +12,7 @@ interface FireAlarmSystemDesignProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     detectors: true,
@@ -61,15 +58,18 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
 
   const removeZone = (id: string) => {
     const zones = formData.zones || [];
-    onUpdate('zones', zones.filter((z: any) => z.id !== id));
+    onUpdate(
+      'zones',
+      zones.filter((z: any) => z.id !== id)
+    );
   };
 
   const detectorCount = formData.detectorCount || {};
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Detection Equipment */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.detectors} onOpenChange={() => toggleSection('detectors')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -79,12 +79,16 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Detection Equipment</h3>
-                  <span className="text-xs text-muted-foreground">Smoke, heat & specialist detectors</span>
+                  <span className="text-xs text-muted-foreground">
+                    Smoke, heat & specialist detectors
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.detectors && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.detectors && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -94,15 +98,17 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                   </div>
                   <span className="text-white font-semibold">Detection Equipment</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.detectors && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.detectors && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-6",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Smoke Detectors */}
               <div className="space-y-3">
                 <h4 className="font-medium text-sm text-elec-yellow flex items-center gap-2">
@@ -111,7 +117,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="opticalSmoke" className="text-sm">Optical Smoke</Label>
+                    <Label htmlFor="opticalSmoke" className="text-sm">
+                      Optical Smoke
+                    </Label>
                     <Input
                       id="opticalSmoke"
                       type="number"
@@ -123,7 +131,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="ionisationSmoke" className="text-sm">Ionisation Smoke</Label>
+                    <Label htmlFor="ionisationSmoke" className="text-sm">
+                      Ionisation Smoke
+                    </Label>
                     <Input
                       id="ionisationSmoke"
                       type="number"
@@ -135,7 +145,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="multiSensor" className="text-sm">Multi-Sensor</Label>
+                    <Label htmlFor="multiSensor" className="text-sm">
+                      Multi-Sensor
+                    </Label>
                     <Input
                       id="multiSensor"
                       type="number"
@@ -157,7 +169,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="heatFixed" className="text-sm">Fixed Temperature</Label>
+                    <Label htmlFor="heatFixed" className="text-sm">
+                      Fixed Temperature
+                    </Label>
                     <Input
                       id="heatFixed"
                       type="number"
@@ -169,7 +183,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="heatRor" className="text-sm">Rate of Rise</Label>
+                    <Label htmlFor="heatRor" className="text-sm">
+                      Rate of Rise
+                    </Label>
                     <Input
                       id="heatRor"
                       type="number"
@@ -191,7 +207,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="beam" className="text-sm">Beam Detectors</Label>
+                    <Label htmlFor="beam" className="text-sm">
+                      Beam Detectors
+                    </Label>
                     <Input
                       id="beam"
                       type="number"
@@ -203,7 +221,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="aspirating" className="text-sm">Aspirating</Label>
+                    <Label htmlFor="aspirating" className="text-sm">
+                      Aspirating
+                    </Label>
                     <Input
                       id="aspirating"
                       type="number"
@@ -215,7 +235,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="flame" className="text-sm">Flame Detectors</Label>
+                    <Label htmlFor="flame" className="text-sm">
+                      Flame Detectors
+                    </Label>
                     <Input
                       id="flame"
                       type="number"
@@ -227,7 +249,9 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="co" className="text-sm">CO Detectors</Label>
+                    <Label htmlFor="co" className="text-sm">
+                      CO Detectors
+                    </Label>
                     <Input
                       id="co"
                       type="number"
@@ -246,7 +270,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
       </div>
 
       {/* Sounders & Call Points */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.sounders} onOpenChange={() => toggleSection('sounders')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -258,10 +282,12 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                   <h3 className="font-semibold text-foreground">Sounders & Call Points</h3>
                   <span className="text-xs text-muted-foreground">Alarm devices count</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.sounders && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.sounders && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -271,48 +297,71 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                   </div>
                   <span className="text-white font-semibold">Sounders & Call Points</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.sounders && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.sounders && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="callPointCount" className="text-sm">Manual Call Points</Label>
+                  <Label htmlFor="callPointCount" className="text-sm">
+                    Manual Call Points
+                  </Label>
                   <Input
                     id="callPointCount"
                     type="number"
                     min="0"
                     value={formData.callPointCount ?? ''}
-                    onChange={(e) => onUpdate('callPointCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'callPointCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     placeholder="0"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="sounderCount" className="text-sm">Sounders</Label>
+                  <Label htmlFor="sounderCount" className="text-sm">
+                    Sounders
+                  </Label>
                   <Input
                     id="sounderCount"
                     type="number"
                     min="0"
                     value={formData.sounderCount ?? ''}
-                    onChange={(e) => onUpdate('sounderCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'sounderCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     placeholder="0"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="visualAlarmCount" className="text-sm">Visual Alarm Devices</Label>
+                  <Label htmlFor="visualAlarmCount" className="text-sm">
+                    Visual Alarm Devices
+                  </Label>
                   <Input
                     id="visualAlarmCount"
                     type="number"
                     min="0"
                     value={formData.visualAlarmCount ?? ''}
-                    onChange={(e) => onUpdate('visualAlarmCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      onUpdate(
+                        'visualAlarmCount',
+                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                      )
+                    }
                     placeholder="0"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
@@ -325,12 +374,17 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-red-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-red-400">
-                      {Object.values(detectorCount).reduce((sum: number, val: any) => sum + (parseInt(val) || 0), 0)}
+                      {Object.values(detectorCount).reduce(
+                        (sum: number, val: any) => sum + (parseInt(val) || 0),
+                        0
+                      )}
                     </p>
                     <p className="text-white/60 text-sm sm:text-xs">Detectors</p>
                   </div>
                   <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-green-500/10 rounded-lg">
-                    <p className="text-2xl font-bold text-green-400">{formData.callPointCount || 0}</p>
+                    <p className="text-2xl font-bold text-green-400">
+                      {formData.callPointCount || 0}
+                    </p>
                     <p className="text-white/60 text-sm sm:text-xs">Call Points</p>
                   </div>
                   <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-orange-500/10 rounded-lg">
@@ -347,7 +401,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
       </div>
 
       {/* Zone Schedule */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.zones} onOpenChange={() => toggleSection('zones')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -357,12 +411,16 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Zone Schedule</h3>
-                  <span className="text-xs text-muted-foreground">{(formData.zones || []).length} zones configured</span>
+                  <span className="text-xs text-muted-foreground">
+                    {(formData.zones || []).length} zones configured
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.zones && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.zones && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -372,15 +430,17 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                   </div>
                   <span className="text-white font-semibold">Zone Schedule</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.zones && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.zones && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Zone list */}
               {(formData.zones || []).map((zone: any) => (
                 <div key={zone.id} className="bg-black/40 rounded-xl p-4">
@@ -393,7 +453,8 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => removeZone(zone.id)}
-                      className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="h-11 w-11 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-[0.98] transition-transform"
+                      aria-label="Remove zone"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -405,7 +466,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                         placeholder="e.g., Ground Floor Corridor"
                         value={zone.zoneName || ''}
                         onChange={(e) => updateZone(zone.id, 'zoneName', e.target.value)}
-                        className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
                     <div className="space-y-2">
@@ -414,7 +475,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                         placeholder="e.g., Main building"
                         value={zone.location || ''}
                         onChange={(e) => updateZone(zone.id, 'location', e.target.value)}
-                        className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
                   </div>
@@ -425,9 +486,15 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                         type="number"
                         min="0"
                         value={zone.detectorCount ?? ''}
-                        onChange={(e) => updateZone(zone.id, 'detectorCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateZone(
+                            zone.id,
+                            'detectorCount',
+                            e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                          )
+                        }
                         placeholder="0"
-                        className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
                     <div className="space-y-2">
@@ -436,9 +503,15 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                         type="number"
                         min="0"
                         value={zone.callPointCount ?? ''}
-                        onChange={(e) => updateZone(zone.id, 'callPointCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateZone(
+                            zone.id,
+                            'callPointCount',
+                            e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                          )
+                        }
                         placeholder="0"
-                        className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
                     <div className="space-y-2">
@@ -447,9 +520,15 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({
                         type="number"
                         min="0"
                         value={zone.sounderCount ?? ''}
-                        onChange={(e) => updateZone(zone.id, 'sounderCount', e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateZone(
+                            zone.id,
+                            'sounderCount',
+                            e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                          )
+                        }
                         placeholder="0"
-                        className="h-10 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                       />
                     </div>
                   </div>

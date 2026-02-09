@@ -1,17 +1,30 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
-  ArrowLeft, Camera, Upload, CheckCircle, X, Loader2, Sparkles,
-  FileCheck, ClipboardList, FileText, Home, Building, Factory,
-  Plus, Shield, Zap
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import InstallationVerificationResults from "@/components/electrician-tools/ai-tools/InstallationVerificationResults";
+  ArrowLeft,
+  Camera,
+  Upload,
+  CheckCircle,
+  X,
+  Loader2,
+  Sparkles,
+  FileCheck,
+  ClipboardList,
+  FileText,
+  Home,
+  Building,
+  Factory,
+  Plus,
+  Shield,
+  Zap,
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import InstallationVerificationResults from '@/components/electrician-tools/ai-tools/InstallationVerificationResults';
 
 // Certificate types
 const certificateTypes = [
@@ -21,7 +34,7 @@ const certificateTypes = [
     fullName: 'Electrical Installation Certificate',
     desc: 'New installations',
     icon: FileCheck,
-    color: 'text-green-400 bg-green-500/10 border-green-500/30'
+    color: 'text-green-400 bg-green-500/10 border-green-500/30',
   },
   {
     id: 'eicr',
@@ -29,7 +42,7 @@ const certificateTypes = [
     fullName: 'Condition Report',
     desc: 'Periodic inspection',
     icon: ClipboardList,
-    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30'
+    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
   },
   {
     id: 'minor-works',
@@ -37,7 +50,7 @@ const certificateTypes = [
     fullName: 'Minor Electrical Works',
     desc: 'Small alterations',
     icon: FileText,
-    color: 'text-purple-400 bg-purple-500/10 border-purple-500/30'
+    color: 'text-purple-400 bg-purple-500/10 border-purple-500/30',
   },
 ];
 
@@ -90,19 +103,25 @@ const InstallationVerifyPage = () => {
   // Camera functions
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
       }
     } catch (error) {
-      toast({ title: "Camera Error", description: "Unable to access camera", variant: "destructive" });
+      toast({
+        title: 'Camera Error',
+        description: 'Unable to access camera',
+        variant: 'destructive',
+      });
     }
   };
 
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
-      (videoRef.current.srcObject as MediaStream).getTracks().forEach(track => track.stop());
+      (videoRef.current.srcObject as MediaStream).getTracks().forEach((track) => track.stop());
       setIsCameraActive(false);
     }
   };
@@ -114,32 +133,45 @@ const InstallationVerifyPage = () => {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d')?.drawImage(video, 0, 0);
-      canvas.toBlob((blob) => {
-        if (blob) {
-          setImages(prev => [...prev, new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' })]);
-          stopCamera();
-        }
-      }, 'image/jpeg', 0.9);
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            setImages((prev) => [
+              ...prev,
+              new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' }),
+            ]);
+            stopCamera();
+          }
+        },
+        'image/jpeg',
+        0.9
+      );
     }
   };
 
   const handleFileSelect = (files: FileList | null) => {
     if (files) {
-      setImages(prev => [...prev, ...Array.from(files).filter(f => f.type.startsWith('image/'))].slice(0, 6));
+      setImages((prev) =>
+        [...prev, ...Array.from(files).filter((f) => f.type.startsWith('image/'))].slice(0, 6)
+      );
     }
   };
 
   const toggleScope = (id: string) => {
-    setSelectedScopes(prev => prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]);
+    setSelectedScopes((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
   };
 
   const toggleCheck = (id: string) => {
-    setCheckedItems(prev => prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]);
+    setCheckedItems((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
   };
 
   const handleAnalysis = async () => {
     if (images.length === 0) {
-      toast({ title: "No Images", description: "Please upload photos of the installation", variant: "destructive" });
+      toast({
+        title: 'No Images',
+        description: 'Please upload photos of the installation',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -147,21 +179,29 @@ const InstallationVerifyPage = () => {
     setAnalysisProgress(0);
 
     const progressInterval = setInterval(() => {
-      setAnalysisProgress(prev => Math.min(prev + Math.random() * 8, 90));
+      setAnalysisProgress((prev) => Math.min(prev + Math.random() * 8, 90));
     }, 600);
 
     try {
       const image = images[0];
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const fileName = `${user?.id}/visual-analysis/verify-${Date.now()}.jpg`;
-      const { error: uploadError } = await supabase.storage.from('visual-uploads').upload(fileName, image);
+      const { error: uploadError } = await supabase.storage
+        .from('visual-uploads')
+        .upload(fileName, image);
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
-      const certLabel = certificateTypes.find(c => c.id === selectedCertType)?.fullName || '';
-      const propLabel = propertyTypes.find(p => p.id === selectedPropertyType)?.label || '';
-      const scopeLabels = selectedScopes.map(s => scopeAreas.find(a => a.id === s)?.label).join(', ');
+      const certLabel = certificateTypes.find((c) => c.id === selectedCertType)?.fullName || '';
+      const propLabel = propertyTypes.find((p) => p.id === selectedPropertyType)?.label || '';
+      const scopeLabels = selectedScopes
+        .map((s) => scopeAreas.find((a) => a.id === s)?.label)
+        .join(', ');
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
@@ -170,12 +210,17 @@ const InstallationVerifyPage = () => {
             mode: 'installation_verify',
             confidence_threshold: 0.5,
             enable_bounding_boxes: false,
-            focus_areas: [`Certificate: ${certLabel}`, `Property: ${propLabel}`, `Scope: ${scopeLabels}`, additionalNotes].filter(Boolean),
+            focus_areas: [
+              `Certificate: ${certLabel}`,
+              `Property: ${propLabel}`,
+              `Scope: ${scopeLabels}`,
+              additionalNotes,
+            ].filter(Boolean),
             remove_background: false,
             bs7671_compliance: true,
-            fast_mode: false
-          }
-        }
+            fast_mode: false,
+          },
+        },
       });
 
       // Handle both wrapped and unwrapped responses
@@ -185,7 +230,11 @@ const InstallationVerifyPage = () => {
         data,
         error,
         hasVerificationChecks: !!verificationData,
-        dataStructure: data?.verification_checks ? 'unwrapped' : data?.analysis?.verification_checks ? 'wrapped' : 'missing'
+        dataStructure: data?.verification_checks
+          ? 'unwrapped'
+          : data?.analysis?.verification_checks
+            ? 'wrapped'
+            : 'missing',
       });
 
       if (error) {
@@ -196,9 +245,10 @@ const InstallationVerifyPage = () => {
       if (!verificationData) {
         console.error('❌ Response missing verification_checks:', data);
         toast({
-          title: "Invalid Response",
-          description: "The analysis didn't return verification results. Check console for details.",
-          variant: "destructive"
+          title: 'Invalid Response',
+          description:
+            "The analysis didn't return verification results. Check console for details.",
+          variant: 'destructive',
         });
         return;
       }
@@ -206,10 +256,9 @@ const InstallationVerifyPage = () => {
       setAnalysisProgress(100);
       // Unwrap if needed
       setAnalysisResult(data?.verification_checks ? data : data.analysis);
-
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({ title: "Analysis Failed", description: "Please try again", variant: "destructive" });
+      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
     } finally {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -222,14 +271,17 @@ const InstallationVerifyPage = () => {
     setAnalysisProgress(0);
   };
 
-  const selectedCert = certificateTypes.find(c => c.id === selectedCertType);
+  const selectedCert = certificateTypes.find((c) => c.id === selectedCertType);
 
   return (
     <div className="bg-background ">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
         <div className="px-4 py-2">
-          <button onClick={() => navigate('/electrician-tools/ai-tooling')} className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg">
+          <button
+            onClick={() => navigate('/electrician-tools/ai-tooling')}
+            className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg"
+          >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">AI Tools</span>
           </button>
@@ -267,11 +319,17 @@ const InstallationVerifyPage = () => {
               <Loader2 className="h-6 w-6 animate-spin text-cyan-400" />
               <div>
                 <h3 className="font-semibold text-foreground">Verifying Installation...</h3>
-                <p className="text-xs text-muted-foreground">Checking against BS 7671 requirements</p>
+                <p className="text-xs text-muted-foreground">
+                  Checking against BS 7671 requirements
+                </p>
               </div>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden">
-              <motion.div className="h-full bg-cyan-500" initial={{ width: 0 }} animate={{ width: `${analysisProgress}%` }} />
+              <motion.div
+                className="h-full bg-cyan-500"
+                initial={{ width: 0 }}
+                animate={{ width: `${analysisProgress}%` }}
+              />
             </div>
           </div>
         ) : (
@@ -280,17 +338,24 @@ const InstallationVerifyPage = () => {
             <div className="space-y-3">
               <h2 className="font-semibold text-foreground px-1">Certificate Type</h2>
               <div className="grid grid-cols-3 gap-3">
-                {certificateTypes.map(cert => (
+                {certificateTypes.map((cert) => (
                   <button
                     key={cert.id}
                     onClick={() => setSelectedCertType(cert.id)}
                     className={cn(
-                      "relative p-4 rounded-xl border-2 transition-all",
-                      "min-h-[100px] flex flex-col items-center justify-center gap-2 text-center",
-                      selectedCertType === cert.id ? cert.color : "border-border/30 bg-card/50 hover:border-border/50"
+                      'relative p-4 rounded-xl border-2 transition-all',
+                      'min-h-[100px] flex flex-col items-center justify-center gap-2 text-center',
+                      selectedCertType === cert.id
+                        ? cert.color
+                        : 'border-border/30 bg-card/50 hover:border-border/50'
                     )}
                   >
-                    <cert.icon className={cn("h-6 w-6", selectedCertType === cert.id ? "" : "text-muted-foreground")} />
+                    <cert.icon
+                      className={cn(
+                        'h-6 w-6',
+                        selectedCertType === cert.id ? '' : 'text-muted-foreground'
+                      )}
+                    />
                     <div>
                       <span className="text-sm font-bold block">{cert.label}</span>
                       <span className="text-[10px] text-muted-foreground">{cert.desc}</span>
@@ -307,15 +372,15 @@ const InstallationVerifyPage = () => {
             <div className="rounded-xl border border-border/30 bg-card/50 p-4 space-y-3">
               <h3 className="font-medium text-foreground text-sm">Property Type</h3>
               <div className="grid grid-cols-3 gap-2">
-                {propertyTypes.map(prop => (
+                {propertyTypes.map((prop) => (
                   <button
                     key={prop.id}
                     onClick={() => setSelectedPropertyType(prop.id)}
                     className={cn(
-                      "p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 min-h-[70px]",
+                      'p-3 rounded-xl border-2 transition-all flex flex-col items-center gap-1.5 min-h-[70px]',
                       selectedPropertyType === prop.id
-                        ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-400"
-                        : "border-border/30 text-muted-foreground hover:border-border/50"
+                        ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
+                        : 'border-border/30 text-muted-foreground hover:border-border/50'
                     )}
                   >
                     <prop.icon className="h-5 w-5" />
@@ -332,18 +397,20 @@ const InstallationVerifyPage = () => {
                   <Shield className="h-4 w-4 text-cyan-400" />
                   What are you verifying?
                 </h3>
-                <Badge variant="secondary" className="text-xs">{selectedScopes.length} areas</Badge>
+                <Badge variant="secondary" className="text-xs">
+                  {selectedScopes.length} areas
+                </Badge>
               </div>
               <div className="flex flex-wrap gap-2">
-                {scopeAreas.map(scope => (
+                {scopeAreas.map((scope) => (
                   <button
                     key={scope.id}
                     onClick={() => toggleScope(scope.id)}
                     className={cn(
-                      "px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[36px]",
+                      'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[36px]',
                       selectedScopes.includes(scope.id)
-                        ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-400"
-                        : "border-border/30 text-muted-foreground hover:border-border/50"
+                        ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
+                        : 'border-border/30 text-muted-foreground hover:border-border/50'
                     )}
                   >
                     {scope.label}
@@ -359,29 +426,37 @@ const InstallationVerifyPage = () => {
                 Pre-verification Checklist
               </h3>
               <div className="space-y-2">
-                {quickChecks.map(check => (
+                {quickChecks.map((check) => (
                   <button
                     key={check.id}
                     onClick={() => toggleCheck(check.id)}
                     className={cn(
-                      "w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left min-h-[48px]",
+                      'w-full flex items-center gap-3 p-3 rounded-lg border transition-all text-left min-h-[48px]',
                       checkedItems.includes(check.id)
-                        ? "bg-cyan-500/10 border-cyan-500/30"
-                        : "border-border/30 hover:border-border/50"
+                        ? 'bg-cyan-500/10 border-cyan-500/30'
+                        : 'border-border/30 hover:border-border/50'
                     )}
                   >
-                    <div className={cn(
-                      "w-5 h-5 rounded border-2 flex items-center justify-center transition-colors",
-                      checkedItems.includes(check.id)
-                        ? "bg-cyan-500 border-cyan-500"
-                        : "border-muted-foreground/30"
-                    )}>
-                      {checkedItems.includes(check.id) && <CheckCircle className="h-3 w-3 text-white" />}
+                    <div
+                      className={cn(
+                        'w-5 h-5 rounded border-2 flex items-center justify-center transition-colors',
+                        checkedItems.includes(check.id)
+                          ? 'bg-cyan-500 border-cyan-500'
+                          : 'border-muted-foreground/30'
+                      )}
+                    >
+                      {checkedItems.includes(check.id) && (
+                        <CheckCircle className="h-3 w-3 text-white" />
+                      )}
                     </div>
-                    <span className={cn(
-                      "text-sm",
-                      checkedItems.includes(check.id) ? "text-foreground" : "text-muted-foreground"
-                    )}>
+                    <span
+                      className={cn(
+                        'text-sm',
+                        checkedItems.includes(check.id)
+                          ? 'text-foreground'
+                          : 'text-muted-foreground'
+                      )}
+                    >
                       {check.label}
                     </span>
                   </button>
@@ -396,7 +471,9 @@ const InstallationVerifyPage = () => {
                   <Camera className="h-5 w-5 text-cyan-400" />
                   <h3 className="font-semibold text-foreground">Installation Photos</h3>
                 </div>
-                <Badge variant="outline" className="text-xs">{images.length}/6</Badge>
+                <Badge variant="outline" className="text-xs">
+                  {images.length}/6
+                </Badge>
               </div>
 
               <p className="text-xs text-muted-foreground">
@@ -405,13 +482,31 @@ const InstallationVerifyPage = () => {
 
               <AnimatePresence>
                 {isCameraActive && (
-                  <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} className="space-y-3 overflow-hidden">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: 'auto' }}
+                    exit={{ height: 0 }}
+                    className="space-y-3 overflow-hidden"
+                  >
                     <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                      <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+                      <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                        muted
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="flex gap-2">
-                      <Button onClick={captureImage} className="flex-1 h-12 bg-cyan-500 hover:bg-cyan-600">Capture</Button>
-                      <Button onClick={stopCamera} variant="outline" className="h-12"><X className="h-5 w-5" /></Button>
+                      <Button
+                        onClick={captureImage}
+                        className="flex-1 h-12 bg-cyan-500 hover:bg-cyan-600"
+                      >
+                        Capture
+                      </Button>
+                      <Button onClick={stopCamera} variant="outline" className="h-12">
+                        <X className="h-5 w-5" />
+                      </Button>
                     </div>
                   </motion.div>
                 )}
@@ -419,23 +514,50 @@ const InstallationVerifyPage = () => {
 
               {!isCameraActive && (
                 <div className="grid grid-cols-2 gap-3">
-                  <Button onClick={startCamera} className="h-14 bg-cyan-500 hover:bg-cyan-600 text-white">
-                    <Camera className="h-5 w-5 mr-2" />Camera
+                  <Button
+                    onClick={startCamera}
+                    className="h-14 bg-cyan-500 hover:bg-cyan-600 text-white"
+                  >
+                    <Camera className="h-5 w-5 mr-2" />
+                    Camera
                   </Button>
-                  <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="h-14 border-cyan-500/30">
-                    <Upload className="h-5 w-5 mr-2" />Upload
+                  <Button
+                    onClick={() => fileInputRef.current?.click()}
+                    variant="outline"
+                    className="h-14 border-cyan-500/30"
+                  >
+                    <Upload className="h-5 w-5 mr-2" />
+                    Upload
                   </Button>
                 </div>
               )}
 
-              <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={(e) => handleFileSelect(e.target.files)} className="hidden" />
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => handleFileSelect(e.target.files)}
+                className="hidden"
+              />
 
               {images.length > 0 && (
                 <div className="grid grid-cols-3 gap-2">
                   {images.map((img, idx) => (
-                    <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border-2 border-cyan-500/30">
-                      <img src={URL.createObjectURL(img)} alt="" className="w-full h-full object-cover" />
-                      <button onClick={() => setImages(prev => prev.filter((_, i) => i !== idx))} className="absolute top-1 right-1 p-1 bg-red-500 rounded-full">
+                    <div
+                      key={idx}
+                      className="relative aspect-square rounded-xl overflow-hidden border-2 border-cyan-500/30"
+                    >
+                      <img
+                        src={URL.createObjectURL(img)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <button
+                        onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
+                        className="absolute top-1 right-1 p-1 bg-red-500 rounded-full"
+                      >
                         <X className="h-3 w-3 text-white" />
                       </button>
                     </div>
@@ -470,10 +592,10 @@ const InstallationVerifyPage = () => {
               <Button
                 onClick={handleAnalysis}
                 className={cn(
-                  "w-full h-14 text-base font-semibold rounded-xl",
-                  "bg-gradient-to-r from-cyan-500 to-teal-500",
-                  "hover:from-cyan-600 hover:to-teal-600",
-                  "text-white shadow-lg shadow-cyan-500/25"
+                  'w-full h-14 text-base font-semibold rounded-xl',
+                  'bg-gradient-to-r from-cyan-500 to-teal-500',
+                  'hover:from-cyan-600 hover:to-teal-600',
+                  'text-white shadow-lg shadow-cyan-500/25'
                 )}
               >
                 <CheckCircle className="h-5 w-5 mr-2" />

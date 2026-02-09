@@ -28,6 +28,13 @@ interface FireAlarmFormTabsProps {
     isCurrentTabComplete: boolean;
     onGenerateCertificate?: () => void;
     canGenerateCertificate?: boolean;
+    whatsApp?: {
+      type: string;
+      id: string;
+      recipientPhone: string;
+      recipientName: string;
+      documentLabel: string;
+    };
   };
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;

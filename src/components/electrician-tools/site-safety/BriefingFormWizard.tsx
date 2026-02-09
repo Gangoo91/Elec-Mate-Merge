@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useForm, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,38 +23,57 @@ import {
   X,
   Check,
   Plus,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  ImagePlus,
+  Trash2,
+  Eye,
+  ShieldAlert,
+  AlertTriangle,
+  ImageIcon,
+  Share2,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   BriefingTypePicker,
   BriefingType,
+  briefingTypes,
   HazardPillSelector,
+  defaultHazards,
   RiskLevelSlider,
   RiskLevel,
   SignaturePad,
+  BriefingShareSheet,
   AttendeeSignatureCard,
-} from "./briefings";
+} from './briefings';
+import { TemplateSelector } from './briefing-templates/TemplateSelector';
 
 // Schema for the form
 const briefingSchema = z.object({
-  briefingType: z.string().min(1, "Please select a briefing type"),
-  siteName: z.string().min(2, "Site name is required"),
+  briefingType: z.string().min(1, 'Please select a briefing type'),
+  siteName: z.string().min(2, 'Site name is required'),
   siteAddress: z.string().optional(),
-  briefingTitle: z.string().min(3, "Title must be at least 3 characters"),
-  briefingContent: z.string().min(50, "Content must be at least 50 characters"),
-  briefingDate: z.string().min(1, "Date is required"),
-  briefingTime: z.string().min(1, "Time is required"),
-  hazards: z.array(z.string()).min(1, "Select at least one hazard"),
-  riskLevel: z.enum(["low", "medium", "high"]),
-  photos: z.array(z.object({
-    url: z.string(),
-    caption: z.string().optional(),
-  })).optional(),
-  attendees: z.array(z.object({
-    name: z.string(),
-    signature: z.string().optional(),
-    timestamp: z.string().optional(),
-  })).optional(),
+  briefingTitle: z.string().min(3, 'Title must be at least 3 characters'),
+  briefingContent: z.string().min(50, 'Content must be at least 50 characters'),
+  briefingDate: z.string().min(1, 'Date is required'),
+  briefingTime: z.string().min(1, 'Time is required'),
+  hazards: z.array(z.string()).min(1, 'Select at least one hazard'),
+  riskLevel: z.enum(['low', 'medium', 'high']),
+  photos: z
+    .array(
+      z.object({
+        url: z.string(),
+        caption: z.string().optional(),
+      })
+    )
+    .optional(),
+  attendees: z
+    .array(
+      z.object({
+        name: z.string(),
+        signature: z.string().optional(),
+        timestamp: z.string().optional(),
+      })
+    )
+    .optional(),
 });
 
 type BriefingFormData = z.infer<typeof briefingSchema>;
@@ -83,13 +102,7 @@ interface BriefingFormWizardProps {
   onSuccess: () => void;
 }
 
-const STEP_TITLES = [
-  "Type & Site",
-  "Briefing Content",
-  "Hazards",
-  "Photos",
-  "Review & Signatures",
-];
+const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Review & Signatures'];
 
 export const BriefingFormWizard = ({
   initialData,
@@ -101,33 +114,42 @@ export const BriefingFormWizard = ({
   const [step, setStep] = useState(0);
   const [aiGenerating, setAiGenerating] = useState(false);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
-  const [newAttendeeName, setNewAttendeeName] = useState("");
+  const [newAttendeeName, setNewAttendeeName] = useState('');
   const [signingAttendeeIndex, setSigningAttendeeIndex] = useState<number | null>(null);
+  const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
+  const [showShareSheet, setShowShareSheet] = useState(false);
+  const [savedBriefingId, setSavedBriefingId] = useState<string | null>(initialData?.id || null);
+  const [showTemplateSelector, setShowTemplateSelector] = useState(false);
 
   // Default values
   const defaultValues: Partial<BriefingFormData> = {
-    briefingType: nearMissData ? "near-miss-review" : initialData?.briefing_type || "",
-    siteName: nearMissData?.location || initialData?.location || "",
-    siteAddress: initialData?.site_address || "",
+    briefingType: nearMissData ? 'near-miss-review' : initialData?.briefing_type || '',
+    siteName: nearMissData?.location || initialData?.location || '',
+    siteAddress: initialData?.site_address || '',
     briefingTitle: nearMissData
       ? `Near Miss Review: ${nearMissData.categoryLabel}`
-      : initialData?.briefing_name || "",
-    briefingContent: nearMissData?.description || initialData?.briefing_description || "",
-    briefingDate: initialData?.briefing_date || new Date().toISOString().split("T")[0],
-    briefingTime: initialData?.briefing_time || "09:00",
+      : initialData?.briefing_name || '',
+    briefingContent: nearMissData?.description || initialData?.briefing_description || '',
+    briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
+    briefingTime: initialData?.briefing_time || '09:00',
     hazards: nearMissData ? [nearMissData.category] : initialData?.identified_hazards || [],
-    riskLevel: (nearMissData?.severity as RiskLevel) || initialData?.risk_level || "medium",
-    photos: (nearMissData?.photo_urls?.map(url => ({ url, caption: "" })) || initialData?.photos || []),
+    riskLevel: (nearMissData?.severity as RiskLevel) || initialData?.risk_level || 'medium',
+    photos:
+      nearMissData?.photo_urls?.map((url) => ({ url, caption: '' })) || initialData?.photos || [],
     attendees: initialData?.attendees || [],
   };
 
   const methods = useForm<BriefingFormData>({
     resolver: zodResolver(briefingSchema),
     defaultValues,
-    mode: "onChange",
+    mode: 'onChange',
   });
 
-  const { watch, setValue, formState: { errors } } = methods;
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = methods;
   const formData = watch();
 
   const totalSteps = STEP_TITLES.length;
@@ -137,7 +159,7 @@ export const BriefingFormWizard = ({
   const handleGenerateAI = async () => {
     setAiGenerating(true);
     try {
-      const { data, error } = await supabase.functions.invoke("generate-briefing-content", {
+      const { data, error } = await supabase.functions.invoke('generate-briefing-content', {
         body: {
           briefingType: formData.briefingType,
           briefingContext: {
@@ -155,26 +177,46 @@ export const BriefingFormWizard = ({
       if (error) throw error;
 
       // Update form with AI content
-      const briefingContent = data.content.briefingOverview
-        ?.map((p: any) => p.content)
-        .join("\n\n") || data.content.briefingDescription || formData.briefingContent;
+      const briefingContent =
+        data.content.briefingOverview?.map((p: any) => p.content).join('\n\n') ||
+        data.content.briefingDescription ||
+        formData.briefingContent;
 
-      setValue("briefingContent", briefingContent);
+      setValue('briefingContent', briefingContent);
 
       toast({
-        title: "AI Content Generated",
-        description: "Review and edit the AI-generated content.",
+        title: 'AI Content Generated',
+        description: 'Review and edit the AI-generated content.',
       });
     } catch (error: any) {
-      console.error("AI generation error:", error);
+      console.error('AI generation error:', error);
       toast({
-        title: "Generation Failed",
-        description: error.message || "Failed to generate content.",
-        variant: "destructive",
+        title: 'Generation Failed',
+        description: error.message || 'Failed to generate content.',
+        variant: 'destructive',
       });
     } finally {
       setAiGenerating(false);
     }
+  };
+
+  // Template selection handler
+  const handleTemplateSelect = (template: {
+    id: string;
+    name: string;
+    description: string;
+    template_type: string;
+  }) => {
+    setValue('briefingTitle', template.name);
+    setValue('briefingContent', template.description);
+    if (template.template_type) {
+      setValue('briefingType', template.template_type);
+    }
+    setShowTemplateSelector(false);
+    toast({
+      title: 'Template loaded',
+      description: `"${template.name}" has been applied. Review and edit as needed.`,
+    });
   };
 
   // Photo upload
@@ -184,42 +226,44 @@ export const BriefingFormWizard = ({
 
     setUploadingPhotos(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const uploadedPhotos: any[] = [];
 
       for (const file of Array.from(files)) {
-        const fileExt = file.name.split(".").pop();
+        const fileExt = file.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
         const { data, error } = await supabase.storage
-          .from("briefing-photos")
+          .from('briefing-photos')
           .upload(fileName, file, {
-            cacheControl: "3600",
+            cacheControl: '3600',
             upsert: false,
           });
 
         if (error) throw error;
 
-        const { data: { publicUrl } } = supabase.storage
-          .from("briefing-photos")
-          .getPublicUrl(data.path);
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('briefing-photos').getPublicUrl(data.path);
 
-        uploadedPhotos.push({ url: publicUrl, caption: "" });
+        uploadedPhotos.push({ url: publicUrl, caption: '' });
       }
 
-      setValue("photos", [...(formData.photos || []), ...uploadedPhotos]);
+      setValue('photos', [...(formData.photos || []), ...uploadedPhotos]);
 
       toast({
-        title: "Photos Uploaded",
+        title: 'Photos Uploaded',
         description: `${uploadedPhotos.length} photo(s) added.`,
       });
     } catch (error: any) {
       toast({
-        title: "Upload Failed",
-        description: error.message || "Failed to upload photos.",
-        variant: "destructive",
+        title: 'Upload Failed',
+        description: error.message || 'Failed to upload photos.',
+        variant: 'destructive',
       });
     } finally {
       setUploadingPhotos(false);
@@ -228,7 +272,7 @@ export const BriefingFormWizard = ({
 
   const handleDeletePhoto = (index: number) => {
     setValue(
-      "photos",
+      'photos',
       (formData.photos || []).filter((_, idx) => idx !== index)
     );
   };
@@ -236,16 +280,16 @@ export const BriefingFormWizard = ({
   // Attendee management
   const addAttendee = () => {
     if (!newAttendeeName.trim()) return;
-    setValue("attendees", [
+    setValue('attendees', [
       ...(formData.attendees || []),
       { name: newAttendeeName.trim(), signature: undefined, timestamp: undefined },
     ]);
-    setNewAttendeeName("");
+    setNewAttendeeName('');
   };
 
   const removeAttendee = (index: number) => {
     setValue(
-      "attendees",
+      'attendees',
       (formData.attendees || []).filter((_, idx) => idx !== index)
     );
   };
@@ -257,25 +301,27 @@ export const BriefingFormWizard = ({
       signature,
       timestamp: signature ? new Date().toLocaleString() : undefined,
     };
-    setValue("attendees", updated);
+    setValue('attendees', updated);
     setSigningAttendeeIndex(null);
   };
 
   // Save briefing
   const handleSave = async (asDraft = false) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name")
-        .eq("id", user.id)
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
         .single();
 
       const briefingData = {
         user_id: user.id,
-        template_id: "ai-generated",
+        template_id: 'ai-generated',
         briefing_name: formData.briefingTitle,
         briefing_date: formData.briefingDate,
         briefing_time: formData.briefingTime,
@@ -290,41 +336,48 @@ export const BriefingFormWizard = ({
         briefing_description: formData.briefingContent,
         photos: formData.photos,
         created_by_name: profile?.full_name || user.email,
-        status: asDraft ? "draft" : "scheduled",
+        status: asDraft ? 'draft' : 'scheduled',
       };
 
       let error;
-      if (initialData?.id) {
+      if (initialData?.id || savedBriefingId) {
+        const updateId = initialData?.id || savedBriefingId;
         const { error: updateError } = await supabase
-          .from("team_briefings")
+          .from('team_briefings')
           .update(briefingData)
-          .eq("id", initialData.id);
+          .eq('id', updateId);
         error = updateError;
       } else {
-        const { error: insertError } = await supabase
-          .from("team_briefings")
-          .insert([briefingData]);
+        const { data: insertedData, error: insertError } = await supabase
+          .from('team_briefings')
+          .insert([briefingData])
+          .select('id')
+          .single();
         error = insertError;
+        if (insertedData?.id) {
+          setSavedBriefingId(insertedData.id);
+        }
       }
 
       if (error) throw error;
 
       toast({
-        title: initialData?.id
-          ? "Briefing Updated"
-          : asDraft
-            ? "Draft Saved"
-            : "Briefing Created",
-        description: "Successfully saved.",
+        title: initialData?.id ? 'Briefing Updated' : asDraft ? 'Draft Saved' : 'Briefing Created',
+        description: 'Successfully saved.',
       });
 
-      onSuccess();
-      onClose();
+      if (asDraft) {
+        // Keep wizard open so user can share the link
+        onSuccess();
+      } else {
+        onSuccess();
+        onClose();
+      }
     } catch (error: any) {
       toast({
-        title: "Save Failed",
-        description: error.message || "Failed to save briefing.",
-        variant: "destructive",
+        title: 'Save Failed',
+        description: error.message || 'Failed to save briefing.',
+        variant: 'destructive',
       });
     }
   };
@@ -366,9 +419,46 @@ export const BriefingFormWizard = ({
       case 0:
         return (
           <div className="space-y-6">
+            {/* Start from template option — hidden when near-miss pre-fill or editing */}
+            {!nearMissData && !initialData && (
+              <div className="space-y-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowTemplateSelector(!showTemplateSelector)}
+                  className={cn(
+                    'w-full h-12 border-white/20 text-white/80',
+                    'hover:bg-white/[0.06] hover:border-elec-yellow/40',
+                    'touch-manipulation',
+                    showTemplateSelector && 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                  )}
+                >
+                  <FileText className="h-4 w-4 mr-2 text-elec-yellow" />
+                  {showTemplateSelector ? 'Hide Templates' : 'Start from Template'}
+                  <span className="text-[10px] text-white/40 ml-2">(Optional)</span>
+                </Button>
+
+                <AnimatePresence>
+                  {showTemplateSelector && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <TemplateSelector
+                        onSelectTemplate={handleTemplateSelect}
+                        selectedType={formData.briefingType || undefined}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
+
             <BriefingTypePicker
               value={formData.briefingType as BriefingType}
-              onChange={(type) => setValue("briefingType", type)}
+              onChange={(type) => setValue('briefingType', type)}
               error={errors.briefingType?.message}
             />
 
@@ -377,7 +467,7 @@ export const BriefingFormWizard = ({
               icon={<MapPin className="h-5 w-5" />}
               placeholder="e.g. Acme Construction"
               value={formData.siteName}
-              onChange={(e) => setValue("siteName", e.target.value)}
+              onChange={(e) => setValue('siteName', e.target.value)}
               error={errors.siteName?.message}
             />
 
@@ -385,8 +475,8 @@ export const BriefingFormWizard = ({
               label="Site Address"
               icon={<Home className="h-5 w-5" />}
               placeholder="e.g. 123 High Street, Manchester"
-              value={formData.siteAddress || ""}
-              onChange={(e) => setValue("siteAddress", e.target.value)}
+              value={formData.siteAddress || ''}
+              onChange={(e) => setValue('siteAddress', e.target.value)}
               hint="Optional"
             />
 
@@ -396,7 +486,7 @@ export const BriefingFormWizard = ({
                 type="date"
                 icon={<Calendar className="h-5 w-5" />}
                 value={formData.briefingDate}
-                onChange={(e) => setValue("briefingDate", e.target.value)}
+                onChange={(e) => setValue('briefingDate', e.target.value)}
                 className="[color-scheme:dark]"
               />
               <IOSInput
@@ -404,7 +494,7 @@ export const BriefingFormWizard = ({
                 type="time"
                 icon={<Clock className="h-5 w-5" />}
                 value={formData.briefingTime}
-                onChange={(e) => setValue("briefingTime", e.target.value)}
+                onChange={(e) => setValue('briefingTime', e.target.value)}
                 className="[color-scheme:dark]"
               />
             </div>
@@ -421,10 +511,10 @@ export const BriefingFormWizard = ({
               onClick={handleGenerateAI}
               disabled={aiGenerating || !formData.briefingType}
               className={cn(
-                "w-full h-12",
-                "bg-gradient-to-r from-purple-500 to-blue-500",
-                "hover:from-purple-600 hover:to-blue-600",
-                "text-white font-medium"
+                'w-full h-12',
+                'bg-gradient-to-r from-purple-500 to-blue-500',
+                'hover:from-purple-600 hover:to-blue-600',
+                'text-white font-medium'
               )}
             >
               {aiGenerating ? (
@@ -432,7 +522,7 @@ export const BriefingFormWizard = ({
               ) : (
                 <Sparkles className="h-5 w-5 mr-2" />
               )}
-              {aiGenerating ? "Generating..." : "AI Assist"}
+              {aiGenerating ? 'Generating...' : 'AI Assist'}
             </Button>
 
             <IOSInput
@@ -440,25 +530,23 @@ export const BriefingFormWizard = ({
               icon={<FileText className="h-5 w-5" />}
               placeholder="e.g. Daily Site Induction Briefing"
               value={formData.briefingTitle}
-              onChange={(e) => setValue("briefingTitle", e.target.value)}
+              onChange={(e) => setValue('briefingTitle', e.target.value)}
               error={errors.briefingTitle?.message}
             />
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-white/80">
-                Briefing Content
-              </label>
+              <label className="block text-sm font-medium text-white/80">Briefing Content</label>
               <textarea
                 value={formData.briefingContent}
-                onChange={(e) => setValue("briefingContent", e.target.value)}
+                onChange={(e) => setValue('briefingContent', e.target.value)}
                 placeholder="Enter the briefing content. Include key points, safety information, and any specific instructions..."
                 rows={8}
                 className={cn(
-                  "w-full px-4 py-3 rounded-xl",
-                  "bg-white/5 border border-white/10",
-                  "text-white placeholder:text-white/40",
-                  "focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50",
-                  "transition-all resize-none"
+                  'w-full px-4 py-3 rounded-xl',
+                  'bg-white/5 border border-white/10',
+                  'text-white placeholder:text-white/40',
+                  'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50',
+                  'transition-all resize-none'
                 )}
               />
               <div className="flex justify-between text-xs text-white/40">
@@ -475,118 +563,372 @@ export const BriefingFormWizard = ({
           <div className="space-y-6">
             <HazardPillSelector
               value={formData.hazards || []}
-              onChange={(hazards) => setValue("hazards", hazards)}
+              onChange={(hazards) => setValue('hazards', hazards)}
               error={errors.hazards?.message}
             />
 
             <RiskLevelSlider
               value={formData.riskLevel as RiskLevel}
-              onChange={(level) => setValue("riskLevel", level)}
+              onChange={(level) => setValue('riskLevel', level)}
             />
           </div>
         );
 
       // Step 4: Photos
-      case 3:
+      case 3: {
+        const photoCount = formData.photos?.length || 0;
+        const maxPhotos = 5;
+        const remaining = maxPhotos - photoCount;
+
         return (
           <div className="space-y-5">
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-white/80">
-                Site Photos (Optional)
-              </label>
-              <p className="text-xs text-white/50">
-                Add photos to document site conditions
-              </p>
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Camera className="h-4.5 w-4.5 text-elec-yellow" />
+                <label className="text-sm font-semibold text-white">Site Photos</label>
+                <span className="text-xs text-white/40 font-normal">(Optional)</span>
+              </div>
+              {photoCount > 0 && (
+                <motion.span
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow"
+                >
+                  {photoCount} of {maxPhotos}
+                </motion.span>
+              )}
             </div>
+            <p className="text-xs text-white/50 -mt-2">
+              Photograph site conditions, hazards, or relevant areas
+            </p>
 
             {/* Upload Area */}
-            <label
-              className={cn(
-                "flex flex-col items-center justify-center",
-                "h-32 rounded-xl border-2 border-dashed",
-                "border-white/20 hover:border-white/40",
-                "bg-white/5 hover:bg-white/10",
-                "cursor-pointer transition-all",
-                uploadingPhotos && "pointer-events-none opacity-50"
-              )}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handlePhotoUpload}
-                className="hidden"
-                disabled={uploadingPhotos}
-              />
-              {uploadingPhotos ? (
-                <Loader2 className="h-8 w-8 text-white/50 animate-spin" />
-              ) : (
-                <>
-                  <Camera className="h-8 w-8 text-white/50 mb-2" />
-                  <span className="text-sm text-white/50">Tap to add photos</span>
-                  <span className="text-xs text-white/30 mt-1">Max 5 photos</span>
-                </>
-              )}
-            </label>
+            {remaining > 0 && (
+              <label
+                className={cn(
+                  'group flex flex-col items-center justify-center gap-3',
+                  'py-8 rounded-2xl border-2 border-dashed',
+                  'border-white/15 hover:border-elec-yellow/40',
+                  'bg-white/[0.03] hover:bg-elec-yellow/[0.04]',
+                  'cursor-pointer transition-all duration-300',
+                  uploadingPhotos && 'pointer-events-none opacity-50'
+                )}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handlePhotoUpload}
+                  className="hidden"
+                  disabled={uploadingPhotos}
+                />
+                {uploadingPhotos ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+                    <span className="text-sm text-white/60">Uploading...</span>
+                  </div>
+                ) : (
+                  <>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      className={cn(
+                        'flex items-center justify-center w-14 h-14 rounded-2xl',
+                        'bg-elec-yellow/10 group-hover:bg-elec-yellow/20',
+                        'transition-colors duration-300'
+                      )}
+                    >
+                      <ImagePlus className="h-7 w-7 text-elec-yellow/70 group-hover:text-elec-yellow transition-colors" />
+                    </motion.div>
+                    <div className="text-center">
+                      <span className="block text-sm font-medium text-white/70 group-hover:text-white/90 transition-colors">
+                        Take or choose photos
+                      </span>
+                      <span className="block text-xs text-white/35 mt-1">
+                        {remaining} {remaining === 1 ? 'slot' : 'slots'} remaining
+                      </span>
+                    </div>
+                  </>
+                )}
+              </label>
+            )}
 
             {/* Photo Grid */}
-            {formData.photos && formData.photos.length > 0 && (
-              <div className="grid grid-cols-3 gap-2">
-                {formData.photos.map((photo, idx) => (
-                  <div key={idx} className="relative aspect-square">
-                    <img
-                      src={photo.url}
-                      alt=""
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+            {photoCount > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {formData.photos!.map((photo, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="relative group/photo"
+                  >
+                    <div
+                      className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5 cursor-pointer"
+                      onClick={() => setPreviewPhoto(photo.url)}
+                    >
+                      <img
+                        src={photo.url}
+                        alt={`Site photo ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+
+                      {/* Overlay on hover — desktop only */}
+                      <div className="hidden sm:flex absolute inset-0 bg-black/0 group-hover/photo:bg-black/40 transition-colors duration-200 items-center justify-center gap-2 opacity-0 group-hover/photo:opacity-100">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPreviewPhoto(photo.url);
+                          }}
+                          className={cn(
+                            'flex items-center justify-center w-11 h-11 rounded-full',
+                            'bg-white/20 backdrop-blur-sm text-white',
+                            'hover:bg-white/30 touch-manipulation transition-colors'
+                          )}
+                        >
+                          <Eye className="h-4.5 w-4.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeletePhoto(idx);
+                          }}
+                          className={cn(
+                            'flex items-center justify-center w-11 h-11 rounded-full',
+                            'bg-red-500/80 backdrop-blur-sm text-white',
+                            'hover:bg-red-500 touch-manipulation transition-colors'
+                          )}
+                        >
+                          <Trash2 className="h-4.5 w-4.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Mobile delete — always visible */}
                     <button
                       type="button"
                       onClick={() => handleDeletePhoto(idx)}
-                      className="absolute -top-2 -right-2 p-1 rounded-full bg-red-500 text-white"
+                      className={cn(
+                        'sm:hidden absolute -top-2 -right-2 flex items-center justify-center',
+                        'w-7 h-7 rounded-full',
+                        'bg-red-500 text-white shadow-lg shadow-red-500/30',
+                        'touch-manipulation'
+                      )}
                     >
-                      <X className="h-3 w-3" />
+                      <X className="h-3.5 w-3.5" strokeWidth={3} />
                     </button>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}
+
+            {/* Empty state */}
+            {photoCount === 0 && !uploadingPhotos && (
+              <div className="text-center py-4">
+                <ImageIcon className="h-8 w-8 text-white/15 mx-auto mb-2" />
+                <p className="text-xs text-white/30">No photos added yet</p>
+              </div>
+            )}
+
+            {/* Full-screen photo preview */}
+            <AnimatePresence>
+              {previewPhoto && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+                  onClick={() => setPreviewPhoto(null)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setPreviewPhoto(null)}
+                    className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white hover:bg-white/20 touch-manipulation"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                  <motion.img
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    src={previewPhoto}
+                    alt="Preview"
+                    className="max-w-full max-h-[85vh] object-contain rounded-xl"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
+      }
 
       // Step 5: Review & Signatures
-      case 4:
+      case 4: {
+        const briefingTypeInfo = briefingTypes.find((t) => t.id === formData.briefingType);
+
+        const riskColorMap: Record<string, { bg: string; text: string; border: string }> = {
+          low: {
+            bg: 'bg-emerald-500/15',
+            text: 'text-emerald-400',
+            border: 'border-emerald-500/30',
+          },
+          medium: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
+          high: { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' },
+        };
+
+        const hazardColorMap: Record<string, { bg: string; text: string }> = {
+          yellow: { bg: 'bg-elec-yellow/15', text: 'text-elec-yellow' },
+          red: { bg: 'bg-red-500/15', text: 'text-red-400' },
+          purple: { bg: 'bg-purple-500/15', text: 'text-purple-400' },
+          amber: { bg: 'bg-amber-500/15', text: 'text-amber-400' },
+          blue: { bg: 'bg-blue-500/15', text: 'text-blue-400' },
+          green: { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
+          pink: { bg: 'bg-pink-500/15', text: 'text-pink-400' },
+          orange: { bg: 'bg-orange-500/15', text: 'text-orange-400' },
+          cyan: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
+          gray: { bg: 'bg-gray-500/15', text: 'text-gray-400' },
+          slate: { bg: 'bg-slate-500/15', text: 'text-slate-400' },
+          rose: { bg: 'bg-rose-500/15', text: 'text-rose-400' },
+        };
+
+        const riskColors = riskColorMap[formData.riskLevel] || riskColorMap.medium;
+        const signedCount = (formData.attendees || []).filter((a) => a.signature).length;
+        const totalAttendees = (formData.attendees || []).length;
+
         return (
           <div className="space-y-5">
-            {/* Summary Card */}
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                <span className="font-medium text-white">{formData.briefingTitle}</span>
+            {/* Summary Document Card */}
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
+              {/* Card Header - type badge */}
+              <div className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    {briefingTypeInfo && (
+                      <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-elec-yellow/80 mb-1.5">
+                        <FileText className="h-3 w-3" />
+                        {briefingTypeInfo.label} Briefing
+                      </span>
+                    )}
+                    <h3 className="text-base sm:text-lg font-semibold text-white leading-tight truncate">
+                      {formData.briefingTitle}
+                    </h3>
+                  </div>
+                  <div
+                    className={cn(
+                      'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0',
+                      riskColors.bg,
+                      riskColors.text,
+                      'border',
+                      riskColors.border
+                    )}
+                  >
+                    <AlertTriangle className="h-3 w-3" />
+                    {formData.riskLevel.charAt(0).toUpperCase() + formData.riskLevel.slice(1)} Risk
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/60">
-                <MapPin className="h-3.5 w-3.5" />
-                <span>{formData.siteName}</span>
+
+              {/* Info Rows */}
+              <div className="px-4 py-3 space-y-2.5">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                    <MapPin className="h-3.5 w-3.5 text-white/50" />
+                  </div>
+                  <span className="text-white/70">{formData.siteName}</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                    <Calendar className="h-3.5 w-3.5 text-white/50" />
+                  </div>
+                  <span className="text-white/70">{formData.briefingDate}</span>
+                  <span className="text-white/25">|</span>
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                    <Clock className="h-3.5 w-3.5 text-white/50" />
+                  </div>
+                  <span className="text-white/70">{formData.briefingTime}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/60">
-                <Calendar className="h-3.5 w-3.5" />
-                <span>{formData.briefingDate} at {formData.briefingTime}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-white/60">
-                <span className="capitalize">{formData.hazards?.length || 0} hazards</span>
-                <span className="text-white/30">•</span>
-                <span className="capitalize">{formData.riskLevel} risk</span>
-              </div>
+
+              {/* Hazard Pills */}
+              {formData.hazards && formData.hazards.length > 0 && (
+                <div className="px-4 py-3 border-t border-white/[0.06]">
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <ShieldAlert className="h-3.5 w-3.5 text-white/50" />
+                    <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
+                      Identified Hazards
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {formData.hazards.map((hazardId) => {
+                      const hazardInfo = defaultHazards.find((h) => h.id === hazardId);
+                      const colors = hazardInfo
+                        ? hazardColorMap[hazardInfo.color] || hazardColorMap.gray
+                        : hazardColorMap.gray;
+                      return (
+                        <span
+                          key={hazardId}
+                          className={cn(
+                            'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium',
+                            colors.bg,
+                            colors.text
+                          )}
+                        >
+                          {hazardInfo?.label || hazardId.replace('custom-', '').replace(/-/g, ' ')}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Photo Thumbnails */}
+              {formData.photos && formData.photos.length > 0 && (
+                <div className="px-4 py-3 border-t border-white/[0.06]">
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <Camera className="h-3.5 w-3.5 text-white/50" />
+                    <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
+                      Site Photos ({formData.photos.length})
+                    </span>
+                  </div>
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {formData.photos.map((photo, idx) => (
+                      <div
+                        key={idx}
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-white/10 shrink-0"
+                      >
+                        <img
+                          src={photo.url}
+                          alt={`Photo ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Attendees */}
+            {/* Attendees & Signatures */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-white/80">
-                  Attendees & Signatures
-                </label>
-                <span className="text-xs text-white/50">
-                  {(formData.attendees || []).filter((a) => a.signature).length} of{" "}
-                  {(formData.attendees || []).length} signed
+                <div className="flex items-center gap-2">
+                  <Users className="h-4.5 w-4.5 text-elec-yellow" />
+                  <label className="text-sm font-semibold text-white">Attendees & Signatures</label>
+                </div>
+                <span
+                  className={cn(
+                    'text-xs font-medium px-2.5 py-1 rounded-full',
+                    totalAttendees > 0 && signedCount === totalAttendees
+                      ? 'bg-emerald-500/20 text-emerald-400'
+                      : 'bg-white/10 text-white/50'
+                  )}
+                >
+                  {signedCount} of {totalAttendees} signed
                 </span>
               </div>
 
@@ -596,7 +938,7 @@ export const BriefingFormWizard = ({
                   placeholder="Enter attendee name"
                   value={newAttendeeName}
                   onChange={(e) => setNewAttendeeName(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addAttendee())}
+                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addAttendee())}
                   icon={<Users className="h-5 w-5" />}
                 />
                 <Button
@@ -616,7 +958,7 @@ export const BriefingFormWizard = ({
                     {signingAttendeeIndex === idx ? (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
+                        animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         className="space-y-2"
                       >
@@ -630,7 +972,7 @@ export const BriefingFormWizard = ({
                             type="button"
                             variant="ghost"
                             onClick={() => setSigningAttendeeIndex(null)}
-                            className="flex-1 h-10 text-white/60"
+                            className="flex-1 h-11 text-white/60"
                           >
                             Cancel
                           </Button>
@@ -638,7 +980,7 @@ export const BriefingFormWizard = ({
                             type="button"
                             onClick={() => handleSignature(idx, attendee.signature)}
                             disabled={!attendee.signature}
-                            className="flex-1 h-10 bg-emerald-500 text-white hover:bg-emerald-600"
+                            className="flex-1 h-11 bg-emerald-500 text-white hover:bg-emerald-600"
                           >
                             <Check className="h-4 w-4 mr-1" />
                             Confirm
@@ -658,14 +1000,16 @@ export const BriefingFormWizard = ({
                 ))}
               </AnimatePresence>
 
-              {(formData.attendees || []).length === 0 && (
-                <p className="text-center py-4 text-white/40 text-sm">
-                  Add attendees to collect signatures
-                </p>
+              {totalAttendees === 0 && (
+                <div className="text-center py-6">
+                  <Users className="h-8 w-8 text-white/10 mx-auto mb-2" />
+                  <p className="text-sm text-white/30">Add attendees to collect signatures</p>
+                </div>
               )}
             </div>
           </div>
         );
+      }
 
       default:
         return null;
@@ -688,14 +1032,9 @@ export const BriefingFormWizard = ({
               <p className="text-xs text-white/50">
                 Step {step + 1} of {totalSteps}
               </p>
-              <p className="text-sm font-medium text-white">
-                {STEP_TITLES[step]}
-              </p>
+              <p className="text-sm font-medium text-white">{STEP_TITLES[step]}</p>
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 -mr-2 text-white/60 hover:text-white"
-            >
+            <button onClick={onClose} className="p-2 -mr-2 text-white/60 hover:text-white">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -748,6 +1087,16 @@ export const BriefingFormWizard = ({
                   <Check className="h-4 w-4 mr-2" />
                   Complete
                 </Button>
+                {/* Share for remote signing — only available if briefing has been saved */}
+                {savedBriefingId && (
+                  <Button
+                    type="button"
+                    onClick={() => setShowShareSheet(true)}
+                    className="h-14 px-4 bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30"
+                  >
+                    <Share2 className="h-4 w-4" />
+                  </Button>
+                )}
               </>
             ) : (
               <>
@@ -767,9 +1116,9 @@ export const BriefingFormWizard = ({
                   onClick={nextStep}
                   disabled={!canProceed()}
                   className={cn(
-                    "flex-1 h-14 font-semibold",
-                    "bg-elec-yellow text-black hover:bg-elec-yellow/90",
-                    "disabled:opacity-50 disabled:cursor-not-allowed"
+                    'flex-1 h-14 font-semibold',
+                    'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+                    'disabled:opacity-50 disabled:cursor-not-allowed'
                   )}
                 >
                   Continue
@@ -779,6 +1128,17 @@ export const BriefingFormWizard = ({
             )}
           </div>
         </div>
+
+        {/* Share Sheet for remote signing */}
+        <AnimatePresence>
+          {showShareSheet && savedBriefingId && (
+            <BriefingShareSheet
+              briefingId={savedBriefingId}
+              briefingName={formData.briefingTitle}
+              onClose={() => setShowShareSheet(false)}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </FormProvider>
   );

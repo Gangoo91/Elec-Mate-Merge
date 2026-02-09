@@ -4,7 +4,12 @@ import { Camera, Upload, Loader2, AlertCircle, Check, X, FileImage, Sparkles } f
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { CreateExpenseInput, ExpenseCategory, ExpenseExtractionResult, EXPENSE_CATEGORIES } from '@/types/expense';
+import {
+  CreateExpenseInput,
+  ExpenseCategory,
+  ExpenseExtractionResult,
+  EXPENSE_CATEGORIES,
+} from '@/types/expense';
 import { uploadReceipt, fileToBase64 } from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
 
@@ -58,7 +63,9 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
       // Call the edge function for OCR extraction
       const { data, error } = await supabase.functions.invoke('parse-expense-receipt', {
         body: {
-          image_base64: base64.replace(/^data:image\/\w+;base64,/, '').replace(/^data:application\/octet-stream;base64,/, ''),
+          image_base64: base64
+            .replace(/^data:image\/\w+;base64,/, '')
+            .replace(/^data:application\/octet-stream;base64,/, ''),
           image_type: imageType,
         },
       });
@@ -224,7 +231,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           {/* Preview image while processing */}
           {previewUrl && (
             <div className="w-32 h-32 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-              <img src={previewUrl} alt="Receipt" className="w-full h-full object-cover" />
+              <img
+                src={previewUrl}
+                alt="Receipt"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
           )}
           <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center">
@@ -252,9 +264,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           </div>
           <div>
             <p className="font-medium text-foreground mb-1">Failed to process receipt</p>
-            <p className="text-sm text-muted-foreground">
-              Please try again with a clearer photo
-            </p>
+            <p className="text-sm text-muted-foreground">Please try again with a clearer photo</p>
           </div>
           <div className="flex gap-3 w-full">
             <Button
@@ -267,11 +277,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             >
               Try Again
             </Button>
-            <Button
-              variant="outline"
-              onClick={onCancel}
-              className="flex-1 h-11 touch-manipulation"
-            >
+            <Button variant="outline" onClick={onCancel} className="flex-1 h-11 touch-manipulation">
               Cancel
             </Button>
           </div>
@@ -289,12 +295,14 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             <Sparkles className="h-4 w-4 text-elec-yellow" />
             <span className="text-sm font-medium text-foreground">AI Extracted</span>
           </div>
-          <div className={cn(
-            "px-2.5 py-1 rounded-full text-xs font-medium",
-            (extractedData.confidence || 0) > 0.7
-              ? "bg-green-500/15 text-green-400"
-              : "bg-amber-500/15 text-amber-400"
-          )}>
+          <div
+            className={cn(
+              'px-2.5 py-1 rounded-full text-xs font-medium',
+              (extractedData.confidence || 0) > 0.7
+                ? 'bg-green-500/15 text-green-400'
+                : 'bg-amber-500/15 text-amber-400'
+            )}
+          >
             {Math.round((extractedData.confidence || 0) * 100)}% confidence
           </div>
         </div>
@@ -305,7 +313,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           {previewUrl && (
             <div className="sm:w-1/3 flex-shrink-0">
               <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/10 bg-white/[0.02]">
-                <img src={previewUrl} alt="Receipt" className="w-full h-full object-contain" />
+                <img
+                  src={previewUrl}
+                  alt="Receipt"
+                  className="w-full h-full object-contain"
+                  loading="lazy"
+                />
               </div>
             </div>
           )}
@@ -315,10 +328,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             {/* Vendor */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
               <span className="text-sm text-muted-foreground">Vendor</span>
-              <span className={cn(
-                "font-medium text-right",
-                extractedData.vendor ? "text-foreground" : "text-muted-foreground/50"
-              )}>
+              <span
+                className={cn(
+                  'font-medium text-right',
+                  extractedData.vendor ? 'text-foreground' : 'text-muted-foreground/50'
+                )}
+              >
                 {extractedData.vendor || 'Not detected'}
               </span>
             </div>
@@ -326,10 +341,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             {/* Amount */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
               <span className="text-sm text-muted-foreground">Amount</span>
-              <span className={cn(
-                "font-bold text-lg",
-                extractedData.amount ? "text-elec-yellow" : "text-muted-foreground/50"
-              )}>
+              <span
+                className={cn(
+                  'font-bold text-lg',
+                  extractedData.amount ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                )}
+              >
                 {extractedData.amount ? `£${extractedData.amount.toFixed(2)}` : 'Not detected'}
               </span>
             </div>
@@ -337,10 +354,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             {/* Date */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
               <span className="text-sm text-muted-foreground">Date</span>
-              <span className={cn(
-                "font-medium",
-                extractedData.date ? "text-foreground" : "text-muted-foreground/50"
-              )}>
+              <span
+                className={cn(
+                  'font-medium',
+                  extractedData.date ? 'text-foreground' : 'text-muted-foreground/50'
+                )}
+              >
                 {extractedData.date || 'Not detected'}
               </span>
             </div>
@@ -348,12 +367,15 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             {/* Category */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
               <span className="text-sm text-muted-foreground">Category</span>
-              <span className={cn(
-                "font-medium",
-                extractedData.category ? "text-foreground" : "text-muted-foreground/50"
-              )}>
+              <span
+                className={cn(
+                  'font-medium',
+                  extractedData.category ? 'text-foreground' : 'text-muted-foreground/50'
+                )}
+              >
                 {extractedData.category
-                  ? EXPENSE_CATEGORIES.find(c => c.id === extractedData.category)?.label || extractedData.category
+                  ? EXPENSE_CATEGORIES.find((c) => c.id === extractedData.category)?.label ||
+                    extractedData.category
                   : 'Not detected'}
               </span>
             </div>
@@ -471,11 +493,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
       </p>
 
       {/* Cancel button */}
-      <Button
-        variant="ghost"
-        onClick={onCancel}
-        className="w-full h-11 touch-manipulation"
-      >
+      <Button variant="ghost" onClick={onCancel} className="w-full h-11 touch-manipulation">
         Cancel
       </Button>
     </div>

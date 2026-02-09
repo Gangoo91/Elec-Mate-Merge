@@ -50,11 +50,13 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
   };
 
   return (
-    <div className={cn(
-      "sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border",
-      isMobile ? "p-3 mt-2" : "p-4 sm:p-6 mt-6"
-    )}>
-      <div className={cn(isMobile ? "" : "max-w-5xl mx-auto")}>
+    <div
+      className={cn(
+        'sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border',
+        isMobile ? 'p-3 mt-2' : 'p-4 sm:p-6 mt-6'
+      )}
+    >
+      <div className={cn(isMobile ? '' : 'max-w-5xl mx-auto')}>
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
@@ -77,7 +79,7 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
             variant="outline"
             onClick={handleNavigatePrevious}
             disabled={!canNavigatePrevious}
-            className="h-12 px-6 touch-manipulation"
+            className="h-12 px-6 touch-manipulation active:scale-[0.98] transition-transform"
           >
             <ChevronLeft className="h-5 w-5 mr-2" />
             Previous
@@ -97,8 +99,8 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
               onClick={onGenerateCertificate}
               disabled={!canGenerateCertificate}
               className={cn(
-                "touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform",
-                isMobile ? "w-full h-11" : "h-12 px-6"
+                'touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform',
+                isMobile ? 'w-full h-11' : 'h-12 px-6'
               )}
             >
               Generate Certificate
@@ -108,8 +110,8 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
               onClick={handleNavigateNext}
               disabled={!canNavigateNext}
               className={cn(
-                "touch-manipulation active:scale-[0.98] transition-transform",
-                isMobile ? "h-11 px-4" : "h-12 px-6"
+                'touch-manipulation active:scale-[0.98] transition-transform',
+                isMobile ? 'h-11 px-4' : 'h-12 px-6'
               )}
             >
               Next

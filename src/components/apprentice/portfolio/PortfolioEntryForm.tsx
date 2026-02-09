@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check, BookOpen } from "lucide-react";
 import { PortfolioEntry, PortfolioCategory, PortfolioFile } from "@/types/portfolio";
 import { EvidenceUploader } from "@/components/apprentice/shared/EvidenceUploader";
 import { EvidenceRequirementsGuide } from "@/components/apprentice/portfolio/EvidenceRequirementsGuide";
@@ -14,6 +15,8 @@ import {
   ScrollbarFreeSelectValue,
 } from "@/components/ui/scrollbar-free-select";
 import { SingleSelectWithAdd } from "@/components/ui/single-select-with-add";
+import { useStudentQualification } from "@/hooks/useStudentQualification";
+import { ACPickerSheet } from "@/components/apprentice/portfolio/ACPickerSheet";
 
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
@@ -56,28 +59,6 @@ const TAGS_OPTIONS = [
   { value: "leadership", label: "Leadership" }
 ];
 
-const ASSESSMENT_CRITERIA_OPTIONS = [
-  { value: "ac1.1", label: "AC1.1 - Comply with health and safety requirements" },
-  { value: "ac1.2", label: "AC1.2 - Use appropriate tools and equipment safely" },
-  { value: "ac2.1", label: "AC2.1 - Select appropriate wiring systems" },
-  { value: "ac2.2", label: "AC2.2 - Install wiring systems correctly" },
-  { value: "ac3.1", label: "AC3.1 - Test electrical installations" },
-  { value: "ac3.2", label: "AC3.2 - Commission electrical systems" },
-  { value: "ac4.1", label: "AC4.1 - Identify electrical faults" },
-  { value: "ac4.2", label: "AC4.2 - Rectify electrical faults safely" },
-  { value: "ac5.1", label: "AC5.1 - Interpret technical documentation" },
-  { value: "ac5.2", label: "AC5.2 - Complete installation certificates" }
-];
-
-const LEARNING_OUTCOMES_OPTIONS = [
-  { value: "lo1", label: "LO1: Understand electrical safety principles" },
-  { value: "lo2", label: "LO2: Install electrical wiring systems" },
-  { value: "lo3", label: "LO3: Test and commission electrical installations" },
-  { value: "lo4", label: "LO4: Diagnose and repair electrical faults" },
-  { value: "lo5", label: "LO5: Apply industry standards and regulations" },
-  { value: "lo6", label: "LO6: Work effectively in electrical environments" },
-  { value: "lo7", label: "LO7: Communicate technical information effectively" }
-];
 
 const AWARDING_BODY_STANDARDS_OPTIONS = [
   { value: "bs7671", label: "BS 7671:2018 - Wiring Regulations" },
@@ -102,7 +83,9 @@ const WIZARD_STEPS = [
 
 const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: PortfolioEntryFormProps) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const { requirementCode } = useStudentQualification();
   const [currentStep, setCurrentStep] = useState(0);
+  const [showACPicker, setShowACPicker] = useState(false);
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     description: initialData?.description || "",
@@ -341,25 +324,44 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         hint="Add electrical skills you used or developed"
       />
 
-      {/* Learning Outcomes */}
-      <SingleSelectWithAdd
-        label="Learning Outcomes"
-        placeholder="Select a learning outcome"
-        value={formData.learningOutcomes}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, learningOutcomes: value }))}
-        options={LEARNING_OUTCOMES_OPTIONS}
-        hint="Add learning outcomes this work demonstrates"
-      />
-
-      {/* Assessment Criteria */}
-      <SingleSelectWithAdd
-        label="Assessment Criteria Met"
-        placeholder="Select an assessment criteria"
-        value={formData.assessmentCriteria}
-        onValueChange={(value) => setFormData(prev => ({ ...prev, assessmentCriteria: value }))}
-        options={ASSESSMENT_CRITERIA_OPTIONS}
-        hint="Add criteria you've addressed with this evidence"
-      />
+      {/* Assessment Criteria (from real qualification data) */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+          Assessment Criteria
+        </label>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full h-12 justify-between border-elec-gray/50 hover:border-elec-yellow/40 touch-manipulation"
+          onClick={() => setShowACPicker(true)}
+        >
+          <span className="flex items-center gap-2 text-sm">
+            <BookOpen className="h-4 w-4 text-elec-yellow" />
+            {formData.assessmentCriteria.length > 0
+              ? `${formData.assessmentCriteria.length} criteria selected`
+              : 'Select assessment criteria'}
+          </span>
+          <ChevronRight className="h-4 w-4 text-elec-light/60" />
+        </Button>
+        {formData.assessmentCriteria.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {formData.assessmentCriteria.slice(0, 6).map((ac) => (
+              <Badge key={ac} variant="outline" className="text-[10px] border-elec-yellow/30 text-elec-yellow">
+                {ac}
+              </Badge>
+            ))}
+            {formData.assessmentCriteria.length > 6 && (
+              <Badge variant="outline" className="text-[10px]">
+                +{formData.assessmentCriteria.length - 6} more
+              </Badge>
+            )}
+          </div>
+        )}
+        <p className="text-xs text-elec-light/70">
+          Browse your qualification's units and select criteria this work demonstrates
+        </p>
+      </div>
 
       {/* Tags */}
       <SingleSelectWithAdd
@@ -379,6 +381,14 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
         onValueChange={(value) => setFormData(prev => ({ ...prev, awardingBodyStandards: value }))}
         options={AWARDING_BODY_STANDARDS_OPTIONS}
         hint="Add relevant standards or regulations that apply"
+      />
+
+      <ACPickerSheet
+        open={showACPicker}
+        onOpenChange={setShowACPicker}
+        requirementCode={requirementCode}
+        selectedACs={formData.assessmentCriteria}
+        onDone={(acs) => setFormData(prev => ({ ...prev, assessmentCriteria: acs }))}
       />
     </div>
   );

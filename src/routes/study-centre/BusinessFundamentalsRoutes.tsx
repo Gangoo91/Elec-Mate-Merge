@@ -1,17 +1,13 @@
-import { Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
-import { lazyWithRetry } from "@/utils/lazyWithRetry";
+import { Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
-const BusinessFundamentalsIndex = lazyWithRetry(() => import("@/pages/study-centre/business-fundamentals/Index"));
-
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen bg-elec-dark">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mx-auto mb-4" />
-      <p className="text-gray-400">Loading...</p>
-    </div>
-  </div>
+const BusinessFundamentalsIndex = lazyWithRetry(
+  () => import('@/pages/study-centre/business-fundamentals/Index')
 );
+
+const LoadingFallback = CourseSkeleton;
 
 export default function BusinessFundamentalsRoutes() {
   return (

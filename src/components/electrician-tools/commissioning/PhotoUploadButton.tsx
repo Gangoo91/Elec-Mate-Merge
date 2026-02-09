@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Camera, Upload, X } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Camera, Upload, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface PhotoUploadButtonProps {
   onPhotoUploaded?: (url: string) => void;
@@ -12,12 +12,12 @@ interface PhotoUploadButtonProps {
   className?: string;
 }
 
-const PhotoUploadButton = ({ 
-  onPhotoUploaded, 
-  onPhotosUploaded, 
-  maxPhotos = 1, 
-  disabled, 
-  className 
+const PhotoUploadButton = ({
+  onPhotoUploaded,
+  onPhotosUploaded,
+  maxPhotos = 1,
+  disabled,
+  className,
 }: PhotoUploadButtonProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [photos, setPhotos] = useState<string[]>([]);
@@ -51,7 +51,9 @@ const PhotoUploadButton = ({
       setPreview(previewUrl);
 
       // Check authentication
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('You must be logged in to upload images');
       }
@@ -59,27 +61,25 @@ const PhotoUploadButton = ({
       // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-      
-      const { data, error } = await supabase.storage
-        .from('visual-uploads')
-        .upload(fileName, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
+
+      const { data, error } = await supabase.storage.from('visual-uploads').upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
 
       if (error) throw error;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('visual-uploads')
-        .getPublicUrl(data.path);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
 
       const newPhotos = [...photos, publicUrl];
       setPhotos(newPhotos);
 
       // Call legacy single photo callback for backwards compatibility
       if (onPhotoUploaded) onPhotoUploaded(publicUrl);
-      
+
       // Call multi-photo callback
       if (onPhotosUploaded) onPhotosUploaded(newPhotos);
 
@@ -111,8 +111,16 @@ const PhotoUploadButton = ({
           </div>
           <div className="grid grid-cols-3 gap-2">
             {photos.map((photoUrl, index) => (
-              <div key={index} className="relative group aspect-square rounded-lg overflow-hidden border border-elec-yellow/20 bg-elec-dark">
-                <img src={photoUrl} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
+              <div
+                key={index}
+                className="relative group aspect-square rounded-lg overflow-hidden border border-elec-yellow/20 bg-elec-dark"
+              >
+                <img
+                  src={photoUrl}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
                 <button
                   type="button"
                   onClick={() => handleRemovePhoto(index)}
@@ -133,15 +141,15 @@ const PhotoUploadButton = ({
       {/* Preview */}
       {preview && (
         <div className="mb-4 relative w-full aspect-video rounded-lg overflow-hidden border border-elec-yellow/20 bg-elec-dark">
-          <img 
-            src={preview} 
-            alt="Upload preview" 
-            className="w-full h-full object-cover"
-          />
+          <img src={preview} alt="Upload preview" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-3">
             <div className="flex gap-1">
               {[0, 100, 200].map((delay, i) => (
-                <div key={i} className="h-1.5 w-1.5 rounded-full bg-elec-yellow animate-pulse" style={{ animationDelay: `${delay}ms` }} />
+                <div
+                  key={i}
+                  className="h-1.5 w-1.5 rounded-full bg-elec-yellow animate-pulse"
+                  style={{ animationDelay: `${delay}ms` }}
+                />
               ))}
             </div>
           </div>
@@ -172,7 +180,7 @@ const PhotoUploadButton = ({
               if (file) handleFileSelect(file);
             }}
           />
-          
+
           <Button
             type="button"
             variant="outline"

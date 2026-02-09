@@ -15,11 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -75,10 +71,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => (
   <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
     <div className="flex items-center gap-3">
-      <div className={cn(
-        'w-10 h-10 rounded-xl flex items-center justify-center',
-        `bg-${color}/15`
-      )}>
+      <div
+        className={cn('w-10 h-11 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
+      >
         <Icon className={cn('h-5 w-5', `text-${color}`)} />
       </div>
       <div className="text-left">
@@ -100,10 +95,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   </CollapsibleTrigger>
 );
 
-const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({ formData, onUpdate }) => {
   const [openSections, setOpenSections] = useState({
     arrays: true,
     inverters: true,
@@ -123,41 +115,62 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
   }, [formData.arrays, onUpdate]);
 
   // Remove array
-  const removeArray = useCallback((index: number) => {
-    const updatedArrays = formData.arrays.filter((_, i) => i !== index);
-    // Renumber arrays
-    const renumbered = updatedArrays.map((arr, i) => ({ ...arr, arrayNumber: i + 1 }));
-    onUpdate('arrays', renumbered);
-    smartForm.recalculateAllValues({ ...formData, arrays: renumbered }, onUpdate);
-  }, [formData, onUpdate, smartForm]);
+  const removeArray = useCallback(
+    (index: number) => {
+      const updatedArrays = formData.arrays.filter((_, i) => i !== index);
+      // Renumber arrays
+      const renumbered = updatedArrays.map((arr, i) => ({ ...arr, arrayNumber: i + 1 }));
+      onUpdate('arrays', renumbered);
+      smartForm.recalculateAllValues({ ...formData, arrays: renumbered }, onUpdate);
+    },
+    [formData, onUpdate, smartForm]
+  );
 
   // Update array field
-  const updateArray = useCallback((index: number, field: string, value: any) => {
-    const updatedArrays = [...formData.arrays];
-    updatedArrays[index] = { ...updatedArrays[index], [field]: value };
+  const updateArray = useCallback(
+    (index: number, field: string, value: any) => {
+      const updatedArrays = [...formData.arrays];
+      updatedArrays[index] = { ...updatedArrays[index], [field]: value };
 
-    // Recalculate array values if relevant field changed
-    if (['panelWattage', 'panelCount', 'vocRated', 'iscRated', 'vmpRated', 'impRated', 'panelsPerString', 'stringsInParallel', 'orientation', 'tiltAngle', 'shadingFactor'].includes(field)) {
-      const calculated = smartForm.calculateArrayValues(updatedArrays[index]);
-      updatedArrays[index] = { ...updatedArrays[index], ...calculated };
-    }
+      // Recalculate array values if relevant field changed
+      if (
+        [
+          'panelWattage',
+          'panelCount',
+          'vocRated',
+          'iscRated',
+          'vmpRated',
+          'impRated',
+          'panelsPerString',
+          'stringsInParallel',
+          'orientation',
+          'tiltAngle',
+          'shadingFactor',
+        ].includes(field)
+      ) {
+        const calculated = smartForm.calculateArrayValues(updatedArrays[index]);
+        updatedArrays[index] = { ...updatedArrays[index], ...calculated };
+      }
 
-    onUpdate('arrays', updatedArrays);
+      onUpdate('arrays', updatedArrays);
 
-    // Recalculate totals
-    const totalCapacity = updatedArrays.reduce((sum, a) =>
-      sum + (a.panelWattage * a.panelCount) / 1000, 0
-    );
-    onUpdate('totalCapacity', Math.round(totalCapacity * 100) / 100);
+      // Recalculate totals
+      const totalCapacity = updatedArrays.reduce(
+        (sum, a) => sum + (a.panelWattage * a.panelCount) / 1000,
+        0
+      );
+      onUpdate('totalCapacity', Math.round(totalCapacity * 100) / 100);
 
-    // Recalculate yield
-    const { estimateAnnualYield } = require('@/data/solarPanelDatabase');
-    const totalYield = updatedArrays.reduce((sum, a) => {
-      const cap = (a.panelWattage * a.panelCount) / 1000;
-      return sum + estimateAnnualYield(cap, a.orientation, a.tiltAngle, a.shadingFactor);
-    }, 0);
-    onUpdate('estimatedAnnualYield', Math.round(totalYield));
-  }, [formData.arrays, onUpdate, smartForm]);
+      // Recalculate yield
+      const { estimateAnnualYield } = require('@/data/solarPanelDatabase');
+      const totalYield = updatedArrays.reduce((sum, a) => {
+        const cap = (a.panelWattage * a.panelCount) / 1000;
+        return sum + estimateAnnualYield(cap, a.orientation, a.tiltAngle, a.shadingFactor);
+      }, 0);
+      onUpdate('estimatedAnnualYield', Math.round(totalYield));
+    },
+    [formData.arrays, onUpdate, smartForm]
+  );
 
   // Add new inverter
   const addInverter = useCallback(() => {
@@ -166,17 +179,23 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
   }, [formData.inverters, onUpdate]);
 
   // Remove inverter
-  const removeInverter = useCallback((index: number) => {
-    const updatedInverters = formData.inverters.filter((_, i) => i !== index);
-    onUpdate('inverters', updatedInverters);
-  }, [formData.inverters, onUpdate]);
+  const removeInverter = useCallback(
+    (index: number) => {
+      const updatedInverters = formData.inverters.filter((_, i) => i !== index);
+      onUpdate('inverters', updatedInverters);
+    },
+    [formData.inverters, onUpdate]
+  );
 
   // Update inverter field
-  const updateInverter = useCallback((index: number, field: string, value: any) => {
-    const updatedInverters = [...formData.inverters];
-    updatedInverters[index] = { ...updatedInverters[index], [field]: value };
-    onUpdate('inverters', updatedInverters);
-  }, [formData.inverters, onUpdate]);
+  const updateInverter = useCallback(
+    (index: number, field: string, value: any) => {
+      const updatedInverters = [...formData.inverters];
+      updatedInverters[index] = { ...updatedInverters[index], [field]: value };
+      onUpdate('inverters', updatedInverters);
+    },
+    [formData.inverters, onUpdate]
+  );
 
   return (
     <div className="space-y-4 px-4 sm:px-0">
@@ -229,7 +248,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         Panel Make & Model
                       </Label>
                       <PVPanelAutocomplete
-                        value={array.panelMake && array.panelModel ? `${array.panelMake} ${array.panelModel}` : ''}
+                        value={
+                          array.panelMake && array.panelModel
+                            ? `${array.panelMake} ${array.panelModel}`
+                            : ''
+                        }
                         onPanelSelect={(panel) => {
                           if (panel) {
                             smartForm.updateArrayWithPanelSelection(
@@ -256,8 +279,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.panelWattage || ''}
-                          onChange={(e) => updateArray(index, 'panelWattage', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'panelWattage',
+                              e.target.value === '' ? 0 : parseInt(e.target.value) || 0
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -266,8 +295,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.panelCount || ''}
-                          onChange={(e) => updateArray(index, 'panelCount', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'panelCount',
+                              e.target.value === '' ? 0 : parseInt(e.target.value) || 0
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -277,8 +312,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           step="0.01"
                           value={array.vocRated || ''}
-                          onChange={(e) => updateArray(index, 'vocRated', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'vocRated',
+                              e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -288,8 +329,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           step="0.01"
                           value={array.iscRated || ''}
-                          onChange={(e) => updateArray(index, 'iscRated', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'iscRated',
+                              e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
                     </div>
@@ -301,8 +348,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.panelsPerString || array.panelCount}
-                          onChange={(e) => updateArray(index, 'panelsPerString', e.target.value === '' ? 0 : parseInt(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'panelsPerString',
+                              e.target.value === '' ? 0 : parseInt(e.target.value) || 0
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -311,8 +364,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.stringsInParallel || 1}
-                          onChange={(e) => updateArray(index, 'stringsInParallel', e.target.value === '' ? 1 : parseInt(e.target.value) || 1)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(
+                              index,
+                              'stringsInParallel',
+                              e.target.value === '' ? 1 : parseInt(e.target.value) || 1
+                            )
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -322,7 +381,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           value={array.stringVoltageVoc?.toFixed(1) || ''}
                           disabled
-                          className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
+                          className="h-11 text-base touch-manipulation border-white/30 bg-muted/50"
                         />
                       </div>
 
@@ -332,7 +391,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           value={array.stringCurrentIsc?.toFixed(2) || ''}
                           disabled
-                          className="h-10 text-base touch-manipulation border-white/30 bg-muted/50"
+                          className="h-11 text-base touch-manipulation border-white/30 bg-muted/50"
                         />
                       </div>
                     </div>
@@ -348,7 +407,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           value={array.orientation || 'South'}
                           onValueChange={(value) => updateArray(index, 'orientation', value)}
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -366,8 +425,10 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={array.tiltAngle || 35}
-                          onChange={(e) => updateArray(index, 'tiltAngle', parseInt(e.target.value) || 35)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateArray(index, 'tiltAngle', parseInt(e.target.value) || 35)
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -375,9 +436,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Label className="text-xs text-muted-foreground">Shading Factor</Label>
                         <Select
                           value={array.shadingFactor?.toString() || '1'}
-                          onValueChange={(value) => updateArray(index, 'shadingFactor', parseFloat(value))}
+                          onValueChange={(value) =>
+                            updateArray(index, 'shadingFactor', parseFloat(value))
+                          }
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -394,9 +457,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Label className="text-xs text-muted-foreground">Mounting Type</Label>
                         <Select
                           value={array.mountingType || 'roof-mounted'}
-                          onValueChange={(value) => updateArray(index, 'mountingType', value as MountingType)}
+                          onValueChange={(value) =>
+                            updateArray(index, 'mountingType', value as MountingType)
+                          }
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -475,7 +540,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         Inverter Make & Model
                       </Label>
                       <InverterAutocomplete
-                        value={inverter.make && inverter.model ? `${inverter.make} ${inverter.model}` : ''}
+                        value={
+                          inverter.make && inverter.model
+                            ? `${inverter.make} ${inverter.model}`
+                            : ''
+                        }
                         onInverterSelect={(selectedInverter) => {
                           if (selectedInverter) {
                             smartForm.updateInverterWithSelection(
@@ -502,7 +571,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           value={inverter.serialNumber || ''}
                           onChange={(e) => updateInverter(index, 'serialNumber', e.target.value)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -512,8 +581,10 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           type="number"
                           step="0.1"
                           value={inverter.ratedPowerAc || ''}
-                          onChange={(e) => updateInverter(index, 'ratedPowerAc', parseFloat(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateInverter(index, 'ratedPowerAc', parseFloat(e.target.value) || 0)
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -521,9 +592,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Label className="text-xs text-muted-foreground">Type</Label>
                         <Select
                           value={inverter.type || 'string'}
-                          onValueChange={(value) => updateInverter(index, 'type', value as InverterType)}
+                          onValueChange={(value) =>
+                            updateInverter(index, 'type', value as InverterType)
+                          }
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -540,8 +613,10 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={inverter.mpptCount || 2}
-                          onChange={(e) => updateInverter(index, 'mpptCount', parseInt(e.target.value) || 1)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateInverter(index, 'mpptCount', parseInt(e.target.value) || 1)
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
                     </div>
@@ -552,8 +627,10 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Input
                           type="number"
                           value={inverter.maxInputVoltage || ''}
-                          onChange={(e) => updateInverter(index, 'maxInputVoltage', parseInt(e.target.value) || 0)}
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          onChange={(e) =>
+                            updateInverter(index, 'maxInputVoltage', parseInt(e.target.value) || 0)
+                          }
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -563,7 +640,7 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                           value={inverter.location || ''}
                           onChange={(e) => updateInverter(index, 'location', e.target.value)}
                           placeholder="e.g., Garage"
-                          className="h-10 text-base touch-manipulation border-white/30"
+                          className="h-11 text-base touch-manipulation border-white/30"
                         />
                       </div>
 
@@ -571,9 +648,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         <Label className="text-xs text-muted-foreground">Phases</Label>
                         <Select
                           value={inverter.phases || 'single'}
-                          onValueChange={(value) => updateInverter(index, 'phases', value as 'single' | 'three')}
+                          onValueChange={(value) =>
+                            updateInverter(index, 'phases', value as 'single' | 'three')
+                          }
                         >
-                          <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -639,9 +718,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       <Label className="text-xs text-muted-foreground">Make</Label>
                       <Input
                         value={formData.battery?.make || ''}
-                        onChange={(e) => onUpdate('battery', { ...formData.battery, make: e.target.value })}
+                        onChange={(e) =>
+                          onUpdate('battery', { ...formData.battery, make: e.target.value })
+                        }
                         placeholder="e.g., GivEnergy"
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
 
@@ -649,9 +730,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       <Label className="text-xs text-muted-foreground">Model</Label>
                       <Input
                         value={formData.battery?.model || ''}
-                        onChange={(e) => onUpdate('battery', { ...formData.battery, model: e.target.value })}
+                        onChange={(e) =>
+                          onUpdate('battery', { ...formData.battery, model: e.target.value })
+                        }
                         placeholder="e.g., All-in-One"
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
                   </div>
@@ -661,8 +744,10 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       <Label className="text-xs text-muted-foreground">Serial Number</Label>
                       <Input
                         value={formData.battery?.serialNumber || ''}
-                        onChange={(e) => onUpdate('battery', { ...formData.battery, serialNumber: e.target.value })}
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        onChange={(e) =>
+                          onUpdate('battery', { ...formData.battery, serialNumber: e.target.value })
+                        }
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
 
@@ -672,8 +757,13 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                         type="number"
                         step="0.1"
                         value={formData.battery?.capacity || ''}
-                        onChange={(e) => onUpdate('battery', { ...formData.battery, capacity: parseFloat(e.target.value) || 0 })}
-                        className="h-10 text-base touch-manipulation border-white/30"
+                        onChange={(e) =>
+                          onUpdate('battery', {
+                            ...formData.battery,
+                            capacity: parseFloat(e.target.value) || 0,
+                          })
+                        }
+                        className="h-11 text-base touch-manipulation border-white/30"
                       />
                     </div>
 
@@ -681,9 +771,14 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                       <Label className="text-xs text-muted-foreground">Chemistry</Label>
                       <Select
                         value={formData.battery?.chemistry || 'lithium-ion'}
-                        onValueChange={(value) => onUpdate('battery', { ...formData.battery, chemistry: value as BatteryChemistry })}
+                        onValueChange={(value) =>
+                          onUpdate('battery', {
+                            ...formData.battery,
+                            chemistry: value as BatteryChemistry,
+                          })
+                        }
                       >
-                        <SelectTrigger className="h-10 touch-manipulation bg-elec-gray border-elec-gray">
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -700,9 +795,11 @@ const SolarPVSystemDesign: React.FC<SolarPVSystemDesignProps> = ({
                     <Label className="text-xs text-muted-foreground">Location</Label>
                     <Input
                       value={formData.battery?.location || ''}
-                      onChange={(e) => onUpdate('battery', { ...formData.battery, location: e.target.value })}
+                      onChange={(e) =>
+                        onUpdate('battery', { ...formData.battery, location: e.target.value })
+                      }
                       placeholder="e.g., Garage, Utility Room"
-                      className="h-10 text-base touch-manipulation border-white/30"
+                      className="h-11 text-base touch-manipulation border-white/30"
                     />
                   </div>
                 </div>

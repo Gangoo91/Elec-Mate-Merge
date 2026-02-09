@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
@@ -19,21 +25,32 @@ interface DeclarationSectionProps {
   isValid: boolean;
 }
 
-const DeclarationSection = ({ 
-  formData, 
-  onUpdate, 
-  onGenerateCertificate, 
+const DeclarationSection = ({
+  formData,
+  onUpdate,
+  onGenerateCertificate,
   onSaveDraft,
-  isValid 
+  isValid,
 }: DeclarationSectionProps) => {
   const getCompletionStatus = () => {
     const required = [
-      'propertyAddress', 'clientName', 'workDate', 'workType', 'workDescription',
-      'earthingArrangement', 'electricianName', 'electricianPosition', 'signatureDate'
+      'propertyAddress',
+      'clientName',
+      'workDate',
+      'workType',
+      'workDescription',
+      'earthingArrangement',
+      'electricianName',
+      'electricianPosition',
+      'signatureDate',
     ];
-    
-    const completed = required.filter(field => formData[field]?.trim()).length;
-    return { completed, total: required.length, percentage: Math.round((completed / required.length) * 100) };
+
+    const completed = required.filter((field) => formData[field]?.trim()).length;
+    return {
+      completed,
+      total: required.length,
+      percentage: Math.round((completed / required.length) * 100),
+    };
   };
 
   const status = getCompletionStatus();
@@ -51,23 +68,23 @@ const DeclarationSection = ({
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Completion Progress</span>
-            <Badge variant={status.percentage >= 100 ? "default" : "secondary"}>
+            <Badge variant={status.percentage >= 100 ? 'default' : 'secondary'}>
               {status.completed}/{status.total} sections completed
             </Badge>
           </div>
-          
+
           <div className="w-full bg-muted rounded-full h-2">
-            <div 
-              className="bg-primary h-2 rounded-full transition-all duration-300" 
+            <div
+              className="bg-primary h-2 rounded-full transition-all duration-300"
               style={{ width: `${status.percentage}%` }}
             />
           </div>
-          
+
           <p className="text-sm text-muted-foreground">
-            {status.percentage}% complete. {status.percentage < 100 ? 
-              `${status.total - status.completed} more sections required.` : 
-              'All required sections completed.'
-            }
+            {status.percentage}% complete.{' '}
+            {status.percentage < 100
+              ? `${status.total - status.completed} more sections required.`
+              : 'All required sections completed.'}
           </p>
         </CardContent>
       </Card>
@@ -142,7 +159,7 @@ const DeclarationSection = ({
                 </Select>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="schemeProvider" className="text-sm font-medium">
@@ -166,7 +183,7 @@ const DeclarationSection = ({
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div>
                 <Label htmlFor="registrationNumber" className="text-sm font-medium">
                   Registration Number
@@ -176,9 +193,10 @@ const DeclarationSection = ({
                   placeholder="Scheme registration number"
                   value={formData.registrationNumber || ''}
                   onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="signatureDate" className="text-sm font-medium">
                   Date of Declaration *
@@ -188,6 +206,7 @@ const DeclarationSection = ({
                   type="date"
                   value={formData.signatureDate || ''}
                   onChange={(e) => onUpdate('signatureDate', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
@@ -206,16 +225,17 @@ const DeclarationSection = ({
         <CardContent className="space-y-4">
           <div className="bg-white/60 dark:bg-black/20 p-4 rounded-lg border border-blue-200/50 dark:border-blue-800/50">
             <p className="text-sm leading-relaxed text-blue-900 dark:text-blue-100">
-              <strong>I/We certify that:</strong><br/>
-              The work described above has been carried out by me/us in accordance with BS 7671:2018 
-              (IET Wiring Regulations 18th Edition) and that all the information recorded above is accurate 
-              to the best of my/our knowledge and belief.
+              <strong>I/We certify that:</strong>
+              <br />
+              The work described above has been carried out by me/us in accordance with BS 7671:2018
+              (IET Wiring Regulations 18th Edition) and that all the information recorded above is
+              accurate to the best of my/our knowledge and belief.
             </p>
           </div>
-          
+
           <div className="space-y-3">
             <div className="flex items-start space-x-2">
-              <Checkbox 
+              <Checkbox
                 id="bs7671Compliance"
                 checked={formData.bs7671Compliance || false}
                 onCheckedChange={(checked) => onUpdate('bs7671Compliance', checked)}
@@ -224,9 +244,9 @@ const DeclarationSection = ({
                 I confirm the work complies with BS 7671:2018 (IET Wiring Regulations 18th Edition)
               </Label>
             </div>
-            
+
             <div className="flex items-start space-x-2">
-              <Checkbox 
+              <Checkbox
                 id="testResultsAccurate"
                 checked={formData.testResultsAccurate || false}
                 onCheckedChange={(checked) => onUpdate('testResultsAccurate', checked)}
@@ -235,27 +255,29 @@ const DeclarationSection = ({
                 I confirm all test results and measurements recorded are accurate
               </Label>
             </div>
-            
+
             <div className="flex items-start space-x-2">
-              <Checkbox 
+              <Checkbox
                 id="workSafety"
                 checked={formData.workSafety || false}
                 onCheckedChange={(checked) => onUpdate('workSafety', checked)}
               />
               <Label htmlFor="workSafety" className="text-sm leading-relaxed">
-                I confirm the work has been carried out safely and in accordance with relevant safety standards
+                I confirm the work has been carried out safely and in accordance with relevant
+                safety standards
               </Label>
             </div>
-            
+
             {formData.partPRequired === 'yes' && (
               <div className="flex items-start space-x-2">
-                <Checkbox 
+                <Checkbox
                   id="partPNotification"
                   checked={formData.partPNotification || false}
                   onCheckedChange={(checked) => onUpdate('partPNotification', checked)}
                 />
                 <Label htmlFor="partPNotification" className="text-sm leading-relaxed">
-                  I confirm Building Regulations (Part P) notification requirements have been considered
+                  I confirm Building Regulations (Part P) notification requirements have been
+                  considered
                 </Label>
               </div>
             )}
@@ -282,7 +304,7 @@ const DeclarationSection = ({
           <p className="text-xs text-muted-foreground">
             By providing your signature, you are confirming a legally binding digital signature
           </p>
-          
+
           <div>
             <Label htmlFor="additionalNotes" className="text-sm font-medium">
               Additional Notes & Observations
@@ -292,7 +314,7 @@ const DeclarationSection = ({
               placeholder="Any additional comments, recommendations, or important notes regarding the installation..."
               value={formData.additionalNotes || ''}
               onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-              className="min-h-[80px]"
+              className="min-h-[120px] text-base touch-manipulation"
             />
           </div>
         </CardContent>
@@ -311,32 +333,28 @@ const DeclarationSection = ({
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                Please complete all required fields before generating the certificate. 
-                Required sections are marked with an asterisk (*).
+                Please complete all required fields before generating the certificate. Required
+                sections are marked with an asterisk (*).
               </AlertDescription>
             </Alert>
           )}
-          
+
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
+            <Button
               onClick={onGenerateCertificate}
               disabled={!isValid}
-              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+              className="h-11 flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <FileText className="h-4 w-4 mr-2" />
               Generate Final Certificate
             </Button>
-            
-            <Button 
-              variant="outline" 
-              onClick={onSaveDraft}
-              className="flex-1"
-            >
+
+            <Button variant="outline" onClick={onSaveDraft} className="h-11 flex-1">
               <Download className="h-4 w-4 mr-2" />
               Save Draft
             </Button>
           </div>
-          
+
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
               Certificates are generated in PDF format compliant with BS 7671:2018 requirements

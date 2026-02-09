@@ -10,10 +10,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, CheckCircle2, XCircle, Minus, Settings, Battery, AlertTriangle, Volume2, Plus, Trash2, Info } from 'lucide-react';
+import {
+  ChevronDown,
+  CheckCircle2,
+  XCircle,
+  Minus,
+  Settings,
+  Battery,
+  AlertTriangle,
+  Volume2,
+  Plus,
+  Trash2,
+  Info,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useFireAlarmSmartForm, SoundValidationResult } from '@/hooks/inspection/useFireAlarmSmartForm';
+import {
+  useFireAlarmSmartForm,
+  SoundValidationResult,
+} from '@/hooks/inspection/useFireAlarmSmartForm';
 import { AreaType } from '@/data/fireAlarmCompliance';
 
 interface FireAlarmTestScheduleProps {
@@ -29,32 +44,50 @@ const TestResultSelect: React.FC<{
   id?: string;
 }> = ({ value, onChange, id }) => (
   <Select value={value || ''} onValueChange={(v) => onChange(v as TestResult)}>
-    <SelectTrigger className="h-11 touch-manipulation w-full bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow" id={id}>
+    <SelectTrigger
+      className="h-11 touch-manipulation w-full bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+      id={id}
+    >
       <SelectValue placeholder="Select">
-        {value === 'pass' && <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="h-4 w-4" /> Pass</span>}
-        {value === 'fail' && <span className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /> Fail</span>}
-        {value === 'na' && <span className="flex items-center gap-2 text-muted-foreground"><Minus className="h-4 w-4" /> N/A</span>}
+        {value === 'pass' && (
+          <span className="flex items-center gap-2 text-green-400">
+            <CheckCircle2 className="h-4 w-4" /> Pass
+          </span>
+        )}
+        {value === 'fail' && (
+          <span className="flex items-center gap-2 text-red-400">
+            <XCircle className="h-4 w-4" /> Fail
+          </span>
+        )}
+        {value === 'na' && (
+          <span className="flex items-center gap-2 text-muted-foreground">
+            <Minus className="h-4 w-4" /> N/A
+          </span>
+        )}
         {!value && <span className="text-muted-foreground">Select</span>}
       </SelectValue>
     </SelectTrigger>
     <SelectContent className="z-[100] bg-background border-border text-foreground">
       <SelectItem value="pass">
-        <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="h-4 w-4" /> Pass</span>
+        <span className="flex items-center gap-2 text-green-400">
+          <CheckCircle2 className="h-4 w-4" /> Pass
+        </span>
       </SelectItem>
       <SelectItem value="fail">
-        <span className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /> Fail</span>
+        <span className="flex items-center gap-2 text-red-400">
+          <XCircle className="h-4 w-4" /> Fail
+        </span>
       </SelectItem>
       <SelectItem value="na">
-        <span className="flex items-center gap-2 text-muted-foreground"><Minus className="h-4 w-4" /> N/A</span>
+        <span className="flex items-center gap-2 text-muted-foreground">
+          <Minus className="h-4 w-4" /> N/A
+        </span>
       </SelectItem>
     </SelectContent>
   </Select>
 );
 
-const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const { validateSoundReading, getMinimumDbRequired } = useFireAlarmSmartForm();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
@@ -65,7 +98,9 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
   });
 
   // Store validation results for each sound reading
-  const [validationResults, setValidationResults] = useState<Record<string, SoundValidationResult>>({});
+  const [validationResults, setValidationResults] = useState<Record<string, SoundValidationResult>>(
+    {}
+  );
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -106,18 +141,19 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
 
   const updateSoundReading = (id: string, field: string, value: any) => {
     const readings = formData.soundLevelReadings || [];
-    const updatedReadings = readings.map((r: any) =>
-      r.id === id ? { ...r, [field]: value } : r
-    );
+    const updatedReadings = readings.map((r: any) => (r.id === id ? { ...r, [field]: value } : r));
     onUpdate('soundLevelReadings', updatedReadings);
   };
 
   const removeSoundReading = (id: string) => {
     const readings = formData.soundLevelReadings || [];
-    onUpdate('soundLevelReadings', readings.filter((r: any) => r.id !== id));
+    onUpdate(
+      'soundLevelReadings',
+      readings.filter((r: any) => r.id !== id)
+    );
 
     // Remove validation result
-    setValidationResults(prev => {
+    setValidationResults((prev) => {
       const newResults = { ...prev };
       delete newResults[id];
       return newResults;
@@ -139,11 +175,12 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
     // If dB reading or area type changed, validate and auto-set result
     if (field === 'dBReading' || field === 'areaType') {
       const dbValue = field === 'dBReading' ? value : updatedReading.dBReading;
-      const areaType = (field === 'areaType' ? value : updatedReading.areaType) as AreaType || 'general';
+      const areaType =
+        ((field === 'areaType' ? value : updatedReading.areaType) as AreaType) || 'general';
 
       if (dbValue) {
         const result = validateSoundReading(dbValue, areaType);
-        setValidationResults(prev => ({ ...prev, [id]: result }));
+        setValidationResults((prev) => ({ ...prev, [id]: result }));
 
         // Auto-set the result and minRequired based on validation
         updateSoundReading(id, 'result', result.isValid ? 'pass' : 'fail');
@@ -161,9 +198,9 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
   ];
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Control Panel Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.panel} onOpenChange={() => toggleSection('panel')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -175,10 +212,12 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">Control Panel Tests</h3>
                   <span className="text-xs text-muted-foreground">Power, zones, indicators</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.panel && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.panel && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -188,15 +227,17 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Control Panel Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.panel && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.panel && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Power On Indicator</Label>
@@ -254,7 +295,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
       </div>
 
       {/* Power & Battery Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.power} onOpenChange={() => toggleSection('power')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -266,10 +307,12 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">Power & Battery Tests</h3>
                   <span className="text-xs text-muted-foreground">Mains, charger, backup</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.power && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.power && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -279,15 +322,17 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Power & Battery Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.power && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.power && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Mains Supply</Label>
@@ -334,7 +379,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
       </div>
 
       {/* Fault Simulation Tests */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.fault} onOpenChange={() => toggleSection('fault')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -346,10 +391,12 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   <h3 className="font-semibold text-foreground">Fault Simulation Tests</h3>
                   <span className="text-xs text-muted-foreground">Open, short, earth faults</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.fault && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.fault && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -359,15 +406,17 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Fault Simulation Tests</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.fault && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.fault && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Open Circuit Fault</Label>
@@ -404,8 +453,11 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
       </div>
 
       {/* Sound Level Readings */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
-        <Collapsible open={openSections.soundLevels} onOpenChange={() => toggleSection('soundLevels')}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.soundLevels}
+          onOpenChange={() => toggleSection('soundLevels')}
+        >
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
@@ -414,12 +466,16 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Sound Level Readings</h3>
-                  <span className="text-xs text-muted-foreground">{(formData.soundLevelReadings || []).length} readings</span>
+                  <span className="text-xs text-muted-foreground">
+                    {(formData.soundLevelReadings || []).length} readings
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.soundLevels && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.soundLevels && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -429,23 +485,28 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                   </div>
                   <span className="text-white font-semibold">Sound Level Readings</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.soundLevels && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.soundLevels && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* BS 5839 Info Box */}
               <div className="flex items-start gap-3 p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
                 <Info className="h-5 w-5 text-purple-400 shrink-0 mt-0.5" />
                 <div className="text-sm">
                   <p className="font-medium text-foreground">BS 5839-1 Sound Level Requirements</p>
                   <p className="text-muted-foreground mt-1">
-                    Minimum <span className="text-green-400 font-medium">65 dB(A)</span> in general occupied areas<br/>
-                    Minimum <span className="text-orange-400 font-medium">75 dB(A)</span> in bedrooms/sleeping areas
+                    Minimum <span className="text-green-400 font-medium">65 dB(A)</span> in general
+                    occupied areas
+                    <br />
+                    Minimum <span className="text-orange-400 font-medium">75 dB(A)</span> in
+                    bedrooms/sleeping areas
                   </p>
                 </div>
               </div>
@@ -454,19 +515,26 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                 const validation = validationResults[reading.id];
 
                 return (
-                  <div key={reading.id} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
+                  <div
+                    key={reading.id}
+                    className="border-b border-white/10 pb-4 last:border-0 last:pb-0"
+                  >
                     {/* Header Row */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-foreground">Reading {index + 1}</span>
+                        <span className="text-sm font-medium text-foreground">
+                          Reading {index + 1}
+                        </span>
                         {/* Auto-validation badge */}
                         {validation && (
-                          <span className={cn(
-                            "px-2 py-0.5 rounded text-[10px] font-bold",
-                            validation.isValid
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-red-500/20 text-red-400"
-                          )}>
+                          <span
+                            className={cn(
+                              'px-2 py-0.5 rounded text-[10px] font-bold',
+                              validation.isValid
+                                ? 'bg-green-500/20 text-green-400'
+                                : 'bg-red-500/20 text-red-400'
+                            )}
+                          >
                             {validation.isValid ? 'PASS' : 'FAIL'}
                           </span>
                         )}
@@ -475,7 +543,8 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => removeSoundReading(reading.id)}
-                        className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                        className="h-11 w-11 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-[0.98] transition-transform"
+                        aria-label="Remove item"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -504,7 +573,9 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                         <Input
                           placeholder="Main corridor"
                           value={reading.location || ''}
-                          onChange={(e) => updateSoundReading(reading.id, 'location', e.target.value)}
+                          onChange={(e) =>
+                            updateSoundReading(reading.id, 'location', e.target.value)
+                          }
                           className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                         />
                       </div>
@@ -518,7 +589,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent className="z-[100] bg-elec-gray border-white/20 text-foreground">
-                            {areaTypeOptions.map(opt => (
+                            {areaTypeOptions.map((opt) => (
                               <SelectItem key={opt.value} value={opt.value}>
                                 {opt.label}
                               </SelectItem>
@@ -533,18 +604,23 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
                           type="number"
                           min="0"
                           value={reading.dBReading || ''}
-                          onChange={(e) => handleSoundReadingChange(reading.id, 'dBReading', e.target.value)}
+                          onChange={(e) =>
+                            handleSoundReadingChange(reading.id, 'dBReading', e.target.value)
+                          }
                           className={cn(
-                            "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                            validation?.isValid === false && "border-red-500/50",
-                            validation?.isValid === true && "border-green-500/50"
+                            'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                            validation?.isValid === false && 'border-red-500/50',
+                            validation?.isValid === true && 'border-green-500/50'
                           )}
                         />
                       </div>
                       <div className="space-y-2">
                         <Label className="text-sm">Min Required</Label>
                         <Input
-                          value={reading.minRequired || getMinimumDbRequired(reading.areaType || 'general')}
+                          value={
+                            reading.minRequired ||
+                            getMinimumDbRequired(reading.areaType || 'general')
+                          }
                           className="h-11 text-base touch-manipulation border-white/30 bg-black/20"
                           readOnly
                         />
@@ -575,9 +651,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
       </div>
 
       {/* Overall Battery Test Result */}
-      <div className={cn(
-        isMobile ? "px-4 py-4" : "eicr-section-card p-4"
-      )}>
+      <div className={cn(isMobile ? 'px-4 py-4' : 'eicr-section-card p-4')}>
         <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
           Battery Backup Test
@@ -594,10 +668,14 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({
               </SelectTrigger>
               <SelectContent className="z-[100] bg-background border-border text-foreground">
                 <SelectItem value="pass">
-                  <span className="flex items-center gap-2 text-green-400"><CheckCircle2 className="h-4 w-4" /> Pass</span>
+                  <span className="flex items-center gap-2 text-green-400">
+                    <CheckCircle2 className="h-4 w-4" /> Pass
+                  </span>
                 </SelectItem>
                 <SelectItem value="fail">
-                  <span className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /> Fail</span>
+                  <span className="flex items-center gap-2 text-red-400">
+                    <XCircle className="h-4 w-4" /> Fail
+                  </span>
                 </SelectItem>
               </SelectContent>
             </Select>

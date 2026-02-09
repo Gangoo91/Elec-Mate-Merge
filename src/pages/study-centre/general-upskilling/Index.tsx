@@ -40,161 +40,161 @@ interface Course {
 const courses: Course[] = [
   {
     id: 1,
-    title: "IPAF Mobile Scaffold Training",
-    description: "Safe assembly, use, and inspection of mobile access towers on site",
+    title: 'IPAF Mobile Scaffold Training',
+    description: 'Safe assembly, use, and inspection of mobile access towers on site',
     icon: TowerControl,
-    level: "Foundation",
-    duration: "Half day",
-    link: "ipaf-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'ipaf-course',
   },
   {
     id: 2,
-    title: "PASMA Towers for Users",
-    description: "PASMA-certified training for mobile access tower assembly, inspection, and safe use",
+    title: 'PASMA Towers for Users',
+    description:
+      'PASMA-certified training for mobile access tower assembly, inspection, and safe use',
     icon: HardHat,
-    level: "Foundation",
-    duration: "Half day",
-    link: "pasma-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'pasma-course',
   },
   {
     id: 3,
-    comingSoon: true,
-    title: "MEWP Operator Training",
-    description: "Mobile elevating work platform operation, safety checks, and best practice",
+    title: 'MEWP Operator Training',
+    description: 'Mobile elevating work platform operation, safety checks, and best practice',
     icon: CableCar,
-    level: "Intermediate",
-    duration: "1-2 days",
-    link: "mewp-course",
+    level: 'Intermediate',
+    duration: '3.5 hours',
+    link: 'mewp-course',
   },
   {
     id: 4,
-    comingSoon: true,
-    title: "First Aid at Work",
-    description: "Workplace first aid procedures, CPR, and emergency response training",
+    title: 'First Aid at Work',
+    description: 'Workplace first aid procedures, CPR, and emergency response training',
     icon: Heart,
-    level: "Intermediate",
-    duration: "3 days",
-    link: "first-aid-course",
+    level: 'Intermediate',
+    duration: '3 days',
+    link: 'first-aid-course',
   },
   {
     id: 5,
     comingSoon: true,
-    title: "Mental Health First Aid",
-    description: "Recognising and supporting mental health issues in the workplace",
+    title: 'Mental Health First Aid',
+    description: 'Recognising and supporting mental health issues in the workplace',
     icon: Brain,
-    level: "Intermediate",
-    duration: "2 days",
-    link: "mental-health-course",
+    level: 'Intermediate',
+    duration: '2 days',
+    link: 'mental-health-course',
   },
   {
     id: 6,
     comingSoon: true,
-    title: "Asbestos Awareness",
-    description: "Identifying asbestos-containing materials and safe working procedures",
+    title: 'Asbestos Awareness',
+    description: 'Identifying asbestos-containing materials and safe working procedures',
     icon: AlertTriangle,
-    level: "Foundation",
-    duration: "Half day",
-    link: "asbestos-awareness-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'asbestos-awareness-course',
   },
   {
     id: 7,
     comingSoon: true,
-    title: "Working at Height",
-    description: "Risk assessment, fall prevention, and safe practices for working at height",
+    title: 'Working at Height',
+    description: 'Risk assessment, fall prevention, and safe practices for working at height',
     icon: ArrowUpFromLine,
-    level: "Foundation",
-    duration: "Half day",
-    link: "working-at-height-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'working-at-height-course',
   },
   {
     id: 8,
     comingSoon: true,
-    title: "Manual Handling",
-    description: "Safe lifting techniques, risk assessment, and injury prevention on site",
+    title: 'Manual Handling',
+    description: 'Safe lifting techniques, risk assessment, and injury prevention on site',
     icon: PackageOpen,
-    level: "Foundation",
-    duration: "Half day",
-    link: "manual-handling-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'manual-handling-course',
   },
   {
     id: 9,
     comingSoon: true,
-    title: "COSHH Awareness",
-    description: "Control of substances hazardous to health — identification and safe handling",
+    title: 'COSHH Awareness',
+    description: 'Control of substances hazardous to health — identification and safe handling',
     icon: FlaskConical,
-    level: "Foundation",
-    duration: "Half day",
-    link: "coshh-awareness-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'coshh-awareness-course',
   },
   {
     id: 10,
     comingSoon: true,
-    title: "Confined Spaces Awareness",
-    description: "Hazard identification and safe entry procedures for confined spaces",
+    title: 'Confined Spaces Awareness',
+    description: 'Hazard identification and safe entry procedures for confined spaces',
     icon: DoorOpen,
-    level: "Intermediate",
-    duration: "1 day",
-    link: "confined-spaces-course",
+    level: 'Intermediate',
+    duration: '1 day',
+    link: 'confined-spaces-course',
   },
   {
     id: 11,
     comingSoon: true,
-    title: "Fire Safety & Fire Marshal",
-    description: "Fire prevention, evacuation procedures, and fire marshal responsibilities",
+    title: 'Fire Safety & Fire Marshal',
+    description: 'Fire prevention, evacuation procedures, and fire marshal responsibilities',
     icon: Flame,
-    level: "Foundation",
-    duration: "Half day",
-    link: "fire-safety-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'fire-safety-course',
   },
   {
     id: 12,
     comingSoon: true,
-    title: "CSCS Card Preparation",
-    description: "Health, safety, and environment test preparation for CSCS card applications",
+    title: 'CSCS Card Preparation',
+    description: 'Health, safety, and environment test preparation for CSCS card applications',
     icon: BadgeCheck,
-    level: "Foundation",
-    duration: "1 day",
-    link: "cscs-card-course",
+    level: 'Foundation',
+    duration: '1 day',
+    link: 'cscs-card-course',
   },
   {
     id: 13,
     comingSoon: true,
-    title: "Scaffolding Awareness",
-    description: "Scaffold safety, inspection requirements, and hazard awareness on site",
+    title: 'Scaffolding Awareness',
+    description: 'Scaffold safety, inspection requirements, and hazard awareness on site',
     icon: Construction,
-    level: "Foundation",
-    duration: "Half day",
-    link: "scaffolding-awareness-course",
+    level: 'Foundation',
+    duration: 'Half day',
+    link: 'scaffolding-awareness-course',
   },
   {
     id: 14,
     comingSoon: true,
-    title: "Environmental & Sustainability",
-    description: "Waste management, energy efficiency, and sustainable working practices",
+    title: 'Environmental & Sustainability',
+    description: 'Waste management, energy efficiency, and sustainable working practices',
     icon: Leaf,
-    level: "Foundation",
-    duration: "1 day",
-    link: "environmental-sustainability-course",
+    level: 'Foundation',
+    duration: '1 day',
+    link: 'environmental-sustainability-course',
   },
   {
     id: 15,
     comingSoon: true,
-    title: "CDM Regulations Awareness",
-    description: "Construction Design and Management regulations, roles, and responsibilities",
+    title: 'CDM Regulations Awareness',
+    description: 'Construction Design and Management regulations, roles, and responsibilities',
     icon: ClipboardCheck,
-    level: "Intermediate",
-    duration: "1 day",
-    link: "cdm-regulations-course",
+    level: 'Intermediate',
+    duration: '1 day',
+    link: 'cdm-regulations-course',
   },
 ];
 
-const activeCourses = courses.filter(c => !c.comingSoon);
-const comingSoonCourses = courses.filter(c => c.comingSoon);
+const activeCourses = courses.filter((c) => !c.comingSoon);
+const comingSoonCourses = courses.filter((c) => c.comingSoon);
 
 export default function GeneralUpskillingIndex() {
   useSEO({
     title: 'General Upskilling | Study Centre',
-    description: 'Cross-industry training for tradespeople — safety, health, and professional development courses.',
+    description:
+      'Cross-industry training for tradespeople — safety, health, and professional development courses.',
   });
 
   return (
@@ -230,7 +230,8 @@ export default function GeneralUpskillingIndex() {
                   General Upskilling
                 </h1>
                 <p className="text-base sm:text-lg text-white/50 leading-relaxed">
-                  Cross-industry safety and professional development courses for tradespeople. Build on your core skills with recognised certifications.
+                  Cross-industry safety and professional development courses for tradespeople. Build
+                  on your core skills with recognised certifications.
                 </p>
               </div>
 
@@ -238,10 +239,16 @@ export default function GeneralUpskillingIndex() {
               <div className="hidden lg:flex items-center gap-3 pb-1">
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm text-white/70"><span className="font-semibold text-white">{activeCourses.length}</span> available</span>
+                  <span className="text-sm text-white/70">
+                    <span className="font-semibold text-white">{activeCourses.length}</span>{' '}
+                    available
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                  <span className="text-sm text-white/70"><span className="font-semibold text-white">{comingSoonCourses.length}</span> coming soon</span>
+                  <span className="text-sm text-white/70">
+                    <span className="font-semibold text-white">{comingSoonCourses.length}</span>{' '}
+                    coming soon
+                  </span>
                 </div>
               </div>
             </div>
@@ -276,7 +283,9 @@ export default function GeneralUpskillingIndex() {
               <div className="w-2 h-2 rounded-full bg-white/20" />
               <h2 className="text-lg sm:text-xl font-semibold text-white/40">Coming Soon</h2>
               <div className="h-px flex-1 bg-white/[0.04]" />
-              <span className="text-xs text-white/25 uppercase tracking-wider font-medium hidden sm:block">{comingSoonCourses.length} courses</span>
+              <span className="text-xs text-white/25 uppercase tracking-wider font-medium hidden sm:block">
+                {comingSoonCourses.length} courses
+              </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-3">
               {comingSoonCourses.map((course, index) => (

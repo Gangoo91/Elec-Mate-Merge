@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Initial JS (entry point)",
+    "path": "dist/assets/index-*.js",
+    "limit": "350 kB"
+  },
+  {
+    "name": "React vendor bundle",
+    "path": "dist/assets/vendor-react-*.js",
+    "limit": "700 kB"
+  },
+  {
+    "name": "CSS",
+    "path": "dist/assets/*.css",
+    "limit": "700 kB"
+  }
+]

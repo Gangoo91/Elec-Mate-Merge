@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -9,11 +10,15 @@ import {
   AlertCircle,
   Calendar,
   BarChart3,
+  BookOpen,
 } from 'lucide-react';
 import { ProgressRing, MiniProgressRing } from '@/components/portfolio-hub/ProgressRings';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { QualificationProgress } from '@/components/apprentice/portfolio/QualificationProgress';
+import { QualificationRequirements } from '@/components/apprentice/portfolio/QualificationRequirements';
 
 /**
  * ProgressSection - KSB tracking, OTJ hours, timeline view
@@ -28,6 +33,8 @@ export function ProgressSection() {
   const { categories, entries, analytics } = useUltraFastPortfolio();
   const { otjGoal, getRemainingHours } = useComplianceTracking();
   const { totalTime, weeklyTime, timeEntries } = useTimeEntries();
+  const { qualificationCode, qualificationName } = useStudentQualification();
+  const [requirementsOpen, setRequirementsOpen] = useState(false);
 
   const currentHours = Math.round(otjGoal?.current_hours || 0);
   const targetHours = otjGoal?.target_hours || 400;
@@ -36,7 +43,8 @@ export function ProgressSection() {
 
   const totalRequired = categories.reduce((sum, cat) => sum + (cat.requiredEntries || 0), 0);
   const totalCompleted = analytics?.completedEntries || 0;
-  const portfolioPercent = totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0;
+  const portfolioPercent =
+    totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0;
 
   return (
     <div className="p-4 sm:p-6 space-y-6">
@@ -58,11 +66,7 @@ export function ProgressSection() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-6">
-              <ProgressRing
-                percentage={otjPercent}
-                size="lg"
-                color="#a855f7"
-              />
+              <ProgressRing percentage={otjPercent} size="lg" color="#a855f7" />
               <div className="flex-1 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Logged</span>
@@ -74,10 +78,12 @@ export function ProgressSection() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Remaining</span>
-                  <span className={cn(
-                    "font-semibold",
-                    remainingHours > 100 ? "text-amber-500" : "text-green-500"
-                  )}>
+                  <span
+                    className={cn(
+                      'font-semibold',
+                      remainingHours > 100 ? 'text-amber-500' : 'text-green-500'
+                    )}
+                  >
                     {remainingHours}h
                   </span>
                 </div>
@@ -96,11 +102,7 @@ export function ProgressSection() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-6">
-              <ProgressRing
-                percentage={portfolioPercent}
-                size="lg"
-                color="#22c55e"
-              />
+              <ProgressRing percentage={portfolioPercent} size="lg" color="#22c55e" />
               <div className="flex-1 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Completed</span>
@@ -113,7 +115,7 @@ export function ProgressSection() {
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">In Progress</span>
                   <span className="font-semibold text-amber-500">
-                    {entries.filter(e => e.status === 'in-progress').length}
+                    {entries.filter((e) => e.status === 'in-progress').length}
                   </span>
                 </div>
               </div>
@@ -121,6 +123,31 @@ export function ProgressSection() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Qualification Requirements Progress */}
+      {qualificationCode && (
+        <>
+          <QualificationProgress
+            qualificationCode={qualificationCode}
+            qualificationName={qualificationName}
+          />
+
+          {/* View Requirements button */}
+          <button
+            onClick={() => setRequirementsOpen(true)}
+            className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+          >
+            <BookOpen className="h-4 w-4" />
+            View Full Requirements
+          </button>
+
+          <QualificationRequirements
+            open={requirementsOpen}
+            onOpenChange={setRequirementsOpen}
+            qualificationCode={qualificationCode}
+          />
+        </>
+      )}
 
       {/* KSB Category Progress */}
       <Card className="border-border">
@@ -133,8 +160,8 @@ export function ProgressSection() {
         <CardContent>
           <div className="space-y-4">
             {categories.map((category) => {
-              const catEntries = entries.filter(e => e.category?.id === category.id);
-              const completed = catEntries.filter(e => e.status === 'completed').length;
+              const catEntries = entries.filter((e) => e.category?.id === category.id);
+              const completed = catEntries.filter((e) => e.status === 'completed').length;
               const required = category.requiredEntries || 3;
               const percent = Math.round((completed / required) * 100);
 
@@ -153,10 +180,10 @@ export function ProgressSection() {
                     <Badge
                       variant="outline"
                       className={cn(
-                        "text-xs",
+                        'text-xs',
                         percent >= 100
-                          ? "bg-green-500/10 text-green-500 border-green-500/20"
-                          : "bg-muted text-muted-foreground"
+                          ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                          : 'bg-muted text-muted-foreground'
                       )}
                     >
                       {completed}/{required}
@@ -165,8 +192,8 @@ export function ProgressSection() {
                   <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                     <div
                       className={cn(
-                        "h-full rounded-full transition-all duration-500",
-                        percent >= 100 ? "bg-green-500" : "bg-elec-yellow"
+                        'h-full rounded-full transition-all duration-500',
+                        percent >= 100 ? 'bg-green-500' : 'bg-elec-yellow'
                       )}
                       style={{ width: `${Math.min(percent, 100)}%` }}
                     />
@@ -194,12 +221,14 @@ export function ProgressSection() {
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
               <p className="text-2xl font-bold text-blue-500">
-                {entries.filter(e => {
-                  const created = new Date(e.dateCreated);
-                  const weekAgo = new Date();
-                  weekAgo.setDate(weekAgo.getDate() - 7);
-                  return created >= weekAgo;
-                }).length}
+                {
+                  entries.filter((e) => {
+                    const created = new Date(e.dateCreated);
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    return created >= weekAgo;
+                  }).length
+                }
               </p>
               <p className="text-xs text-muted-foreground">New Evidence</p>
             </div>
@@ -209,7 +238,7 @@ export function ProgressSection() {
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
               <p className="text-2xl font-bold text-amber-500">
-                {7.5 - (weeklyTime / 60) > 0 ? (7.5 - (weeklyTime / 60)).toFixed(1) : '0'}h
+                {7.5 - weeklyTime / 60 > 0 ? (7.5 - weeklyTime / 60).toFixed(1) : '0'}h
               </p>
               <p className="text-xs text-muted-foreground">Hours Needed</p>
             </div>

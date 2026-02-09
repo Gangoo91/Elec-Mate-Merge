@@ -21,12 +21,15 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Zap,
+  ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAIEvidenceTagger, AIAnalysisResult } from '@/hooks/portfolio/useAIEvidenceTagger';
 import { AITagSuggestions } from './AITagSuggestions';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { ACPickerSheet } from '@/components/apprentice/portfolio/ACPickerSheet';
 
 type CaptureStep = 'capture' | 'details' | 'analyze' | 'review';
 
@@ -56,6 +59,8 @@ export function SmartCaptureFlow({
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { analyze, isAnalyzing, result: aiResult } = useAIEvidenceTagger();
+  const { requirementCode } = useStudentQualification();
+  const [showACPicker, setShowACPicker] = useState(false);
 
   const [step, setStep] = useState<CaptureStep>('capture');
   const [captureData, setCaptureData] = useState<CaptureData>({
@@ -471,6 +476,41 @@ export function SmartCaptureFlow({
         />
       )}
 
+      {/* Assessment Criteria Picker */}
+      {requirementCode && (
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            Assessment Criteria
+          </p>
+          <Button
+            variant="outline"
+            className="w-full h-11 justify-between border-border touch-manipulation active:scale-[0.98]"
+            onClick={() => setShowACPicker(true)}
+          >
+            <span className="text-sm">
+              {captureData.selectedKSBs.length > 0
+                ? `${captureData.selectedKSBs.length} criteria selected`
+                : 'Select assessment criteria'}
+            </span>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </Button>
+          {captureData.selectedKSBs.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {captureData.selectedKSBs.slice(0, 5).map((ac) => (
+                <Badge key={ac} variant="outline" className="text-[10px]">
+                  {ac}
+                </Badge>
+              ))}
+              {captureData.selectedKSBs.length > 5 && (
+                <Badge variant="outline" className="text-[10px]">
+                  +{captureData.selectedKSBs.length - 5} more
+                </Badge>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Actions */}
       <div className="flex gap-2 pt-2">
         <Button
@@ -489,6 +529,16 @@ export function SmartCaptureFlow({
           Save Evidence
         </Button>
       </div>
+
+      <ACPickerSheet
+        open={showACPicker}
+        onOpenChange={setShowACPicker}
+        requirementCode={requirementCode}
+        selectedACs={captureData.selectedKSBs}
+        onDone={(acs) =>
+          setCaptureData((prev) => ({ ...prev, selectedKSBs: acs }))
+        }
+      />
     </div>
   );
 

@@ -1,30 +1,33 @@
-import { Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
-import { lazyWithRetry } from "@/utils/lazyWithRetry";
+import { Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy load with retry for chunk failures
-const StudyCentreIndex = lazyWithRetry(() => import("@/pages/study-centre/StudyCentreIndex"));
+const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreIndex'));
 
 // Import nested route components with retry
-const ApprenticeCourseRoutes = lazyWithRetry(() => import("@/routes/ApprenticeCourseRoutes"));
-const UpskillingRoutes = lazyWithRetry(() => import("@/routes/UpskillingRoutes"));
-const BusinessFundamentalsRoutes = lazyWithRetry(() => import("@/routes/study-centre/BusinessFundamentalsRoutes"));
-const ConstructionAwarenessRoutes = lazyWithRetry(() => import("@/routes/study-centre/ConstructionAwarenessRoutes"));
-const CybersecurityRoutes = lazyWithRetry(() => import("@/routes/study-centre/CybersecurityRoutes"));
-const EmergingTechRoutes = lazyWithRetry(() => import("@/routes/study-centre/EmergingTechRoutes"));
-const GeneralUpskillingRoutes = lazyWithRetry(() => import("@/routes/study-centre/GeneralUpskillingRoutes"));
-const MultiTradeRoutes = lazyWithRetry(() => import("@/routes/study-centre/MultiTradeRoutes"));
-const PersonalDevelopmentRoutes = lazyWithRetry(() => import("@/routes/study-centre/PersonalDevelopmentRoutes"));
-
-// Loading component
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen bg-elec-dark">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mx-auto mb-4" />
-      <p className="text-gray-400">Loading...</p>
-    </div>
-  </div>
+const ApprenticeCourseRoutes = lazyWithRetry(() => import('@/routes/ApprenticeCourseRoutes'));
+const UpskillingRoutes = lazyWithRetry(() => import('@/routes/UpskillingRoutes'));
+const BusinessFundamentalsRoutes = lazyWithRetry(
+  () => import('@/routes/study-centre/BusinessFundamentalsRoutes')
 );
+const ConstructionAwarenessRoutes = lazyWithRetry(
+  () => import('@/routes/study-centre/ConstructionAwarenessRoutes')
+);
+const CybersecurityRoutes = lazyWithRetry(
+  () => import('@/routes/study-centre/CybersecurityRoutes')
+);
+const EmergingTechRoutes = lazyWithRetry(() => import('@/routes/study-centre/EmergingTechRoutes'));
+const GeneralUpskillingRoutes = lazyWithRetry(
+  () => import('@/routes/study-centre/GeneralUpskillingRoutes')
+);
+const MultiTradeRoutes = lazyWithRetry(() => import('@/routes/study-centre/MultiTradeRoutes'));
+const PersonalDevelopmentRoutes = lazyWithRetry(
+  () => import('@/routes/study-centre/PersonalDevelopmentRoutes')
+);
+
+const LoadingFallback = CourseSkeleton;
 
 export default function StudyCentreRoutes() {
   return (

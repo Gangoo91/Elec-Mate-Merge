@@ -1,13 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
 // import { componentTagger } from "lovable-tagger"; // Disabled - causing JSX corruption
-import { VitePWA } from "vite-plugin-pwa";
+import { VitePWA } from 'vite-plugin-pwa';
+import { compression } from 'vite-plugin-compression2';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    host: '::',
     port: 8080,
   },
   plugins: [
@@ -29,20 +30,20 @@ export default defineConfig(({ mode }) => ({
           {
             src: 'logo.jpg',
             sizes: '192x192',
-            type: 'image/jpeg'
-          },
-          {
-            src: 'logo.jpg',
-            sizes: '512x512',
-            type: 'image/jpeg'
+            type: 'image/jpeg',
           },
           {
             src: 'logo.jpg',
             sizes: '512x512',
             type: 'image/jpeg',
-            purpose: 'any maskable'
-          }
-        ]
+          },
+          {
+            src: 'logo.jpg',
+            sizes: '512x512',
+            type: 'image/jpeg',
+            purpose: 'any maskable',
+          },
+        ],
       },
       workbox: {
         globPatterns: ['**/*.{css,ico,png,jpg,jpeg,svg,woff2}'], // NO html — always fetch fresh from network
@@ -58,9 +59,9 @@ export default defineConfig(({ mode }) => ({
               networkTimeoutSeconds: 3,
               expiration: {
                 maxEntries: 1,
-                maxAgeSeconds: 60 * 60 // 1 hour max
-              }
-            }
+                maxAgeSeconds: 60 * 60, // 1 hour max
+              },
+            },
           },
           {
             // JS chunks: network-first with short cache
@@ -71,9 +72,9 @@ export default defineConfig(({ mode }) => ({
               networkTimeoutSeconds: 5,
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 24 * 60 * 60
-              }
-            }
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+            },
           },
           {
             urlPattern: /^https:\/\/.*supabase\.co\/.*/i,
@@ -83,17 +84,19 @@ export default defineConfig(({ mode }) => ({
               networkTimeoutSeconds: 8,
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60
-              }
-            }
-          }
-        ]
-      }
-    })
+                maxAgeSeconds: 60,
+              },
+            },
+          },
+        ],
+      },
+    }),
+    compression({ algorithm: 'gzip', threshold: 1024 }),
+    compression({ algorithm: 'brotliCompress', threshold: 1024 }),
   ].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
@@ -119,13 +122,17 @@ export default defineConfig(({ mode }) => ({
             '@radix-ui/react-progress',
             '@radix-ui/react-scroll-area',
             '@radix-ui/react-separator',
-            '@radix-ui/react-tooltip'
+            '@radix-ui/react-tooltip',
           ],
           'vendor-charts': ['recharts'],
           'vendor-pdf': ['jspdf', 'jspdf-autotable'],
           'vendor-canvas': ['fabric', 'html2canvas'],
           'vendor-motion': ['framer-motion'],
-          'vendor-editor': ['@tiptap/react', '@tiptap/starter-kit', '@tiptap/extension-placeholder'],
+          'vendor-editor': [
+            '@tiptap/react',
+            '@tiptap/starter-kit',
+            '@tiptap/extension-placeholder',
+          ],
           'vendor-excel': ['xlsx', 'papaparse'],
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-query': ['@tanstack/react-query'],
@@ -140,11 +147,11 @@ export default defineConfig(({ mode }) => ({
             '@capacitor/haptics',
             '@capacitor/keyboard',
             '@capacitor/share',
-            '@capacitor/browser'
+            '@capacitor/browser',
           ],
-          'vendor-markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
-        }
-      }
-    }
+          'vendor-markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm'],
+        },
+      },
+    },
   },
 }));

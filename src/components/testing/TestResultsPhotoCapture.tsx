@@ -48,7 +48,7 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
           const tryCompress = () => {
             const dataUrl = canvas.toDataURL('image/jpeg', quality);
             const sizeInMB = (dataUrl.length * 0.75) / (1024 * 1024);
-            
+
             if (sizeInMB > maxSizeMB && quality > 0.3) {
               quality -= 0.1;
               tryCompress();
@@ -69,9 +69,9 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
   const handleImageCapture = async (file: File) => {
     if (images.length >= MAX_IMAGES) {
       toast({
-        title: "Maximum Photos Reached",
+        title: 'Maximum Photos Reached',
         description: `You can upload up to ${MAX_IMAGES} photos at once.`,
-        variant: "destructive",
+        variant: 'destructive',
       });
       return;
     }
@@ -80,17 +80,17 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
       // Dynamic compression based on number of images
       const maxSizePerImage = images.length === 0 ? 7.5 : images.length === 1 ? 3.75 : 2.5;
       const compressedImage = await compressImage(file, maxSizePerImage);
-      setImages(prev => [...prev, compressedImage]);
-      
+      setImages((prev) => [...prev, compressedImage]);
+
       toast({
-        title: "Photo Added",
+        title: 'Photo Added',
         description: `${images.length + 1} of ${MAX_IMAGES} photos captured`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to process image. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to process image. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -98,7 +98,9 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      Array.from(files).slice(0, MAX_IMAGES - images.length).forEach(handleImageCapture);
+      Array.from(files)
+        .slice(0, MAX_IMAGES - images.length)
+        .forEach(handleImageCapture);
     }
   };
 
@@ -115,15 +117,15 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleAnalyse = async () => {
     if (images.length === 0) {
       toast({
-        title: "No Photos",
-        description: "Please capture at least one photo of your test results.",
-        variant: "destructive",
+        title: 'No Photos',
+        description: 'Please capture at least one photo of your test results.',
+        variant: 'destructive',
       });
       return;
     }
@@ -148,24 +150,23 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
       }
 
       const data = await response.json();
-      
+
       toast({
-        title: "Analysis Complete",
+        title: 'Analysis Complete',
         description: `Extracted ${data.circuits?.length || 0} circuit(s) from test results`,
       });
 
       onAnalysisComplete(data);
     } catch (error) {
       toast({
-        title: "Analysis Failed",
-        description: error instanceof Error ? error.message : "Failed to analyse test results",
-        variant: "destructive",
+        title: 'Analysis Failed',
+        description: error instanceof Error ? error.message : 'Failed to analyse test results',
+        variant: 'destructive',
       });
     } finally {
       setIsAnalysing(false);
     }
   };
-
 
   return (
     <Card className="p-4 sm:p-6 space-y-3">
@@ -211,7 +212,7 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
           onChange={handleFileSelect}
           className="hidden"
         />
-        
+
         {/* Upload input - file picker */}
         <input
           ref={uploadInputRef}
@@ -226,7 +227,12 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
           <div className="grid grid-cols-3 gap-2">
             {images.map((image, index) => (
               <div key={index} className="relative aspect-square rounded-lg overflow-hidden border">
-                <img src={image} alt={`Test result ${index + 1}`} className="object-cover w-full h-full" />
+                <img
+                  src={image}
+                  alt={`Test result ${index + 1}`}
+                  className="object-cover w-full h-full"
+                  loading="lazy"
+                />
                 <Button
                   variant="destructive"
                   size="icon"

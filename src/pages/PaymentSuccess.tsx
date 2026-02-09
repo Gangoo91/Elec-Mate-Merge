@@ -1,59 +1,82 @@
-import { CheckCircle, ArrowRight, Zap, Shield, BookOpen, Wrench, Sparkles, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef, useCallback } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
-import { motion } from "framer-motion";
+import {
+  CheckCircle,
+  ArrowRight,
+  Zap,
+  Shield,
+  BookOpen,
+  Wrench,
+  Sparkles,
+  Loader2,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { motion } from 'framer-motion';
 
 // Plan display info
-const planInfo: Record<string, { name: string; icon: React.ElementType; color: string; features: string[] }> = {
+const planInfo: Record<
+  string,
+  { name: string; icon: React.ElementType; color: string; features: string[] }
+> = {
   'electrician-monthly': {
     name: 'Electrician Pro',
     icon: Zap,
     color: 'from-yellow-500 to-amber-500',
-    features: ['Unlimited certificates', 'AI tools & calculators', 'Invoice management', 'Cloud storage']
+    features: [
+      'Unlimited certificates',
+      'AI tools & calculators',
+      'Invoice management',
+      'Cloud storage',
+    ],
   },
   'electrician-annual': {
     name: 'Electrician Pro',
     icon: Zap,
     color: 'from-yellow-500 to-amber-500',
-    features: ['Unlimited certificates', 'AI tools & calculators', 'Invoice management', 'Cloud storage']
+    features: [
+      'Unlimited certificates',
+      'AI tools & calculators',
+      'Invoice management',
+      'Cloud storage',
+    ],
   },
   'apprentice-monthly': {
     name: 'Apprentice',
     icon: BookOpen,
     color: 'from-blue-500 to-cyan-500',
-    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support']
+    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support'],
   },
   'apprentice-annual': {
     name: 'Apprentice',
     icon: BookOpen,
     color: 'from-blue-500 to-cyan-500',
-    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support']
+    features: ['Full study centre access', 'Practice exams', 'Progress tracking', 'Tutor support'],
   },
   'contractor-monthly': {
     name: 'Contractor',
     icon: Wrench,
     color: 'from-purple-500 to-pink-500',
-    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support']
+    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support'],
   },
   'contractor-annual': {
     name: 'Contractor',
     icon: Wrench,
     color: 'from-purple-500 to-pink-500',
-    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support']
+    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support'],
   },
 };
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const planId = searchParams.get("plan") || 'electrician-monthly';
-  const isTrial = searchParams.get("trial") === 'true';
+  const planId = searchParams.get('plan') || 'electrician-monthly';
+  const isTrial = searchParams.get('trial') === 'true';
   const { fetchProfile, profile, user } = useAuth();
   const [showContent, setShowContent] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [activationSlow, setActivationSlow] = useState(false);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const autoNavRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -68,24 +91,32 @@ const PaymentSuccess = () => {
   });
 
   // Derive role from planId so Dashboard doesn't redirect to complete-profile
-  const roleFromPlan = planId.startsWith('apprentice') ? 'apprentice'
-    : planId.startsWith('contractor') ? 'electrician'
-    : 'electrician';
+  const roleFromPlan = planId.startsWith('apprentice')
+    ? 'apprentice'
+    : planId.startsWith('contractor')
+      ? 'electrician'
+      : 'electrician';
 
   // Ensure profile has a role set — fills the gap if webhook didn't set one
-  const ensureRole = useCallback(async (freshProfile: any) => {
-    if (!user?.id || freshProfile?.role) return;
-    try {
-      await supabase.from('profiles').update({
-        role: roleFromPlan,
-        updated_at: new Date().toISOString(),
-      }).eq('id', user.id);
-      // Re-fetch so AuthContext has the updated role
-      await fetchProfile(user.id);
-    } catch {
-      // Non-fatal — Dashboard complete-profile page is the fallback
-    }
-  }, [user?.id, roleFromPlan, fetchProfile]);
+  const ensureRole = useCallback(
+    async (freshProfile: any) => {
+      if (!user?.id || freshProfile?.role) return;
+      try {
+        await supabase
+          .from('profiles')
+          .update({
+            role: roleFromPlan,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', user.id);
+        // Re-fetch so AuthContext has the updated role
+        await fetchProfile(user.id);
+      } catch {
+        // Non-fatal — Dashboard complete-profile page is the fallback
+      }
+    },
+    [user?.id, roleFromPlan, fetchProfile]
+  );
 
   const handleGoToDashboard = useCallback(() => {
     navigate('/dashboard');
@@ -96,7 +127,7 @@ const PaymentSuccess = () => {
     if (!user?.id) return;
 
     let attempts = 0;
-    const MAX_ATTEMPTS = 10;
+    const MAX_ATTEMPTS = 15;
 
     const poll = () => {
       pollRef.current = setInterval(async () => {
@@ -109,6 +140,7 @@ const PaymentSuccess = () => {
 
           // Ensure role is set before navigating to dashboard
           await ensureRole(freshProfile);
+          setActivationSlow(false);
           setIsReady(true);
 
           // Auto-navigate after 2s so user sees the success screen
@@ -119,9 +151,10 @@ const PaymentSuccess = () => {
         }
 
         if (attempts >= MAX_ATTEMPTS) {
-          // Timed out — enable button anyway as fallback
+          // Timed out — enable button but warn user activation is slow
           if (pollRef.current) clearInterval(pollRef.current);
           await ensureRole(freshProfile);
+          setActivationSlow(true);
           setIsReady(true);
         }
       }, 2000);
@@ -166,7 +199,7 @@ const PaymentSuccess = () => {
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", duration: 0.8, bounce: 0.4 }}
+            transition={{ type: 'spring', duration: 0.8, bounce: 0.4 }}
             className="flex justify-center mb-6"
           >
             <div className="relative">
@@ -204,10 +237,17 @@ const PaymentSuccess = () => {
               {isTrial ? 'Your 7-day free trial has started!' : 'Welcome to Elec-Mate!'}
             </h1>
             <p className="text-white/60 text-[15px] sm:text-base">
-              {isTrial
-                ? <>You won&apos;t be charged until <span className="text-white font-medium">{trialEndDate}</span></>
-                : <>Your <span className="text-white font-medium">{plan.name}</span> subscription is now active</>
-              }
+              {isTrial ? (
+                <>
+                  You won&apos;t be charged until{' '}
+                  <span className="text-white font-medium">{trialEndDate}</span>
+                </>
+              ) : (
+                <>
+                  Your <span className="text-white font-medium">{plan.name}</span> subscription is
+                  now active
+                </>
+              )}
             </p>
           </motion.div>
 
@@ -220,7 +260,9 @@ const PaymentSuccess = () => {
           >
             <div className="rounded-2xl bg-slate-900/95 p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center`}>
+                <div
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center`}
+                >
                   <PlanIcon className="h-5 w-5 text-white" />
                 </div>
                 <div>
@@ -251,7 +293,12 @@ const PaymentSuccess = () => {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="flex items-center justify-center gap-2 mb-4"
           >
-            {isReady ? (
+            {isReady && activationSlow ? (
+              <span className="text-[13px] text-amber-400 flex items-center gap-1.5 text-center px-4">
+                <Shield className="h-3.5 w-3.5 flex-shrink-0" />
+                Activation is taking longer than usual. Try refreshing or contact info@elec-mate.com
+              </span>
+            ) : isReady ? (
               <span className="text-[13px] text-green-400 flex items-center gap-1.5">
                 <CheckCircle className="h-3.5 w-3.5" />
                 Account activated
@@ -294,9 +341,7 @@ const PaymentSuccess = () => {
               asChild
               className="w-full h-11 text-[14px] bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-white/80 rounded-xl touch-manipulation"
             >
-              <Link to="/settings">
-                Manage Subscription
-              </Link>
+              <Link to="/settings">Manage Subscription</Link>
             </Button>
           </motion.div>
 
@@ -312,10 +357,13 @@ const PaymentSuccess = () => {
             </p>
             <p className="text-[12px] text-white/40">
               Need help? Email{' '}
-              <a href="mailto:info@elec-mate.com" className="text-white/60 hover:text-white underline">
+              <a
+                href="mailto:info@elec-mate.com"
+                className="text-white/60 hover:text-white underline"
+              >
                 info@elec-mate.com
-              </a>
-              {' '}or use the chat icon in the top right corner.
+              </a>{' '}
+              or use the chat icon in the top right corner.
             </p>
           </motion.div>
         </div>

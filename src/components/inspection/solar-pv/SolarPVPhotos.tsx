@@ -12,20 +12,34 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { Camera, Upload, X, Image, Loader2, ZoomIn, Sun, Zap, Gauge, Power, Tag } from 'lucide-react';
+import {
+  Camera,
+  Upload,
+  X,
+  Image,
+  Loader2,
+  ZoomIn,
+  Sun,
+  Zap,
+  Gauge,
+  Power,
+  Tag,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { CertificatePhoto, PVArray, Inverter } from '@/types/solar-pv';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 interface SolarPVPhotosProps {
   photos: CertificatePhoto[];
@@ -112,7 +126,9 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   const uploadPhoto = async (file: File) => {
     setIsUploading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Compress the image
@@ -135,9 +151,9 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('inspection-photos')
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('inspection-photos').getPublicUrl(filePath);
 
       // Create photo object
       const newPhoto: CertificatePhoto = {
@@ -175,7 +191,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   };
 
   const deletePhoto = async (photoId: string) => {
-    const photo = photos.find(p => p.id === photoId);
+    const photo = photos.find((p) => p.id === photoId);
     if (!photo) return;
 
     try {
@@ -189,28 +205,28 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
       console.error('Error deleting from storage:', error);
     }
 
-    onPhotosChange(photos.filter(p => p.id !== photoId));
+    onPhotosChange(photos.filter((p) => p.id !== photoId));
     toast.success('Photo deleted');
   };
 
   const getCategoryIcon = (category: CertificatePhoto['category']) => {
-    const cat = PHOTO_CATEGORIES.find(c => c.value === category);
+    const cat = PHOTO_CATEGORIES.find((c) => c.value === category);
     return cat ? cat.icon : Image;
   };
 
   const getCategoryColor = (category: CertificatePhoto['category']) => {
-    const cat = PHOTO_CATEGORIES.find(c => c.value === category);
+    const cat = PHOTO_CATEGORIES.find((c) => c.value === category);
     return cat ? cat.color : 'text-gray-400';
   };
 
   const getCategoryLabel = (category: CertificatePhoto['category']): string => {
-    return PHOTO_CATEGORIES.find(c => c.value === category)?.label || category;
+    return PHOTO_CATEGORIES.find((c) => c.value === category)?.label || category;
   };
 
-  const photosByCategory = PHOTO_CATEGORIES.map(cat => ({
+  const photosByCategory = PHOTO_CATEGORIES.map((cat) => ({
     ...cat,
-    photos: photos.filter(p => p.category === cat.value),
-  })).filter(cat => cat.photos.length > 0);
+    photos: photos.filter((p) => p.category === cat.value),
+  })).filter((cat) => cat.photos.length > 0);
 
   // Get link options based on selected category
   const getLinkOptions = () => {
@@ -243,12 +259,15 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-xs text-muted-foreground">Photo Category</Label>
-            <Select value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}>
+            <Select
+              value={selectedCategory}
+              onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
+            >
               <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/20">
-                {PHOTO_CATEGORIES.map(cat => {
+                {PHOTO_CATEGORIES.map((cat) => {
                   const Icon = cat.icon;
                   return (
                     <SelectItem key={cat.value} value={cat.value}>
@@ -274,7 +293,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/20">
                   <SelectItem value="">No link</SelectItem>
-                  {linkOptions.map(opt => (
+                  {linkOptions.map((opt) => (
                     <SelectItem key={opt.id} value={opt.id}>
                       {opt.label}
                     </SelectItem>
@@ -340,7 +359,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
       {/* Photos Grid */}
       {photos.length > 0 ? (
         <div className="space-y-4">
-          {photosByCategory.map(category => {
+          {photosByCategory.map((category) => {
             const Icon = category.icon;
             return (
               <div key={category.value} className="space-y-2">
@@ -349,7 +368,7 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
                   {category.label} ({category.photos.length})
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {category.photos.map(photo => (
+                  {category.photos.map((photo) => (
                     <div key={photo.id} className="relative group">
                       <Dialog>
                         <DialogTrigger asChild>
@@ -371,7 +390,9 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
                             className="w-full h-auto rounded-lg"
                           />
                           {photo.caption && (
-                            <p className="text-center text-sm text-muted-foreground mt-2">{photo.caption}</p>
+                            <p className="text-center text-sm text-muted-foreground mt-2">
+                              {photo.caption}
+                            </p>
                           )}
                         </DialogContent>
                       </Dialog>
@@ -379,7 +400,8 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
                       <Button
                         variant="destructive"
                         size="icon"
-                        className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-1 right-1 h-11 w-11 opacity-0 group-hover:opacity-100 transition-opacity touch-manipulation"
+                        aria-label="Remove photo"
                         onClick={() => deletePhoto(photo.id)}
                       >
                         <X className="h-3 w-3" />
@@ -413,12 +435,15 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
             <span className="font-semibold text-amber-400">{photos.length}</span>
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {PHOTO_CATEGORIES.map(cat => {
-              const count = photos.filter(p => p.category === cat.value).length;
+            {PHOTO_CATEGORIES.map((cat) => {
+              const count = photos.filter((p) => p.category === cat.value).length;
               if (count === 0) return null;
               const Icon = cat.icon;
               return (
-                <div key={cat.value} className="flex items-center gap-1 text-xs text-muted-foreground">
+                <div
+                  key={cat.value}
+                  className="flex items-center gap-1 text-xs text-muted-foreground"
+                >
                   <Icon className={`h-3 w-3 ${cat.color}`} />
                   {count}
                 </div>

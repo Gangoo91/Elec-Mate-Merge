@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,19 +22,21 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   const { getDefaultProfile } = useInspectorProfiles();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
-  
+
   // Check if all required fields are completed
   const isDesignerComplete = formData.designerName && formData.designerSignature;
   const isConstructorComplete = formData.constructorName && formData.constructorSignature;
   const isInspectorComplete = formData.inspectorName && formData.inspectorSignature;
-  const allDeclarationsComplete = isDesignerComplete && isConstructorComplete && isInspectorComplete;
+  const allDeclarationsComplete =
+    isDesignerComplete && isConstructorComplete && isInspectorComplete;
 
   // Auto-fill from default profile on initial mount
   useEffect(() => {
     if (isInitialMount) {
       const defaultProfile = getDefaultProfile();
-      const areAllFieldsEmpty = !formData.designerName && !formData.constructorName && !formData.inspectorName;
-      
+      const areAllFieldsEmpty =
+        !formData.designerName && !formData.constructorName && !formData.inspectorName;
+
       if (defaultProfile && areAllFieldsEmpty) {
         // Auto-populate all three declarations
         loadProfileToSection('designer', defaultProfile);
@@ -47,13 +48,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   }, [isInitialMount]);
 
   // Load profile data into a specific declaration section
-  const loadProfileToSection = (section: 'designer' | 'constructor' | 'inspector', profile?: any) => {
+  const loadProfileToSection = (
+    section: 'designer' | 'constructor' | 'inspector',
+    profile?: any
+  ) => {
     const selectedProfile = profile || getDefaultProfile();
     if (!selectedProfile) return;
 
     const today = new Date().toISOString().split('T')[0];
-    const qualifications = Array.isArray(selectedProfile.qualifications) 
-      ? selectedProfile.qualifications.join(', ') 
+    const qualifications = Array.isArray(selectedProfile.qualifications)
+      ? selectedProfile.qualifications.join(', ')
       : '';
 
     onUpdate(`${section}Name`, selectedProfile.name);
@@ -71,15 +75,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Alert className="border-amber-200 bg-amber-50">
         <Shield className="h-4 w-4 text-amber-600" />
         <AlertDescription className="text-amber-800 text-xs sm:text-sm">
-          <strong>Legal Requirement:</strong> This Electrical Installation Certificate (EIC) is required by BS 7671 
-          and must be completed by competent persons responsible for the design, construction, and inspection & testing 
-          of the electrical installation. Digital signatures are legally binding when properly executed.
+          <strong>Legal Requirement:</strong> This Electrical Installation Certificate (EIC) is
+          required by BS 7671 and must be completed by competent persons responsible for the design,
+          construction, and inspection & testing of the electrical installation. Digital signatures
+          are legally binding when properly executed.
         </AlertDescription>
       </Alert>
 
       {/* Use Saved Profile Button */}
       {getDefaultProfile() && (
-        <Button 
+        <Button
           onClick={() => {
             const profile = getDefaultProfile();
             if (profile) {
@@ -87,8 +92,8 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               loadProfileToSection('constructor', profile);
               loadProfileToSection('inspector', profile);
               toast({
-                title: "Profile Loaded",
-                description: "Your saved profile has been applied to all declaration sections.",
+                title: 'Profile Loaded',
+                description: 'Your saved profile has been applied to all declaration sections.',
               });
             }
           }}
@@ -106,15 +111,21 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs sm:text-sm">
             <span className="font-medium">Declaration Progress:</span>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <div className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div
+                className={`flex items-center gap-1.5 ${isDesignerComplete ? 'text-green-600' : 'text-gray-400'}`}
+              >
                 <FileCheck className="h-4 w-4" />
                 <span>Designer</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div
+                className={`flex items-center gap-1.5 ${isConstructorComplete ? 'text-green-600' : 'text-gray-400'}`}
+              >
                 <FileCheck className="h-4 w-4" />
                 <span>Constructor</span>
               </div>
-              <div className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-600' : 'text-gray-400'}`}>
+              <div
+                className={`flex items-center gap-1.5 ${isInspectorComplete ? 'text-green-600' : 'text-gray-400'}`}
+              >
                 <FileCheck className="h-4 w-4" />
                 <span>Inspector</span>
               </div>
@@ -127,15 +138,18 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isDesignerComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+            >
               1
             </span>
             Designer Declaration
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            I being the person responsible for the design of the electrical installation (as indicated by my signature below), 
-            particulars of which are described above, having exercised reasonable skill and care when carrying out the design 
-            hereby CERTIFY that the design work for which I have been responsible is to the best of my knowledge and belief 
+            I being the person responsible for the design of the electrical installation (as
+            indicated by my signature below), particulars of which are described above, having
+            exercised reasonable skill and care when carrying out the design hereby CERTIFY that the
+            design work for which I have been responsible is to the best of my knowledge and belief
             in accordance with BS 7671:{currentYear}.
           </p>
         </CardHeader>
@@ -148,7 +162,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 placeholder="Enter designer full name"
                 value={formData.designerName || ''}
                 onChange={(e) => onUpdate('designerName', e.target.value)}
-                className={cn("h-11 text-base touch-manipulation", !formData.designerName && 'border-red-300 focus:border-red-500')}
+                className={cn(
+                  'h-11 text-base touch-manipulation',
+                  !formData.designerName && 'border-red-300 focus:border-red-500'
+                )}
               />
             </div>
             <div>
@@ -162,7 +179,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="designerCompany">Company/Organisation</Label>
@@ -185,7 +202,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <SignatureInput
             label="Designer Digital Signature *"
             value={formData.designerSignature}
@@ -200,16 +217,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isConstructorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+            >
               2
             </span>
             Constructor Declaration
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            I being the person responsible for the construction of the electrical installation (as indicated by my signature below), 
-            particulars of which are described above, having exercised reasonable skill and care when carrying out the construction 
-            work hereby CERTIFY that the construction work for which I have been responsible is to the best of my knowledge and belief 
-            in accordance with BS 7671:{currentYear}.
+            I being the person responsible for the construction of the electrical installation (as
+            indicated by my signature below), particulars of which are described above, having
+            exercised reasonable skill and care when carrying out the construction work hereby
+            CERTIFY that the construction work for which I have been responsible is to the best of
+            my knowledge and belief in accordance with BS 7671:{currentYear}.
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -228,11 +248,14 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 }
               }}
             />
-            <Label htmlFor="sameAsDesigner" className="text-base font-medium cursor-pointer leading-relaxed">
+            <Label
+              htmlFor="sameAsDesigner"
+              className="text-base font-medium cursor-pointer leading-relaxed"
+            >
               Same person as Designer (auto-populate fields)
             </Label>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="constructorName">Constructor Name *</Label>
@@ -242,7 +265,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 value={formData.constructorName || ''}
                 onChange={(e) => onUpdate('constructorName', e.target.value)}
                 disabled={formData.sameAsDesigner}
-                className={cn("h-11 text-base touch-manipulation", !formData.constructorName && 'border-red-300 focus:border-red-500')}
+                className={cn(
+                  'h-11 text-base touch-manipulation',
+                  !formData.constructorName && 'border-red-300 focus:border-red-500'
+                )}
               />
             </div>
             <div>
@@ -257,7 +283,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="constructorCompany">Company/Organisation</Label>
@@ -282,7 +308,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <SignatureInput
             label="Constructor Digital Signature *"
             value={formData.constructorSignature}
@@ -298,16 +324,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       <Card>
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+            <span
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isInspectorComplete ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}
+            >
               3
             </span>
             Inspector Declaration
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            I being the person responsible for the inspection & testing of the electrical installation (as indicated by my signature below), 
-            particulars of which are described above, having exercised reasonable skill and care when carrying out the inspection & testing 
-            hereby CERTIFY that the work for which I have been responsible is to the best of my knowledge and belief in accordance with 
-            BS 7671:{currentYear}.
+            I being the person responsible for the inspection & testing of the electrical
+            installation (as indicated by my signature below), particulars of which are described
+            above, having exercised reasonable skill and care when carrying out the inspection &
+            testing hereby CERTIFY that the work for which I have been responsible is to the best of
+            my knowledge and belief in accordance with BS 7671:{currentYear}.
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -326,11 +355,14 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 }
               }}
             />
-            <Label htmlFor="sameAsConstructor" className="text-base font-medium cursor-pointer leading-relaxed">
+            <Label
+              htmlFor="sameAsConstructor"
+              className="text-base font-medium cursor-pointer leading-relaxed"
+            >
               Same person as Constructor (auto-populate fields)
             </Label>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="inspectorName">Inspector Name *</Label>
@@ -340,7 +372,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 value={formData.inspectorName || ''}
                 onChange={(e) => onUpdate('inspectorName', e.target.value)}
                 disabled={formData.sameAsConstructor}
-                className={cn("h-11 text-base touch-manipulation", !formData.inspectorName && 'border-red-300 focus:border-red-500')}
+                className={cn(
+                  'h-11 text-base touch-manipulation',
+                  !formData.inspectorName && 'border-red-300 focus:border-red-500'
+                )}
               />
             </div>
             <div>
@@ -355,7 +390,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="inspectorCompany">Company/Organisation</Label>
@@ -380,7 +415,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </div>
           </div>
-          
+
           <SignatureInput
             label="Inspector Digital Signature *"
             value={formData.inspectorSignature}
@@ -395,7 +430,9 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       {/* Additional Information & Compliance Notes */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Additional Information & Compliance</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Additional Information & Compliance
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
@@ -406,32 +443,38 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               value={formData.additionalNotes || ''}
               onChange={(e) => onUpdate('additionalNotes', e.target.value)}
               rows={4}
-              className="text-base touch-manipulation min-h-[100px] sm:min-h-[120px]"
+              className="text-base touch-manipulation min-h-[120px]"
             />
           </div>
 
           {/* Authorisation Signatures Section */}
           <div className="space-y-4 sm:space-y-6 pt-4 border-t border-border">
             <div className="space-y-1.5">
-              <h3 className="text-base sm:text-lg font-semibold text-elec-gray">Authorisation Signatures</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-elec-gray">
+                Authorisation Signatures
+              </h3>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Both signatures are required per BS 7671 regulations to authorise this EIC for issue.
+                Both signatures are required per BS 7671 regulations to authorise this EIC for
+                issue.
               </p>
             </div>
 
             {/* Copy from Inspector Declaration Button */}
             <div className="p-3 sm:p-4 bg-blue-500/5 sm:bg-blue-500/10 border border-blue-500/20 sm:border-blue-500/30 rounded-lg">
-              <Button 
+              <Button
                 onClick={() => {
                   onUpdate('inspectedByName', formData.inspectorName);
                   onUpdate('inspectedBySignature', formData.inspectorSignature);
                   onUpdate('inspectedByForOnBehalfOf', formData.inspectorCompany);
                   onUpdate('inspectedByPosition', 'Inspector & Tester');
                   onUpdate('inspectedByAddress', formData.inspectorCompany);
-                  onUpdate('inspectedByCpScheme', formData.inspectorQualifications?.split(',')[0] || '');
+                  onUpdate(
+                    'inspectedByCpScheme',
+                    formData.inspectorQualifications?.split(',')[0] || ''
+                  );
                   toast({
-                    title: "Details copied",
-                    description: "Inspector details copied to 'Inspected By' authorisation"
+                    title: 'Details copied',
+                    description: "Inspector details copied to 'Inspected By' authorisation",
                   });
                 }}
                 className="w-full h-11 touch-manipulation text-sm sm:text-base"
@@ -446,7 +489,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               {/* INSPECTED BY Section */}
               <Card className="p-4 sm:p-6 space-y-4">
                 <h4 className="font-semibold text-base sm:text-lg">INSPECTED BY:</h4>
-                
+
                 <div>
                   <Label htmlFor="inspectedByName">Name (Capitals): *</Label>
                   <Input
@@ -498,7 +541,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     value={formData.inspectedByAddress || ''}
                     onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
                     placeholder="Full address"
-                    className="text-base touch-manipulation min-h-[100px] sm:min-h-[120px]"
+                    className="text-base touch-manipulation min-h-[120px]"
                   />
                 </div>
 
@@ -511,7 +554,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
                       placeholder="Competent Person Scheme"
                       disabled={formData.inspectedByCpSchemeNA}
-                      className={cn("h-11 text-base touch-manipulation", formData.inspectedByCpSchemeNA && 'opacity-50')}
+                      className={cn(
+                        'h-11 text-base touch-manipulation',
+                        formData.inspectedByCpSchemeNA && 'opacity-50'
+                      )}
                     />
                     <div className="flex items-center gap-2 whitespace-nowrap">
                       <Checkbox
@@ -522,7 +568,9 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                           if (checked) onUpdate('inspectedByCpScheme', '');
                         }}
                       />
-                      <Label htmlFor="inspectedByCpSchemeNA" className="cursor-pointer">N/A</Label>
+                      <Label htmlFor="inspectedByCpSchemeNA" className="cursor-pointer">
+                        N/A
+                      </Label>
                     </div>
                   </div>
                 </div>
@@ -541,32 +589,45 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         if (checked) {
                           onUpdate('reportAuthorisedByName', formData.inspectedByName);
                           onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
-                          onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
-                          onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
+                          onUpdate(
+                            'reportAuthorisedByDate',
+                            new Date().toISOString().split('T')[0]
+                          );
+                          onUpdate(
+                            'reportAuthorisedByForOnBehalfOf',
+                            formData.inspectedByForOnBehalfOf
+                          );
                           onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
                           onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
                           onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
                           toast({
-                            title: "Details copied",
-                            description: "Copied from 'Inspected By' section"
+                            title: 'Details copied',
+                            description: "Copied from 'Inspected By' section",
                           });
                         }
                       }}
                     />
-                    <Label htmlFor="eicSameAsInspectedBy" className="text-sm sm:text-base font-medium cursor-pointer leading-relaxed">
+                    <Label
+                      htmlFor="eicSameAsInspectedBy"
+                      className="text-sm sm:text-base font-medium cursor-pointer leading-relaxed"
+                    >
                       Same person as Inspected By (auto-populate fields)
                     </Label>
                   </div>
                 </div>
 
-                <h4 className="font-semibold text-base sm:text-lg">REPORT AUTHORISED FOR ISSUE BY:</h4>
-                
+                <h4 className="font-semibold text-base sm:text-lg">
+                  REPORT AUTHORISED FOR ISSUE BY:
+                </h4>
+
                 <div>
                   <Label htmlFor="reportAuthorisedByName">Name (Capitals): *</Label>
                   <Input
                     id="reportAuthorisedByName"
                     value={formData.reportAuthorisedByName || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
+                    onChange={(e) =>
+                      onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())
+                    }
                     placeholder="FULL NAME IN CAPITALS"
                     className="uppercase h-11 text-base touch-manipulation"
                   />
@@ -623,7 +684,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     value={formData.reportAuthorisedByAddress || ''}
                     onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
                     placeholder="Full address"
-                    className="text-base touch-manipulation min-h-[100px] sm:min-h-[120px]"
+                    className="text-base touch-manipulation min-h-[120px]"
                   />
                 </div>
 
@@ -685,8 +746,9 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                 Part P Building Regulations
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Under Part P of the Building Regulations, notifiable electrical work must be submitted to your
-                Competent Person Scheme (NICEIC/NAPIT) or Local Authority Building Control within 30 days of completion.
+                Under Part P of the Building Regulations, notifiable electrical work must be
+                submitted to your Competent Person Scheme (NICEIC/NAPIT) or Local Authority Building
+                Control within 30 days of completion.
               </p>
             </div>
 
@@ -699,12 +761,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   className="border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black h-6 w-6"
                 />
                 <div className="flex-1">
-                  <Label htmlFor="partPNotification" className="text-base font-medium cursor-pointer leading-relaxed">
+                  <Label
+                    htmlFor="partPNotification"
+                    className="text-base font-medium cursor-pointer leading-relaxed"
+                  >
                     This work requires Part P notification
                   </Label>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Tick this if the work includes: new circuits, consumer unit replacement, work in bathrooms/kitchens,
-                    outdoor installations, or any other notifiable work under Building Regulations.
+                    Tick this if the work includes: new circuits, consumer unit replacement, work in
+                    bathrooms/kitchens, outdoor installations, or any other notifiable work under
+                    Building Regulations.
                   </p>
                 </div>
               </div>
@@ -714,8 +780,8 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               <Alert className="border-amber-500/30 bg-amber-500/5">
                 <AlertTriangle className="h-4 w-4 text-amber-500" />
                 <AlertDescription className="text-amber-300 text-xs">
-                  <strong>Reminder:</strong> A Part P notification will be created when you generate this certificate.
-                  You can track and submit it via Part P Notifications in the app.
+                  <strong>Reminder:</strong> A Part P notification will be created when you generate
+                  this certificate. You can track and submit it via Part P Notifications in the app.
                 </AlertDescription>
               </Alert>
             )}
@@ -728,16 +794,17 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <Alert className="border-green-200 bg-green-50">
           <FileCheck className="h-4 w-4 text-green-600" />
           <AlertDescription className="text-green-800 text-xs sm:text-sm">
-            <strong>All declarations completed.</strong> The EIC is ready for generation and submission. 
-            Ensure all previous sections are complete before generating the final certificate.
+            <strong>All declarations completed.</strong> The EIC is ready for generation and
+            submission. Ensure all previous sections are complete before generating the final
+            certificate.
           </AlertDescription>
         </Alert>
       ) : (
         <Alert className="border-amber-200 bg-amber-50">
           <AlertTriangle className="h-4 w-4 text-amber-600" />
           <AlertDescription className="text-amber-800 text-xs sm:text-sm">
-            <strong>Incomplete declarations.</strong> All three declarations (Designer, Constructor, Inspector) 
-            must be completed with names and signatures before the EIC can be finalised.
+            <strong>Incomplete declarations.</strong> All three declarations (Designer, Constructor,
+            Inspector) must be completed with names and signatures before the EIC can be finalised.
           </AlertDescription>
         </Alert>
       )}

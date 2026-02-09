@@ -312,7 +312,7 @@ export function ProfileSection() {
             </Avatar>
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-foreground">{fullName}</h2>
-              <p className="text-sm text-muted-foreground">Apprentice Electrician</p>
+              <p className="text-sm text-white/80">Apprentice Electrician</p>
               <div className="flex items-center gap-2 mt-2">
                 <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
                   <GraduationCap className="h-3 w-3 mr-1" />
@@ -353,7 +353,7 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Actions Required</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {actionRequiredCount > 0
                   ? `${actionRequiredCount} item${actionRequiredCount !== 1 ? 's' : ''} need attention`
                   : 'All caught up!'}
@@ -364,7 +364,7 @@ export function ProfileSection() {
                 {actionRequiredCount}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
 
           {/* Unread Messages */}
@@ -377,7 +377,7 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Unread Messages</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {unreadCount > 0 ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}` : 'No new messages'}
               </p>
             </div>
@@ -386,7 +386,7 @@ export function ProfileSection() {
                 {unreadCount}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
 
           {/* Message Tutor */}
@@ -399,7 +399,7 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Message Tutor</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {connections.length > 0
                   ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
                   : 'Send a message to your tutor'}
@@ -410,7 +410,7 @@ export function ProfileSection() {
                 {messageUnreadCount}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
         </CardContent>
       </Card>
@@ -433,9 +433,9 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">KSB Coverage Map</p>
-              <p className="text-xs text-muted-foreground">View your knowledge, skills & behaviours progress</p>
+              <p className="text-xs text-white/80">View your knowledge, skills & behaviours progress</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
 
           <button
@@ -447,9 +447,9 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">EPA Gateway Status</p>
-              <p className="text-xs text-muted-foreground">Check your end-point assessment readiness</p>
+              <p className="text-xs text-white/80">Check your end-point assessment readiness</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
         </CardContent>
       </Card>
@@ -472,7 +472,7 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Share Portfolio Link</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {shares.length > 0 ? `${shares.length} active link${shares.length !== 1 ? 's' : ''}` : 'Generate a link to share with tutors'}
               </p>
             </div>
@@ -481,7 +481,7 @@ export function ProfileSection() {
                 {shares.length}
               </Badge>
             )}
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
 
           <button
@@ -498,11 +498,11 @@ export function ProfileSection() {
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Export to PDF</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {isExportingPDF ? 'Generating PDF...' : 'Download your portfolio as a PDF'}
               </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
 
           <button
@@ -512,18 +512,18 @@ export function ProfileSection() {
           >
             <div className="p-2 rounded-lg bg-muted">
               {isDownloadingAll ? (
-                <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />
+                <Loader2 className="h-4 w-4 text-white/80 animate-spin" />
               ) : (
-                <Download className="h-4 w-4 text-muted-foreground" />
+                <Download className="h-4 w-4 text-white/80" />
               )}
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Download All Evidence</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/80">
                 {isDownloadingAll ? 'Creating zip file...' : 'Get a zip of all your files'}
               </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-white/80" />
           </button>
         </CardContent>
       </Card>
@@ -536,10 +536,10 @@ export function ProfileSection() {
             className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-muted">
-              <Settings className="h-4 w-4 text-muted-foreground" />
+              <Settings className="h-4 w-4 text-white/80" />
             </div>
             <span className="text-sm font-medium text-foreground">Settings</span>
-            <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto" />
+            <ChevronRight className="h-4 w-4 text-white/80 ml-auto" />
           </button>
 
           <div className="border-t border-border" />
@@ -574,7 +574,7 @@ export function ProfileSection() {
 
               {/* Expiry Selection */}
               <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">Link expires after</label>
+                <label className="text-xs text-white/80">Link expires after</label>
                 <Select value={shareExpiry} onValueChange={(v) => setShareExpiry(v as any)}>
                   <SelectTrigger className="h-11">
                     <SelectValue />
@@ -622,7 +622,7 @@ export function ProfileSection() {
                         <p className="text-sm font-medium truncate">
                           {share.title || 'Portfolio Link'}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2 text-xs text-white/80">
                           <Clock className="h-3 w-3" />
                           <span>{formatExpiry(share.expires_at)}</span>
                           <span className="text-border">•</span>
@@ -641,7 +641,7 @@ export function ProfileSection() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 p-2 rounded-lg bg-background text-xs text-muted-foreground truncate">
+                      <div className="flex-1 p-2 rounded-lg bg-background text-xs text-white/80 truncate">
                         {getShareUrl(share.token)}
                       </div>
                       <Button
@@ -663,7 +663,7 @@ export function ProfileSection() {
             )}
 
             {/* Info */}
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-white/80 text-center">
               Anyone with a link can view your portfolio (read-only).
               Tutors can leave comments if they sign in.
             </p>
@@ -684,10 +684,10 @@ export function ProfileSection() {
 
           <div className="mt-6 flex flex-col items-center justify-center py-12 text-center">
             <div className="p-4 rounded-full bg-muted mb-4">
-              <MessageSquare className="h-8 w-8 text-muted-foreground" />
+              <MessageSquare className="h-8 w-8 text-white/80" />
             </div>
             <p className="text-sm font-medium text-foreground">No messages yet</p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-white/80 mt-1">
               Comments from your tutor will appear here
             </p>
           </div>

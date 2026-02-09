@@ -26,11 +26,12 @@ const itemVariants = {
 
 export function DiaryDashboardWidget() {
   const { entries, createEntry, recentSites, isLoading } = useSiteDiaryEntries();
-  const { currentStreak } = useDiaryStreak(entries);
+  const { currentStreak, nextMilestone, daysToNextMilestone, streakMessage } =
+    useDiaryStreak(entries);
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const todayStr = new Date().toISOString().split('T')[0];
-  const hasLoggedToday = entries.some(e => e.date === todayStr);
+  const hasLoggedToday = entries.some((e) => e.date === todayStr);
   const todayFormatted = new Date().toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',
@@ -67,19 +68,25 @@ export function DiaryDashboardWidget() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-white/70 leading-relaxed">
-                  {todayFormatted}
-                </p>
+                <p className="text-sm text-white/70 leading-relaxed">{todayFormatted}</p>
 
                 {/* Stats row */}
                 <div className="flex flex-wrap gap-2 mt-2.5">
-                  {currentStreak > 0 && (
+                  {currentStreak > 0 ? (
                     <Badge
                       variant="outline"
                       className="text-[10px] bg-orange-500/10 border-orange-500/30 text-orange-400"
                     >
+                      <Flame className="h-3 w-3 mr-1 animate-pulse" />
+                      {currentStreak}-day streak!
+                    </Badge>
+                  ) : (
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] bg-white/[0.04] border-white/10 text-white/60"
+                    >
                       <Flame className="h-3 w-3 mr-1" />
-                      {currentStreak} day streak
+                      {streakMessage}
                     </Badge>
                   )}
                   {entries.length > 0 && (
@@ -89,6 +96,14 @@ export function DiaryDashboardWidget() {
                     >
                       <FileText className="h-3 w-3 mr-1" />
                       {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+                    </Badge>
+                  )}
+                  {currentStreak > 0 && nextMilestone && daysToNextMilestone > 0 && (
+                    <Badge
+                      variant="outline"
+                      className="text-[10px] bg-purple-500/10 border-purple-500/30 text-purple-400"
+                    >
+                      {daysToNextMilestone}d to {nextMilestone}-day milestone
                     </Badge>
                   )}
                 </div>

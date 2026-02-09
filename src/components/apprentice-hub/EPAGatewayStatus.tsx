@@ -240,7 +240,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       case 'at_risk':
         return 'bg-red-500/10 text-red-500 border-red-500/20';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-white/80';
     }
   };
 
@@ -289,7 +289,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       case 'offjob':
         return 'text-amber-500';
       default:
-        return 'text-muted-foreground';
+        return 'text-white/80';
     }
   };
 
@@ -310,8 +310,8 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <p className="text-sm text-muted-foreground mt-2">Checking readiness...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-white/80" />
+            <p className="text-sm text-white/80 mt-2">Checking readiness...</p>
           </div>
         ) : (
           <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
@@ -331,7 +331,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-foreground">{overallReadiness}%</p>
-                  <p className="text-xs text-muted-foreground">complete</p>
+                  <p className="text-xs text-white/80">complete</p>
                 </div>
               </div>
               <Progress value={overallReadiness} className="h-2" />
@@ -339,7 +339,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
 
             {/* Requirements Checklist */}
             <div className="space-y-3 mb-6">
-              <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <h3 className="text-sm font-medium text-white/80 flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4" />
                 Gateway Requirements
               </h3>
@@ -362,9 +362,9 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
                           <p className="text-sm font-medium text-foreground">{req.title}</p>
                           <span className="text-sm font-bold">{req.progress}%</span>
                         </div>
-                        <p className="text-xs text-muted-foreground mb-2">{req.description}</p>
+                        <p className="text-xs text-white/80 mb-2">{req.description}</p>
                         <Progress value={req.progress} className="h-1.5 mb-2" />
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center justify-between text-xs text-white/80">
                           <span>Current: {req.current}</span>
                           <span>Target: {req.target}</span>
                         </div>
@@ -378,7 +378,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Gaps to Address */}
             {gaps.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-3">
+                <h3 className="text-sm font-medium text-white/80 flex items-center gap-2 mb-3">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
                   Gaps to Address
                 </h3>
@@ -399,7 +399,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Recommendations */}
             {recommendations.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-3">
+                <h3 className="text-sm font-medium text-white/80 flex items-center gap-2 mb-3">
                   <TrendingUp className="h-4 w-4 text-elec-yellow" />
                   Next Steps
                 </h3>
@@ -420,8 +420,8 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Info Note */}
             <div className="p-4 rounded-xl bg-muted/30 border border-border">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-                <div className="text-xs text-muted-foreground">
+                <Clock className="h-5 w-5 text-white/80 shrink-0 mt-0.5" />
+                <div className="text-xs text-white/80">
                   <p className="font-medium text-foreground mb-1">About the Gateway</p>
                   <p>
                     The gateway is a formal check before your End-Point Assessment (EPA).

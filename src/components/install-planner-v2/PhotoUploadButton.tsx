@@ -14,13 +14,13 @@ interface PhotoUploadButtonProps {
   layout?: 'vertical' | 'horizontal';
 }
 
-export const PhotoUploadButton = ({ 
-  onPhotoUploaded, 
-  onPhotosUploaded, 
-  maxPhotos = 1, 
-  disabled, 
-  className, 
-  layout = 'vertical' 
+export const PhotoUploadButton = ({
+  onPhotoUploaded,
+  onPhotosUploaded,
+  maxPhotos = 1,
+  disabled,
+  className,
+  layout = 'vertical',
 }: PhotoUploadButtonProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [photos, setPhotos] = useState<string[]>([]);
@@ -49,7 +49,9 @@ export const PhotoUploadButton = ({
       reader.onloadend = () => setPreview(reader.result as string);
       reader.readAsDataURL(file);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const fileExt = file.name.split('.').pop();
@@ -61,21 +63,21 @@ export const PhotoUploadButton = ({
 
       if (error) throw error;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('visual-uploads')
-        .getPublicUrl(data.path);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
 
       const newPhotos = [...photos, publicUrl];
       setPhotos(newPhotos);
-      
+
       toast.success(`Photo ${newPhotos.length}/${maxPhotos} uploaded`);
-      
+
       // Call legacy single photo callback for backwards compatibility
       if (onPhotoUploaded) onPhotoUploaded(publicUrl);
-      
+
       // Call multi-photo callback
       if (onPhotosUploaded) onPhotosUploaded(newPhotos);
-      
+
       setTimeout(() => setPreview(null), 2000);
     } catch (error) {
       console.error('Upload error:', error);
@@ -94,29 +96,46 @@ export const PhotoUploadButton = ({
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
-      <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
-      <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
+    <div className={cn('space-y-3', className)}>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
+        className="hidden"
+      />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
+        className="hidden"
+      />
 
-      <div className={cn("flex gap-2", layout === 'horizontal' ? 'flex-row' : 'flex-col')}>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="icon" 
+      <div className={cn('flex gap-2', layout === 'horizontal' ? 'flex-row' : 'flex-col')}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
           disabled={disabled || isUploading || photos.length >= maxPhotos}
-          onClick={() => cameraInputRef.current?.click()} 
-          className={cn("shrink-0", layout === 'horizontal' ? 'h-9 w-9' : 'h-10 w-10')} 
+          onClick={() => cameraInputRef.current?.click()}
+          className={cn('shrink-0', layout === 'horizontal' ? 'h-9 w-9' : 'h-10 w-10')}
           aria-label="Take photo"
         >
-          {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
+          {isUploading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Camera className="h-4 w-4" />
+          )}
         </Button>
-        <Button 
-          type="button" 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
           disabled={disabled || isUploading || photos.length >= maxPhotos}
-          onClick={() => fileInputRef.current?.click()} 
-          className={cn("shrink-0", layout === 'horizontal' ? 'h-9 w-9' : 'h-10 w-10')} 
+          onClick={() => fileInputRef.current?.click()}
+          className={cn('shrink-0', layout === 'horizontal' ? 'h-9 w-9' : 'h-10 w-10')}
           aria-label="Upload photo"
         >
           <Upload className="h-4 w-4" />
@@ -132,16 +151,34 @@ export const PhotoUploadButton = ({
       {photos.length > 0 && (
         <div className="grid grid-cols-3 gap-2">
           {photos.map((photoUrl, index) => (
-            <div key={index} className="relative group aspect-square rounded-lg overflow-hidden border border-border/50 bg-card">
-              <img src={photoUrl} alt={`Photo ${index + 1}`} className="w-full h-full object-cover" />
+            <div
+              key={index}
+              className="relative group aspect-square rounded-lg overflow-hidden border border-border/50 bg-card"
+            >
+              <img
+                src={photoUrl}
+                alt={`Photo ${index + 1}`}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
               <button
                 type="button"
                 onClick={() => handleRemovePhoto(index)}
                 className="absolute top-1 right-1 p-1 bg-red-500/90 hover:bg-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Remove photo"
               >
-                <svg className="h-3 w-3 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="h-3 w-3 text-foreground"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
               <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 rounded text-xs text-foreground">
@@ -154,11 +191,15 @@ export const PhotoUploadButton = ({
 
       {preview && (
         <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-border/50 bg-card">
-          <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+          <img src={preview} alt="Preview" className="w-full h-full object-cover" loading="lazy" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-2">
             <div className="flex gap-1">
               {[0, 100, 200].map((delay, i) => (
-                <div key={i} className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse" style={{ animationDelay: `${delay}ms` }} />
+                <div
+                  key={i}
+                  className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse"
+                  style={{ animationDelay: `${delay}ms` }}
+                />
               ))}
             </div>
           </div>

@@ -17,7 +17,13 @@
     "cap:sync": "npm run build && npx cap sync",
     "cap:ios": "npm run build && npx cap sync ios && npx cap open ios",
     "cap:android": "npm run build && npx cap sync android && npx cap open android",
-    "cap:build": "npm run build && npx cap sync"
+    "cap:build": "npm run build && npx cap sync",
+    "prepare": "husky",
+    "lint:fast": "oxlint src/",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "size": "size-limit",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.1",
@@ -67,6 +73,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@react-google-maps/api": "^2.20.8",
+    "@revenuecat/purchases-capacitor": "^12.1.1",
     "@sentry/react": "^10.36.0",
     "@supabase/supabase-js": "^2.49.4",
     "@tanstack/react-query": "^5.80.6",
@@ -129,7 +136,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.57.0",
+    "@size-limit/preset-app": "^12.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/dompurify": "^3.2.0",
     "@types/node": "^22.18.1",
@@ -142,14 +151,29 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "husky": "^9.1.7",
+    "knip": "^5.83.1",
+    "lint-staged": "^16.2.7",
     "lovable-tagger": "^1.1.7",
+    "pdf-parse": "^2.4.5",
     "pg": "^8.16.3",
     "postcss": "^8.4.47",
+    "prettier": "^3.8.1",
     "rollup-plugin-visualizer": "^6.0.5",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
+    "vite-plugin-compression2": "^2.4.0",
     "vite-plugin-pwa": "^1.2.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   }
 }

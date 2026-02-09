@@ -32,7 +32,8 @@ const OptionCard: React.FC<{
       'w-full text-left flex items-center gap-4 rounded-xl p-4 border transition-all duration-200',
       'active:scale-[0.98] touch-manipulation',
       'hover:border-white/30 hover:bg-white/[0.06]',
-      borderClass, accentClass
+      borderClass,
+      accentClass
     )}
   >
     {icon}
@@ -115,7 +116,7 @@ const QuoteOptionsSheet: React.FC<QuoteOptionsSheetProps> = ({
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
             >
               <X className="h-4 w-4" />
             </button>
@@ -141,9 +142,7 @@ const QuoteOptionsSheet: React.FC<QuoteOptionsSheetProps> = ({
       <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col bg-background">
           <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/10">
-            <SheetTitle className="text-base font-semibold text-white">
-              Quote Options
-            </SheetTitle>
+            <SheetTitle className="text-base font-semibold text-white">Quote Options</SheetTitle>
           </SheetHeader>
 
           <div className="p-4">

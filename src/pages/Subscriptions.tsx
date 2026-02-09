@@ -1,13 +1,31 @@
-import { ArrowLeft, Lock, RotateCcw, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import SubscriptionStatus from "@/components/subscriptions/SubscriptionStatus";
-import PlanSelection from "@/components/subscriptions/PlanSelection";
-import SubscriptionFAQ from "@/components/subscriptions/SubscriptionFAQ";
-import SupportSection from "@/components/subscriptions/SupportSection";
-import FeatureComparison from "@/components/subscriptions/FeatureComparison";
+import { ArrowLeft, Lock, RotateCcw, Zap, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import SubscriptionStatus from '@/components/subscriptions/SubscriptionStatus';
+import PlanSelection from '@/components/subscriptions/PlanSelection';
+import SubscriptionFAQ from '@/components/subscriptions/SubscriptionFAQ';
+import SupportSection from '@/components/subscriptions/SupportSection';
+import FeatureComparison from '@/components/subscriptions/FeatureComparison';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
 
 const Subscriptions = () => {
+  const { user } = useAuth();
+  const { isNative, restorePurchases, isPurchasing } = useRevenueCat(user?.id);
+  const { toast } = useToast();
+
+  const handleRestore = async () => {
+    const restored = await restorePurchases();
+    toast({
+      title: restored ? 'Purchases restored' : 'No purchases found',
+      description: restored
+        ? 'Your subscription has been restored successfully.'
+        : "We couldn't find any previous purchases for this account.",
+      variant: restored ? 'default' : 'destructive',
+    });
+  };
+
   return (
     <div className="animate-fade-in relative min-h-screen">
       {/* Ambient background — subtle, consistent with app */}
@@ -50,9 +68,9 @@ const Subscriptions = () => {
         <section>
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:gap-x-8">
             {[
-              { icon: Lock, text: "Secure payment via Stripe" },
-              { icon: RotateCcw, text: "Cancel anytime" },
-              { icon: Zap, text: "Instant access" },
+              { icon: Lock, text: 'Secure payment via Stripe' },
+              { icon: RotateCcw, text: 'Cancel anytime' },
+              { icon: Zap, text: 'Instant access' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-1.5 text-white/40">
                 <item.icon className="h-3.5 w-3.5" />
@@ -61,6 +79,28 @@ const Subscriptions = () => {
             ))}
           </div>
         </section>
+
+        {/* Restore Purchases — native only (required by Apple) */}
+        {isNative && (
+          <section className="flex justify-center">
+            <Button
+              variant="ghost"
+              onClick={handleRestore}
+              disabled={isPurchasing}
+              className="text-sm text-white/50 hover:text-white hover:bg-white/5 h-11 touch-manipulation"
+            >
+              {isPurchasing ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Restoring...
+                </>
+              ) : (
+                <>
+                  <RotateCcw className="mr-2 h-4 w-4" /> Restore Purchases
+                </>
+              )}
+            </Button>
+          </section>
+        )}
 
         {/* Feature comparison */}
         <section>

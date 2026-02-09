@@ -1,33 +1,37 @@
-import { useState, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
-import { Camera, Image as ImageIcon, X, Check, MapPin, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useSafetyPhotoUpload, UploadOptions } from "@/hooks/useSafetyPhotoUpload";
-import { PHOTO_CATEGORIES, getCategoryColor } from "@/hooks/useSafetyPhotos";
+import { useState, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Camera, Image as ImageIcon, X, Check, MapPin, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useSafetyPhotoUpload, UploadOptions } from '@/hooks/useSafetyPhotoUpload';
+import { PHOTO_CATEGORIES, getCategoryColor } from '@/hooks/useSafetyPhotos';
 
 interface CameraTabProps {
   onPhotoUploaded?: () => void;
-  projectReference?: string;  // Pre-fill project field when capturing for specific project
-  onClose?: () => void;       // Close sheet after upload
+  projectReference?: string; // Pre-fill project field when capturing for specific project
+  onClose?: () => void; // Close sheet after upload
 }
 
-type CaptureState = "ready" | "preview" | "details";
+type CaptureState = 'ready' | 'preview' | 'details';
 
-export default function CameraTab({ onPhotoUploaded, projectReference: initialProject, onClose }: CameraTabProps) {
+export default function CameraTab({
+  onPhotoUploaded,
+  projectReference: initialProject,
+  onClose,
+}: CameraTabProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [captureState, setCaptureState] = useState<CaptureState>("ready");
+  const [captureState, setCaptureState] = useState<CaptureState>('ready');
   const [capturedImage, setCapturedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("before_work");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [projectReference, setProjectReference] = useState(initialProject || "");
+  const [selectedCategory, setSelectedCategory] = useState<string>('before_work');
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [projectReference, setProjectReference] = useState(initialProject || '');
 
   // Track if project is pre-filled (locked)
   const isProjectLocked = Boolean(initialProject);
   const [tags, setTags] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState("");
+  const [tagInput, setTagInput] = useState('');
 
   const { uploadPhoto, uploadProgress, isUploading, getCurrentLocation } = useSafetyPhotoUpload();
 
@@ -38,7 +42,7 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
       const reader = new FileReader();
       reader.onload = (ev) => {
         setImagePreview(ev.target?.result as string);
-        setCaptureState("preview");
+        setCaptureState('preview');
       };
       reader.readAsDataURL(file);
     }
@@ -49,9 +53,9 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
   }, []);
 
   const handleGallerySelect = useCallback(() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
     input.multiple = false;
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
@@ -60,7 +64,7 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
         const reader = new FileReader();
         reader.onload = (ev) => {
           setImagePreview(ev.target?.result as string);
-          setCaptureState("preview");
+          setCaptureState('preview');
         };
         reader.readAsDataURL(file);
       }
@@ -71,18 +75,18 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
   const handleRetake = useCallback(() => {
     setCapturedImage(null);
     setImagePreview(null);
-    setCaptureState("ready");
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    setCaptureState('ready');
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }, []);
 
   const handleProceedToDetails = useCallback(() => {
-    setCaptureState("details");
+    setCaptureState('details');
   }, []);
 
   const handleAddTag = useCallback(() => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
       setTags((prev) => [...prev, tagInput.trim()]);
-      setTagInput("");
+      setTagInput('');
     }
   }, [tagInput, tags]);
 
@@ -113,23 +117,34 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
     if (result) {
       setCapturedImage(null);
       setImagePreview(null);
-      setDescription("");
-      setLocation("");
+      setDescription('');
+      setLocation('');
       // Only reset project if not locked
       if (!isProjectLocked) {
-        setProjectReference("");
+        setProjectReference('');
       }
       setTags([]);
-      setSelectedCategory("before_work");
-      setCaptureState("ready");
+      setSelectedCategory('before_work');
+      setCaptureState('ready');
       onPhotoUploaded?.();
       // Close sheet if onClose callback provided
       onClose?.();
     }
-  }, [capturedImage, description, selectedCategory, location, tags, projectReference, uploadPhoto, onPhotoUploaded, onClose, isProjectLocked]);
+  }, [
+    capturedImage,
+    description,
+    selectedCategory,
+    location,
+    tags,
+    projectReference,
+    uploadPhoto,
+    onPhotoUploaded,
+    onClose,
+    isProjectLocked,
+  ]);
 
   // Ready state - camera/gallery selection
-  if (captureState === "ready") {
+  if (captureState === 'ready') {
     return (
       <div className="flex flex-col h-full bg-elec-dark">
         <input
@@ -180,7 +195,7 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
   }
 
   // Preview state - review captured image
-  if (captureState === "preview") {
+  if (captureState === 'preview') {
     return (
       <div className="flex flex-col h-full bg-elec-dark">
         {/* Full image preview - constrained on desktop */}
@@ -230,7 +245,12 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
           {/* Photo thumbnail - smaller on desktop */}
           <div className="relative w-full md:w-48 md:mx-auto h-24 md:h-32 rounded-xl overflow-hidden bg-[#1e1e1e] border border-white/10">
             {imagePreview && (
-              <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             )}
             <button
               onClick={handleRetake}
@@ -242,7 +262,9 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
 
           {/* Category grid - compact 4x2 */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">Category</label>
+            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+              Category
+            </label>
             <div className="grid grid-cols-4 gap-1.5 md:gap-2 mt-2">
               {PHOTO_CATEGORIES.map((cat) => (
                 <button
@@ -250,12 +272,14 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
                   onClick={() => setSelectedCategory(cat.value)}
                   className={`flex flex-col items-center gap-1 p-2 md:p-3 rounded-lg transition-all touch-manipulation ${
                     selectedCategory === cat.value
-                      ? "bg-elec-yellow/20 ring-1 ring-elec-yellow"
-                      : "bg-white/5 hover:bg-white/10 active:bg-white/10"
+                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
+                      : 'bg-white/5 hover:bg-white/10 active:bg-white/10'
                   }`}
                 >
                   <span className={`w-2.5 h-2.5 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] md:text-xs text-white/80 text-center leading-tight">{cat.label}</span>
+                  <span className="text-[10px] md:text-xs text-white/80 text-center leading-tight">
+                    {cat.label}
+                  </span>
                 </button>
               ))}
             </div>
@@ -263,7 +287,9 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
 
           {/* Description */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">Description *</label>
+            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+              Description *
+            </label>
             <Textarea
               placeholder="What does this photo show?"
               value={description}
@@ -275,7 +301,9 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
           {/* Location + Project in row */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">Location</label>
+              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+                Location
+              </label>
               <div className="relative mt-2">
                 <Input
                   placeholder="Site..."
@@ -301,7 +329,9 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
                 onChange={(e) => setProjectReference(e.target.value)}
                 disabled={isProjectLocked}
                 className={`mt-2 h-10 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation ${
-                  isProjectLocked ? "opacity-70 cursor-not-allowed bg-elec-yellow/5 border-elec-yellow/20" : ""
+                  isProjectLocked
+                    ? 'opacity-70 cursor-not-allowed bg-elec-yellow/5 border-elec-yellow/20'
+                    : ''
                 }`}
               />
             </div>
@@ -309,13 +339,15 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
 
           {/* Tags - inline */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">Tags</label>
+            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+              Tags
+            </label>
             <div className="flex gap-2 mt-2">
               <Input
                 placeholder="Add tag..."
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
+                onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
                 className="flex-1 h-10 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation"
               />
               <button
@@ -329,9 +361,15 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
             {tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 text-xs">
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 text-xs"
+                  >
                     {tag}
-                    <button onClick={() => handleRemoveTag(tag)} className="text-white/40 hover:text-white">
+                    <button
+                      onClick={() => handleRemoveTag(tag)}
+                      className="text-white/40 hover:text-white"
+                    >
                       <X className="h-3 w-3" />
                     </button>
                   </span>

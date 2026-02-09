@@ -5,31 +5,32 @@
  * Sends welcome emails to new subscribers
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
-import { Resend } from "npm:resend@2.0.0";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+import { Resend } from 'npm:resend@2.0.0';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, stripe-signature, x-request-id',
 };
 
 // Tier display names
 const TIER_NAMES: Record<string, string> = {
-  'apprentice': 'Apprentice',
-  'apprentice_yearly': 'Apprentice (Annual)',
-  'electrician': 'Electrician Pro',
-  'electrician_yearly': 'Electrician Pro (Annual)',
-  'desktop': 'Desktop',
-  'desktop_yearly': 'Desktop (Annual)',
-  'employer': 'Employer',
-  'employer_yearly': 'Employer (Annual)',
-  'college': 'College',
-  'college_yearly': 'College (Annual)',
-  'Founder': 'Founder',
+  apprentice: 'Apprentice',
+  apprentice_yearly: 'Apprentice (Annual)',
+  electrician: 'Electrician Pro',
+  electrician_yearly: 'Electrician Pro (Annual)',
+  desktop: 'Desktop',
+  desktop_yearly: 'Desktop (Annual)',
+  employer: 'Employer',
+  employer_yearly: 'Employer (Annual)',
+  college: 'College',
+  college_yearly: 'College (Annual)',
+  Founder: 'Founder',
 };
 
 /**
@@ -41,7 +42,7 @@ async function sendWelcomeEmail(
   tierName: string,
   isYearly: boolean
 ): Promise<void> {
-  const resendApiKey = Deno.env.get("RESEND_API_KEY");
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
   if (!resendApiKey) {
     console.warn('⚠️ RESEND_API_KEY not configured - skipping welcome email');
@@ -169,25 +170,25 @@ async function sendWelcomeEmail(
 // CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
   // Apprentice - £4.99/month, £49.99/year
-  'price_1SmUef2RKw5t5RAmRIMTWTqU': 'apprentice', // £4.99/month (current)
-  'price_1SmUfK2RKw5t5RAml6bj1I77': 'apprentice_yearly', // £49.99/year (current)
+  price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice', // £4.99/month (current)
+  price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly', // £49.99/year (current)
 
   // Electrician Pro - £9.99/month, £99.99/year
-  'price_1SqJVr2RKw5t5RAmaiTGelLN': 'electrician', // £9.99/month (current)
-  'price_1SqJVs2RKw5t5RAmVeD2QVsb': 'electrician_yearly', // £99.99/year (current)
+  price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (current)
+  price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (current)
 
   // Employer - £29.99/month, £299.99/year
-  'price_1SlyAT2RKw5t5RAmUmTRGimH': 'employer', // £29.99/month (current)
-  'price_1SlyB82RKw5t5RAmN447YJUW': 'employer_yearly', // £299.99/year (current)
+  price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (current)
+  price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current)
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
-  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'Employer', // £3.99/month founders offer (employer access)
+  price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer', // £3.99/month founders offer (employer access)
 
   // Legacy prices (for existing subscribers)
-  'price_1RhtdT2RKw5t5RAmv6b2xE6p': 'apprentice', // £6.99/month (legacy)
-  'price_1Rhtgl2RKw5t5RAmkQVKVnKn': 'apprentice_yearly', // £69.99/year (legacy)
-  'price_1RhteS2RKw5t5RAmzRbaTE8U': 'electrician', // £9.99/month (legacy)
-  'price_1RhtiS2RKw5t5RAmha0s6PJA': 'electrician_yearly', // £99.99/year (legacy)
+  price_1RhtdT2RKw5t5RAmv6b2xE6p: 'apprentice', // £6.99/month (legacy)
+  price_1Rhtgl2RKw5t5RAmkQVKVnKn: 'apprentice_yearly', // £69.99/year (legacy)
+  price_1RhteS2RKw5t5RAmzRbaTE8U: 'electrician', // £9.99/month (legacy)
+  price_1RhtiS2RKw5t5RAmha0s6PJA: 'electrician_yearly', // £99.99/year (legacy)
 };
 
 serve(async (req) => {
@@ -222,7 +223,9 @@ serve(async (req) => {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
         logger.info('Webhook signature verified');
       } catch (err: any) {
-        logger.warn('Webhook signature verification failed, processing anyway', { error: err.message });
+        logger.warn('Webhook signature verification failed, processing anyway', {
+          error: err.message,
+        });
         event = JSON.parse(body);
       }
     } else {
@@ -239,8 +242,23 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Helper: Find user by Stripe customer ID or email
-    async function findUserByCustomer(customerId: string): Promise<string | null> {
-      // First check if we have the stripe_customer_id stored
+    async function findUserByCustomer(
+      customerId: string,
+      metadataUserId?: string | null
+    ): Promise<string | null> {
+      // Priority 1: Use userId from subscription/event metadata (most reliable)
+      if (metadataUserId) {
+        logger.info('Found userId in metadata', { metadataUserId });
+        // Backfill stripe_customer_id if missing
+        await supabase
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', metadataUserId)
+          .is('stripe_customer_id', null);
+        return metadataUserId;
+      }
+
+      // Priority 2: Check if we have the stripe_customer_id stored in profiles
       const { data: profile } = await supabase
         .from('profiles')
         .select('id')
@@ -251,17 +269,34 @@ serve(async (req) => {
         return profile.id;
       }
 
-      // Fallback: Look up customer email in Stripe, then find user
+      // Priority 3: Look up customer email in Stripe, then find auth user
       try {
         const customer = await stripe.customers.retrieve(customerId);
         if (customer.deleted || !('email' in customer) || !customer.email) {
           return null;
         }
 
-        // Use listUsers and filter - getUserByEmail doesn't exist in Supabase JS v2
-        const { data: usersData } = await supabase.auth.admin.listUsers();
+        // List users with pagination (default only returns 50!)
+        const { data: usersData } = await supabase.auth.admin.listUsers({
+          page: 1,
+          perPage: 1000,
+        });
         const authUser = usersData?.users?.find((u: any) => u.email === customer.email);
-        return authUser?.id || null;
+
+        if (authUser?.id) {
+          // Backfill stripe_customer_id for future lookups
+          await supabase
+            .from('profiles')
+            .update({ stripe_customer_id: customerId })
+            .eq('id', authUser.id);
+          logger.info('Backfilled stripe_customer_id via email lookup', {
+            userId: authUser.id,
+            customerId,
+          });
+          return authUser.id;
+        }
+
+        return null;
       } catch (err) {
         console.error('Error finding user by customer:', err);
         return null;
@@ -299,10 +334,7 @@ serve(async (req) => {
         updateData.onboarding_completed = true;
       }
 
-      const { error } = await supabase
-        .from('profiles')
-        .update(updateData)
-        .eq('id', userId);
+      const { error } = await supabase.from('profiles').update(updateData).eq('id', userId);
 
       if (error) {
         logger.error('Error updating subscription status', { userId, error: error.message });
@@ -323,12 +355,16 @@ serve(async (req) => {
           eventType: event.type,
           subscriptionId: subscription.id,
           status: subscription.status,
-          customerId
+          customerId,
         });
 
-        const userId = await findUserByCustomer(customerId);
+        const metadataUserId = (subscription as any).metadata?.userId || null;
+        const userId = await findUserByCustomer(customerId, metadataUserId);
         if (!userId) {
-          logger.warn('No user found for customer', { customerId });
+          logger.error('No user found for customer — subscription will not activate', {
+            customerId,
+            subscriptionId: subscription.id,
+          });
           break;
         }
 
@@ -337,7 +373,7 @@ serve(async (req) => {
 
         // Get the price/tier
         const priceId = subscription.items.data[0]?.price?.id;
-        const tier = priceId ? (PRICE_TO_TIER[priceId] || 'unknown') : null;
+        const tier = priceId ? PRICE_TO_TIER[priceId] || 'unknown' : null;
 
         // Get period end
         const periodEnd = subscription.current_period_end
@@ -346,7 +382,14 @@ serve(async (req) => {
 
         // Pass setOnboardingCompleted=true for new subscriptions to mark signup flow as done
         const isNewSubscription = event.type === 'customer.subscription.created';
-        await updateSubscriptionStatus(userId, isActive, customerId, tier, periodEnd, isNewSubscription && isActive);
+        await updateSubscriptionStatus(
+          userId,
+          isActive,
+          customerId,
+          tier,
+          periodEnd,
+          isNewSubscription && isActive
+        );
 
         // Handle founder invite completion (mark as claimed)
         // Check if this is a founder subscription by looking at the price ID
@@ -373,13 +416,18 @@ serve(async (req) => {
                 .eq('id', inviteId);
 
               if (inviteError) {
-                logger.error('Failed to mark founder invite as claimed', { inviteId, error: inviteError.message });
+                logger.error('Failed to mark founder invite as claimed', {
+                  inviteId,
+                  error: inviteError.message,
+                });
               } else {
                 logger.info('Founder invite claimed', { inviteId });
               }
             }
           } catch (inviteErr: any) {
-            logger.warn('Error processing founder invite (non-fatal)', { error: inviteErr?.message });
+            logger.warn('Error processing founder invite (non-fatal)', {
+              error: inviteErr?.message,
+            });
           }
         }
 
@@ -434,9 +482,10 @@ serve(async (req) => {
 
         logger.info('Subscription cancelled', { subscriptionId: subscription.id, customerId });
 
-        const userId = await findUserByCustomer(customerId);
+        const metadataUserId = (subscription as any).metadata?.userId || null;
+        const userId = await findUserByCustomer(customerId, metadataUserId);
         if (!userId) {
-          logger.warn('No user found for customer', { customerId });
+          logger.error('No user found for customer — cannot process cancellation', { customerId });
           break;
         }
 
@@ -447,7 +496,8 @@ serve(async (req) => {
           user_id: userId,
           type: 'subscription_cancelled',
           title: 'Subscription Ended',
-          message: 'Your subscription has ended. Subscribe again to regain access to premium features.',
+          message:
+            'Your subscription has ended. Subscribe again to regain access to premium features.',
           data: {},
           read: false,
         });
@@ -467,16 +517,21 @@ serve(async (req) => {
         const customerId = invoice.customer as string;
         logger.info('Subscription invoice paid', { invoiceId: invoice.id, customerId });
 
-        const userId = await findUserByCustomer(customerId);
+        const invoiceMetadataUserId =
+          (invoice as any).subscription_details?.metadata?.userId || null;
+        const userId = await findUserByCustomer(customerId, invoiceMetadataUserId);
         if (!userId) {
-          logger.warn('No user found for customer', { customerId });
+          logger.error('No user found for customer — cannot process invoice', {
+            customerId,
+            invoiceId: invoice.id,
+          });
           break;
         }
 
         // Ensure subscription is marked active
         const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
         const priceId = subscription.items.data[0]?.price?.id;
-        const tier = priceId ? (PRICE_TO_TIER[priceId] || 'unknown') : null;
+        const tier = priceId ? PRICE_TO_TIER[priceId] || 'unknown' : null;
         const periodEnd = subscription.current_period_end
           ? new Date(subscription.current_period_end * 1000)
           : null;
@@ -498,9 +553,14 @@ serve(async (req) => {
         const customerId = invoice.customer as string;
         logger.warn('Subscription payment failed', { invoiceId: invoice.id, customerId });
 
-        const userId = await findUserByCustomer(customerId);
+        const failedInvoiceMetadataUserId =
+          (invoice as any).subscription_details?.metadata?.userId || null;
+        const userId = await findUserByCustomer(customerId, failedInvoiceMetadataUserId);
         if (!userId) {
-          logger.warn('No user found for customer', { customerId });
+          logger.error('No user found for customer — cannot notify of failed payment', {
+            customerId,
+            invoiceId: invoice.id,
+          });
           break;
         }
 
@@ -510,7 +570,8 @@ serve(async (req) => {
           user_id: userId,
           type: 'payment_failed',
           title: 'Payment Failed',
-          message: 'Your subscription payment failed. Please update your payment method to avoid losing access.',
+          message:
+            'Your subscription payment failed. Please update your payment method to avoid losing access.',
           data: {
             invoice_id: invoice.id,
             amount: invoice.amount_due / 100,
@@ -526,17 +587,19 @@ serve(async (req) => {
     }
 
     logger.info('Webhook processed successfully', { eventType: event.type });
-    return new Response(
-      JSON.stringify({ received: true, type: event.type }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId } }
-    );
-
+    return new Response(JSON.stringify({ received: true, type: event.type }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId },
+    });
   } catch (error: any) {
     logger.error('Webhook error', { error: error.message });
-    await captureException(error, { functionName: 'stripe-subscription-webhook', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId } }
-    );
+    await captureException(error, {
+      functionName: 'stripe-subscription-webhook',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId },
+    });
   }
 });

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
+import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy-loaded components for code splitting
 const Dashboard = lazy(() => import('@/components/Dashboard'));
@@ -12,12 +13,8 @@ const MinorWorksForm = lazy(() => import('@/components/MinorWorksForm'));
 const MyReports = lazy(() => import('@/components/MyReports'));
 const LearningHub = lazy(() => import('@/components/LearningHub'));
 
-// Loading spinner for lazy components
-const SectionLoader = () => (
-  <div className="flex items-center justify-center py-20 bg-background">
-    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-  </div>
-);
+// Skeleton loader for lazy components
+const SectionLoader = SectionSkeleton;
 
 const InspectionIndex = () => {
   const location = useLocation();
@@ -153,7 +150,10 @@ const InspectionIndex = () => {
         return (
           <div className="bg-background text-foreground">
             <ErrorBoundary>
-              <MinorWorksForm onBack={() => handleNavigate('dashboard')} initialReportId={currentReportId} />
+              <MinorWorksForm
+                onBack={() => handleNavigate('dashboard')}
+                initialReportId={currentReportId}
+              />
             </ErrorBoundary>
           </div>
         );
@@ -196,9 +196,7 @@ const InspectionIndex = () => {
 
   return (
     <div className="bg-background">
-      <Suspense fallback={<SectionLoader />}>
-        {renderCurrentSection()}
-      </Suspense>
+      <Suspense fallback={<SectionLoader />}>{renderCurrentSection()}</Suspense>
     </div>
   );
 };

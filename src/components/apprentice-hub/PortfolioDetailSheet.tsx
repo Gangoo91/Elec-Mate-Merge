@@ -93,7 +93,7 @@ export function PortfolioDetailSheet({
   const comments = getCommentsForEvidence(entry.id) || [];
 
   const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-muted-foreground',
+    draft: 'bg-muted text-white/80',
     'in-progress': 'bg-blue-500/10 text-blue-500 border-blue-500/30',
     completed: 'bg-green-500/10 text-green-500 border-green-500/30',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30',
@@ -208,7 +208,7 @@ export function PortfolioDetailSheet({
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <FileText className="h-16 w-16 text-muted-foreground/30" />
+                <FileText className="h-16 w-16 text-white/80/30" />
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
@@ -243,7 +243,7 @@ export function PortfolioDetailSheet({
                 'flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
                 activeTab === 'details'
                   ? 'border-elec-yellow text-elec-yellow'
-                  : 'border-transparent text-muted-foreground'
+                  : 'border-transparent text-white/80'
               )}
             >
               Details
@@ -254,7 +254,7 @@ export function PortfolioDetailSheet({
                 'flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
                 activeTab === 'comments'
                   ? 'border-elec-yellow text-elec-yellow'
-                  : 'border-transparent text-muted-foreground'
+                  : 'border-transparent text-white/80'
               )}
             >
               Comments
@@ -273,7 +273,7 @@ export function PortfolioDetailSheet({
                 {/* Description */}
                 {entry.description && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">Description</h3>
+                    <h3 className="text-sm font-medium text-white/80">Description</h3>
                     <p className="text-sm text-foreground">{entry.description}</p>
                   </div>
                 )}
@@ -281,7 +281,7 @@ export function PortfolioDetailSheet({
                 {/* Reflection */}
                 {entry.reflection && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">Reflection</h3>
+                    <h3 className="text-sm font-medium text-white/80">Reflection</h3>
                     <p className="text-sm text-foreground">{entry.reflection}</p>
                   </div>
                 )}
@@ -289,7 +289,7 @@ export function PortfolioDetailSheet({
                 {/* Metadata */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
+                    <span className="text-xs text-white/80 flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       Created
                     </span>
@@ -303,7 +303,7 @@ export function PortfolioDetailSheet({
                   </div>
                   {entry.timeSpent && (
                     <div className="space-y-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-xs text-white/80 flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         Time Spent
                       </span>
@@ -315,7 +315,7 @@ export function PortfolioDetailSheet({
                 {/* Skills / KSBs */}
                 {entry.skills?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">Skills & KSBs</h3>
+                    <h3 className="text-sm font-medium text-white/80">Skills & KSBs</h3>
                     <div className="flex flex-wrap gap-2">
                       {entry.skills.map((skill: string, i: number) => (
                         <Badge key={i} variant="outline" className="text-xs">
@@ -329,7 +329,7 @@ export function PortfolioDetailSheet({
                 {/* Evidence Files */}
                 {entry.evidenceFiles?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">
+                    <h3 className="text-sm font-medium text-white/80">
                       Evidence Files ({entry.evidenceFiles.length})
                     </h3>
                     <div className="space-y-2">
@@ -345,7 +345,7 @@ export function PortfolioDetailSheet({
                           <span className="flex-1 text-sm text-foreground truncate">
                             {file.name || `File ${i + 1}`}
                           </span>
-                          <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                          <ExternalLink className="h-4 w-4 text-white/80" />
                         </a>
                       ))}
                     </div>
@@ -355,7 +355,7 @@ export function PortfolioDetailSheet({
                 {/* Supervisor Feedback */}
                 {entry.supervisorFeedback && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">Supervisor Feedback</h3>
+                    <h3 className="text-sm font-medium text-white/80">Supervisor Feedback</h3>
                     <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                       <p className="text-sm text-foreground">{entry.supervisorFeedback}</p>
                     </div>
@@ -367,9 +367,9 @@ export function PortfolioDetailSheet({
                 {/* Comments list */}
                 {comments.length === 0 ? (
                   <div className="text-center py-8 space-y-2">
-                    <MessageSquare className="h-8 w-8 text-muted-foreground mx-auto" />
-                    <p className="text-sm text-muted-foreground">No comments yet</p>
-                    <p className="text-xs text-muted-foreground">
+                    <MessageSquare className="h-8 w-8 text-white/80 mx-auto" />
+                    <p className="text-sm text-white/80">No comments yet</p>
+                    <p className="text-xs text-white/80">
                       Start a discussion about this evidence
                     </p>
                   </div>
@@ -379,7 +379,7 @@ export function PortfolioDetailSheet({
                       <div key={comment.id} className="space-y-2">
                         <div className="flex items-start gap-3">
                           <div className="p-2 rounded-full bg-muted">
-                            <User className="h-4 w-4 text-muted-foreground" />
+                            <User className="h-4 w-4 text-white/80" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
@@ -389,7 +389,7 @@ export function PortfolioDetailSheet({
                               <Badge variant="outline" className="text-[10px]">
                                 {comment.authorRole}
                               </Badge>
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-white/80">
                                 {formatDate(comment.createdAt)}
                               </span>
                             </div>
@@ -471,7 +471,7 @@ export function PortfolioDetailSheet({
           <div className="space-y-4 py-4">
             {isCreatingShare ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                <Loader2 className="h-8 w-8 animate-spin text-white/80" />
               </div>
             ) : shareUrl ? (
               <>
@@ -493,12 +493,12 @@ export function PortfolioDetailSheet({
                     )}
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white/80">
                   This link expires in 7 days. Anyone with the link can view this evidence.
                 </p>
               </>
             ) : (
-              <p className="text-sm text-muted-foreground text-center py-4">
+              <p className="text-sm text-white/80 text-center py-4">
                 Failed to create share link. Please try again.
               </p>
             )}
@@ -549,7 +549,7 @@ function FileIcon({ type }: { type?: string }) {
   if (type?.includes('pdf')) {
     return <FileText className="h-5 w-5 text-red-500" />;
   }
-  return <FileText className="h-5 w-5 text-muted-foreground" />;
+  return <FileText className="h-5 w-5 text-white/80" />;
 }
 
 // Date formatter

@@ -69,11 +69,15 @@ export default function EmergencyLightingCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
-  const [savedReportId, setSavedReportId] = useState<string | null>(id !== 'new' ? id || null : null);
+  const [savedReportId, setSavedReportId] = useState<string | null>(
+    id !== 'new' ? id || null : null
+  );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
-  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
+  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
+    null
+  );
   const [user, setUser] = useState<any>(null);
 
   // Refs for auto-save
@@ -117,7 +121,9 @@ export default function EmergencyLightingCertificate() {
       setUser(session?.user ?? null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
@@ -143,7 +149,9 @@ export default function EmergencyLightingCertificate() {
     const loadReport = async () => {
       if (!isNew && id) {
         try {
-          const { data: { user: authUser } } = await supabase.auth.getUser();
+          const {
+            data: { user: authUser },
+          } = await supabase.auth.getUser();
           if (!authUser) {
             setIsLoading(false);
             return;
@@ -236,7 +244,11 @@ export default function EmergencyLightingCertificate() {
           hasUnsavedChangesRef.current = false;
           setSyncStatus('synced');
           // Update URL without navigation
-          window.history.replaceState(null, '', `/electrician/inspection-testing/emergency-lighting/${result.reportId}`);
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/emergency-lighting/${result.reportId}`
+          );
           // Clear the "new" draft
           draftStorage.clearDraft(REPORT_TYPE, null);
         } else {
@@ -288,7 +300,10 @@ export default function EmergencyLightingCertificate() {
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       // Always save to localStorage immediately
-      if (formData && (formData.clientName || formData.premisesAddress || (formData.luminaires || []).length > 0)) {
+      if (
+        formData &&
+        (formData.clientName || formData.premisesAddress || (formData.luminaires || []).length > 0)
+      ) {
         draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
         console.log('[EmergencyLighting] Emergency save on beforeunload');
       }
@@ -374,7 +389,11 @@ export default function EmergencyLightingCertificate() {
           setSyncStatus('synced');
           draftStorage.clearDraft(REPORT_TYPE, null);
           toast.success('Saved to cloud');
-          window.history.replaceState(null, '', `/electrician/inspection-testing/emergency-lighting/${result.reportId}`);
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/emergency-lighting/${result.reportId}`
+          );
         } else {
           throw new Error(result.error?.message || 'Failed to create report');
         }
@@ -408,13 +427,18 @@ export default function EmergencyLightingCertificate() {
           dataWithCertNumber = {
             ...dataWithCertNumber,
             companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
-            companyName: branding.companyName || dataWithCertNumber.companyName || dataWithCertNumber.testerCompany,
+            companyName:
+              branding.companyName ||
+              dataWithCertNumber.companyName ||
+              dataWithCertNumber.testerCompany,
             companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
-            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
-            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
+            registrationSchemeLogo:
+              branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme:
+              branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }
@@ -423,9 +447,12 @@ export default function EmergencyLightingCertificate() {
       const pdfData = formatEmergencyLightingJson(dataWithCertNumber);
 
       // Call edge function
-      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-emergency-lighting-pdf', {
-        body: { formData: pdfData },
-      });
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'generate-emergency-lighting-pdf',
+        {
+          body: { formData: pdfData },
+        }
+      );
 
       if (functionError) {
         throw new Error(functionError.message || 'Failed to generate PDF');
@@ -542,25 +569,21 @@ export default function EmergencyLightingCertificate() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>
-              Start Fresh
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>
-              Recover Draft
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
+            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
       {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-amber-500/20 sticky top-0 z-10">
+      <div className="bg-[#242428] border-b border-amber-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
         <div className="px-4 py-3">
           {/* Top Row - Back & Actions */}
           <div className="flex items-center justify-between mb-3">
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-9 px-2"
+              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-11 px-2 touch-manipulation active:scale-[0.98] transition-transform"
               onClick={() => navigate('/electrician/inspection-testing')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
@@ -575,7 +598,8 @@ export default function EmergencyLightingCertificate() {
                 size="icon"
                 onClick={handleSaveDraft}
                 disabled={isSaving}
-                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10"
+                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
+                aria-label="Save draft"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -588,7 +612,8 @@ export default function EmergencyLightingCertificate() {
                 size="sm"
                 onClick={handleGenerateCertificate}
                 disabled={isGenerating}
-                className="bg-amber-500 hover:bg-amber-600 text-white h-9 px-3 font-semibold rounded-lg"
+                className="bg-amber-500 hover:bg-amber-600 text-white h-11 px-3 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
+                aria-label="Generate certificate PDF"
               >
                 {isGenerating ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -604,7 +629,7 @@ export default function EmergencyLightingCertificate() {
                 recipientName={formData.clientName || ''}
                 documentLabel="Emergency Lighting Certificate"
                 variant="ghost"
-                className="h-9 w-9"
+                className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform"
               />
             </div>
           </div>
@@ -619,9 +644,7 @@ export default function EmergencyLightingCertificate() {
                 {isNew ? 'New Emergency Lighting' : 'Emergency Lighting'}
               </h1>
               <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">
-                BS 5266 Compliance
-              </p>
+              <p className="text-[11px] text-white/50">BS 5266 Compliance</p>
             </div>
           </div>
         </div>

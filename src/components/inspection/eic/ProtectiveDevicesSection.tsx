@@ -1,9 +1,14 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Shield } from 'lucide-react';
 import InputWithValidation from './InputWithValidation';
 
@@ -12,7 +17,10 @@ interface ProtectiveDevicesSectionProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({ formData, onUpdate }) => {
+const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({
+  formData,
+  onUpdate,
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -29,7 +37,7 @@ const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({ for
               value={formData.mainProtectiveDevice || ''}
               onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}
             >
-              <SelectTrigger className="mt-1">
+              <SelectTrigger className="h-11 touch-manipulation mt-1">
                 <SelectValue placeholder="Device type" />
               </SelectTrigger>
               <SelectContent>
@@ -41,7 +49,7 @@ const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({ for
               </SelectContent>
             </Select>
           </div>
-          
+
           <InputWithValidation
             id="mainSwitchRating"
             label="Rating (A)"
@@ -51,7 +59,7 @@ const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({ for
             type="number"
             helpText="Current rating in Amperes"
           />
-          
+
           <div>
             <Label htmlFor="mainSwitchLocation">Location</Label>
             <Input

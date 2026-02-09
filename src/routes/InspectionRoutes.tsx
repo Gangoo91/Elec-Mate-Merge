@@ -1,27 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { CertificateSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy load the main inspection app page
-const InspectionIndex = lazy(() => import("@/pages/inspection/InspectionIndex"));
-const LegacyCertificates = lazy(() => import("@/pages/inspection/LegacyCertificates"));
-const NewCertificate = lazy(() => import("@/pages/inspection/NewCertificate"));
+const InspectionIndex = lazy(() => import('@/pages/inspection/InspectionIndex'));
+const LegacyCertificates = lazy(() => import('@/pages/inspection/LegacyCertificates'));
+const NewCertificate = lazy(() => import('@/pages/inspection/NewCertificate'));
 
 // New certificate types
-const FireAlarmCertificate = lazy(() => import("@/pages/inspection/FireAlarmCertificate"));
-const EVChargingCertificate = lazy(() => import("@/pages/inspection/EVChargingCertificate"));
-const EmergencyLightingCertificate = lazy(() => import("@/pages/inspection/EmergencyLightingCertificate"));
-const SolarPVCertificate = lazy(() => import("@/pages/inspection/SolarPVCertificate"));
-const PATTestingCertificate = lazy(() => import("@/pages/inspection/PATTestingCertificate"));
-
-// Loading component
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4" />
-      <p className="text-muted-foreground">Loading Inspection & Testing...</p>
-    </div>
-  </div>
+const FireAlarmCertificate = lazy(() => import('@/pages/inspection/FireAlarmCertificate'));
+const EVChargingCertificate = lazy(() => import('@/pages/inspection/EVChargingCertificate'));
+const EmergencyLightingCertificate = lazy(
+  () => import('@/pages/inspection/EmergencyLightingCertificate')
 );
+const SolarPVCertificate = lazy(() => import('@/pages/inspection/SolarPVCertificate'));
+const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCertificate'));
+
+const LoadingFallback = CertificateSkeleton;
 
 export default function InspectionRoutes() {
   return (

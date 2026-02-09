@@ -83,7 +83,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
   };
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Quick Add Section */}
       <div className="bg-muted/30 rounded-lg p-4">
         <h4 className="font-medium mb-2 flex items-center gap-2">
@@ -99,7 +99,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
             size="sm"
             onClick={() => handleBulkAdd(5)}
             disabled={isAddingBulk}
-            className="touch-manipulation border-white/30 hover:border-elec-yellow/50"
+            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
           >
             {isAddingBulk ? (
               <Loader2 className="h-4 w-4 mr-1 animate-spin" />
@@ -113,7 +113,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
             size="sm"
             onClick={() => handleBulkAdd(10)}
             disabled={isAddingBulk}
-            className="touch-manipulation border-white/30 hover:border-elec-yellow/50"
+            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
           >
             {isAddingBulk ? (
               <Loader2 className="h-4 w-4 mr-1 animate-spin" />
@@ -127,7 +127,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
             size="sm"
             onClick={() => handleBulkAdd(20)}
             disabled={isAddingBulk}
-            className="touch-manipulation border-white/30 hover:border-elec-yellow/50"
+            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
           >
             {isAddingBulk ? (
               <Loader2 className="h-4 w-4 mr-1 animate-spin" />
@@ -155,8 +155,8 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
             onClick={handleMarkAllPass}
             disabled={isMarkingPass}
             className={cn(
-              "touch-manipulation border-white/30",
-              isMarkingPass && "border-green-500/50 bg-green-500/10"
+              'h-11 touch-manipulation border-white/30',
+              isMarkingPass && 'border-green-500/50 bg-green-500/10'
             )}
           >
             {isMarkingPass ? (
@@ -179,8 +179,8 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
         <div className="flex items-start gap-2 text-xs text-muted-foreground px-1">
           <Copy className="h-3.5 w-3.5 mt-0.5 shrink-0" />
           <span>
-            Use the <strong>Clone</strong> button on any luminaire to duplicate it
-            with the same specs but a new location.
+            Use the <strong>Clone</strong> button on any luminaire to duplicate it with the same
+            specs but a new location.
           </span>
         </div>
       )}

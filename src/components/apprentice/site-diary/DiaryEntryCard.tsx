@@ -7,8 +7,17 @@
  */
 
 import { motion } from 'framer-motion';
-import { MapPin, Pencil, Trash2, ChevronRight } from 'lucide-react';
+import {
+  MapPin,
+  Pencil,
+  Trash2,
+  ChevronRight,
+  Camera,
+  Briefcase,
+  CheckCircle2,
+} from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
 
 const moodEmojis: Record<number, string> = {
   1: '😢',
@@ -32,9 +41,9 @@ const skillColours: Record<string, string> = {
   'Health & Safety': 'bg-red-500/15 text-red-400 border-red-500/25',
   'Testing & Inspection': 'bg-purple-500/15 text-purple-400 border-purple-500/25',
   'Wiring & Containment': 'bg-amber-500/15 text-amber-400 border-amber-500/25',
-  'Regulations': 'bg-cyan-500/15 text-cyan-400 border-cyan-500/25',
+  Regulations: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/25',
   'Tools & Equipment': 'bg-orange-500/15 text-orange-400 border-orange-500/25',
-  'Communication': 'bg-pink-500/15 text-pink-400 border-pink-500/25',
+  Communication: 'bg-pink-500/15 text-pink-400 border-pink-500/25',
   'Problem Solving': 'bg-green-500/15 text-green-400 border-green-500/25',
 };
 
@@ -44,9 +53,17 @@ interface DiaryEntryCardProps {
   onTap?: () => void;
   onEdit?: (entry: SiteDiaryEntry) => void;
   onDelete?: (id: string) => void;
+  portfolioNudge?: PortfolioNudge;
 }
 
-export function DiaryEntryCard({ entry, compact = false, onTap, onEdit, onDelete }: DiaryEntryCardProps) {
+export function DiaryEntryCard({
+  entry,
+  compact = false,
+  onTap,
+  onEdit,
+  onDelete,
+  portfolioNudge,
+}: DiaryEntryCardProps) {
   const formattedDate = new Date(entry.date + 'T00:00:00').toLocaleDateString('en-GB', {
     weekday: compact ? 'short' : 'long',
     day: 'numeric',
@@ -64,19 +81,25 @@ export function DiaryEntryCard({ entry, compact = false, onTap, onEdit, onDelete
           {/* Mood colour strip - wider for visibility */}
           <div className={`w-1.5 flex-shrink-0 ${moodStripColour(entry.mood_rating)}`} />
 
-          <div className="flex-1 min-w-0 p-3.5 sm:p-4">
+          <div className="flex-1 min-w-0 p-3.5 sm:p-5">
             {/* Header: date + mood emoji + site */}
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-semibold text-white">{formattedDate}</span>
               {entry.mood_rating && (
                 <span className="text-sm">{moodEmojis[entry.mood_rating]}</span>
               )}
-              <span className="text-white/20">·</span>
+              <span className="text-white/40">·</span>
               <div className="flex items-center gap-1 min-w-0 flex-1">
                 <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
                 <span className="text-xs text-white truncate">{entry.site_name}</span>
               </div>
-              <ChevronRight className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+              {entry.photos && entry.photos.length > 0 && (
+                <span className="flex items-center gap-0.5 text-white/50 flex-shrink-0">
+                  <Camera className="h-3 w-3" />
+                  <span className="text-[10px]">{entry.photos.length}</span>
+                </span>
+              )}
+              <ChevronRight className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
             </div>
 
             {/* Tasks as compact pills */}
@@ -119,6 +142,25 @@ export function DiaryEntryCard({ entry, compact = false, onTap, onEdit, onDelete
               </div>
             )}
 
+            {/* Portfolio nudge badge */}
+            {!compact && portfolioNudge && !entry.linked_portfolio_id && (
+              <div className="flex items-center gap-1.5 mb-2">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-[11px] font-medium text-elec-yellow max-w-full truncate">
+                  <Briefcase className="h-3 w-3 flex-shrink-0" />
+                  <span className="truncate">{portfolioNudge.nudge}</span>
+                </span>
+              </div>
+            )}
+            {/* "In Portfolio" badge */}
+            {!compact && entry.linked_portfolio_id && (
+              <div className="flex items-center gap-1.5 mb-2">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-[11px] font-medium text-green-400">
+                  <CheckCircle2 className="h-3 w-3 flex-shrink-0" />
+                  In Portfolio
+                </span>
+              </div>
+            )}
+
             {/* What I learned -- italic quote */}
             {!compact && entry.what_i_learned && (
               <p className="text-[11px] text-white italic leading-relaxed line-clamp-2 border-l-2 border-elec-yellow/30 pl-2">
@@ -134,7 +176,10 @@ export function DiaryEntryCard({ entry, compact = false, onTap, onEdit, onDelete
         <div className="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
           {onEdit && (
             <button
-              onClick={(e) => { e.stopPropagation(); onEdit(entry); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit(entry);
+              }}
               className="h-8 w-8 flex items-center justify-center rounded-lg bg-elec-yellow/15 text-elec-yellow touch-manipulation active:bg-elec-yellow/25 transition-colors"
             >
               <Pencil className="h-3.5 w-3.5" />
@@ -142,7 +187,10 @@ export function DiaryEntryCard({ entry, compact = false, onTap, onEdit, onDelete
           )}
           {onDelete && (
             <button
-              onClick={(e) => { e.stopPropagation(); onDelete(entry.id); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(entry.id);
+              }}
               className="h-8 w-8 flex items-center justify-center rounded-lg bg-red-500/15 text-red-400 touch-manipulation active:bg-red-500/25 transition-colors"
             >
               <Trash2 className="h-3.5 w-3.5" />

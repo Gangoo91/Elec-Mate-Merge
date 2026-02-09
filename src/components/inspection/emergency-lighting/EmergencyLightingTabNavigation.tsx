@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface EmergencyLightingTabNavigationProps {
   currentTab: string;
@@ -16,6 +17,13 @@ interface EmergencyLightingTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  whatsApp?: {
+    type: string;
+    id: string;
+    recipientPhone: string;
+    recipientName: string;
+    documentLabel: string;
+  };
 }
 
 const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationProps> = ({
@@ -30,6 +38,7 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
+  whatsApp,
 }) => {
   const isMobile = useIsMobile();
   const progress = getProgressPercentage();
@@ -96,16 +105,29 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
           </div>
 
           {isLastTab ? (
-            <Button
-              onClick={onGenerateCertificate}
-              disabled={!canGenerateCertificate}
-              className={cn(
-                "touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform",
-                isMobile ? "w-full h-11" : "h-12 px-6"
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={onGenerateCertificate}
+                disabled={!canGenerateCertificate}
+                className={cn(
+                  "touch-manipulation bg-green-600 hover:bg-green-700 active:scale-[0.98] transition-transform flex-1",
+                  isMobile ? "h-11" : "h-12 px-6"
+                )}
+              >
+                Generate Certificate
+              </Button>
+              {whatsApp && (
+                <WhatsAppShareButton
+                  type={whatsApp.type}
+                  id={whatsApp.id}
+                  recipientPhone={whatsApp.recipientPhone}
+                  recipientName={whatsApp.recipientName}
+                  documentLabel={whatsApp.documentLabel}
+                  variant="ghost"
+                  className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform flex-shrink-0"
+                />
               )}
-            >
-              Generate Certificate
-            </Button>
+            </div>
           ) : (
             <Button
               onClick={handleNavigateNext}

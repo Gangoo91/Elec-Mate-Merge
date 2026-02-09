@@ -6,21 +6,9 @@
  */
 
 import { useState, useRef } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import {
-  Camera,
-  Image as ImageIcon,
-  X,
-  Loader2,
-  Check,
-  AlertCircle,
-} from 'lucide-react';
+import { Camera, Image as ImageIcon, X, Loader2, Check, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -127,9 +115,7 @@ export function ChatImageUpload({
       setUploadProgress(80);
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('portfolio-evidence')
-        .getPublicUrl(data.path);
+      const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
 
       setUploadProgress(100);
 
@@ -138,7 +124,6 @@ export function ChatImageUpload({
       onOpenChange(false);
       reset();
       toast.success('Image ready to send');
-
     } catch (err) {
       console.error('Upload failed:', err);
       toast.error('Failed to upload image');
@@ -176,11 +161,7 @@ export function ChatImageUpload({
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="relative aspect-video rounded-xl overflow-hidden bg-muted"
               >
-                <img
-                  src={previewUrl}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
+                <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
 
                 {/* Upload Progress Overlay */}
                 {isUploading && (
@@ -246,7 +227,8 @@ export function ChatImageUpload({
           <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <AlertCircle className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
             <p className="text-xs text-blue-300">
-              Take a clear photo of wiring, boards, or components. Dave can identify issues and give specific advice.
+              Take a clear photo of wiring, boards, or components. Dave can identify issues and give
+              specific advice.
             </p>
           </div>
 
@@ -292,13 +274,10 @@ export function ImagePreviewBadge({
       className="relative inline-flex items-center gap-2 px-2 py-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30"
     >
       <div className="w-8 h-8 rounded overflow-hidden">
-        <img src={imageUrl} alt="Attached" className="w-full h-full object-cover" />
+        <img src={imageUrl} alt="Attached" className="w-full h-full object-cover" loading="lazy" />
       </div>
       <span className="text-xs text-foreground/70">Photo attached</span>
-      <button
-        onClick={onRemove}
-        className="p-1 rounded-full hover:bg-white/10 transition-colors"
-      >
+      <button onClick={onRemove} className="p-1 rounded-full hover:bg-white/10 transition-colors">
         <X className="h-3.5 w-3.5 text-foreground/50" />
       </button>
     </motion.div>

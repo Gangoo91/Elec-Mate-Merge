@@ -1,14 +1,28 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Calendar, ChevronDown, ChevronRight, Building, Clock, Settings, MapPin, CheckCircle2 } from 'lucide-react';
+import {
+  Calendar,
+  ChevronDown,
+  ChevronRight,
+  Building,
+  Clock,
+  Settings,
+  MapPin,
+  CheckCircle2,
+} from 'lucide-react';
 import DateInputWithToday from './DateInputWithToday';
 import { cn } from '@/lib/utils';
 
@@ -25,9 +39,12 @@ interface SectionData {
   isComplete: boolean;
 }
 
-const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({ formData, onUpdate }) => {
+const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
+  formData,
+  onUpdate,
+}) => {
   const [openSections, setOpenSections] = useState<Set<string>>(new Set(['basic']));
-  
+
   // Calculate installation age
   const calculateAge = () => {
     if (formData.constructionDate && formData.installationDate) {
@@ -51,11 +68,11 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
       basic: ['installationType', 'installationDate'],
       technical: ['numberOfCircuits', 'installationMethod'],
       environment: ['locationType'],
-      timeline: ['constructionDate']
+      timeline: ['constructionDate'],
     };
-    
+
     const fields = requiredFields[sectionId] || [];
-    return fields.every(field => formData[field]);
+    return fields.every((field) => formData[field]);
   };
 
   const toggleSection = (sectionId: string) => {
@@ -74,32 +91,32 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
       title: 'Basic Installation Info',
       icon: <Building className="h-4 w-4" />,
       fields: ['installationType', 'installationDate'],
-      isComplete: getSectionCompletion('basic')
+      isComplete: getSectionCompletion('basic'),
     },
     {
       id: 'technical',
       title: 'Technical Details',
       icon: <Settings className="h-4 w-4" />,
       fields: ['numberOfCircuits', 'installationMethod'],
-      isComplete: getSectionCompletion('technical')
+      isComplete: getSectionCompletion('technical'),
     },
     {
       id: 'environment',
       title: 'Environment & Location',
       icon: <MapPin className="h-4 w-4" />,
       fields: ['locationType'],
-      isComplete: getSectionCompletion('environment')
+      isComplete: getSectionCompletion('environment'),
     },
     {
       id: 'timeline',
       title: 'Timeline & Age',
       icon: <Clock className="h-4 w-4" />,
       fields: ['constructionDate'],
-      isComplete: getSectionCompletion('timeline')
-    }
+      isComplete: getSectionCompletion('timeline'),
+    },
   ];
 
-  const completedSections = sections.filter(s => s.isComplete).length;
+  const completedSections = sections.filter((s) => s.isComplete).length;
   const totalSections = sections.length;
 
   return (
@@ -110,21 +127,24 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
             <Building className="h-5 w-5 text-elec-yellow" />
             Installation Details
           </CardTitle>
-          <Badge variant={completedSections === totalSections ? "default" : "secondary"} className="text-xs">
+          <Badge
+            variant={completedSections === totalSections ? 'default' : 'secondary'}
+            className="text-xs"
+          >
             {completedSections}/{totalSections} Complete
           </Badge>
         </div>
         <div className="w-full bg-muted rounded-full h-2 mt-2">
-          <div 
+          <div
             className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
             style={{ width: `${(completedSections / totalSections) * 100}%` }}
           />
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {sections.map((section) => (
-          <Collapsible 
+          <Collapsible
             key={section.id}
             open={openSections.has(section.id)}
             onOpenChange={() => toggleSection(section.id)}
@@ -134,9 +154,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                 <div className="flex items-center gap-2">
                   {section.icon}
                   <span className="font-medium text-sm">{section.title}</span>
-                  {section.isComplete && (
-                    <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
-                  )}
+                  {section.isComplete && <CheckCircle2 className="h-4 w-4 text-elec-yellow" />}
                 </div>
                 {openSections.has(section.id) ? (
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
@@ -145,21 +163,23 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                 )}
               </div>
             </CollapsibleTrigger>
-            
+
             <CollapsibleContent className="pt-4">
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 pl-6">
                 {section.id === 'basic' && (
                   <>
                     <div className="space-y-2">
-                      <Label htmlFor="installationType" className="text-sm font-medium flex items-center gap-1">
-                        Installation Type *
-                        <span className="text-destructive">*</span>
+                      <Label
+                        htmlFor="installationType"
+                        className="text-sm font-medium flex items-center gap-1"
+                      >
+                        Installation Type *<span className="text-destructive">*</span>
                       </Label>
                       <Select
                         value={formData.installationType || ''}
                         onValueChange={(value) => onUpdate('installationType', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select installation type" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -174,9 +194,11 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="installationDate" className="text-sm font-medium flex items-center gap-1">
-                        Installation Date *
-                        <span className="text-destructive">*</span>
+                      <Label
+                        htmlFor="installationDate"
+                        className="text-sm font-medium flex items-center gap-1"
+                      >
+                        Installation Date *<span className="text-destructive">*</span>
                       </Label>
                       <DateInputWithToday
                         id="installationDate"
@@ -224,7 +246,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         value={formData.installationPurpose || ''}
                         onValueChange={(value) => onUpdate('installationPurpose', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select purpose" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -242,9 +264,11 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                 {section.id === 'technical' && (
                   <>
                     <div className="space-y-2">
-                      <Label htmlFor="numberOfCircuits" className="text-sm font-medium flex items-center gap-1">
-                        Number of Circuits *
-                        <span className="text-destructive">*</span>
+                      <Label
+                        htmlFor="numberOfCircuits"
+                        className="text-sm font-medium flex items-center gap-1"
+                      >
+                        Number of Circuits *<span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="numberOfCircuits"
@@ -259,15 +283,17 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="installationMethod" className="text-sm font-medium flex items-center gap-1">
-                        Installation Method *
-                        <span className="text-destructive">*</span>
+                      <Label
+                        htmlFor="installationMethod"
+                        className="text-sm font-medium flex items-center gap-1"
+                      >
+                        Installation Method *<span className="text-destructive">*</span>
                       </Label>
                       <Select
                         value={formData.installationMethod || ''}
                         onValueChange={(value) => onUpdate('installationMethod', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select method" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -288,7 +314,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         value={formData.installationExtent || ''}
                         onValueChange={(value) => onUpdate('installationExtent', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select extent" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -305,15 +331,17 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                 {section.id === 'environment' && (
                   <>
                     <div className="space-y-2">
-                      <Label htmlFor="locationType" className="text-sm font-medium flex items-center gap-1">
-                        Location Type *
-                        <span className="text-destructive">*</span>
+                      <Label
+                        htmlFor="locationType"
+                        className="text-sm font-medium flex items-center gap-1"
+                      >
+                        Location Type *<span className="text-destructive">*</span>
                       </Label>
                       <Select
                         value={formData.locationType || ''}
                         onValueChange={(value) => onUpdate('locationType', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select location" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -336,7 +364,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         value={formData.environmentalConditions || ''}
                         onValueChange={(value) => onUpdate('environmentalConditions', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select conditions" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
@@ -345,7 +373,9 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                           <SelectItem value="corrosive">Corrosive Atmosphere</SelectItem>
                           <SelectItem value="high-temp">High Temperature</SelectItem>
                           <SelectItem value="vibration">Subject to Vibration</SelectItem>
-                          <SelectItem value="mechanical-damage">Risk of Mechanical Damage</SelectItem>
+                          <SelectItem value="mechanical-damage">
+                            Risk of Mechanical Damage
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -359,7 +389,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         value={formData.accessLimitations || ''}
                         onChange={(e) => onUpdate('accessLimitations', e.target.value)}
                         placeholder="Describe any areas not accessible during inspection..."
-                        className="min-h-[80px] resize-none"
+                        className="text-base touch-manipulation min-h-[120px] resize-none"
                         rows={3}
                       />
                     </div>
@@ -452,7 +482,7 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         value={formData.previousRecords || ''}
                         onValueChange={(value) => onUpdate('previousRecords', value)}
                       >
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select availability" />
                         </SelectTrigger>
                         <SelectContent className="bg-background border-border z-50">

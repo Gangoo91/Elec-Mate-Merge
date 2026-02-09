@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,9 +14,12 @@ import {
   CheckCircle2,
   AlertCircle,
   TrendingUp,
+  BookOpen,
 } from 'lucide-react';
 import { ProgressRingsGroup, MiniProgressRing } from './ProgressRings';
 import { NavSection } from './PortfolioHubNav';
+import { QualificationProgress } from '@/components/apprentice/portfolio/QualificationProgress';
+import { QualificationRequirements } from '@/components/apprentice/portfolio/QualificationRequirements';
 
 interface PortfolioOverviewProps {
   userName?: string;
@@ -27,6 +30,8 @@ interface PortfolioOverviewProps {
   nextAction?: NextAction;
   onNavigate: (section: NavSection) => void;
   onQuickCapture: () => void;
+  requirementCode?: string | null;
+  qualificationName?: string | null;
 }
 
 interface ActivityItem {
@@ -68,7 +73,10 @@ export function PortfolioOverview({
   nextAction,
   onNavigate,
   onQuickCapture,
+  requirementCode,
+  qualificationName,
 }: PortfolioOverviewProps) {
+  const [requirementsOpen, setRequirementsOpen] = useState(false);
   // Get time-based greeting
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
@@ -101,6 +109,28 @@ export function PortfolioOverview({
           />
         </CardContent>
       </Card>
+
+      {/* Course Requirements Progress */}
+      {requirementCode && (
+        <>
+          <QualificationProgress
+            qualificationCode={requirementCode}
+            qualificationName={qualificationName}
+          />
+          <button
+            onClick={() => setRequirementsOpen(true)}
+            className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+          >
+            <BookOpen className="h-4 w-4" />
+            View Full Requirements
+          </button>
+          <QualificationRequirements
+            open={requirementsOpen}
+            onOpenChange={setRequirementsOpen}
+            qualificationCode={requirementCode}
+          />
+        </>
+      )}
 
       {/* Smart Next Action */}
       {nextAction && (

@@ -42,6 +42,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useAIEvidenceTagger } from '@/hooks/portfolio/useAIEvidenceTagger';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -54,11 +56,10 @@ interface UnifiedCaptureSheetProps {
 type LinkTo = 'portfolio' | 'ojt' | 'both';
 type CaptureStep = 'capture' | 'details' | 'saving';
 
-const CATEGORIES = [
+const FALLBACK_CATEGORIES = [
   'Practical Skills',
   'Health & Safety',
   'Testing & Inspection',
-  'Customer Service',
   'Technical Knowledge',
   'Workplace Practice',
 ];
@@ -73,6 +74,13 @@ export function UnifiedCaptureSheet({
   const { addEntry } = usePortfolioData();
   const { addTimeEntry } = useTimeEntries();
   const { analyze, isAnalyzing } = useAIEvidenceTagger();
+  const { requirementCode } = useStudentQualification();
+  const { tree } = useQualificationACs(requirementCode);
+
+  // Dynamic categories from qualification units
+  const categories = tree.units.length > 0
+    ? tree.units.map(u => `Unit ${u.unitCode}: ${u.unitTitle}`)
+    : FALLBACK_CATEGORIES;
 
   // Form state
   const [step, setStep] = useState<CaptureStep>('capture');
@@ -384,7 +392,7 @@ export function UnifiedCaptureSheet({
                 />
 
                 {/* Info */}
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-white/80 text-center">
                   Max file size: 10MB. Supported: Images, Videos, PDFs, Documents
                 </p>
               </div>
@@ -454,7 +462,7 @@ export function UnifiedCaptureSheet({
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {CATEGORIES.map((cat) => (
+                      {categories.map((cat) => (
                         <SelectItem key={cat} value={cat}>
                           {cat}
                         </SelectItem>
@@ -476,7 +484,7 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Briefcase className={cn('h-5 w-5', linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-muted-foreground')} />
+                      <Briefcase className={cn('h-5 w-5', linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white/80')} />
                       <span className="text-xs font-medium">Portfolio</span>
                     </button>
                     <button
@@ -488,7 +496,7 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Clock className={cn('h-5 w-5', linkTo === 'ojt' ? 'text-elec-yellow' : 'text-muted-foreground')} />
+                      <Clock className={cn('h-5 w-5', linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white/80')} />
                       <span className="text-xs font-medium">OJT Hours</span>
                     </button>
                     <button
@@ -500,7 +508,7 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Check className={cn('h-5 w-5', linkTo === 'both' ? 'text-elec-yellow' : 'text-muted-foreground')} />
+                      <Check className={cn('h-5 w-5', linkTo === 'both' ? 'text-elec-yellow' : 'text-white/80')} />
                       <span className="text-xs font-medium">Both</span>
                     </button>
                   </div>
@@ -538,7 +546,7 @@ export function UnifiedCaptureSheet({
                             'px-3 h-9 rounded-full text-xs font-medium border transition-colors touch-manipulation',
                             selectedKsbs.includes(ksb.code)
                               ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-muted border-border text-muted-foreground hover:border-muted-foreground'
+                              : 'bg-muted border-border text-white/80 hover:border-muted-foreground'
                           )}
                         >
                           {ksb.code}
@@ -548,7 +556,7 @@ export function UnifiedCaptureSheet({
                         </button>
                       ))}
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/80">
                       * High confidence suggestions auto-selected
                     </p>
                   </div>
@@ -560,7 +568,7 @@ export function UnifiedCaptureSheet({
             {step === 'saving' && (
               <div className="flex flex-col items-center justify-center py-12 space-y-4">
                 <Loader2 className="h-10 w-10 text-elec-yellow animate-spin" />
-                <p className="text-sm text-muted-foreground">Saving your evidence...</p>
+                <p className="text-sm text-white/80">Saving your evidence...</p>
               </div>
             )}
           </div>

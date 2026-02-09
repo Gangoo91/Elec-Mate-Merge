@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar, MapPin, User, FileText, AlertTriangle, Shield, Zap } from 'lucide-react';
@@ -14,43 +20,43 @@ interface WorkDetailsSectionProps {
 }
 
 const workTypeCategories = {
-  'addition': {
+  addition: {
     label: 'Addition of New Circuit',
     subcategories: [
       'New socket outlet circuit',
       'New lighting circuit',
       'New cooker circuit',
       'New shower circuit',
-      'New outdoor circuit'
-    ]
+      'New outdoor circuit',
+    ],
   },
-  'alteration': {
+  alteration: {
     label: 'Alteration to Existing Circuit',
     subcategories: [
       'Circuit extension',
       'Change of protective device',
       'Cable route alteration',
-      'Load increase modification'
-    ]
+      'Load increase modification',
+    ],
   },
-  'replacement': {
+  replacement: {
     label: 'Replacement Work',
     subcategories: [
       'Like-for-like accessory replacement',
       'Consumer unit replacement',
       'Cable replacement',
-      'Protective device replacement'
-    ]
+      'Protective device replacement',
+    ],
   },
-  'accessory': {
+  accessory: {
     label: 'Accessory Installation',
     subcategories: [
       'Additional socket outlets',
       'Additional lighting points',
       'Switches and controls',
-      'Outdoor installations'
-    ]
-  }
+      'Outdoor installations',
+    ],
+  },
 };
 
 const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => {
@@ -78,9 +84,10 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   placeholder="Enter complete property address including postcode"
                   value={formData.propertyAddress || ''}
                   onChange={(e) => onUpdate('propertyAddress', e.target.value)}
+                  className="text-base touch-manipulation min-h-[120px]"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="clientName" className="text-sm font-medium">
                   Client Name *
@@ -90,10 +97,11 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   placeholder="Client or responsible person"
                   value={formData.clientName || ''}
                   onChange={(e) => onUpdate('clientName', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <Label htmlFor="workDate" className="text-sm font-medium">
@@ -106,11 +114,11 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     type="date"
                     value={formData.workDate || ''}
                     onChange={(e) => onUpdate('workDate', e.target.value)}
-                    className="pl-10"
+                    className="h-11 text-base touch-manipulation pl-10"
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="workOrderNumber" className="text-sm font-medium">
                   Work Order Number
@@ -120,6 +128,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   placeholder="Internal reference number"
                   value={formData.workOrderNumber || ''}
                   onChange={(e) => onUpdate('workOrderNumber', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
@@ -141,8 +150,8 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="workType" className="text-sm font-medium">
                 Primary Work Category *
               </Label>
-              <Select 
-                value={formData.workType || ''} 
+              <Select
+                value={formData.workType || ''}
                 onValueChange={(value) => {
                   onUpdate('workType', value);
                   onUpdate('workSubcategory', ''); // Reset subcategory
@@ -160,14 +169,14 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             {selectedCategory && (
               <div>
                 <Label htmlFor="workSubcategory" className="text-sm font-medium">
                   Specific Work Type *
                 </Label>
-                <Select 
-                  value={formData.workSubcategory || ''} 
+                <Select
+                  value={formData.workSubcategory || ''}
                   onValueChange={(value) => onUpdate('workSubcategory', value)}
                 >
                   <SelectTrigger>
@@ -184,17 +193,18 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               </div>
             )}
           </div>
-          
+
           <div>
             <Label htmlFor="workDescription" className="text-sm font-medium">
               Detailed Description of Work *
             </Label>
-              <Textarea
-                id="workDescription"
-                placeholder="Provide comprehensive description including locations, quantities, and specific details..."
-                value={formData.workDescription || ''}
-                onChange={(e) => onUpdate('workDescription', e.target.value)}
-              />
+            <Textarea
+              id="workDescription"
+              placeholder="Provide comprehensive description including locations, quantities, and specific details..."
+              value={formData.workDescription || ''}
+              onChange={(e) => onUpdate('workDescription', e.target.value)}
+              className="text-base touch-manipulation min-h-[120px]"
+            />
           </div>
         </CardContent>
       </Card>
@@ -217,7 +227,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               placeholder="Enter details of any departures from BS 7671, or state 'None' if not applicable..."
               value={formData.departuresFromBs7671 || ''}
               onChange={(e) => onUpdate('departuresFromBs7671', e.target.value)}
-              className="min-h-[100px] touch-manipulation text-base"
+              className="min-h-[120px] touch-manipulation text-base"
             />
           </div>
 
@@ -230,7 +240,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               placeholder="Enter details of any permitted exceptions under Reg 411.3.3, or state 'None' if not applicable..."
               value={formData.permittedExceptions || ''}
               onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
-              className="min-h-[100px] touch-manipulation text-base"
+              className="min-h-[120px] touch-manipulation text-base"
             />
           </div>
 
@@ -241,7 +251,10 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               onCheckedChange={(checked) => onUpdate('riskAssessmentAttached', checked)}
               className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
             />
-            <Label htmlFor="riskAssessmentAttached" className="text-base font-medium cursor-pointer">
+            <Label
+              htmlFor="riskAssessmentAttached"
+              className="text-base font-medium cursor-pointer"
+            >
               Risk assessment attached
             </Label>
           </div>
@@ -280,15 +293,16 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 placeholder="e.g., Ring Main - Ground Floor"
                 value={formData.circuitDesignation || ''}
                 onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
+                className="h-11 text-base touch-manipulation"
               />
             </div>
-            
+
             <div>
               <Label htmlFor="supplyVoltage" className="text-sm font-medium">
                 Supply Voltage
               </Label>
-              <Select 
-                value={formData.supplyVoltage || ''} 
+              <Select
+                value={formData.supplyVoltage || ''}
                 onValueChange={(value) => onUpdate('supplyVoltage', value)}
               >
                 <SelectTrigger>
@@ -301,7 +315,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="frequency" className="text-sm font-medium">
                 Frequency
@@ -311,10 +325,11 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 placeholder="50 Hz"
                 value={formData.frequency || '50'}
                 onChange={(e) => onUpdate('frequency', e.target.value)}
+                className="h-11 text-base touch-manipulation"
               />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="earthingArrangement" className="text-sm font-medium">
@@ -383,7 +398,10 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   onCheckedChange={(checked) => onUpdate('earthingConductorPresent', checked)}
                   className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                 />
-                <Label htmlFor="earthingConductorPresent" className="text-base font-medium cursor-pointer">
+                <Label
+                  htmlFor="earthingConductorPresent"
+                  className="text-base font-medium cursor-pointer"
+                >
                   Earthing conductor present
                 </Label>
               </div>
@@ -402,7 +420,9 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     onCheckedChange={(checked) => onUpdate('bondingWater', checked)}
                     className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                   />
-                  <Label htmlFor="bondingWater" className="text-sm font-medium cursor-pointer">Water</Label>
+                  <Label htmlFor="bondingWater" className="text-sm font-medium cursor-pointer">
+                    Water
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
@@ -412,7 +432,9 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     onCheckedChange={(checked) => onUpdate('bondingGas', checked)}
                     className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                   />
-                  <Label htmlFor="bondingGas" className="text-sm font-medium cursor-pointer">Gas</Label>
+                  <Label htmlFor="bondingGas" className="text-sm font-medium cursor-pointer">
+                    Gas
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
@@ -422,7 +444,9 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     onCheckedChange={(checked) => onUpdate('bondingOil', checked)}
                     className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                   />
-                  <Label htmlFor="bondingOil" className="text-sm font-medium cursor-pointer">Oil</Label>
+                  <Label htmlFor="bondingOil" className="text-sm font-medium cursor-pointer">
+                    Oil
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
@@ -432,7 +456,9 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     onCheckedChange={(checked) => onUpdate('bondingSteel', checked)}
                     className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                   />
-                  <Label htmlFor="bondingSteel" className="text-sm font-medium cursor-pointer">Steel</Label>
+                  <Label htmlFor="bondingSteel" className="text-sm font-medium cursor-pointer">
+                    Steel
+                  </Label>
                 </div>
 
                 <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
@@ -442,7 +468,9 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                     onCheckedChange={(checked) => onUpdate('bondingOther', checked)}
                     className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
                   />
-                  <Label htmlFor="bondingOther" className="text-sm font-medium cursor-pointer">Other</Label>
+                  <Label htmlFor="bondingOther" className="text-sm font-medium cursor-pointer">
+                    Other
+                  </Label>
                 </div>
               </div>
             </div>
@@ -464,8 +492,8 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="partPRequired" className="text-sm font-medium">
                 Part P Notification Required
               </Label>
-              <Select 
-                value={formData.partPRequired || ''} 
+              <Select
+                value={formData.partPRequired || ''}
                 onValueChange={(value) => onUpdate('partPRequired', value)}
               >
                 <SelectTrigger>
@@ -478,7 +506,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             {formData.partPRequired === 'yes' && (
               <div>
                 <Label htmlFor="buildingControl" className="text-sm font-medium">
@@ -489,19 +517,20 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   placeholder="Local authority or approved inspector"
                   value={formData.buildingControl || ''}
                   onChange={(e) => onUpdate('buildingControl', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             )}
           </div>
-          
+
           {formData.partPRequired === 'self-cert' && (
             <div className="p-3 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
               <Badge variant="secondary" className="mb-2">
                 Self-Certification Scheme
               </Badge>
               <p className="text-sm text-green-700 dark:text-green-400">
-                Work covered under competent person self-certification scheme. 
-                Building control notification will be handled automatically.
+                Work covered under competent person self-certification scheme. Building control
+                notification will be handled automatically.
               </p>
             </div>
           )}

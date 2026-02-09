@@ -9,7 +9,18 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Sparkles, Check, Trash2, ChevronDown, ChevronUp, Package, Clock, FileText, X } from 'lucide-react';
+import {
+  Loader2,
+  Sparkles,
+  Check,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+  Package,
+  Clock,
+  FileText,
+  X,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { EstimateResult } from '@/hooks/useEstimateRemedialCosts';
@@ -51,13 +62,16 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
-  const [editingItem, setEditingItem] = useState<{ index: number; field: 'quantity' | 'unitPrice' } | null>(null);
+  const [editingItem, setEditingItem] = useState<{
+    index: number;
+    field: 'quantity' | 'unitPrice';
+  } | null>(null);
   const [materialsOpen, setMaterialsOpen] = useState(true);
   const [labourOpen, setLabourOpen] = useState(true);
   const [scopeOpen, setScopeOpen] = useState(true);
 
   const toggleExpand = (index: number) => {
-    setExpandedItems(prev => {
+    setExpandedItems((prev) => {
       const next = new Set(prev);
       if (next.has(index)) next.delete(index);
       else next.add(index);
@@ -80,8 +94,8 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
     onUpdateItem(index, updates);
   };
 
-  const materialItems = estimateResult?.items.filter(i => i.category === 'materials') || [];
-  const labourItems = estimateResult?.items.filter(i => i.category === 'labour') || [];
+  const materialItems = estimateResult?.items.filter((i) => i.category === 'materials') || [];
+  const labourItems = estimateResult?.items.filter((i) => i.category === 'labour') || [];
 
   const formatCurrency = (amount: number) => `£${amount.toFixed(2)}`;
 
@@ -91,26 +105,24 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
     const isEditingPrice = editingItem?.index === globalIndex && editingItem.field === 'unitPrice';
 
     return (
-      <div key={item.id} className="bg-white/[0.03] border border-white/10 rounded-lg p-3 space-y-2">
+      <div
+        key={item.id}
+        className="bg-white/[0.03] border border-white/10 rounded-lg p-3 space-y-2"
+      >
         <div className="flex items-start gap-2">
           <div
             className="flex-1 min-w-0 touch-manipulation cursor-pointer"
             onClick={() => toggleExpand(globalIndex)}
           >
-            <p className={cn(
-              'text-sm text-white text-left',
-              !isExpanded && 'line-clamp-2'
-            )}>
+            <p className={cn('text-sm text-white text-left', !isExpanded && 'line-clamp-2')}>
               {item.description}
             </p>
-            {item.notes && isExpanded && (
-              <p className="text-xs text-white/50 mt-1">{item.notes}</p>
-            )}
+            {item.notes && isExpanded && <p className="text-xs text-white/50 mt-1">{item.notes}</p>}
           </div>
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 w-8 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation flex-shrink-0"
+            className="h-11 w-11 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation flex-shrink-0"
             onClick={() => onDeleteItem(globalIndex)}
           >
             <Trash2 className="h-4 w-4" />
@@ -124,7 +136,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               <Input
                 type="number"
                 defaultValue={item.quantity}
-                className="h-7 w-16 text-xs px-2 border-white/30 focus:border-yellow-500"
+                className="h-11 w-16 text-base px-2 touch-manipulation border-white/30 focus:border-yellow-500"
                 autoFocus
                 onBlur={(e) => {
                   handleEditField(globalIndex, 'quantity', e.target.value);
@@ -153,7 +165,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 type="number"
                 step="0.01"
                 defaultValue={item.unitPrice}
-                className="h-7 w-20 text-xs px-2 border-white/30 focus:border-yellow-500"
+                className="h-11 w-20 text-base px-2 touch-manipulation border-white/30 focus:border-yellow-500"
                 autoFocus
                 onBlur={(e) => {
                   handleEditField(globalIndex, 'unitPrice', e.target.value);
@@ -192,14 +204,12 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
         AI Estimator
       </div>
       <div className="flex items-center gap-3">
-        {isEstimating && (
-          <span className="text-xs text-white/50">{elapsedSeconds}s</span>
-        )}
+        {isEstimating && <span className="text-xs text-white/50">{elapsedSeconds}s</span>}
         {!isMobile && (
           <button
             type="button"
-            onClick={() => isEstimating ? onCancel() : onOpenChange(false)}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+            onClick={() => (isEstimating ? onCancel() : onOpenChange(false))}
+            className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
           >
             <X className="h-4 w-4" />
           </button>
@@ -226,12 +236,14 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
             <div className="h-1 rounded-full bg-white/10 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 animate-progress-fill transition-all"
-                style={{
-                  '--progress-width': `${(() => {
-                    const stepIndex = PROGRESS_STEPS.findIndex(s => s.key === progressStep);
-                    return stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 0;
-                  })()}%`
-                } as React.CSSProperties}
+                style={
+                  {
+                    '--progress-width': `${(() => {
+                      const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
+                      return stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 0;
+                    })()}%`,
+                  } as React.CSSProperties
+                }
               />
             </div>
           </div>
@@ -239,7 +251,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           {/* Steps */}
           <div className="w-full max-w-xs space-y-3">
             {PROGRESS_STEPS.map((step, i) => {
-              const stepIndex = PROGRESS_STEPS.findIndex(s => s.key === progressStep);
+              const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
               const isActive = step.key === progressStep;
               const isComplete = i < stepIndex;
               const isVisible = i <= stepIndex;
@@ -252,12 +264,16 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                   )}
                   style={isVisible ? { animationDelay: `${i * 100}ms` } : undefined}
                 >
-                  <div className={cn(
-                    'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500',
-                    isComplete ? 'bg-green-500 scale-100' :
-                    isActive ? 'bg-elec-yellow scale-110' :
-                    'bg-white/10 scale-90'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500',
+                      isComplete
+                        ? 'bg-green-500 scale-100'
+                        : isActive
+                          ? 'bg-elec-yellow scale-110'
+                          : 'bg-white/10 scale-90'
+                    )}
+                  >
                     {isComplete ? (
                       <Check className="h-4 w-4 text-white" />
                     ) : isActive ? (
@@ -266,12 +282,12 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                       <span className="text-[10px] text-white/50">{i + 1}</span>
                     )}
                   </div>
-                  <span className={cn(
-                    'text-sm font-medium transition-colors duration-300',
-                    isActive ? 'text-white' :
-                    isComplete ? 'text-white/70' :
-                    'text-white/30'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm font-medium transition-colors duration-300',
+                      isActive ? 'text-white' : isComplete ? 'text-white/70' : 'text-white/30'
+                    )}
+                  >
                     {step.label}
                   </span>
                 </div>
@@ -339,9 +355,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               onClick={() => setScopeOpen(!scopeOpen)}
             >
               <FileText className="h-4 w-4 text-purple-400" />
-              <span className="text-sm font-semibold text-white flex-1">
-                Scope of Works
-              </span>
+              <span className="text-sm font-semibold text-white flex-1">Scope of Works</span>
               {scopeOpen ? (
                 <ChevronUp className="h-4 w-4 text-white/50" />
               ) : (
@@ -353,7 +367,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 value={estimateResult.scopeOfWorks || ''}
                 onChange={(e) => onUpdateScopeOfWorks(e.target.value)}
                 placeholder="Describe the scope of remedial works..."
-                className="min-h-[100px] text-sm text-white touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                className="min-h-[120px] text-base text-white touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               />
             )}
           </div>
@@ -446,7 +460,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
         {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-200"
-          onClick={() => isEstimating ? onCancel() : onOpenChange(false)}
+          onClick={() => (isEstimating ? onCancel() : onOpenChange(false))}
         />
 
         {/* Panel */}
@@ -457,9 +471,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           </div>
 
           {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-5 py-4">
-            {bodyContent}
-          </div>
+          <div className="flex-1 overflow-y-auto px-5 py-4">{bodyContent}</div>
 
           {/* Footer */}
           {footerContent}
@@ -479,9 +491,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           </SheetHeader>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
-            {bodyContent}
-          </div>
+          <div className="flex-1 overflow-y-auto px-4 py-4">{bodyContent}</div>
 
           {/* Footer */}
           {footerContent}

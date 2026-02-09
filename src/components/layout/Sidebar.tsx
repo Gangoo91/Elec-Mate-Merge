@@ -1,14 +1,13 @@
-
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
-import SidebarNavSection from "./SidebarNavSection";
-import SidebarFooter from "./SidebarFooter";
-import { mainNavItems } from "./SidebarNavItems";
-import { useEffect } from "react";
-import { useScrollLock } from "@/hooks/use-scroll-lock";
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import SidebarNavSection from './SidebarNavSection';
+import SidebarFooter from './SidebarFooter';
+import { mainNavItems } from './SidebarNavItems';
+import { useEffect } from 'react';
+import { useScrollLock } from '@/hooks/use-scroll-lock';
 
 interface SidebarProps {
   open: boolean;
@@ -20,7 +19,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const location = useLocation();
 
   // Get the user role from the profile, defaulting to "visitor" if not available
-  const userRole = profile?.role || "visitor";
+  const userRole = profile?.role || 'visitor';
   const adminRole = profile?.admin_role;
 
   // Close sidebar on Escape key press (mobile)
@@ -53,32 +52,29 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       {/* Sidebar with glass morphism */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col",
-          "backdrop-blur-xl bg-elec-dark/90 border-r border-white/10",
-          "shadow-2xl shadow-black/50",
-          "transition-transform duration-300 ease-in-out",
-          "md:relative md:translate-x-0 md:z-auto",
-          open ? "translate-x-0" : "-translate-x-full",
+          'fixed inset-y-0 left-0 z-50 flex w-64 flex-col',
+          'backdrop-blur-xl bg-elec-dark/90 border-r border-white/10',
+          'shadow-2xl shadow-black/50',
+          'transition-transform duration-300 ease-in-out',
+          'md:relative md:translate-x-0 md:z-auto',
+          open ? 'translate-x-0' : '-translate-x-full',
           // Hide completely on mobile when closed
-          !open && "max-md:invisible"
+          !open && 'max-md:invisible'
         )}
+        style={{
+          paddingTop: 'calc(var(--native-header-offset, 0px) + env(safe-area-inset-top, 0px))',
+        }}
       >
         {/* Logo section with gradient styling */}
         <div className="flex h-16 items-center justify-between px-4 border-b border-white/10">
-          <Link
-            to="/"
-            className="flex items-center gap-2 group"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
             <div className="rounded-xl overflow-hidden border border-elec-yellow/20 group-hover:border-elec-yellow/40 transition-all duration-200 shadow-lg shadow-elec-yellow/5">
-              <img
-                src="/logo.jpg"
-                alt="Elec-Mate"
-                className="h-10 w-10 object-cover"
-              />
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-10 w-10 object-cover" />
             </div>
             <span className="font-bold text-lg">
-              <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">Elec</span>
+              <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">
+                Elec
+              </span>
               <span className="text-white">Mate</span>
             </span>
           </Link>

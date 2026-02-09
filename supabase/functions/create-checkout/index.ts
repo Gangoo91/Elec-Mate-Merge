@@ -3,18 +3,18 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import Stripe from "https://esm.sh/stripe@14.21.0";
+import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const requestId = generateRequestId();
     const logger = createLogger(requestId);
-    
+
     logger.info('💳 Create checkout started');
 
     // Get request body
@@ -24,69 +24,66 @@ serve(async (req) => {
     logger.info('Request body received', { priceId, mode, planId, offerCode });
 
     if (!priceId || !mode || !planId) {
-      throw new ValidationError("Missing required parameters: priceId, mode, or planId");
+      throw new ValidationError('Missing required parameters: priceId, mode, or planId');
     }
 
     // Authenticate user
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      throw new ValidationError("No authorization header provided");
+      throw new ValidationError('No authorization header provided');
     }
-    
-    const token = authHeader.replace("Bearer ", "");
+
+    const token = authHeader.replace('Bearer ', '');
     logger.debug('Authenticating user with token');
-    
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
-    
+
     if (!supabaseUrl || !supabaseAnonKey) {
       throw new ValidationError('Supabase credentials not configured');
     }
-    
+
     const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-    
+
     const { data: userData, error: authError } = await withTimeout(
       supabaseClient.auth.getUser(token),
       Timeouts.QUICK,
       'user authentication'
     );
-    
+
     if (authError) {
       logger.error('Authentication error', { error: authError.message });
       throw new Error(`Authentication error: ${authError.message}`);
     }
-    
+
     const user = userData.user;
     if (!user?.email) {
-      throw new ValidationError("User not authenticated or email not available");
+      throw new ValidationError('User not authenticated or email not available');
     }
-    
+
     logger.info('User authenticated', { userId: user.id, email: user.email });
 
     // Initialize Stripe
-    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     if (!stripeKey) {
-      throw new ValidationError("STRIPE_SECRET_KEY is not set");
+      throw new ValidationError('STRIPE_SECRET_KEY is not set');
     }
-    
+
     const stripe = new Stripe(stripeKey, {
-      apiVersion: "2023-10-16",
+      apiVersion: '2023-10-16',
     });
-    
+
     logger.info('Stripe initialized');
 
     // Check if a Stripe customer record exists for this user with timeout
     const customers = await withTimeout(
-      withRetry(
-        () => stripe.customers.list({ email: user.email, limit: 1 }),
-        RetryPresets.FAST
-      ),
+      withRetry(() => stripe.customers.list({ email: user.email, limit: 1 }), RetryPresets.FAST),
       Timeouts.STANDARD,
       'Stripe customer lookup'
     );
-    
+
     let customerId;
-    
+
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
       logger.info('Existing customer found', { customerId });
@@ -94,12 +91,13 @@ serve(async (req) => {
       // Create a new customer if one doesn't exist with retry
       const newCustomer = await withTimeout(
         withRetry(
-          () => stripe.customers.create({
-            email: user.email,
-            metadata: {
-              userId: user.id,
-            }
-          }),
+          () =>
+            stripe.customers.create({
+              email: user.email,
+              metadata: {
+                userId: user.id,
+              },
+            }),
           RetryPresets.FAST
         ),
         Timeouts.STANDARD,
@@ -107,6 +105,21 @@ serve(async (req) => {
       );
       customerId = newCustomer.id;
       logger.info('New customer created', { customerId });
+    }
+
+    // Store stripe_customer_id in profile for reliable webhook linking
+    try {
+      const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (supabaseServiceKey) {
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+        await supabaseAdmin
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', user.id);
+        logger.info('Stored stripe_customer_id in profile', { userId: user.id, customerId });
+      }
+    } catch (linkError: any) {
+      logger.warn('Failed to store stripe_customer_id (non-fatal)', { error: linkError?.message });
     }
 
     // Look up offer code if provided
@@ -135,25 +148,27 @@ serve(async (req) => {
           if (planMatches) {
             discounts = [{ promotion_code: offer.stripe_promotion_code_id }];
             logger.info('Applying promotion code', {
-              stripePromoCodeId: offer.stripe_promotion_code_id
+              stripePromoCodeId: offer.stripe_promotion_code_id,
             });
           } else {
             logger.warn('Offer plan mismatch', {
               offerPlan: offer.plan_id,
-              requestedPlan: planId
+              requestedPlan: planId,
             });
           }
         } else {
           logger.warn('Offer not active or missing Stripe ID', {
             isActive: offer?.is_active,
-            hasStripeId: !!offer?.stripe_promotion_code_id
+            hasStripeId: !!offer?.stripe_promotion_code_id,
           });
         }
       }
     }
 
     // Create checkout options based on mode
-    const origin = req.headers.get("origin") || "https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com";
+    const origin =
+      req.headers.get('origin') ||
+      'https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com';
 
     const checkoutOptions: any = {
       customer: customerId,
@@ -177,33 +192,32 @@ serve(async (req) => {
       // If we have a specific discount to apply, use that; otherwise allow manual promo codes
       ...(discounts ? { discounts } : { allow_promotion_codes: true }),
       // Add 7-day free trial for subscription mode
-      ...(mode === 'subscription' ? {
-        subscription_data: {
-          trial_period_days: 7,
-          metadata: {
-            userId: user.id,
-            planId: planId,
-          },
-        },
-      } : {}),
+      ...(mode === 'subscription'
+        ? {
+            subscription_data: {
+              trial_period_days: 7,
+              metadata: {
+                userId: user.id,
+                planId: planId,
+              },
+            },
+          }
+        : {}),
     };
-    
+
     logger.info('Creating checkout session with options', checkoutOptions);
 
     // Create checkout session with retry and timeout
     const session = await withTimeout(
-      withRetry(
-        () => stripe.checkout.sessions.create(checkoutOptions),
-        RetryPresets.FAST
-      ),
+      withRetry(() => stripe.checkout.sessions.create(checkoutOptions), RetryPresets.FAST),
       Timeouts.STANDARD,
       'Stripe checkout session creation'
     );
-    
+
     logger.info('Checkout session created', { sessionId: session.id, url: session.url });
 
     return new Response(JSON.stringify({ url: session.url }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error) {
@@ -211,7 +225,7 @@ serve(async (req) => {
     await captureException(error, {
       functionName: 'create-checkout',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return handleError(error);

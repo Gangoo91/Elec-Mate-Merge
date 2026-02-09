@@ -67,11 +67,15 @@ export default function EVChargingCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
-  const [savedReportId, setSavedReportId] = useState<string | null>(id !== 'new' ? id || null : null);
+  const [savedReportId, setSavedReportId] = useState<string | null>(
+    id !== 'new' ? id || null : null
+  );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
-  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
+  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
+    null
+  );
   const [user, setUser] = useState<any>(null);
 
   // Refs for auto-save
@@ -115,7 +119,9 @@ export default function EVChargingCertificate() {
       setUser(session?.user ?? null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
@@ -141,7 +147,9 @@ export default function EVChargingCertificate() {
     const loadReport = async () => {
       if (!isNew && id) {
         try {
-          const { data: { user: authUser } } = await supabase.auth.getUser();
+          const {
+            data: { user: authUser },
+          } = await supabase.auth.getUser();
           if (!authUser) {
             setIsLoading(false);
             return;
@@ -234,7 +242,11 @@ export default function EVChargingCertificate() {
           hasUnsavedChangesRef.current = false;
           setSyncStatus('synced');
           // Update URL without navigation
-          window.history.replaceState(null, '', `/electrician/inspection-testing/ev-charging/${result.reportId}`);
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/ev-charging/${result.reportId}`
+          );
           // Clear the "new" draft
           draftStorage.clearDraft(REPORT_TYPE, null);
         } else {
@@ -286,7 +298,10 @@ export default function EVChargingCertificate() {
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       // Always save to localStorage immediately
-      if (formData && (formData.clientName || formData.installationAddress || formData.chargerMake)) {
+      if (
+        formData &&
+        (formData.clientName || formData.installationAddress || formData.chargerMake)
+      ) {
         draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
         console.log('[EVCharging] Emergency save on beforeunload');
       }
@@ -372,7 +387,11 @@ export default function EVChargingCertificate() {
           setSyncStatus('synced');
           draftStorage.clearDraft(REPORT_TYPE, null);
           toast.success('Saved to cloud');
-          window.history.replaceState(null, '', `/electrician/inspection-testing/ev-charging/${result.reportId}`);
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/ev-charging/${result.reportId}`
+          );
         } else {
           throw new Error(result.error?.message || 'Failed to create report');
         }
@@ -406,13 +425,18 @@ export default function EVChargingCertificate() {
           dataWithCertNumber = {
             ...dataWithCertNumber,
             companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
-            companyName: branding.companyName || dataWithCertNumber.companyName || dataWithCertNumber.installerCompany,
+            companyName:
+              branding.companyName ||
+              dataWithCertNumber.companyName ||
+              dataWithCertNumber.installerCompany,
             companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
             accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
-            registrationSchemeLogo: branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
-            registrationScheme: branding.registrationScheme || dataWithCertNumber.registrationScheme,
+            registrationSchemeLogo:
+              branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
+            registrationScheme:
+              branding.registrationScheme || dataWithCertNumber.registrationScheme,
           };
         }
       }
@@ -421,9 +445,12 @@ export default function EVChargingCertificate() {
       const pdfData = formatEVChargingJson(dataWithCertNumber);
 
       // Call edge function
-      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-ev-charging-pdf', {
-        body: { formData: pdfData },
-      });
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'generate-ev-charging-pdf',
+        {
+          body: { formData: pdfData },
+        }
+      );
 
       if (functionError) {
         throw new Error(functionError.message || 'Failed to generate PDF');
@@ -535,25 +562,21 @@ export default function EVChargingCertificate() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>
-              Start Fresh
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>
-              Recover Draft
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
+            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
       {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-green-500/20 sticky top-0 z-10">
+      <div className="bg-[#242428] border-b border-green-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
         <div className="px-4 py-3">
           {/* Top Row - Back & Actions */}
           <div className="flex items-center justify-between mb-3">
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-9 px-2"
+              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
               onClick={() => navigate('/electrician/inspection-testing')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
@@ -568,7 +591,8 @@ export default function EVChargingCertificate() {
                 size="icon"
                 onClick={handleSaveDraft}
                 disabled={isSaving}
-                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10"
+                aria-label="Save draft"
+                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -581,7 +605,8 @@ export default function EVChargingCertificate() {
                 size="sm"
                 onClick={handleGenerateCertificate}
                 disabled={isGenerating}
-                className="bg-green-500 hover:bg-green-600 text-white h-9 px-3 font-semibold rounded-lg"
+                aria-label="Generate certificate PDF"
+                className="bg-green-500 hover:bg-green-600 text-white h-11 px-3 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
               >
                 {isGenerating ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -602,9 +627,7 @@ export default function EVChargingCertificate() {
                 {isNew ? 'New EV Charging' : 'EV Charging'}
               </h1>
               <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">
-                IET Code of Practice
-              </p>
+              <p className="text-[11px] text-white/50">IET Code of Practice</p>
             </div>
           </div>
         </div>

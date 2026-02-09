@@ -52,10 +52,10 @@ serve(async (req) => {
   try {
     if (!openAIApiKey) {
       console.error('OpenAI API key not configured');
-      return new Response(
-        JSON.stringify({ error: 'OpenAI API key not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'OpenAI API key not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const requestData: GenerateRequest = await req.json();
@@ -150,7 +150,7 @@ Make it practical, engaging, and relevant to the work described.`;
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -163,7 +163,6 @@ Make it practical, engaging, and relevant to the work described.`;
           },
         ],
         max_completion_tokens: 2000,
-        temperature: 0.7,
       }),
     });
 
@@ -185,8 +184,8 @@ Make it practical, engaging, and relevant to the work described.`;
     // Parse JSON response
     let briefingContent: BriefingContent;
     try {
-      const jsonMatch = aiResponse.match(/```json\s*([\s\S]*?)\s*```/) ||
-                        aiResponse.match(/{[\s\S]*}/);
+      const jsonMatch =
+        aiResponse.match(/```json\s*([\s\S]*?)\s*```/) || aiResponse.match(/{[\s\S]*}/);
 
       if (!jsonMatch) {
         throw new Error('No JSON structure found in AI response');

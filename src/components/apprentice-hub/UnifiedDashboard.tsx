@@ -50,7 +50,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const { entries: timeEntries, totalTime } = useTimeEntries();
   const { otjGoal } = useComplianceTracking();
   const { userSelection, loading: qualLoading } = useQualifications();
-  const { requirementCode } = useStudentQualification();
+  const { requirementCode, isLoading: studentLoading } = useStudentQualification();
   const { tree, isLoading: acLoading } = useQualificationACs(requirementCode);
 
   const [showCourseSelector, setShowCourseSelector] = useState(false);
@@ -127,7 +127,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       </div>
 
       {/* No-data guard */}
-      {userSelection && !acLoading && tree.totalACs === 0 && (
+      {userSelection && !acLoading && !studentLoading && tree.totalACs === 0 && (
         <div className="flex items-start gap-3 p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
           <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
@@ -199,6 +199,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       </div>
 
       {/* Course Requirements — Units with LOs & ACs */}
+      {(acLoading || studentLoading) && userSelection && (
+        <div className="flex items-center justify-center py-8">
+          <div className="h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
+          <span className="ml-2 text-sm text-white/60">Loading course data...</span>
+        </div>
+      )}
       {tree.totalACs > 0 && (
         <div className="space-y-4">
           {/* Section header with stats */}

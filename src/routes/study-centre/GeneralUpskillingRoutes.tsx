@@ -1,19 +1,17 @@
-import { Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
-import { lazyWithRetry } from "@/utils/lazyWithRetry";
-import { ipafRoutes } from "@/routes/study-centre/ipafRoutes";
-import { pasmaRoutes } from "@/routes/study-centre/pasmaRoutes";
+import { Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { CourseSkeleton } from '@/components/ui/page-skeleton';
+import { ipafRoutes } from '@/routes/study-centre/ipafRoutes';
+import { pasmaRoutes } from '@/routes/study-centre/pasmaRoutes';
+import { mewpRoutes } from '@/routes/study-centre/mewpRoutes';
+import { firstAidRoutes } from '@/routes/study-centre/firstAidRoutes';
 
-const GeneralUpskillingIndex = lazyWithRetry(() => import("@/pages/study-centre/general-upskilling/Index"));
-
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-screen bg-elec-dark">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mx-auto mb-4" />
-      <p className="text-gray-400">Loading...</p>
-    </div>
-  </div>
+const GeneralUpskillingIndex = lazyWithRetry(
+  () => import('@/pages/study-centre/general-upskilling/Index')
 );
+
+const LoadingFallback = CourseSkeleton;
 
 export default function GeneralUpskillingRoutes() {
   return (
@@ -22,6 +20,8 @@ export default function GeneralUpskillingRoutes() {
         <Route index element={<GeneralUpskillingIndex />} />
         {ipafRoutes}
         {pasmaRoutes}
+        {mewpRoutes}
+        {firstAidRoutes}
       </Routes>
     </Suspense>
   );

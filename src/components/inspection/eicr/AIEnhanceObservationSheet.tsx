@@ -8,7 +8,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Sparkles, Check, Copy, BookOpen, ArrowRight, RotateCcw, CircleCheck, X } from 'lucide-react';
+import {
+  Loader2,
+  Sparkles,
+  Check,
+  Copy,
+  BookOpen,
+  ArrowRight,
+  RotateCcw,
+  CircleCheck,
+  X,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -69,7 +79,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
     if (isEnhancing) {
       setElapsedSeconds(0);
       timerRef.current = setInterval(() => {
-        setElapsedSeconds(prev => prev + 1);
+        setElapsedSeconds((prev) => prev + 1);
       }, 1000);
     } else {
       if (timerRef.current) {
@@ -97,12 +107,16 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
       await navigator.clipboard.writeText(text);
       toast({ title: 'Copied', description: `${label} copied to clipboard.` });
     } catch {
-      toast({ title: 'Copy failed', description: 'Could not copy to clipboard.', variant: 'destructive' });
+      toast({
+        title: 'Copy failed',
+        description: 'Could not copy to clipboard.',
+        variant: 'destructive',
+      });
     }
   };
 
   const markAccepted = (field: string) => {
-    setAccepted(prev => new Set(prev).add(field));
+    setAccepted((prev) => new Set(prev).add(field));
   };
 
   const handleAcceptCode = (code: 'C1' | 'C2' | 'C3' | 'FI') => {
@@ -122,7 +136,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
 
   const handleAcceptRegulations = () => {
     if (suggestions?.regulationRefs?.length) {
-      const formatted = suggestions.regulationRefs.map(r => `${r.number}: ${r.title}`).join('; ');
+      const formatted = suggestions.regulationRefs.map((r) => `${r.number}: ${r.title}`).join('; ');
       onAcceptRegulations(formatted);
       markAccepted('regulations');
     }
@@ -149,7 +163,11 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   };
 
   const codeChanged = suggestions && currentCode !== suggestions.suggestedCode;
-  const totalFields = (codeChanged ? 1 : 0) + 1 + (suggestions?.recommendation ? 1 : 0) + (suggestions?.regulationRefs?.length ? 1 : 0);
+  const totalFields =
+    (codeChanged ? 1 : 0) +
+    1 +
+    (suggestions?.recommendation ? 1 : 0) +
+    (suggestions?.regulationRefs?.length ? 1 : 0);
 
   /* ── Shared header ── */
   const headerContent = (
@@ -163,7 +181,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           <Button
             variant="ghost"
             size="sm"
-            className="h-9 px-3 text-xs text-white/70 hover:bg-white/10 touch-manipulation gap-1.5"
+            className="h-11 px-3 text-xs text-white/70 hover:bg-white/10 touch-manipulation gap-1.5"
             onClick={onRetry}
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -174,7 +192,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
           >
             <X className="h-4 w-4" />
           </button>
@@ -201,12 +219,14 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
             <div className="h-1 rounded-full bg-white/10 overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 animate-progress-fill transition-all"
-                style={{
-                  '--progress-width': `${(() => {
-                    const stepIndex = PROGRESS_STEPS.findIndex(s => s.key === progressStep);
-                    return stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 0;
-                  })()}%`
-                } as React.CSSProperties}
+                style={
+                  {
+                    '--progress-width': `${(() => {
+                      const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
+                      return stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 0;
+                    })()}%`,
+                  } as React.CSSProperties
+                }
               />
             </div>
           </div>
@@ -214,7 +234,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           {/* Steps */}
           <div className="w-full max-w-xs space-y-3">
             {PROGRESS_STEPS.map((step, i) => {
-              const stepIndex = PROGRESS_STEPS.findIndex(s => s.key === progressStep);
+              const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
               const isActive = step.key === progressStep;
               const isComplete = i < stepIndex;
               const isVisible = i <= stepIndex;
@@ -227,12 +247,16 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   )}
                   style={isVisible ? { animationDelay: `${i * 100}ms` } : undefined}
                 >
-                  <div className={cn(
-                    'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500',
-                    isComplete ? 'bg-green-500 scale-100' :
-                    isActive ? 'bg-elec-yellow scale-110' :
-                    'bg-white/10 scale-90'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500',
+                      isComplete
+                        ? 'bg-green-500 scale-100'
+                        : isActive
+                          ? 'bg-elec-yellow scale-110'
+                          : 'bg-white/10 scale-90'
+                    )}
+                  >
                     {isComplete ? (
                       <Check className="h-4 w-4 text-white" />
                     ) : isActive ? (
@@ -241,12 +265,12 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                       <span className="text-[10px] text-white/50">{i + 1}</span>
                     )}
                   </div>
-                  <span className={cn(
-                    'text-sm font-medium transition-colors duration-300',
-                    isActive ? 'text-white' :
-                    isComplete ? 'text-white/70' :
-                    'text-white/30'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-sm font-medium transition-colors duration-300',
+                      isActive ? 'text-white' : isComplete ? 'text-white/70' : 'text-white/30'
+                    )}
+                  >
                     {step.label}
                   </span>
                 </div>
@@ -265,10 +289,14 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
       {suggestions && !isEnhancing && (
         <>
           {/* Suggested Code */}
-          <section className={cn(
-            'rounded-xl p-4 border transition-all',
-            accepted.has('code') ? 'bg-green-500/5 border-green-500/20' : 'bg-white/[0.03] border-white/10'
-          )}>
+          <section
+            className={cn(
+              'rounded-xl p-4 border transition-all',
+              accepted.has('code')
+                ? 'bg-green-500/5 border-green-500/20'
+                : 'bg-white/[0.03] border-white/10'
+            )}
+          >
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
@@ -284,13 +312,22 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
             <div className="flex items-center gap-3">
               {codeChanged && (
                 <>
-                  <Badge variant="outline" className={cn('text-sm px-3 py-1', codeColours[currentCode] || 'bg-white/10 text-white')}>
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      'text-sm px-3 py-1',
+                      codeColours[currentCode] || 'bg-white/10 text-white'
+                    )}
+                  >
                     {currentCode}
                   </Badge>
                   <ArrowRight className="h-4 w-4 text-white/50" />
                 </>
               )}
-              <Badge variant="outline" className={cn('text-sm px-3 py-1', codeColours[suggestions.suggestedCode])}>
+              <Badge
+                variant="outline"
+                className={cn('text-sm px-3 py-1', codeColours[suggestions.suggestedCode])}
+              >
                 {suggestions.suggestedCode}
               </Badge>
               <span className="text-xs text-white/70 ml-1">
@@ -317,10 +354,14 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           </section>
 
           {/* Enhanced Description */}
-          <section className={cn(
-            'rounded-xl p-4 border transition-all',
-            accepted.has('description') ? 'bg-green-500/5 border-green-500/20' : 'bg-white/[0.03] border-white/10'
-          )}>
+          <section
+            className={cn(
+              'rounded-xl p-4 border transition-all',
+              accepted.has('description')
+                ? 'bg-green-500/5 border-green-500/20'
+                : 'bg-white/[0.03] border-white/10'
+            )}
+          >
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
@@ -336,14 +377,22 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
             <div className="space-y-3 text-left">
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Current</p>
-                <p className={cn(
-                  'text-sm leading-relaxed text-left',
-                  accepted.has('description') ? 'text-white/40 line-through' : 'text-white/70'
-                )}>{currentDescription}</p>
+                <p
+                  className={cn(
+                    'text-sm leading-relaxed text-left',
+                    accepted.has('description') ? 'text-white/40 line-through' : 'text-white/70'
+                  )}
+                >
+                  {currentDescription}
+                </p>
               </div>
               <div className="border-t border-white/10 pt-3">
-                <p className="text-[10px] uppercase tracking-wider text-elec-yellow mb-1">AI Enhanced</p>
-                <p className="text-sm text-white leading-relaxed text-left">{suggestions.enhancedDescription}</p>
+                <p className="text-[10px] uppercase tracking-wider text-elec-yellow mb-1">
+                  AI Enhanced
+                </p>
+                <p className="text-sm text-white leading-relaxed text-left">
+                  {suggestions.enhancedDescription}
+                </p>
               </div>
             </div>
             {!accepted.has('description') && (
@@ -377,7 +426,9 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
                 Client Explanation
               </h3>
-              <p className="text-sm text-white leading-relaxed text-left">{suggestions.clientExplanation}</p>
+              <p className="text-sm text-white leading-relaxed text-left">
+                {suggestions.clientExplanation}
+              </p>
               <div className="flex gap-2 mt-4">
                 <Button
                   variant="ghost"
@@ -389,16 +440,22 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   Copy to clipboard
                 </Button>
               </div>
-              <p className="text-[10px] text-white/40 mt-2">Use in client reports or emails — not written to the certificate.</p>
+              <p className="text-[10px] text-white/40 mt-2">
+                Use in client reports or emails — not written to the certificate.
+              </p>
             </section>
           )}
 
           {/* Recommendation */}
           {suggestions.recommendation && (
-            <section className={cn(
-              'rounded-xl p-4 border transition-all',
-              accepted.has('recommendation') ? 'bg-green-500/5 border-green-500/20' : 'bg-white/[0.03] border-white/10'
-            )}>
+            <section
+              className={cn(
+                'rounded-xl p-4 border transition-all',
+                accepted.has('recommendation')
+                  ? 'bg-green-500/5 border-green-500/20'
+                  : 'bg-white/[0.03] border-white/10'
+              )}
+            >
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
@@ -411,7 +468,9 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   </span>
                 )}
               </div>
-              <p className="text-sm text-white leading-relaxed text-left">{suggestions.recommendation}</p>
+              <p className="text-sm text-white leading-relaxed text-left">
+                {suggestions.recommendation}
+              </p>
               {!accepted.has('recommendation') && (
                 <div className="flex gap-2 mt-4">
                   <Button
@@ -439,10 +498,14 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
 
           {/* Regulation References */}
           {suggestions.regulationRefs.length > 0 && (
-            <section className={cn(
-              'rounded-xl p-4 border transition-all',
-              accepted.has('regulations') ? 'bg-green-500/5 border-green-500/20' : 'bg-white/[0.03] border-white/10'
-            )}>
+            <section
+              className={cn(
+                'rounded-xl p-4 border transition-all',
+                accepted.has('regulations')
+                  ? 'bg-green-500/5 border-green-500/20'
+                  : 'bg-white/[0.03] border-white/10'
+              )}
+            >
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
                   <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
@@ -461,12 +524,16 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                     key={i}
                     type="button"
                     className="w-full text-left flex items-start gap-3 rounded-lg p-3 bg-white/[0.04] border border-white/10 touch-manipulation active:bg-white/10 transition-colors"
-                    onClick={() => handleCopy(
-                      `${ref.number}${ref.title ? ` — ${ref.title}` : ''}`,
-                      `Regulation ${ref.number}`
-                    )}
+                    onClick={() =>
+                      handleCopy(
+                        `${ref.number}${ref.title ? ` — ${ref.title}` : ''}`,
+                        `Regulation ${ref.number}`
+                      )
+                    }
                   >
-                    <span className="text-xs font-mono text-elec-yellow font-semibold flex-shrink-0 pt-0.5">{ref.number}</span>
+                    <span className="text-xs font-mono text-elec-yellow font-semibold flex-shrink-0 pt-0.5">
+                      {ref.number}
+                    </span>
                     <span className="text-xs text-white leading-relaxed flex-1">
                       {ref.title || ref.relevance}
                     </span>
@@ -534,9 +601,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           </div>
 
           {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-5 py-4">
-            {bodyContent}
-          </div>
+          <div className="flex-1 overflow-y-auto px-5 py-4">{bodyContent}</div>
 
           {/* Footer */}
           {footerContent}
@@ -556,9 +621,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           </SheetHeader>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
-            {bodyContent}
-          </div>
+          <div className="flex-1 overflow-y-auto px-4 py-4">{bodyContent}</div>
 
           {/* Footer */}
           {footerContent}

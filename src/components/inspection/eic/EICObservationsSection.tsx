@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,10 +22,12 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   onUpdateObservation,
   onRemoveObservation,
   onSyncToInspectionItem,
-  className
+  className,
 }) => {
-  const criticalCount = observations.filter(obs => obs.defectCode === 'C1' || obs.defectCode === 'C2' || obs.defectCode === 'C3').length;
-  const limitationsCount = observations.filter(obs => obs.defectCode === 'limitation').length;
+  const criticalCount = observations.filter(
+    (obs) => obs.defectCode === 'C1' || obs.defectCode === 'C2' || obs.defectCode === 'C3'
+  ).length;
+  const limitationsCount = observations.filter((obs) => obs.defectCode === 'limitation').length;
 
   return (
     <div className={className} id="eic-observations-section">
@@ -47,24 +48,29 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
             )}
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Record any unsatisfactory items, limitations, or observations identified during the inspection
+            Record any unsatisfactory items, limitations, or observations identified during the
+            inspection
           </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <p className="text-sm text-muted-foreground">
-                {observations.length === 0 
-                  ? "No observations recorded" 
-                  : `${observations.length} observation${observations.length !== 1 ? 's' : ''} recorded`
-                }
+                {observations.length === 0
+                  ? 'No observations recorded'
+                  : `${observations.length} observation${observations.length !== 1 ? 's' : ''} recorded`}
               </p>
-              <Button onClick={onAddObservation} variant="outline" size="default" className="h-10 touch-manipulation">
+              <Button
+                onClick={onAddObservation}
+                variant="outline"
+                size="default"
+                className="h-11 touch-manipulation"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Observation
               </Button>
             </div>
-            
+
             <EICDefectObservationsList
               observations={observations}
               reportId={reportId}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,9 +49,13 @@ import {
   AlertCircle,
   ExternalLink,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 import { WorkerRates, TestingInstrument } from '@/types/company';
-import { AccountingProvider, ACCOUNTING_PROVIDERS, AccountingIntegration } from '@/types/accounting';
+import {
+  AccountingProvider,
+  ACCOUNTING_PROVIDERS,
+  AccountingIntegration,
+} from '@/types/accounting';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
@@ -147,57 +151,96 @@ const INSURANCE_PROVIDERS = [
   'Other',
 ];
 
-const INSURANCE_COVERAGE_OPTIONS = [
-  '£1,000,000',
-  '£2,000,000',
-  '£5,000,000',
-  '£10,000,000',
-];
+const INSURANCE_COVERAGE_OPTIONS = ['£1,000,000', '£2,000,000', '£5,000,000', '£10,000,000'];
 
 const DEFAULT_TERMS_GROUPED = {
   payment: {
     label: 'Payment Terms',
     terms: [
       { id: 'payment_30', label: 'Payment due within 30 days of invoice date' },
-      { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences' },
-      { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate' },
+      {
+        id: 'deposit_required',
+        label: 'A deposit of the specified percentage is required before work commences',
+      },
+      {
+        id: 'additional_charges',
+        label:
+          'Additional work not included in this quote will be charged at our standard hourly rate',
+      },
     ],
   },
   warranty: {
     label: 'Warranty & Guarantee',
     terms: [
-      { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified' },
-      { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable' },
+      {
+        id: 'warranty_workmanship',
+        label: 'All workmanship is guaranteed for the warranty period specified',
+      },
+      {
+        id: 'warranty_materials',
+        label: 'Materials are covered by manufacturer warranties where applicable',
+      },
     ],
   },
   compliance: {
     label: 'Compliance & Certification',
     terms: [
-      { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations' },
-      { id: 'part_p_notification', label: 'Building control notification (Part P) included where required' },
-      { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion' },
+      {
+        id: 'bs7671_compliance',
+        label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
+      },
+      {
+        id: 'part_p_notification',
+        label: 'Building control notification (Part P) included where required',
+      },
+      {
+        id: 'testing_cert',
+        label:
+          'Electrical installation certificate or minor works certificate provided on completion',
+      },
     ],
   },
   site: {
     label: 'Site Access & Safety',
     terms: [
       { id: 'access_required', label: 'Clear access to work areas must be provided' },
-      { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given' },
-      { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day' },
-      { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey' },
+      {
+        id: 'power_isolation',
+        label: 'Power may need to be isolated during installation - advance notice will be given',
+      },
+      {
+        id: 'site_safety',
+        label: 'Work area will be left safe and clean at the end of each working day',
+      },
+      {
+        id: 'asbestos_disclaimer',
+        label:
+          'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+      },
     ],
   },
   general: {
     label: 'General Conditions',
     terms: [
-      { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue' },
-      { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges' },
-      { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately' },
+      {
+        id: 'price_validity',
+        label: 'This quotation is valid for the number of days specified from the date of issue',
+      },
+      {
+        id: 'cancellation',
+        label: 'Cancellation within 48 hours of scheduled work may incur charges',
+      },
+      {
+        id: 'unforeseen_works',
+        label: 'Unforeseen works discovered during installation will be quoted separately',
+      },
     ],
   },
 };
 
-const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
+const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap((group) =>
+  group.terms.map((t) => t.id)
+);
 
 // Default Invoice T&Cs - specific to invoices
 const DEFAULT_INVOICE_TERMS_GROUPED = {
@@ -212,8 +255,15 @@ const DEFAULT_INVOICE_TERMS_GROUPED = {
   late_payment: {
     label: 'Late Payment',
     terms: [
-      { id: 'inv_late_interest', label: 'Late payment interest may be charged on overdue invoices' },
-      { id: 'inv_debt_recovery', label: 'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act' },
+      {
+        id: 'inv_late_interest',
+        label: 'Late payment interest may be charged on overdue invoices',
+      },
+      {
+        id: 'inv_debt_recovery',
+        label:
+          'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act',
+      },
       { id: 'inv_credit_hold', label: 'Future work may be suspended if invoices remain unpaid' },
     ],
   },
@@ -234,17 +284,29 @@ const DEFAULT_INVOICE_TERMS_GROUPED = {
   },
 };
 
-const ALL_DEFAULT_INVOICE_TERM_IDS = Object.values(DEFAULT_INVOICE_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
+const ALL_DEFAULT_INVOICE_TERM_IDS = Object.values(DEFAULT_INVOICE_TERMS_GROUPED).flatMap((group) =>
+  group.terms.map((t) => t.id)
+);
 
 interface CustomTerm {
   id: string;
   label: string;
 }
 
-function parseQuoteTerms(quoteTermsJson: string | undefined | null): { selected: string[]; custom: CustomTerm[] } {
+function parseQuoteTerms(quoteTermsJson: string | undefined | null): {
+  selected: string[];
+  custom: CustomTerm[];
+} {
   if (!quoteTermsJson) {
     return {
-      selected: ['payment_30', 'deposit_required', 'warranty_workmanship', 'bs7671_compliance', 'testing_cert', 'price_validity'],
+      selected: [
+        'payment_30',
+        'deposit_required',
+        'warranty_workmanship',
+        'bs7671_compliance',
+        'testing_cert',
+        'price_validity',
+      ],
       custom: [],
     };
   }
@@ -259,10 +321,20 @@ function parseQuoteTerms(quoteTermsJson: string | undefined | null): { selected:
   }
 }
 
-function parseInvoiceTerms(invoiceTermsJson: string | undefined | null): { selected: string[]; custom: CustomTerm[] } {
+function parseInvoiceTerms(invoiceTermsJson: string | undefined | null): {
+  selected: string[];
+  custom: CustomTerm[];
+} {
   if (!invoiceTermsJson) {
     return {
-      selected: ['inv_payment_due', 'inv_use_reference', 'inv_late_interest', 'inv_workmanship', 'inv_compliance', 'inv_queries'],
+      selected: [
+        'inv_payment_due',
+        'inv_use_reference',
+        'inv_late_interest',
+        'inv_workmanship',
+        'inv_compliance',
+        'inv_queries',
+      ],
       custom: [],
     };
   }
@@ -292,7 +364,16 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-const Section = ({ title, icon: Icon, iconColor, iconBg, badge, badgeColor = 'text-white/50', defaultOpen = false, children }: SectionProps) => {
+const Section = ({
+  title,
+  icon: Icon,
+  iconColor,
+  iconBg,
+  badge,
+  badgeColor = 'text-white/50',
+  defaultOpen = false,
+  children,
+}: SectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
@@ -305,28 +386,21 @@ const Section = ({ title, icon: Icon, iconColor, iconBg, badge, badgeColor = 'te
         <CollapsibleTrigger className="w-full">
           <div className="flex items-center justify-between p-4 active:bg-white/[0.02] transition-colors touch-manipulation">
             <div className="flex items-center gap-3">
-              <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center", iconBg)}>
-                <Icon className={cn("h-5 w-5", iconColor)} />
+              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center', iconBg)}>
+                <Icon className={cn('h-5 w-5', iconColor)} />
               </div>
               <div className="text-left">
                 <h3 className="text-[15px] font-semibold text-white">{title}</h3>
-                {badge && (
-                  <p className={cn("text-[13px]", badgeColor)}>{badge}</p>
-                )}
+                {badge && <p className={cn('text-[13px]', badgeColor)}>{badge}</p>}
               </div>
             </div>
-            <motion.div
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
               <ChevronDown className="h-5 w-5 text-white/30" />
             </motion.div>
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-4 pb-5 pt-1">
-            {children}
-          </div>
+          <div className="px-4 pb-5 pt-1">{children}</div>
         </CollapsibleContent>
       </Collapsible>
     </motion.div>
@@ -417,7 +491,10 @@ const BusinessTab = () => {
   const [selectedInvoiceTerms, setSelectedInvoiceTerms] = useState<string[]>([]);
   const [customInvoiceTerms, setCustomInvoiceTerms] = useState<CustomTerm[]>([]);
   const [newCustomInvoiceTerm, setNewCustomInvoiceTerm] = useState('');
-  const [expandedInvoiceGroups, setExpandedInvoiceGroups] = useState<string[]>(['payment', 'late_payment']);
+  const [expandedInvoiceGroups, setExpandedInvoiceGroups] = useState<string[]>([
+    'payment',
+    'late_payment',
+  ]);
   const [latePaymentInterestRate, setLatePaymentInterestRate] = useState('8% p.a.');
   const [preferredPaymentMethod, setPreferredPaymentMethod] = useState('Bank Transfer');
 
@@ -451,7 +528,13 @@ const BusinessTab = () => {
     getIntegration,
   } = useAccountingIntegrations();
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<FormData>({
     defaultValues: {
       company_name: '',
       company_address: '',
@@ -484,7 +567,7 @@ const BusinessTab = () => {
       insurance_coverage: '',
       insurance_expiry: '',
       signature_data: '',
-    }
+    },
   });
 
   // Check Stripe status
@@ -493,7 +576,12 @@ const BusinessTab = () => {
       try {
         const { data: session } = await supabase.auth.getSession();
         if (!session.session) {
-          setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+          setStripeStatus({
+            connected: false,
+            status: 'not_connected',
+            chargesEnabled: false,
+            payoutsEnabled: false,
+          });
           setStripeLoading(false);
           return;
         }
@@ -506,7 +594,12 @@ const BusinessTab = () => {
         setStripeStatus(response.data as StripeConnectStatus);
       } catch (error) {
         console.error('Error checking Stripe status:', error);
-        setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+        setStripeStatus({
+          connected: false,
+          status: 'not_connected',
+          chargesEnabled: false,
+          payoutsEnabled: false,
+        });
       } finally {
         setStripeLoading(false);
       }
@@ -558,7 +651,7 @@ const BusinessTab = () => {
       setValue('signature_data', companyProfile.signature_data || '');
       // Only set logo preview from profile if user hasn't selected a new file
       // This prevents the preview from being reset when the profile refetches
-      setLogoPreview(prev => {
+      setLogoPreview((prev) => {
         // If there's already a data URL preview (user selected new file), keep it
         if (prev && prev.startsWith('data:')) {
           console.log('[BusinessTab] Keeping user-selected logo preview');
@@ -600,7 +693,10 @@ const BusinessTab = () => {
     console.log('[BusinessTab] event.target.files:', event.target.files);
 
     const file = event.target.files?.[0];
-    console.log('[BusinessTab] Selected file:', file ? { name: file.name, size: file.size, type: file.type } : 'none');
+    console.log(
+      '[BusinessTab] Selected file:',
+      file ? { name: file.name, size: file.size, type: file.type } : 'none'
+    );
 
     if (file) {
       // Check file size (max 20MB)
@@ -645,17 +741,17 @@ const BusinessTab = () => {
       calibration_date: '',
       calibration_due: '',
     };
-    setInstruments(prev => [...prev, newInstrument]);
+    setInstruments((prev) => [...prev, newInstrument]);
   };
 
   const handleRemoveInstrument = (id: string) => {
-    setInstruments(prev => prev.filter(inst => inst.id !== id));
+    setInstruments((prev) => prev.filter((inst) => inst.id !== id));
   };
 
   const handleInstrumentChange = (id: string, field: keyof TestingInstrument, value: string) => {
-    setInstruments(prev => prev.map(inst =>
-      inst.id === id ? { ...inst, [field]: value } : inst
-    ));
+    setInstruments((prev) =>
+      prev.map((inst) => (inst.id === id ? { ...inst, [field]: value } : inst))
+    );
   };
 
   const formatSortCode = (value: string) => {
@@ -785,7 +881,8 @@ const BusinessTab = () => {
       bank_details: bankDetails,
       testing_instruments: instruments,
       inspector_name: data.inspector_name || null,
-      inspector_qualifications: data.inspector_qualifications?.length > 0 ? data.inspector_qualifications : null,
+      inspector_qualifications:
+        data.inspector_qualifications?.length > 0 ? data.inspector_qualifications : null,
       registration_scheme: data.registration_scheme || null,
       registration_number: data.registration_number || null,
       registration_expiry: data.registration_expiry || null,
@@ -818,13 +915,13 @@ const BusinessTab = () => {
         addNotification({
           title: 'Settings Saved',
           message: 'Your business settings have been saved.',
-          type: 'success'
+          type: 'success',
         });
       } else {
         addNotification({
           title: 'Save Failed',
           message: 'Could not save settings. Please try again.',
-          type: 'error'
+          type: 'error',
         });
       }
     } catch (error) {
@@ -832,7 +929,7 @@ const BusinessTab = () => {
       addNotification({
         title: 'Save Failed',
         message: 'Could not save settings. Please try again.',
-        type: 'error'
+        type: 'error',
       });
     } finally {
       setIsSaving(false);
@@ -842,7 +939,7 @@ const BusinessTab = () => {
   if (loading) {
     return (
       <div className="space-y-4 animate-pulse">
-        {[1, 2, 3, 4].map(i => (
+        {[1, 2, 3, 4].map((i) => (
           <div key={i} className="rounded-2xl bg-[#1c1c1e] border border-white/[0.08] h-20" />
         ))}
       </div>
@@ -889,14 +986,21 @@ const BusinessTab = () => {
 
             <div className="flex items-start gap-4">
               {/* Logo Preview */}
-              <div className={cn(
-                "rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden flex-shrink-0",
-                logoSize === 'small' && "w-16 h-16",
-                logoSize === 'medium' && "w-20 h-20",
-                logoSize === 'large' && "w-28 h-28"
-              )}>
+              <div
+                className={cn(
+                  'rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden flex-shrink-0',
+                  logoSize === 'small' && 'w-16 h-16',
+                  logoSize === 'medium' && 'w-20 h-20',
+                  logoSize === 'large' && 'w-28 h-28'
+                )}
+              >
                 {logoPreview ? (
-                  <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
+                  <img
+                    loading="lazy"
+                    src={logoPreview}
+                    alt="Logo"
+                    className="w-full h-full object-contain"
+                  />
                 ) : (
                   <Building2 className="h-8 w-8 text-white/20" />
                 )}
@@ -948,7 +1052,9 @@ const BusinessTab = () => {
 
             {/* Logo Size Options */}
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Logo Size on Documents</Label>
+              <Label className="text-[11px] text-white/40 font-medium">
+                Logo Size on Documents
+              </Label>
               <div className="flex gap-2">
                 {(['small', 'medium', 'large'] as const).map((size) => (
                   <button
@@ -956,10 +1062,10 @@ const BusinessTab = () => {
                     type="button"
                     onClick={() => setLogoSize(size)}
                     className={cn(
-                      "flex-1 py-2 px-3 rounded-xl text-[13px] font-medium transition-all touch-manipulation capitalize",
+                      'flex-1 py-2 px-3 rounded-xl text-[13px] font-medium transition-all touch-manipulation capitalize',
                       logoSize === size
-                        ? "bg-blue-500 text-white"
-                        : "bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]"
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]'
                     )}
                   >
                     {size}
@@ -1064,8 +1170,20 @@ const BusinessTab = () => {
         icon={CreditCard}
         iconColor="text-green-400"
         iconBg="bg-green-500/15"
-        badge={stripeStatus?.status === 'active' ? 'Stripe Connected' : bankDetails.accountNumber ? 'Bank details set' : 'Not configured'}
-        badgeColor={stripeStatus?.status === 'active' ? 'text-green-400' : bankDetails.accountNumber ? 'text-green-400' : 'text-white/40'}
+        badge={
+          stripeStatus?.status === 'active'
+            ? 'Stripe Connected'
+            : bankDetails.accountNumber
+              ? 'Bank details set'
+              : 'Not configured'
+        }
+        badgeColor={
+          stripeStatus?.status === 'active'
+            ? 'text-green-400'
+            : bankDetails.accountNumber
+              ? 'text-green-400'
+              : 'text-white/40'
+        }
       >
         <div className="space-y-5">
           {/* Stripe Connect */}
@@ -1073,7 +1191,12 @@ const BusinessTab = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-[#635BFF] flex items-center justify-center overflow-hidden">
-                  <img src="/logos/stripe.svg" alt="Stripe" className="h-6 w-auto brightness-0 invert" />
+                  <img
+                    loading="lazy"
+                    src="/logos/stripe.svg"
+                    alt="Stripe"
+                    className="h-6 w-auto brightness-0 invert"
+                  />
                 </div>
                 <div>
                   <p className="text-[14px] font-medium text-white">Stripe Payments</p>
@@ -1125,7 +1248,9 @@ const BusinessTab = () => {
               <Landmark className="h-4 w-4 text-cyan-400" />
               <Label className="text-[13px] text-white/70 font-medium">Bank Transfer Details</Label>
             </div>
-            <p className="text-[12px] text-white/40 -mt-2">Appears on invoices for clients paying by BACS</p>
+            <p className="text-[12px] text-white/40 -mt-2">
+              Appears on invoices for clients paying by BACS
+            </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -1150,7 +1275,9 @@ const BusinessTab = () => {
                 <Label className="text-[13px] text-white/50 font-medium">Sort Code</Label>
                 <Input
                   value={bankDetails.sortCode}
-                  onChange={(e) => setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })}
+                  onChange={(e) =>
+                    setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })
+                  }
                   placeholder="12-34-56"
                   className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                   inputMode="numeric"
@@ -1160,7 +1287,12 @@ const BusinessTab = () => {
                 <Label className="text-[13px] text-white/50 font-medium">Account Number</Label>
                 <Input
                   value={bankDetails.accountNumber}
-                  onChange={(e) => setBankDetails({ ...bankDetails, accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8) })}
+                  onChange={(e) =>
+                    setBankDetails({
+                      ...bankDetails,
+                      accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8),
+                    })
+                  }
                   placeholder="12345678"
                   className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                   inputMode="numeric"
@@ -1193,16 +1325,23 @@ const BusinessTab = () => {
               const integration = getIntegration('xero');
               const isConnected = isProviderConnected('xero');
               return (
-                <div className={`relative overflow-hidden rounded-xl border transition-all ${
-                  isConnected
-                    ? 'bg-gradient-to-br from-[#13B5EA]/10 to-[#13B5EA]/5 border-[#13B5EA]/30'
-                    : 'bg-white/[0.03] border-white/[0.08] hover:border-[#13B5EA]/30'
-                }`}>
+                <div
+                  className={`relative overflow-hidden rounded-xl border transition-all ${
+                    isConnected
+                      ? 'bg-gradient-to-br from-[#13B5EA]/10 to-[#13B5EA]/5 border-[#13B5EA]/30'
+                      : 'bg-white/[0.03] border-white/[0.08] hover:border-[#13B5EA]/30'
+                  }`}
+                >
                   <div className="p-4">
                     {/* Header with logo and status */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                        <img src="/logos/xero.svg" alt="Xero" className="w-full h-full object-cover" />
+                        <img
+                          loading="lazy"
+                          src="/logos/xero.svg"
+                          alt="Xero"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       {isConnected && (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20">
@@ -1215,7 +1354,9 @@ const BusinessTab = () => {
                     {/* Provider name and description */}
                     <h4 className="text-[15px] font-semibold text-white">{provider.name}</h4>
                     <p className="text-[12px] text-white/50 mt-0.5 mb-3">
-                      {isConnected ? integration?.tenantName || 'Organisation connected' : provider.description}
+                      {isConnected
+                        ? integration?.tenantName || 'Organisation connected'
+                        : provider.description}
                     </p>
 
                     {/* Action button */}
@@ -1232,7 +1373,11 @@ const BusinessTab = () => {
                         disabled={accountingConnecting}
                         className="w-full h-9 text-[12px] text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg border border-red-500/20"
                       >
-                        {accountingConnecting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Disconnect'}
+                        {accountingConnecting ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          'Disconnect'
+                        )}
                       </Button>
                     ) : (
                       <Button
@@ -1241,7 +1386,11 @@ const BusinessTab = () => {
                         disabled={accountingConnecting || accountingLoading}
                         className="w-full h-9 text-[12px] font-medium bg-[#13B5EA] hover:bg-[#0ea5d9] text-white rounded-lg"
                       >
-                        {accountingConnecting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Connect Xero'}
+                        {accountingConnecting ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          'Connect Xero'
+                        )}
                       </Button>
                     )}
                   </div>
@@ -1255,16 +1404,23 @@ const BusinessTab = () => {
               const integration = getIntegration('quickbooks');
               const isConnected = isProviderConnected('quickbooks');
               return (
-                <div className={`relative overflow-hidden rounded-xl border transition-all ${
-                  isConnected
-                    ? 'bg-gradient-to-br from-[#2CA01C]/10 to-[#2CA01C]/5 border-[#2CA01C]/30'
-                    : 'bg-white/[0.03] border-white/[0.08] hover:border-[#2CA01C]/30'
-                }`}>
+                <div
+                  className={`relative overflow-hidden rounded-xl border transition-all ${
+                    isConnected
+                      ? 'bg-gradient-to-br from-[#2CA01C]/10 to-[#2CA01C]/5 border-[#2CA01C]/30'
+                      : 'bg-white/[0.03] border-white/[0.08] hover:border-[#2CA01C]/30'
+                  }`}
+                >
                   <div className="p-4">
                     {/* Header with logo and status */}
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                        <img src="/logos/quickbooks.svg" alt="QuickBooks" className="w-full h-full object-cover" />
+                        <img
+                          loading="lazy"
+                          src="/logos/quickbooks.svg"
+                          alt="QuickBooks"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       {isConnected ? (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20">
@@ -1273,7 +1429,9 @@ const BusinessTab = () => {
                         </div>
                       ) : (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-amber-500/20 border border-amber-500/30">
-                          <span className="text-[10px] text-amber-400 font-semibold">£38/mo plan</span>
+                          <span className="text-[10px] text-amber-400 font-semibold">
+                            £38/mo plan
+                          </span>
                         </div>
                       )}
                     </div>
@@ -1281,10 +1439,14 @@ const BusinessTab = () => {
                     {/* Provider name and description */}
                     <h4 className="text-[15px] font-semibold text-white">{provider.name}</h4>
                     <p className="text-[12px] text-white/50 mt-0.5 mb-3">
-                      {isConnected ? integration?.tenantName || 'Company connected' : (
+                      {isConnected ? (
+                        integration?.tenantName || 'Company connected'
+                      ) : (
                         <>
                           {provider.description}
-                          <span className="block text-amber-400/80 mt-1 font-medium">Requires Business Pro subscription</span>
+                          <span className="block text-amber-400/80 mt-1 font-medium">
+                            Requires Business Pro subscription
+                          </span>
                         </>
                       )}
                     </p>
@@ -1303,7 +1465,11 @@ const BusinessTab = () => {
                         disabled={accountingConnecting}
                         className="w-full h-9 text-[12px] text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg border border-red-500/20"
                       >
-                        {accountingConnecting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Disconnect'}
+                        {accountingConnecting ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          'Disconnect'
+                        )}
                       </Button>
                     ) : (
                       <Button
@@ -1312,7 +1478,11 @@ const BusinessTab = () => {
                         disabled={accountingConnecting || accountingLoading}
                         className="w-full h-9 text-[12px] font-medium bg-[#2CA01C] hover:bg-[#249017] text-white rounded-lg"
                       >
-                        {accountingConnecting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Connect QuickBooks'}
+                        {accountingConnecting ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          'Connect QuickBooks'
+                        )}
                       </Button>
                     )}
                   </div>
@@ -1326,7 +1496,12 @@ const BusinessTab = () => {
                 {/* Header with logo */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src="/logos/sage.svg" alt="Sage" className="w-full h-full object-cover" />
+                    <img
+                      loading="lazy"
+                      src="/logos/sage.svg"
+                      alt="Sage"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <span className="px-2 py-1 rounded-full bg-white/[0.06] text-[10px] font-medium text-white/40">
                     Coming Soon
@@ -1353,7 +1528,8 @@ const BusinessTab = () => {
           <div className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/10">
             <Calculator className="h-4 w-4 text-purple-400 flex-shrink-0" />
             <p className="text-[11px] text-white/50 leading-relaxed">
-              Once connected, sync invoices directly to your accounting software. Contacts and line items are created automatically.
+              Once connected, sync invoices directly to your accounting software. Contacts and line
+              items are created automatically.
             </p>
           </div>
         </div>
@@ -1414,7 +1590,9 @@ const BusinessTab = () => {
                   placeholder="15"
                   className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">%</span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                  %
+                </span>
               </div>
               <p className="text-[11px] text-white/40">Applied to cover business running costs</p>
             </div>
@@ -1430,7 +1608,9 @@ const BusinessTab = () => {
                   placeholder="20"
                   className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">%</span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                  %
+                </span>
               </div>
               <p className="text-[11px] text-white/40">Your profit on each job</p>
             </div>
@@ -1450,13 +1630,18 @@ const BusinessTab = () => {
                   <div key={workerKey} className="space-y-1.5">
                     <Label className="text-[11px] text-white/40 font-medium">{worker.name}</Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">£</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                        £
+                      </span>
                       <Input
                         type="number"
                         step="0.50"
                         value={rates[workerKey] || DEFAULT_WORKER_RATES[workerKey]}
                         onChange={(e) => {
-                          const newRates = { ...rates, [workerKey]: parseFloat(e.target.value) || 0 };
+                          const newRates = {
+                            ...rates,
+                            [workerKey]: parseFloat(e.target.value) || 0,
+                          };
                           setValue('worker_rates', newRates);
                         }}
                         className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl pl-7 focus:border-emerald-500/50 focus:ring-0"
@@ -1525,8 +1710,10 @@ const BusinessTab = () => {
           <div className="space-y-3">
             <Label className="text-[13px] text-white/70 font-medium">Terms & Conditions</Label>
             {Object.entries(DEFAULT_TERMS_GROUPED).map(([groupKey, group]) => {
-              const groupTermIds = group.terms.map(t => t.id);
-              const selectedInGroup = groupTermIds.filter(id => selectedTerms.includes(id)).length;
+              const groupTermIds = group.terms.map((t) => t.id);
+              const selectedInGroup = groupTermIds.filter((id) =>
+                selectedTerms.includes(id)
+              ).length;
               const isExpanded = expandedGroups.includes(groupKey);
 
               return (
@@ -1534,8 +1721,8 @@ const BusinessTab = () => {
                   key={groupKey}
                   open={isExpanded}
                   onOpenChange={(open) => {
-                    setExpandedGroups(prev =>
-                      open ? [...prev, groupKey] : prev.filter(g => g !== groupKey)
+                    setExpandedGroups((prev) =>
+                      open ? [...prev, groupKey] : prev.filter((g) => g !== groupKey)
                     );
                   }}
                 >
@@ -1544,9 +1731,16 @@ const BusinessTab = () => {
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                         <span className="text-[13px] font-medium text-white">{group.label}</span>
-                        <span className="text-[11px] text-white/40">({selectedInGroup}/{groupTermIds.length})</span>
+                        <span className="text-[11px] text-white/40">
+                          ({selectedInGroup}/{groupTermIds.length})
+                        </span>
                       </div>
-                      <ChevronDown className={cn("h-4 w-4 text-white/30 transition-transform", isExpanded && "rotate-180")} />
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white/30 transition-transform',
+                          isExpanded && 'rotate-180'
+                        )}
+                      />
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
@@ -1561,13 +1755,15 @@ const BusinessTab = () => {
                             <Checkbox
                               checked={isSelected}
                               onCheckedChange={(checked) => {
-                                setSelectedTerms(prev =>
-                                  checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                                setSelectedTerms((prev) =>
+                                  checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                                 );
                               }}
                               className="mt-0.5 border-white/30 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                             />
-                            <span className="text-[13px] text-white/70 leading-relaxed">{term.label}</span>
+                            <span className="text-[13px] text-white/70 leading-relaxed">
+                              {term.label}
+                            </span>
                           </label>
                         );
                       })}
@@ -1581,12 +1777,15 @@ const BusinessTab = () => {
             {customTerms.length > 0 && (
               <div className="space-y-2 pt-2">
                 {customTerms.map((term) => (
-                  <div key={term.id} className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]">
+                  <div
+                    key={term.id}
+                    className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]"
+                  >
                     <Checkbox
                       checked={selectedTerms.includes(term.id)}
                       onCheckedChange={(checked) => {
-                        setSelectedTerms(prev =>
-                          checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                        setSelectedTerms((prev) =>
+                          checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                         );
                       }}
                       className="mt-0.5 border-white/30 data-[state=checked]:bg-amber-500"
@@ -1595,8 +1794,8 @@ const BusinessTab = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        setCustomTerms(prev => prev.filter(t => t.id !== term.id));
-                        setSelectedTerms(prev => prev.filter(id => id !== term.id));
+                        setCustomTerms((prev) => prev.filter((t) => t.id !== term.id));
+                        setSelectedTerms((prev) => prev.filter((id) => id !== term.id));
                       }}
                       className="p-1 text-white/30 hover:text-red-400"
                     >
@@ -1617,8 +1816,8 @@ const BusinessTab = () => {
                   if (e.key === 'Enter' && newCustomTerm.trim()) {
                     e.preventDefault();
                     const newId = `custom_${Date.now()}`;
-                    setCustomTerms(prev => [...prev, { id: newId, label: newCustomTerm.trim() }]);
-                    setSelectedTerms(prev => [...prev, newId]);
+                    setCustomTerms((prev) => [...prev, { id: newId, label: newCustomTerm.trim() }]);
+                    setSelectedTerms((prev) => [...prev, newId]);
                     setNewCustomTerm('');
                   }
                 }}
@@ -1631,8 +1830,8 @@ const BusinessTab = () => {
                 onClick={() => {
                   if (newCustomTerm.trim()) {
                     const newId = `custom_${Date.now()}`;
-                    setCustomTerms(prev => [...prev, { id: newId, label: newCustomTerm.trim() }]);
-                    setSelectedTerms(prev => [...prev, newId]);
+                    setCustomTerms((prev) => [...prev, { id: newId, label: newCustomTerm.trim() }]);
+                    setSelectedTerms((prev) => [...prev, newId]);
                     setNewCustomTerm('');
                   }
                 }}
@@ -1679,10 +1878,14 @@ const BusinessTab = () => {
 
           {/* Invoice T&Cs Checklist */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/70 font-medium">Invoice Terms & Conditions</Label>
+            <Label className="text-[13px] text-white/70 font-medium">
+              Invoice Terms & Conditions
+            </Label>
             {Object.entries(DEFAULT_INVOICE_TERMS_GROUPED).map(([groupKey, group]) => {
-              const groupTermIds = group.terms.map(t => t.id);
-              const selectedInGroup = groupTermIds.filter(id => selectedInvoiceTerms.includes(id)).length;
+              const groupTermIds = group.terms.map((t) => t.id);
+              const selectedInGroup = groupTermIds.filter((id) =>
+                selectedInvoiceTerms.includes(id)
+              ).length;
               const isExpanded = expandedInvoiceGroups.includes(groupKey);
 
               return (
@@ -1690,8 +1893,8 @@ const BusinessTab = () => {
                   key={groupKey}
                   open={isExpanded}
                   onOpenChange={(open) => {
-                    setExpandedInvoiceGroups(prev =>
-                      open ? [...prev, groupKey] : prev.filter(g => g !== groupKey)
+                    setExpandedInvoiceGroups((prev) =>
+                      open ? [...prev, groupKey] : prev.filter((g) => g !== groupKey)
                     );
                   }}
                 >
@@ -1700,9 +1903,16 @@ const BusinessTab = () => {
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                         <span className="text-[13px] font-medium text-white">{group.label}</span>
-                        <span className="text-[11px] text-white/40">({selectedInGroup}/{groupTermIds.length})</span>
+                        <span className="text-[11px] text-white/40">
+                          ({selectedInGroup}/{groupTermIds.length})
+                        </span>
                       </div>
-                      <ChevronDown className={cn("h-4 w-4 text-white/30 transition-transform", isExpanded && "rotate-180")} />
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white/30 transition-transform',
+                          isExpanded && 'rotate-180'
+                        )}
+                      />
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
@@ -1717,13 +1927,15 @@ const BusinessTab = () => {
                             <Checkbox
                               checked={isSelected}
                               onCheckedChange={(checked) => {
-                                setSelectedInvoiceTerms(prev =>
-                                  checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                                setSelectedInvoiceTerms((prev) =>
+                                  checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                                 );
                               }}
                               className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
                             />
-                            <span className="text-[13px] text-white/70 leading-relaxed">{term.label}</span>
+                            <span className="text-[13px] text-white/70 leading-relaxed">
+                              {term.label}
+                            </span>
                           </label>
                         );
                       })}
@@ -1737,12 +1949,15 @@ const BusinessTab = () => {
             {customInvoiceTerms.length > 0 && (
               <div className="space-y-2 pt-2">
                 {customInvoiceTerms.map((term) => (
-                  <div key={term.id} className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]">
+                  <div
+                    key={term.id}
+                    className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]"
+                  >
                     <Checkbox
                       checked={selectedInvoiceTerms.includes(term.id)}
                       onCheckedChange={(checked) => {
-                        setSelectedInvoiceTerms(prev =>
-                          checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                        setSelectedInvoiceTerms((prev) =>
+                          checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                         );
                       }}
                       className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500"
@@ -1751,8 +1966,8 @@ const BusinessTab = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        setCustomInvoiceTerms(prev => prev.filter(t => t.id !== term.id));
-                        setSelectedInvoiceTerms(prev => prev.filter(id => id !== term.id));
+                        setCustomInvoiceTerms((prev) => prev.filter((t) => t.id !== term.id));
+                        setSelectedInvoiceTerms((prev) => prev.filter((id) => id !== term.id));
                       }}
                       className="p-1 text-white/30 hover:text-red-400"
                     >
@@ -1773,8 +1988,11 @@ const BusinessTab = () => {
                   if (e.key === 'Enter' && newCustomInvoiceTerm.trim()) {
                     e.preventDefault();
                     const newId = `inv_custom_${Date.now()}`;
-                    setCustomInvoiceTerms(prev => [...prev, { id: newId, label: newCustomInvoiceTerm.trim() }]);
-                    setSelectedInvoiceTerms(prev => [...prev, newId]);
+                    setCustomInvoiceTerms((prev) => [
+                      ...prev,
+                      { id: newId, label: newCustomInvoiceTerm.trim() },
+                    ]);
+                    setSelectedInvoiceTerms((prev) => [...prev, newId]);
                     setNewCustomInvoiceTerm('');
                   }
                 }}
@@ -1787,8 +2005,11 @@ const BusinessTab = () => {
                 onClick={() => {
                   if (newCustomInvoiceTerm.trim()) {
                     const newId = `inv_custom_${Date.now()}`;
-                    setCustomInvoiceTerms(prev => [...prev, { id: newId, label: newCustomInvoiceTerm.trim() }]);
-                    setSelectedInvoiceTerms(prev => [...prev, newId]);
+                    setCustomInvoiceTerms((prev) => [
+                      ...prev,
+                      { id: newId, label: newCustomInvoiceTerm.trim() },
+                    ]);
+                    setSelectedInvoiceTerms((prev) => [...prev, newId]);
                     setNewCustomInvoiceTerm('');
                   }
                 }}
@@ -1890,10 +2111,10 @@ const BusinessTab = () => {
                       setValue('inspector_qualifications', updated);
                     }}
                     className={cn(
-                      "px-3 py-2 rounded-xl text-[13px] font-medium transition-all touch-manipulation",
+                      'px-3 py-2 rounded-xl text-[13px] font-medium transition-all touch-manipulation',
                       isSelected
-                        ? "bg-blue-500 text-white"
-                        : "bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]"
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]'
                     )}
                   >
                     {isSelected && <Check className="h-3.5 w-3.5 inline mr-1.5" />}
@@ -1920,7 +2141,9 @@ const BusinessTab = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
                   {INSURANCE_PROVIDERS.map((provider) => (
-                    <SelectItem key={provider} value={provider}>{provider}</SelectItem>
+                    <SelectItem key={provider} value={provider}>
+                      {provider}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -1933,7 +2156,9 @@ const BusinessTab = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
                   {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
-                    <SelectItem key={coverage} value={coverage}>{coverage}</SelectItem>
+                    <SelectItem key={coverage} value={coverage}>
+                      {coverage}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -1981,7 +2206,10 @@ const BusinessTab = () => {
             </div>
           ) : (
             instruments.map((instrument, index) => (
-              <div key={instrument.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-3">
+              <div
+                key={instrument.id}
+                className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-3"
+              >
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] font-medium text-white">Instrument {index + 1}</span>
                   <Button
@@ -1997,14 +2225,18 @@ const BusinessTab = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <Select
                     value={instrument.instrument_type}
-                    onValueChange={(value) => handleInstrumentChange(instrument.id, 'instrument_type', value)}
+                    onValueChange={(value) =>
+                      handleInstrumentChange(instrument.id, 'instrument_type', value)
+                    }
                   >
                     <SelectTrigger className="h-12 sm:h-11">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       {INSTRUMENT_TYPES.map((type) => (
-                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                        <SelectItem key={type.value} value={type.value}>
+                          {type.label}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -2022,20 +2254,26 @@ const BusinessTab = () => {
                   />
                   <Input
                     value={instrument.serial_number}
-                    onChange={(e) => handleInstrumentChange(instrument.id, 'serial_number', e.target.value)}
+                    onChange={(e) =>
+                      handleInstrumentChange(instrument.id, 'serial_number', e.target.value)
+                    }
                     placeholder="Serial"
                     className="h-10 text-[13px] bg-white/[0.04] border-white/[0.06]"
                   />
                   <Input
                     type="date"
                     value={instrument.calibration_date}
-                    onChange={(e) => handleInstrumentChange(instrument.id, 'calibration_date', e.target.value)}
+                    onChange={(e) =>
+                      handleInstrumentChange(instrument.id, 'calibration_date', e.target.value)
+                    }
                     className="h-10 text-[13px] bg-white/[0.04] border-white/[0.06]"
                   />
                   <Input
                     type="date"
                     value={instrument.calibration_due || ''}
-                    onChange={(e) => handleInstrumentChange(instrument.id, 'calibration_due', e.target.value)}
+                    onChange={(e) =>
+                      handleInstrumentChange(instrument.id, 'calibration_due', e.target.value)
+                    }
                     className="h-10 text-[13px] bg-white/[0.04] border-white/[0.06]"
                     placeholder="Next cal"
                   />
@@ -2068,7 +2306,10 @@ const BusinessTab = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-[13px] text-white/50 font-medium">Currency</Label>
-            <Select value={watch('currency')} onValueChange={(value) => setValue('currency', value)}>
+            <Select
+              value={watch('currency')}
+              onValueChange={(value) => setValue('currency', value)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

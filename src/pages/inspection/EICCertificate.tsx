@@ -29,7 +29,6 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 import { supabase } from '@/integrations/supabase/client';
 
 // Import EIC form components
@@ -522,15 +521,6 @@ export default function EICCertificate() {
                 Invoice
               </Button>
 
-              <WhatsAppShareButton
-                type="eic"
-                id={savedReportId || id || 'new'}
-                recipientPhone={formData.clientTelephone || ''}
-                recipientName={formData.clientName || ''}
-                documentLabel="EIC Certificate"
-                variant="outline"
-                className="h-9"
-              />
             </div>
           </div>
         </div>
@@ -580,7 +570,14 @@ export default function EICCertificate() {
             currentTabHasRequiredFields: true,
             onToggleComplete: () => {},
             onGenerateCertificate: handleGenerateCertificate,
-            canGenerateCertificate: !isGenerating
+            canGenerateCertificate: !isGenerating,
+            whatsApp: {
+              type: 'eic' as const,
+              id: savedReportId || id || 'new',
+              recipientPhone: formData.clientTelephone || '',
+              recipientName: formData.clientName || '',
+              documentLabel: 'EIC Certificate',
+            },
           }}
           observationsProps={{
             observations: observationsProps.observations,

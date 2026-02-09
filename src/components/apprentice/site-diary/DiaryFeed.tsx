@@ -10,6 +10,7 @@ import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { DiaryEntryCard } from './DiaryEntryCard';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
 import { BookOpen, Plus } from 'lucide-react';
 
 /** Format a date string into a friendly label */
@@ -41,9 +42,18 @@ interface DiaryFeedProps {
   onDelete?: (id: string) => void;
   onNewEntry?: () => void;
   maxItems?: number;
+  portfolioNudges?: Map<string, PortfolioNudge>;
 }
 
-export function DiaryFeed({ entries, onEntryTap, onEdit, onDelete, onNewEntry, maxItems }: DiaryFeedProps) {
+export function DiaryFeed({
+  entries,
+  onEntryTap,
+  onEdit,
+  onDelete,
+  onNewEntry,
+  maxItems,
+  portfolioNudges,
+}: DiaryFeedProps) {
   const displayEntries = maxItems ? entries.slice(0, maxItems) : entries;
 
   // Group entries by date
@@ -82,7 +92,7 @@ export function DiaryFeed({ entries, onEntryTap, onEdit, onDelete, onNewEntry, m
           <BookOpen className="h-8 w-8 text-white" />
         </motion.div>
         <p className="text-base font-medium text-white mb-1">No diary entries yet</p>
-        <p className="text-sm text-white/80 mb-4">Start recording your on-site experience</p>
+        <p className="text-sm text-white mb-4">Start recording your on-site experience</p>
         {onNewEntry && (
           <motion.button
             initial={{ opacity: 0, y: 10 }}
@@ -119,8 +129,8 @@ export function DiaryFeed({ entries, onEntryTap, onEdit, onDelete, onNewEntry, m
           </motion.div>
 
           {/* Entries for this date */}
-          <div className="space-y-2 pb-2">
-            {group.entries.map(entry => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pb-2">
+            {group.entries.map((entry) => {
               const currentIndex = entryIndex++;
               return (
                 <motion.div
@@ -134,6 +144,7 @@ export function DiaryFeed({ entries, onEntryTap, onEdit, onDelete, onNewEntry, m
                     onTap={() => onEntryTap?.(entry)}
                     onEdit={onEdit}
                     onDelete={onDelete ? (id) => onDelete(id) : undefined}
+                    portfolioNudge={portfolioNudges?.get(entry.id)}
                   />
                 </motion.div>
               );

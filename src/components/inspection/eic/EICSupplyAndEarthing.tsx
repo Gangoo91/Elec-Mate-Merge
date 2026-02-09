@@ -1,9 +1,14 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface EICSupplyAndEarthingProps {
   formData: any;
@@ -15,7 +20,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Supply Characteristics</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Supply Characteristics
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -25,7 +32,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.supplyVoltage || ''}
                 onValueChange={(value) => onUpdate('supplyVoltage', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Voltage" />
                 </SelectTrigger>
                 <SelectContent>
@@ -42,7 +49,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.supplyFrequency || '50'}
                 onValueChange={(value) => onUpdate('supplyFrequency', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Frequency" />
                 </SelectTrigger>
                 <SelectContent>
@@ -57,7 +64,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.phases || ''}
                 onValueChange={(value) => onUpdate('phases', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Phases" />
                 </SelectTrigger>
                 <SelectContent>
@@ -75,7 +82,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.earthingArrangement || ''}
                 onValueChange={(value) => onUpdate('earthingArrangement', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select earthing arrangement" />
                 </SelectTrigger>
                 <SelectContent>
@@ -92,7 +99,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.supplyType || ''}
                 onValueChange={(value) => onUpdate('supplyType', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Supply type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -109,7 +116,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Main Protective Device</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Main Protective Device
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -119,7 +128,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.mainProtectiveDevice || ''}
                 onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Device type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -138,6 +147,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 placeholder="e.g., 100"
                 value={formData.mainSwitchRating || ''}
                 onChange={(e) => onUpdate('mainSwitchRating', e.target.value)}
+                className="h-11 text-base touch-manipulation"
               />
             </div>
             <div>
@@ -147,6 +157,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 placeholder="e.g., Consumer unit"
                 value={formData.mainSwitchLocation || ''}
                 onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
+                className="h-11 text-base touch-manipulation"
               />
             </div>
           </div>
@@ -155,7 +166,9 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-gray">Earthing and Bonding</CardTitle>
+          <CardTitle className="text-lg font-semibold text-elec-gray">
+            Earthing and Bonding
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -165,7 +178,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.earthElectrodeType || ''}
                 onValueChange={(value) => onUpdate('earthElectrodeType', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Electrode type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -184,6 +197,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 placeholder="e.g., 2.5"
                 value={formData.earthElectrodeResistance || ''}
                 onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                className="h-11 text-base touch-manipulation"
               />
             </div>
           </div>
@@ -195,7 +209,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.mainBondingConductor || ''}
                 onValueChange={(value) => onUpdate('mainBondingConductor', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Conductor size" />
                 </SelectTrigger>
                 <SelectContent>
@@ -212,7 +226,7 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 value={formData.supplementaryBonding || ''}
                 onValueChange={(value) => onUpdate('supplementaryBonding', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Required?" />
                 </SelectTrigger>
                 <SelectContent>

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 interface MWTabNavigationProps {
   currentTab: string;
@@ -16,6 +17,13 @@ interface MWTabNavigationProps {
   isCurrentTabComplete: boolean;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  whatsApp?: {
+    type: string;
+    id: string;
+    recipientPhone: string;
+    recipientName: string;
+    documentLabel: string;
+  };
 }
 
 const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
@@ -30,6 +38,7 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
   isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
+  whatsApp,
 }) => {
   const isMobile = useIsMobile();
   const progress = getProgressPercentage();
@@ -74,14 +83,27 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
 
           {/* Next/Generate button */}
           {isLastTab ? (
-            <Button
-              onClick={onGenerateCertificate}
-              disabled={!canGenerateCertificate}
-              size="sm"
-              className="h-10 px-4 touch-manipulation bg-green-600 hover:bg-green-700 text-white font-medium"
-            >
-              Generate
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={onGenerateCertificate}
+                disabled={!canGenerateCertificate}
+                size="sm"
+                className="h-10 px-4 touch-manipulation bg-green-600 hover:bg-green-700 text-white font-medium"
+              >
+                Generate
+              </Button>
+              {whatsApp && (
+                <WhatsAppShareButton
+                  type={whatsApp.type}
+                  id={whatsApp.id}
+                  recipientPhone={whatsApp.recipientPhone}
+                  recipientName={whatsApp.recipientName}
+                  documentLabel={whatsApp.documentLabel}
+                  variant="ghost"
+                  className="h-10 w-10 touch-manipulation active:scale-[0.98] transition-transform flex-shrink-0"
+                />
+              )}
+            </div>
           ) : (
             <Button
               onClick={navigateNext}

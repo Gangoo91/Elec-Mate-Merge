@@ -1,22 +1,65 @@
-import { useState, useEffect, lazy, Suspense } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
-import { Shield, FileText, AlertTriangle, Camera, Users, Wrench, Phone, ArrowRight, ArrowLeft, FolderOpen, Loader2 } from "lucide-react";
-import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
-import { motion } from "framer-motion";
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
+import {
+  Shield,
+  FileText,
+  AlertTriangle,
+  Camera,
+  Users,
+  Wrench,
+  Phone,
+  ArrowRight,
+  ArrowLeft,
+  FolderOpen,
+  Loader2,
+} from 'lucide-react';
+import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
+import { motion } from 'framer-motion';
+import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy-loaded tool components for code splitting
-const RAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/RAMSGenerator"));
-const MethodStatementGenerator = lazy(() => import("@/components/electrician-tools/site-safety/MethodStatementGenerator"));
-const IntegratedRAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/IntegratedRAMSGenerator"));
-const EnhancedHazardDatabase = lazy(() => import("@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase").then(m => ({ default: m.EnhancedHazardDatabase })));
-const PhotoDocumentation = lazy(() => import("@/components/electrician-tools/site-safety/PhotoDocumentation"));
-const TeamBriefingTemplates = lazy(() => import("@/components/electrician-tools/site-safety/TeamBriefingTemplates"));
-const NearMissReporting = lazy(() => import("@/components/electrician-tools/site-safety/NearMissReporting").then(m => ({ default: m.NearMissReporting })));
-const SafetyEquipmentTracker = lazy(() => import("@/components/electrician-tools/site-safety/SafetyEquipmentTracker"));
-const EmergencyProcedures = lazy(() => import("@/components/electrician-tools/site-safety/EmergencyProcedures"));
-const AIRAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator").then(m => ({ default: m.AIRAMSGenerator })));
-const SavedRAMSLibrary = lazy(() => import("@/components/electrician-tools/site-safety/SavedRAMSLibrary").then(m => ({ default: m.SavedRAMSLibrary })));
+const RAMSGenerator = lazy(
+  () => import('@/components/electrician-tools/site-safety/RAMSGenerator')
+);
+const MethodStatementGenerator = lazy(
+  () => import('@/components/electrician-tools/site-safety/MethodStatementGenerator')
+);
+const IntegratedRAMSGenerator = lazy(
+  () => import('@/components/electrician-tools/site-safety/IntegratedRAMSGenerator')
+);
+const EnhancedHazardDatabase = lazy(() =>
+  import('@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase').then(
+    (m) => ({ default: m.EnhancedHazardDatabase })
+  )
+);
+const PhotoDocumentation = lazy(
+  () => import('@/components/electrician-tools/site-safety/PhotoDocumentation')
+);
+const TeamBriefingTemplates = lazy(
+  () => import('@/components/electrician-tools/site-safety/TeamBriefingTemplates')
+);
+const NearMissReporting = lazy(() =>
+  import('@/components/electrician-tools/site-safety/NearMissReporting').then((m) => ({
+    default: m.NearMissReporting,
+  }))
+);
+const SafetyEquipmentTracker = lazy(
+  () => import('@/components/electrician-tools/site-safety/SafetyEquipmentTracker')
+);
+const EmergencyProcedures = lazy(
+  () => import('@/components/electrician-tools/site-safety/EmergencyProcedures')
+);
+const AIRAMSGenerator = lazy(() =>
+  import('@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator').then((m) => ({
+    default: m.AIRAMSGenerator,
+  }))
+);
+const SavedRAMSLibrary = lazy(() =>
+  import('@/components/electrician-tools/site-safety/SavedRAMSLibrary').then((m) => ({
+    default: m.SavedRAMSLibrary,
+  }))
+);
 
 // Animation variants
 const containerVariants = {
@@ -36,12 +79,8 @@ const itemVariants = {
   },
 };
 
-// Loading spinner for lazy components
-const ToolLoader = () => (
-  <div className="flex items-center justify-center py-20">
-    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-  </div>
-);
+// Skeleton loader for lazy components
+const ToolLoader = SectionSkeleton;
 
 // Tool color mapping
 const toolColors: Record<string, string> = {
@@ -51,8 +90,8 @@ const toolColors: Record<string, string> = {
   'photo-docs': 'from-emerald-400 to-green-500',
   'team-briefing': 'from-purple-400 to-purple-500',
   'near-miss': 'from-red-400 to-rose-500',
-  'equipment': 'from-cyan-400 to-teal-500',
-  'emergency': 'from-pink-400 to-rose-500',
+  equipment: 'from-cyan-400 to-teal-500',
+  emergency: 'from-pink-400 to-rose-500',
 };
 
 const SiteSafety = () => {
@@ -69,65 +108,65 @@ const SiteSafety = () => {
 
   const primaryTools = [
     {
-      id: "ai-rams",
-      title: "RAMS Generator",
-      description: "Create comprehensive RAMS documentation from your job description",
+      id: 'ai-rams',
+      title: 'RAMS Generator',
+      description: 'Create comprehensive RAMS documentation from your job description',
       icon: FileText,
-      badge: "AI"
+      badge: 'AI',
     },
     {
-      id: "saved-rams",
-      title: "Saved Documents",
-      description: "Access your previously generated RAMS documentation",
+      id: 'saved-rams',
+      title: 'Saved Documents',
+      description: 'Access your previously generated RAMS documentation',
       icon: FolderOpen,
-      badge: "Library"
-    }
+      badge: 'Library',
+    },
   ];
 
   const safetyTools = [
     {
-      id: "hazard-database",
-      title: "Hazard Database",
-      description: "Comprehensive electrical hazard information",
-      icon: Shield
+      id: 'hazard-database',
+      title: 'Hazard Database',
+      description: 'Comprehensive electrical hazard information',
+      icon: Shield,
     },
     {
-      id: "photo-docs",
-      title: "Photo Documentation",
-      description: "Document safety conditions on site",
-      icon: Camera
+      id: 'photo-docs',
+      title: 'Photo Documentation',
+      description: 'Document safety conditions on site',
+      icon: Camera,
     },
     {
-      id: "team-briefing",
-      title: "Team Briefing",
-      description: "Pre-work safety briefings & toolbox talks",
-      icon: Users
+      id: 'team-briefing',
+      title: 'Team Briefing',
+      description: 'Pre-work safety briefings & toolbox talks',
+      icon: Users,
     },
     {
-      id: "near-miss",
-      title: "Near Miss Reports",
-      description: "Report and track safety incidents",
-      icon: AlertTriangle
+      id: 'near-miss',
+      title: 'Near Miss Reports',
+      description: 'Report and track safety incidents',
+      icon: AlertTriangle,
     },
     {
-      id: "equipment",
-      title: "Equipment Tracker",
-      description: "Track PPE and safety equipment",
-      icon: Wrench
+      id: 'equipment',
+      title: 'Equipment Tracker',
+      description: 'Track PPE and safety equipment',
+      icon: Wrench,
     },
     {
-      id: "emergency",
-      title: "Emergency Procedures",
-      description: "Quick access to emergency protocols",
-      icon: Phone
-    }
+      id: 'emergency',
+      title: 'Emergency Procedures',
+      description: 'Quick access to emergency protocols',
+      icon: Phone,
+    },
   ];
 
   const renderToolContent = () => {
     switch (activeView) {
-      case "ai-rams":
+      case 'ai-rams':
         return <AIRAMSGenerator onBack={() => setActiveView(null)} />;
-      case "saved-rams":
+      case 'saved-rams':
         return (
           <div className="space-y-4">
             {/* Header */}
@@ -153,23 +192,23 @@ const SiteSafety = () => {
             </div>
           </div>
         );
-      case "integrated-rams":
+      case 'integrated-rams':
         return <IntegratedRAMSGenerator />;
-      case "rams":
+      case 'rams':
         return <RAMSGenerator />;
-      case "method-statement":
+      case 'method-statement':
         return <MethodStatementGenerator />;
-      case "hazard-database":
+      case 'hazard-database':
         return <EnhancedHazardDatabase />;
-      case "photo-docs":
+      case 'photo-docs':
         return <PhotoDocumentation onBack={() => setActiveView(null)} />;
-      case "team-briefing":
+      case 'team-briefing':
         return <TeamBriefingTemplates />;
-      case "near-miss":
+      case 'near-miss':
         return <NearMissReporting />;
-      case "equipment":
+      case 'equipment':
         return <SafetyEquipmentTracker />;
-      case "emergency":
+      case 'emergency':
         return <EmergencyProcedures />;
       default:
         return null;
@@ -178,16 +217,18 @@ const SiteSafety = () => {
 
   if (activeView) {
     // Full-width views render without max-width container
-    const isFullWidth = activeView === "equipment" || activeView === "photo-docs" || activeView === "ai-rams" || activeView === "saved-rams";
+    const isFullWidth =
+      activeView === 'equipment' ||
+      activeView === 'photo-docs' ||
+      activeView === 'ai-rams' ||
+      activeView === 'saved-rams';
 
     return (
       <RAMSProvider>
         <div className="bg-background animate-fade-in">
           {isFullWidth ? (
             // Edge-to-edge layout for native mobile feel
-            <Suspense fallback={<ToolLoader />}>
-              {renderToolContent()}
-            </Suspense>
+            <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
           ) : (
             // Standard contained layout for other views
             <div className="px-4 py-4 sm:py-6">
@@ -200,9 +241,7 @@ const SiteSafety = () => {
                   <span className="text-sm font-medium">Back to Safety Tools</span>
                 </button>
               </div>
-              <Suspense fallback={<ToolLoader />}>
-                {renderToolContent()}
-              </Suspense>
+              <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
             </div>
           )}
         </div>
@@ -248,7 +287,10 @@ const SiteSafety = () => {
             <div className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
               <h2 className="text-base font-bold text-white">Essential Tools</h2>
-              <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
+              >
                 2 Active
               </Badge>
             </div>
@@ -270,17 +312,20 @@ const SiteSafety = () => {
                       <div className="p-4">
                         <div className="flex items-center gap-3">
                           {/* Icon with gradient background */}
-                          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                          <div
+                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
+                          >
                             <IconComponent className="h-6 w-6 text-white" />
                           </div>
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <h3 className="text-[15px] font-bold text-white">
-                                {tool.title}
-                              </h3>
+                              <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
                               {tool.badge && (
-                                <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-[10px]">
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-[10px]"
+                                >
                                   {tool.badge}
                                 </Badge>
                               )}
@@ -308,7 +353,10 @@ const SiteSafety = () => {
             <div className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
               <h2 className="text-base font-bold text-white">Safety Tools</h2>
-              <Badge variant="secondary" className="bg-white/10 text-white/70 border-white/10 text-xs">
+              <Badge
+                variant="secondary"
+                className="bg-white/10 text-white/70 border-white/10 text-xs"
+              >
                 {safetyTools.length} Tools
               </Badge>
             </div>
@@ -330,14 +378,14 @@ const SiteSafety = () => {
                       <div className="p-4">
                         <div className="flex items-center gap-3">
                           {/* Icon with gradient background */}
-                          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                          <div
+                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
+                          >
                             <IconComponent className="h-6 w-6 text-white" />
                           </div>
 
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-[15px] font-bold text-white">
-                              {tool.title}
-                            </h3>
+                            <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
                             <p className="text-[13px] text-white/70 line-clamp-1">
                               {tool.description}
                             </p>

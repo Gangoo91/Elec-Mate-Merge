@@ -106,7 +106,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
       case 'in_progress':
         return <Clock className="h-4 w-4 text-amber-500" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-muted-foreground" />;
+        return <AlertCircle className="h-4 w-4 text-white/80" />;
     }
   };
 
@@ -177,16 +177,16 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
             {isExpanded && (
               <div className="mt-3 pt-3 border-t border-border space-y-2">
                 {ksb.description && (
-                  <p className="text-xs text-muted-foreground">{ksb.description}</p>
+                  <p className="text-xs text-white/80">{ksb.description}</p>
                 )}
                 {ksbProgress?.evidence_portfolio_ids && ksbProgress.evidence_portfolio_ids.length > 0 && (
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs text-white/80">
                     <FileText className="h-3 w-3" />
                     <span>{ksbProgress.evidence_portfolio_ids.length} evidence item(s) linked</span>
                   </div>
                 )}
                 {ksbProgress?.notes && (
-                  <div className="p-2 rounded-lg bg-muted/50 text-xs text-muted-foreground">
+                  <div className="p-2 rounded-lg bg-muted/50 text-xs text-white/80">
                     <span className="font-medium">Notes:</span> {ksbProgress.notes}
                   </div>
                 )}
@@ -204,9 +204,9 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
           </div>
           <div className="shrink-0">
             {isExpanded ? (
-              <ChevronUp className="h-4 w-4 text-muted-foreground" />
+              <ChevronUp className="h-4 w-4 text-white/80" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-white/80" />
             )}
           </div>
         </div>
@@ -231,16 +231,16 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <p className="text-sm text-muted-foreground mt-2">Loading KSBs...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-white/80" />
+            <p className="text-sm text-white/80 mt-2">Loading KSBs...</p>
           </div>
         ) : ksbs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
             <div className="p-4 rounded-full bg-muted mb-4">
-              <Target className="h-8 w-8 text-muted-foreground" />
+              <Target className="h-8 w-8 text-white/80" />
             </div>
             <p className="font-medium text-foreground">No KSBs Found</p>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-white/80 mt-1">
               KSBs will appear once you select a qualification with mapped standards.
             </p>
           </div>
@@ -251,7 +251,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
               <div className="p-4 rounded-xl bg-gradient-to-r from-elec-yellow/10 to-amber-600/10 border border-elec-yellow/20">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium">Overall Progress</span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-white/80">
                     {stats.overall.completed}/{stats.overall.total} completed
                   </span>
                 </div>
@@ -296,14 +296,14 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
                               <span className="font-medium text-sm">{config.label}</span>
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-white/80">
                                 {config.stats.percentage}% complete
                               </span>
                             </div>
                             <Progress value={config.stats.percentage} className="h-1.5 mt-1" />
                           </div>
                         </div>
-                        <div className="flex gap-4 mt-3 text-xs text-muted-foreground">
+                        <div className="flex gap-4 mt-3 text-xs text-white/80">
                           <span className="flex items-center gap-1">
                             <CheckCircle2 className="h-3 w-3 text-green-500" />
                             {config.stats.completed} done
@@ -326,7 +326,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
                         ))}
                         {config.items.length === 0 && (
                           <div className="text-center py-8">
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white/80">
                               No {config.label.toLowerCase()} mapped for this qualification yet.
                             </p>
                           </div>

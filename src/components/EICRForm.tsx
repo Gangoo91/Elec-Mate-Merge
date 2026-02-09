@@ -1,5 +1,6 @@
 import React, { Suspense, useState, useCallback, useEffect } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
+import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
@@ -51,86 +52,84 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
 
   // Handle board scan completion - populate circuits
   // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
-  const handleBoardScanComplete = useCallback((data: {
-    board: any;
-    circuits: any[];
-    metadata?: any;
-    warnings?: string[];
-  }) => {
-    // Convert detected circuits to test results format matching TestResult type
-    // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
-    const newCircuits = data.circuits.map((circuit, index) => {
-      const ratingAmps = circuit.rating || null;
-      const deviceCategory = circuit.device || 'MCB';
-      const deviceCurve = circuit.curve || 'B';
+  const handleBoardScanComplete = useCallback(
+    (data: { board: any; circuits: any[]; metadata?: any; warnings?: string[] }) => {
+      // Convert detected circuits to test results format matching TestResult type
+      // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
+      const newCircuits = data.circuits.map((circuit, index) => {
+        const ratingAmps = circuit.rating || null;
+        const deviceCategory = circuit.device || 'MCB';
+        const deviceCurve = circuit.curve || 'B';
 
-      // Get cable size from detected rating
-      const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
-      const cpcSize = getCpcForLive(liveSize) || '1.5mm';
+        // Get cable size from detected rating
+        const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
+        const cpcSize = getCpcForLive(liveSize) || '1.5mm';
 
-      // Get BS standard from device category
-      const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
+        // Get BS standard from device category
+        const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
 
-      // Calculate Max Zs from detected device
-      const maxZs = getMaxZsFromDeviceDetails(
-        bsStandard,
-        deviceCurve,
-        ratingAmps?.toString() || '',
-        circuit.label || ''
-      );
+        // Calculate Max Zs from detected device
+        const maxZs = getMaxZsFromDeviceDetails(
+          bsStandard,
+          deviceCurve,
+          ratingAmps?.toString() || '',
+          circuit.label || ''
+        );
 
-      return {
-        id: `circuit-${Date.now()}-${index}`,
-        circuitNumber: circuit.position?.toString() || String(index + 1),
-        circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
-        circuitDescription: circuit.label || `Circuit ${index + 1}`,
-        circuitType: '',
-        type: '',
-        // Use DETECTED device values
-        protectiveDeviceType: deviceCategory,
-        protectiveDeviceRating: ratingAmps?.toString() || '',
-        protectiveDeviceCurve: deviceCurve,
-        bsStandard: bsStandard,
-        // Cable sizes from detected rating
-        liveSize: liveSize,
-        cpcSize: cpcSize,
-        // Max Zs calculated from BS 7671 tables
-        maxZs: maxZs?.toString() || '',
-        phaseType: circuit.phase === '3P' ? '3P' : '1P' as '1P' | '3P',
-        // RCD details if RCBO
-        rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
-        rcdType: deviceCategory === 'RCBO' ? 'A' : '',
-        rcdRating: deviceCategory === 'RCBO' ? '30' : '',
-        // Default test values - user must fill these
-        r1r2: '',
-        r2: '',
-        zs: '',
-        polarity: '',
-        insulationTestVoltage: '500',
-        insulationLiveNeutral: '',
-        insulationLiveEarth: '',
-        rcdOneX: '',
-        autoFilled: true,
-        notes: circuit.notes || '',
-      };
-    });
+        return {
+          id: `circuit-${Date.now()}-${index}`,
+          circuitNumber: circuit.position?.toString() || String(index + 1),
+          circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
+          circuitDescription: circuit.label || `Circuit ${index + 1}`,
+          circuitType: '',
+          type: '',
+          // Use DETECTED device values
+          protectiveDeviceType: deviceCategory,
+          protectiveDeviceRating: ratingAmps?.toString() || '',
+          protectiveDeviceCurve: deviceCurve,
+          bsStandard: bsStandard,
+          // Cable sizes from detected rating
+          liveSize: liveSize,
+          cpcSize: cpcSize,
+          // Max Zs calculated from BS 7671 tables
+          maxZs: maxZs?.toString() || '',
+          phaseType: circuit.phase === '3P' ? '3P' : ('1P' as '1P' | '3P'),
+          // RCD details if RCBO
+          rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
+          rcdType: deviceCategory === 'RCBO' ? 'A' : '',
+          rcdRating: deviceCategory === 'RCBO' ? '30' : '',
+          // Default test values - user must fill these
+          r1r2: '',
+          r2: '',
+          zs: '',
+          polarity: '',
+          insulationTestVoltage: '500',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          rcdOneX: '',
+          autoFilled: true,
+          notes: circuit.notes || '',
+        };
+      });
 
-    // Merge with existing circuits or replace
-    const existingCircuits = formData.scheduleOfTests || [];
-    updateFormData('scheduleOfTests', [...existingCircuits, ...newCircuits]);
+      // Merge with existing circuits or replace
+      const existingCircuits = formData.scheduleOfTests || [];
+      updateFormData('scheduleOfTests', [...existingCircuits, ...newCircuits]);
 
-    // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
-    if (data.board) {
-      updateFormData('boardBrand', data.board.make || '');
-      updateFormData('boardModel', data.board.model || '');
-      updateFormData('mainSwitchRating', data.board.mainSwitch || '');
-      updateFormData('spdStatus', data.board.spd || '');
-    }
+      // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
+      if (data.board) {
+        updateFormData('boardBrand', data.board.make || '');
+        updateFormData('boardModel', data.board.model || '');
+        updateFormData('mainSwitchRating', data.board.mainSwitch || '');
+        updateFormData('spdStatus', data.board.spd || '');
+      }
 
-    setShowBoardScan(false);
-    // Stay on testing tab after scan completes
-    setCurrentTab('testing');
-  }, [formData.scheduleOfTests, updateFormData]);
+      setShowBoardScan(false);
+      // Stay on testing tab after scan completes
+      setCurrentTab('testing');
+    },
+    [formData.scheduleOfTests, updateFormData]
+  );
 
   // ALWAYS save to localStorage before unload - never lose data
   // Also attempt cloud sync and warn user if data hasn't synced
@@ -154,7 +153,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       if (hasUnsyncedChanges && hasMeaningfulData) {
         // ALWAYS warn the user if data hasn't synced to cloud
         e.preventDefault();
-        e.returnValue = 'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
+        e.returnValue =
+          'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
         return;
       }
 
@@ -168,7 +168,6 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [formData, currentReportId, syncState.status, syncState.queuedChanges]);
-
 
   if (isLoadingReport) {
     return (
@@ -184,10 +183,11 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // Calculate section completion for progress
   const completedSections = new Set<number>();
   if (formData.clientName && formData.installationAddress) completedSections.add(0);
-  if (formData.inspectionItems?.some((item: any) => item.outcome && item.outcome !== '')) completedSections.add(1);
+  if (formData.inspectionItems?.some((item: any) => item.outcome && item.outcome !== ''))
+    completedSections.add(1);
   // Tests tab is complete only if circuits have actual test data filled in
-  const hasCompletedTests = formData.scheduleOfTests?.some((test: any) =>
-    test.zs || test.polarity || test.insulationResistance || test.insulationLiveEarth
+  const hasCompletedTests = formData.scheduleOfTests?.some(
+    (test: any) => test.zs || test.polarity || test.insulationResistance || test.insulationLiveEarth
   );
   if (hasCompletedTests) completedSections.add(2);
   if (formData.inspectorName && formData.inspectorSignature) completedSections.add(3);
@@ -252,10 +252,16 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   );
 };
 
-const EICRForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
+const EICRForm = ({
+  onBack,
+  initialReportId,
+}: {
+  onBack: () => void;
+  initialReportId?: string | null;
+}) => {
   return (
     <EICRFormProvider initialReportId={initialReportId}>
-      <Suspense fallback={<div className="flex items-center justify-center p-8">Loading...</div>}>
+      <Suspense fallback={<SectionSkeleton />}>
         <EICRFormInner onBack={onBack} />
       </Suspense>
     </EICRFormProvider>
