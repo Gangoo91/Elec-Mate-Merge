@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { Qualification, QualificationCategory, UserQualificationSelection, QualificationCompliance } from '@/types/qualification';
+import {
+  Qualification,
+  QualificationCategory,
+  UserQualificationSelection,
+  QualificationCompliance,
+} from '@/types/qualification';
 
 export const useQualifications = () => {
   const [qualifications, setQualifications] = useState<Qualification[]>([]);
@@ -12,15 +17,30 @@ export const useQualifications = () => {
 
   const loadQualifications = async () => {
     try {
+      // Get the set of requirement codes that have actual curriculum data
+      const { data: reqCodes, error: reqError } = await supabase
+        .from('qualification_requirements')
+        .select('qualification_code');
+
+      if (reqError) throw reqError;
+
+      const codesWithData = new Set(
+        (reqCodes || []).map((r: { qualification_code: string }) => r.qualification_code)
+      );
+
+      // Only show qualifications whose code directly matches a requirement code
+      // (i.e. the canonical courses, not the many qualifications that map to them)
       const { data, error } = await supabase
         .from('qualifications')
         .select('*')
         .eq('requires_portfolio', true)
-        .order('awarding_body', { ascending: true })
-        .order('level', { ascending: true });
+        .order('level', { ascending: true })
+        .order('awarding_body', { ascending: true });
 
       if (error) throw error;
-      setQualifications(data || []);
+
+      const filtered = (data || []).filter((q: Qualification) => codesWithData.has(q.code));
+      setQualifications(filtered);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load qualifications');
     }
@@ -42,15 +62,19 @@ export const useQualifications = () => {
 
   const loadUserSelection = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
         .from('user_qualification_selections')
-        .select(`
+        .select(
+          `
           *,
           qualification:qualifications(*)
-        `)
+        `
+        )
         .eq('user_id', user.id)
         .eq('is_active', true)
         .single();
@@ -84,15 +108,19 @@ export const useQualifications = () => {
 
   const loadCompliance = async (qualificationId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
         .from('qualification_compliance')
-        .select(`
+        .select(
+          `
           *,
           category:qualification_categories(*)
-        `)
+        `
+        )
         .eq('user_id', user.id)
         .eq('qualification_id', qualificationId);
 
@@ -105,7 +133,9 @@ export const useQualifications = () => {
 
   const selectQualification = async (qualificationId: string, targetDate?: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Deactivate previous selections
@@ -121,12 +151,14 @@ export const useQualifications = () => {
           user_id: user.id,
           qualification_id: qualificationId,
           target_completion_date: targetDate,
-          is_active: true
+          is_active: true,
         })
-        .select(`
+        .select(
+          `
           *,
           qualification:qualifications(*)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
@@ -134,7 +166,7 @@ export const useQualifications = () => {
 
       // Initialize compliance tracking
       await initializeCompliance(qualificationId);
-      
+
       await loadQualificationCategories(qualificationId);
       await loadCompliance(qualificationId);
 
@@ -147,7 +179,9 @@ export const useQualifications = () => {
 
   const initializeCompliance = async (qualificationId: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       // Get categories for this qualification
@@ -159,18 +193,16 @@ export const useQualifications = () => {
       if (categoriesError) throw categoriesError;
 
       // Create compliance records for each category
-      const complianceRecords = categories.map(category => ({
+      const complianceRecords = categories.map((category) => ({
         user_id: user.id,
         qualification_id: qualificationId,
         category_id: category.id,
         required_entries: category.required_entries,
         completed_entries: 0,
-        compliance_percentage: 0
+        compliance_percentage: 0,
       }));
 
-      const { error } = await supabase
-        .from('qualification_compliance')
-        .insert(complianceRecords);
+      const { error } = await supabase.from('qualification_compliance').insert(complianceRecords);
 
       if (error) throw error;
     } catch (err) {
@@ -180,10 +212,12 @@ export const useQualifications = () => {
 
   const updateCompliance = async (categoryId: string, completedEntries: number) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
-      const complianceRecord = compliance.find(c => c.category_id === categoryId);
+      const complianceRecord = compliance.find((c) => c.category_id === categoryId);
       if (!complianceRecord) return;
 
       const percentage = Math.round((completedEntries / complianceRecord.required_entries) * 100);
@@ -193,7 +227,7 @@ export const useQualifications = () => {
         .update({
           completed_entries: completedEntries,
           compliance_percentage: percentage,
-          last_updated: new Date().toISOString()
+          last_updated: new Date().toISOString(),
         })
         .eq('id', complianceRecord.id);
 
@@ -210,7 +244,9 @@ export const useQualifications = () => {
 
   const clearQualificationSelection = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       // Deactivate all current selections
@@ -240,7 +276,7 @@ export const useQualifications = () => {
       await Promise.all([
         loadQualifications(),
         loadAllQualificationCategories(),
-        loadUserSelection()
+        loadUserSelection(),
       ]);
       setLoading(false);
     };
@@ -248,16 +284,19 @@ export const useQualifications = () => {
     loadData();
   }, []);
 
-  const awardingBodies = qualifications.reduce((acc, qual) => {
-    if (!acc[qual.awarding_body]) {
-      acc[qual.awarding_body] = [];
-    }
-    acc[qual.awarding_body].push(qual);
-    return acc;
-  }, {} as Record<string, Qualification[]>);
+  const awardingBodies = qualifications.reduce(
+    (acc, qual) => {
+      if (!acc[qual.awarding_body]) {
+        acc[qual.awarding_body] = [];
+      }
+      acc[qual.awarding_body].push(qual);
+      return acc;
+    },
+    {} as Record<string, Qualification[]>
+  );
 
   // Sort qualifications within each awarding body by level (Level 2 before Level 3)
-  Object.keys(awardingBodies).forEach(awardingBody => {
+  Object.keys(awardingBodies).forEach((awardingBody) => {
     awardingBodies[awardingBody].sort((a, b) => {
       const levelA = parseInt(a.level);
       const levelB = parseInt(b.level);
@@ -276,6 +315,6 @@ export const useQualifications = () => {
     selectQualification,
     clearQualificationSelection,
     updateCompliance,
-    refreshData: loadUserSelection
+    refreshData: loadUserSelection,
   };
 };

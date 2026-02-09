@@ -1,12 +1,9 @@
 /**
  * UnifiedDashboard
  *
- * Home tab content - unified dashboard showing:
- * - Course selection (if not selected) OR Course requirements (if selected)
- * - Portfolio progress
- * - OJT hours (weekly + yearly)
- * - Action required items
- * - Recent activity
+ * Home tab — smart course-focused dashboard.
+ * Shows greeting, course overview, unit progress with LOs/ACs,
+ * quick actions, and recent activity.
  */
 
 import { useState } from 'react';
@@ -14,18 +11,20 @@ import {
   Clock,
   Briefcase,
   Target,
-  AlertCircle,
+  AlertTriangle,
   ChevronRight,
+  ChevronDown,
   FileCheck,
-  MessageSquare,
   Timer,
   Plus,
   GraduationCap,
-  Pencil,
+  BookOpen,
+  Layers,
+  FileText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -34,8 +33,9 @@ import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
-import { CourseRequirementsPanel } from './CourseRequirementsPanel';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
 
 interface UnifiedDashboardProps {
@@ -45,18 +45,22 @@ interface UnifiedDashboardProps {
 
 export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProps) {
   const { user, profile } = useAuth();
-  const { entries: portfolioEntries, isLoading: portfolioLoading } = usePortfolioData();
-  const { actionRequiredCount, unreadCount } = usePortfolioComments();
-  const { entries: timeEntries, totalTime, isLoading: timeLoading } = useTimeEntries();
+  const { entries: portfolioEntries } = usePortfolioData();
+  const { actionRequiredCount } = usePortfolioComments();
+  const { entries: timeEntries, totalTime } = useTimeEntries();
   const { otjGoal } = useComplianceTracking();
-  const { userSelection, isLoading: qualLoading } = useQualifications();
+  const { userSelection, loading: qualLoading } = useQualifications();
+  const { requirementCode } = useStudentQualification();
+  const { tree, isLoading: acLoading } = useQualificationACs(requirementCode);
 
   const [showCourseSelector, setShowCourseSelector] = useState(false);
+  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
 
-  // Calculate stats
+  // Stats
   const portfolioTotal = portfolioEntries?.length || 0;
-  const portfolioCompleted = portfolioEntries?.filter(e => e.status === 'completed' || e.status === 'reviewed').length || 0;
-  const portfolioPercent = portfolioTotal > 0 ? Math.round((portfolioCompleted / portfolioTotal) * 100) : 0;
+  const portfolioCompleted =
+    portfolioEntries?.filter((e) => e.status === 'completed' || e.status === 'reviewed').length ||
+    0;
 
   const yearlyHours = Math.round(totalTime.hours + totalTime.minutes / 60);
   const yearlyTarget = otjGoal?.target_hours || 400;
@@ -66,7 +70,6 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const weeklyTarget = 7.5;
   const weeklyPercent = Math.round((weeklyHours / weeklyTarget) * 100);
 
-  // Get greeting
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good morning';
@@ -77,98 +80,75 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
   const firstName = fullName.split(' ')[0];
 
-  // No course selected - show course selector
+  const toggleUnit = (unitCode: string) => {
+    const next = new Set(expandedUnits);
+    if (next.has(unitCode)) {
+      next.delete(unitCode);
+    } else {
+      next.add(unitCode);
+    }
+    setExpandedUnits(next);
+  };
+
+  // No course selected
   if (!userSelection && !qualLoading) {
     return (
-      <div className="px-4 py-6 space-y-6 lg:px-6">
-        {/* Welcome Header */}
-        <div className="space-y-0.5">
-          <p className="text-xs text-muted-foreground font-medium tracking-wide">
-            {getGreeting()}
-          </p>
-          <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
-            {firstName}
+      <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
+        <div>
+          <h2 className="text-xl font-bold text-white">
+            {getGreeting()}, {firstName}
           </h2>
-          <p className="text-sm text-muted-foreground pt-1">
-            Select your qualification to get started
-          </p>
+          <p className="text-sm text-white/70 mt-1">Select your qualification to get started</p>
         </div>
-
-        {/* Course Selection - Full Width */}
         <QualificationSelector />
       </div>
     );
   }
 
   return (
-    <div className="px-4 py-6 space-y-6 lg:px-6">
-      {/* Welcome Header with Course Badge */}
-      <div className="space-y-1">
-        <p className="text-xs text-muted-foreground font-medium tracking-wide">
-          {getGreeting()}
-        </p>
-        <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
-          {firstName}
+    <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
+      {/* Greeting + Course header */}
+      <div>
+        <h2 className="text-xl font-bold text-white">
+          {getGreeting()}, {firstName}
         </h2>
         {userSelection && (
           <button
             onClick={() => setShowCourseSelector(true)}
-            className="flex items-center gap-2 h-11 text-sm text-muted-foreground hover:text-foreground transition-colors group touch-manipulation mt-1"
+            className="flex items-center gap-2 mt-2 touch-manipulation active:opacity-70"
           >
-            <GraduationCap className="h-4 w-4" />
-            <span>{userSelection.qualification?.title}</span>
-            <Pencil className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+            <GraduationCap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+            <span className="text-sm text-white/80 truncate max-w-[240px]">
+              {userSelection.qualification?.title}
+            </span>
+            <span className="text-xs text-elec-yellow font-semibold whitespace-nowrap">Change</span>
           </button>
         )}
       </div>
 
-      {/* Progress Cards */}
-      <div className="grid grid-cols-2 gap-3 lg:gap-4">
-        {/* Portfolio Progress */}
-        <ProgressCard
-          title="Portfolio"
-          value={portfolioPercent}
-          subtitle={`${portfolioCompleted}/${portfolioTotal} items`}
-          icon={Briefcase}
-          color="yellow"
-          onClick={() => onNavigate('work')}
-        />
-
-        {/* Weekly Hours */}
-        <ProgressCard
-          title="This Week"
-          value={weeklyPercent}
-          subtitle={`${weeklyHours.toFixed(1)}/${weeklyTarget}h`}
-          icon={Clock}
-          color={weeklyPercent >= 100 ? 'green' : weeklyPercent >= 75 ? 'yellow' : 'red'}
-          onClick={() => onNavigate('hours')}
-        />
-
-        {/* Yearly Hours */}
-        <ProgressCard
-          title="This Year"
-          value={yearlyPercent}
-          subtitle={`${yearlyHours}/${yearlyTarget}h`}
-          icon={Target}
-          color="blue"
-          onClick={() => onNavigate('hours')}
-        />
-
-        {/* Actions Required */}
-        <ActionCard
-          title="Actions"
-          count={actionRequiredCount}
-          subtitle="Need attention"
-          icon={AlertCircle}
-          onClick={() => onNavigate('me')}
-        />
-      </div>
+      {/* No-data guard */}
+      {userSelection && !acLoading && tree.totalACs === 0 && (
+        <div className="flex items-start gap-3 p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
+          <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-medium text-white">
+              No curriculum data for this course yet.
+            </p>
+            <button
+              onClick={() => setShowCourseSelector(true)}
+              className="text-sm text-orange-300 font-semibold mt-1.5 touch-manipulation"
+            >
+              Switch to a supported course
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={onCapture}
-          className="h-14 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
+          className="h-14 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Evidence
@@ -176,51 +156,196 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         <Button
           variant="outline"
           onClick={() => onNavigate('hours')}
-          className="h-14 rounded-2xl font-semibold text-base touch-manipulation active:scale-[0.97] transition-transform border-white/20 bg-white/5"
+          className="h-14 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
         >
           <Timer className="h-5 w-5 mr-2" />
           Log Time
         </Button>
       </div>
 
-      {/* Course Requirements Panel */}
-      <CourseRequirementsPanel onChangeCourse={() => setShowCourseSelector(true)} />
+      {/* Progress Overview — stats row */}
+      <div className="grid grid-cols-3 gap-3">
+        <button
+          onClick={() => onNavigate('work')}
+          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
+        >
+          <Briefcase className="h-5 w-5 text-elec-yellow mb-2" />
+          <p className="text-lg font-bold text-white">
+            {portfolioCompleted}/{portfolioTotal}
+          </p>
+          <p className="text-xs text-white/60">Portfolio</p>
+        </button>
+        <button
+          onClick={() => onNavigate('hours')}
+          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
+        >
+          <Clock
+            className={cn(
+              'h-5 w-5 mb-2',
+              weeklyPercent >= 100 ? 'text-green-400' : 'text-blue-400'
+            )}
+          />
+          <p className="text-lg font-bold text-white">{weeklyHours.toFixed(1)}h</p>
+          <p className="text-xs text-white/60">This Week</p>
+        </button>
+        <button
+          onClick={() => onNavigate('hours')}
+          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
+        >
+          <Target className="h-5 w-5 text-blue-400 mb-2" />
+          <p className="text-lg font-bold text-white">{yearlyHours}h</p>
+          <p className="text-xs text-white/60">Yearly OJT</p>
+        </button>
+      </div>
+
+      {/* Course Requirements — Units with LOs & ACs */}
+      {tree.totalACs > 0 && (
+        <div className="space-y-4">
+          {/* Section header with stats */}
+          <div>
+            <h3 className="text-base font-bold text-white">Course Requirements</h3>
+            <div className="flex items-center gap-3 text-xs text-white/60 mt-1">
+              <span className="flex items-center gap-1">
+                <Layers className="h-3.5 w-3.5 text-elec-yellow" />
+                {tree.units.length} units
+              </span>
+              <span className="flex items-center gap-1">
+                <FileText className="h-3.5 w-3.5 text-green-400" />
+                {tree.totalACs} ACs
+              </span>
+            </div>
+          </div>
+
+          {/* Units accordion */}
+          <div className="space-y-2">
+            {tree.units.map((unit) => {
+              const totalUnitACs = unit.learningOutcomes.reduce(
+                (sum, lo) => sum + lo.assessmentCriteria.length,
+                0
+              );
+
+              return (
+                <Collapsible
+                  key={unit.unitCode}
+                  open={expandedUnits.has(unit.unitCode)}
+                  onOpenChange={() => toggleUnit(unit.unitCode)}
+                >
+                  <CollapsibleTrigger asChild>
+                    <button
+                      className={cn(
+                        'w-full text-left p-4 rounded-2xl transition-all',
+                        'bg-white/[0.03] border border-white/[0.08]',
+                        'hover:border-white/[0.15] active:scale-[0.99] touch-manipulation',
+                        expandedUnits.has(unit.unitCode) && 'border-elec-yellow/30 bg-white/[0.05]'
+                      )}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={cn(
+                            'p-1.5 rounded-lg mt-0.5 flex-shrink-0',
+                            expandedUnits.has(unit.unitCode)
+                              ? 'bg-elec-yellow/20'
+                              : 'bg-white/[0.06]'
+                          )}
+                        >
+                          {expandedUnits.has(unit.unitCode) ? (
+                            <ChevronDown className="h-4 w-4 text-elec-yellow" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 text-white/50" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-white leading-tight">
+                            {unit.unitTitle}
+                          </p>
+                          <p className="text-xs text-white/50 mt-1">
+                            {unit.unitCode} · {unit.learningOutcomes.length} outcomes ·{' '}
+                            {totalUnitACs} ACs
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="ml-4 mr-1 mt-2 mb-1 space-y-4">
+                      {unit.learningOutcomes.map((lo) => (
+                        <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-2">
+                          <div className="flex items-start gap-2">
+                            <BookOpen className="h-3.5 w-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
+                            <p className="text-xs font-medium text-blue-400 leading-snug">
+                              LO{lo.loNumber}: {lo.loText}
+                            </p>
+                          </div>
+                          <div className="space-y-1.5 ml-5">
+                            {lo.assessmentCriteria.map((ac) => (
+                              <div
+                                key={ac.acFullRef}
+                                className="flex items-start gap-2 text-xs text-white/70"
+                              >
+                                <span className="text-elec-yellow/60 flex-shrink-0 mt-px">•</span>
+                                <span>
+                                  <span className="font-medium text-white/90">{ac.acRef}</span>{' '}
+                                  {ac.acText.replace(`${ac.acRef} `, '')}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Recent Activity */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
+      {portfolioEntries && portfolioEntries.length > 0 && (
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base font-semibold">Recent Activity</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
+            <h3 className="text-base font-bold text-white">Recent Activity</h3>
+            <button
               onClick={() => onNavigate('work')}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-xs text-elec-yellow font-medium touch-manipulation flex items-center gap-0.5"
             >
-              View All
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
+              View All <ChevronRight className="h-3 w-3" />
+            </button>
           </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-3">
-            {portfolioEntries?.slice(0, 4).map((entry) => (
-              <ActivityItem
+          <div className="space-y-2">
+            {portfolioEntries.slice(0, 3).map((entry) => (
+              <div
                 key={entry.id}
-                title={entry.title}
-                type="evidence"
-                date={new Date(entry.dateCreated)}
-                status={entry.status}
-              />
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
+              >
+                <div className="p-2 rounded-xl bg-white/[0.06]">
+                  <FileCheck className="h-4 w-4 text-white/70" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-white truncate">{entry.title}</p>
+                  <p className="text-xs text-white/50 mt-0.5">
+                    {formatRelativeDate(new Date(entry.dateCreated))}
+                  </p>
+                </div>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    'text-[10px] px-2 py-0.5',
+                    entry.status === 'completed' || entry.status === 'reviewed'
+                      ? 'border-green-500/30 text-green-400'
+                      : entry.status === 'in-progress'
+                        ? 'border-blue-500/30 text-blue-400'
+                        : 'border-white/20 text-white/60'
+                  )}
+                >
+                  {entry.status || 'draft'}
+                </Badge>
+              </div>
             ))}
-            {(!portfolioEntries || portfolioEntries.length === 0) && (
-              <p className="text-sm text-muted-foreground py-4 text-center">
-                No activity yet. Add your first evidence!
-              </p>
-            )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      )}
 
       {/* Course Selector Sheet */}
       <Sheet open={showCourseSelector} onOpenChange={setShowCourseSelector}>
@@ -238,168 +363,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   );
 }
 
-// Progress card component
-function ProgressCard({
-  title,
-  value,
-  subtitle,
-  icon: Icon,
-  color,
-  onClick,
-}: {
-  title: string;
-  value: number;
-  subtitle: string;
-  icon: typeof Clock;
-  color: 'yellow' | 'green' | 'blue' | 'red';
-  onClick: () => void;
-}) {
-  const colorClasses = {
-    yellow: 'text-elec-yellow bg-elec-yellow/15',
-    green: 'text-green-400 bg-green-500/15',
-    blue: 'text-blue-400 bg-blue-500/15',
-    red: 'text-red-400 bg-red-500/15',
-  };
-
-  const progressColors = {
-    yellow: 'bg-elec-yellow',
-    green: 'bg-green-500',
-    blue: 'bg-blue-500',
-    red: 'bg-red-500',
-  };
-
-  const textColors = {
-    yellow: 'text-elec-yellow',
-    green: 'text-green-400',
-    blue: 'text-blue-400',
-    red: 'text-red-400',
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left active:scale-[0.97] transition-all touch-manipulation hover:bg-white/[0.05]"
-    >
-      <div className="flex items-center gap-3 mb-3">
-        <div className={cn('p-2.5 rounded-xl', colorClasses[color])}>
-          <Icon className="h-4 w-4" />
-        </div>
-        <div className="flex-1">
-          <span className="text-sm font-semibold text-foreground block">{title}</span>
-          <span className="text-xs text-muted-foreground">{subtitle}</span>
-        </div>
-      </div>
-      <div className="space-y-2">
-        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className={cn('h-full rounded-full transition-all duration-500', progressColors[color])}
-            style={{ width: `${Math.min(value, 100)}%` }}
-          />
-        </div>
-        <div className="flex items-center justify-end">
-          <span className={cn('text-xl font-bold', textColors[color])}>{Math.min(value, 100)}%</span>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-// Action card component
-function ActionCard({
-  title,
-  count,
-  subtitle,
-  icon: Icon,
-  onClick,
-}: {
-  title: string;
-  count: number;
-  subtitle: string;
-  icon: typeof AlertCircle;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left active:scale-[0.97] transition-all touch-manipulation hover:bg-white/[0.05]"
-    >
-      <div className="flex items-center gap-3 mb-3">
-        <div className={cn(
-          'p-2.5 rounded-xl',
-          count > 0 ? 'text-orange-400 bg-orange-500/15' : 'text-green-400 bg-green-500/15'
-        )}>
-          <Icon className="h-4 w-4" />
-        </div>
-        <div className="flex-1">
-          <span className="text-sm font-semibold text-foreground block">{title}</span>
-          <span className="text-xs text-muted-foreground">{subtitle}</span>
-        </div>
-      </div>
-      <div className="flex items-center justify-end">
-        {count > 0 ? (
-          <span className="text-xl font-bold text-orange-400">{count}</span>
-        ) : (
-          <span className="text-xl font-bold text-green-400">✓</span>
-        )}
-      </div>
-    </button>
-  );
-}
-
-// Activity item component
-function ActivityItem({
-  title,
-  type,
-  date,
-  status,
-}: {
-  title: string;
-  type: 'evidence' | 'time' | 'comment';
-  date: Date;
-  status?: string;
-}) {
-  const icons = {
-    evidence: FileCheck,
-    time: Clock,
-    comment: MessageSquare,
-  };
-  const Icon = icons[type];
-
-  return (
-    <div className="flex items-center gap-3 py-2">
-      <div className="p-2 rounded-lg bg-muted">
-        <Icon className="h-4 w-4 text-muted-foreground" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-foreground truncate">{title}</p>
-        <p className="text-xs text-muted-foreground">
-          {formatRelativeDate(date)}
-        </p>
-      </div>
-      {status && (
-        <Badge
-          variant="outline"
-          className={cn(
-            'text-[10px]',
-            status === 'completed' || status === 'reviewed'
-              ? 'border-green-500/30 text-green-500'
-              : status === 'in-progress'
-              ? 'border-blue-500/30 text-blue-500'
-              : 'border-muted-foreground/30 text-muted-foreground'
-          )}
-        >
-          {status}
-        </Badge>
-      )}
-    </div>
-  );
-}
-
-// Helper: Get hours logged this week
 function getWeeklyHours(entries: any[]): number {
   const now = new Date();
   const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay() + 1); // Monday
+  startOfWeek.setDate(now.getDate() - now.getDay() + 1);
   startOfWeek.setHours(0, 0, 0, 0);
 
   return entries
@@ -407,7 +374,6 @@ function getWeeklyHours(entries: any[]): number {
     .reduce((sum, e) => sum + (e.duration || 0) / 60, 0);
 }
 
-// Helper: Format relative date
 function formatRelativeDate(date: Date): string {
   const now = new Date();
   const diff = now.getTime() - date.getTime();

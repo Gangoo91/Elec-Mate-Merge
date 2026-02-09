@@ -25,18 +25,10 @@ export function ApprenticeHubShell({
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation - Sticky */}
-      <ApprenticeHubNav
-        activeTab={activeTab}
-        onTabChange={onTabChange}
-        onCapture={onCapture}
-      />
+      <ApprenticeHubNav activeTab={activeTab} onTabChange={onTabChange} onCapture={onCapture} />
 
       {/* Main Content Area - Full screen below nav */}
-      <main className="flex-1">
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
-      </main>
+      <main className="flex-1">{children}</main>
     </div>
   );
 }

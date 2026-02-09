@@ -1,38 +1,55 @@
-import { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+/**
+ * QualificationConfirmationDialog
+ *
+ * Bottom sheet showing the real course requirements (units, LOs, ACs)
+ * from qualification_requirements. Lets the user review what's needed
+ * before confirming their portfolio setup.
+ */
+
+import { useState, useEffect, useMemo } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   CalendarDays,
-  Award,
   GraduationCap,
-  FolderOpen,
-  FileText,
   Clock,
   ChevronDown,
   ChevronRight,
   BookOpen,
-  CheckCircle2,
-  Target,
+  Layers,
+  FileText,
   Loader2,
 } from 'lucide-react';
 import { Qualification, QualificationCategory } from '@/types/qualification';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+
+interface RawRequirement {
+  unit_code: string;
+  unit_title: string;
+  lo_number: number | null;
+  lo_text: string;
+  ac_code: string;
+  ac_text: string;
+}
+
+interface UnitSummary {
+  unitCode: string;
+  unitTitle: string;
+  loCount: number;
+  acCount: number;
+  learningOutcomes: {
+    loNumber: string;
+    loText: string;
+    acCount: number;
+    acs: { code: string; text: string }[];
+  }[];
+}
 
 interface QualificationConfirmationDialogProps {
   open: boolean;
@@ -51,7 +68,105 @@ const QualificationConfirmationDialog = ({
 }: QualificationConfirmationDialogProps) => {
   const [targetDate, setTargetDate] = useState('');
   const [isConfirming, setIsConfirming] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
+  const [rawData, setRawData] = useState<RawRequirement[]>([]);
+  const [loadingReqs, setLoadingReqs] = useState(false);
+
+  // Load actual requirements when qualification changes
+  useEffect(() => {
+    if (!qualification?.code || !open) {
+      setRawData([]);
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadRequirements() {
+      setLoadingReqs(true);
+
+      try {
+        // The qualification code IS the requirement code for our canonical courses
+        // Also check via mappings as a fallback
+        let reqCode = qualification!.code;
+
+        const { data: mapping } = await supabase
+          .from('qualification_requirement_mappings')
+          .select('requirement_code')
+          .eq('qualification_code', qualification!.code)
+          .eq('is_primary', true)
+          .maybeSingle();
+
+        if (mapping?.requirement_code) {
+          reqCode = mapping.requirement_code;
+        }
+
+        const { data, error } = await supabase
+          .from('qualification_requirements')
+          .select('unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
+          .eq('qualification_code', reqCode)
+          .order('unit_code')
+          .order('lo_number')
+          .order('ac_code');
+
+        if (error) throw error;
+        if (!cancelled) {
+          setRawData((data as RawRequirement[]) || []);
+        }
+      } catch {
+        // Non-critical
+      } finally {
+        if (!cancelled) setLoadingReqs(false);
+      }
+    }
+
+    loadRequirements();
+    return () => {
+      cancelled = true;
+    };
+  }, [qualification?.code, open]);
+
+  // Build unit summaries
+  const units = useMemo((): UnitSummary[] => {
+    const unitMap = new Map<string, UnitSummary>();
+    const loMap = new Map<string, UnitSummary['learningOutcomes'][0]>();
+
+    for (const req of rawData) {
+      if (!unitMap.has(req.unit_code)) {
+        unitMap.set(req.unit_code, {
+          unitCode: req.unit_code,
+          unitTitle: req.unit_title,
+          loCount: 0,
+          acCount: 0,
+          learningOutcomes: [],
+        });
+      }
+
+      const unit = unitMap.get(req.unit_code)!;
+      const loKey = `${req.unit_code}-${req.lo_number ?? '0'}`;
+
+      if (!loMap.has(loKey)) {
+        const lo = {
+          loNumber: String(req.lo_number ?? ''),
+          loText: req.lo_text,
+          acCount: 0,
+          acs: [] as { code: string; text: string }[],
+        };
+        loMap.set(loKey, lo);
+        unit.learningOutcomes.push(lo);
+        unit.loCount++;
+      }
+
+      const lo = loMap.get(loKey)!;
+      lo.acs.push({ code: req.ac_code, text: req.ac_text });
+      lo.acCount++;
+      unit.acCount++;
+    }
+
+    return Array.from(unitMap.values());
+  }, [rawData]);
+
+  const totalACs = rawData.length;
+  const totalLOs = units.reduce((sum, u) => sum + u.loCount, 0);
 
   const handleConfirm = async () => {
     if (!qualification) return;
@@ -61,31 +176,24 @@ const QualificationConfirmationDialog = ({
       await onConfirm(targetDate || undefined);
       onOpenChange(false);
       setTargetDate('');
-    } catch (error) {
+      setExpandedUnits(new Set());
+    } catch {
       toast.error('Failed to select qualification');
     } finally {
       setIsConfirming(false);
     }
   };
 
-  const toggleCategory = (categoryId: string) => {
-    const newExpanded = new Set(expandedCategories);
-    if (newExpanded.has(categoryId)) {
-      newExpanded.delete(categoryId);
+  const toggleUnit = (unitCode: string) => {
+    const next = new Set(expandedUnits);
+    if (next.has(unitCode)) {
+      next.delete(unitCode);
     } else {
-      newExpanded.add(categoryId);
+      next.add(unitCode);
     }
-    setExpandedCategories(newExpanded);
+    setExpandedUnits(next);
   };
 
-  // Calculate stats
-  const totalRequiredEntries = categories.reduce((sum, cat) => sum + cat.required_entries, 0);
-  const totalLearningOutcomes = categories.reduce(
-    (sum, cat) => sum + (cat.learning_outcomes?.length || 0),
-    0
-  );
-
-  // Quick date presets
   const setQuickDate = (months: number) => {
     const date = new Date();
     date.setMonth(date.getMonth() + months);
@@ -95,302 +203,215 @@ const QualificationConfirmationDialog = ({
   if (!qualification) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[95vh] overflow-hidden bg-card border-border mx-2 w-[calc(100vw-1rem)] sm:w-full sm:mx-4">
-        <div className="overflow-y-auto max-h-[calc(95vh-8rem)] pr-2 -mr-2">
-          <DialogHeader className="pb-4">
-            {/* Qualification Header */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Award className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Badge className="bg-elec-yellow text-black font-semibold text-xs">
-                      {qualification.level}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {qualification.awarding_body}
-                    </span>
-                  </div>
-                  <DialogTitle className="text-lg mt-1 line-clamp-2">
-                    {qualification.title}
-                  </DialogTitle>
-                </div>
-              </div>
-              <DialogDescription className="text-sm">
-                Code: {qualification.code}
-                {qualification.description && (
-                  <span className="block mt-1 text-muted-foreground">
-                    {qualification.description}
-                  </span>
-                )}
-              </DialogDescription>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl p-0 overflow-hidden">
+        <div className="flex flex-col h-full">
+          {/* Drag handle */}
+          <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 flex-shrink-0" />
+
+          {/* Header */}
+          <SheetHeader className="px-5 pb-4 flex-shrink-0">
+            <div className="flex items-center gap-2 mb-1">
+              <Badge className="bg-elec-yellow text-black font-semibold text-xs">
+                {qualification.level}
+              </Badge>
+              <span className="text-xs text-white/70">{qualification.awarding_body}</span>
             </div>
-          </DialogHeader>
+            <SheetTitle className="text-left text-lg leading-tight">
+              {qualification.title}
+            </SheetTitle>
+          </SheetHeader>
 
-          <div className="space-y-5">
-            {/* Stats Summary Cards */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 rounded-xl bg-muted/50 border border-border text-center">
-                <div className="p-2 rounded-lg bg-elec-yellow/10 w-fit mx-auto mb-2">
-                  <FolderOpen className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <p className="text-2xl font-bold text-foreground">{categories.length}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
-                  Categories
-                </p>
-              </div>
-              <div className="p-3 rounded-xl bg-muted/50 border border-border text-center">
-                <div className="p-2 rounded-lg bg-blue-500/10 w-fit mx-auto mb-2">
-                  <FileText className="h-4 w-4 text-blue-500" />
-                </div>
-                <p className="text-2xl font-bold text-foreground">{totalRequiredEntries}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
-                  Evidence
-                </p>
-              </div>
-              <div className="p-3 rounded-xl bg-muted/50 border border-border text-center">
-                <div className="p-2 rounded-lg bg-green-500/10 w-fit mx-auto mb-2">
-                  <Target className="h-4 w-4 text-green-500" />
-                </div>
-                <p className="text-2xl font-bold text-foreground">{totalLearningOutcomes}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
-                  Outcomes
-                </p>
-              </div>
+          {/* Stats bar */}
+          <div className="flex items-center gap-4 px-5 pb-4 flex-shrink-0">
+            <div className="flex items-center gap-1.5">
+              <Layers className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm font-semibold text-white">{units.length}</span>
+              <span className="text-xs text-white/60">units</span>
             </div>
+            <div className="w-px h-4 bg-white/10" />
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-semibold text-white">{totalLOs}</span>
+              <span className="text-xs text-white/60">outcomes</span>
+            </div>
+            <div className="w-px h-4 bg-white/10" />
+            <div className="flex items-center gap-1.5">
+              <FileText className="h-4 w-4 text-green-400" />
+              <span className="text-sm font-semibold text-white">{totalACs}</span>
+              <span className="text-xs text-white/60">ACs</span>
+            </div>
+          </div>
 
-            {/* Portfolio Requirements Accordion */}
+          {/* Scrollable content */}
+          <div className="flex-1 overflow-y-auto px-5 pb-4 space-y-5">
+            {/* Units accordion */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-elec-yellow" />
-                <h4 className="font-semibold text-sm">Portfolio Requirements</h4>
-              </div>
+              <h4 className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+                Course Units
+              </h4>
 
-              <div className="space-y-2">
-                {categories.map((category) => (
-                  <Collapsible
-                    key={category.id}
-                    open={expandedCategories.has(category.id)}
-                    onOpenChange={() => toggleCategory(category.id)}
-                  >
-                    <CollapsibleTrigger asChild>
-                      <button
-                        className={cn(
-                          'w-full p-3 rounded-xl text-left transition-all',
-                          'bg-muted/50 border border-border',
-                          'hover:bg-muted/80 hover:border-elec-yellow/30',
-                          'active:scale-[0.99] touch-manipulation',
-                          expandedCategories.has(category.id) && 'border-elec-yellow/50'
-                        )}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={cn(
-                              'p-1.5 rounded-lg transition-colors',
-                              expandedCategories.has(category.id)
-                                ? 'bg-elec-yellow/20'
-                                : 'bg-muted'
-                            )}
-                          >
-                            {expandedCategories.has(category.id) ? (
-                              <ChevronDown className="h-4 w-4 text-elec-yellow" />
-                            ) : (
-                              <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                            )}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-foreground truncate">
-                              {category.name}
-                            </p>
-                            {category.description && (
-                              <p className="text-xs text-muted-foreground truncate">
-                                {category.description}
+              {loadingReqs ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+                  <span className="ml-2 text-sm text-white/60">Loading requirements...</span>
+                </div>
+              ) : units.length === 0 ? (
+                <p className="text-sm text-white/60 text-center py-6">
+                  No curriculum data available for this course yet.
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {units.map((unit) => (
+                    <Collapsible
+                      key={unit.unitCode}
+                      open={expandedUnits.has(unit.unitCode)}
+                      onOpenChange={() => toggleUnit(unit.unitCode)}
+                    >
+                      <CollapsibleTrigger asChild>
+                        <button
+                          className={cn(
+                            'w-full text-left p-3.5 rounded-xl transition-all',
+                            'bg-white/[0.03] border border-white/[0.08]',
+                            'hover:border-white/[0.15] active:scale-[0.99] touch-manipulation',
+                            expandedUnits.has(unit.unitCode) &&
+                              'border-elec-yellow/30 bg-white/[0.05]'
+                          )}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div
+                              className={cn(
+                                'p-1.5 rounded-lg mt-0.5 flex-shrink-0',
+                                expandedUnits.has(unit.unitCode)
+                                  ? 'bg-elec-yellow/20'
+                                  : 'bg-white/[0.06]'
+                              )}
+                            >
+                              {expandedUnits.has(unit.unitCode) ? (
+                                <ChevronDown className="h-4 w-4 text-elec-yellow" />
+                              ) : (
+                                <ChevronRight className="h-4 w-4 text-white/50" />
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-white leading-tight">
+                                {unit.unitTitle}
                               </p>
-                            )}
-                          </div>
-                          <Badge
-                            variant="outline"
-                            className="text-xs border-elec-yellow/30 text-elec-yellow shrink-0"
-                          >
-                            {category.required_entries} required
-                          </Badge>
-                        </div>
-                      </button>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="ml-10 mr-3 mt-2 space-y-3 pb-2">
-                        {/* Learning Outcomes */}
-                        {category.learning_outcomes && category.learning_outcomes.length > 0 && (
-                          <div className="space-y-2">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                              Learning Outcomes
-                            </p>
-                            <div className="space-y-1.5">
-                              {category.learning_outcomes.map((outcome, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-start gap-2 text-xs text-foreground"
-                                >
-                                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 shrink-0" />
-                                  <span>{outcome}</span>
-                                </div>
-                              ))}
+                              <p className="text-xs text-white/50 mt-1">
+                                {unit.unitCode} · {unit.loCount} outcomes · {unit.acCount} ACs
+                              </p>
                             </div>
                           </div>
-                        )}
-
-                        {/* Assessment Criteria */}
-                        {category.assessment_criteria &&
-                          category.assessment_criteria.length > 0 && (
-                            <div className="space-y-2">
-                              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                                Assessment Criteria
+                        </button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="ml-4 mr-1 mt-2 mb-1 space-y-3">
+                          {unit.learningOutcomes.map((lo) => (
+                            <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-1.5">
+                              <p className="text-xs font-medium text-blue-400">
+                                LO{lo.loNumber}: {lo.loText}
                               </p>
-                              <div className="space-y-1.5">
-                                {category.assessment_criteria.map((criteria, idx) => (
+                              <div className="space-y-1 ml-3">
+                                {lo.acs.map((ac) => (
                                   <div
-                                    key={idx}
-                                    className="flex items-start gap-2 text-xs text-muted-foreground"
+                                    key={`${unit.unitCode}-${ac.code}`}
+                                    className="flex items-start gap-2 text-xs text-white/70"
                                   >
-                                    <span className="text-elec-yellow shrink-0">•</span>
-                                    <span>{criteria}</span>
+                                    <span className="text-elec-yellow/70 flex-shrink-0 mt-px">
+                                      •
+                                    </span>
+                                    <span>
+                                      <span className="font-medium text-white/90">{ac.code}</span>{' '}
+                                      {ac.text}
+                                    </span>
                                   </div>
                                 ))}
                               </div>
                             </div>
-                          )}
-
-                        {/* Fallback if no details */}
-                        {(!category.learning_outcomes ||
-                          category.learning_outcomes.length === 0) &&
-                          (!category.assessment_criteria ||
-                            category.assessment_criteria.length === 0) && (
-                            <p className="text-xs text-muted-foreground italic">
-                              No detailed requirements specified for this category.
-                            </p>
-                          )}
-                      </div>
-                    </CollapsibleContent>
-                  </Collapsible>
-                ))}
-
-                {categories.length === 0 && (
-                  <p className="text-sm text-muted-foreground text-center py-4">
-                    No categories defined for this qualification yet.
-                  </p>
-                )}
-              </div>
+                          ))}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Target Date Section */}
-            <div className="space-y-3 p-4 rounded-xl bg-muted/30 border border-border">
-              <Label className="flex items-center gap-2 text-sm font-medium">
+            {/* Target Date */}
+            <div className="space-y-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+              <Label className="flex items-center gap-2 text-sm font-medium text-white">
                 <CalendarDays className="h-4 w-4 text-elec-yellow" />
                 Target Completion Date
-                <span className="text-muted-foreground font-normal">(Optional)</span>
+                <span className="text-white/50 font-normal">(Optional)</span>
               </Label>
 
-              {/* Quick Date Presets */}
               <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuickDate(3)}
-                  className={cn(
-                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
-                    targetDate &&
-                      new Date(targetDate).getMonth() ===
-                        new Date(new Date().setMonth(new Date().getMonth() + 3)).getMonth() &&
-                      'border-elec-yellow bg-elec-yellow/10'
-                  )}
-                >
-                  <Clock className="h-3 w-3 mr-1" />
-                  3 months
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuickDate(6)}
-                  className={cn(
-                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
-                    targetDate &&
-                      new Date(targetDate).getMonth() ===
-                        new Date(new Date().setMonth(new Date().getMonth() + 6)).getMonth() &&
-                      'border-elec-yellow bg-elec-yellow/10'
-                  )}
-                >
-                  <Clock className="h-3 w-3 mr-1" />
-                  6 months
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuickDate(12)}
-                  className={cn(
-                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
-                    targetDate &&
-                      new Date(targetDate).getMonth() ===
-                        new Date(new Date().setMonth(new Date().getMonth() + 12)).getMonth() &&
-                      'border-elec-yellow bg-elec-yellow/10'
-                  )}
-                >
-                  <Clock className="h-3 w-3 mr-1" />
-                  1 year
-                </Button>
+                {[
+                  { label: '3 months', months: 3 },
+                  { label: '6 months', months: 6 },
+                  { label: '1 year', months: 12 },
+                ].map(({ label, months }) => (
+                  <Button
+                    key={months}
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setQuickDate(months)}
+                    className="flex-1 text-xs h-11 touch-manipulation active:scale-95 border-white/15 bg-white/[0.04]"
+                  >
+                    <Clock className="h-3 w-3 mr-1" />
+                    {label}
+                  </Button>
+                ))}
               </div>
 
-              {/* Manual Date Input */}
               <Input
-                id="target-date"
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="bg-background border-border h-11 touch-manipulation"
+                className="bg-background border-white/15 h-11 touch-manipulation"
               />
 
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/50">
                 Set a goal to track your progress. You can change this later.
               </p>
             </div>
           </div>
-        </div>
 
-        <DialogFooter className="flex-col sm:flex-row gap-2 pt-4 border-t border-border">
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={isConfirming}
-            className="w-full sm:w-auto order-2 sm:order-1 h-11 touch-manipulation active:scale-95"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleConfirm}
-            disabled={isConfirming}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full sm:w-auto order-1 sm:order-2 h-11 touch-manipulation active:scale-95"
-          >
-            {isConfirming ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Setting Up...
-              </>
-            ) : (
-              <>
-                <GraduationCap className="h-4 w-4 mr-2" />
-                Confirm & Start Portfolio
-              </>
-            )}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          {/* Sticky footer */}
+          <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06] bg-background/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                disabled={isConfirming}
+                className="flex-1 h-12 rounded-xl touch-manipulation active:scale-[0.97] border-white/15"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirm}
+                disabled={isConfirming}
+                className="flex-[2] h-12 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.97]"
+              >
+                {isConfirming ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Setting Up...
+                  </>
+                ) : (
+                  <>
+                    <GraduationCap className="h-4 w-4 mr-2" />
+                    Confirm & Start Portfolio
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
