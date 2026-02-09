@@ -77,7 +77,6 @@ const courses: Course[] = [
   },
   {
     id: 5,
-    comingSoon: true,
     title: 'Mental Health First Aid',
     description: 'Recognising and supporting mental health issues in the workplace',
     icon: Brain,
@@ -87,7 +86,6 @@ const courses: Course[] = [
   },
   {
     id: 6,
-    comingSoon: true,
     title: 'Asbestos Awareness',
     description: 'Identifying asbestos-containing materials and safe working procedures',
     icon: AlertTriangle,

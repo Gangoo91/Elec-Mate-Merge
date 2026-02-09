@@ -6,6 +6,8 @@ import { ipafRoutes } from '@/routes/study-centre/ipafRoutes';
 import { pasmaRoutes } from '@/routes/study-centre/pasmaRoutes';
 import { mewpRoutes } from '@/routes/study-centre/mewpRoutes';
 import { firstAidRoutes } from '@/routes/study-centre/firstAidRoutes';
+import { mentalHealthRoutes } from '@/routes/study-centre/mentalHealthRoutes';
+import { asbestosRoutes } from '@/routes/study-centre/asbestosRoutes';
 
 const GeneralUpskillingIndex = lazyWithRetry(
   () => import('@/pages/study-centre/general-upskilling/Index')
@@ -22,6 +24,8 @@ export default function GeneralUpskillingRoutes() {
         {pasmaRoutes}
         {mewpRoutes}
         {firstAidRoutes}
+        {mentalHealthRoutes}
+        {asbestosRoutes}
       </Routes>
     </Suspense>
   );
