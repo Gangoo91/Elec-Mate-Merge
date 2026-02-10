@@ -170,12 +170,11 @@ export function BriefingEditor({
     <Button
       type="button"
       variant="ghost"
-      size="sm"
       onClick={onClick}
       title={title}
       disabled={disabled}
       className={cn(
-        "h-9 w-9 p-0 rounded-lg touch-manipulation",
+        "h-11 w-11 p-0 rounded-lg touch-manipulation",
         isActive
           ? "bg-elec-yellow/20 text-elec-yellow"
           : "text-white/60 hover:text-white hover:bg-white/10"
@@ -227,7 +226,7 @@ export function BriefingEditor({
                 variant="ghost"
                 size="icon"
                 onClick={handleClose}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -426,14 +425,14 @@ export function BriefingEditor({
               <Button
                 variant="outline"
                 onClick={handleClose}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleSave}
                 disabled={updateContent.isPending || !hasChanges}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
               >
                 {updateContent.isPending ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

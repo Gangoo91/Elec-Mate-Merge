@@ -225,7 +225,7 @@ export function DigitalSignOff({
                     onOpenChange(false);
                   }
                 }}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -372,7 +372,7 @@ export function DigitalSignOff({
               <div className="p-4 border-t border-border shrink-0">
                 <Button
                   onClick={() => setViewMode("add-guest")}
-                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
                 >
                   <UserPlus className="h-4 w-4 mr-2" />
                   Add Guest / Visitor
@@ -452,7 +452,7 @@ export function DigitalSignOff({
                     placeholder="Enter guest name"
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="h-11"
+                    className="h-11 touch-manipulation"
                     autoFocus
                   />
                 </div>
@@ -463,7 +463,7 @@ export function DigitalSignOff({
                     placeholder="Enter company name"
                     value={guestCompany}
                     onChange={(e) => setGuestCompany(e.target.value)}
-                    className="h-11"
+                    className="h-11 touch-manipulation"
                   />
                 </div>
               </div>

@@ -358,7 +358,7 @@ const InspectionTestingModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              <strong>BS 7671</strong> (Requirements for Electrical Installations - IET Wiring Regulations) is the national standard for electrical installation in the UK. The current edition is the <strong className="text-elec-yellow">18th Edition</strong>, with Amendment 2 published in 2022.
+              <strong>BS 7671</strong> (Requirements for Electrical Installations - IET Wiring Regulations) is the national standard for electrical installation in the UK. The current edition is the <strong className="text-elec-yellow">18th Edition</strong>, with Amendment 3 (A3:2024) being the latest.
             </p>
 
             <div className="my-6">

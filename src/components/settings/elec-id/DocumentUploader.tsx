@@ -558,11 +558,22 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         console.log("[Elec-ID] Background verification complete:", { verifyResult, verifyError });
         if (verifyError) {
           console.error("[Elec-ID] Background verification error:", verifyError);
+          toast({
+            title: "Verification Issue",
+            description: "Automatic verification encountered a problem. Your document has been queued for manual review.",
+            variant: "destructive",
+          });
         }
         // Refresh documents list to show updated status
         fetchDocuments();
       }).catch((err) => {
         console.error("[Elec-ID] Background verification failed:", err);
+        toast({
+          title: "Verification Issue",
+          description: "Automatic verification encountered a problem. Your document has been queued for manual review.",
+          variant: "destructive",
+        });
+        fetchDocuments();
       });
 
       // Show success immediately - verification happens in background

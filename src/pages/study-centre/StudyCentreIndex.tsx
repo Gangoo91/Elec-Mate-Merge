@@ -30,9 +30,9 @@ export default function StudyCentreIndex() {
   });
 
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;
-  const quizResults = quizData?.quizResults || [];
-  const totalQuizzesTaken = quizResults?.length || 0;
-  const averageScore = quizResults?.length > 0
+  const quizResults = quizData?.results || [];
+  const totalQuizzesTaken = quizResults.length;
+  const averageScore = quizResults.length > 0
     ? Math.round(quizResults.reduce((acc: number, r: any) => acc + (r.score || 0), 0) / quizResults.length)
     : 0;
 
@@ -121,7 +121,7 @@ export default function StudyCentreIndex() {
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">{stat.label}</span>
+                  <span className="text-[10px] text-white/70 uppercase tracking-wider font-medium">{stat.label}</span>
                 </div>
               </motion.div>
             ))}

@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSwipeable } from "react-swipeable";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 import { useAdminPrefetch } from "@/hooks/useAdminPrefetch";
+import OfflineBanner from "@/components/admin/OfflineBanner";
 import {
   LayoutDashboard,
   Users,
@@ -94,6 +96,35 @@ export default function AdminPanel() {
     if (isInTools) setShowTools(true);
   }, [location.pathname]);
 
+  // Swipe between primary nav pages
+  const currentPrimaryIndex = useMemo(() => {
+    const idx = primaryNavItems.findIndex(
+      (item) =>
+        location.pathname === item.path ||
+        (item.path !== "/admin" && location.pathname.startsWith(item.path + "/"))
+    );
+    return idx >= 0 ? idx : 0;
+  }, [location.pathname]);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => {
+      const next = currentPrimaryIndex + 1;
+      if (next < primaryNavItems.length) {
+        navigate(primaryNavItems[next].path);
+      }
+    },
+    onSwipedRight: () => {
+      const prev = currentPrimaryIndex - 1;
+      if (prev >= 0) {
+        navigate(primaryNavItems[prev].path);
+      }
+    },
+    delta: 60,
+    trackTouch: true,
+    trackMouse: false,
+    preventScrollOnSwipe: false,
+  });
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -129,7 +160,7 @@ export default function AdminPanel() {
         onMouseEnter={() => onPrefetch(item.path)}
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
-          "shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-10 sm:h-9 px-2.5 sm:px-4 text-xs sm:text-sm",
+          "shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-11 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm",
           isActive
             ? "bg-red-500/20 text-red-400 hover:bg-red-500/30"
             : "text-muted-foreground hover:text-foreground"
@@ -142,9 +173,12 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-background min-h-screen">
+      {/* Offline Banner */}
+      <OfflineBanner />
+
       {/* Back Button */}
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-4 safe-top">
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
@@ -190,7 +224,7 @@ export default function AdminPanel() {
               variant={showMore ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setShowMore(!showMore)}
-              className="shrink-0 gap-1 touch-manipulation h-10 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
             >
               More
               {showMore ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
@@ -201,7 +235,7 @@ export default function AdminPanel() {
               variant={showTools ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setShowTools(!showTools)}
-              className="shrink-0 gap-1 touch-manipulation h-10 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
             >
               Tools
               {showTools ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
@@ -228,8 +262,8 @@ export default function AdminPanel() {
         )}
       </div>
 
-      {/* Admin Content */}
-      <div className="p-4">
+      {/* Admin Content — swipeable between primary pages */}
+      <div className="p-4 pb-20 safe-bottom" {...swipeHandlers}>
         <Outlet />
       </div>
     </div>

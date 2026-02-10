@@ -33,6 +33,8 @@ import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { useDiaryCoach } from '@/hooks/site-diary/useDiaryCoach';
 import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { DiaryFeed } from '@/components/apprentice/site-diary/DiaryFeed';
 import { DiaryCalendarView } from '@/components/apprentice/site-diary/DiaryCalendarView';
 import { DiaryWeeklySummary } from '@/components/apprentice/site-diary/DiaryWeeklySummary';
@@ -78,6 +80,27 @@ export default function SiteDiary() {
     isLoading: coachLoading,
     refresh: refreshCoach,
   } = useDiaryCoach(entries, qualificationCode);
+  // Portfolio data for evidence awareness
+  const { entries: portfolioEntries } = usePortfolioData();
+  const evidencedACSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const pe of portfolioEntries) {
+      for (const ac of pe.assessmentCriteria || []) {
+        // ACs stored as e.g. "301 AC 2.3 Describe the types..." — extract unit+acRef
+        const match = ac.match(/^(\S+)\s+AC\s+(\S+)/);
+        if (match) set.add(`${match[1]}.${match[2]}`);
+      }
+    }
+    return set;
+  }, [portfolioEntries]);
+
+  // Qualification units for course-aware skill prompts
+  const { tree: qualificationTree } = useQualificationACs(qualificationCode);
+  const qualificationUnits = useMemo(
+    () => qualificationTree.units.map((u) => ({ unitCode: u.unitCode, unitTitle: u.unitTitle })),
+    [qualificationTree.units]
+  );
+
   const [coachExpanded, setCoachExpanded] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('feed');
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -132,6 +155,15 @@ export default function SiteDiary() {
     coachInsight?.portfolioNudges?.forEach((n) => map.set(n.entryId, n));
     return map;
   }, [coachInsight?.portfolioNudges]);
+
+  // Portfolio opportunities: un-linked diary entries with portfolio nudges
+  const portfolioOpportunities = useMemo(() => {
+    if (!coachInsight?.portfolioNudges) return [];
+    return coachInsight.portfolioNudges.filter((n) => {
+      const entry = entries.find((e) => e.id === n.entryId);
+      return entry && !entry.linked_portfolio_id;
+    });
+  }, [coachInsight?.portfolioNudges, entries]);
 
   const handleEntryTap = useCallback((entry: SiteDiaryEntry) => {
     setDetailEntry(entry);
@@ -352,6 +384,35 @@ export default function SiteDiary() {
           {/* Weekly Summary (always at top) */}
           <DiaryWeeklySummary entries={entries} aiSummary={coachInsight?.weekSummary} />
 
+          {/* Portfolio Opportunities card */}
+          {portfolioOpportunities.length > 0 && (
+            <button
+              onClick={() => {
+                const nudge = portfolioOpportunities[0];
+                const target = entries.find((e) => e.id === nudge.entryId);
+                if (target) {
+                  setDetailEntry(target);
+                  setDetailOpen(true);
+                }
+              }}
+              className="w-full rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.06] to-yellow-500/[0.04] overflow-hidden text-left touch-manipulation active:bg-amber-500/[0.08] transition-colors"
+            >
+              <div className="h-0.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500" />
+              <div className="px-4 py-3 flex items-center gap-3">
+                <div className="h-9 w-9 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+                  <Briefcase className="h-4 w-4 text-amber-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-semibold text-white">Portfolio Opportunities</h4>
+                  <p className="text-[11px] text-amber-300/80 mt-0.5">
+                    {portfolioOpportunities.length} entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your portfolio
+                  </p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-amber-400/60 flex-shrink-0" />
+              </div>
+            </button>
+          )}
+
           {/* AI Coach card — only when 3+ entries */}
           {entries.length >= 3 && (coachInsight || coachLoading) && (
             <div className="rounded-xl overflow-hidden border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.06] to-blue-500/[0.06]">
@@ -554,6 +615,7 @@ export default function SiteDiary() {
         onSave={handleSave}
         recentSites={recentSites}
         existingEntry={editEntry}
+        qualificationUnits={qualificationUnits}
       />
 
       {/* Entry detail sheet */}
@@ -570,6 +632,7 @@ export default function SiteDiary() {
                 .slice(0, 3)
             : []
         }
+        evidencedACs={evidencedACSet}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Loader2, Calendar, Users, AlertTriangle, Sparkles, FileText } from "lucide-react";
 import { MobileInput } from "@/components/ui/mobile-input";
@@ -143,32 +143,32 @@ ${aiData.content.requiredPPE || ''}
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] bg-card">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            Create Team Briefing
-          </DialogTitle>
-          <DialogDescription>
-            Generate a professional safety briefing from this near miss report
-          </DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onClose}>
+      <SheetContent side="bottom" className="rounded-t-2xl p-0 max-h-[85vh]">
+        <div className="overflow-y-auto p-6 space-y-4">
+          <SheetHeader className="text-left">
+            <SheetTitle className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              Create Team Briefing
+            </SheetTitle>
+            <SheetDescription>
+              Generate a professional safety briefing from this near miss report
+            </SheetDescription>
+          </SheetHeader>
 
-        <div className="space-y-4 pt-4">
           {/* Preview Card */}
           <div className="p-4 rounded-lg border border-border/50 bg-muted/50 space-y-2">
             <div className="flex items-start gap-2">
-              <AlertTriangle className={`h-5 w-5 mt-0.5 ${
+              <AlertTriangle className={`h-5 w-5 mt-0.5 shrink-0 ${
                 nearMissReport.severity === 'Critical' ? 'text-destructive' :
                 nearMissReport.severity === 'High' ? 'text-orange-500' :
                 nearMissReport.severity === 'Medium' ? 'text-yellow-500' :
                 'text-green-500'
               }`} />
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm">{nearMissReport.category}</p>
-                <p className="text-xs text-muted-foreground">{nearMissReport.location}</p>
-                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                <p className="text-xs text-muted-foreground truncate">{nearMissReport.location}</p>
+                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                   {nearMissReport.description}
                 </p>
               </div>
@@ -199,10 +199,10 @@ ${aiData.content.requiredPPE || ''}
           />
 
           <div className="pt-2 space-y-2">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               The briefing will include:
             </p>
-            <ul className="text-xs text-muted-foreground space-y-1 ml-4">
+            <ul className="text-sm text-muted-foreground space-y-1 ml-4">
               <li>• Professional incident summary</li>
               <li>• Key safety discussion points</li>
               <li>• Preventive action items</li>
@@ -211,19 +211,19 @@ ${aiData.content.requiredPPE || ''}
             </ul>
           </div>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-2 pt-2">
             <Button
               variant="outline"
               onClick={onClose}
               disabled={generating}
-              className="flex-1"
+              className="flex-1 h-11 touch-manipulation"
             >
               Cancel
             </Button>
             <Button
               onClick={handleGenerateAndCreate}
               disabled={generating}
-              className="flex-1"
+              className="flex-1 h-11 touch-manipulation"
             >
               {generating ? (
                 <>
@@ -239,7 +239,7 @@ ${aiData.content.requiredPPE || ''}
             </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };

@@ -28,7 +28,7 @@ const RCDTestingGuide = () => {
             <h1 className="text-4xl font-bold text-white">RCD Testing Guide</h1>
             <p className="text-xl text-white">Complete practical procedures for residual current device testing</p>
             <div className="flex justify-center gap-3">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A2</Badge>
+              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A3:2024</Badge>
               <Badge variant="outline" className="border-gray-600 text-white">IET Guidance Note 3</Badge>
             </div>
           </div>

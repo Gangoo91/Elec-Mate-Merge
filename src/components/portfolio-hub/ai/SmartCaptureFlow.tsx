@@ -59,7 +59,7 @@ export function SmartCaptureFlow({
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { analyze, isAnalyzing, result: aiResult } = useAIEvidenceTagger();
-  const { requirementCode } = useStudentQualification();
+  const { qualificationCode } = useStudentQualification();
   const [showACPicker, setShowACPicker] = useState(false);
 
   const [step, setStep] = useState<CaptureStep>('capture');
@@ -477,7 +477,7 @@ export function SmartCaptureFlow({
       )}
 
       {/* Assessment Criteria Picker */}
-      {requirementCode && (
+      {qualificationCode && (
         <div className="space-y-2">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
             Assessment Criteria
@@ -533,7 +533,7 @@ export function SmartCaptureFlow({
       <ACPickerSheet
         open={showACPicker}
         onOpenChange={setShowACPicker}
-        requirementCode={requirementCode}
+        qualificationCode={qualificationCode}
         selectedACs={captureData.selectedKSBs}
         onDone={(acs) =>
           setCaptureData((prev) => ({ ...prev, selectedKSBs: acs }))

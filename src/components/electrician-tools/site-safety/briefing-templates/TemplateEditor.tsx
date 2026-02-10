@@ -141,13 +141,13 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={onClose}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h2 className="text-2xl font-bold text-elec-light">
+            <h2 className="text-lg sm:text-2xl font-bold text-elec-light">
               {templateId ? 'Edit Template' : 'Create Template'}
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -156,11 +156,11 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
           </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setShowPreview(!showPreview)}>
+          <Button variant="outline" onClick={() => setShowPreview(!showPreview)} className="h-11 touch-manipulation">
             <Eye className="mr-2 h-4 w-4" />
             {showPreview ? 'Edit' : 'Preview'}
           </Button>
-          <Button onClick={handleSave} disabled={saving}>
+          <Button onClick={handleSave} disabled={saving} className="h-11 touch-manipulation">
             <Save className="mr-2 h-4 w-4" />
             {saving ? 'Saving...' : 'Save Template'}
           </Button>
@@ -228,9 +228,8 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                   <Button
                     key={type}
                     variant="outline"
-                    size="sm"
                     onClick={() => addField(type as FieldDefinition['type'])}
-                    className="justify-start"
+                    className="justify-start h-11 touch-manipulation"
                   >
                     <Icon className="mr-2 h-4 w-4" />
                     {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -257,7 +256,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                   return (
                     <Card key={field.id} className="border-elec-yellow/20">
                       <CardContent className="p-4 space-y-3">
-                        <div className="flex items-start justify-between">
+                        <div className="flex items-start justify-between flex-wrap">
                           <div className="flex items-center gap-2">
                             <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
                             <Icon className="h-5 w-5 text-elec-yellow" />
@@ -289,6 +288,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                               variant="ghost"
                               size="icon"
                               onClick={() => removeField(field.id)}
+                              className="h-11 w-11 touch-manipulation"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>

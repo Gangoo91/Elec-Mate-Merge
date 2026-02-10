@@ -1,11 +1,12 @@
 /**
  * UnifiedApprenticeHub
  *
- * Main page combining Portfolio and OJT functionality into one unified hub.
+ * Main page combining Portfolio, OJT, and Progress into one unified hub.
  * Routes:
  * - /apprentice/hub (default: home tab)
  * - /apprentice/hub?tab=work
  * - /apprentice/hub?tab=hours
+ * - /apprentice/hub?tab=progress
  * - /apprentice/hub?tab=me
  */
 
@@ -19,6 +20,7 @@ import { PortfolioGrid } from '@/components/apprentice-hub/PortfolioGrid';
 import { OJTProgressSection } from '@/components/apprentice-hub/OJTProgressSection';
 import { ProfileSection } from '@/components/apprentice-hub/ProfileSection';
 import { UnifiedCaptureSheet } from '@/components/apprentice-hub/UnifiedCaptureSheet';
+import { ProgressDashboard } from '@/components/apprentice/progress/ProgressDashboard';
 
 export default function UnifiedApprenticeHub() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,7 +28,7 @@ export default function UnifiedApprenticeHub() {
   // Get tab from URL or default to 'home'
   const tabParam = searchParams.get('tab') as ApprenticeHubTab | null;
   const [activeTab, setActiveTab] = useState<ApprenticeHubTab>(
-    tabParam && ['home', 'work', 'hours', 'me'].includes(tabParam)
+    tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam)
       ? tabParam
       : 'home'
   );
@@ -46,7 +48,7 @@ export default function UnifiedApprenticeHub() {
 
   // Sync active tab with URL on mount
   useEffect(() => {
-    if (tabParam && ['home', 'work', 'hours', 'me'].includes(tabParam)) {
+    if (tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam)) {
       setActiveTab(tabParam);
     }
   }, []);
@@ -90,6 +92,8 @@ export default function UnifiedApprenticeHub() {
         return <PortfolioGrid onCapture={handleCapture} />;
       case 'hours':
         return <OJTProgressSection />;
+      case 'progress':
+        return <ProgressDashboard />;
       case 'me':
         return <ProfileSection />;
       default:

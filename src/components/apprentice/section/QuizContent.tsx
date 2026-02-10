@@ -7,6 +7,8 @@ import UnitQuiz from "@/components/apprentice/UnitQuiz";
 import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 import { useToast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 interface QuizContentProps {
   effectiveCourseSlug: string;
@@ -23,6 +25,7 @@ const QuizContent = ({
 }: QuizContentProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(30 * 60); // 30 minutes in seconds
@@ -82,12 +85,13 @@ const QuizContent = ({
     
     // Add to off-the-job training record
     try {
-      const existingTime = parseInt(localStorage.getItem(`course_${effectiveCourseSlug}_todayTime`) || '0');
+      const uid = user?.id;
+      const existingTime = parseInt(localStorage.getItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`)) || '0');
       const newTime = existingTime + timeTaken;
-      localStorage.setItem(`course_${effectiveCourseSlug}_todayTime`, newTime.toString());
-      
-      // Record quiz attempt in localStorage
-      const attempts = JSON.parse(localStorage.getItem(`unit_${unitCode}_quiz_attempts`) || '[]');
+      localStorage.setItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`), newTime.toString());
+
+      // Record quiz attempt in localStorage (user-scoped)
+      const attempts = JSON.parse(localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]');
       attempts.push({
         date: new Date().toISOString(),
         score,
@@ -95,7 +99,7 @@ const QuizContent = ({
         timeTaken,
         percentage: Math.round((score / totalQuestions) * 100)
       });
-      localStorage.setItem(`unit_${unitCode}_quiz_attempts`, JSON.stringify(attempts));
+      localStorage.setItem(userKey(uid, `unit_${unitCode}_quiz_attempts`), JSON.stringify(attempts));
     } catch (error) {
       console.error("Error saving quiz result:", error);
     }

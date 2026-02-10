@@ -14,6 +14,7 @@ import {
 } from '@/data/apprentice/curatedVideos';
 import type { CuratedVideo } from '@/data/apprentice/curatedVideos';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+import { useAuth } from '@/contexts/AuthContext';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 8 },
@@ -27,9 +28,22 @@ const itemVariants = {
 export function LearningVideosSection() {
   const navigate = useNavigate();
   const { isBookmarked, toggleBookmark } = useVideoBookmarks();
+  const { profile } = useAuth();
 
-  // Show first 3 videos on the hub
-  const previewVideos = curatedVideos.slice(0, 3);
+  // Personalise preview based on apprentice level (single source of truth from portfolio)
+  const previewVideos = (() => {
+    const level = profile?.apprentice_level;
+    if (level === 'level2') {
+      // Level 2 apprentices: show electrical theory fundamentals first
+      const theoryVideos = curatedVideos.filter(
+        v => v.channel === 'The Engineering Mindset' && v.category === 'electrical-theory' && v.level === 'beginner'
+      );
+      return theoryVideos.slice(0, 3);
+    }
+    // Level 3 / AM2 / no level: show Craig's practical NVQ content
+    const craigVideos = curatedVideos.filter(v => v.channel === 'Craig Wiltshire');
+    return craigVideos.slice(0, 3);
+  })();
 
   const handleVideoTap = (video: CuratedVideo) => {
     navigate(`/apprentice/learning-videos?play=${video.id}`);

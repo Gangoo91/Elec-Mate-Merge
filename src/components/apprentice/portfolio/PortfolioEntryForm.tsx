@@ -83,7 +83,7 @@ const WIZARD_STEPS = [
 
 const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: PortfolioEntryFormProps) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { requirementCode } = useStudentQualification();
+  const { qualificationCode } = useStudentQualification();
   const [currentStep, setCurrentStep] = useState(0);
   const [showACPicker, setShowACPicker] = useState(false);
   const [formData, setFormData] = useState({
@@ -386,7 +386,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
       <ACPickerSheet
         open={showACPicker}
         onOpenChange={setShowACPicker}
-        requirementCode={requirementCode}
+        qualificationCode={qualificationCode}
         selectedACs={formData.assessmentCriteria}
         onDone={(acs) => setFormData(prev => ({ ...prev, assessmentCriteria: acs }))}
       />

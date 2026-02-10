@@ -485,7 +485,7 @@ const EarthFaultLoopGuide = () => {
                 </div>
                 <div className="bg-elec-yellow/20 p-3 rounded mt-3">
                   <p className="text-yellow-200 text-sm">
-                    <strong>Important:</strong> Always use the current edition of BS 7671:2018+A2:2022. Values may change between editions.
+                    <strong>Important:</strong> Always use the current edition of BS 7671:2018+A3:2024. Values may change between editions.
                   </p>
                 </div>
               </div>

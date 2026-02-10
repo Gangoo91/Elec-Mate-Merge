@@ -45,8 +45,8 @@ const STATUS_OPTIONS = [
 export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
   const { entries, categories, updateEntry, deleteEntry, isLoading, addEntry } = useUltraFastPortfolio();
   const { toast } = useToast();
-  const { requirementCode } = useStudentQualification();
-  const { tree } = useQualificationACs(requirementCode);
+  const { qualificationCode } = useStudentQualification();
+  const { tree } = useQualificationACs(qualificationCode);
   const [showCaptureSheet, setShowCaptureSheet] = useState(false);
   const [showKSBAssistant, setShowKSBAssistant] = useState(false);
   const [showFilterSheet, setShowFilterSheet] = useState(false);

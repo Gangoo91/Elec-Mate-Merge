@@ -251,7 +251,7 @@ export function BriefingsSection() {
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
                       {briefingTypes.map(type => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
+                        <SelectItem key={type} value={type} className="h-11 touch-manipulation">{type}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -296,7 +296,7 @@ export function BriefingsSection() {
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
                       {employees?.map(emp => (
-                        <SelectItem key={emp.id} value={emp.name}>{emp.name}</SelectItem>
+                        <SelectItem key={emp.id} value={emp.name} className="h-11 touch-manipulation">{emp.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -461,9 +461,8 @@ export function BriefingsSection() {
               <p className="text-muted-foreground text-sm">No upcoming briefings scheduled</p>
               <Button
                 variant="outline"
-                size="sm"
                 onClick={() => setShowNewBriefing(true)}
-                className="mt-3 gap-2"
+                className="mt-3 gap-2 h-11 touch-manipulation"
               >
                 <Plus className="h-4 w-4" />
                 Schedule One
@@ -486,16 +485,16 @@ export function BriefingsSection() {
                           {briefing.briefing_type && (
                             <Badge variant="outline" className="text-xs">{briefing.briefing_type}</Badge>
                           )}
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 whitespace-nowrap shrink-0">
                             <Clock className="h-3 w-3" />
                             {new Date(briefing.date).toLocaleDateString("en-GB")}
                             {briefing.time && ` at ${briefing.time.slice(0, 5)}`}
                           </span>
                         </div>
                         {briefing.location && (
-                          <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {briefing.location}
+                          <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1 truncate">
+                            <MapPin className="h-3 w-3 shrink-0" />
+                            <span className="truncate">{briefing.location}</span>
                           </p>
                         )}
                         {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
@@ -509,40 +508,36 @@ export function BriefingsSection() {
                       <Badge className={statusColors["Scheduled"]}>
                         Scheduled
                       </Badge>
-                      <div className="flex items-center gap-1">
+                      <div className="flex flex-wrap items-center gap-1">
                         <Button
-                          size="sm"
-                          variant="ghost"
+                                                    variant="ghost"
                           onClick={() => handleViewBriefing(briefing)}
-                          className="h-8 w-8 p-0 touch-manipulation"
+                          className="h-11 w-11 p-0 touch-manipulation"
                           title="View"
                         >
                           <Eye className="h-3.5 w-3.5" />
                         </Button>
                         <Button
-                          size="sm"
-                          variant="ghost"
+                                                    variant="ghost"
                           onClick={() => handleEditBriefing(briefing)}
-                          className="h-8 w-8 p-0 touch-manipulation"
+                          className="h-11 w-11 p-0 touch-manipulation"
                           title="Edit"
                         >
                           <Edit3 className="h-3.5 w-3.5" />
                         </Button>
                         <Button
-                          size="sm"
-                          variant="outline"
+                                                    variant="outline"
                           onClick={() => handleSignOff(briefing)}
-                          className="h-8 text-xs touch-manipulation bg-blue-500/10 border-blue-500/30 text-blue-400"
+                          className="h-11 text-xs touch-manipulation bg-blue-500/10 border-blue-500/30 text-blue-400"
                         >
                           <PenTool className="h-3 w-3 mr-1" />
                           Sign-off
                         </Button>
                         <Button
-                          size="sm"
-                          variant="outline"
+                                                    variant="outline"
                           onClick={() => handleComplete(briefing)}
                           disabled={completeBriefing.isPending}
-                          className="h-8 text-xs touch-manipulation"
+                          className="h-11 text-xs touch-manipulation"
                         >
                           {completeBriefing.isPending ? (
                             <Loader2 className="h-3 w-3 animate-spin" />
@@ -554,11 +549,10 @@ export function BriefingsSection() {
                           )}
                         </Button>
                         <Button
-                          size="sm"
-                          variant="ghost"
+                                                    variant="ghost"
                           onClick={() => handleDelete(briefing.id)}
                           disabled={deleteBriefing.isPending}
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
+                          className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>
@@ -633,34 +627,31 @@ export function BriefingsSection() {
                             ? `${attendancePercent}%`
                             : "Complete"}
                         </Badge>
-                        <div className="flex items-center gap-1">
+                        <div className="flex flex-wrap items-center gap-1">
                           <Button
-                            size="sm"
-                            variant="ghost"
+                                                        variant="ghost"
                             onClick={() => handleViewBriefing(briefing)}
-                            className="h-8 w-8 p-0 touch-manipulation"
+                            className="h-11 w-11 p-0 touch-manipulation"
                             title="View"
                           >
                             <Eye className="h-3.5 w-3.5" />
                           </Button>
                           <Button
-                            size="sm"
-                            variant="ghost"
+                                                        variant="ghost"
                             onClick={() => {
                               setSelectedBriefingId(briefing.id);
                               handleExportPdf(briefing);
                             }}
-                            className="h-8 w-8 p-0 touch-manipulation"
+                            className="h-11 w-11 p-0 touch-manipulation"
                             title="Export PDF"
                           >
                             <Download className="h-3.5 w-3.5" />
                           </Button>
                           <Button
-                            size="sm"
-                            variant="ghost"
+                                                        variant="ghost"
                             onClick={() => handleDelete(briefing.id)}
                             disabled={deleteBriefing.isPending}
-                            className="h-8 w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
+                            className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>

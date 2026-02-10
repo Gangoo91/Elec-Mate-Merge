@@ -187,7 +187,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
             variant="ghost" 
             size="icon" 
             onClick={onClose}
-            className="md:flex"
+            className="md:flex touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -204,7 +204,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
         {/* Create button - full width on mobile */}
         <Button
           onClick={() => setShowEditor(true)}
-          className="w-full md:w-auto"
+          className="w-full md:w-auto h-11 touch-manipulation"
         >
           <Plus className="mr-2 h-4 w-4" />
           Create Template
@@ -221,14 +221,14 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search templates..."
-            className={cn(!searchQuery && "pl-10")}
+            className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
           />
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button
             variant={selectedType === null ? "default" : "outline"}
-            size="sm"
             onClick={() => setSelectedType(null)}
+            className="h-11 touch-manipulation"
           >
             All
           </Button>
@@ -236,8 +236,8 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
             <Button
               key={type}
               variant={selectedType === type ? "default" : "outline"}
-              size="sm"
               onClick={() => setSelectedType(type)}
+              className="h-11 touch-manipulation"
             >
               {type}
             </Button>
@@ -266,7 +266,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                       )}
                       {template.name}
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                       {template.description}
                     </p>
                   </div>
@@ -284,12 +284,11 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                   {!template.is_default && (
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => {
                         setEditingTemplateId(template.id);
                         setShowEditor(true);
                       }}
-                      className="flex-1 min-w-[80px]"
+                      className="flex-1 min-w-[80px] h-11 touch-manipulation"
                     >
                       <Edit className="h-4 w-4 md:mr-2" />
                       <span className="hidden md:inline">Edit</span>
@@ -297,18 +296,16 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                   )}
                   <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => handleDuplicate(template)}
-                    className="flex-1 min-w-[80px]"
+                    className="flex-1 min-w-[80px] h-11 touch-manipulation"
                   >
                     <Copy className="h-4 w-4 md:mr-2" />
                     <span className="hidden md:inline">Copy</span>
                   </Button>
                   <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => handleExport(template)}
-                    className="flex-1 min-w-[80px]"
+                    className="flex-1 min-w-[80px] h-11 touch-manipulation"
                   >
                     <Download className="h-4 w-4 md:mr-2" />
                     <span className="hidden md:inline">Export</span>
@@ -316,9 +313,8 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                   {!template.is_default && (
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => handleDelete(template.id)}
-                      className="text-destructive hover:text-destructive flex-1 min-w-[80px]"
+                      className="text-destructive hover:text-destructive flex-1 min-w-[80px] h-11 touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4 md:mr-2" />
                       <span className="hidden md:inline">Delete</span>

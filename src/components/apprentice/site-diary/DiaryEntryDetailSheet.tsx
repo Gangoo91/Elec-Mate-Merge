@@ -28,6 +28,7 @@ import {
   Loader2,
   Lightbulb,
   RefreshCw,
+  ShieldCheck,
 } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { supabase } from '@/integrations/supabase/client';
@@ -83,6 +84,8 @@ interface DiaryEntryDetailSheetProps {
   onEdit: (entry: SiteDiaryEntry) => void;
   onDelete: (id: string) => void;
   relatedEntries: SiteDiaryEntry[];
+  /** Set of AC full refs (e.g. "301.2.3") already evidenced in portfolio */
+  evidencedACs?: Set<string>;
 }
 
 export function DiaryEntryDetailSheet({
@@ -92,6 +95,7 @@ export function DiaryEntryDetailSheet({
   onEdit,
   onDelete,
   relatedEntries,
+  evidencedACs,
 }: DiaryEntryDetailSheetProps) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
@@ -253,11 +257,26 @@ export function DiaryEntryDetailSheet({
           user_id: user.id,
           title,
           description,
-          category: 'Site Diary Evidence',
+          category: 'site-diary-evidence',
           skills_demonstrated: entry.skills_practised,
           reflection_notes: entry.what_i_learned || '',
           assessment_criteria_met: acsMet,
           learning_outcomes_met: losMet,
+          storage_urls: entry.photos?.length
+            ? entry.photos.map((url, i) => ({
+                id: `diary-photo-${i}`,
+                name: `Site photo ${i + 1}`,
+                type: 'image/jpeg',
+                size: 0,
+                url,
+                uploadDate: entry.created_at,
+              }))
+            : [],
+          status: 'completed',
+          date_completed: new Date(entry.date + 'T12:00:00').toISOString(),
+          evidence_count: (entry.photos?.length || 0) + 1,
+          tags: ['site-diary', entry.site_name.toLowerCase().replace(/\s+/g, '-')],
+          supervisor_feedback: entry.supervisor ? `Supervised by: ${entry.supervisor}` : null,
         })
         .select('id')
         .single();
@@ -270,7 +289,12 @@ export function DiaryEntryDetailSheet({
         .update({ linked_portfolio_id: newItem.id })
         .eq('id', entry.id);
 
-      toast.success('Added to portfolio');
+      const acCount = acsMet.length;
+      toast.success('Added to portfolio', {
+        description: acCount > 0
+          ? `${acCount} assessment criteri${acCount === 1 ? 'on' : 'a'} linked — keep building your evidence!`
+          : 'Evidence saved — open your portfolio to track progress',
+      });
       setShowPortfolioPicker(false);
       setSuggestedACs([]);
     } catch (err) {
@@ -545,9 +569,24 @@ export function DiaryEntryDetailSheet({
                                 <span className="text-[11px] font-bold text-purple-400 truncate min-w-0">
                                   Unit {mc.unitCode} — AC {mc.acCode}
                                 </span>
-                                <span className="text-[11px] text-white/60 flex-shrink-0">
-                                  {mc.confidence}%
-                                </span>
+                                <div className="flex items-center gap-1.5 flex-shrink-0">
+                                  <span className="text-[11px] text-white/60">
+                                    {mc.confidence}%
+                                  </span>
+                                  {evidencedACs && (
+                                    evidencedACs.has(`${mc.unitCode}.${mc.acCode}`) ? (
+                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-green-500/15 text-green-400 border border-green-500/25">
+                                        <CheckCircle2 className="h-2.5 w-2.5" />
+                                        Evidenced
+                                      </span>
+                                    ) : (
+                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                                        <Circle className="h-2.5 w-2.5" />
+                                        Needed
+                                      </span>
+                                    )
+                                  )}
+                                </div>
                               </div>
                               <p className="text-[11px] text-white/70 leading-snug mb-1.5">
                                 {mc.acText}
@@ -620,6 +659,21 @@ export function DiaryEntryDetailSheet({
               </button>
             </motion.div>
 
+            {/* Request Supervisor Verification */}
+            {entry.linked_portfolio_id && (
+              <button
+                onClick={() => {
+                  onOpenChange(false);
+                  // Navigate to portfolio detail to trigger verification from there
+                  toast.info('Open this evidence in your Portfolio to request verification');
+                }}
+                className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-purple-500/10 border border-purple-500/25 text-purple-400 text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                Request Supervisor Verification
+              </button>
+            )}
+
             {/* Add to Portfolio */}
             {entry.linked_portfolio_id ? (
               <div className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
@@ -679,9 +733,23 @@ export function DiaryEntryDetailSheet({
                           <Circle className="h-4 w-4 text-white/20 mt-0.5 flex-shrink-0" />
                         )}
                         <div className="flex-1 min-w-0">
-                          <span className="text-[10px] font-bold text-elec-yellow">
-                            Unit {ac.unitCode}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] font-bold text-elec-yellow">
+                              Unit {ac.unitCode}
+                            </span>
+                            {evidencedACs && (
+                              evidencedACs.has(`${ac.unitCode}.${ac.acText.split(' ')[0]}`) ? (
+                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-green-500/15 text-green-400 border border-green-500/25">
+                                  <CheckCircle2 className="h-2 w-2" />
+                                  Evidenced
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                                  Needed
+                                </span>
+                              )
+                            )}
+                          </div>
                           <p className="text-[11px] text-white/70 leading-snug">AC {ac.acText}</p>
                         </div>
                       </button>

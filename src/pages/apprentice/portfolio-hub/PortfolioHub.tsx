@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PortfolioHubShell } from '@/components/portfolio-hub/PortfolioHubShell';
 import { PortfolioOverview } from '@/components/portfolio-hub/PortfolioOverview';
@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { toast } from 'sonner';
 
 // Placeholder components for other sections (to be built in Phase 2-5)
 import { EvidenceSection } from './sections/EvidenceSection';
@@ -53,6 +54,46 @@ export default function PortfolioHub() {
     qualificationName,
     requirementCode,
   } = useStudentQualification();
+
+  // Build set of evidenced ACs from portfolio entries
+  // Handles multiple formats:
+  //   "301 AC 1.1"              → "301.1.1"
+  //   "ELTP06 (Unit 317) AC 2.2" → "ELTP06.2.2" + "317.2.2"
+  //   "ETKP3-01 AC 3.1"        → "ETKP3-01.3.1"
+  const evidencedACSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const pe of entries) {
+      for (const ac of pe.assessmentCriteria || []) {
+        // Try to extract AC code from the end: everything after " AC "
+        const acMatch = ac.match(/\bAC\s+(\S+)/);
+        if (!acMatch) continue;
+        const acCode = acMatch[1];
+
+        // Extract the primary unit code (first word)
+        const primaryUnit = ac.match(/^(\S+)/)?.[1];
+        if (primaryUnit) {
+          set.add(`${primaryUnit}.${acCode}`);
+        }
+
+        // Also extract parenthetical unit code if present: "(Unit 317)"
+        const parenUnit = ac.match(/\(Unit\s+(\S+)\)/i);
+        if (parenUnit) {
+          set.add(`${parenUnit[1]}.${acCode}`);
+        }
+      }
+    }
+    return set;
+  }, [entries]);
+
+  // Handle "Capture for AC" from requirements browser
+  const handleCaptureForAC = (unitCode: string, acRef: string, acText: string) => {
+    toast.info(`Capturing evidence for Unit ${unitCode} — AC ${acRef}`, {
+      description: acText,
+      duration: 4000,
+    });
+    setActiveSection('evidence');
+    setIsQuickCaptureOpen(true);
+  };
 
   // Sync URL with active section - use replace: false to create history entries for back button
   useEffect(() => {
@@ -126,6 +167,8 @@ export default function PortfolioHub() {
             onQuickCapture={handleQuickCapture}
             requirementCode={requirementCode}
             qualificationName={qualificationName}
+            evidencedACs={evidencedACSet}
+            onCaptureForAC={handleCaptureForAC}
           />
         );
       case 'evidence':

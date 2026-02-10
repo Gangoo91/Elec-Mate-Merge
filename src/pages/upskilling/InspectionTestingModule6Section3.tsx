@@ -350,6 +350,83 @@ const InspectionTestingModule6Section3 = () => {
           </div>
         </section>
 
+        {/* RCD Test Connection Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">RCD Test Connection — Trip Time &amp; Ramp Testing</h4>
+          <svg viewBox="0 0 800 360" className="w-full h-auto" role="img" aria-label="RCD test connection diagram showing tester connected between line and protective earth at a socket outlet downstream of the RCD">
+            {/* Consumer Unit */}
+            <rect x="40" y="40" width="160" height="200" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="120" y="62" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">CONSUMER UNIT</text>
+
+            {/* RCD Device */}
+            <rect x="65" y="80" width="110" height="60" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.3)" strokeWidth="1.5" />
+            <text x="120" y="100" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">RCD 30mA</text>
+            <text x="120" y="116" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Type A</text>
+            {/* RCD test button */}
+            <rect x="90" y="125" width="60" height="12" rx="3" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.3)" strokeWidth="1" />
+            <text x="120" y="134" textAnchor="middle" fill="rgba(251,191,36,0.6)" fontSize="7">TEST BUTTON</text>
+
+            {/* MCB */}
+            <rect x="80" y="155" width="80" height="35" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <text x="120" y="176" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">MCB B32</text>
+
+            {/* MET */}
+            <rect x="80" y="200" width="80" height="25" rx="4" fill="rgba(34,197,94,0.08)" stroke="rgba(34,197,94,0.3)" strokeWidth="1" />
+            <text x="120" y="217" textAnchor="middle" fill="#22C55E" fontSize="9">MET</text>
+
+            {/* Cable run */}
+            <line x1="200" y1="100" x2="420" y2="100" stroke="#EF4444" strokeWidth="2" />
+            <text x="310" y="92" textAnchor="middle" fill="#EF4444" fontSize="9">Line</text>
+            <line x1="200" y1="120" x2="420" y2="120" stroke="#3B82F6" strokeWidth="2" />
+            <text x="310" y="135" textAnchor="middle" fill="#3B82F6" fontSize="9">Neutral</text>
+            <line x1="160" y1="225" x2="300" y2="225" stroke="#22C55E" strokeWidth="2" />
+            <line x1="300" y1="225" x2="300" y2="170" stroke="#22C55E" strokeWidth="2" />
+            <line x1="300" y1="170" x2="420" y2="170" stroke="#22C55E" strokeWidth="2" />
+            <text x="310" y="180" textAnchor="middle" fill="#22C55E" fontSize="9">CPC</text>
+
+            {/* Socket outlet */}
+            <rect x="420" y="70" width="130" height="120" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="485" y="90" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">SOCKET OUTLET</text>
+            {/* Socket face */}
+            <rect x="450" y="100" width="70" height="50" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+            <text x="467" y="130" fill="#EF4444" fontSize="9" fontWeight="bold">L</text>
+            <text x="503" y="130" fill="#3B82F6" fontSize="9" fontWeight="bold">N</text>
+            <text x="485" y="116" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">E</text>
+
+            {/* RCD Tester */}
+            <rect x="590" y="90" width="170" height="130" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.3)" strokeWidth="2" />
+            <text x="675" y="115" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">RCD TESTER</text>
+            {/* Tester display */}
+            <rect x="620" y="125" width="110" height="35" rx="4" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            <text x="675" y="147" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">22ms</text>
+            {/* Tester controls */}
+            <text x="635" y="180" fill="rgba(255,255,255,0.4)" fontSize="8">1×IΔn</text>
+            <text x="675" y="180" fill="rgba(255,255,255,0.4)" fontSize="8">5×IΔn</text>
+            <text x="715" y="180" fill="rgba(255,255,255,0.4)" fontSize="8">Ramp</text>
+            <text x="675" y="195" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">0° / 180°</text>
+
+            {/* Tester connections */}
+            <line x1="550" y1="110" x2="590" y2="120" stroke="#EF4444" strokeWidth="2" />
+            <line x1="550" y1="165" x2="590" y2="170" stroke="#22C55E" strokeWidth="2" />
+            <text x="575" y="105" textAnchor="middle" fill="#EF4444" fontSize="8">L</text>
+            <text x="575" y="178" textAnchor="middle" fill="#22C55E" fontSize="8">PE</text>
+
+            {/* Trip time requirements */}
+            <rect x="40" y="270" width="720" height="80" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+            <text x="400" y="290" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">Maximum Trip Times (BS EN 61008/61009)</text>
+            <text x="150" y="312" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">½×IΔn</text>
+            <text x="150" y="328" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">Must NOT trip</text>
+            <text x="320" y="312" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">1×IΔn (non-delay)</text>
+            <text x="320" y="328" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">≤ 300ms</text>
+            <text x="500" y="312" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">5×IΔn (non-delay)</text>
+            <text x="500" y="328" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">≤ 40ms</text>
+            <text x="660" y="312" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">S-type at 5×IΔn</text>
+            <text x="660" y="328" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">≤ 150ms</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">RCD tester connects between Line and PE at a socket downstream of the RCD. Test at both 0° and 180° — record the longer trip time. Press the RCD test button first as a functional check.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 3: Performing Ramp Tests */}

@@ -92,7 +92,7 @@ serve(async (req) => {
       ? JSON.parse(invoice.job_details)
       : invoice.job_details;
 
-    // Calculate platform fee (1.1% in pence)
+    // Calculate platform fee (1% in pence)
     const invoiceAmountPence = Math.round(invoice.total * 100);
     const platformFeePence = Math.round(invoice.total * PLATFORM_FEE_PERCENT);
 
@@ -116,7 +116,7 @@ serve(async (req) => {
         quantity: 1,
       }],
       payment_intent_data: {
-        application_fee_amount: platformFeePence, // 1.1% to ElecMate
+        application_fee_amount: platformFeePence, // 1% to ElecMate
         transfer_data: {
           destination: profile.stripe_account_id, // Rest to electrician
         },

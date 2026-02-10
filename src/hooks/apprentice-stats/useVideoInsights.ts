@@ -31,6 +31,7 @@ const quizToVideoCategory: Record<string, VideoCategory[]> = {
   'Safety': ['safety'],
   'Testing': ['testing-inspection'],
   'Design': ['wiring', 'domestic', 'commercial'],
+  'Science': ['electrical-theory'],
 };
 
 // Parse duration string "MM:SS" to minutes

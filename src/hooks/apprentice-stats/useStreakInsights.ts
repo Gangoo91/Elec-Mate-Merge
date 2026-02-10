@@ -15,7 +15,7 @@ import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { useQuizResults } from '@/hooks/useQuizResults';
-import { flashcardSets } from '@/data/flashcardSets';
+import { flashcardSetMeta as flashcardSets } from '@/data/flashcards';
 
 export interface StreakRecommendation {
   id: string;

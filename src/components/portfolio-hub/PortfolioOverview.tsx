@@ -15,6 +15,7 @@ import {
   AlertCircle,
   TrendingUp,
   BookOpen,
+  Award,
 } from 'lucide-react';
 import { ProgressRingsGroup, MiniProgressRing } from './ProgressRings';
 import { NavSection } from './PortfolioHubNav';
@@ -32,6 +33,10 @@ interface PortfolioOverviewProps {
   onQuickCapture: () => void;
   requirementCode?: string | null;
   qualificationName?: string | null;
+  /** Set of AC full refs already evidenced in portfolio */
+  evidencedACs?: Set<string>;
+  /** Called when student taps "Capture" on an unevidenced AC in requirements browser */
+  onCaptureForAC?: (unitCode: string, acRef: string, acText: string) => void;
 }
 
 interface ActivityItem {
@@ -75,6 +80,8 @@ export function PortfolioOverview({
   onQuickCapture,
   requirementCode,
   qualificationName,
+  evidencedACs,
+  onCaptureForAC,
 }: PortfolioOverviewProps) {
   const [requirementsOpen, setRequirementsOpen] = useState(false);
   // Get time-based greeting
@@ -116,6 +123,7 @@ export function PortfolioOverview({
           <QualificationProgress
             qualificationCode={requirementCode}
             qualificationName={qualificationName}
+            evidencedACs={evidencedACs}
           />
           <button
             onClick={() => setRequirementsOpen(true)}
@@ -128,9 +136,38 @@ export function PortfolioOverview({
             open={requirementsOpen}
             onOpenChange={setRequirementsOpen}
             qualificationCode={requirementCode}
+            evidencedACs={evidencedACs}
+            onCaptureForAC={(unitCode, acRef, acText) => {
+              setRequirementsOpen(false);
+              onCaptureForAC?.(unitCode, acRef, acText);
+            }}
           />
         </>
       )}
+
+      {/* EPA Readiness Mini-Card */}
+      <button
+        onClick={() => {
+          window.location.href = '/apprentice/epa-simulator';
+        }}
+        className={cn(
+          "w-full flex items-center gap-4 p-4 rounded-xl",
+          "bg-gradient-to-r from-purple-500/10 to-purple-500/5",
+          "border border-purple-500/25",
+          "text-left active:scale-[0.98] transition-transform touch-manipulation"
+        )}
+      >
+        <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+          <Award className="h-6 w-6 text-purple-400" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-purple-300">EPA Readiness</p>
+          <p className="text-xs text-white/50 mt-0.5">
+            Mock discussions, knowledge tests &amp; readiness score
+          </p>
+        </div>
+        <ChevronRight className="h-5 w-5 text-purple-400 shrink-0" />
+      </button>
 
       {/* Smart Next Action */}
       {nextAction && (
@@ -238,7 +275,7 @@ function NextActionCard({
 
   return (
     <Card className={cn(
-      "border overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform",
+      "border overflow-hidden cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
       priorityColors[action.priority]
     )}>
       <CardContent className="p-4" onClick={onAction}>

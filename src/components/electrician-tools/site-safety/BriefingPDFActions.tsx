@@ -331,8 +331,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       <Button
         onClick={handleGeneratePDF}
         variant="outline"
-        size="sm"
-        className="w-full border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-background"
+        className="w-full h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-background"
       >
         <FileText className="h-4 w-4 mr-2" />
         Generate PDF
@@ -342,7 +341,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
 
   if (generating || polling) {
     return (
-      <Button disabled size="sm" className="w-full">
+      <Button disabled className="w-full h-11 touch-manipulation">
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
         {polling 
           ? `Still generating... (${pollAttempts * 3}s)` 
@@ -356,9 +355,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       <div className="flex flex-col sm:flex-row gap-2">
         <Button
           onClick={handleViewPDF}
-          size="sm"
           disabled={validating || generating}
-          className="flex-1 bg-elec-yellow text-background hover:bg-elec-yellow/90"
+          className="flex-1 h-11 touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -371,9 +369,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
         <Button
           onClick={handleDownloadPDF}
           variant="outline"
-          size="sm"
           disabled={validating || generating}
-          className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -386,9 +383,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
         <Button
           onClick={handlePrintPDF}
           variant="outline"
-          size="sm"
           disabled={validating || generating}
-          className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+          className="flex-1 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
         >
           {validating ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -402,9 +398,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       <Button
         onClick={handleGeneratePDF}
         variant="ghost"
-        size="sm"
         disabled={generating || validating}
-        className="w-full text-xs text-elec-light/60 hover:text-elec-yellow"
+        className="w-full h-11 touch-manipulation text-xs text-elec-light/60 hover:text-elec-yellow"
       >
         <RefreshCw className="h-3 w-3 mr-1" />
         Regenerate PDF

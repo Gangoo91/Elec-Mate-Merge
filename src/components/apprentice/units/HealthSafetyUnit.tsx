@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { CheckCircle, BookOpen, Shield, Users } from "lucide-react";
 import { healthAndSafetySections } from "@/data/healthAndSafety/index";
 import BackButton from "../BackButton";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 interface HealthSafetyUnitProps {
   unitCode: string;
@@ -14,14 +16,15 @@ interface HealthSafetyUnitProps {
 const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug, sectionId } = useParams();
-  
-  // Load completion status
+  const { user } = useAuth();
+
+  // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(`unit_${unitCode}_quiz_completed`);
+    const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${unitCode}_quiz_completed`));
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
-  }, [unitCode]);
+  }, [unitCode, user?.id]);
 
   const handleSectionClick = () => {
     // Report study activity when opening a section

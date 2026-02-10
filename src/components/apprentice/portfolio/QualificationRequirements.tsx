@@ -10,20 +10,18 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
-import { ChevronDown, ChevronRight, BookOpen, CheckCircle2, Circle, Search, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, BookOpen, CheckCircle2, Circle, Search, X, Camera } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface QualificationRequirement {
   id: string;
   qualification_code: string;
-  qualification_name: string;
   unit_code: string;
   unit_title: string;
-  learning_outcome_number: string | null;
-  learning_outcome: string;
-  assessment_criteria: string[];
-  topic_area: string | null;
-  level: number | null;
+  lo_number: number | null;
+  lo_text: string;
+  ac_code: string;
+  ac_text: string;
 }
 
 interface QualificationRequirementsProps {
@@ -32,12 +30,21 @@ interface QualificationRequirementsProps {
   qualificationCode: string | null;
   /** Set of AC identifiers the student has already evidenced (e.g. "301.2.3") */
   evidencedACs?: Set<string>;
+  /** Called when student taps "Capture" on an unevidenced AC */
+  onCaptureForAC?: (unitCode: string, acRef: string, acText: string) => void;
+}
+
+interface LOGroup {
+  loNumber: number | null;
+  loText: string;
+  acs: QualificationRequirement[];
 }
 
 interface UnitGroup {
   unitCode: string;
   unitTitle: string;
-  requirements: QualificationRequirement[];
+  loGroups: LOGroup[];
+  allACs: QualificationRequirement[];
 }
 
 export function QualificationRequirements({
@@ -45,6 +52,7 @@ export function QualificationRequirements({
   onOpenChange,
   qualificationCode,
   evidencedACs = new Set(),
+  onCaptureForAC,
 }: QualificationRequirementsProps) {
   const [requirements, setRequirements] = useState<QualificationRequirement[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,10 +71,11 @@ export function QualificationRequirements({
       try {
         const { data, error } = await supabase
           .from('qualification_requirements')
-          .select('*')
+          .select('id, qualification_code, unit_code, unit_title, lo_number, lo_text, ac_code, ac_text')
           .eq('qualification_code', qualificationCode!)
           .order('unit_code', { ascending: true })
-          .order('learning_outcome_number', { ascending: true });
+          .order('lo_number', { ascending: true })
+          .order('ac_code', { ascending: true });
 
         if (error) throw error;
         if (!cancelled) {
@@ -85,30 +94,50 @@ export function QualificationRequirements({
     };
   }, [open, qualificationCode]);
 
-  // Group by unit
+  // Group by unit → then by LO
   const unitGroups = useMemo(() => {
-    const groups: Map<string, UnitGroup> = new Map();
     const filtered = searchQuery.trim()
       ? requirements.filter((r) => {
           const q = searchQuery.toLowerCase();
           return (
             r.unit_title.toLowerCase().includes(q) ||
-            r.learning_outcome.toLowerCase().includes(q) ||
-            r.assessment_criteria.some((ac) => ac.toLowerCase().includes(q)) ||
+            r.lo_text.toLowerCase().includes(q) ||
+            r.ac_text.toLowerCase().includes(q) ||
+            r.ac_code.toLowerCase().includes(q) ||
             r.unit_code.toLowerCase().includes(q)
           );
         })
       : requirements;
+
+    const groups: Map<string, UnitGroup> = new Map();
 
     for (const req of filtered) {
       if (!groups.has(req.unit_code)) {
         groups.set(req.unit_code, {
           unitCode: req.unit_code,
           unitTitle: req.unit_title,
-          requirements: [],
+          loGroups: [],
+          allACs: [],
         });
       }
-      groups.get(req.unit_code)!.requirements.push(req);
+      groups.get(req.unit_code)!.allACs.push(req);
+    }
+
+    // Sub-group each unit's ACs by LO
+    for (const group of groups.values()) {
+      const loMap: Map<string, LOGroup> = new Map();
+      for (const ac of group.allACs) {
+        const loKey = `${ac.lo_number ?? 'none'}`;
+        if (!loMap.has(loKey)) {
+          loMap.set(loKey, {
+            loNumber: ac.lo_number,
+            loText: ac.lo_text,
+            acs: [],
+          });
+        }
+        loMap.get(loKey)!.acs.push(ac);
+      }
+      group.loGroups = Array.from(loMap.values());
     }
 
     return Array.from(groups.values());
@@ -140,25 +169,20 @@ export function QualificationRequirements({
 
   // Count evidenced ACs per unit
   const getUnitProgress = (group: UnitGroup) => {
-    let total = 0;
+    const total = group.allACs.length;
     let evidenced = 0;
-    for (const req of group.requirements) {
-      for (const ac of req.assessment_criteria) {
-        total++;
-        const acRef = ac.split(' ')[0]; // e.g. "2.3" from "2.3 Describe..."
-        const fullRef = `${req.unit_code}.${acRef}`;
-        if (evidencedACs.has(fullRef) || evidencedACs.has(acRef)) {
-          evidenced++;
-        }
+    for (const ac of group.allACs) {
+      const fullRef = `${ac.unit_code}.${ac.ac_code}`;
+      if (evidencedACs.has(fullRef) || evidencedACs.has(ac.ac_code)) {
+        evidenced++;
       }
     }
     return { total, evidenced };
   };
 
-  const getACStatus = (unitCode: string, acText: string): 'evidenced' | 'not_started' => {
-    const acRef = acText.split(' ')[0];
-    const fullRef = `${unitCode}.${acRef}`;
-    if (evidencedACs.has(fullRef) || evidencedACs.has(acRef)) {
+  const getACStatus = (unitCode: string, acCode: string): 'evidenced' | 'not_started' => {
+    const fullRef = `${unitCode}.${acCode}`;
+    if (evidencedACs.has(fullRef) || evidencedACs.has(acCode)) {
       return 'evidenced';
     }
     return 'not_started';
@@ -188,7 +212,7 @@ export function QualificationRequirements({
                 Qualification Requirements
               </SheetTitle>
               <p className="text-xs text-white/50 mt-0.5">
-                {requirements.length > 0 ? requirements[0].qualification_name : 'Loading...'}
+                {qualificationCode || 'Loading...'}
               </p>
             </div>
 
@@ -246,9 +270,9 @@ export function QualificationRequirements({
                       className="w-full flex items-center gap-3 px-4 py-3.5 bg-white/[0.03] touch-manipulation active:bg-white/[0.06] transition-colors"
                     >
                       {isExpanded ? (
-                        <ChevronDown className="h-4 w-4 text-white/60 flex-shrink-0" />
+                        <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
                       ) : (
-                        <ChevronRight className="h-4 w-4 text-white/60 flex-shrink-0" />
+                        <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                       )}
                       <div className="flex-1 text-left min-w-0">
                         <span className="text-xs font-bold text-elec-yellow">
@@ -266,58 +290,71 @@ export function QualificationRequirements({
                     {/* Expanded: Learning Outcomes */}
                     {isExpanded && (
                       <div className="border-t border-white/[0.06]">
-                        {group.requirements.map((req) => {
-                          const loKey = `${req.unit_code}-${req.learning_outcome_number}`;
+                        {group.loGroups.map((lo) => {
+                          const loKey = `${group.unitCode}-${lo.loNumber}`;
                           const loExpanded = expandedLOs.has(loKey);
 
                           return (
                             <div
-                              key={req.id}
+                              key={loKey}
                               className="border-b border-white/[0.04] last:border-b-0"
                             >
                               {/* LO header */}
                               <button
                                 onClick={() => toggleLO(loKey)}
-                                className="w-full flex items-start gap-2.5 px-4 py-2.5 pl-10 touch-manipulation active:bg-white/[0.03] transition-colors"
+                                className="w-full flex items-start gap-2.5 px-4 py-3 pl-10 touch-manipulation active:bg-white/[0.03] transition-colors min-h-[44px]"
                               >
                                 {loExpanded ? (
-                                  <ChevronDown className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                                  <ChevronDown className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                 ) : (
-                                  <ChevronRight className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                                  <ChevronRight className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                 )}
                                 <div className="flex-1 text-left">
-                                  {req.learning_outcome_number && (
-                                    <span className="text-[10px] font-medium text-white/50 uppercase tracking-wider">
-                                      LO{req.learning_outcome_number}
+                                  {lo.loNumber != null && (
+                                    <span className="text-[10px] font-medium text-elec-yellow uppercase tracking-wider">
+                                      LO{lo.loNumber}
                                     </span>
                                   )}
-                                  <p className="text-xs text-white/80 leading-relaxed">
-                                    {req.learning_outcome}
+                                  <p className="text-xs text-white leading-relaxed">
+                                    {lo.loText}
                                   </p>
                                 </div>
                               </button>
 
                               {/* AC list */}
-                              {loExpanded && req.assessment_criteria.length > 0 && (
+                              {loExpanded && lo.acs.length > 0 && (
                                 <div className="pl-16 pr-4 pb-2.5 space-y-1">
-                                  {req.assessment_criteria.map((ac, idx) => {
-                                    const status = getACStatus(req.unit_code, ac);
+                                  {lo.acs.map((ac) => {
+                                    const status = getACStatus(ac.unit_code, ac.ac_code);
                                     return (
-                                      <div key={idx} className="flex items-start gap-2">
+                                      <div key={ac.id} className="flex items-start gap-2">
                                         {status === 'evidenced' ? (
                                           <CheckCircle2 className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                                         ) : (
-                                          <Circle className="h-3.5 w-3.5 text-white/20 mt-0.5 flex-shrink-0" />
+                                          <Circle className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
                                         )}
                                         <p
-                                          className={`text-[11px] leading-relaxed ${
+                                          className={`text-[11px] leading-relaxed flex-1 min-w-0 ${
                                             status === 'evidenced'
-                                              ? 'text-green-400/80'
-                                              : 'text-white/60'
+                                              ? 'text-green-400'
+                                              : 'text-white'
                                           }`}
                                         >
-                                          {ac}
+                                          <span className="font-medium">{ac.ac_code}</span>{' '}
+                                          {ac.ac_text}
                                         </p>
+                                        {status !== 'evidenced' && onCaptureForAC && (
+                                          <button
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              onCaptureForAC(ac.unit_code, ac.ac_code, ac.ac_text);
+                                            }}
+                                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.95] transition-all flex-shrink-0 h-11"
+                                          >
+                                            <Camera className="h-3 w-3" />
+                                            Capture
+                                          </button>
+                                        )}
                                       </div>
                                     );
                                   })}

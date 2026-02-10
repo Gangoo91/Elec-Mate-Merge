@@ -435,7 +435,7 @@ export const BriefingFormWizard = ({
                 >
                   <FileText className="h-4 w-4 mr-2 text-elec-yellow" />
                   {showTemplateSelector ? 'Hide Templates' : 'Start from Template'}
-                  <span className="text-[10px] text-white/40 ml-2">(Optional)</span>
+                  <span className="text-xs text-white/40 ml-2">(Optional)</span>
                 </Button>
 
                 <AnimatePresence>
@@ -546,7 +546,7 @@ export const BriefingFormWizard = ({
                   'bg-white/5 border border-white/10',
                   'text-white placeholder:text-white/40',
                   'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50',
-                  'transition-all resize-none'
+                  'transition-all resize-none touch-manipulation'
                 )}
               />
               <div className="flex justify-between text-xs text-white/40">
@@ -708,19 +708,34 @@ export const BriefingFormWizard = ({
                       </div>
                     </div>
 
-                    {/* Mobile delete — always visible */}
-                    <button
-                      type="button"
-                      onClick={() => handleDeletePhoto(idx)}
-                      className={cn(
-                        'sm:hidden absolute -top-2 -right-2 flex items-center justify-center',
-                        'w-7 h-7 rounded-full',
-                        'bg-red-500 text-white shadow-lg shadow-red-500/30',
-                        'touch-manipulation'
-                      )}
-                    >
-                      <X className="h-3.5 w-3.5" strokeWidth={3} />
-                    </button>
+                    {/* Mobile actions — always visible */}
+                    <div className="sm:hidden absolute bottom-1.5 right-1.5 flex gap-1.5">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPreviewPhoto(photo.url);
+                        }}
+                        className={cn(
+                          'flex items-center justify-center w-9 h-9 rounded-full',
+                          'bg-black/50 backdrop-blur-sm text-white',
+                          'touch-manipulation'
+                        )}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeletePhoto(idx)}
+                        className={cn(
+                          'flex items-center justify-center w-9 h-9 rounded-full',
+                          'bg-red-500/80 backdrop-blur-sm text-white',
+                          'touch-manipulation'
+                        )}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -809,7 +824,7 @@ export const BriefingFormWizard = ({
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     {briefingTypeInfo && (
-                      <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-elec-yellow/80 mb-1.5">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-elec-yellow/80 mb-1.5">
                         <FileText className="h-3 w-3" />
                         {briefingTypeInfo.label} Briefing
                       </span>
@@ -839,18 +854,24 @@ export const BriefingFormWizard = ({
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
                     <MapPin className="h-3.5 w-3.5 text-white/50" />
                   </div>
-                  <span className="text-white/70">{formData.siteName}</span>
+                  <span className="text-white/70 truncate">{formData.siteName}</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <Calendar className="h-3.5 w-3.5 text-white/50" />
+                <div className="flex items-center gap-3 text-sm flex-wrap">
+                  <div className="flex items-center gap-3 shrink-0">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                      <Calendar className="h-3.5 w-3.5 text-white/50" />
+                    </div>
+                    <span className="text-white/70 whitespace-nowrap">
+                      {formData.briefingDate ? new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}
+                    </span>
                   </div>
-                  <span className="text-white/70">{formData.briefingDate}</span>
-                  <span className="text-white/25">|</span>
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <Clock className="h-3.5 w-3.5 text-white/50" />
+                  <span className="text-white/25 hidden sm:inline">|</span>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                      <Clock className="h-3.5 w-3.5 text-white/50" />
+                    </div>
+                    <span className="text-white/70 whitespace-nowrap">{formData.briefingTime}</span>
                   </div>
-                  <span className="text-white/70">{formData.briefingTime}</span>
                 </div>
               </div>
 
@@ -1024,7 +1045,7 @@ export const BriefingFormWizard = ({
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={step === 0 ? onClose : prevStep}
-              className="p-2 -ml-2 text-white/60 hover:text-white"
+              className="p-2.5 -ml-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -1034,7 +1055,7 @@ export const BriefingFormWizard = ({
               </p>
               <p className="text-sm font-medium text-white">{STEP_TITLES[step]}</p>
             </div>
-            <button onClick={onClose} className="p-2 -mr-2 text-white/60 hover:text-white">
+            <button onClick={onClose} className="p-2.5 -mr-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center">
               <X className="h-5 w-5" />
             </button>
           </div>

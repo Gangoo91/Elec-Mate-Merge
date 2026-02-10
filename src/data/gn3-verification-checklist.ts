@@ -4,7 +4,7 @@
  * This file tracks content accuracy against the IET Guidance Note 3: Inspection & Testing.
  * Use this to verify that all testing procedures and limits in the app match the official guidance.
  *
- * Reference: IET Guidance Note 3 (BS 7671:2018+A2:2022)
+ * Reference: IET Guidance Note 3 (BS 7671:2018+A3:2024)
  * Source file: public/data/GUIDANCE-NOTE-3.txt
  */
 
@@ -36,7 +36,7 @@ export interface GN3VerificationChecklist {
 export const gn3VerificationChecklist: GN3VerificationChecklist = {
   lastVerified: "2026-01-06",
   gnVersion: "GN3:2024",
-  bs7671Version: "BS 7671:2018+A2:2022",
+  bs7671Version: "BS 7671:2018+A3:2024",
 
   sections: {
     safeIsolation: {
@@ -206,7 +206,7 @@ export const gn3VerificationChecklist: GN3VerificationChecklist = {
         "Test at BOTH 0° and 180° (positive and negative half-cycles) - record LONGER time",
         "½×IΔn test: RCD should NOT trip",
         "1×IΔn test: Required by BS 7671 for ADS (643.7) and additional protection (643.8)",
-        "5×IΔn test: OPTIONAL per BS 7671:2018+A2:2022 (for fault-finding purposes)",
+        "5×IΔn test: OPTIONAL per BS 7671:2018+A3:2024 (for fault-finding purposes)",
         "Configure tester for correct RCD Type (AC, A, F, B) as marked on device",
         "Longest trip time at 0°/180° recorded in column 28 of Schedule of Test Results",
         "Type A/F/B RCDs require additional pulsed DC tests"

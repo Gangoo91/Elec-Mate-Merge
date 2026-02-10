@@ -305,6 +305,77 @@ const InspectionTestingModule1Section5 = () => {
           </div>
         </section>
 
+        {/* Test Sequence Flowchart Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">BS 7671 / GN3 Test Sequence Flowchart</h4>
+          <svg viewBox="0 0 800 680" className="w-full h-auto" role="img" aria-label="Test sequence flowchart showing visual inspection, dead tests, then live tests in correct order per BS 7671 Chapter 64 and GN3">
+            {/* Stage 1: Visual Inspection */}
+            <rect x="200" y="5" width="400" height="30" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" />
+            <text x="400" y="25" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold">STAGE 1 — VISUAL INSPECTION (Supply OFF)</text>
+
+            <rect x="275" y="45" width="250" height="36" rx="8" fill="rgba(59,130,246,0.06)" stroke="rgba(59,130,246,0.25)" strokeWidth="1.5" />
+            <text x="400" y="68" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Visual Inspection (Ch.63)</text>
+            <line x1="400" y1="81" x2="400" y2="100" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            {/* Stage 2: Dead Tests */}
+            <rect x="200" y="100" width="400" height="30" rx="6" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" strokeWidth="1.5" />
+            <text x="400" y="120" textAnchor="middle" fill="#F97316" fontSize="11" fontWeight="bold">STAGE 2 — DEAD TESTS (Supply ISOLATED)</text>
+
+            <rect x="275" y="140" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
+            <text x="400" y="163" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">1. Continuity of CPCs (R1+R2)</text>
+            <line x1="400" y1="176" x2="400" y2="192" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="192" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
+            <text x="400" y="215" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">2. Ring Final Circuit Continuity</text>
+            <line x1="400" y1="228" x2="400" y2="244" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="244" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
+            <text x="400" y="267" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">3. Insulation Resistance (500V DC)</text>
+            <line x1="400" y1="280" x2="400" y2="296" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="296" width="250" height="36" rx="8" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.2)" strokeWidth="1.5" />
+            <text x="400" y="319" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">4. Polarity (initial check)</text>
+            <line x1="400" y1="332" x2="400" y2="348" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            {/* Stage 3: Live Tests */}
+            <rect x="200" y="348" width="400" height="30" rx="6" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" strokeWidth="1.5" />
+            <text x="400" y="368" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">STAGE 3 — LIVE TESTS (Supply CONNECTED)</text>
+
+            <rect x="275" y="388" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
+            <text x="400" y="411" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">5. Earth Electrode (TT only)</text>
+            <line x1="400" y1="424" x2="400" y2="440" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="440" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
+            <text x="400" y="463" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">6. Earth Fault Loop Impedance</text>
+            <line x1="400" y1="476" x2="400" y2="492" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="492" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
+            <text x="400" y="515" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">7. Prospective Fault Current</text>
+            <line x1="400" y1="528" x2="400" y2="544" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="544" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
+            <text x="400" y="567" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">8. RCD Operation</text>
+            <line x1="400" y1="580" x2="400" y2="596" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            <rect x="275" y="596" width="250" height="36" rx="8" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.2)" strokeWidth="1.5" />
+            <text x="400" y="619" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">9. Functional Testing</text>
+            <line x1="400" y1="632" x2="400" y2="648" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" markerEnd="url(#arrowTS)" />
+
+            {/* Complete */}
+            <rect x="305" y="648" width="190" height="26" rx="13" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.5" />
+            <text x="400" y="666" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">TESTING COMPLETE</text>
+
+            {/* Arrow marker */}
+            <defs>
+              <marker id="arrowTS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="rgba(255,255,255,0.3)" />
+              </marker>
+            </defs>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">Test sequence per BS 7671 Chapter 64 and GN3. Visual inspection first, then dead tests (supply isolated), then live tests (supply connected). Never skip stages — each confirms safety for the next.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 03: Dead Testing Sequence */}

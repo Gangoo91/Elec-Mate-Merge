@@ -284,6 +284,67 @@ const InspectionTestingModule3Section1 = () => {
           </div>
         </section>
 
+        {/* CPC Continuity Test Setup Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">R1+R2 Continuity Test Setup (Method 1)</h4>
+          <svg viewBox="0 0 800 320" className="w-full h-auto" role="img" aria-label="CPC continuity test setup showing temporary link between Line and CPC at the distribution board, with low-resistance ohmmeter measuring at the furthest socket outlet">
+            {/* Distribution Board */}
+            <rect x="50" y="40" width="180" height="180" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="140" y="62" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">DISTRIBUTION BOARD</text>
+            <text x="140" y="78" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">(Circuit isolated)</text>
+
+            {/* Terminals */}
+            <rect x="80" y="100" width="40" height="25" rx="4" fill="rgba(239,68,68,0.1)" stroke="#EF4444" strokeWidth="1.5" />
+            <text x="100" y="117" textAnchor="middle" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <rect x="80" y="145" width="40" height="25" rx="4" fill="rgba(59,130,246,0.1)" stroke="#3B82F6" strokeWidth="1.5" />
+            <text x="100" y="162" textAnchor="middle" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <rect x="80" y="190" width="40" height="25" rx="4" fill="rgba(34,197,94,0.1)" stroke="#22C55E" strokeWidth="1.5" />
+            <text x="100" y="207" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+
+            {/* Temporary link (L to E) */}
+            <path d="M120,112 L170,112 L170,202 L120,202" fill="none" stroke="#FBBF24" strokeWidth="2.5" strokeDasharray="6,3" />
+            <rect x="150" y="148" width="55" height="22" rx="4" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.4)" strokeWidth="1" />
+            <text x="177" y="163" textAnchor="middle" fill="#FBBF24" fontSize="8" fontWeight="bold">LINK</text>
+
+            {/* Cable run from DB to socket */}
+            <line x1="230" y1="112" x2="500" y2="112" stroke="#EF4444" strokeWidth="2" />
+            <text x="365" y="105" textAnchor="middle" fill="#EF4444" fontSize="9">R1 (Line conductor)</text>
+            <line x1="230" y1="157" x2="500" y2="157" stroke="#3B82F6" strokeWidth="2" opacity="0.4" />
+            <line x1="230" y1="202" x2="500" y2="202" stroke="#22C55E" strokeWidth="2" />
+            <text x="365" y="218" textAnchor="middle" fill="#22C55E" fontSize="9">R2 (CPC)</text>
+
+            {/* Furthest Socket Outlet */}
+            <rect x="500" y="70" width="150" height="180" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="575" y="90" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">FURTHEST SOCKET</text>
+            <text x="575" y="106" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">(Point of measurement)</text>
+
+            {/* Socket terminals */}
+            <rect x="525" y="120" width="30" height="20" rx="3" fill="rgba(239,68,68,0.1)" stroke="#EF4444" strokeWidth="1" />
+            <text x="540" y="134" textAnchor="middle" fill="#EF4444" fontSize="8">L</text>
+            <rect x="560" y="120" width="30" height="20" rx="3" fill="rgba(59,130,246,0.1)" stroke="#3B82F6" strokeWidth="1" />
+            <text x="575" y="134" textAnchor="middle" fill="#3B82F6" fontSize="8">N</text>
+            <rect x="543" y="145" width="30" height="20" rx="3" fill="rgba(34,197,94,0.1)" stroke="#22C55E" strokeWidth="1" />
+            <text x="558" y="159" textAnchor="middle" fill="#22C55E" fontSize="8">E</text>
+
+            {/* Ohmmeter */}
+            <rect x="520" y="185" width="110" height="50" rx="8" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.3)" strokeWidth="1.5" />
+            <text x="575" y="205" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">OHMMETER</text>
+            <text x="575" y="222" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">≥200mA test current</text>
+
+            {/* Meter probes to L and E */}
+            <line x1="540" y1="185" x2="540" y2="165" stroke="#EF4444" strokeWidth="1.5" />
+            <line x1="558" y1="185" x2="558" y2="165" stroke="#22C55E" strokeWidth="1.5" />
+            <text x="575" y="177" fill="rgba(255,255,255,0.4)" fontSize="7">L to E</text>
+
+            {/* Result annotation */}
+            <rect x="50" y="270" width="700" height="40" rx="8" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
+            <text x="400" y="288" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Reading = R1 + R2 (line resistance + CPC resistance in series via the temporary link)</text>
+            <text x="400" y="303" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Add to Ze for Zs verification: Zs = Ze + (R1+R2)</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">Method 1 (GN3 Figure 2.13): Temporarily link L and CPC at the DB. Measure between L and E at the furthest point. Reading gives R1+R2 directly. Always remove the link before re-energising.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 3: Calculating Expected R1+R2 */}

@@ -51,7 +51,7 @@ export async function saveCertificatePdf(
 
   console.log('[certificate-pdf-storage] PDF saved permanently:', { storagePath, publicUrl });
 
-  return { permanentUrl: publicUrl, storagePath };
+  return { permanentUrl: `${publicUrl}?v=${Date.now()}`, storagePath };
 }
 
 /**

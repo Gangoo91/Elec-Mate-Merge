@@ -23,7 +23,8 @@ export const useSupabaseEntries = (userId: string | null) => {
           duration: entry.duration,
           activity: entry.activity,
           notes: entry.notes,
-          isAutomatic: entry.is_automatic
+          isAutomatic: entry.is_automatic,
+          is_supervisor_verified: entry.is_supervisor_verified || false,
         }));
       }
     } catch (e) {

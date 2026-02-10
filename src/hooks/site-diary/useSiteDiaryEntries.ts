@@ -9,6 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { useLearningXP } from '@/hooks/useLearningXP';
 
 export interface SiteDiaryEntry {
   id: string;
@@ -33,6 +34,7 @@ const STORAGE_KEY = 'elec-mate-site-diary';
 
 export function useSiteDiaryEntries() {
   const { user } = useAuth();
+  const { logActivity } = useLearningXP();
   const [entries, setEntries] = useState<SiteDiaryEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -97,6 +99,19 @@ export function useSiteDiaryEntries() {
       setEntries(prev => [newEntry, ...prev]);
       localStorage.setItem(STORAGE_KEY, JSON.stringify([newEntry, ...entries]));
       toast.success('Diary entry saved');
+
+      // Log XP for diary entry
+      logActivity({
+        activityType: 'site_diary_entry',
+        sourceId: newEntry.id,
+        sourceTitle: `Site Diary: ${newEntry.site_name}`,
+        metadata: {
+          siteName: newEntry.site_name,
+          tasksCompleted: newEntry.tasks_completed?.length ?? 0,
+          skillsPractised: newEntry.skills_practised?.length ?? 0,
+        },
+      });
+
       return newEntry;
     } catch (err) {
       console.error('Failed to save diary entry:', err);

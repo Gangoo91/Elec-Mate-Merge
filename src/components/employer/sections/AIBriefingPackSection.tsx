@@ -173,7 +173,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
 
           {/* Prerequisites Status */}
           {selectedJobPack && (
-            <Card className={`border-${canGenerate ? 'success' : 'warning'}/20 bg-${canGenerate ? 'success' : 'warning'}/5`}>
+            <Card className={canGenerate ? "border-success/20 bg-success/5" : "border-warning/20 bg-warning/5"}>
               <CardContent className="p-4">
                 <h4 className="font-medium text-foreground mb-3">Prerequisites</h4>
                 <div className="space-y-2">
@@ -190,9 +190,8 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     ) : (
                       <Button
                         variant="outline"
-                        size="sm"
                         onClick={() => onNavigate("airams")}
-                        className="text-xs"
+                        className="h-11 touch-manipulation text-xs"
                       >
                         Generate
                       </Button>
@@ -211,9 +210,8 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     ) : (
                       <Button
                         variant="outline"
-                        size="sm"
                         onClick={() => onNavigate("aimethodstatement")}
-                        className="text-xs"
+                        className="h-11 touch-manipulation text-xs"
                       >
                         Generate
                       </Button>
@@ -236,14 +234,14 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
                 placeholder="Site access codes, parking instructions, specific safety concerns..."
-                className="min-h-[100px] bg-elec-dark border-elec-yellow/20"
+                className="min-h-[100px] bg-elec-dark border-elec-yellow/20 touch-manipulation"
                 disabled={isGenerating}
               />
 
               <Button
                 onClick={handleGenerate}
                 disabled={isGenerating || !canGenerate}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation"
               >
                 {isGenerating ? (
                   <>
@@ -293,7 +291,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
                     <p className="text-sm text-muted-foreground mt-1">{error}</p>
-                    <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
+                    <Button variant="outline" className="mt-3 h-11 touch-manipulation" onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
                     </Button>
@@ -322,12 +320,12 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   <div className="flex gap-2">
                     <Button
                       onClick={handleDownload}
-                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation"
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Download
                     </Button>
-                    <Button variant="outline" onClick={handleReset} className="border-elec-yellow/30">
+                    <Button variant="outline" onClick={handleReset} className="border-elec-yellow/30 h-11 touch-manipulation">
                       <RefreshCw className="h-4 w-4 mr-2" />
                       New
                     </Button>

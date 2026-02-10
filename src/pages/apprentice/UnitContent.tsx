@@ -9,10 +9,13 @@ import { SmartBackButton } from "@/components/ui/smart-back-button";
 import HealthSafetyUnit from "@/components/apprentice/units/HealthSafetyUnit";
 import ElectricalTheoryUnit from "@/components/apprentice/units/ElectricalTheoryUnit";
 import InstallationMethodsUnit from "@/components/apprentice/units/InstallationMethodsUnit";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 const UnitContent = () => {
   const { unitId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [completedSections, setCompletedSections] = useState<Record<string, boolean>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
   
@@ -25,17 +28,16 @@ const UnitContent = () => {
   const isInstallationMethodsUnit = unitId === 'elec2-05a';
   const unitCode = unitData?.code || '';
   
-  // Load any completed sections and quiz status from localStorage
+  // Load any completed sections and quiz status from localStorage (user-scoped)
   useEffect(() => {
     if (unitId && unitData?.code) {
       const code = unitData.code;
-      // Check for completed quiz
-      const storedQuizStatus = localStorage.getItem(`unit_${code}_quiz_completed`);
+      const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${code}_quiz_completed`));
       if (storedQuizStatus === 'true') {
         setQuizCompleted(true);
       }
     }
-  }, [unitId, unitData]);
+  }, [unitId, unitData, user?.id]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">

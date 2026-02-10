@@ -17,6 +17,8 @@ export interface PortfolioEntry {
   status: 'draft' | 'in-progress' | 'completed' | 'reviewed';
   timeSpent: number; // minutes
   awardingBodyStandards: string[];
+  isVerified?: boolean;
+  lastValidationGrade?: string;
 }
 
 export interface PortfolioFile {

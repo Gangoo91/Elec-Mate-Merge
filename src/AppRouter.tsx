@@ -36,6 +36,7 @@ const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
 const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
 const PublicElecIdView = lazy(() => import('@/pages/public/PublicElecIdView'));
+const SupervisorVerificationPage = lazy(() => import('@/pages/public/SupervisorVerificationPage'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
 const InvoiceViewPage = lazy(() => import('@/pages/electrician/InvoiceViewPage'));
@@ -309,6 +310,14 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <PublicElecIdView />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/verify-evidence/:token"
+          element={
+            <LazyRoute>
+              <SupervisorVerificationPage />
             </LazyRoute>
           }
         />

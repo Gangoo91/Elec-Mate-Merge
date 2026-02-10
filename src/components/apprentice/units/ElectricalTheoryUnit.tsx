@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TheorySections from "./components/TheorySections";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
@@ -11,14 +13,15 @@ interface ElectricalTheoryUnitProps {
 const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUnitProps) => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const navigate = useNavigate();
-  
-  // Load completion status
+  const { user } = useAuth();
+
+  // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(`unit_${unitCode}_quiz_completed`);
+    const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${unitCode}_quiz_completed`));
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
-  }, [unitCode]);
+  }, [unitCode, user?.id]);
 
   return (
     <div className="space-y-6 animate-fade-in">

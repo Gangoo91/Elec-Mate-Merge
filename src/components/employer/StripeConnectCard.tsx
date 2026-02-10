@@ -211,7 +211,7 @@ export function StripeConnectCard() {
               </Button>
               
               <p className="text-xs text-muted-foreground text-center">
-                1.6% platform fee + Stripe processing fees apply to each transaction
+                1% platform fee + Stripe processing fees apply to each transaction
               </p>
             </div>
           ) : isPending ? (
@@ -306,7 +306,7 @@ export function StripeConnectCard() {
               </Button>
               
               <p className="text-xs text-muted-foreground text-center">
-                1.6% platform fee + Stripe processing fees apply to each transaction
+                1% platform fee + Stripe processing fees apply to each transaction
               </p>
             </div>
           )}

@@ -126,7 +126,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search briefings..."
-            className={cn("h-11 bg-card/50 border-elec-yellow/20", !searchTerm && "pl-10")}
+            className={cn("h-11 bg-card/50 border-elec-yellow/20 touch-manipulation", !searchTerm && "pl-10")}
           />
         </div>
 
@@ -134,7 +134,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           <button
             onClick={() => setStatusFilter("all")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               statusFilter === "all"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -144,7 +144,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           </button>
           <button
             onClick={() => setStatusFilter("completed")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               statusFilter === "completed"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -154,7 +154,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           </button>
           <button
             onClick={() => setStatusFilter("scheduled")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               statusFilter === "scheduled"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -164,7 +164,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           </button>
           <button
             onClick={() => setStatusFilter("draft")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               statusFilter === "draft"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -175,7 +175,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           <div className="border-l border-elec-yellow/20 mx-1"></div>
           <button
             onClick={() => setAiFilter("all")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               aiFilter === "all"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -185,7 +185,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           </button>
           <button
             onClick={() => setAiFilter("ai")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               aiFilter === "ai"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -196,7 +196,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
           </button>
           <button
             onClick={() => setAiFilter("manual")}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-colors touch-manipulation ${
               aiFilter === "manual"
                 ? "bg-elec-yellow text-elec-dark"
                 : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
@@ -256,7 +256,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
               return (
                 <div 
                   key={briefing.id} 
-                  className="bg-card/30 border border-elec-yellow/10 rounded-xl p-4 hover:border-elec-yellow/30 transition-all active:scale-[0.98]"
+                  className="bg-card/30 border border-elec-yellow/10 rounded-xl p-4 hover:border-elec-yellow/30 transition-all active:scale-[0.98] touch-manipulation"
                 >
                     {/* Top badges row with actions */}
                     <div className="flex items-start justify-between gap-2 mb-3">
@@ -282,7 +282,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-bold text-lg text-elec-light mb-2">
+                    <h3 className="font-bold text-lg text-elec-light mb-2 line-clamp-2">
                       {briefing.job_name || briefing.briefing_name}
                     </h3>
 
@@ -297,15 +297,15 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-elec-light/70 mb-3">
                       <div className="flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-elec-yellow" />
-                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')} at {briefing.briefing_time}</span>
+                        <span className="whitespace-nowrap">{new Date(briefing.briefing_date).toLocaleDateString('en-GB')} at {briefing.briefing_time}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-elec-yellow" />
-                        <span>{briefing.location}</span>
+                        <span className="truncate">{briefing.location}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <User className="h-4 w-4 text-elec-yellow" />
-                        <span>{briefing.conductor_name || 'Not specified'}</span>
+                        <span className="truncate">{briefing.conductor_name || 'Not specified'}</span>
                       </div>
                       {briefing.team_size && (
                         <div className="flex items-center gap-2">

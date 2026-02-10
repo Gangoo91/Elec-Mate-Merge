@@ -249,7 +249,7 @@ const BriefingSignOff = () => {
 
   if (loading) {
     return (
-      <div className="bg-elec-navy flex items-center justify-center">
+      <div className="min-h-screen bg-elec-navy flex items-center justify-center">
         <div className="text-center text-elec-light">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
           <p>Loading briefing...</p>
@@ -260,7 +260,7 @@ const BriefingSignOff = () => {
 
   if (!briefing) {
     return (
-      <div className="bg-elec-navy flex items-center justify-center p-4">
+      <div className="min-h-screen bg-elec-navy flex items-center justify-center p-4">
         <Card className="max-w-md w-full bg-elec-gray border-elec-gray">
           <CardContent className="pt-6 text-center">
             <AlertTriangle className="h-16 w-16 text-destructive mx-auto mb-4" />
@@ -290,7 +290,7 @@ const BriefingSignOff = () => {
 
   if (showSuccess) {
     return (
-      <div className="bg-elec-navy flex items-center justify-center p-4">
+      <div className="min-h-screen bg-elec-navy flex items-center justify-center p-4">
         <Card className="max-w-md w-full bg-elec-gray border-green-500/30">
           <CardContent className="pt-8 text-center">
             <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
@@ -311,7 +311,7 @@ const BriefingSignOff = () => {
   }
 
   return (
-    <div className="bg-elec-navy">
+    <div className="min-h-screen bg-elec-navy">
       <div className="container mx-auto px-4 py-6 max-w-lg">
         <div className="bg-elec-gray/95 backdrop-blur-sm rounded-2xl overflow-hidden">
           {/* Header */}
@@ -353,15 +353,15 @@ const BriefingSignOff = () => {
                 </span>
               )}
               {briefing.location && (
-                <span className="flex items-center gap-1.5 text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  {briefing.location}
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <MapPin className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.location}</span>
                 </span>
               )}
               {briefing.presenter && (
-                <span className="flex items-center gap-1.5 text-muted-foreground">
-                  <User className="h-4 w-4" />
-                  {briefing.presenter}
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <User className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.presenter}</span>
                 </span>
               )}
             </div>
@@ -401,10 +401,9 @@ const BriefingSignOff = () => {
                 <div className="flex gap-2">
                   <Button
                     variant={!isGuest ? "default" : "outline"}
-                    size="sm"
                     onClick={() => setIsGuest(false)}
                     className={cn(
-                      "flex-1 h-10",
+                      "flex-1 h-11 touch-manipulation",
                       !isGuest && "bg-blue-600 hover:bg-blue-700"
                     )}
                   >
@@ -413,10 +412,9 @@ const BriefingSignOff = () => {
                   </Button>
                   <Button
                     variant={isGuest ? "default" : "outline"}
-                    size="sm"
                     onClick={() => setIsGuest(true)}
                     className={cn(
-                      "flex-1 h-10",
+                      "flex-1 h-11 touch-manipulation",
                       isGuest && "bg-blue-600 hover:bg-blue-700"
                     )}
                   >
@@ -443,7 +441,7 @@ const BriefingSignOff = () => {
                                   : "bg-muted/50 border-border hover:border-blue-500/50"
                               )}
                             >
-                              <p className="font-medium text-foreground">
+                              <p className="font-medium text-foreground truncate">
                                 {attendee.employee?.name || attendee.guest_name || "Unknown"}
                               </p>
                               {attendee.guest_company && (
@@ -501,7 +499,7 @@ const BriefingSignOff = () => {
                         variant="ghost"
                         size="sm"
                         onClick={clearSignature}
-                        className="h-7 text-xs text-muted-foreground"
+                        className="h-11 text-sm text-muted-foreground touch-manipulation"
                       >
                         Clear
                       </Button>
@@ -554,12 +552,12 @@ const BriefingSignOff = () => {
                     {signedAttendees.map((attendee) => (
                       <div
                         key={attendee.id}
-                        className="flex items-center justify-between p-2 rounded bg-green-500/5"
+                        className="flex items-center justify-between gap-2 p-2 rounded bg-green-500/5"
                       >
-                        <span className="text-sm text-foreground">
+                        <span className="text-sm text-foreground truncate min-w-0 flex-1">
                           {attendee.employee?.name || attendee.guest_name}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground shrink-0 whitespace-nowrap">
                           {attendee.acknowledged_at
                             ? format(new Date(attendee.acknowledged_at), "HH:mm")
                             : ""}

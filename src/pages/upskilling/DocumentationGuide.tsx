@@ -28,7 +28,7 @@ const DocumentationGuide = () => {
             <h1 className="text-4xl font-bold text-white">Documentation Guide</h1>
             <p className="text-xl text-white">Complete guide to filling out test certificates and schedules for practical exams</p>
             <div className="flex justify-center gap-3">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A2</Badge>
+              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A3:2024</Badge>
               <Badge variant="outline" className="border-gray-600 text-white">IET Guidance Note 3</Badge>
               <Badge variant="outline" className="border-gray-600 text-white">City & Guilds</Badge>
             </div>
@@ -376,7 +376,7 @@ const DocumentationGuide = () => {
                   <li>• <strong>Not a certificate of compliance</strong> - it's a condition report</li>
                   <li>• <strong>Sampling basis</strong> - reasonable examination without damage</li>
                   <li>• <strong>Competent person</strong> - must be carried out by qualified inspector</li>
-                  <li>• <strong>Current edition</strong> - assessed against BS 7671:2018+A2</li>
+                  <li>• <strong>Current edition</strong> - assessed against BS 7671:2018+A3:2024</li>
                 </ul>
               </div>
 

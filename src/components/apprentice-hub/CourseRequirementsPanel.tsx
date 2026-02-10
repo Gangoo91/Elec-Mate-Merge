@@ -22,7 +22,7 @@ interface CourseRequirementsPanelProps {
 export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPanelProps) {
   const [expanded, setExpanded] = useState(true);
   const [requirementsOpen, setRequirementsOpen] = useState(false);
-  const { qualificationName, requirementCode, isLoading } = useStudentQualification();
+  const { qualificationName, qualificationCode, isLoading } = useStudentQualification();
 
   if (isLoading) {
     return (
@@ -37,7 +37,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
     );
   }
 
-  if (!requirementCode) {
+  if (!qualificationCode) {
     return (
       <Card className="bg-card border-border">
         <CardContent className="py-6">
@@ -114,7 +114,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
         {expanded && (
           <CardContent className="pt-4 space-y-3">
             <QualificationProgress
-              qualificationCode={requirementCode}
+              qualificationCode={qualificationCode}
               qualificationName={qualificationName}
             />
 
@@ -132,7 +132,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
       <QualificationRequirements
         open={requirementsOpen}
         onOpenChange={setRequirementsOpen}
-        qualificationCode={requirementCode}
+        qualificationCode={qualificationCode}
       />
     </>
   );

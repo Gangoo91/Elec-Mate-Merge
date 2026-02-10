@@ -147,9 +147,8 @@ export function SignaturePad({
             <Button
               type="button"
               variant="ghost"
-              size="sm"
-              onClick={clearSignature}
-              className="h-8 px-2 text-white/50 hover:text-white hover:bg-white/10"
+                            onClick={clearSignature}
+              className="h-11 px-2 text-white/50 hover:text-white hover:bg-white/10 touch-manipulation"
             >
               <Eraser className="h-4 w-4 mr-1" />
               Clear
@@ -269,9 +268,8 @@ export function AttendeeSignatureCard({
       {/* Actions */}
       {!signed && onSign && (
         <Button
-          size="sm"
-          onClick={onSign}
-          className="h-9 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    onClick={onSign}
+          className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
         >
           Sign
         </Button>
@@ -279,9 +277,8 @@ export function AttendeeSignatureCard({
       {onRemove && (
         <Button
           variant="ghost"
-          size="sm"
-          onClick={onRemove}
-          className="h-9 w-9 p-0 text-white/40 hover:text-red-400 hover:bg-red-500/10"
+                    onClick={onRemove}
+          className="h-11 w-11 p-0 text-white/40 hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
         >
           <X className="h-4 w-4" />
         </Button>

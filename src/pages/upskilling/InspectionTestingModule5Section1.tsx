@@ -330,6 +330,68 @@ const InspectionTestingModule5Section1 = () => {
           </div>
         </section>
 
+        {/* Earth Fault Loop Path Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">Earth Fault Loop Impedance Path (Zs = Ze + R1+R2)</h4>
+          <svg viewBox="0 0 800 420" className="w-full h-auto" role="img" aria-label="Earth fault loop impedance path diagram showing Ze external path and R1+R2 internal circuit path">
+            {/* Transformer */}
+            <rect x="30" y="140" width="100" height="140" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="80" y="165" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">SUPPLY</text>
+            <text x="80" y="180" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">TRANSFORMER</text>
+            {/* Transformer coils */}
+            <path d="M60,200 Q70,195 80,200 Q90,205 100,200" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+            <path d="M60,215 Q70,210 80,215 Q90,220 100,215" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+            <circle cx="80" cy="250" r="6" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+            <text x="80" y="254" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">N</text>
+
+            {/* Consumer Unit */}
+            <rect x="350" y="50" width="120" height="80" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="410" y="75" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">CONSUMER</text>
+            <text x="410" y="90" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">UNIT</text>
+            <text x="410" y="115" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="8">MET</text>
+
+            {/* Fault location */}
+            <rect x="630" y="130" width="120" height="60" rx="8" fill="rgba(239,68,68,0.1)" stroke="#EF4444" strokeWidth="2" />
+            <text x="690" y="155" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">FAULT</text>
+            <text x="690" y="170" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L touches metalwork</text>
+
+            {/* Phase conductor path (R1) — Transformer → CU → Fault */}
+            <line x1="130" y1="160" x2="350" y2="70" stroke="#EF4444" strokeWidth="2.5" />
+            <line x1="470" y1="70" x2="630" y2="140" stroke="#EF4444" strokeWidth="2.5" />
+            <text x="550" y="90" textAnchor="middle" fill="#EF4444" fontSize="11" fontWeight="bold">R1 (Line)</text>
+
+            {/* CPC path (R2) — Fault → CU */}
+            <line x1="690" y1="190" x2="690" y2="320" stroke="#22C55E" strokeWidth="2.5" />
+            <line x1="690" y1="320" x2="410" y2="320" stroke="#22C55E" strokeWidth="2.5" />
+            <line x1="410" y1="320" x2="410" y2="130" stroke="#22C55E" strokeWidth="2.5" />
+            <text x="560" y="310" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">R2 (CPC)</text>
+
+            {/* Earth return path — CU → Transformer */}
+            <line x1="350" y1="120" x2="80" y2="280" stroke="#F97316" strokeWidth="2" strokeDasharray="6,3" />
+            <text x="200" y="220" textAnchor="middle" fill="#F97316" fontSize="10" fontWeight="bold">Earthing conductor</text>
+
+            {/* DNO earth return */}
+            <path d="M80,280 L80,360 L400,360" fill="none" stroke="#F97316" strokeWidth="2" strokeDasharray="6,3" />
+            <text x="240" y="380" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">DNO earth return (cable sheath / PEN)</text>
+
+            {/* Ze bracket */}
+            <rect x="20" y="395" width="340" height="20" rx="4" fill="rgba(249,115,22,0.1)" stroke="rgba(249,115,22,0.3)" strokeWidth="1" />
+            <text x="190" y="410" textAnchor="middle" fill="#F97316" fontSize="10" fontWeight="bold">Ze (External Impedance)</text>
+
+            {/* R1+R2 bracket */}
+            <rect x="385" y="395" width="370" height="20" rx="4" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" strokeWidth="1" />
+            <text x="570" y="410" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">R1+R2 (Circuit Impedance)</text>
+
+            {/* Zs label */}
+            <text x="400" y="22" textAnchor="middle" fill="#FBBF24" fontSize="14" fontWeight="bold">Zs = Ze + (R1+R2)</text>
+
+            {/* Current flow arrows */}
+            <text x="240" y="55" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">Fault current flow →</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">The earth fault loop: current flows from the transformer through the line conductor (R1) to the fault, returns via the CPC (R2) and earthing conductor, then through the DNO earth return (Ze) back to the transformer.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 3: The Key Formula */}

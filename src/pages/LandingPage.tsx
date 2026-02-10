@@ -453,12 +453,12 @@ const LandingPage = () => {
               painPoint="Training courses cost thousands and revision materials are scattered everywhere"
               tagline="Everything to ace your training — from £4.99/mo"
               features={[
-                'Level 2 & 3 complete curriculum',
-                'AM2 practical & theory prep',
-                '2,000+ practice questions',
-                'HNC diploma modules',
-                'Flashcards & mock exams',
-                'Mental Health Mates community',
+                'Study Centre — Level 2, 3 & AM2',
+                'EPA Simulator with AI scoring',
+                'Inspection & Testing hub',
+                'AI Study Assistant',
+                'Portfolio & OJT hours tracking',
+                'Learning videos & calculators',
               ]}
               color="green"
             />
@@ -848,11 +848,12 @@ const LandingPage = () => {
               price="£4.99"
               description="Everything to ace your training"
               features={[
-                '22 courses (Level 2, 3, AM2, HNC)',
-                '2,000+ practice questions',
-                'Progress tracking',
-                'Mental Health Mates access',
-                'Flashcards & mock exams',
+                'Study Centre (Level 2, 3, AM2)',
+                'EPA Simulator with AI grading',
+                'Inspection & Testing hub',
+                'AI Study Assistant',
+                'Portfolio & OJT tracking',
+                'Learning videos & calculators',
               ]}
               color="green"
             />

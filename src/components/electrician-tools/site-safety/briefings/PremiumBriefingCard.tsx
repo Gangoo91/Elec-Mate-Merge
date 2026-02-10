@@ -130,8 +130,7 @@ export function TemplateCard({
           {onEdit && (
             <Button
               variant="ghost"
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onEdit(); }}
+                            onClick={(e) => { e.stopPropagation(); onEdit(); }}
               className="flex-1 h-11 text-yellow-400/80 hover:text-yellow-400 hover:bg-yellow-400/10 border border-yellow-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <FileText className="h-4 w-4 mr-1.5" />
@@ -141,8 +140,7 @@ export function TemplateCard({
           {onDuplicate && (
             <Button
               variant="ghost"
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
+                            onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
               className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Copy className="h-4 w-4 mr-1.5" />
@@ -151,8 +149,7 @@ export function TemplateCard({
           )}
           {onStart && (
             <Button
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onStart(); }}
+                            onClick={(e) => { e.stopPropagation(); onStart(); }}
               className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
               <Play className="h-4 w-4 mr-1.5" />
@@ -253,8 +250,7 @@ export function HistoryCard({
           {onView && (
             <Button
               variant="ghost"
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onView(); }}
+                            onClick={(e) => { e.stopPropagation(); onView(); }}
               className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Eye className="h-4 w-4 mr-1.5" />
@@ -264,8 +260,7 @@ export function HistoryCard({
           {onShare && (
             <Button
               variant="ghost"
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onShare(); }}
+                            onClick={(e) => { e.stopPropagation(); onShare(); }}
               className="flex-1 h-11 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-400/10 border border-emerald-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Share2 className="h-4 w-4 mr-1.5" />
@@ -275,8 +270,7 @@ export function HistoryCard({
           {onDownload && (
             <Button
               variant="ghost"
-              size="sm"
-              onClick={(e) => { e.stopPropagation(); onDownload(); }}
+                            onClick={(e) => { e.stopPropagation(); onDownload(); }}
               className="flex-1 h-11 text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10 border border-purple-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Download className="h-4 w-4 mr-1.5" />

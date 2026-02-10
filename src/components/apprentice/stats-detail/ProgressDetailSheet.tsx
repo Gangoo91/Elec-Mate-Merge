@@ -2,13 +2,15 @@
  * ProgressDetailSheet
  *
  * Green-themed 85vh bottom sheet with:
- * - Glowing StatRing hero with computed overall %
+ * - XP ring hero with level + daily goal progress
+ * - Overall progress from unified 6-factor formula
  * - Quiz performance bars with trend indicators + navigation
  * - Strongest/weakest category highlights
  * - Flashcard mastery with animated bars
  * - OJT hours animated progress
  * - Personalised insight card with decorative blob
- * - Smart recommendations
+ * - Smart cross-feature recommendations
+ * - Go to Study Centre CTA
  * - Empty state CTA
  */
 
@@ -31,47 +33,85 @@ import {
   Lightbulb,
   Brain,
   AlertCircle,
+  RotateCcw,
+  Layers,
+  ClipboardCheck,
+  ArrowRight,
+  PenLine,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { useProgressInsights } from '@/hooks/apprentice-stats/useProgressInsights';
-import { StatRing } from './StatRing';
+import { useUnifiedProgress, type QuizTrend } from '@/hooks/useUnifiedProgress';
+import { useSmartRecommendations, type SmartRecommendation } from '@/hooks/useSmartRecommendations';
+import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
 import { RecommendationCard } from './RecommendationCard';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import type { LucideIcon } from 'lucide-react';
 
 interface ProgressDetailSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-const trendIcons = {
+const trendIcons: Record<QuizTrend, LucideIcon> = {
   improving: TrendingUp,
   declining: TrendingDown,
   stable: Minus,
   'no-data': Minus,
 };
 
-const trendColours = {
+const trendColours: Record<QuizTrend, string> = {
   improving: 'text-green-400',
   declining: 'text-red-400',
   stable: 'text-white/50',
   'no-data': 'text-white/30',
 };
 
-const trendLabels = {
+const trendLabels: Record<QuizTrend, string> = {
   improving: 'Improving',
   declining: 'Needs attention',
   stable: 'Stable',
   'no-data': '',
 };
 
+/** Map smart recommendation icon strings to Lucide components */
+const smartIconMap: Record<string, LucideIcon> = {
+  RotateCcw,
+  Layers,
+  ClipboardCheck,
+  ArrowRight,
+  PenLine,
+  Clock,
+  TrendingUp,
+  Target,
+  Brain,
+  BookOpen,
+};
+
+function getSmartIcon(rec: SmartRecommendation): LucideIcon {
+  return smartIconMap[rec.icon] || BookOpen;
+}
+
+/** Map smart recommendation type to card variant colour */
+function getSmartVariant(rec: SmartRecommendation): 'green' | 'orange' | 'purple' | 'yellow' | 'blue' {
+  switch (rec.type) {
+    case 'spaced-rep': return 'orange';
+    case 'flashcard': return 'yellow';
+    case 'quiz': return 'green';
+    case 'diary': return 'purple';
+    case 'ojt': return 'blue';
+    case 'portfolio': return 'yellow';
+    default: return 'green';
+  }
+}
+
 export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetProps) {
   const navigate = useNavigate();
 
-  const goToQuiz = () => {
-    onOpenChange(false);
-    setTimeout(() => navigate('/apprentice/quiz'), 150);
+  const goToStudyCentre = () => {
+    navigate('/study-centre/apprentice');
+    setTimeout(() => onOpenChange(false), 50);
   };
 
   const {
@@ -87,9 +127,11 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
     totalFlashcards,
     ojtHours,
     insightText,
-    recommendations,
+    xp,
     loading,
-  } = useProgressInsights();
+  } = useUnifiedProgress();
+
+  const { recommendations: smartRecs } = useSmartRecommendations(4);
 
   const quizBarColours: Record<string, string> = {
     'Regulations': 'bg-green-500',
@@ -120,28 +162,54 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
 
           {/* Scrollable content */}
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-6">
-            {/* ── Hero: StatRing with glow ── */}
+            {/* ── Hero: XP ring + overall progress ── */}
             <div className="flex flex-col items-center text-center pt-2 pb-1">
               <div className="relative">
-                <div className="absolute inset-0 bg-green-400/15 rounded-full blur-2xl scale-110" />
-                <StatRing percent={overallPercent} size={140} ringClass="stroke-green-400" strokeWidth={10}>
-                  <div className="flex flex-col items-center">
-                    <AnimatedCounter
-                      value={overallPercent}
-                      className="text-4xl font-bold text-green-400"
-                    />
-                    <span className="text-xs text-white/50 mt-0.5">overall</span>
-                  </div>
-                </StatRing>
+                <div className="absolute inset-0 bg-green-400/15 rounded-full blur-2xl scale-125" />
+                <XPProgressRing
+                  xpToday={xp.xpToday}
+                  dailyGoal={xp.dailyGoal}
+                  level={xp.level}
+                  levelTitle={xp.levelTitle}
+                  totalXP={xp.totalXP}
+                  size={140}
+                  showLevel
+                />
               </div>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+                className="mt-3 flex items-center gap-3"
+              >
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/15 border border-green-500/25">
+                  <Target className="h-3.5 w-3.5 text-green-400" />
+                  <span className="text-sm font-bold text-green-400">{overallPercent}%</span>
+                  <span className="text-xs text-green-400/70">overall</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08]">
+                  <span className="text-xs text-white/50">{xp.xpToday}/{xp.dailyGoal} XP today</span>
+                </div>
+              </motion.div>
               <motion.p
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-sm text-white/80 mt-4 font-medium"
+                className="text-xs text-white/50 mt-2"
               >
-                Based on quizzes, flashcards, and on-the-job hours
+                Quizzes · Flashcards · OJT · Portfolio · Streak · EPA
               </motion.p>
+              <motion.button
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                onClick={goToStudyCentre}
+                className="mt-4 flex items-center gap-2 px-6 h-12 rounded-xl bg-green-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-green-500/20"
+              >
+                <BookOpen className="h-4 w-4" />
+                Go to Study Centre
+                <ChevronRight className="h-4 w-4" />
+              </motion.button>
             </div>
 
             {/* ── Quiz Performance with trend ── */}
@@ -177,7 +245,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={goToQuiz}
+                          onClick={goToStudyCentre}
                           className="text-sm text-white/80 font-medium touch-manipulation active:text-green-400 transition-colors"
                         >
                           {cat.subject}
@@ -318,17 +386,17 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   Take a quiz, review flashcards, or log your on-the-job hours to track your progress
                 </p>
                 <button
-                  onClick={goToQuiz}
+                  onClick={goToStudyCentre}
                   className="flex items-center gap-2 px-6 h-12 rounded-xl bg-green-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
                 >
-                  Take a quiz
+                  Go to Study Centre
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </motion.div>
             )}
 
-            {/* ── Recommendations ── */}
-            {recommendations.length > 0 && (
+            {/* ── Smart Recommendations ── */}
+            {smartRecs.length > 0 && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -341,15 +409,15 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 </div>
 
                 <div className="space-y-3 pb-6">
-                  {recommendations.map((rec) => (
+                  {smartRecs.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
-                      icon={rec.id === 'improve-quiz' ? Target : rec.id === 'quiz-overdue' ? AlertCircle : rec.id === 'log-ojt' ? Clock : rec.id === 'career-step' ? Award : BookOpen}
+                      icon={getSmartIcon(rec)}
                       title={rec.title}
                       description={rec.description}
                       actionLabel={rec.actionLabel}
                       actionPath={rec.actionPath}
-                      variant="green"
+                      variant={getSmartVariant(rec)}
                       onClose={() => onOpenChange(false)}
                     />
                   ))}

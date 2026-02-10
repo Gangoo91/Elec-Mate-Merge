@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { QuizResult } from '@/types/quiz';
 import { Json } from '@/integrations/supabase/types';
+import { useLearningXP } from './useLearningXP';
 
 export interface QuizResultData {
   id: string;
@@ -28,6 +29,7 @@ export const useQuizResults = () => {
   const [results, setResults] = useState<QuizResultData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { logActivity } = useLearningXP();
 
   const fetchQuizResults = async () => {
     try {
@@ -68,9 +70,24 @@ export const useQuizResults = () => {
         });
 
       if (error) throw error;
-      
+
       // Refresh results after saving
       await fetchQuizResults();
+
+      // Log XP for this quiz
+      logActivity({
+        activityType: 'quiz_completed',
+        sourceId: result.assessmentId,
+        sourceTitle: `Quiz ${result.assessmentId}`,
+        scorePercent: result.percentage,
+        questionCount: result.totalQuestions,
+        metadata: {
+          score: result.score,
+          totalQuestions: result.totalQuestions,
+          percentage: result.percentage,
+          timeSpent: result.timeSpent,
+        },
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save quiz result');
       throw err;

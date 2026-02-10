@@ -215,7 +215,7 @@ const QualificationConfirmationDialog = ({
               <Badge className="bg-elec-yellow text-black font-semibold text-xs">
                 {qualification.level}
               </Badge>
-              <span className="text-xs text-white/70">{qualification.awarding_body}</span>
+              <span className="text-xs text-white">{qualification.awarding_body}</span>
             </div>
             <SheetTitle className="text-left text-lg leading-tight">
               {qualification.title}
@@ -227,19 +227,19 @@ const QualificationConfirmationDialog = ({
             <div className="flex items-center gap-1.5">
               <Layers className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-semibold text-white">{units.length}</span>
-              <span className="text-xs text-white/60">units</span>
+              <span className="text-xs text-white">units</span>
             </div>
             <div className="w-px h-4 bg-white/10" />
             <div className="flex items-center gap-1.5">
               <BookOpen className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-semibold text-white">{totalLOs}</span>
-              <span className="text-xs text-white/60">outcomes</span>
+              <span className="text-xs text-white">outcomes</span>
             </div>
             <div className="w-px h-4 bg-white/10" />
             <div className="flex items-center gap-1.5">
               <FileText className="h-4 w-4 text-green-400" />
               <span className="text-sm font-semibold text-white">{totalACs}</span>
-              <span className="text-xs text-white/60">ACs</span>
+              <span className="text-xs text-white">ACs</span>
             </div>
           </div>
 
@@ -247,17 +247,17 @@ const QualificationConfirmationDialog = ({
           <div className="flex-1 overflow-y-auto px-5 pb-4 space-y-5">
             {/* Units accordion */}
             <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
                 Course Units
               </h4>
 
               {loadingReqs ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
-                  <span className="ml-2 text-sm text-white/60">Loading requirements...</span>
+                  <span className="ml-2 text-sm text-white">Loading requirements...</span>
                 </div>
               ) : units.length === 0 ? (
-                <p className="text-sm text-white/60 text-center py-6">
+                <p className="text-sm text-white text-center py-6">
                   No curriculum data available for this course yet.
                 </p>
               ) : (
@@ -297,7 +297,7 @@ const QualificationConfirmationDialog = ({
                               <p className="text-sm font-semibold text-white leading-tight">
                                 {unit.unitTitle}
                               </p>
-                              <p className="text-xs text-white/50 mt-1">
+                              <p className="text-xs text-white mt-1">
                                 {unit.unitCode} · {unit.loCount} outcomes · {unit.acCount} ACs
                               </p>
                             </div>
@@ -308,20 +308,20 @@ const QualificationConfirmationDialog = ({
                         <div className="ml-4 mr-1 mt-2 mb-1 space-y-3 text-left">
                           {unit.learningOutcomes.map((lo) => (
                             <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-1.5">
-                              <p className="text-xs font-medium text-blue-400 text-left">
+                              <p className="text-xs font-medium text-white text-left">
                                 LO{lo.loNumber}: {lo.loText}
                               </p>
                               <div className="space-y-1 ml-3">
                                 {lo.acs.map((ac) => (
                                   <div
                                     key={`${unit.unitCode}-${ac.code}`}
-                                    className="flex items-start gap-2 text-xs text-white/70 text-left"
+                                    className="flex items-start gap-2 text-xs text-white text-left"
                                   >
                                     <span className="text-elec-yellow/70 flex-shrink-0 mt-px">
                                       •
                                     </span>
                                     <span className="text-left">
-                                      <span className="font-medium text-white/90">{ac.code}</span>{' '}
+                                      <span className="font-medium text-white">{ac.code}</span>{' '}
                                       {ac.text}
                                     </span>
                                   </div>

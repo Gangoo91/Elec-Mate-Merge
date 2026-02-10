@@ -222,13 +222,13 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white">Share for Signing</h3>
-              <p className="text-[11px] text-white/40">Workers sign remotely — no login needed</p>
+              <p className="text-xs text-white/40">Workers sign remotely — no login needed</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 touch-manipulation"
+            className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <X className="h-4 w-4" />
           </button>
@@ -375,13 +375,13 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 className="overflow-hidden"
               >
                 <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                  <p className="text-[10px] font-medium text-white/30 uppercase tracking-wider mb-1.5">
+                  <p className="text-xs font-medium text-white/30 uppercase tracking-wider mb-1.5">
                     Signing Link
                   </p>
                   <p className="text-xs text-yellow-400/80 break-all font-mono leading-relaxed">
                     {signingUrl}
                   </p>
-                  <p className="text-[10px] text-white/25 mt-2">
+                  <p className="text-xs text-white/25 mt-2">
                     Expires in 7 days. Anyone with this link can sign.
                   </p>
                 </div>

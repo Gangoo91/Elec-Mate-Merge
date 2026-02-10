@@ -63,6 +63,9 @@ import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { getInitials, ROLE_COLORS } from "@/utils/adminUtils";
 import MessageUserSheet from "@/components/admin/MessageUserSheet";
+import { useAdminUsersBase } from "@/hooks/useAdminUsersBase";
+import { useHaptic } from "@/hooks/useHaptic";
+import PullToRefresh from "@/components/admin/PullToRefresh";
 
 interface UserProfile {
   id: string;
@@ -117,6 +120,7 @@ const quickFilters = [
 export default function AdminUsers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
+  const haptic = useHaptic();
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
@@ -141,34 +145,29 @@ export default function AdminUsers() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  const { data: users, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["admin-users", search, roleFilter, quickFilter],
-    refetchInterval: 30000,
-    refetchOnWindowFocus: true,
-    staleTime: 0,
+  // Shared cached edge function call — reused across AdminUsers/AdminTrials
+  const { data: baseUsers, isLoading: baseLoading, refetch: refetchBase, isFetching: baseFetching } = useAdminUsersBase();
+
+  const { data: users, isLoading: enrichmentLoading, refetch: refetchEnrichment, isFetching: enrichmentFetching } = useQuery({
+    queryKey: ["admin-users-enriched", search, roleFilter, quickFilter],
+    enabled: !!baseUsers,
+    refetchInterval: 60000,
+    refetchOnWindowFocus: false,
+    staleTime: 30000,
     queryFn: async () => {
-      const { data: edgeData, error: edgeError } = await supabase.functions.invoke("admin-get-users");
+      let allUsers = [...(baseUsers || [])];
+      const userIds = allUsers.map((u: UserProfile) => u.id);
 
-      if (edgeError) {
-        console.error("Edge function error:", edgeError);
-        throw edgeError;
-      }
-
-      let allUsers = edgeData?.users || [];
-
-      const { data: presenceData } = await supabase
-        .from("user_presence")
-        .select("user_id, last_seen")
-        .in("user_id", allUsers?.map((u: UserProfile) => u.id) || []);
-
-      const presenceMap = new Map(
-        presenceData?.map((p) => [p.user_id, p.last_seen]) || []
-      );
-
-      const { data: elecIdData } = await supabase
-        .from("employer_elec_id_profiles")
-        .select("id, employee_id, elec_id_number, is_verified, activated, ecs_card_type")
-        .in("employee_id", allUsers?.map((u: UserProfile) => u.id) || []);
+      const [{ data: presenceData }, { data: elecIdData }] = await Promise.all([
+        supabase
+          .from("user_presence")
+          .select("user_id, last_seen")
+          .in("user_id", userIds),
+        supabase
+          .from("employer_elec_id_profiles")
+          .select("id, employee_id, elec_id_number, is_verified, activated, ecs_card_type")
+          .in("employee_id", userIds),
+      ]);
 
       const elecIdMap = new Map(
         elecIdData?.map((p) => [p.employee_id, {
@@ -224,6 +223,13 @@ export default function AdminUsers() {
       return allUsers as UserProfile[];
     },
   });
+
+  const isLoading = baseLoading || enrichmentLoading;
+  const isFetching = baseFetching || enrichmentFetching;
+  const refetch = async () => {
+    await refetchBase();
+    await refetchEnrichment();
+  };
 
   const allUsersCount = useMemo(() => {
     return users?.length || 0;
@@ -289,7 +295,9 @@ export default function AdminUsers() {
       return results;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
       setSelectedIds(new Set());
       toast({ title: "Access granted", description: `Granted access to ${selectedIds.size} users` });
@@ -319,7 +327,9 @@ export default function AdminUsers() {
       return results;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      haptic.warning();
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
       setSelectedIds(new Set());
       toast({ title: "Access revoked", description: `Revoked access from ${selectedIds.size} users` });
@@ -350,7 +360,9 @@ export default function AdminUsers() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       setSelectedUser(null);
       toast({ title: "Admin access updated" });
     },
@@ -378,11 +390,11 @@ export default function AdminUsers() {
       return data;
     },
     onMutate: async ({ userId }) => {
-      await queryClient.cancelQueries({ queryKey: ["admin-users"] });
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, quickFilter]);
+      await queryClient.cancelQueries({ queryKey: ["admin-users-enriched"] });
+      const previousUsers = queryClient.getQueryData(["admin-users-enriched", search, roleFilter, quickFilter]);
 
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, quickFilter],
+        ["admin-users-enriched", search, roleFilter, quickFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: true, free_access_granted: true } : u
@@ -401,16 +413,18 @@ export default function AdminUsers() {
     },
     onError: (error, _variables, context) => {
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, quickFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users-enriched", search, roleFilter, quickFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
     onSuccess: () => {
+      haptic.success();
       setSelectedUser(null);
       toast({ title: "Subscription granted", description: "User now has free access" });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
@@ -433,11 +447,11 @@ export default function AdminUsers() {
       return data;
     },
     onMutate: async (userId) => {
-      await queryClient.cancelQueries({ queryKey: ["admin-users"] });
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, quickFilter]);
+      await queryClient.cancelQueries({ queryKey: ["admin-users-enriched"] });
+      const previousUsers = queryClient.getQueryData(["admin-users-enriched", search, roleFilter, quickFilter]);
 
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, quickFilter],
+        ["admin-users-enriched", search, roleFilter, quickFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: false, free_access_granted: false } : u
@@ -456,16 +470,18 @@ export default function AdminUsers() {
     },
     onError: (error, _variables, context) => {
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, quickFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users-enriched", search, roleFilter, quickFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
     onSuccess: () => {
+      haptic.warning();
       setSelectedUser(null);
       toast({ title: "Access revoked", description: "User subscription removed" });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
@@ -488,7 +504,9 @@ export default function AdminUsers() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      haptic.error();
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-users-enriched"] });
       setSelectedUser(null);
       setDeleteDialogOpen(false);
       toast({ title: "User deleted", description: "The user has been permanently removed" });
@@ -509,6 +527,7 @@ export default function AdminUsers() {
   const activeFiltersCount = (roleFilter !== "all" ? 1 : 0) + (quickFilter !== "all" ? 1 : 0);
 
   return (
+    <PullToRefresh onRefresh={async () => { await refetch(); }}>
     <div className="space-y-4 pb-20">
       {/* Hero Stats Card - Premium Purple/Violet Gradient */}
       <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-700">
@@ -544,28 +563,28 @@ export default function AdminUsers() {
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-lg font-bold text-white">{stats.online}</span>
               </div>
-              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">Online</p>
+              <p className="text-[11px] text-purple-200 uppercase tracking-wide font-medium">Online</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
               <div className="flex items-center justify-center gap-1 mb-0.5">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
                 <span className="text-lg font-bold text-white">{stats.subscribed}</span>
               </div>
-              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">Paid</p>
+              <p className="text-[11px] text-purple-200 uppercase tracking-wide font-medium">Paid</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
               <div className="flex items-center justify-center gap-1 mb-0.5">
                 <TrendingUp className="h-3.5 w-3.5 text-emerald-300" />
                 <span className="text-lg font-bold text-white">{stats.thisWeek}</span>
               </div>
-              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">New</p>
+              <p className="text-[11px] text-purple-200 uppercase tracking-wide font-medium">New</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
               <div className="flex items-center justify-center gap-1 mb-0.5">
                 <IdCard className="h-3.5 w-3.5 text-cyan-300" />
                 <span className="text-lg font-bold text-white">{stats.elecIds}</span>
               </div>
-              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">IDs</p>
+              <p className="text-[11px] text-purple-200 uppercase tracking-wide font-medium">IDs</p>
             </div>
           </div>
         </CardContent>
@@ -804,7 +823,7 @@ export default function AdminUsers() {
                   <div className="flex items-center gap-4">
                     {/* Selection Checkbox */}
                     <div
-                      className="shrink-0"
+                      className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleSelection(user.id);
@@ -1014,7 +1033,7 @@ export default function AdminUsers() {
                       Elec-ID Profile
                       <Badge
                         variant="secondary"
-                        className={`text-[10px] px-1.5 py-0 h-5 ml-auto border-0 ${
+                        className={`text-xs px-1.5 py-0 h-5 ml-auto border-0 ${
                           selectedUser.elec_id_profile.is_verified
                             ? "bg-green-500/20 text-green-400"
                             : "bg-amber-500/20 text-amber-400"
@@ -1186,5 +1205,6 @@ export default function AdminUsers() {
         } : null}
       />
     </div>
+    </PullToRefresh>
   );
 }

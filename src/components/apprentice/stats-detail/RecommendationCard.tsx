@@ -80,8 +80,8 @@ export function RecommendationCard({
   const styles = variantStyles[variant];
 
   const handleAction = () => {
-    onClose?.();
-    setTimeout(() => navigate(actionPath), 150);
+    navigate(actionPath);
+    setTimeout(() => onClose?.(), 50);
   };
 
   return (

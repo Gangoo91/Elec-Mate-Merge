@@ -8,77 +8,55 @@ import {
   Bot,
   Lightbulb,
   Sparkles,
-  Shield,
-  BookOpen,
-  GraduationCap,
-  Zap
+  GraduationCap
 } from "lucide-react";
 import DailyAITipsTab from "@/components/apprentice/ojt/enhanced/DailyAITipsTab";
 import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
 
 const AdvancedHelp = () => {
   return (
-    <div className="max-w-6xl mx-auto space-y-2 sm:space-y-6 animate-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-      {/* Compact Header - Mobile Optimized */}
-      <div className="relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-2 sm:p-6">
-        <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+    <div className="max-w-6xl mx-auto flex flex-col min-h-0 flex-1 h-[calc(100dvh-var(--header-height,56px))] animate-fade-in">
+      {/* Compact Header - Hidden on mobile, visible on desktop */}
+      <div className="hidden sm:block relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-6 mb-6">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="relative z-10">
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-3">
               <SmartBackButton />
               <div className="flex items-center gap-2">
-                <div className="p-1.5 sm:p-2 rounded-lg bg-elec-yellow/20">
-                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+                <div className="p-2 rounded-lg bg-elec-yellow/20">
+                  <Sparkles className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <h1 className="text-lg sm:text-2xl font-bold tracking-tight">AI Study Centre</h1>
+                <h1 className="text-2xl font-bold tracking-tight">AI Study Centre</h1>
               </div>
             </div>
             <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-xs px-2 py-0.5 shrink-0">
               <Bot className="h-3 w-3 mr-1" />
-              <span className="hidden sm:inline">AI Enhanced</span>
-              <span className="sm:hidden">AI</span>
+              AI Enhanced
             </Badge>
           </div>
 
-          {/* Description - Hidden on Mobile */}
-          <p className="hidden sm:block text-white/70 text-sm mt-3 max-w-xl">
+          <p className="text-white/70 text-sm mt-3 max-w-xl">
             AI-powered learning tools built specifically for UK electrical apprentices.
             Get expert guidance from Dave, your 20-year veteran electrical mentor.
           </p>
         </div>
       </div>
 
-      {/* Feature Highlights - Hidden on Mobile */}
-      <div className="hidden sm:grid grid-cols-4 gap-3">
-        <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-red-500/5">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Shield className="h-4 w-4 text-red-500 shrink-0" />
-            <span className="text-xs text-white">Safety-First Guidance</span>
-          </CardContent>
-        </Card>
-        <Card className="border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
-          <CardContent className="p-3 flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-orange-500 shrink-0" />
-            <span className="text-xs text-white">BS 7671 Expert</span>
-          </CardContent>
-        </Card>
-        <Card className="border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 to-cyan-500/5">
-          <CardContent className="p-3 flex items-center gap-2">
-            <GraduationCap className="h-4 w-4 text-cyan-500 shrink-0" />
-            <span className="text-xs text-white">EPA Preparation</span>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/20 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Zap className="h-4 w-4 text-yellow-500 shrink-0" />
-            <span className="text-xs text-white">Testing & Inspection</span>
-          </CardContent>
-        </Card>
+      {/* Mobile-only minimal header with back button */}
+      <div className="sm:hidden flex items-center gap-2 px-1 py-1.5 shrink-0">
+        <SmartBackButton />
+        <div className="flex items-center gap-1.5">
+          <Sparkles className="h-4 w-4 text-elec-yellow" />
+          <span className="text-sm font-semibold">AI Study Centre</span>
+        </div>
       </div>
 
+
+
       {/* Main Tabs Section */}
-      <Tabs defaultValue="helpbot" className="w-full">
+      <Tabs defaultValue="helpbot" className="w-full flex-1 flex flex-col">
         <TabsList className="grid w-full grid-cols-2 h-9 sm:h-11 bg-white/5 border border-white/10 rounded-xl">
           <TabsTrigger
             value="helpbot"
@@ -96,8 +74,10 @@ const AdvancedHelp = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="helpbot" className="mt-1 sm:mt-4">
-          <HelpBotTab />
+        <TabsContent value="helpbot" className="mt-1 sm:mt-4 flex-1 min-h-0">
+          <div className="h-full sm:border sm:border-border/30 sm:rounded-xl sm:overflow-hidden">
+            <HelpBotTab />
+          </div>
         </TabsContent>
 
         <TabsContent value="tips" className="mt-1 sm:mt-4">

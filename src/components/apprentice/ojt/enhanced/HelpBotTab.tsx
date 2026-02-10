@@ -22,9 +22,9 @@ import { ChatContainer, ChatMessagesArea, ChatInputArea } from '@/components/ele
 import { MobileChatInput } from '@/components/electrician-tools/ai-tools/chat/MobileChatInput';
 import { InspectorMessage } from '@/components/electrician-tools/ai-tools/InspectorMessage';
 import { ChatImageUpload, ImagePreviewBadge } from './ChatImageUpload';
-import { Camera } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
 
 interface ChatMessage {
   id: string;
@@ -44,6 +44,7 @@ interface QuickQuestionCategory {
 }
 
 const HelpBotTab = () => {
+  const { qualificationCode, qualificationName } = useStudentQualification();
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -54,11 +55,6 @@ const HelpBotTab = () => {
   const [imageUploadOpen, setImageUploadOpen] = useState(false);
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const userScrolledRef = useRef(false);
-  const wasAtBottomBeforeStreamRef = useRef(true);
-  const lastScrollTimeRef = useRef(0);
-  const SCROLL_THROTTLE_MS = 500; // Only scroll every 500ms during streaming
 
   // Smooth streaming hook - 60fps text animation
   const {
@@ -66,53 +62,14 @@ const HelpBotTab = () => {
     addTokens,
     flush: flushStream,
     reset: resetStream,
-  } = useSmoothedStreaming({ charsPerFrame: 4, stateUpdateInterval: 60 });
+  } = useSmoothedStreaming({ flushInterval: 40 });
 
-  // Check if user is at bottom of scroll
-  const isAtBottom = useCallback(() => {
-    const el = scrollContainerRef.current;
-    if (!el) return true;
-    const { scrollTop, scrollHeight, clientHeight } = el;
-    return scrollHeight - scrollTop - clientHeight < 100;
+  // Scroll to bottom — only called explicitly, never auto during streaming
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    });
   }, []);
-
-  // Track when user manually scrolls during streaming
-  const handleScroll = useCallback(() => {
-    if (isLoading && !isAtBottom()) {
-      userScrolledRef.current = true;
-    }
-  }, [isLoading, isAtBottom]);
-
-  // Smooth scroll to bottom - only if user hasn't scrolled away, with throttling during streaming
-  const scrollToBottom = useCallback((force = false) => {
-    const now = Date.now();
-
-    // During streaming, throttle scroll calls to prevent jumpiness
-    if (isLoading && !force) {
-      if (now - lastScrollTimeRef.current < SCROLL_THROTTLE_MS) return;
-      lastScrollTimeRef.current = now;
-    }
-
-    if (force || (!userScrolledRef.current && wasAtBottomBeforeStreamRef.current)) {
-      requestAnimationFrame(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-  }, [isLoading]);
-
-  // Scroll to bottom when new message arrives (not during streaming)
-  useEffect(() => {
-    if (!isLoading) {
-      scrollToBottom();
-    }
-  }, [chatMessages.length, scrollToBottom, isLoading]);
-
-  // Periodically scroll during streaming (throttled via scrollToBottom)
-  useEffect(() => {
-    if (isLoading && streamedContent && !userScrolledRef.current) {
-      scrollToBottom();
-    }
-  }, [streamedContent, isLoading, scrollToBottom]);
 
   const quickQuestionCategories: QuickQuestionCategory[] = [
     {
@@ -245,10 +202,6 @@ const HelpBotTab = () => {
     setFollowUpQuestions([]);
     resetStream();
 
-    // Record scroll position before streaming starts
-    wasAtBottomBeforeStreamRef.current = isAtBottom();
-    userScrolledRef.current = false;
-
     // Capture attached image before clearing
     const imageToSend = attachedImage;
 
@@ -292,9 +245,13 @@ const HelpBotTab = () => {
           },
           body: JSON.stringify({
             message: textToSend.trim(),
-            context: 'electrical apprenticeship training and guidance',
+            context: qualificationName
+              ? `electrical apprenticeship training - studying ${qualificationName}`
+              : 'electrical apprenticeship training and guidance',
             stream: true,
             imageUrl: imageToSend || undefined,
+            qualificationCode: qualificationCode || undefined,
+            qualificationName: qualificationName || undefined,
             history: chatMessages
               .filter(m => m.content.trim() !== '')
               .slice(-10)
@@ -369,10 +326,6 @@ const HelpBotTab = () => {
     } finally {
       setIsLoading(false);
       setStreamingMessageId(null);
-      // Scroll to bottom at end if user didn't scroll away
-      if (!userScrolledRef.current) {
-        setTimeout(() => scrollToBottom(), 100);
-      }
     }
   };
 
@@ -411,6 +364,9 @@ const HelpBotTab = () => {
       <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-[10px] sm:text-xs mb-2 sm:mb-3">
         20+ Years in the Trade
       </Badge>
+      {qualificationName && (
+        <p className="text-xs text-elec-yellow/80">Studying: {qualificationName}</p>
+      )}
 
       <p className="text-white/70 text-xs sm:text-sm max-w-xs mb-3 sm:mb-4 hidden sm:block">
         Qualified sparky with decades of UK experience. Ask me about regs, testing, calcs, or your apprenticeship.
@@ -451,11 +407,10 @@ const HelpBotTab = () => {
   );
 
   return (
-    <div className="h-[calc(100dvh-140px)] sm:h-[600px]">
+    <div className="h-full sm:h-[600px]">
       <ChatContainer>
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
-          onScroll={handleScroll}
         >
           {chatMessages.length === 0 ? (
             <WelcomeScreen />
@@ -568,7 +523,7 @@ const HelpBotTab = () => {
           {/* Attached Image Preview */}
           <AnimatePresence>
             {attachedImage && (
-              <div className="mb-2">
+              <div className="mb-1.5">
                 <ImagePreviewBadge
                   imageUrl={attachedImage}
                   onRemove={() => setAttachedImage('')}
@@ -577,33 +532,18 @@ const HelpBotTab = () => {
             )}
           </AnimatePresence>
 
-          {/* Input Row with Camera Button */}
-          <div className="flex items-end gap-1.5 sm:gap-2">
-            {/* Camera Button - Compact on mobile */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setImageUploadOpen(true)}
-              disabled={isLoading}
-              className="h-10 w-10 sm:h-11 sm:w-11 shrink-0 rounded-xl bg-white/5 hover:bg-elec-yellow/20 border border-white/10 hover:border-elec-yellow/30 transition-colors touch-manipulation"
-            >
-              <Camera className="h-4.5 w-4.5 sm:h-5 sm:w-5 text-elec-yellow" />
-            </Button>
-
-            {/* Premium Mobile Chat Input */}
-            <div className="flex-1 min-w-0">
-              <MobileChatInput
-                value={currentMessage}
-                onChange={setCurrentMessage}
-                onSubmit={() => handleSendMessage()}
-                onClear={handleClearConversation}
-                isStreaming={isLoading}
-                placeholder={attachedImage ? "What do you see?" : "Ask Dave anything..."}
-                messageCount={chatMessages.length}
-                showClearButton={chatMessages.length > 0}
-              />
-            </div>
-          </div>
+          {/* Chat Input — camera integrated inside */}
+          <MobileChatInput
+            value={currentMessage}
+            onChange={setCurrentMessage}
+            onSubmit={() => handleSendMessage()}
+            onClear={handleClearConversation}
+            onCameraPress={() => setImageUploadOpen(true)}
+            isStreaming={isLoading}
+            placeholder={attachedImage ? "What do you see?" : "Ask Dave anything..."}
+            messageCount={chatMessages.length}
+            showClearButton={chatMessages.length > 0}
+          />
         </ChatInputArea>
       </ChatContainer>
 

@@ -9,6 +9,7 @@ export type TimeEntry = {
   isQuiz?: boolean;
   score?: number;
   totalQuestions?: number;
+  is_supervisor_verified?: boolean;
 };
 
 export type TimeEntryTotal = {

@@ -101,7 +101,7 @@ export function BriefingDistribution({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -123,7 +123,7 @@ export function BriefingDistribution({
               <Button
                 variant="outline"
                 onClick={handleCopy}
-                className="h-14 flex flex-col items-center justify-center gap-1"
+                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 {copied ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
@@ -136,7 +136,7 @@ export function BriefingDistribution({
               <Button
                 variant="outline"
                 onClick={onShowQR}
-                className="h-14 flex flex-col items-center justify-center gap-1"
+                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 <QrCode className="h-5 w-5" />
                 <span className="text-xs">QR Code</span>
@@ -145,7 +145,7 @@ export function BriefingDistribution({
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="h-14 flex flex-col items-center justify-center gap-1"
+                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 <Share2 className="h-5 w-5" />
                 <span className="text-xs">Share</span>
@@ -154,7 +154,7 @@ export function BriefingDistribution({
               <Button
                 variant="outline"
                 onClick={handleOpenLink}
-                className="h-14 flex flex-col items-center justify-center gap-1"
+                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 <ExternalLink className="h-5 w-5" />
                 <span className="text-xs">Open Page</span>
@@ -185,7 +185,7 @@ export function BriefingDistribution({
                       value={webhookInput}
                       onChange={(e) => setWebhookInput(e.target.value)}
                       placeholder="https://outlook.office.com/webhook/..."
-                      className="h-10 mt-1 text-sm"
+                      className="h-11 mt-1 text-sm touch-manipulation"
                     />
                     <p className="text-xs text-muted-foreground mt-1">
                       Create an Incoming Webhook connector in your Teams channel
@@ -194,17 +194,15 @@ export function BriefingDistribution({
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => setShowWebhookConfig(false)}
-                      className="flex-1"
+                      className="flex-1 h-11 touch-manipulation"
                     >
                       Cancel
                     </Button>
                     <Button
-                      size="sm"
                       onClick={handleSaveWebhook}
                       disabled={!webhookInput.trim() || saveWebhook.isPending}
-                      className="flex-1"
+                      className="flex-1 h-11 touch-manipulation"
                     >
                       {saveWebhook.isPending ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -266,9 +264,8 @@ export function BriefingDistribution({
                   {savedWebhook && (
                     <Button
                       variant="ghost"
-                      size="sm"
                       onClick={() => setShowWebhookConfig(true)}
-                      className="w-full text-xs text-muted-foreground"
+                      className="w-full h-11 text-xs text-muted-foreground touch-manipulation"
                     >
                       <Settings className="h-3 w-3 mr-1" />
                       Update Webhook URL

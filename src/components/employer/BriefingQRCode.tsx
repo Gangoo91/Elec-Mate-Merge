@@ -141,7 +141,7 @@ export function BriefingQRCode({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -229,7 +229,7 @@ export function BriefingQRCode({
               <Button
                 variant="outline"
                 onClick={handleCopyLink}
-                className="h-11"
+                className="h-11 touch-manipulation"
               >
                 <Copy className="h-4 w-4 mr-2" />
                 {copied ? "Copied!" : "Copy Link"}
@@ -237,7 +237,7 @@ export function BriefingQRCode({
               <Button
                 variant="outline"
                 onClick={handleDownloadQR}
-                className="h-11"
+                className="h-11 touch-manipulation"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Download QR
@@ -247,14 +247,14 @@ export function BriefingQRCode({
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="h-11"
+                className="h-11 touch-manipulation"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>
               <Button
                 onClick={handleOpenLink}
-                className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
               >
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Open Page

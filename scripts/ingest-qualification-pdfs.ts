@@ -4,775 +4,761 @@
  * Extracts C&G and EAL qualification PDF content into the
  * qualification_requirements table for RAG-based portfolio/diary coaching.
  *
+ * Schema: one row per Assessment Criterion (AC)
+ *   qualification_code TEXT
+ *   unit_code          TEXT
+ *   unit_title         TEXT
+ *   lo_number          INTEGER
+ *   lo_text            TEXT
+ *   ac_code            TEXT   (e.g. '1.1', '2.3')
+ *   ac_text            TEXT
+ *
  * Usage:
  *   npm install pdf-parse --save-dev
- *   npx tsx scripts/ingest-qualification-pdfs.ts
+ *   npx tsx scripts/ingest-qualification-pdfs.ts              # insert to DB
+ *   npx tsx scripts/ingest-qualification-pdfs.ts --dry-run    # JSON to stdout
+ *   npx tsx scripts/ingest-qualification-pdfs.ts --only 5357  # single qual
  *
- * Requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars
- * (or set them inline below for one-off runs).
+ * Requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars.
  */
 
 import fs from 'fs';
 import path from 'path';
-import pdfParse from 'pdf-parse';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
 
+const require = createRequire(import.meta.url);
+const { PDFParse } = require('pdf-parse');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // --------------- Config ---------------
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';
+const SUPABASE_URL =
+  process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-if (!SUPABASE_KEY) {
-  console.error('Set SUPABASE_SERVICE_ROLE_KEY env var');
+const DRY_RUN = process.argv.includes('--dry-run');
+const JSON_OUT = (() => {
+  const idx = process.argv.indexOf('--json-out');
+  return idx !== -1 ? process.argv[idx + 1] : null;
+})();
+const ONLY_QUAL = (() => {
+  const idx = process.argv.indexOf('--only');
+  return idx !== -1 ? process.argv[idx + 1] : null;
+})();
+
+if (!DRY_RUN && !JSON_OUT && !SUPABASE_KEY) {
+  console.error('Set SUPABASE_SERVICE_ROLE_KEY env var (or use --dry-run / --json-out)');
   process.exit(1);
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = !DRY_RUN && !JSON_OUT && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-const DOWNLOADS = path.join(process.env.HOME || '/Users/andrewmoore', 'Downloads');
+const PDF_DIR = path.join(__dirname, '..', 'docs', 'qualification-pdfs');
 
-// Stop words to strip from keywords
-const STOP_WORDS = new Set([
-  'the',
-  'a',
-  'an',
-  'and',
-  'or',
-  'but',
-  'in',
-  'on',
-  'at',
-  'to',
-  'for',
-  'of',
-  'with',
-  'by',
-  'from',
-  'is',
-  'are',
-  'was',
-  'were',
-  'be',
-  'been',
-  'being',
-  'have',
-  'has',
-  'had',
-  'do',
-  'does',
-  'did',
-  'will',
-  'would',
-  'could',
-  'should',
-  'may',
-  'might',
-  'shall',
-  'can',
-  'need',
-  'must',
-  'it',
-  'its',
-  'this',
-  'that',
-  'these',
-  'those',
-  'they',
-  'them',
-  'their',
-  'he',
-  'she',
-  'his',
-  'her',
-  'we',
-  'our',
-  'you',
-  'your',
-  'my',
-  'me',
-  'who',
-  'which',
-  'what',
-  'when',
-  'where',
-  'how',
-  'why',
-  'all',
-  'each',
-  'every',
-  'both',
-  'few',
-  'more',
-  'most',
-  'other',
-  'some',
-  'such',
-  'no',
-  'not',
-  'only',
-  'same',
-  'so',
-  'than',
-  'too',
-  'very',
-  'just',
-  'because',
-  'as',
-  'into',
-  'through',
-  'during',
-  'before',
-  'after',
-  'above',
-  'below',
-  'between',
-  'out',
-  'off',
-  'over',
-  'under',
-  'again',
-  'then',
-  'once',
-  'here',
-  'there',
-  'about',
-  'up',
-  'if',
-  'also',
-  'any',
-  'etc',
-]);
-
-// Domain-specific terms to always include when found
-const DOMAIN_TERMS = new Set([
-  'rcd',
-  'rcbo',
-  'mcb',
-  'mccb',
-  'acb',
-  'fuse',
-  'earth',
-  'earthing',
-  'bonding',
-  'containment',
-  'trunking',
-  'conduit',
-  'swa',
-  'cable',
-  'inspection',
-  'testing',
-  'bs7671',
-  'pat',
-  'eicr',
-  'eic',
-  'minor',
-  'wiring',
-  'circuit',
-  'voltage',
-  'current',
-  'resistance',
-  'impedance',
-  'insulation',
-  'continuity',
-  'polarity',
-  'zs',
-  'ze',
-  'r1r2',
-  'installation',
-  'maintenance',
-  'fault',
-  'protection',
-  'overload',
-  'short-circuit',
-  'discrimination',
-  'selectivity',
-  'regulation',
-  'consumer',
-  'distribution',
-  'board',
-  'panel',
-  'switchgear',
-  'transformer',
-  'motor',
-  'lighting',
-  'emergency',
-  'fire',
-  'alarm',
-  'socket',
-  'accessory',
-  'luminaire',
-  'lamp',
-  'led',
-  'fluorescent',
-  'three-phase',
-  'single-phase',
-  'neutral',
-  'live',
-  'cpc',
-  'pvc',
-  'xlpe',
-  'lsf',
-  'swa',
-  'micc',
-  'flex',
-  'rigid',
-  'tray',
-  'ladder',
-  'basket',
-  'dado',
-  'mini',
-  'maxi',
-  'ip',
-  'ingress',
-  'hazardous',
-  'zone',
-  'atex',
-  'explosive',
-  'safe',
-  'safety',
-  'isolation',
-  'lockout',
-  'permit',
-  'coshh',
-  'ppe',
-  'risk',
-  'assessment',
-  'method',
-  'statement',
-  'rams',
-  'commissioning',
-  'handover',
-  'certificate',
-  'compliance',
-  'design',
-  'specification',
-  'drawing',
-  'schematic',
-  'diagram',
-  'load',
-  'demand',
-  'diversity',
-  'volt-drop',
-  'cable-size',
-  'adiabatic',
-  'correction',
-  'factor',
-  'grouping',
-  'derating',
-  'thermoplastic',
-  'thermosetting',
-  'armoured',
-  'unarmoured',
-  'domestic',
-  'commercial',
-  'industrial',
-  'agricultural',
-  'special',
-  'location',
-  'bathroom',
-  'swimming',
-  'construction',
-  'temporary',
-  'outdoor',
-  'caravan',
-  'marina',
-  'solar',
-  'pv',
-  'ev',
-  'charger',
-  'battery',
-  'storage',
-  'inverter',
-  'generation',
-  'renewable',
-  'smart',
-  'meter',
-  'tariff',
-  'supply',
-  'dni',
-  'dno',
-]);
-
+// --------------- Types ---------------
 interface QualificationRow {
   qualification_code: string;
-  qualification_name: string;
   unit_code: string;
   unit_title: string;
-  learning_outcome_number: string | null;
-  learning_outcome: string;
-  assessment_criteria: string[];
-  topic_area: string | null;
-  keywords: string[];
-  content_text: string;
-  level: number | null;
+  lo_number: number;
+  lo_text: string;
+  ac_code: string;
+  ac_text: string;
 }
 
-// --------------- Keyword extraction ---------------
-function extractKeywords(texts: string[]): string[] {
-  const combined = texts.join(' ').toLowerCase();
-  const words = combined.match(/[a-z][a-z0-9-]+/g) || [];
-  const unique = new Set<string>();
-
-  for (const w of words) {
-    if (w.length < 3) continue;
-    if (STOP_WORDS.has(w)) continue;
-    unique.add(w);
-  }
-
-  // Always add domain terms found in text
-  for (const term of DOMAIN_TERMS) {
-    if (combined.includes(term)) {
-      unique.add(term);
-    }
-  }
-
-  return Array.from(unique);
-}
-
-// --------------- Classify topic area ---------------
-function classifyTopic(text: string): string | null {
-  const lower = text.toLowerCase();
-  const topics: [string, string[]][] = [
-    [
-      'Health & Safety',
-      [
-        'health',
-        'safety',
-        'ppe',
-        'risk',
-        'hazard',
-        'coshh',
-        'isolation',
-        'permit',
-        'first aid',
-        'accident',
-      ],
-    ],
-    [
-      'Wiring & Containment',
-      [
-        'wiring',
-        'cable',
-        'containment',
-        'trunking',
-        'conduit',
-        'tray',
-        'swa',
-        'termination',
-        'jointing',
-      ],
-    ],
-    [
-      'Testing & Inspection',
-      [
-        'testing',
-        'inspection',
-        'continuity',
-        'insulation',
-        'polarity',
-        'impedance',
-        'rcd',
-        'eicr',
-        'commissioning',
-      ],
-    ],
-    [
-      'Regulations',
-      [
-        'regulation',
-        'bs7671',
-        'standard',
-        'building',
-        'wiring regulations',
-        'compliance',
-        'amendment',
-      ],
-    ],
-    [
-      'Design',
-      [
-        'design',
-        'calculation',
-        'cable sizing',
-        'volt drop',
-        'load',
-        'diversity',
-        'schematic',
-        'drawing',
-      ],
-    ],
-    [
-      'Protection',
-      ['protection', 'overcurrent', 'overload', 'fault', 'mcb', 'rcbo', 'fuse', 'discrimination'],
-    ],
-    [
-      'Earthing & Bonding',
-      ['earthing', 'bonding', 'earth', 'cpc', 'electrode', 'tn-s', 'tn-c-s', 'tt'],
-    ],
-    [
-      'Environmental',
-      ['environment', 'energy', 'efficiency', 'renewable', 'solar', 'sustainability'],
-    ],
-    ['Communication', ['communication', 'customer', 'client', 'teamwork', 'supervision', 'report']],
-    [
-      'Science & Principles',
-      [
-        'science',
-        'ohm',
-        'kirchhoff',
-        'resistance',
-        'capacitance',
-        'inductance',
-        'magnetism',
-        'electron',
-        'atom',
-      ],
-    ],
-  ];
-
-  for (const [topic, terms] of topics) {
-    if (terms.some((t) => lower.includes(t))) {
-      return topic;
-    }
-  }
-  return null;
-}
-
-// --------------- PDF Parsers ---------------
-
-/**
- * Generic parser for C&G qualification handbooks.
- * These follow a pattern of "Unit XXX:" → Learning outcomes → Assessment criteria.
- */
-function parseCGHandbook(
-  text: string,
-  qualCode: string,
-  qualName: string,
-  level: number
-): QualificationRow[] {
-  const rows: QualificationRow[] = [];
-
-  // Split into unit sections
-  // C&G handbooks typically have "Unit XXX" or "Unit XXX:" headings
-  const unitPattern = /(?:^|\n)(?:Unit\s+)(\d{3})\s*[-:]\s*([^\n]+)/gi;
-  const unitMatches: { code: string; title: string; startIndex: number }[] = [];
-
-  let match;
-  while ((match = unitPattern.exec(text)) !== null) {
-    unitMatches.push({
-      code: match[1],
-      title: match[2].trim(),
-      startIndex: match.index,
-    });
-  }
-
-  if (unitMatches.length === 0) {
-    // Fallback: try to find learning outcomes without unit headers
-    console.warn(`  No unit headers found for ${qualCode}, attempting flat LO parse`);
-    return parseFlatLOs(text, qualCode, qualName, 'GENERAL', 'General Content', level);
-  }
-
-  for (let i = 0; i < unitMatches.length; i++) {
-    const unit = unitMatches[i];
-    const nextStart = i + 1 < unitMatches.length ? unitMatches[i + 1].startIndex : text.length;
-    const unitText = text.substring(unit.startIndex, nextStart);
-
-    const loRows = parseFlatLOs(unitText, qualCode, qualName, unit.code, unit.title, level);
-    rows.push(...loRows);
-  }
-
-  return rows;
-}
-
-/**
- * Parse learning outcomes and assessment criteria from a text block.
- */
-function parseFlatLOs(
-  text: string,
-  qualCode: string,
-  qualName: string,
-  unitCode: string,
-  unitTitle: string,
-  level: number
-): QualificationRow[] {
-  const rows: QualificationRow[] = [];
-
-  // Pattern for learning outcomes
-  // Common patterns: "Learning outcome 1", "LO1", "The learner will: 1."
-  const loPattern =
-    /(?:Learning\s+outcome\s+(\d+(?:\.\d+)?)\s*[-:]?\s*([^\n]+)|(?:The\s+learner\s+will[:\s]+)(\d+)\.\s*([^\n]+))/gi;
-
-  const loMatches: { number: string; text: string; startIndex: number }[] = [];
-  let loMatch;
-  while ((loMatch = loPattern.exec(text)) !== null) {
-    loMatches.push({
-      number: (loMatch[1] || loMatch[3]).trim(),
-      text: (loMatch[2] || loMatch[4]).trim(),
-      startIndex: loMatch.index,
-    });
-  }
-
-  if (loMatches.length === 0) {
-    // Create a single row for the whole unit if no LOs found
-    const acList = extractACsFromText(text);
-    const contentText = `${unitTitle} | ${acList.join(' | ')}`;
-    rows.push({
-      qualification_code: qualCode,
-      qualification_name: qualName,
-      unit_code: unitCode,
-      unit_title: unitTitle,
-      learning_outcome_number: null,
-      learning_outcome: unitTitle,
-      assessment_criteria: acList,
-      topic_area: classifyTopic(contentText),
-      keywords: extractKeywords([unitTitle, ...acList]),
-      content_text: contentText,
-      level,
-    });
-    return rows;
-  }
-
-  for (let i = 0; i < loMatches.length; i++) {
-    const lo = loMatches[i];
-    const nextStart = i + 1 < loMatches.length ? loMatches[i + 1].startIndex : text.length;
-    const loSection = text.substring(lo.startIndex, nextStart);
-
-    const acList = extractACsFromText(loSection);
-    const contentText = `${lo.text} | ${acList.join(' | ')}`;
-
-    rows.push({
-      qualification_code: qualCode,
-      qualification_name: qualName,
-      unit_code: unitCode,
-      unit_title: unitTitle,
-      learning_outcome_number: lo.number,
-      learning_outcome: lo.text,
-      assessment_criteria: acList,
-      topic_area: classifyTopic(contentText),
-      keywords: extractKeywords([unitTitle, lo.text, ...acList]),
-      content_text: contentText,
-      level,
-    });
-  }
-
-  return rows;
-}
-
-/**
- * Extract assessment criteria text lines from a section.
- */
-function extractACsFromText(text: string): string[] {
-  const acs: string[] = [];
-
-  // Pattern: "1.1", "2.3", "AC 1.1" etc. followed by text
-  const acPattern = /(?:^|\n)\s*(?:AC\s*)?(\d+\.\d+)\s*[-:.]\s*([^\n]+)/gi;
-  let acMatch;
-  while ((acMatch = acPattern.exec(text)) !== null) {
-    const acText = `${acMatch[1]} ${acMatch[2].trim()}`;
-    if (acText.length > 5) {
-      acs.push(acText);
-    }
-  }
-
-  return acs;
-}
-
-/**
- * Parse EAL unit PDFs (NETP3, N18ED3).
- * EAL format tends to be: Unit Title → Learning Outcomes → Assessment Criteria
- */
-function parseEALUnit(
-  text: string,
-  qualCode: string,
-  qualName: string,
-  unitCode: string,
-  level: number
-): QualificationRow[] {
-  // Try to extract unit title from first few lines
-  const lines = text.split('\n').filter((l) => l.trim().length > 3);
-  let unitTitle =
-    lines.slice(0, 5).find((l) => l.length > 10 && !l.match(/^(EAL|Issue|Page|www)/i)) ||
-    `${qualCode} ${unitCode}`;
-  unitTitle = unitTitle.trim();
-
-  return parseFlatLOs(text, qualCode, qualName, unitCode, unitTitle, level);
-}
-
-// --------------- PDF Definitions ---------------
+// --------------- PDF Source Definitions ---------------
 interface PDFSource {
   file: string;
   qualCode: string;
-  qualName: string;
-  level: number;
-  parser: 'cg' | 'eal';
-  unitCode?: string; // For single-unit EAL PDFs
+  parser: 'cg-5357' | 'cg-2357' | 'cg-2346' | 'cg-8202' | 'eal-qs';
 }
 
 const PDF_SOURCES: PDFSource[] = [
-  // C&G Level 2
+  // C&G 5357-23 (post-Sep 2023 apprenticeship standard)
   {
-    file: '2365-02_l2_electrical_installation_qualification_handbook_v1-11-pdf-pdf.pdf',
-    qualCode: '2365-02',
-    qualName: 'C&G 2365-02 Level 2 Diploma in Electrical Installations',
-    level: 2,
-    parser: 'cg',
+    file: 'city-and-guilds/5357-23_electrotechnical_qualification_handbook_v1-6.pdf',
+    qualCode: '5357',
+    parser: 'cg-5357',
   },
-  // C&G Level 3
+  // C&G 2357 (NVQ Diploma)
   {
-    file: '2365-03_l3_diploma_qualification_handbook_v1-12-pdf.pdf',
-    qualCode: '2365-03',
-    qualName: 'C&G 2365-03 Level 3 Diploma in Electrical Installations',
-    level: 3,
-    parser: 'cg',
+    file: 'city-and-guilds/2357_l3_nvq_diplomas_electrotechnical_technology_handbook_v6-1.pdf',
+    qualCode: '2357',
+    parser: 'cg-2357',
   },
-  // C&G NVQ Level 3
+  // C&G 2346-03 (Experienced Worker)
   {
-    file: '2366-03_qualification_handbook_v1,-d-,5-pdf.pdf',
-    qualCode: '2366-03',
-    qualName: 'C&G 2366-03 Level 3 NVQ Diploma in Electrotechnical Technology',
-    level: 3,
-    parser: 'cg',
+    file: 'city-and-guilds/2346-03_l3_electrotechnical_experienced_worker_v1-9.pdf',
+    qualCode: '2346-03',
+    parser: 'cg-2346',
   },
-  // EAL NETP3 units — qualCode matches '603/3929/9' in qualifications table
+  // C&G 8202-30 (T Level Advanced Technical Diploma)
   {
-    file: 'EAL-NETP3-01-ISSUE-1.2-0220.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-01',
+    file: 'city-and-guilds/8202-30_l3_adv_tech_dip_electrical_installation_v1-12.pdf',
+    qualCode: '8202',
+    parser: 'cg-8202',
   },
+  // EAL 610/3907/X (Technical Occupational Entry)
   {
-    file: 'EAL-NETP3-03-ISSUE-1.1-1115.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-03',
-  },
-  {
-    file: 'EAL-NETP3-04-ISSUE-1.2-0220.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-04',
-  },
-  {
-    file: 'EAL-NETP3-05-ISSUE-1.2-0220.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-05',
-  },
-  {
-    file: 'EAL-NETP3-06-ISSUE-1.5-0822.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-06',
-  },
-  {
-    file: 'EAL-NETP3-07-ISSUE-1.2-0220.pdf',
-    qualCode: '603/3929/9',
-    qualName: 'EAL Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'NETP3-07',
-  },
-  // EAL 18th Edition — qualCode matches 'EAL-600/4341/5' in qualifications table
-  {
-    file: 'EAL-N18ED3-1-DP-ISSUE 1.1-0120.pdf',
-    qualCode: 'EAL-600/4341/5',
-    qualName: 'EAL Level 3 Award in the Requirements for Electrical Installations',
-    level: 3,
-    parser: 'eal',
-    unitCode: 'N18ED3-01',
+    file: 'eal/EAL_610-3907-X_QS_1.pdf',
+    qualCode: '610/3907/X',
+    parser: 'eal-qs',
   },
 ];
+
+// --------------- C&G Content Unit Finder ---------------
+// Identifies real content unit blocks (not TOC entries) by looking for
+// "Unit XXX Title" followed by "Level:" / "GLH:" metadata within ~500 chars.
+function findCGContentUnits(
+  text: string,
+  unitCodePattern: RegExp
+): { code: string; title: string; bodyStart: number; bodyEnd: number }[] {
+  const units: { code: string; title: string; bodyStart: number; bodyEnd: number }[] = [];
+
+  let m;
+  while ((m = unitCodePattern.exec(text)) !== null) {
+    const code = m[1];
+    const afterMatch = text.substring(m.index + m[0].length, m.index + m[0].length + 600);
+
+    // Content blocks have "Level:" or "Level N\n" (on its own line) — TOC entries don't.
+    // Exclude false positives like page footers "Level 3 Advanced Technical Diploma..."
+    const hasLevelColon = /\bLevel:\s*\d/i.test(afterMatch);
+    const hasLevelAlone = /\bLevel\s+\d+\s*\n/i.test(afterMatch);
+    if (!hasLevelColon && !hasLevelAlone) continue;
+
+    // Extract title: text between unit code and "Level:" or "Level N\n"
+    const titleEnd = afterMatch.search(/\bLevel[:\s]+\d/i) !== -1
+      ? afterMatch.search(/\bLevel[:\s]+\d/i)
+      : afterMatch.search(/\bLevel\s+\d+\s*\n/i);
+    const titleText = afterMatch
+      .substring(0, titleEnd)
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(
+        (l) =>
+          l.length > 3 &&
+          !/^\d+$/.test(l) && // skip page numbers
+          !/^[A-Z]\/\d{3}\/\d{3,4}/.test(l) && // skip UAN codes like "A/507/0650"
+          !/^UAN:/i.test(l)
+      )
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    units.push({
+      code,
+      title: titleText || `Unit ${code}`,
+      bodyStart: m.index,
+      bodyEnd: text.length, // will be trimmed below
+    });
+  }
+
+  // Set bodyEnd of each unit to bodyStart of the next
+  for (let i = 0; i < units.length - 1; i++) {
+    units[i].bodyEnd = units[i + 1].bodyStart;
+  }
+
+  // Deduplicate by code (keep first — the content block, skip supporting info)
+  const seen = new Set<string>();
+  return units.filter((u) => {
+    if (seen.has(u.code)) return false;
+    seen.add(u.code);
+    return true;
+  });
+}
+
+// --------------- C&G Unit Block AC Extractor ---------------
+// Extracts LOs and ACs from a unit's body text.
+// Pattern: LO1 text ... AC1.1 text ... AC1.2 text ... Range ... LO2 text ...
+function extractCGACs(
+  body: string,
+  qualCode: string,
+  unitCode: string,
+  unitTitle: string
+): QualificationRow[] {
+  const rows: QualificationRow[] = [];
+
+  // Clean page headers/footers that appear in the middle of content
+  const cleaned = body
+    .replace(/--\s*\d+\s+of\s+\d+\s*--/g, '')
+    .replace(/Level\s+\d\s+Electrotechnical\s+Qualification.*?\d+$/gm, '')
+    .replace(/Level\s+\d\s+NVQ\s+Diplomas?.*?\d+$/gm, '')
+    .replace(/Level\s+\d\s+Electrotechnical\s+Experienced.*?\d+$/gm, '');
+
+  // Build LO text map: LO number → LO description
+  const loTexts = new Map<number, string>();
+  const loPattern = /\bLO\s*(\d+)\s+([\s\S]*?)(?=\bLO\s*\d+\s|\bAC\d+\.\d+|\bSupporting\s+information|$)/gi;
+  let loMatch;
+  while ((loMatch = loPattern.exec(cleaned)) !== null) {
+    const num = parseInt(loMatch[1], 10);
+    if (loTexts.has(num)) continue;
+    // Extract the LO description text (before "Assessment criteria" or "The learner can")
+    const loBody = loMatch[2];
+    const descLines: string[] = [];
+    for (const line of loBody.split('\n')) {
+      const t = line.trim();
+      if (/^Assessment\s+criteria/i.test(t)) break;
+      if (/^The\s+learner\s+(can|will)/i.test(t)) break;
+      if (/^AC\d+\.\d+/i.test(t)) break;
+      if (/^UAN:/i.test(t)) break;
+      if (/^Level:/i.test(t)) break;
+      if (/^GLH:/i.test(t)) break;
+      if (/^City\s*&\s*Guilds/i.test(t)) break;
+      if (/^Level\s+\d\s+(Electrotechnical|Award|Certificate|NVQ)/i.test(t)) break;
+      if (t.length > 3) descLines.push(t);
+    }
+    loTexts.set(num, descLines.join(' ').replace(/\s+/g, ' ').trim());
+  }
+
+  // Find all ACs: AC1.1 text
+  const acPattern =
+    /\bAC(\d+)\.(\d+)\s+([\s\S]*?)(?=\bAC\d+\.\d+|\bRange\b|\bLO\s*\d+\s|\bLearning\s+outcome|\bSupporting\s+information|$)/gi;
+  let acMatch;
+  while ((acMatch = acPattern.exec(cleaned)) !== null) {
+    const loNum = parseInt(acMatch[1], 10);
+    const acNum = acMatch[2];
+    const acText = acMatch[3]
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(
+        (l) =>
+          l.length > 0 &&
+          !/^(Assessment\s+criteria|The\s+learner\s+can)/i.test(l) &&
+          !/^--\s*\d+/i.test(l)
+      )
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (acText.length > 3) {
+      rows.push({
+        qualification_code: qualCode,
+        unit_code: unitCode,
+        unit_title: unitTitle,
+        lo_number: loNum,
+        lo_text: loTexts.get(loNum) || '',
+        ac_code: `${loNum}.${acNum}`,
+        ac_text: acText,
+      });
+    }
+  }
+
+  return rows;
+}
+
+// --------------- C&G 5357 Parser ---------------
+function parseCG5357(text: string): QualificationRow[] {
+  // 5357 unit codes: "Unit 101/001", "Unit 102", "Unit 103/003", etc.
+  const unitCodeRe = /\bUnit\s+(\d{2,3}(?:\/\d{2,3})?)\s+/gi;
+  const units = findCGContentUnits(text, unitCodeRe);
+  const rows: QualificationRow[] = [];
+
+  for (const unit of units) {
+    const body = text.substring(unit.bodyStart, unit.bodyEnd);
+    rows.push(...extractCGACs(body, '5357', unit.code, unit.title));
+  }
+  return rows;
+}
+
+// --------------- C&G 2346 Parser (uses LO/AC prefixes like 5357) ---------------
+function parseCG2346(text: string): QualificationRow[] {
+  const unitCodeRe = /\bUnit\s+(\d{2,3}(?:\/\d{2,3})?)\s+/gi;
+  const units = findCGContentUnits(text, unitCodeRe);
+  const rows: QualificationRow[] = [];
+  for (const unit of units) {
+    const body = text.substring(unit.bodyStart, unit.bodyEnd);
+    rows.push(...extractCGACs(body, '2346-03', unit.code, unit.title));
+  }
+  return rows;
+}
+
+// --------------- C&G 2357 Parser ---------------
+// 2357 uses "Outcome N" instead of "LO", and numbered ACs "1.", "2." without "AC" prefix.
+// Format: "Outcome 1 Title" → "Assessment Criteria" → "1. text" → "2. text" → "Range"
+function parseCG2357(text: string): QualificationRow[] {
+  const unitCodeRe = /\bUnit\s+(\d{2,3}(?:\/\d{2,3})?)\s+/gi;
+  const units = findCGContentUnits(text, unitCodeRe);
+  const rows: QualificationRow[] = [];
+
+  for (const unit of units) {
+    const body = text.substring(unit.bodyStart, unit.bodyEnd);
+    rows.push(...extract2357ACs(body, unit.code, unit.title));
+  }
+  return rows;
+}
+
+function extract2357ACs(
+  body: string,
+  unitCode: string,
+  unitTitle: string
+): QualificationRow[] {
+  const rows: QualificationRow[] = [];
+
+  // Clean page headers/footers
+  const cleaned = body
+    .replace(/--\s*\d+\s+of\s+\d+\s*--/g, '')
+    .replace(/City\s*&\s*Guilds\s+Level\s+\d.*?\d+$/gm, '');
+
+  // Split into Outcome blocks: "Outcome N Title"
+  const outcomePattern =
+    /\bOutcome\s+(\d+)\s+([\s\S]*?)(?=\bOutcome\s+\d+\s|\bSupporting\s+information|$)/gi;
+
+  let outcomeMatch;
+  while ((outcomeMatch = outcomePattern.exec(cleaned)) !== null) {
+    const loNum = parseInt(outcomeMatch[1], 10);
+    const outcomeBody = outcomeMatch[2];
+
+    // Extract LO text (the title after "Outcome N")
+    const loTextLines: string[] = [];
+    for (const line of outcomeBody.split('\n')) {
+      const t = line.trim();
+      if (/^Assessment\s+Criteria/i.test(t)) break;
+      if (/^The\s+learner\s+can/i.test(t)) break;
+      if (t.length > 3) loTextLines.push(t);
+    }
+    const loText = loTextLines.join(' ').replace(/\s+/g, ' ').trim();
+
+    // Find ACs: numbered items "1. text", "2. text" after "Assessment Criteria"
+    const acSection = outcomeBody.substring(
+      outcomeBody.search(/Assessment\s+Criteria/i) || 0
+    );
+
+    // Pattern: "N. text" where N is 1-99 at start of line
+    // Use /gi (not /gm) so $ only matches end of string, not end of each line
+    const acPattern =
+      /(?:^|\n)\s*(\d{1,2})\.\s+([\s\S]*?)(?=\n\s*\d{1,2}\.\s+[a-zA-Z]|\bRange\b|\bOutcome\s+\d|$)/gi;
+    let acMatch;
+    while ((acMatch = acPattern.exec(acSection)) !== null) {
+      const acNum = acMatch[1];
+      const acText = acMatch[2]
+        .split('\n')
+        .map((l) => l.trim())
+        .filter(
+          (l) =>
+            l.length > 0 &&
+            !/^Range/i.test(l) &&
+            !/^--\s*\d+/i.test(l) &&
+            !/^City\s*&\s*Guilds/i.test(l)
+        )
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      if (acText.length > 3) {
+        rows.push({
+          qualification_code: '2357',
+          unit_code: unitCode,
+          unit_title: unitTitle,
+          lo_number: loNum,
+          lo_text: loText,
+          ac_code: `${loNum}.${acNum}`,
+          ac_text: acText,
+        });
+      }
+    }
+  }
+
+  return rows;
+}
+
+// --------------- C&G 8202 Parser ---------------
+// 8202 uses "Learning outcome N: Title" and "Topic N.M" patterns.
+// We treat each Topic as an AC, extracting its description text.
+function parseCG8202(text: string): QualificationRow[] {
+  const unitCodeRe = /\bUnit\s+(\d{2,3}(?:\/\d{2,3})?)\s+/gi;
+  const units = findCGContentUnits(text, unitCodeRe);
+  const rows: QualificationRow[] = [];
+
+  for (const unit of units) {
+    const body = text.substring(unit.bodyStart, unit.bodyEnd);
+    rows.push(...extract8202ACs(body, unit.code, unit.title));
+  }
+  return rows;
+}
+
+function extract8202ACs(
+  body: string,
+  unitCode: string,
+  unitTitle: string
+): QualificationRow[] {
+  const rows: QualificationRow[] = [];
+
+  // Clean page headers/footers
+  const cleaned = body
+    .replace(/--\s*\d+\s+of\s+\d+\s*--/g, '')
+    .replace(/Level\s+\d\s+Advanced\s+Technical.*?\d+$/gm, '');
+
+  // Extract LO texts from the "Learning outcomes" section
+  // Format: "N. LO text" in the outcomes list
+  const loTexts = new Map<number, string>();
+  const loListSection = cleaned.match(
+    /Learning\s+outcomes[\s\S]*?(?=Scope\s+of\s+content|$)/i
+  );
+  if (loListSection) {
+    const loItemPattern = /(?:^|\n)\s*(\d+)\.\s+([\s\S]*?)(?=\n\s*\d+\.\s+|$)/gi;
+    let loMatch;
+    while ((loMatch = loItemPattern.exec(loListSection[0])) !== null) {
+      const num = parseInt(loMatch[1], 10);
+      const text = loMatch[2].split('\n').map((l) => l.trim()).filter((l) => l.length > 3).join(' ').replace(/\s+/g, ' ').trim();
+      if (!loTexts.has(num) && text.length > 5) {
+        loTexts.set(num, text);
+      }
+    }
+  }
+
+  // Also extract from "Learning outcome N: Title" headers
+  const loHeaderPattern = /Learning\s+outcome\s+(\d+):\s*([\s\S]*?)(?=Learning\s+outcome\s+\d+:|Topic\s+\d+\.\d+|$)/gi;
+  let loHeaderMatch;
+  while ((loHeaderMatch = loHeaderPattern.exec(cleaned)) !== null) {
+    const num = parseInt(loHeaderMatch[1], 10);
+    const titleText = loHeaderMatch[2].split('\n')[0].trim();
+    if (!loTexts.has(num) && titleText.length > 5) {
+      loTexts.set(num, titleText);
+    }
+  }
+
+  // Extract Topics: "Topic N.M" → treat as ACs
+  // Skip bullet-list items like "• Topic 1.1: Title" (Scope section) — only match
+  // standalone "Topic N.M\n" (content section) by requiring \n after optional whitespace.
+  const topicPattern =
+    /(?:^|\n)Topic\s+(\d+)\.(\d+)\s*\n([\s\S]*?)(?=(?:^|\n)Topic\s+\d+\.\d+|\bLearning\s+outcome\s+\d+|$)/gi;
+  let topicMatch;
+  while ((topicMatch = topicPattern.exec(cleaned)) !== null) {
+    const loNum = parseInt(topicMatch[1], 10);
+    const acNum = topicMatch[2];
+    const topicBody = topicMatch[3];
+
+    // Extract the topic description — first meaningful paragraph
+    const descLines: string[] = [];
+    for (const line of topicBody.split('\n')) {
+      const t = line.trim();
+      if (t.length < 3) continue;
+      if (/^Topic\s+\d+/i.test(t)) break;
+      if (/^Learning\s+outcome/i.test(t)) break;
+      // Include the description lines (stop at bullet lists or next section)
+      if (t.startsWith('•') && descLines.length > 0) break;
+      descLines.push(t);
+    }
+    let acText = descLines.join(' ').replace(/\s+/g, ' ').trim();
+    // Strip leading colon from "Topic N.M: Title" format
+    acText = acText.replace(/^:\s*/, '');
+
+    if (acText.length > 3) {
+      rows.push({
+        qualification_code: '8202',
+        unit_code: unitCode,
+        unit_title: unitTitle,
+        lo_number: loNum,
+        lo_text: loTexts.get(loNum) || '',
+        ac_code: `${loNum}.${acNum}`,
+        ac_text: acText,
+      });
+    }
+  }
+
+  return rows;
+}
+
+// --------------- EAL QS Parser ---------------
+// EAL 610/3907/X uses 3-column tables:
+// Col 1: LO number + text (e.g. "1. Know how relevant legislation applies in the workplace")
+// Col 2: AC number + text (e.g. "1.1  Identify roles and responsibilities...")
+// Col 3: Coverage and depth
+// Units: "Unit: TE3-01 Health, Safety and Environmental Considerations"
+//
+// Line-by-line state machine approach to avoid multiline regex issues.
+function parseEALQS(text: string): QualificationRow[] {
+  const rows: QualificationRow[] = [];
+
+  // Split into unit sections
+  const unitPattern =
+    /Unit:\s*((?:TE3|18ED3)-\d+)\s+([\s\S]*?)(?=Unit:\s*(?:TE3|18ED3)-\d+|Appendix\s+\d|$)/gi;
+
+  let unitMatch;
+  while ((unitMatch = unitPattern.exec(text)) !== null) {
+    const unitCode = unitMatch[1];
+    const unitBody = unitMatch[2];
+
+    // Extract title: first meaningful lines before "GLH:" or "Relationship"
+    const titleLines: string[] = [];
+    for (const line of unitBody.split('\n')) {
+      const t = line.trim();
+      if (/^GLH:/i.test(t)) break;
+      if (/^Relationship/i.test(t)) break;
+      if (t.length > 3 && !/^\d+$/.test(t)) titleLines.push(t);
+    }
+    const unitTitle = titleLines.join(' ').replace(/\s+/g, ' ').trim();
+
+    // Parse LOs and ACs line by line
+    const loTexts = new Map<number, string>();
+    const lines = unitBody.split('\n');
+
+    // First pass: find LOs (lines matching "N. Uppercase text" where N is single digit)
+    // and ACs (lines matching "N.M \t Text")
+    interface ParsedLO { num: number; textLines: string[] }
+    interface ParsedAC { loNum: number; acNum: string; textLines: string[] }
+
+    const parsedLOs: ParsedLO[] = [];
+    const parsedACs: ParsedAC[] = [];
+    let currentLO: ParsedLO | null = null;
+    let currentAC: ParsedAC | null = null;
+
+    for (const line of lines) {
+      const t = line.trim();
+
+      // Skip page headers/footers
+      if (/^--\s*\d+\s+of\s+\d+/i.test(t)) continue;
+      if (/^EAL-/i.test(t)) continue;
+      if (/^Page\s+\d/i.test(t)) continue;
+      if (/^\u00a9/i.test(t)) continue;
+      if (/^Learning\s+Outcomes$/i.test(t)) continue;
+      if (/^The\s+learner\s+(will|can)/i.test(t)) continue;
+      if (/^Assessment\s+Cri/i.test(t)) continue;
+      if (/^Coverage\s+and\s+depth/i.test(t)) continue;
+
+      // Check for AC pattern: "N.M \t text" or "N.M text"
+      const acMatch = t.match(/^(\d+)\.(\d+)\s+(.+)/);
+      if (acMatch) {
+        // Save previous AC
+        if (currentAC) parsedACs.push(currentAC);
+        // Save current LO before switching to AC mode
+        if (currentLO) { parsedLOs.push(currentLO); currentLO = null; }
+        currentAC = {
+          loNum: parseInt(acMatch[1], 10),
+          acNum: acMatch[2],
+          textLines: [acMatch[3].trim()],
+        };
+        continue;
+      }
+
+      // Check for LO pattern: "N. Uppercase text" (single digit, not N.M)
+      const loMatch = t.match(/^(\d+)\.\s+([A-Z].+)/);
+      if (loMatch) {
+        // Save previous AC
+        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        // Save previous LO
+        if (currentLO) parsedLOs.push(currentLO);
+        currentLO = {
+          num: parseInt(loMatch[1], 10),
+          textLines: [loMatch[2].trim()],
+        };
+        continue;
+      }
+
+      // Check for "Cover:" — marks start of coverage section, stop collecting AC text
+      if (/^Cover:/i.test(t)) {
+        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        currentLO = null;
+        continue;
+      }
+
+      // Bullet points — part of coverage, skip
+      if (t.startsWith('•')) {
+        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        currentLO = null;
+        continue;
+      }
+
+      // Continuation line
+      if (t.length > 0) {
+        if (currentAC) {
+          currentAC.textLines.push(t);
+        } else if (currentLO) {
+          currentLO.textLines.push(t);
+        }
+      }
+    }
+    // Save final items
+    if (currentAC) parsedACs.push(currentAC);
+    if (currentLO) parsedLOs.push(currentLO);
+
+    // Build LO text map (deduplicate by LO number, keep first)
+    for (const lo of parsedLOs) {
+      if (!loTexts.has(lo.num)) {
+        loTexts.set(lo.num, lo.textLines.join(' ').replace(/\s+/g, ' ').trim());
+      }
+    }
+
+    // Build AC rows (deduplicate by ac_code)
+    const seenACs = new Set<string>();
+    for (const ac of parsedACs) {
+      const acCode = `${ac.loNum}.${ac.acNum}`;
+      if (seenACs.has(acCode)) continue;
+      seenACs.add(acCode);
+
+      const acText = ac.textLines.join(' ').replace(/\s+/g, ' ').trim();
+      if (acText.length > 3) {
+        rows.push({
+          qualification_code: '610/3907/X',
+          unit_code: unitCode,
+          unit_title: unitTitle,
+          lo_number: ac.loNum,
+          lo_text: loTexts.get(ac.loNum) || '',
+          ac_code: acCode,
+          ac_text: acText,
+        });
+      }
+    }
+  }
+
+  return rows;
+}
 
 // --------------- Main ---------------
 async function main() {
   console.log('=== Qualification PDF Ingestion ===\n');
+  if (DRY_RUN) console.log('DRY RUN MODE - no database changes\n');
+  if (ONLY_QUAL) console.log(`Filtering to qualification: ${ONLY_QUAL}\n`);
 
-  // Clear existing data
-  console.log('Clearing existing qualification_requirements data...');
-  const { error: deleteError } = await supabase
-    .from('qualification_requirements')
-    .delete()
-    .neq('id', '00000000-0000-0000-0000-000000000000'); // delete all
+  const sources = ONLY_QUAL
+    ? PDF_SOURCES.filter((s) => s.qualCode === ONLY_QUAL)
+    : PDF_SOURCES;
 
-  if (deleteError) {
-    console.error('Delete error:', deleteError);
-    // Table might not exist yet — continue anyway
+  if (sources.length === 0) {
+    console.error(`No sources found for qualification: ${ONLY_QUAL}`);
+    process.exit(1);
   }
 
-  let totalRows = 0;
+  const allResults: Record<string, QualificationRow[]> = {};
 
-  for (const source of PDF_SOURCES) {
-    const filePath = path.join(DOWNLOADS, source.file);
+  for (const source of sources) {
+    const filePath = path.join(PDF_DIR, source.file);
     if (!fs.existsSync(filePath)) {
-      console.warn(`SKIP: ${source.file} not found`);
+      console.warn(`SKIP: ${source.file} not found at ${filePath}`);
       continue;
     }
 
     console.log(`\nProcessing: ${source.file}`);
     const buffer = fs.readFileSync(filePath);
-    const pdf = await pdfParse(buffer);
-    const text = pdf.text;
-    console.log(`  Pages: ${pdf.numpages}, Characters: ${text.length}`);
+    const uint8 = new Uint8Array(buffer);
+    const pdf = new PDFParse(uint8);
+    const result = await pdf.getText();
+    const text = result.text;
+    console.log(`  Pages: ${result.total}, Characters: ${text.length}`);
 
     let rows: QualificationRow[];
-    if (source.parser === 'cg') {
-      rows = parseCGHandbook(text, source.qualCode, source.qualName, source.level);
-    } else {
-      rows = parseEALUnit(text, source.qualCode, source.qualName, source.unitCode!, source.level);
+    switch (source.parser) {
+      case 'cg-5357':
+        rows = parseCG5357(text);
+        break;
+      case 'cg-2357':
+        rows = parseCG2357(text);
+        break;
+      case 'cg-2346':
+        rows = parseCG2346(text);
+        break;
+      case 'cg-8202':
+        rows = parseCG8202(text);
+        break;
+      case 'eal-qs':
+        rows = parseEALQS(text);
+        break;
+      default:
+        console.warn(`  Unknown parser: ${source.parser}`);
+        rows = [];
     }
 
-    console.log(`  Extracted ${rows.length} rows`);
+    console.log(`  Extracted ${rows.length} AC rows`);
 
     if (rows.length === 0) {
       console.warn(`  WARNING: No rows extracted from ${source.file}`);
-      continue;
+    }
+
+    // Log unit breakdown
+    const unitCounts = new Map<string, number>();
+    for (const r of rows) {
+      unitCounts.set(r.unit_code, (unitCounts.get(r.unit_code) || 0) + 1);
+    }
+    for (const [unit, count] of Array.from(unitCounts.entries()).sort()) {
+      console.log(`    ${unit}: ${count} ACs`);
+    }
+
+    allResults[source.qualCode] = rows;
+  }
+
+  if (JSON_OUT) {
+    // Write all rows to a JSON file for SQL import
+    const allRows: QualificationRow[] = [];
+    for (const rows of Object.values(allResults)) {
+      allRows.push(...rows);
+    }
+    fs.writeFileSync(JSON_OUT, JSON.stringify(allRows));
+    console.log(`\nWrote ${allRows.length} rows to ${JSON_OUT}`);
+    return;
+  }
+
+  if (DRY_RUN) {
+    // Output JSON for review
+    for (const [qualCode, rows] of Object.entries(allResults)) {
+      console.log(`\n=== ${qualCode}: ${rows.length} rows ===`);
+      // Show first 5 rows as sample
+      for (const row of rows.slice(0, 5)) {
+        console.log(JSON.stringify(row, null, 2));
+      }
+      if (rows.length > 5) console.log(`  ... and ${rows.length - 5} more`);
+    }
+    console.log('\n=== Dry run complete ===');
+    return;
+  }
+
+  // Insert to database
+  for (const [qualCode, rows] of Object.entries(allResults)) {
+    if (rows.length === 0) continue;
+
+    // Delete existing data for this qualification code only
+    console.log(`\nDeleting existing ${qualCode} data...`);
+    const { error: deleteError } = await supabase!
+      .from('qualification_requirements')
+      .delete()
+      .eq('qualification_code', qualCode);
+
+    if (deleteError) {
+      console.error(`  Delete error for ${qualCode}:`, deleteError);
     }
 
     // Insert in batches of 50
+    let inserted = 0;
     for (let i = 0; i < rows.length; i += 50) {
       const batch = rows.slice(i, i + 50);
-      const { error: insertError } = await supabase
+      const { error: insertError } = await supabase!
         .from('qualification_requirements')
         .insert(batch);
 
       if (insertError) {
-        console.error(`  Insert error (batch ${i / 50 + 1}):`, insertError);
+        console.error(
+          `  Insert error (batch ${Math.floor(i / 50) + 1}):`,
+          insertError
+        );
+      } else {
+        inserted += batch.length;
       }
     }
 
-    totalRows += rows.length;
+    console.log(`  Inserted ${inserted}/${rows.length} rows for ${qualCode}`);
   }
 
-  console.log(`\n=== Done! Inserted ${totalRows} rows total ===`);
+  // Verify counts
+  console.log('\n=== Verification ===');
+  const { data: counts } = await supabase!
+    .from('qualification_requirements')
+    .select('qualification_code')
+    .then(({ data }) => {
+      const grouped: Record<string, number> = {};
+      for (const row of data || []) {
+        grouped[row.qualification_code] =
+          (grouped[row.qualification_code] || 0) + 1;
+      }
+      return { data: grouped };
+    });
 
-  // Verify with a test search
-  console.log('\nTest search: ["wiring", "containment"] with 2365-03...');
-  const { data: testData, error: testError } = await supabase.rpc(
-    'search_qualification_requirements',
-    {
-      p_keywords: ['wiring', 'containment'],
-      p_qualification_code: '2365-03',
-      p_limit: 5,
-    }
-  );
-
-  if (testError) {
-    console.error('Test search error:', testError);
-  } else {
-    console.log(`Found ${testData?.length || 0} results:`);
-    for (const row of (testData || []).slice(0, 3)) {
-      console.log(`  - ${row.unit_code}: ${row.learning_outcome?.substring(0, 80)}`);
-    }
+  console.log('Row counts by qualification:');
+  for (const [code, count] of Object.entries(counts || {}).sort()) {
+    console.log(`  ${code}: ${count}`);
   }
+
+  console.log('\n=== Done! ===');
 }
 
 main().catch(console.error);

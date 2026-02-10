@@ -87,8 +87,8 @@ export function DiaryEntriesDetailSheet({ open, onOpenChange, entries }: DiaryEn
   const navigate = useNavigate();
 
   const goToDiary = () => {
-    onOpenChange(false);
-    setTimeout(() => navigate('/apprentice/site-diary'), 150);
+    navigate('/apprentice/site-diary');
+    setTimeout(() => onOpenChange(false), 50);
   };
 
   const {

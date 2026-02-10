@@ -79,8 +79,8 @@ export const InspectorMessage = memo(function InspectorMessage({
 
   // Assistant message - premium design
   return (
-    <div className="flex justify-start w-full">
-      <div className="w-full max-w-none space-y-3">
+    <div className="flex justify-start w-full text-left">
+      <div className="w-full max-w-3xl space-y-3">
         {/* Agent Header */}
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -123,7 +123,7 @@ export const InspectorMessage = memo(function InspectorMessage({
 
           {/* Content */}
           <div className="relative px-4 sm:px-5 py-4 sm:py-5">
-            <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-foreground">
+            <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-foreground text-left">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{

@@ -14,7 +14,7 @@ import { useMemo } from 'react';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useQuizResults, type PerformanceByCategory } from '@/hooks/useQuizResults';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
-import { flashcardSets } from '@/data/flashcardSets';
+import { flashcardSetMeta as flashcardSets } from '@/data/flashcards';
 
 export interface FlashcardSetInsight {
   id: string;

@@ -68,9 +68,9 @@ const quizQuestions = [
   {
     id: 4,
     question: "A 32A Type B MCB has max Zs (0.4s) of approximately:",
-    options: ["0.27Ω", "0.72Ω", "1.09Ω", "1.44Ω"],
+    options: ["0.27Ω", "0.72Ω", "1.37Ω", "1.44Ω"],
     correctAnswer: 2,
-    explanation: "A 32A Type B MCB has maximum Zs of approximately 1.09Ω for 0.4s disconnection (check current BS 7671 tables for exact values)."
+    explanation: "A 32A Type B MCB has maximum Zs of 1.37Ω for 0.4s disconnection per BS 7671:2018+A3:2024 Table 41.3 (incorporating Cmin = 0.95)."
   },
   {
     id: 5,

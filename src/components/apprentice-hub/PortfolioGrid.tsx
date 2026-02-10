@@ -21,6 +21,8 @@ import {
   FileText,
   Video,
   Link2,
+  NotebookPen,
+  ShieldCheck,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -40,6 +42,7 @@ import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { PortfolioDetailSheet } from './PortfolioDetailSheet';
 import { CourseRequirementsPanel } from './CourseRequirementsPanel';
+import PortfolioEntryForm from '@/components/apprentice/portfolio/PortfolioEntryForm';
 
 interface PortfolioGridProps {
   onCapture: () => void;
@@ -58,10 +61,10 @@ const STATUS_OPTIONS: { value: StatusFilter; label: string }[] = [
 ];
 
 export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
-  const { entries, categories, isLoading } = usePortfolioData();
+  const { entries, categories, isLoading, updateEntry } = usePortfolioData();
   const { getCommentsForEvidence } = usePortfolioComments();
-  const { requirementCode } = useStudentQualification();
-  const { tree } = useQualificationACs(requirementCode);
+  const { qualificationCode } = useStudentQualification();
+  const { tree } = useQualificationACs(qualificationCode);
 
   // Build dynamic categories from qualification units
   const dynamicCategories = useMemo(() => {
@@ -81,6 +84,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   // Detail sheet state
   const [selectedEntry, setSelectedEntry] = useState<any>(null);
   const [showDetail, setShowDetail] = useState(false);
+  const [editEntry, setEditEntry] = useState<any>(null);
 
   // Filter and sort entries
   const filteredEntries = useMemo(() => {
@@ -187,7 +191,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('grid')}
               className={cn(
-                'p-3 rounded touch-manipulation active:scale-95',
+                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
                 viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/80'
               )}
             >
@@ -196,7 +200,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('list')}
               className={cn(
-                'p-3 rounded touch-manipulation active:scale-95',
+                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
                 viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/80'
               )}
             >
@@ -315,7 +319,24 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
         entry={selectedEntry}
         open={showDetail}
         onOpenChange={setShowDetail}
+        onEdit={(entry) => {
+          setShowDetail(false);
+          setEditEntry(entry);
+        }}
       />
+
+      {/* Edit Form (renders its own Dialog) */}
+      {editEntry && (
+        <PortfolioEntryForm
+          categories={categories}
+          initialData={editEntry}
+          onSubmit={async (data) => {
+            await updateEntry(editEntry.id, data);
+            setEditEntry(null);
+          }}
+          onCancel={() => setEditEntry(null)}
+        />
+      )}
     </div>
   );
 }
@@ -393,6 +414,22 @@ function GridCard({
           {commentCount}
         </div>
       )}
+
+      {/* Diary source badge */}
+      {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
+        <div className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-cyan-500/80 text-white text-[10px] font-medium">
+          <NotebookPen className="h-3 w-3" />
+          Diary
+        </div>
+      )}
+
+      {/* Verified badge */}
+      {entry.isVerified && (
+        <div className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-500/80 text-white text-[10px] font-medium">
+          <ShieldCheck className="h-3 w-3" />
+          Verified
+        </div>
+      )}
     </button>
   );
 }
@@ -435,7 +472,7 @@ function ListItem({
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3 className="text-sm font-medium text-foreground truncate">{entry.title}</h3>
-        <p className="text-xs text-white/80 truncate">{entry.category}</p>
+        <p className="text-xs text-white/80 truncate">{typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}</p>
         <div className="flex items-center gap-1.5 mt-1">
           <Badge className={cn('text-[10px]', statusColors[entry.status] || statusColors.draft)}>
             {entry.status || 'draft'}
@@ -460,6 +497,18 @@ function ListItem({
           <div className="flex items-center gap-1 text-white/80">
             <MessageSquare className="h-3 w-3" />
             <span className="text-[10px]">{commentCount}</span>
+          </div>
+        )}
+        {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
+          <div className="flex items-center gap-0.5 text-cyan-400">
+            <NotebookPen className="h-3 w-3" />
+            <span className="text-[10px] font-medium">Diary</span>
+          </div>
+        )}
+        {entry.isVerified && (
+          <div className="flex items-center gap-0.5 text-emerald-400">
+            <ShieldCheck className="h-3 w-3" />
+            <span className="text-[10px] font-medium">Verified</span>
           </div>
         )}
       </div>

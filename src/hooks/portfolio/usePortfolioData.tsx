@@ -4,6 +4,7 @@ import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivit
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLearningXP } from '@/hooks/useLearningXP';
 
 const defaultCategories: PortfolioCategory[] = [
   {
@@ -82,6 +83,17 @@ const defaultCategories: PortfolioCategory[] = [
     completedEntries: 0,
     groupTheme: 'safety-compliance',
     competencyLevel: 'intermediate'
+  },
+  {
+    id: 'site-diary-evidence',
+    name: 'Site Diary Evidence',
+    description: 'Portfolio evidence captured from site diary entries',
+    icon: 'notebook-pen',
+    color: 'cyan',
+    requiredEntries: 0,
+    completedEntries: 0,
+    groupTheme: 'professional-skills',
+    competencyLevel: 'foundation'
   }
 ];
 
@@ -124,7 +136,8 @@ const mapDbToEntry = (row: any): PortfolioEntry => {
     selfAssessment: row.self_assessment || 3,
     status: row.status || 'draft',
     timeSpent: row.time_spent || 0,
-    awardingBodyStandards: row.awarding_body_standards || []
+    awardingBodyStandards: row.awarding_body_standards || [],
+    isVerified: row.is_supervisor_verified || false,
   };
 };
 
@@ -199,6 +212,7 @@ const getGroupInfo = (theme: string) => {
 export const usePortfolioData = () => {
   const { toast } = useToast();
   const { user } = useAuth();
+  const { logActivity } = useLearningXP();
   const [entries, setEntries] = useState<PortfolioEntry[]>([]);
   const [categories, setCategories] = useState<PortfolioCategory[]>(defaultCategories);
   const [analytics, setAnalytics] = useState<PortfolioAnalytics | null>(null);
@@ -367,6 +381,17 @@ export const usePortfolioData = () => {
       toast({
         title: "Portfolio entry added",
         description: "Your new portfolio entry has been saved successfully."
+      });
+
+      // Log XP for portfolio evidence
+      logActivity({
+        activityType: 'portfolio_evidence',
+        sourceId: data.id,
+        sourceTitle: `Portfolio: ${entryData.title}`,
+        metadata: {
+          category: entryData.category.id,
+          status: entryData.status,
+        },
       });
 
       return data.id;

@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -53,6 +54,9 @@ import { format, formatDistanceToNow, isToday, isTomorrow, parseISO, startOfDay,
 import { CheckCheck } from "lucide-react";
 import AdminSearchInput from "@/components/admin/AdminSearchInput";
 import AdminEmptyState from "@/components/admin/AdminEmptyState";
+import { useAdminUsersBase } from "@/hooks/useAdminUsersBase";
+import { useHaptic } from "@/hooks/useHaptic";
+import PullToRefresh from "@/components/admin/PullToRefresh";
 import { toast } from "sonner";
 
 interface TrialUser {
@@ -268,12 +272,23 @@ const getEngagementBadge = (score: number = 0) => {
 };
 
 export default function AdminTrials() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [engagementFilter, setEngagementFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>(searchParams.get("status") || "all");
+  const [roleFilter, setRoleFilter] = useState<string>(searchParams.get("role") || "all");
+  const [engagementFilter, setEngagementFilter] = useState<string>(searchParams.get("engagement") || "all");
   const [selectedUser, setSelectedUser] = useState<TrialUser | null>(null);
   const queryClient = useQueryClient();
+  const haptic = useHaptic();
+
+  // Persist filters to URL
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (statusFilter !== "all") params.set("status", statusFilter);
+    if (roleFilter !== "all") params.set("role", roleFilter);
+    if (engagementFilter !== "all") params.set("engagement", engagementFilter);
+    setSearchParams(params, { replace: true });
+  }, [statusFilter, roleFilter, engagementFilter, setSearchParams]);
 
   // Track hidden user IDs in local state (persisted via localStorage)
   const [hiddenUserIds, setHiddenUserIds] = useState<Set<string>>(() => {
@@ -281,19 +296,15 @@ export default function AdminTrials() {
     return saved ? new Set(JSON.parse(saved)) : new Set();
   });
 
+  // Shared cached edge function call — reused across AdminUsers/AdminTrials
+  const { data: baseUsers, isLoading: baseLoading, refetch: refetchBase } = useAdminUsersBase();
+
   // Fetch trial users with computed status and engagement data
-  const { data: trialUsers, isLoading, refetch } = useQuery({
+  const { data: trialUsers, isLoading: enrichmentLoading, refetch: refetchEnrichment } = useQuery({
     queryKey: ["admin-trial-users", statusFilter, roleFilter],
     queryFn: async () => {
-      // Fetch users with auth data (includes last_sign_in) via admin edge function
-      const { data: edgeData, error: edgeError } = await supabase.functions.invoke("admin-get-users");
-
-      if (edgeError) {
-        console.error("Edge function error:", edgeError);
-        throw edgeError;
-      }
-
-      const users = edgeData?.users || [];
+      const users = baseUsers || [];
+      const userIds = users.map((u: any) => u.id);
 
       // Create auth data map for last_sign_in
       const authDataMap = new Map<string, { last_sign_in: string | null; email: string | null }>();
@@ -304,10 +315,35 @@ export default function AdminTrials() {
         });
       });
 
-      // Fetch user_activity separately
-      const { data: activityData } = await supabase
-        .from("user_activity")
-        .select("user_id, points, streak, last_active_date");
+      // Fetch all enrichment data in parallel, filtered by user IDs
+      const [
+        { data: activityData },
+        { data: quotesData },
+        { data: eicData },
+        { data: studyData },
+        { data: eventSummaryData },
+      ] = await Promise.all([
+        supabase
+          .from("user_activity")
+          .select("user_id, points, streak, last_active_date")
+          .in("user_id", userIds),
+        supabase
+          .from("quotes")
+          .select("user_id")
+          .in("user_id", userIds),
+        supabase
+          .from("eic_schedules")
+          .select("user_id")
+          .in("user_id", userIds),
+        supabase
+          .from("study_sessions")
+          .select("user_id")
+          .in("user_id", userIds),
+        supabase
+          .from("user_activity_summary")
+          .select("*")
+          .in("user_id", userIds),
+      ]);
 
       const activityMap = new Map<string, { points: number; streak: number; last_active_date: string | null }>();
       activityData?.forEach((a: any) => {
@@ -318,40 +354,20 @@ export default function AdminTrials() {
         });
       });
 
-      // Fetch quotes count per user
-      const { data: quotesData } = await supabase
-        .from("quotes")
-        .select("user_id");
-
       const quotesCountMap = new Map<string, number>();
       quotesData?.forEach((q: { user_id: string }) => {
         quotesCountMap.set(q.user_id, (quotesCountMap.get(q.user_id) || 0) + 1);
       });
-
-      // Fetch EIC schedules count per user
-      const { data: eicData } = await supabase
-        .from("eic_schedules")
-        .select("user_id");
 
       const eicCountMap = new Map<string, number>();
       eicData?.forEach((e: { user_id: string }) => {
         eicCountMap.set(e.user_id, (eicCountMap.get(e.user_id) || 0) + 1);
       });
 
-      // Fetch study sessions count per user
-      const { data: studyData } = await supabase
-        .from("study_sessions")
-        .select("user_id");
-
       const studyCountMap = new Map<string, number>();
       studyData?.forEach((s: { user_id: string }) => {
         studyCountMap.set(s.user_id, (studyCountMap.get(s.user_id) || 0) + 1);
       });
-
-      // Fetch user_events summary (NEW - real activity tracking)
-      const { data: eventSummaryData } = await supabase
-        .from("user_activity_summary")
-        .select("*");
 
       const eventSummaryMap = new Map<string, UserEventSummary>();
       eventSummaryData?.forEach((e: any) => {
@@ -466,9 +482,16 @@ export default function AdminTrials() {
         } as TrialUser;
       });
     },
-    staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: 60 * 1000, // Auto-refresh every minute
+    enabled: !!baseUsers,
+    staleTime: 30 * 1000,
+    refetchInterval: 60 * 1000,
   });
+
+  const isLoading = baseLoading || enrichmentLoading;
+  const refetch = async () => {
+    await refetchBase();
+    await refetchEnrichment();
+  };
 
   // Fetch today's email sends to show which users have been emailed
   const { data: todayEmailSends } = useQuery({
@@ -863,6 +886,7 @@ export default function AdminTrials() {
       return userId;
     },
     onSuccess: (userId) => {
+      haptic.light();
       setHiddenUserIds(prev => new Set(prev).add(userId));
       toast.success("User removed from list");
       setSelectedUser(null);
@@ -886,6 +910,7 @@ export default function AdminTrials() {
       return data;
     },
     onSuccess: () => {
+      haptic.success();
       toast.success("Email sent successfully");
       queryClient.invalidateQueries({ queryKey: ["admin-trial-users"] });
       queryClient.invalidateQueries({ queryKey: ["admin-email-sends-today"] });
@@ -905,6 +930,7 @@ export default function AdminTrials() {
       return data;
     },
     onSuccess: (data, variables) => {
+      haptic.success();
       const sent = data?.sent || 0;
       const skipped = data?.skipped || 0;
       if (skipped > 0) {
@@ -940,6 +966,7 @@ export default function AdminTrials() {
   };
 
   return (
+    <PullToRefresh onRefresh={async () => { await refetch(); }}>
     <div className="space-y-4 sm:space-y-6">
       {/* Stats Overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
@@ -951,7 +978,7 @@ export default function AdminTrials() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl sm:text-2xl font-bold">{stats.ending_today.toLocaleString()}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Ending Today</p>
+                <p className="text-xs text-muted-foreground">Ending Today</p>
               </div>
               <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
             </div>
@@ -966,7 +993,7 @@ export default function AdminTrials() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl sm:text-2xl font-bold">{stats.ending_tomorrow.toLocaleString()}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Tomorrow</p>
+                <p className="text-xs text-muted-foreground">Tomorrow</p>
               </div>
               <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400" />
             </div>
@@ -981,7 +1008,7 @@ export default function AdminTrials() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl sm:text-2xl font-bold">{stats.active.toLocaleString()}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Active</p>
+                <p className="text-xs text-muted-foreground">Active</p>
               </div>
               <Timer className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
             </div>
@@ -993,7 +1020,7 @@ export default function AdminTrials() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl sm:text-2xl font-bold">{stats.conversion_rate}%</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Conversion</p>
+                <p className="text-xs text-muted-foreground">Conversion</p>
               </div>
               <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
             </div>
@@ -1009,7 +1036,7 @@ export default function AdminTrials() {
         >
           <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
             <p className="text-base sm:text-lg font-bold">{stats.converted.toLocaleString()}</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
+            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
               <Crown className="h-3 w-3 text-emerald-400" />
               Converted
             </p>
@@ -1021,7 +1048,7 @@ export default function AdminTrials() {
         >
           <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
             <p className="text-base sm:text-lg font-bold">{stats.expired.toLocaleString()}</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
+            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
               <XCircle className="h-3 w-3 text-gray-400" />
               Expired
             </p>
@@ -1033,7 +1060,7 @@ export default function AdminTrials() {
         >
           <CardContent className="p-2.5 sm:pt-4 sm:pb-4 text-center">
             <p className="text-base sm:text-lg font-bold">{stats.total_trials.toLocaleString()}</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground flex items-center justify-center gap-1">
+            <p className="text-xs text-muted-foreground flex items-center justify-center gap-1">
               <Users className="h-3 w-3 text-blue-400" />
               Total
             </p>
@@ -1058,7 +1085,7 @@ export default function AdminTrials() {
               <Flame className="h-5 w-5 text-red-400 mx-auto mb-1" />
               <p className="text-lg font-bold">{stats.hot_leads}</p>
               <p className="text-xs text-muted-foreground">Hot</p>
-              <p className="text-[10px] text-red-400/70">{ENGAGEMENT_HOT}+ score</p>
+              <p className="text-xs text-red-400/70">{ENGAGEMENT_HOT}+ score</p>
             </div>
             <div
               className={`text-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 touch-manipulation active:scale-[0.98] cursor-pointer transition-all ${engagementFilter === "warm" ? "ring-2 ring-amber-500" : ""}`}
@@ -1067,7 +1094,7 @@ export default function AdminTrials() {
               <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
               <p className="text-lg font-bold">{stats.warm_leads}</p>
               <p className="text-xs text-muted-foreground">Warm</p>
-              <p className="text-[10px] text-amber-400/70">{ENGAGEMENT_WARM}-{ENGAGEMENT_HOT - 1} score</p>
+              <p className="text-xs text-amber-400/70">{ENGAGEMENT_WARM}-{ENGAGEMENT_HOT - 1} score</p>
             </div>
             <div
               className={`text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 touch-manipulation active:scale-[0.98] cursor-pointer transition-all ${engagementFilter === "cold" ? "ring-2 ring-blue-500" : ""}`}
@@ -1076,7 +1103,7 @@ export default function AdminTrials() {
               <Snowflake className="h-5 w-5 text-blue-400 mx-auto mb-1" />
               <p className="text-lg font-bold">{stats.cold_leads}</p>
               <p className="text-xs text-muted-foreground">Cold</p>
-              <p className="text-[10px] text-blue-400/70">&lt;{ENGAGEMENT_WARM} score</p>
+              <p className="text-xs text-blue-400/70">&lt;{ENGAGEMENT_WARM} score</p>
             </div>
           </div>
         </CardContent>
@@ -1256,7 +1283,7 @@ export default function AdminTrials() {
                       {/* Bottom row: Badges - on their own line for mobile */}
                       <div className="flex items-center gap-1.5 mt-2 ml-[52px] flex-wrap">
                         {emailedTodayUserIds.has(user.id) && (
-                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] px-1.5 py-0.5 h-5 flex items-center gap-0.5">
+                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs px-1.5 py-0.5 h-5 flex items-center gap-0.5">
                             <CheckCheck className="h-3 w-3" />
                             Sent
                           </Badge>
@@ -1315,7 +1342,7 @@ export default function AdminTrials() {
                       </div>
                       <div className="text-right">
                         <Target className="h-5 w-5 text-green-400 mb-1" />
-                        <p className="text-[10px] text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           {format(parseISO(firstAction.created_at), "dd MMM HH:mm")}
                         </p>
                       </div>
@@ -1332,17 +1359,17 @@ export default function AdminTrials() {
                       <div>
                         <Timer className="h-5 w-5 text-teal-400 mx-auto mb-1" />
                         <p className="text-lg font-bold">{formatTimeSpent(scoreBreakdown.totalSecondsTracked || 0)}</p>
-                        <p className="text-[10px] text-muted-foreground">Time in App</p>
+                        <p className="text-xs text-muted-foreground">Time in App</p>
                       </div>
                       <div>
                         <Eye className="h-5 w-5 text-sky-400 mx-auto mb-1" />
                         <p className="text-lg font-bold">{scoreBreakdown.pageViews || 0}</p>
-                        <p className="text-[10px] text-muted-foreground">Pages Visited</p>
+                        <p className="text-xs text-muted-foreground">Pages Visited</p>
                       </div>
                       <div>
                         <LogIn className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
                         <p className="text-lg font-bold">{scoreBreakdown.loginCount || 0}</p>
-                        <p className="text-[10px] text-muted-foreground">Logins</p>
+                        <p className="text-xs text-muted-foreground">Logins</p>
                       </div>
                     </div>
                     {scoreBreakdown.activeDays > 0 && (
@@ -1640,7 +1667,7 @@ export default function AdminTrials() {
                               {activity.extra_info && (
                                 <p className="text-xs text-muted-foreground truncate">{activity.extra_info}</p>
                               )}
-                              <p className="text-[10px] text-muted-foreground/70 mt-0.5">
+                              <p className="text-xs text-muted-foreground/70 mt-0.5">
                                 {formatDistance(parseISO(activity.created_at), new Date(), { addSuffix: true })}
                               </p>
                             </div>
@@ -1680,5 +1707,6 @@ export default function AdminTrials() {
         </SheetContent>
       </Sheet>
     </div>
+    </PullToRefresh>
   );
 }

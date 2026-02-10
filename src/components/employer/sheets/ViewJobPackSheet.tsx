@@ -241,7 +241,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
   
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto p-0">
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl overflow-y-auto p-0">
         <SheetHeader className="sticky top-0 z-10 bg-background border-b border-border p-4">
           <div className="flex items-center justify-between">
             <div className="flex-1 min-w-0">
@@ -262,11 +262,11 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
         
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border">
-            <TabsTrigger value="overview" className="flex-1 data-[state=active]:bg-background text-xs sm:text-sm">Overview</TabsTrigger>
-            <TabsTrigger value="documents" className="flex-1 data-[state=active]:bg-background text-xs sm:text-sm">Documents</TabsTrigger>
-            <TabsTrigger value="certs" className="flex-1 data-[state=active]:bg-background text-xs sm:text-sm">Certs</TabsTrigger>
-            <TabsTrigger value="briefing" className="flex-1 data-[state=active]:bg-background text-xs sm:text-sm">Briefing</TabsTrigger>
-            <TabsTrigger value="distribute" className="flex-1 data-[state=active]:bg-background text-xs sm:text-sm">Send</TabsTrigger>
+            <TabsTrigger value="overview" className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm">Overview</TabsTrigger>
+            <TabsTrigger value="documents" className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm">Documents</TabsTrigger>
+            <TabsTrigger value="certs" className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm">Certs</TabsTrigger>
+            <TabsTrigger value="briefing" className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm">Briefing</TabsTrigger>
+            <TabsTrigger value="distribute" className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm">Send</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -276,42 +276,42 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label>Title</Label>
-                    <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <Input value={title} onChange={(e) => setTitle(e.target.value)} className="h-11 touch-manipulation text-base" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Client</Label>
-                      <Input value={client} onChange={(e) => setClient(e.target.value)} />
+                      <Input value={client} onChange={(e) => setClient(e.target.value)} className="h-11 touch-manipulation text-base" />
                     </div>
                     <div className="space-y-2">
                       <Label>Location</Label>
-                      <Input value={location} onChange={(e) => setLocation(e.target.value)} />
+                      <Input value={location} onChange={(e) => setLocation(e.target.value)} className="h-11 touch-manipulation text-base" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label>Scope of Works</Label>
-                    <Textarea value={scope} onChange={(e) => setScope(e.target.value)} rows={4} />
+                    <Textarea value={scope} onChange={(e) => setScope(e.target.value)} rows={4} className="h-11 touch-manipulation text-base" />
                   </div>
                   <div className="space-y-2">
                     <Label>Status</Label>
                     <Select value={status} onValueChange={(v) => setStatus(v as JobPackStatus)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-11 touch-manipulation text-base">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Draft">Draft</SelectItem>
-                        <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Complete">Complete</SelectItem>
+                        <SelectItem value="Draft" className="h-11 touch-manipulation">Draft</SelectItem>
+                        <SelectItem value="In Progress" className="h-11 touch-manipulation">In Progress</SelectItem>
+                        <SelectItem value="Complete" className="h-11 touch-manipulation">Complete</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={handleSave} disabled={updateJobPack.isPending} className="flex-1">
+                  <Button onClick={handleSave} disabled={updateJobPack.isPending} className="flex-1 h-11 touch-manipulation">
                     <Save className="h-4 w-4 mr-2" />
                     Save
                   </Button>
-                  <Button variant="outline" onClick={() => setIsEditing(false)} className="flex-1">
+                  <Button variant="outline" onClick={() => setIsEditing(false)} className="flex-1 h-11 touch-manipulation">
                     Cancel
                   </Button>
                 </div>
@@ -363,12 +363,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 )}
                 
                 <div className="flex gap-2 pt-4 border-t border-border">
-                  <Button onClick={() => setIsEditing(true)} className="flex-1">
+                  <Button onClick={() => setIsEditing(true)} className="flex-1 h-11 touch-manipulation">
                     Edit Job Pack
                   </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon">
+                      <Button variant="destructive" size="icon" className="h-11 w-11 touch-manipulation">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </AlertDialogTrigger>
@@ -408,20 +408,19 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     </div>
                     {jobPack.rams_generated ? (
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Eye className="h-4 w-4 mr-1" />
                           View
                         </Button>
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Download className="h-4 w-4" />
                         </Button>
                       </div>
                     ) : (
-                      <Button 
-                        size="sm" 
+                      <Button
                         onClick={() => handleGenerateDocument('rams')}
                         disabled={isGenerating !== null}
-                        className="gap-2"
+                        className="gap-2 h-11 touch-manipulation"
                       >
                         {isGenerating === 'rams' ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -450,20 +449,19 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     </div>
                     {jobPack.method_statement_generated ? (
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Eye className="h-4 w-4 mr-1" />
                           View
                         </Button>
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Download className="h-4 w-4" />
                         </Button>
                       </div>
                     ) : (
-                      <Button 
-                        size="sm" 
+                      <Button
                         onClick={() => handleGenerateDocument('method_statement')}
                         disabled={isGenerating !== null}
-                        className="gap-2"
+                        className="gap-2 h-11 touch-manipulation"
                       >
                         {isGenerating === 'method_statement' ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -492,20 +490,19 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     </div>
                     {jobPack.briefing_pack_generated ? (
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Eye className="h-4 w-4 mr-1" />
                           View
                         </Button>
-                        <Button size="sm" variant="outline" className="h-8">
+                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
                           <Download className="h-4 w-4" />
                         </Button>
                       </div>
                     ) : (
-                      <Button 
-                        size="sm" 
+                      <Button
                         onClick={() => handleGenerateDocument('briefing_pack')}
                         disabled={isGenerating !== null || !jobPack.rams_generated || !jobPack.method_statement_generated}
-                        className="gap-2"
+                        className="gap-2 h-11 touch-manipulation"
                       >
                         {isGenerating === 'briefing_pack' ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -530,7 +527,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                   <p className="text-sm font-medium text-foreground">Upload Additional Documents</p>
                   <p className="text-xs text-muted-foreground">Design drawings, specs, schedules</p>
-                  <Button variant="outline" size="sm" className="mt-3">
+                  <Button variant="outline" className="mt-3 h-11 touch-manipulation">
                     Choose Files
                   </Button>
                 </CardContent>
@@ -542,11 +539,11 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   {documents.map((doc) => (
                     <Card key={doc.id}>
                       <CardContent className="p-3 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">{doc.title}</span>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                          <span className="text-sm truncate">{doc.title}</span>
                         </div>
-                        <Button size="sm" variant="ghost">
+                        <Button size="sm" variant="ghost" className="h-11 w-11 touch-manipulation shrink-0">
                           <Download className="h-4 w-4" />
                         </Button>
                       </CardContent>
@@ -611,12 +608,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                                 <AlertCircle className="h-4 w-4 text-warning" />
                               )}
                             </div>
-                            <div>
-                              <p className="text-sm font-medium">{emp.name}</p>
-                              <p className="text-xs text-muted-foreground">{emp.team_role}</p>
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium truncate">{emp.name}</p>
+                              <p className="text-xs text-muted-foreground truncate">{emp.team_role}</p>
                             </div>
                           </div>
-                          <Badge variant={isCompliant ? "secondary" : "outline"} className={isCompliant ? "bg-success/20 text-success" : "text-warning border-warning"}>
+                          <Badge variant={isCompliant ? "secondary" : "outline"} className={`shrink-0 ${isCompliant ? "bg-success/20 text-success" : "text-warning border-warning"}`}>
                             {isCompliant ? "Compliant" : "Check Required"}
                           </Badge>
                         </CardContent>
@@ -629,7 +626,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               <div className="text-center py-8">
                 <Award className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-sm text-muted-foreground">No certifications required for this job pack</p>
-                <Button variant="outline" size="sm" className="mt-3" onClick={() => setIsEditing(true)}>
+                <Button variant="outline" className="mt-3 h-11 touch-manipulation" onClick={() => setIsEditing(true)}>
                   Add Requirements
                 </Button>
               </div>
@@ -648,7 +645,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 onChange={(e) => setBriefingContent(e.target.value)}
                 placeholder="Site access arrangements, emergency contacts, PPE requirements, specific safety notes..."
                 rows={8}
-                className="resize-none"
+                className="resize-none touch-manipulation"
               />
             </div>
 
@@ -689,10 +686,10 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               </Card>
             )}
 
-            <Button 
-              onClick={handleSave} 
+            <Button
+              onClick={handleSave}
               disabled={updateJobPack.isPending}
-              className="w-full"
+              className="w-full h-11 touch-manipulation"
             >
               <Save className="h-4 w-4 mr-2" />
               Save Briefing Content
@@ -709,8 +706,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       <CheckCircle2 className="h-5 w-5 text-success" />
                       <div>
                         <p className="font-medium text-success">Pack Sent to Workers</p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(jobPack.sent_to_workers_at).toLocaleString()}
+                        <p className="text-xs text-muted-foreground truncate">
+                          {new Date(jobPack.sent_to_workers_at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}
                         </p>
                       </div>
                     </div>
@@ -735,17 +732,17 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                             ) : (
                               <Clock className="h-4 w-4 text-muted-foreground" />
                             )}
-                            <div>
-                              <p className="text-sm font-medium">{emp.name}</p>
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium truncate">{emp.name}</p>
                               {ack && (
-                                <p className="text-xs text-muted-foreground">
-                                  Acknowledged {new Date(ack.acknowledged_at).toLocaleDateString()}
+                                <p className="text-xs text-muted-foreground truncate">
+                                  Acknowledged {new Date(ack.acknowledged_at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}
                                 </p>
                               )}
                             </div>
                           </div>
                           {!ack && (
-                            <Button size="sm" variant="ghost">
+                            <Button size="sm" variant="ghost" className="h-11 w-11 touch-manipulation shrink-0">
                               <RefreshCw className="h-4 w-4" />
                             </Button>
                           )}
@@ -755,7 +752,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   })}
                 </div>
 
-                <Button variant="outline" className="w-full gap-2">
+                <Button variant="outline" className="w-full gap-2 h-11 touch-manipulation">
                   <RefreshCw className="h-4 w-4" />
                   Send Reminder to Pending
                 </Button>
@@ -791,10 +788,10 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   </CardContent>
                 </Card>
 
-                <Button 
+                <Button
                   onClick={handleSendToWorkers}
                   disabled={isSendingToWorkers || assignedEmployees.length === 0}
-                  className="w-full gap-2"
+                  className="w-full gap-2 h-11 touch-manipulation"
                   size="lg"
                 >
                   {isSendingToWorkers ? (

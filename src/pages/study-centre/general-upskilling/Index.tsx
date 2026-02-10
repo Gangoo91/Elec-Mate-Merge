@@ -95,7 +95,6 @@ const courses: Course[] = [
   },
   {
     id: 7,
-    comingSoon: true,
     title: 'Working at Height',
     description: 'Risk assessment, fall prevention, and safe practices for working at height',
     icon: ArrowUpFromLine,
@@ -105,7 +104,6 @@ const courses: Course[] = [
   },
   {
     id: 8,
-    comingSoon: true,
     title: 'Manual Handling',
     description: 'Safe lifting techniques, risk assessment, and injury prevention on site',
     icon: PackageOpen,
@@ -115,7 +113,6 @@ const courses: Course[] = [
   },
   {
     id: 9,
-    comingSoon: true,
     title: 'COSHH Awareness',
     description: 'Control of substances hazardous to health — identification and safe handling',
     icon: FlaskConical,
@@ -125,7 +122,6 @@ const courses: Course[] = [
   },
   {
     id: 10,
-    comingSoon: true,
     title: 'Confined Spaces Awareness',
     description: 'Hazard identification and safe entry procedures for confined spaces',
     icon: DoorOpen,
@@ -135,7 +131,6 @@ const courses: Course[] = [
   },
   {
     id: 11,
-    comingSoon: true,
     title: 'Fire Safety & Fire Marshal',
     description: 'Fire prevention, evacuation procedures, and fire marshal responsibilities',
     icon: Flame,
@@ -145,7 +140,6 @@ const courses: Course[] = [
   },
   {
     id: 12,
-    comingSoon: true,
     title: 'CSCS Card Preparation',
     description: 'Health, safety, and environment test preparation for CSCS card applications',
     icon: BadgeCheck,
@@ -155,7 +149,6 @@ const courses: Course[] = [
   },
   {
     id: 13,
-    comingSoon: true,
     title: 'Scaffolding Awareness',
     description: 'Scaffold safety, inspection requirements, and hazard awareness on site',
     icon: Construction,
@@ -165,7 +158,6 @@ const courses: Course[] = [
   },
   {
     id: 14,
-    comingSoon: true,
     title: 'Environmental & Sustainability',
     description: 'Waste management, energy efficiency, and sustainable working practices',
     icon: Leaf,
@@ -175,7 +167,6 @@ const courses: Course[] = [
   },
   {
     id: 15,
-    comingSoon: true,
     title: 'CDM Regulations Awareness',
     description: 'Construction Design and Management regulations, roles, and responsibilities',
     icon: ClipboardCheck,

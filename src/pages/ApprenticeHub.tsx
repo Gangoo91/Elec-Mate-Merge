@@ -25,8 +25,6 @@ import {
   Flame,
   Target,
   Award,
-  ChevronRight,
-  Brain,
   FileText,
   Video,
   BookMarked,
@@ -238,41 +236,7 @@ function ApprenticeStatsBar() {
   );
 }
 
-// Featured Card Component
-function FeaturedCard() {
-  return (
-    <Link to="/apprentice/advanced-help" className="block group touch-manipulation">
-      <motion.div
-        whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
-        className="relative overflow-hidden glass-premium rounded-2xl"
-      >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-        <div className="absolute -top-16 -right-16 w-32 h-32 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
-
-        <div className="relative z-10 p-5 sm:p-6 text-center">
-          <div className="inline-flex p-3 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
-            <Sparkles className="h-8 w-8 text-elec-yellow" />
-          </div>
-
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-            AI Study Assistant
-          </h3>
-          <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
-            Get instant help with electrical theory, regulations, and exam preparation
-          </p>
-
-          <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-            <span>Start Learning</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-          </div>
-        </div>
-      </motion.div>
-    </Link>
-  );
-}
-
-// Tool Card Component
+// Card Component — unified centred style for all cards
 interface ToolCardProps {
   title: string;
   description: string;
@@ -286,10 +250,10 @@ interface ToolCardProps {
 function ToolCard({ title, description, icon: Icon, link, featured, badges, comingSoon }: ToolCardProps) {
   const cardContent = (
     <motion.div
-      whileHover={comingSoon ? {} : { y: -2, scale: 1.01 }}
+      whileHover={comingSoon ? {} : { y: -2, scale: 1.02 }}
       whileTap={comingSoon ? {} : { scale: 0.98 }}
       className={cn(
-        'relative overflow-hidden glass-premium rounded-xl h-full min-h-[140px]',
+        'relative overflow-hidden glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]',
         featured && !comingSoon && 'bg-gradient-to-br from-elec-yellow/[0.08] to-transparent',
         comingSoon && 'opacity-60 cursor-not-allowed'
       )}
@@ -297,16 +261,14 @@ function ToolCard({ title, description, icon: Icon, link, featured, badges, comi
       {featured && !comingSoon && (
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
       )}
-
-      {/* Coming Soon banner */}
       {comingSoon && (
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
       )}
 
-      <div className="p-4 sm:p-5 flex items-start gap-4">
+      <div className="relative z-10 p-4 flex flex-col items-center justify-center text-center h-full">
         <div
           className={cn(
-            'flex-shrink-0 p-2.5 rounded-lg transition-colors',
+            'p-2 rounded-lg mb-2 transition-colors',
             comingSoon
               ? 'bg-white/10'
               : featured
@@ -314,43 +276,41 @@ function ToolCard({ title, description, icon: Icon, link, featured, badges, comi
                 : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25'
           )}
         >
-          <Icon className={cn('h-6 w-6 sm:h-7 sm:w-7', comingSoon ? 'text-white/50' : 'text-elec-yellow')} />
+          <Icon className={cn('h-6 w-6', comingSoon ? 'text-white/50' : 'text-elec-yellow')} />
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className={cn(
-              'text-base sm:text-lg font-semibold transition-colors',
-              comingSoon ? 'text-white/70' : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
-            )}>
-              {title}
-            </h3>
-            {comingSoon && (
-              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px]">
-                Coming Soon
+        <h3 className={cn(
+          'text-sm sm:text-base font-semibold mb-1 transition-colors',
+          comingSoon ? 'text-white/70' : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
+        )}>
+          {title}
+        </h3>
+
+        <p className={cn(
+          'text-xs line-clamp-2 hidden sm:block',
+          comingSoon ? 'text-white/50' : 'text-white/60'
+        )}>
+          {description}
+        </p>
+
+        {badges && !comingSoon && (
+          <div className="flex flex-wrap justify-center gap-1.5 mt-2">
+            {badges.map((badge, i) => (
+              <Badge
+                key={i}
+                variant="outline"
+                className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+              >
+                {badge}
               </Badge>
-            )}
+            ))}
           </div>
-          <p className={cn('text-sm leading-relaxed line-clamp-2', comingSoon ? 'text-white/50' : 'text-white/70')}>
-            {description}
-          </p>
-          {badges && !comingSoon && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {badges.map((badge, i) => (
-                <Badge
-                  key={i}
-                  variant="outline"
-                  className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
-                >
-                  {badge}
-                </Badge>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
 
-        {!comingSoon && (
-          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
+        {comingSoon && (
+          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] mt-1.5">
+            Coming Soon
+          </Badge>
         )}
       </div>
     </motion.div>
@@ -367,31 +327,6 @@ function ToolCard({ title, description, icon: Icon, link, featured, badges, comi
   );
 }
 
-// Compact Tool Card for More Resources
-function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
-  return (
-    <Link to={link} className="block group touch-manipulation">
-      <motion.div
-        whileHover={{ y: -2, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]"
-      >
-        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
-          <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
-            <Icon className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
-            {title}
-          </h3>
-          <p className="text-xs text-white/60 line-clamp-2 hidden sm:block">
-            {description}
-          </p>
-        </div>
-      </motion.div>
-    </Link>
-  );
-}
-
 // Section Header
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -402,8 +337,8 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-// Main resources
-const mainResources: ToolCardProps[] = [
+// Core Learning resources (featured, own section)
+const coreLearningResources: ToolCardProps[] = [
   {
     title: 'Study Centre',
     description: 'Level 2 & 3 courses, practice questions, and exam prep',
@@ -420,27 +355,39 @@ const mainResources: ToolCardProps[] = [
     featured: true,
     badges: ['8 Topics', 'Interactive', 'Exam Ready'],
   },
+];
+
+// Tools & Resources (compact grid)
+const toolsAndResources: ToolCardProps[] = [
+  {
+    title: 'AI Study Assistant',
+    description: 'Instant help with theory and exams',
+    icon: Sparkles,
+    link: '/apprentice/advanced-help',
+  },
+  {
+    title: 'Site Diary',
+    description: 'Log daily site activities and hours',
+    icon: BookMarked,
+    link: '/apprentice/site-diary',
+  },
   {
     title: 'Electrical Calculators',
-    description: 'Cable sizing, voltage drop, fault current and more',
+    description: 'Cable sizing, voltage drop and more',
     icon: Calculator,
     link: '/apprentice/calculators',
   },
-  {
-    title: 'Mental Health Hub',
-    description: 'Wellbeing resources, support networks and guidance',
-    icon: Heart,
-    link: '/apprentice/mental-health',
-  },
-];
-
-// Additional resources
-const additionalResources: ToolCardProps[] = [
   {
     title: 'On the Job Tools',
     description: 'Quick references for daily work',
     icon: Settings,
     link: '/apprentice/on-job-tools',
+  },
+  {
+    title: 'Mental Health Hub',
+    description: 'Wellbeing resources and support',
+    icon: Heart,
+    link: '/apprentice/mental-health',
   },
   {
     title: 'Career Development',
@@ -453,18 +400,6 @@ const additionalResources: ToolCardProps[] = [
     description: 'Tips, guides and best practices',
     icon: WrenchIcon,
     link: '/apprentice/toolbox',
-  },
-  {
-    title: 'Portfolio & OJT',
-    description: 'Track hours and evidence',
-    icon: Clock,
-    link: '/apprentice/hub',
-  },
-  {
-    title: 'Learning Videos',
-    description: 'Watch curated electrical content',
-    icon: Video,
-    link: '/apprentice/learning-videos',
   },
 ];
 
@@ -516,45 +451,79 @@ const ApprenticeHub = () => {
               <ApprenticeStatsBar />
             </motion.section>
 
+            {/* Core Learning — top priority for apprentices */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Core Learning" />
+              <div className="grid grid-cols-2 gap-3 touch-grid">
+                {coreLearningResources.map((resource) => (
+                  <ToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* My Portfolio — single featured card */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="My Portfolio" />
+              <ToolCard
+                title="My Portfolio"
+                description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
+                icon={FileText}
+                link="/apprentice/hub?tab=work"
+                featured
+                badges={['Evidence', 'AC Mapping', 'OJT Hours']}
+              />
+            </motion.section>
+
             {/* Elec-ID Banner */}
             <motion.section variants={itemVariants} className="px-4 sm:px-0">
               <ElecIdBanner variant="apprentice" />
             </motion.section>
 
-            {/* Featured AI Card */}
+            {/* EPA Readiness */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="AI-Powered Learning" />
-              <FeaturedCard />
+              <SectionHeader title="EPA Readiness" />
+              <Link to="/apprentice/epa-simulator" className="block group touch-manipulation">
+                <motion.div
+                  whileHover={{ y: -2, scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative overflow-hidden glass-premium rounded-2xl"
+                >
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
+                  <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
+
+                  <div className="relative z-10 p-5 sm:p-6 text-center">
+                    <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
+                      <Award className="h-8 w-8 text-purple-400" />
+                    </div>
+
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                      EPA Simulator
+                    </h3>
+                    <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+                      Practise mock Professional Discussions and Knowledge Tests with AI-powered scoring and real EPA grade descriptors
+                    </p>
+
+                    <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
+                      <span>Start Practising</span>
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
             </motion.section>
 
-            {/* Learning Videos - Above Essential Tools */}
+            {/* Learning Videos */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
               <SectionHeader title="Learning Videos" />
               <LearningVideosSection />
             </motion.section>
 
-            {/* Essential Tools - includes Site Diary as a card */}
+            {/* Tools & Resources — merged grid */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Essential Tools" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
-                {mainResources.map((resource) => (
-                  <ToolCard key={resource.link} {...resource} />
-                ))}
-                <ToolCard
-                  title="Site Diary"
-                  description="Log daily site activities, track hours and build evidence"
-                  icon={BookMarked}
-                  link="/apprentice/site-diary"
-                />
-              </div>
-            </motion.section>
-
-            {/* More Resources */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="More Resources" />
+              <SectionHeader title="Tools & Resources" />
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 touch-grid">
-                {additionalResources.map((resource) => (
-                  <CompactToolCard key={resource.link} {...resource} />
+                {toolsAndResources.map((resource) => (
+                  <ToolCard key={resource.link} {...resource} />
                 ))}
               </div>
             </motion.section>

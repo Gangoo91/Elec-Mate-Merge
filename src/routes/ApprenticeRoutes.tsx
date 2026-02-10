@@ -54,6 +54,7 @@ const PortfolioHub = lazy(() => import("@/pages/apprentice/portfolio-hub/Portfol
 const OJTHub = lazy(() => import("@/pages/apprentice/ojt-hub/OJTHub"));
 const LearningVideos = lazy(() => import("@/pages/apprentice/LearningVideos"));
 const SiteDiary = lazy(() => import("@/pages/apprentice/SiteDiary"));
+const EPASimulator = lazy(() => import("@/pages/apprentice/epa/EPASimulator"));
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -110,6 +111,7 @@ const ApprenticeRoutes = () => (
     <Route path="ojt-hub/*" element={<LazyRoute><OJTHub /></LazyRoute>} />
     <Route path="learning-videos" element={<LazyRoute><LearningVideos /></LazyRoute>} />
     <Route path="site-diary" element={<LazyRoute><SiteDiary /></LazyRoute>} />
+    <Route path="epa-simulator" element={<LazyRoute><EPASimulator /></LazyRoute>} />
   </Routes>
 );
 

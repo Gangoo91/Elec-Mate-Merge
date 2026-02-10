@@ -222,7 +222,7 @@ export function BriefingPhotoUpload({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -237,7 +237,7 @@ export function BriefingPhotoUpload({
                 variant="outline"
                 onClick={() => cameraInputRef.current?.click()}
                 disabled={uploading}
-                className="h-16 flex flex-col items-center justify-center gap-1"
+                className="h-16 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 {uploading ? (
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -251,7 +251,7 @@ export function BriefingPhotoUpload({
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="h-16 flex flex-col items-center justify-center gap-1"
+                className="h-16 flex flex-col items-center justify-center gap-1 touch-manipulation"
               >
                 {uploading ? (
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -293,23 +293,29 @@ export function BriefingPhotoUpload({
                       alt={`Photo ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    {/* Delete overlay */}
+                    {/* Delete overlay - desktop only */}
                     <div
                       className={cn(
                         "absolute inset-0 bg-black/50 flex items-center justify-center",
-                        "opacity-0 group-hover:opacity-100 transition-opacity"
+                        "sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hidden sm:flex"
                       )}
                     >
                       <Button
                         variant="destructive"
-                        size="sm"
                         onClick={() => handleRemovePhoto(index)}
-                        className="h-8"
+                        className="h-11"
                       >
                         <Trash2 className="h-4 w-4 mr-1" />
                         Remove
                       </Button>
                     </div>
+                    {/* Delete button - mobile only */}
+                    <button
+                      onClick={() => handleRemovePhoto(index)}
+                      className="sm:hidden absolute bottom-1.5 right-1.5 flex items-center justify-center w-9 h-9 rounded-full bg-red-500/80 backdrop-blur-sm text-white touch-manipulation"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                     {/* Index badge */}
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/50 text-white text-xs">
                       {index + 1}

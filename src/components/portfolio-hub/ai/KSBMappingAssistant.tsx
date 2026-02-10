@@ -42,8 +42,8 @@ export function KSBMappingAssistant({
   onDeselectKSB,
   compact = false,
 }: KSBMappingAssistantProps) {
-  const { requirementCode } = useStudentQualification();
-  const { tree, isLoading } = useQualificationACs(requirementCode);
+  const { qualificationCode } = useStudentQualification();
+  const { tree, isLoading } = useQualificationACs(qualificationCode);
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
 
@@ -172,7 +172,7 @@ export function KSBMappingAssistant({
             <div className="text-center py-12">
               <BookOpen className="h-8 w-8 text-muted-foreground/30 mx-auto mb-3" />
               <p className="text-sm text-muted-foreground">
-                {requirementCode
+                {qualificationCode
                   ? 'No matching criteria found'
                   : 'Select a qualification to view criteria'}
               </p>

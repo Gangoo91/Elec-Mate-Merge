@@ -2,6 +2,8 @@
 import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 interface UseQuizCompletionProps {
   courseSlug?: string;
@@ -13,26 +15,28 @@ export const useQuizCompletion = ({
   unitCode
 }: UseQuizCompletionProps) => {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const uid = user?.id;
 
   const handleQuizComplete = useCallback(async (score: number, totalQuestions: number, timeSpent: number) => {
     try {
-      // Mark quiz as completed in localStorage
-      localStorage.setItem(`unit_${unitCode}_quiz_completed`, 'true');
-      
+      // Mark quiz as completed in localStorage (user-scoped)
+      localStorage.setItem(userKey(uid, `unit_${unitCode}_quiz_completed`), 'true');
+
       // Calculate time taken and minutes for display
       const minutesTaken = Math.ceil(timeSpent / 60);
       const percentage = Math.round((score / totalQuestions) * 100);
-      
+
       // Add to off-the-job training record
       if (courseSlug) {
-        // Update the localStorage for today's time
-        const existingTime = parseInt(localStorage.getItem(`course_${courseSlug}_todayTime`) || '0');
+        // Update the localStorage for today's time (user-scoped)
+        const existingTime = parseInt(localStorage.getItem(userKey(uid, `course_${courseSlug}_todayTime`)) || '0');
         const newTime = existingTime + timeSpent;
-        localStorage.setItem(`course_${courseSlug}_todayTime`, newTime.toString());
+        localStorage.setItem(userKey(uid, `course_${courseSlug}_todayTime`), newTime.toString());
       }
-      
-      // Record quiz attempt in localStorage
-      const attempts = JSON.parse(localStorage.getItem(`unit_${unitCode}_quiz_attempts`) || '[]');
+
+      // Record quiz attempt in localStorage (user-scoped)
+      const attempts = JSON.parse(localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]');
       attempts.push({
         date: new Date().toISOString(),
         score,
@@ -40,10 +44,7 @@ export const useQuizCompletion = ({
         timeTaken: timeSpent,
         percentage
       });
-      localStorage.setItem(`unit_${unitCode}_quiz_attempts`, JSON.stringify(attempts));
-      
-      // Try to save to Supabase if user is logged in
-      const { data: { user } } = await supabase.auth.getUser();
+      localStorage.setItem(userKey(uid, `unit_${unitCode}_quiz_attempts`), JSON.stringify(attempts));
       
       if (user) {
         const { error } = await supabase
@@ -88,14 +89,14 @@ export const useQuizCompletion = ({
       });
       return false;
     }
-  }, [courseSlug, unitCode, toast]);
-  
+  }, [courseSlug, unitCode, uid, user, toast]);
+
   const checkQuizCompletion = useCallback(() => {
     if (unitCode) {
-      return localStorage.getItem(`unit_${unitCode}_quiz_completed`) === 'true';
+      return localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_completed`)) === 'true';
     }
     return false;
-  }, [unitCode]);
+  }, [unitCode, uid]);
 
   return {
     handleQuizComplete,

@@ -57,9 +57,9 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
           {QUICK_TEMPLATES.map((template) => (
             <div
               key={template.id}
-              className="flex-none w-[280px] md:w-[320px] snap-start"
+              className="flex-none w-[calc(100vw-3rem)] sm:w-[280px] md:w-[320px] snap-start"
             >
-              <div className="bg-card border border-elec-yellow/20 rounded-xl p-4 h-full hover:border-elec-yellow/40 transition-all">
+              <div className="bg-card border border-elec-yellow/20 rounded-xl p-4 h-full hover:border-elec-yellow/40 transition-all touch-manipulation">
                 {/* Category Badge */}
                 <div className="inline-flex items-center gap-1 bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded-md mb-3">
                   <span className="text-xs font-semibold">{template.category}</span>

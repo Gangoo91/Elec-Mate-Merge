@@ -213,7 +213,8 @@ export function BriefingHeroCard({
               "shadow-lg shadow-elec-yellow/20",
               "transition-all duration-300",
               "hover:shadow-xl hover:shadow-elec-yellow/30",
-              "active:scale-[0.98]"
+              "active:scale-[0.98]",
+              "touch-manipulation"
             )}
           >
             <Plus className="h-5 w-5 mr-2" />

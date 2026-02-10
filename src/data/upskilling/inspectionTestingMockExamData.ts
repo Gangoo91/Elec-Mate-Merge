@@ -1619,13 +1619,13 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 100,
     question: "What is the maximum permitted Zs for a 32A Type B MCB on a TN system?",
     options: [
-      "1.44Ω",
+      "1.37Ω",
       "2.30Ω",
       "0.72Ω",
       "4.60Ω"
     ],
     correctAnswer: 0,
-    explanation: "For a 32A Type B MCB, maximum Zs is 1.44Ω to ensure disconnection within 0.4 seconds.",
+    explanation: "For a 32A Type B MCB, maximum Zs is 1.37Ω per BS 7671:2018+A3:2024 Table 41.3 (incorporating Cmin = 0.95) to ensure disconnection within 0.4 seconds.",
     section: "Earth Fault Loop Impedance",
     difficulty: "advanced",
     topic: "Maximum Values",

@@ -321,6 +321,68 @@ const InspectionTestingModule3Section2 = () => {
           </div>
         </section>
 
+        {/* Ring Final Circuit Test Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">Ring Final Circuit — Three-Step Test at Consumer Unit</h4>
+          <svg viewBox="0 0 800 400" className="w-full h-auto" role="img" aria-label="Ring final circuit test diagram showing end-to-end and cross-connection tests at the consumer unit">
+            {/* Consumer Unit Box */}
+            <rect x="310" y="10" width="180" height="100" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="400" y="30" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">CONSUMER UNIT</text>
+
+            {/* Conductor labels in CU */}
+            <circle cx="350" cy="55" r="8" fill="none" stroke="#EF4444" strokeWidth="2" />
+            <text x="350" y="59" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">L</text>
+            <circle cx="400" cy="55" r="8" fill="none" stroke="#3B82F6" strokeWidth="2" />
+            <text x="400" y="59" textAnchor="middle" fill="#3B82F6" fontSize="9" fontWeight="bold">N</text>
+            <circle cx="450" cy="55" r="8" fill="none" stroke="#22C55E" strokeWidth="2" />
+            <text x="450" y="59" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">E</text>
+
+            {/* Leg labels */}
+            <text x="350" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L  L'</text>
+            <text x="400" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">N  N'</text>
+            <text x="450" y="85" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">E  E'</text>
+
+            {/* Ring path — Leg 1 (left) */}
+            <path d="M340,110 L340,180 Q340,200 320,200 L160,200 Q140,200 140,220 L140,280" fill="none" stroke="#EF4444" strokeWidth="2" opacity="0.6" />
+            <path d="M390,110 L390,180 Q390,200 370,200 L200,200 Q180,200 180,220 L180,280" fill="none" stroke="#3B82F6" strokeWidth="2" opacity="0.6" />
+            <path d="M440,110 L440,180 Q440,200 420,200 L240,200 Q220,200 220,220 L220,280" fill="none" stroke="#22C55E" strokeWidth="2" opacity="0.6" />
+
+            {/* Ring path — Leg 2 (right) */}
+            <path d="M360,110 L360,180 Q360,200 380,200 L560,200 Q580,200 580,220 L580,280" fill="none" stroke="#EF4444" strokeWidth="2" opacity="0.6" />
+            <path d="M410,110 L410,180 Q410,200 430,200 L600,200 Q620,200 620,220 L620,280" fill="none" stroke="#3B82F6" strokeWidth="2" opacity="0.6" />
+            <path d="M460,110 L460,180 Q460,200 480,200 L640,200 Q660,200 660,220 L660,280" fill="none" stroke="#22C55E" strokeWidth="2" opacity="0.6" />
+
+            {/* Socket outlets */}
+            <rect x="120" y="280" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <text x="180" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 1</text>
+
+            <rect x="340" y="310" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <text x="400" y="332" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 2 (mid)</text>
+
+            <rect x="560" y="280" width="120" height="35" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <text x="620" y="302" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10">Socket 3</text>
+
+            {/* Connect sockets on ring path */}
+            <path d="M240,298 Q300,340 340,328" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+            <path d="M460,328 Q500,340 560,298" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+
+            {/* Step labels */}
+            <rect x="10" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
+            <text x="130" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 1: L-L', N-N', E-E'</text>
+            <text x="130" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">End-to-end at CU</text>
+
+            <rect x="280" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
+            <text x="400" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 2: Cross L↔N'</text>
+            <text x="400" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">L-N at each socket</text>
+
+            <rect x="550" y="360" width="240" height="35" rx="6" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" strokeWidth="1" />
+            <text x="670" y="375" textAnchor="middle" fill="#FBBF24" fontSize="10" fontWeight="bold">Step 3: Cross L↔E'</text>
+            <text x="670" y="390" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">= R1+R2 at each socket</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">Ring circuit conductors leave and return to the consumer unit. Step 1 tests each conductor end-to-end. Steps 2–3 cross-connect and test at every socket — readings should be equal throughout.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 3: Steps 2 and 3 - Cross-Connection Testing */}

@@ -4,7 +4,8 @@ import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   BookOpen, Brain, Target, Flame, Zap, Shield, Sparkles,
-  TrendingUp, Award, CheckCircle, Clock, Lightbulb
+  TrendingUp, Award, CheckCircle, Clock, Lightbulb,
+  Cable, ShieldCheck, Wrench, Atom, Hammer, Leaf
 } from "lucide-react";
 import FlashcardSetCard from "@/components/apprentice/flashcards/FlashcardSetCard";
 import StudyModeSelector from "@/components/apprentice/flashcards/StudyModeSelector";
@@ -24,89 +25,179 @@ const OnJobFlashcards = () => {
 
   const streakInfo = getStreakDisplay();
 
+  // Format an ISO date string to a relative "X days ago" label
+  const formatLastStudied = (isoDate: string | null): string | undefined => {
+    if (!isoDate) return undefined;
+    const diffMs = Date.now() - new Date(isoDate).getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    return `${diffDays} days ago`;
+  };
+
   const flashcardSets = [
     {
       id: "cable-colors",
       title: "Cable Colours & Identification",
       icon: Target,
       description: "Learn UK cable colour codes and identification standards",
-      count: 5,
-      difficulty: 'beginner' as const,
-      estimatedTime: "5 mins",
+      count: 25,
+      difficulty: "beginner" as const,
+      estimatedTime: "15 mins",
       category: "Basic Theory",
       completed: false,
       progressPercentage: 0,
-      masteredCards: 0
+      masteredCards: 0,
     },
     {
       id: "bs7671-regulations",
       title: "BS 7671 Key Regulations",
       icon: BookOpen,
       description: "Essential BS 7671 regulations every apprentice should know",
-      count: 5,
-      difficulty: 'intermediate' as const,
-      estimatedTime: "8 mins",
+      count: 25,
+      difficulty: "intermediate" as const,
+      estimatedTime: "15 mins",
       category: "Regulations",
       completed: false,
-      progressPercentage: 65,
-      masteredCards: 3,
-      lastStudied: "2 days ago"
+      progressPercentage: 0,
+      masteredCards: 0,
     },
     {
       id: "eicr-codes",
       title: "EICR Observation Codes",
       icon: Brain,
       description: "C1, C2, C3, FI codes and their meanings",
-      count: 18,
-      difficulty: 'advanced' as const,
-      estimatedTime: "8 mins",
+      count: 30,
+      difficulty: "advanced" as const,
+      estimatedTime: "18 mins",
       category: "Testing & Inspection",
-      completed: true,
-      progressPercentage: 100,
-      masteredCards: 18,
-      lastStudied: "1 week ago"
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
     },
     {
       id: "safe-isolation",
       title: "Safe Isolation Procedures",
-      icon: Target,
+      icon: Shield,
       description: "Step-by-step safe isolation and proving dead procedures",
-      count: 15,
-      difficulty: 'intermediate' as const,
-      estimatedTime: "12 mins",
+      count: 25,
+      difficulty: "intermediate" as const,
+      estimatedTime: "15 mins",
       category: "Safety",
       completed: false,
-      progressPercentage: 33,
-      masteredCards: 5,
-      lastStudied: "3 days ago"
+      progressPercentage: 0,
+      masteredCards: 0,
     },
     {
       id: "test-instruments",
       title: "Test Instruments & Equipment",
-      icon: Brain,
+      icon: Zap,
       description: "Common electrical testing equipment and their uses",
-      count: 22,
-      difficulty: 'beginner' as const,
-      estimatedTime: "11 mins",
+      count: 30,
+      difficulty: "beginner" as const,
+      estimatedTime: "18 mins",
       category: "Testing & Inspection",
       completed: false,
       progressPercentage: 0,
-      masteredCards: 0
+      masteredCards: 0,
     },
     {
       id: "fault-finding",
       title: "Common Electrical Faults",
       icon: Target,
       description: "Identifying and understanding common electrical faults",
-      count: 30,
-      difficulty: 'advanced' as const,
-      estimatedTime: "18 mins",
+      count: 35,
+      difficulty: "advanced" as const,
+      estimatedTime: "20 mins",
       category: "Troubleshooting",
       completed: false,
-      progressPercentage: 12,
-      masteredCards: 4,
-      lastStudied: "5 days ago"
-    }
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "earthing-bonding",
+      title: "Earthing & Bonding",
+      icon: Cable,
+      description:
+        "TN-S, TN-C-S, TT systems, MET, main and supplementary bonding",
+      count: 25,
+      difficulty: "intermediate" as const,
+      estimatedTime: "15 mins",
+      category: "Installation",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "circuit-protection",
+      title: "Circuit Protection",
+      icon: ShieldCheck,
+      description:
+        "MCBs, RCDs, RCBOs, fuses, discrimination and fault current",
+      count: 25,
+      difficulty: "intermediate" as const,
+      estimatedTime: "15 mins",
+      category: "Protection",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "wiring-systems",
+      title: "Wiring Systems & Enclosures",
+      icon: Wrench,
+      description:
+        "Trunking, conduit, SWA, MICC, cable tray, IP ratings and fixings",
+      count: 25,
+      difficulty: "intermediate" as const,
+      estimatedTime: "15 mins",
+      category: "Installation",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "electrical-science",
+      title: "Electrical Science",
+      icon: Atom,
+      description:
+        "Ohm's law, power, energy, magnetism, AC theory and transformers",
+      count: 25,
+      difficulty: "beginner" as const,
+      estimatedTime: "15 mins",
+      category: "Basic Theory",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "first-second-fix",
+      title: "First Fix & Second Fix",
+      icon: Hammer,
+      description:
+        "Back boxes, cable routes, consumer unit install, termination and testing",
+      count: 25,
+      difficulty: "beginner" as const,
+      estimatedTime: "15 mins",
+      category: "Practical Skills",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
+    {
+      id: "environmental-tech",
+      title: "Environmental Technology",
+      icon: Leaf,
+      description:
+        "Solar PV, EV charging, heat pumps, battery storage and smart meters",
+      count: 25,
+      difficulty: "advanced" as const,
+      estimatedTime: "15 mins",
+      category: "Green Technology",
+      completed: false,
+      progressPercentage: 0,
+      masteredCards: 0,
+    },
   ];
 
   const handleStartFlashcards = (setId: string) => {
@@ -156,12 +247,20 @@ const OnJobFlashcards = () => {
     );
   }
 
-  // Calculate overall progress stats
+  // Calculate overall progress stats from real Supabase data
   const totalSets = flashcardSets.length;
-  const completedSets = flashcardSets.filter(set => set.completed).length;
   const totalCards = flashcardSets.reduce((sum, set) => sum + set.count, 0);
-  const masteredCards = flashcardSets.reduce((sum, set) => sum + set.masteredCards, 0);
-  const overallProgress = Math.round((masteredCards / totalCards) * 100);
+  const setsWithProgress = flashcardSets.map(set => {
+    const progress = getSetProgress(set.id, set.count);
+    return {
+      ...set,
+      ...progress,
+      completed: progress.progressPercentage === 100
+    };
+  });
+  const completedSets = setsWithProgress.filter(set => set.completed).length;
+  const masteredCards = setsWithProgress.reduce((sum, set) => sum + set.masteredCards, 0);
+  const overallProgress = totalCards > 0 ? Math.round((masteredCards / totalCards) * 100) : 0;
 
   return (
     <div className="bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
@@ -282,13 +381,22 @@ const OnJobFlashcards = () => {
             Choose a Flashcard Set
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-            {flashcardSets.map((set) => (
-              <FlashcardSetCard
-                key={set.id}
-                set={set}
-                onStart={handleStartFlashcards}
-              />
-            ))}
+            {flashcardSets.map((set) => {
+              const realProgress = getSetProgress(set.id, set.count);
+              return (
+                <FlashcardSetCard
+                  key={set.id}
+                  set={{
+                    ...set,
+                    progressPercentage: realProgress.progressPercentage,
+                    masteredCards: realProgress.masteredCards,
+                    completed: realProgress.progressPercentage === 100,
+                    lastStudied: formatLastStudied(realProgress.lastStudied)
+                  }}
+                  onStart={handleStartFlashcards}
+                />
+              );
+            })}
           </div>
         </div>
 

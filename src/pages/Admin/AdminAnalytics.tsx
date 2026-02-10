@@ -17,6 +17,7 @@ import {
   Clock,
 } from "lucide-react";
 import { format, subDays, startOfDay, endOfDay } from "date-fns";
+import PullToRefresh from "@/components/admin/PullToRefresh";
 
 export default function AdminAnalytics() {
   // Fetch analytics data
@@ -40,6 +41,7 @@ export default function AdminAnalytics() {
         monthSignupsRes,
         subscribedRes,
         activeRes,
+        { data: roleData },
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("*", { count: "exact", head: true })
@@ -58,10 +60,8 @@ export default function AdminAnalytics() {
           .eq("subscribed", true),
         supabase.from("user_presence").select("*", { count: "exact", head: true })
           .gte("last_seen", subDays(now, 1).toISOString()),
+        supabase.from("profiles").select("role"),
       ]);
-
-      // Get role breakdown - include in main parallel batch
-      const { data: roleData } = await supabase.from("profiles").select("role");
 
       const roleBreakdown: Record<string, number> = {};
       roleData?.forEach((r) => {
@@ -122,6 +122,7 @@ export default function AdminAnalytics() {
   const maxDailySignup = Math.max(...(analytics?.dailySignups?.map((d) => d.count) || [1]));
 
   return (
+    <PullToRefresh onRefresh={async () => { await refetch(); }}>
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -146,7 +147,7 @@ export default function AdminAnalytics() {
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between mb-2">
               <Users className="h-5 w-5 text-blue-400" />
-              <Badge variant="outline" className="text-[10px]">Total</Badge>
+              <Badge variant="outline" className="text-xs">Total</Badge>
             </div>
             <p className="text-2xl font-bold">{analytics?.totalUsers || 0}</p>
             <p className="text-xs text-muted-foreground">Users</p>
@@ -170,7 +171,7 @@ export default function AdminAnalytics() {
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between mb-2">
               <Calendar className="h-5 w-5 text-purple-400" />
-              <Badge className={`text-[10px] ${(analytics?.weekGrowth || 0) >= 0 ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
+              <Badge className={`text-xs ${(analytics?.weekGrowth || 0) >= 0 ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
                 {(analytics?.weekGrowth || 0) >= 0 ? "+" : ""}{(analytics?.weekGrowth || 0).toFixed(0)}%
               </Badge>
             </div>
@@ -183,7 +184,7 @@ export default function AdminAnalytics() {
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between mb-2">
               <Activity className="h-5 w-5 text-amber-400" />
-              <Badge variant="outline" className="text-[10px]">24h</Badge>
+              <Badge variant="outline" className="text-xs">24h</Badge>
             </div>
             <p className="text-2xl font-bold">{analytics?.activeUsers || 0}</p>
             <p className="text-xs text-muted-foreground">Active</p>
@@ -207,7 +208,7 @@ export default function AdminAnalytics() {
                   className="w-full bg-gradient-to-t from-green-500/30 to-green-500/10 rounded-t-lg transition-all"
                   style={{ height: `${Math.max((day.count / maxDailySignup) * 100, 5)}%` }}
                 />
-                <span className="text-[10px] text-muted-foreground">{day.date}</span>
+                <span className="text-xs text-muted-foreground">{day.date}</span>
                 <span className="text-xs font-medium">{day.count}</span>
               </div>
             ))}
@@ -279,5 +280,6 @@ export default function AdminAnalytics() {
         </Card>
       </div>
     </div>
+    </PullToRefresh>
   );
 }

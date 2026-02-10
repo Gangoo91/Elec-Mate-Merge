@@ -9,7 +9,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Search, X, Bookmark, Video, Clock, ExternalLink, BookOpen, Award } from 'lucide-react';
+import { ArrowLeft, Search, X, Bookmark, Video, Clock, ExternalLink, BookOpen, Award, Zap } from 'lucide-react';
 import {
   curatedVideos,
   getAvailableCategories,
@@ -287,6 +287,9 @@ export default function LearningVideos() {
                 {selectedVideo.channel === 'Craig Wiltshire' && (
                   <CreatorPromoCard />
                 )}
+                {selectedVideo.channel === 'The Engineering Mindset' && (
+                  <EngineeringMindsetPromoCard />
+                )}
 
                 {/* Related videos */}
                 {relatedVideos.length > 0 && (
@@ -493,6 +496,57 @@ function CreatorPromoCard() {
             </a>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Engineering Mindset Promo Card ─── */
+
+function EngineeringMindsetPromoCard() {
+  return (
+    <div className="rounded-xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/[0.06] to-transparent overflow-hidden">
+      {/* Header */}
+      <div className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+            <Zap className="h-5 w-5 text-indigo-400" />
+          </div>
+          <div>
+            <h3 className="text-[15px] font-semibold text-white">The Engineering Mindset</h3>
+            <p className="text-[12px] text-white">Paul Evans — Electrical Engineering Educator</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 space-y-3">
+        {/* Bio */}
+        <p className="text-[13px] text-white/90 leading-relaxed">
+          Paul Evans breaks down complex electrical engineering concepts with brilliant
+          animations and clear explanations. His channel has helped millions of students
+          and apprentices understand the theory behind electrical systems.
+        </p>
+
+        {/* US voltage note */}
+        <div className="flex gap-2 rounded-lg bg-indigo-500/[0.08] border border-indigo-500/15 p-3">
+          <Zap className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+          <p className="text-[12px] text-white/70 leading-relaxed">
+            Some videos use US voltage examples (120V/240V) — the principles are identical.
+            UK mains is 230V single phase, 400V three phase.
+          </p>
+        </div>
+
+        {/* YouTube Channel */}
+        <a
+          href="https://www.youtube.com/@TheEngineeringMindset"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 h-12 w-full px-4 rounded-xl bg-indigo-500/15 border border-indigo-500/20 text-indigo-300 font-medium text-sm touch-manipulation active:scale-[0.98] transition-transform"
+        >
+          <Video className="h-4 w-4" />
+          Visit The Engineering Mindset Channel
+          <ExternalLink className="h-3.5 w-3.5 ml-auto" />
+        </a>
       </div>
     </div>
   );

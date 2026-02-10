@@ -445,6 +445,73 @@ const InspectionTestingModule2Section1 = () => {
           </div>
         </section>
 
+        {/* Safe Isolation Flowchart Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">Safe Isolation Procedure Flowchart</h4>
+          <svg viewBox="0 0 800 520" className="w-full h-auto" role="img" aria-label="Safe Isolation Procedure Flowchart showing the six essential steps: Identify, Isolate, Secure, Prove, Test Dead, Re-Prove">
+            {/* Step 1: IDENTIFY */}
+            <rect x="275" y="10" width="250" height="54" rx="12" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+            <text x="400" y="32" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">1. IDENTIFY</text>
+            <text x="400" y="50" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">All sources of supply</text>
+            {/* Arrow 1→2 */}
+            <line x1="400" y1="64" x2="400" y2="86" stroke="rgba(255,255,255,0.4)" strokeWidth="2" markerEnd="url(#arrowSI)" />
+
+            {/* Step 2: ISOLATE */}
+            <rect x="275" y="86" width="250" height="54" rx="12" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+            <text x="400" y="108" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">2. ISOLATE</text>
+            <text x="400" y="126" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Disconnect using isolation devices</text>
+            {/* Arrow 2→3 */}
+            <line x1="400" y1="140" x2="400" y2="162" stroke="rgba(255,255,255,0.4)" strokeWidth="2" markerEnd="url(#arrowSI)" />
+
+            {/* Step 3: SECURE */}
+            <rect x="275" y="162" width="250" height="54" rx="12" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+            <text x="400" y="184" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">3. SECURE</text>
+            <text x="400" y="202" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Lock off &amp; apply warning notices</text>
+            {/* Arrow 3→4 */}
+            <line x1="400" y1="216" x2="400" y2="238" stroke="rgba(255,255,255,0.4)" strokeWidth="2" markerEnd="url(#arrowSI)" />
+
+            {/* Prove-Test-Prove bracket */}
+            <rect x="245" y="232" width="310" height="250" rx="16" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" strokeDasharray="6,4" />
+            <text x="400" y="252" textAnchor="middle" fill="rgba(251,191,36,0.6)" fontSize="10" fontWeight="bold">PROVE — TEST — PROVE</text>
+
+            {/* Step 4: PROVE (tester works) */}
+            <rect x="285" y="262" width="230" height="54" rx="12" fill="none" stroke="#F97316" strokeWidth="2" />
+            <text x="400" y="284" textAnchor="middle" fill="#F97316" fontSize="13" fontWeight="bold">4. PROVE</text>
+            <text x="400" y="302" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Prove tester on known live source</text>
+            {/* Arrow 4→5 */}
+            <line x1="400" y1="316" x2="400" y2="338" stroke="rgba(255,255,255,0.4)" strokeWidth="2" markerEnd="url(#arrowSI)" />
+
+            {/* Step 5: TEST DEAD */}
+            <rect x="285" y="338" width="230" height="54" rx="12" fill="none" stroke="#F97316" strokeWidth="2" />
+            <text x="400" y="360" textAnchor="middle" fill="#F97316" fontSize="13" fontWeight="bold">5. TEST DEAD</text>
+            <text x="400" y="378" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Test circuit at point of work</text>
+            {/* Arrow 5→6 */}
+            <line x1="400" y1="392" x2="400" y2="414" stroke="rgba(255,255,255,0.4)" strokeWidth="2" markerEnd="url(#arrowSI)" />
+
+            {/* Step 6: RE-PROVE */}
+            <rect x="285" y="414" width="230" height="54" rx="12" fill="none" stroke="#F97316" strokeWidth="2" />
+            <text x="400" y="436" textAnchor="middle" fill="#F97316" fontSize="13" fontWeight="bold">6. RE-PROVE</text>
+            <text x="400" y="454" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Prove tester still works</text>
+
+            {/* Safe to work */}
+            <rect x="305" y="490" width="190" height="24" rx="12" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" strokeWidth="1.5" />
+            <text x="400" y="507" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">SAFE TO WORK</text>
+            <line x1="400" y1="468" x2="400" y2="490" stroke="rgba(34,197,94,0.4)" strokeWidth="2" markerEnd="url(#arrowSIG)" />
+
+            {/* Arrow marker */}
+            <defs>
+              <marker id="arrowSI" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="rgba(255,255,255,0.4)" />
+              </marker>
+              <marker id="arrowSIG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="rgba(34,197,94,0.4)" />
+              </marker>
+            </defs>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">The six essential steps of safe isolation per HSE GS38. Steps 4–6 form the critical prove-test-prove sequence.</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Section 6: Legal Requirements */}

@@ -6,9 +6,11 @@
  *
  * Current approved creators:
  * - Craig Wiltshire (@craigwiltshire9628) - NVQ assessment & apprentice training
+ * - The Engineering Mindset (@TheEngineeringMindset) - Electrical theory & fundamentals
  */
 
 export type VideoCategory =
+  | 'electrical-theory'
   | 'wiring'
   | 'testing-inspection'
   | 'bs7671'
@@ -32,6 +34,7 @@ export interface CuratedVideo {
 }
 
 export const categoryLabels: Record<VideoCategory, string> = {
+  'electrical-theory': 'Electrical Theory',
   'wiring': 'Wiring',
   'testing-inspection': 'Testing & Inspection',
   'bs7671': 'BS 7671',
@@ -45,6 +48,338 @@ export const categoryLabels: Record<VideoCategory, string> = {
 };
 
 export const curatedVideos: CuratedVideo[] = [
+  // ═══════════════════════════════════════════════════════════════════
+  // THE ENGINEERING MINDSET — Electrical Theory & Fundamentals
+  // ═══════════════════════════════════════════════════════════════════
+
+  // ── Electrical Theory — Beginner ────────────────────────────────────
+  {
+    id: 'mc979OhitAg',
+    title: 'How Electricity Works — Working Principle',
+    channel: 'The Engineering Mindset',
+    duration: '10:11',
+    category: 'electrical-theory',
+    tags: ['electricity', 'basics', 'fundamentals', 'atoms', 'electrons'],
+    level: 'beginner',
+    description: 'The fundamental working principle of electricity — how and why electrons flow through conductors.',
+  },
+  {
+    id: 'kcL2_D33k3o',
+    title: 'Electrical Current Explained — AC, DC, Fuses & Circuit Breakers',
+    channel: 'The Engineering Mindset',
+    duration: '18:45',
+    category: 'electrical-theory',
+    tags: ['current', 'AC', 'DC', 'fuses', 'circuit breakers', 'ampere'],
+    level: 'beginner',
+    description: 'What electrical current is, the difference between AC and DC, and how fuses and circuit breakers protect circuits.',
+  },
+  {
+    id: 'w82aSjLuD_8',
+    title: 'Voltage Explained — What Is Voltage?',
+    channel: 'The Engineering Mindset',
+    duration: '10:52',
+    category: 'electrical-theory',
+    tags: ['voltage', 'potential difference', 'basics', 'fundamentals'],
+    level: 'beginner',
+    description: 'What voltage is, how potential difference works, and why it matters in every electrical circuit.',
+  },
+  {
+    id: 'HsLLq6Rm5tU',
+    title: "Ohm's Law Explained — The Basics of Circuit Theory",
+    channel: 'The Engineering Mindset',
+    duration: '10:00',
+    category: 'electrical-theory',
+    tags: ["Ohm's law", 'resistance', 'voltage', 'current', 'circuit theory'],
+    level: 'beginner',
+    description: "How Ohm's law works and how to use it to calculate voltage, current and resistance in circuits.",
+  },
+  {
+    id: 'MUh_dOcqgVw',
+    title: 'Conventional Current vs Electron Flow',
+    channel: 'The Engineering Mindset',
+    duration: '3:23',
+    category: 'electrical-theory',
+    tags: ['conventional current', 'electron flow', 'direction', 'fundamentals'],
+    level: 'beginner',
+    description: 'The difference between conventional current direction and actual electron flow — and why both are used.',
+  },
+  {
+    id: 'VV6tZ3Aqfuc',
+    title: 'DC Series Circuits Explained',
+    channel: 'The Engineering Mindset',
+    duration: '11:29',
+    category: 'electrical-theory',
+    tags: ['series circuits', 'DC', 'resistance', 'voltage divider'],
+    level: 'beginner',
+    description: 'How DC series circuits work — current, voltage and resistance behaviour when components are in series.',
+  },
+  {
+    id: '5uyJezQNSHw',
+    title: 'DC Parallel Circuits Explained',
+    channel: 'The Engineering Mindset',
+    duration: '16:00',
+    category: 'electrical-theory',
+    tags: ['parallel circuits', 'DC', 'resistance', 'current division'],
+    level: 'beginner',
+    description: 'How DC parallel circuits work — how current splits and how to calculate total resistance.',
+  },
+  {
+    id: 'OUcKJuMSSW4',
+    title: 'AC Basics — All About Alternating Current',
+    channel: 'The Engineering Mindset',
+    duration: '4:17',
+    category: 'electrical-theory',
+    tags: ['AC', 'alternating current', 'frequency', 'sine wave', 'basics'],
+    level: 'beginner',
+    description: 'A concise overview of alternating current — what it is, how it differs from DC, and why we use it.',
+  },
+  {
+    id: 'SMPhh8gT_1E',
+    title: 'What Is a kWh? Kilowatt Hour Explained + Calculations',
+    channel: 'The Engineering Mindset',
+    duration: '6:02',
+    category: 'electrical-theory',
+    tags: ['kWh', 'kilowatt hour', 'energy', 'calculations', 'billing'],
+    level: 'beginner',
+    description: 'What a kilowatt hour is, how to calculate energy consumption, and how it relates to electricity bills.',
+  },
+
+  // ── Electrical Theory — Intermediate ────────────────────────────────
+  {
+    id: 'Fwj_d3uO5g8',
+    title: 'Diodes Explained — How Diodes Work',
+    channel: 'The Engineering Mindset',
+    duration: '11:32',
+    category: 'electrical-theory',
+    tags: ['diodes', 'PN junction', 'semiconductors', 'rectification'],
+    level: 'intermediate',
+    description: 'How diodes work, the PN junction principle, and where diodes are used in electrical systems.',
+  },
+  {
+    id: 'KSylo01n5FY',
+    title: 'Inductors Explained — How Inductors Work',
+    channel: 'The Engineering Mindset',
+    duration: '10:20',
+    category: 'electrical-theory',
+    tags: ['inductors', 'inductance', 'magnetic field', 'coils'],
+    level: 'intermediate',
+    description: 'How inductors store energy in magnetic fields and their role in electrical circuits.',
+  },
+  {
+    id: 'PXNKkcB0pI4',
+    title: 'How Batteries Work',
+    channel: 'The Engineering Mindset',
+    duration: '19:01',
+    category: 'electrical-theory',
+    tags: ['batteries', 'electrochemistry', 'cells', 'energy storage'],
+    level: 'intermediate',
+    description: 'The working principle of batteries — how chemical energy converts to electrical energy.',
+  },
+  {
+    id: 'O8M2z2hIbag',
+    title: 'How LEDs Work',
+    channel: 'The Engineering Mindset',
+    duration: '19:06',
+    category: 'electrical-theory',
+    tags: ['LED', 'light emitting diode', 'semiconductors', 'lighting'],
+    level: 'intermediate',
+    description: 'How LEDs produce light, their construction, and why they are so efficient compared to traditional lighting.',
+  },
+  {
+    id: 'Tv_7XWf96gg',
+    title: 'Power Factor Explained',
+    channel: 'The Engineering Mindset',
+    duration: '11:09',
+    category: 'electrical-theory',
+    tags: ['power factor', 'reactive power', 'apparent power', 'AC'],
+    level: 'intermediate',
+    description: 'What power factor is, why it matters, and the relationship between real, reactive and apparent power.',
+  },
+  {
+    id: 'W0_1xRqT8uU',
+    title: 'Single Phase Electricity Explained',
+    channel: 'The Engineering Mindset',
+    duration: '10:10',
+    category: 'electrical-theory',
+    tags: ['single phase', 'mains supply', 'domestic', 'AC'],
+    level: 'intermediate',
+    description: 'How single phase electricity supply works — from the transformer to the consumer unit.',
+  },
+  {
+    id: '4oRT7PoXSS0',
+    title: 'How Three Phase Electricity Works',
+    channel: 'The Engineering Mindset',
+    duration: '7:53',
+    category: 'electrical-theory',
+    tags: ['three phase', '3 phase', 'power distribution', 'AC'],
+    level: 'intermediate',
+    description: 'The basics of three phase electricity — why we use it and how it delivers more power efficiently.',
+  },
+  {
+    id: 'qthuFLNSrlg',
+    title: 'Three Phase Electricity — Basics and Calculations',
+    channel: 'The Engineering Mindset',
+    duration: '14:37',
+    category: 'electrical-theory',
+    tags: ['three phase', 'calculations', 'line voltage', 'phase voltage', 'star', 'delta'],
+    level: 'intermediate',
+    description: 'Three phase calculations including line vs phase voltage, star and delta configurations.',
+  },
+  {
+    id: 'jcY4QN7awEc',
+    title: 'How Transformers Work',
+    channel: 'The Engineering Mindset',
+    duration: '16:33',
+    category: 'electrical-theory',
+    tags: ['transformers', 'step up', 'step down', 'electromagnetic induction'],
+    level: 'intermediate',
+    description: 'The working principle of transformers — how they step voltage up and down using electromagnetic induction.',
+  },
+  {
+    id: 'u0SsejDCVkU',
+    title: 'How 3 Phase Transformers Work',
+    channel: 'The Engineering Mindset',
+    duration: '24:24',
+    category: 'electrical-theory',
+    tags: ['three phase', 'transformers', 'power distribution', 'delta', 'star'],
+    level: 'intermediate',
+    description: 'How three phase transformers work, the different winding configurations, and why we need them.',
+  },
+  {
+    id: 'GQatiB-JHdI',
+    title: 'How Does a DC Motor Work?',
+    channel: 'The Engineering Mindset',
+    duration: '15:32',
+    category: 'electrical-theory',
+    tags: ['DC motor', 'commutator', 'brushes', 'electromagnetic', 'rotation'],
+    level: 'intermediate',
+    description: 'The working principle of DC motors — how they convert electrical energy into mechanical rotation.',
+  },
+  {
+    id: '59HBoIXzX_c',
+    title: 'How Electric Motors Work — 3 Phase AC Induction Motors',
+    channel: 'The Engineering Mindset',
+    duration: '15:34',
+    category: 'electrical-theory',
+    tags: ['induction motor', '3 phase', 'AC motor', 'rotating magnetic field'],
+    level: 'intermediate',
+    description: 'How three phase AC induction motors work — the rotating magnetic field and squirrel cage rotor.',
+  },
+
+  // ── Electrical Theory — Advanced ────────────────────────────────────
+  {
+    id: 'ucEiEic-kZ4',
+    title: 'Capacitor Calculations — Series and Parallel',
+    channel: 'The Engineering Mindset',
+    duration: '16:16',
+    category: 'electrical-theory',
+    tags: ['capacitors', 'calculations', 'series', 'parallel', 'capacitance'],
+    level: 'advanced',
+    description: 'How to calculate total capacitance for capacitors in series and parallel configurations.',
+  },
+  {
+    id: 'h89TTwlNnpY',
+    title: 'Star Delta Starter Explained',
+    channel: 'The Engineering Mindset',
+    duration: '11:08',
+    category: 'electrical-theory',
+    tags: ['star delta', 'motor starter', 'inrush current', 'industrial'],
+    level: 'advanced',
+    description: 'How star delta starters work to reduce inrush current when starting large three phase motors.',
+  },
+  {
+    id: 'yEPe7RDtkgo',
+    title: 'Variable Frequency Drives Explained — VFD Basics',
+    channel: 'The Engineering Mindset',
+    duration: '15:18',
+    category: 'electrical-theory',
+    tags: ['VFD', 'variable frequency drive', 'inverter', 'motor speed control'],
+    level: 'advanced',
+    description: 'How variable frequency drives control motor speed — the IGBT inverter principle and applications.',
+  },
+
+  // ── Safety (Engineering Mindset) ────────────────────────────────────
+  {
+    id: 'n594CkrP6xE',
+    title: 'How Relays Work',
+    channel: 'The Engineering Mindset',
+    duration: '14:02',
+    category: 'safety',
+    tags: ['relays', 'coil', 'contacts', 'switching', 'control circuits'],
+    level: 'intermediate',
+    description: 'How relays work — the electromagnetic switching principle and their role in control and safety circuits.',
+  },
+  {
+    id: 'gqEu9t8HwW0',
+    title: "Why Circuit Breakers Don't Protect People (Electric Shocks)",
+    channel: 'The Engineering Mindset',
+    duration: '18:23',
+    category: 'safety',
+    tags: ['circuit breakers', 'RCD', 'electric shock', 'protection', 'safety'],
+    level: 'intermediate',
+    description: 'Why MCBs alone cannot protect against electric shock — and why RCDs are essential for personal safety.',
+  },
+  {
+    id: 'RwSga-zQy0I',
+    title: 'Time Delay Relays Explained',
+    channel: 'The Engineering Mindset',
+    duration: '12:29',
+    category: 'safety',
+    tags: ['time delay relay', 'timer', 'control circuits', 'automation'],
+    level: 'intermediate',
+    description: 'How time delay relays work — the different timing modes and their applications in control circuits.',
+  },
+
+  // ── Solar/EV (Engineering Mindset) ──────────────────────────────────
+  {
+    id: 'jdSKlg80DjU',
+    title: 'How Alternators Work',
+    channel: 'The Engineering Mindset',
+    duration: '18:15',
+    category: 'solar-ev',
+    tags: ['alternator', 'generator', 'AC', 'electromagnetic induction'],
+    level: 'intermediate',
+    description: 'How alternators generate AC electricity using electromagnetic induction.',
+  },
+  {
+    id: 'WhATjUHgzxQ',
+    title: 'AC Electrical Generator Basics',
+    channel: 'The Engineering Mindset',
+    duration: '5:56',
+    category: 'solar-ev',
+    tags: ['generator', 'AC', 'power generation', 'basics'],
+    level: 'beginner',
+    description: 'The basic working principle of AC generators — how mechanical energy is converted to electrical energy.',
+  },
+
+  // ── Tools & Equipment (Engineering Mindset) ─────────────────────────
+  {
+    id: 'J3kKNNizARc',
+    title: 'How to Use a Multimeter Like a Pro — Clamp Meter',
+    channel: 'The Engineering Mindset',
+    duration: '24:52',
+    category: 'tools-equipment',
+    tags: ['multimeter', 'clamp meter', 'testing', 'measurement', 'tools'],
+    level: 'beginner',
+    description: 'A comprehensive guide to using multimeters and clamp meters for electrical measurement and testing.',
+  },
+
+  // ── Career (Engineering Mindset) ────────────────────────────────────
+  {
+    id: 'DGKTzl9CTXo',
+    title: 'The Invention Edison Missed — Now Worth Billions',
+    channel: 'The Engineering Mindset',
+    duration: '17:35',
+    category: 'career',
+    tags: ['Edison', 'Tesla', 'AC vs DC', 'history', 'electrical engineering'],
+    level: 'beginner',
+    description: 'The fascinating history of AC vs DC power — how Tesla and Westinghouse changed the world of electricity.',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════
+  // CRAIG WILTSHIRE — NVQ Assessment & Apprentice Training
+  // ═══════════════════════════════════════════════════════════════════
+
   // ── Testing & Inspection ──────────────────────────────────────────
   {
     id: 'K7-FxWD87Kg',

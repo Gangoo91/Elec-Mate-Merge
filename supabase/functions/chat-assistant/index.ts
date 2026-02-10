@@ -127,34 +127,75 @@ const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]
   }
 };
 
+// Search qualification requirements via full-text search
+const searchQualificationRequirements = async (
+  supabase: any,
+  qualificationCode: string,
+  keywords: string[]
+): Promise<any[]> => {
+  if (!qualificationCode || keywords.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase.rpc('search_qualification_requirements', {
+      p_qualification_code: qualificationCode,
+      p_keywords: keywords.join(' '),
+      p_limit: 8,
+    });
+
+    if (error) {
+      console.error('Qualification requirements search error:', error);
+      return [];
+    }
+    return data || [];
+  } catch (e) {
+    console.error('Qualification requirements search exception:', e);
+    return [];
+  }
+};
+
 // Build context from RAG results - prioritise regulations for compliance
-const buildContext = (regulations: any[], practical: any[]): string => {
-  if (regulations.length === 0 && practical.length === 0) return '';
+const buildContext = (regulations: any[], practical: any[], qualificationReqs: any[] = [], qualificationName?: string): string => {
+  if (regulations.length === 0 && practical.length === 0 && qualificationReqs.length === 0) return '';
 
   let context = '\n\n';
 
   // Prioritise regulations - these are authoritative
   if (regulations.length > 0) {
     context += '📖 BS 7671 REGULATIONS (Authoritative):\n\n';
-    // Take top 10 most relevant regulations, with more content
-    regulations.slice(0, 10).forEach(r => {
+    // Take top 6 most relevant regulations
+    regulations.slice(0, 6).forEach(r => {
       context += `REGULATION ${r.regulation_number || 'N/A'}: ${r.title || ''}\n`;
       if (r.content) {
-        // Include up to 400 chars for better context
-        context += `${r.content.slice(0, 400)}${r.content.length > 400 ? '...' : ''}\n\n`;
+        context += `${r.content.slice(0, 250)}${r.content.length > 250 ? '...' : ''}\n\n`;
       }
     });
   }
 
   if (practical.length > 0) {
     context += '\n🔧 PRACTICAL GUIDANCE (Field-tested procedures):\n\n';
-    // Take top 8 practical guides with more content
-    practical.slice(0, 8).forEach(p => {
+    // Take top 5 practical guides
+    practical.slice(0, 5).forEach(p => {
       context += `${p.title || 'Procedure'}:\n`;
       if (p.content) {
-        // Include up to 350 chars for better context
-        context += `${p.content.slice(0, 350)}${p.content.length > 350 ? '...' : ''}\n\n`;
+        context += `${p.content.slice(0, 250)}${p.content.length > 250 ? '...' : ''}\n\n`;
       }
+    });
+  }
+
+  if (qualificationReqs.length > 0) {
+    context += `\n📋 QUALIFICATION REQUIREMENTS (${qualificationName ? `Student's course: ${qualificationName}` : 'Student course'}):\n\n`;
+    qualificationReqs.forEach(r => {
+      context += `Unit ${r.unit_code || 'N/A'}: ${r.unit_title || ''}\n`;
+      if (r.learning_outcome) {
+        context += `LO: ${r.learning_outcome}\n`;
+      }
+      if (r.assessment_criteria && Array.isArray(r.assessment_criteria)) {
+        context += 'Assessment Criteria:\n';
+        r.assessment_criteria.forEach((ac: any) => {
+          context += `- ${ac.code || ac.ac_code || ''}: ${ac.text || ac.ac_text || ''}\n`;
+        });
+      }
+      context += '\n';
     });
   }
 
@@ -168,7 +209,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, context, stream = true, history = [], imageUrl } = await req.json();
+    const { message, context, stream = true, history = [], imageUrl, qualificationCode, qualificationName } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -184,13 +225,14 @@ serve(async (req) => {
     const keywords = extractKeywords(message);
 
     // Parallel RAG searches (50-100ms)
-    const [regulations, practical] = await Promise.all([
+    const [regulations, practical, qualificationReqs] = await Promise.all([
       searchRegulations(supabase, keywords),
       searchPractical(supabase, keywords),
+      qualificationCode ? searchQualificationRequirements(supabase, qualificationCode, keywords) : Promise.resolve([]),
     ]);
 
     // Build context from RAG results
-    const ragContext = buildContext(regulations, practical);
+    const ragContext = buildContext(regulations, practical, qualificationReqs, qualificationName);
 
     // Build system prompt with RAG context at the TOP for priority
     const ragSection = ragContext ? `
@@ -322,7 +364,7 @@ Remember: You're not just answering questions - you're training the next generat
 
 When answering questions about testing, procedures, or regulations, ALWAYS check the technical reference provided above and cite specific regulation numbers (e.g., "According to Regulation 613.2...").
 
-Current topic context: ${context || 'general electrical apprenticeship support'}`;
+Current topic context: ${context || 'general electrical apprenticeship support'}${qualificationName ? `\n\nYou know this apprentice is studying ${qualificationName}${qualificationCode ? ` (${qualificationCode})` : ''}. When relevant, reference their specific learning outcomes and assessment criteria.` : ''}`;
 
     // Build messages array with conversation history
     const conversationHistory = Array.isArray(history)
@@ -348,8 +390,8 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
       userMessage = { role: 'user', content: message };
     }
 
-    // Use gpt-4o for vision, gpt-4o-mini for text-only
-    const modelToUse = imageUrl ? 'gpt-4o' : 'gpt-4o-mini';
+    // Use gpt-4o for vision, gpt-5-mini for text-only
+    const modelToUse = imageUrl ? 'gpt-4o' : 'gpt-5-mini-2025-08-07';
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -364,7 +406,7 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
           ...conversationHistory,
           userMessage
         ],
-        max_tokens: 1500,
+        max_completion_tokens: 4000,
         stream: stream,
       }),
     });

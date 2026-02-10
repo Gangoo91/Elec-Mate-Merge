@@ -24,6 +24,8 @@ import {
   BookOpen,
   Plus,
   Check,
+  GraduationCap,
+  Tag,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -56,6 +58,8 @@ interface DiaryEntrySheetProps {
   onSave: (entry: NewDiaryEntry) => Promise<unknown>;
   recentSites: string[];
   existingEntry?: SiteDiaryEntry | null;
+  /** Qualification unit codes + titles for course-aware skill prompts */
+  qualificationUnits?: { unitCode: string; unitTitle: string }[];
 }
 
 export function DiaryEntrySheet({
@@ -64,6 +68,7 @@ export function DiaryEntrySheet({
   onSave,
   recentSites,
   existingEntry,
+  qualificationUnits,
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
   const today = new Date().toISOString().split('T')[0];
@@ -257,11 +262,10 @@ export function DiaryEntrySheet({
 
           {/* Scrollable form */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-            {/* === SECTION: When & Where === */}
+            {/* === SECTION 1: When & Where === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-elec-yellow/40 ml-0.5">
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">
                   When &amp; Where
                 </span>
               </div>
@@ -296,7 +300,7 @@ export function DiaryEntrySheet({
                       <button
                         key={site}
                         onClick={() => setSiteName(site)}
-                        className="px-3.5 min-h-[36px] text-xs rounded-full bg-white/[0.06] border border-white/10 text-white touch-manipulation active:bg-white/10"
+                        className="px-3.5 min-h-[44px] text-xs rounded-full bg-white/[0.06] border border-white/10 text-white/90 touch-manipulation active:bg-white/10"
                       >
                         <MapPin className="h-3 w-3 inline mr-1 opacity-50" />
                         {site}
@@ -320,16 +324,14 @@ export function DiaryEntrySheet({
               </div>
             </div>
 
-            {/* === SECTION: What You Did === */}
+            {/* === SECTION 2: What You Did (tasks only) === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-blue-400/40 ml-0.5">
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">
                   What You Did
                 </span>
               </div>
 
-              {/* Tasks */}
               <div className="px-4 py-2.5 border-t border-white/[0.04]">
                 <label className="text-[11px] text-white/80 mb-1 flex items-center gap-1.5">
                   <Wrench className="h-3 w-3" /> Tasks completed
@@ -362,7 +364,7 @@ export function DiaryEntrySheet({
                       <button
                         key={suggestion}
                         onClick={() => setTasks((prev) => [...prev, suggestion])}
-                        className="px-3 min-h-[36px] text-[11px] rounded-full bg-white/[0.04] border border-dashed border-white/15 text-white touch-manipulation active:bg-white/10"
+                        className="px-3 min-h-[44px] text-[11px] rounded-full bg-white/[0.04] border border-dashed border-white/15 text-white/80 touch-manipulation active:bg-white/10"
                       >
                         <Plus className="h-3 w-3 inline mr-0.5 opacity-60" />
                         {suggestion}
@@ -390,22 +392,69 @@ export function DiaryEntrySheet({
                   </div>
                 )}
               </div>
+            </div>
 
-              {/* Skills */}
-              <div className="px-4 py-2.5 border-t border-white/[0.04]">
-                <label className="text-[11px] text-white/80 mb-2 block">Skills practised</label>
+            {/* === SECTION 3: Qualification Units (PROMOTED) === */}
+            {qualificationUnits && qualificationUnits.length > 0 && (
+              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+                <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-purple-400/40 ml-0.5">
+                  <GraduationCap className="h-4 w-4 text-purple-400/70" />
+                  <span className="text-[13px] font-bold text-white/90 tracking-wide">
+                    Qualification Units
+                  </span>
+                </div>
+
+                <div className="px-4 py-3 border-t border-white/[0.04]">
+                  <p className="text-[11px] text-white/60 mb-3">
+                    Link today&apos;s work to your qualification units
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {qualificationUnits.map((unit) => {
+                      const label = `${unit.unitCode}: ${unit.unitTitle}`;
+                      return (
+                        <button
+                          key={unit.unitCode}
+                          onClick={() => toggleSkill(label)}
+                          className={`inline-flex items-center gap-1.5 px-3.5 min-h-[44px] text-xs font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
+                            selectedSkills.includes(label)
+                              ? 'bg-purple-500/15 border-purple-500/40 text-purple-400 shadow-[0_0_12px_-3px] shadow-purple-500/20'
+                              : 'bg-white/[0.03] border-purple-500/20 text-purple-300/80 active:bg-purple-500/[0.08]'
+                          }`}
+                        >
+                          {selectedSkills.includes(label) && <Check className="h-3.5 w-3.5" />}
+                          <span className="font-bold mr-0.5">{unit.unitCode}:</span>
+                          {unit.unitTitle}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* === SECTION 4: Quick Tags (DEMOTED general skills) === */}
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-white/15 ml-0.5">
+                <Tag className="h-3.5 w-3.5 text-white/40" />
+                <span className="text-[13px] font-bold text-white/70 tracking-wide">
+                  Quick Tags
+                </span>
+                <span className="text-[10px] text-white/40 ml-1">Optional</span>
+              </div>
+
+              <div className="px-4 py-3 border-t border-white/[0.04]">
                 <div className="flex flex-wrap gap-2">
                   {skillCategories.map((skill) => (
                     <button
                       key={skill}
                       onClick={() => toggleSkill(skill)}
-                      className={`inline-flex items-center gap-1.5 px-3.5 min-h-[40px] text-xs font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
+                      className={`inline-flex items-center gap-1.5 px-3 min-h-[44px] text-[11px] font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
                         selectedSkills.includes(skill)
                           ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow shadow-[0_0_12px_-3px] shadow-elec-yellow/20'
-                          : 'bg-white/[0.03] border-white/[0.08] text-white active:bg-white/[0.08]'
+                          : 'bg-white/[0.02] border-white/[0.06] text-white/60 active:bg-white/[0.06]'
                       }`}
                     >
-                      {selectedSkills.includes(skill) && <Check className="h-3.5 w-3.5" />}
+                      {selectedSkills.includes(skill) && <Check className="h-3 w-3" />}
                       {skill}
                     </button>
                   ))}
@@ -413,11 +462,10 @@ export function DiaryEntrySheet({
               </div>
             </div>
 
-            {/* === SECTION: Reflections === */}
+            {/* === SECTION 5: Reflections === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-green-400/40 ml-0.5">
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">
                   Reflections
                 </span>
               </div>
@@ -447,11 +495,10 @@ export function DiaryEntrySheet({
               </div>
             </div>
 
-            {/* === SECTION: Evidence === */}
+            {/* === SECTION 6: Evidence === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-purple-400/40 ml-0.5">
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">
                   Evidence
                 </span>
                 <span className="text-[10px] text-white/60 ml-auto">
@@ -516,7 +563,7 @@ export function DiaryEntrySheet({
                       type="button"
                       onClick={() => cameraInputRef.current?.click()}
                       disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
+                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/90 text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
                     >
                       <Camera className="h-4 w-4" />
                       {isUploading ? 'Uploading...' : 'Camera'}
@@ -525,7 +572,7 @@ export function DiaryEntrySheet({
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
+                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/90 text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
                     >
                       <Upload className="h-4 w-4" />
                       Gallery
@@ -535,11 +582,10 @@ export function DiaryEntrySheet({
               </div>
             </div>
 
-            {/* === SECTION: Mood === */}
+            {/* === SECTION 7: How Was Your Day? === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3 pb-2 flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-amber-400/40 ml-0.5">
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">
                   How Was Your Day?
                 </span>
               </div>
@@ -581,7 +627,7 @@ export function DiaryEntrySheet({
             <Button
               onClick={handleSave}
               disabled={!siteName.trim() || isSaving}
-              className="w-full h-13 text-base font-bold rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation disabled:opacity-40 shadow-lg shadow-elec-yellow/20"
+              className="w-full h-14 text-base font-bold rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation disabled:opacity-40 shadow-lg shadow-elec-yellow/20"
             >
               <Save className="h-5 w-5 mr-2" />
               {isSaving ? 'Saving...' : isEditing ? 'Update Entry' : 'Save Entry'}

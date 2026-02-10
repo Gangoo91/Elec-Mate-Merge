@@ -145,7 +145,7 @@ export function RiskLevelSlider({ value, onChange, error }: RiskLevelSliderProps
               {/* Description */}
               <span
                 className={cn(
-                  'text-[10px] sm:text-xs leading-tight text-center transition-colors duration-200',
+                  'text-xs leading-tight text-center transition-colors duration-200',
                   isActive ? 'text-white/60' : 'text-white/30'
                 )}
               >

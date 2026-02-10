@@ -357,7 +357,7 @@ export const useReportSync = ({
 
   // === SYNC TO CLOUD ===
   // isAutoSync: true for debounced/interval syncs (keeps 'auto-draft' status), false for manual saves (promotes to proper status)
-  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false, isAutoSync: boolean = false): Promise<{ success: boolean; reportId: string | null }> => {
+  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false, isAutoSync: boolean = false, dataOverride?: any): Promise<{ success: boolean; reportId: string | null }> => {
     if (isSyncingRef.current) {
       return { success: false, reportId: currentReportIdRef.current };
     }
@@ -373,9 +373,9 @@ export const useReportSync = ({
       return { success: false, reportId: null };
     }
 
-    // CRITICAL FIX: Use the ref to get the absolute latest form data
-    // The closure `formData` can be stale if user made changes just before triggering sync
-    const currentFormData = latestFormDataRef.current;
+    // CRITICAL FIX: Use dataOverride if provided (e.g. from syncNowImmediate),
+    // otherwise use the ref to get the absolute latest form data
+    const currentFormData = dataOverride || latestFormDataRef.current;
 
     // Check minimum data
     const hasData =
@@ -697,8 +697,8 @@ export const useReportSync = ({
       clientName: dataToSync.clientName
     });
 
-    // Perform the sync
-    const result = await syncToCloud(true);
+    // Perform the sync — force overwrite and pass captured data directly
+    const result = await syncToCloud(true, true, false, dataToSync);
 
     console.log('[ReportSync] syncNowImmediate - sync result:', {
       success: result.success,

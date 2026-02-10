@@ -366,7 +366,7 @@ ${ragContext}`;
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 1500,
+        max_completion_tokens: 5000,
         messages: [
           { role: 'system', content: systemPrompt },
           {

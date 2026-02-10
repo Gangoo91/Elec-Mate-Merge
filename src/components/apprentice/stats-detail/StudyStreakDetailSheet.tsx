@@ -30,12 +30,22 @@ import {
   Lightbulb,
   CalendarDays,
   Star,
+  RotateCcw,
+  Layers,
+  ClipboardCheck,
+  ArrowRight,
+  PenLine,
+  TrendingUp,
+  Target,
+  type LucideIcon,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useStreakInsights } from '@/hooks/apprentice-stats/useStreakInsights';
+import { useSmartRecommendations } from '@/hooks/useSmartRecommendations';
 import { ActivityGrid } from './ActivityGrid';
-import { RecommendationCard } from './RecommendationCard';
+import { RecommendationCard, type RecommendationVariant } from './RecommendationCard';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 
 interface StudyStreakDetailSheetProps {
@@ -43,7 +53,30 @@ interface StudyStreakDetailSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const smartIconMap: Record<string, LucideIcon> = {
+  RotateCcw, Layers, ClipboardCheck, ArrowRight, PenLine, Clock, TrendingUp, Target, Brain, BookOpen, Flame, Star,
+};
+
+const smartVariantMap: Record<string, RecommendationVariant> = {
+  'spaced-rep': 'orange',
+  flashcard: 'yellow',
+  quiz: 'green',
+  diary: 'purple',
+  ojt: 'blue',
+  portfolio: 'blue',
+  general: 'orange',
+};
+
 export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetailSheetProps) {
+  const navigate = useNavigate();
+
+  const goToStudyCentre = () => {
+    navigate('/study-centre/apprentice');
+    setTimeout(() => onOpenChange(false), 50);
+  };
+
+  const { recommendations: smartRecs } = useSmartRecommendations(4);
+
   const {
     currentStreak,
     longestStreak,
@@ -114,6 +147,17 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               >
                 {studiedToday ? 'Studied today' : `Last studied: ${lastStudiedText}`}
               </motion.p>
+              <motion.button
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                onClick={goToStudyCentre}
+                className="mt-4 flex items-center gap-2 px-6 h-12 rounded-xl bg-orange-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-orange-500/20"
+              >
+                <BookOpen className="h-4 w-4" />
+                Go to Study Centre
+                <ChevronRight className="h-4 w-4" />
+              </motion.button>
             </div>
 
             {/* ── Milestone badges (staggered) ── */}
@@ -269,7 +313,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   Study flashcards or take a quiz today to begin building your study streak
                 </p>
                 <button
-                  onClick={() => onOpenChange(false)}
+                  onClick={goToStudyCentre}
                   className="flex items-center gap-2 px-6 h-12 rounded-xl bg-orange-500 text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
                 >
                   Start studying
@@ -278,8 +322,8 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               </motion.div>
             )}
 
-            {/* ── Recommendations divider ── */}
-            {recommendations.length > 0 && (
+            {/* ── Smart recommendations ── */}
+            {(smartRecs.length > 0 || recommendations.length > 0) && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -292,18 +336,37 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 </div>
 
                 <div className="space-y-3 pb-6">
-                  {recommendations.map((rec) => (
-                    <RecommendationCard
-                      key={rec.id}
-                      icon={rec.id === 'study-today' ? Flame : rec.id === 'due-cards' ? Brain : rec.id === 'milestone-chase' ? Star : rec.id === 'weak-category' ? BookOpen : Clock}
-                      title={rec.title}
-                      description={rec.description}
-                      actionLabel={rec.actionLabel}
-                      actionPath={rec.actionPath}
-                      variant="orange"
-                      onClose={() => onOpenChange(false)}
-                    />
-                  ))}
+                  {smartRecs.length > 0 ? (
+                    smartRecs.map((rec) => {
+                      const Icon = smartIconMap[rec.icon] || BookOpen;
+                      const variant = smartVariantMap[rec.type] || 'orange';
+                      return (
+                        <RecommendationCard
+                          key={rec.id}
+                          icon={Icon}
+                          title={rec.title}
+                          description={rec.description}
+                          actionLabel={rec.actionLabel}
+                          actionPath={rec.actionPath}
+                          variant={variant}
+                          onClose={() => onOpenChange(false)}
+                        />
+                      );
+                    })
+                  ) : (
+                    recommendations.map((rec) => (
+                      <RecommendationCard
+                        key={rec.id}
+                        icon={rec.id === 'study-today' ? Flame : rec.id === 'due-cards' ? Brain : rec.id === 'milestone-chase' ? Star : rec.id === 'weak-category' ? BookOpen : Clock}
+                        title={rec.title}
+                        description={rec.description}
+                        actionLabel={rec.actionLabel}
+                        actionPath={rec.actionPath}
+                        variant="orange"
+                        onClose={() => onOpenChange(false)}
+                      />
+                    ))
+                  )}
                 </div>
               </motion.div>
             )}

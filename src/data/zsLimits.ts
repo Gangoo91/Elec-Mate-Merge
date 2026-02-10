@@ -1,7 +1,7 @@
 /**
  * BS 7671 Maximum Earth Fault Loop Impedance (Zs) Values
  * 
- * Source: BS 7671:2018+A2:2022 Tables 41.2, 41.3, 41.4, 41.6
+ * Source: BS 7671:2018+A3:2024 Tables 41.2, 41.3, 41.4, 41.6
  * 
  * IMPORTANT NOTES:
  * - All values are in Ohms (Ω)

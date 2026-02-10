@@ -1,102 +1,92 @@
 import { useRef, useCallback, useEffect, useState } from 'react';
 
 interface UseSmoothedStreamingOptions {
-  /** Characters to render per frame (default: 3 for very smooth) */
-  charsPerFrame?: number;
-  /** How often to sync to React state in ms (default: 50ms) */
-  stateUpdateInterval?: number;
+  /** How often to flush buffered tokens to React state in ms (default: 40ms ≈ 25fps) */
+  flushInterval?: number;
 }
 
 interface UseSmoothedStreamingReturn {
-  /** Current displayed text (updates smoothly via RAF) */
+  /** Current displayed text (updates in batches for smooth rendering) */
   displayedText: string;
-  /** Add tokens to the buffer */
+  /** Add tokens to the buffer — they'll appear on next flush */
   addTokens: (tokens: string) => void;
-  /** Flush all remaining tokens immediately */
+  /** Flush all remaining tokens immediately and return final text */
   flush: () => string;
   /** Reset the streaming state */
   reset: () => void;
-  /** Stop the animation loop */
+  /** Stop streaming */
   stop: () => void;
   /** Check if currently has content to display */
   isActive: () => boolean;
 }
 
 /**
- * useSmoothedStreaming - RAF-based smooth text streaming with batched React updates
+ * useSmoothedStreaming - Batched token streaming with smooth React updates
  *
- * Uses requestAnimationFrame for 60fps visual updates while batching
- * React state updates to prevent excessive re-renders.
+ * Instead of dripping characters one-by-one (which looks stuttery), this
+ * batches incoming tokens and flushes them to React state on a timer.
+ * Since OpenAI tokens are typically whole words or word fragments, this
+ * produces natural word-by-word streaming that looks smooth.
+ *
+ * The key insight: OpenAI already sends tokens at a natural pace (~20-50ms
+ * apart). We just need to batch them slightly to avoid excessive React
+ * re-renders while keeping the visual flow natural.
  */
-export function useSmoothedStreaming(options: UseSmoothedStreamingOptions = {}): UseSmoothedStreamingReturn {
-  const { charsPerFrame = 3, stateUpdateInterval = 50 } = options;
+export function useSmoothedStreaming(
+  options: UseSmoothedStreamingOptions = {}
+): UseSmoothedStreamingReturn {
+  const { flushInterval = 40 } = options;
 
-  // React state for displayed text (batched updates)
   const [displayedText, setDisplayedText] = useState('');
 
-  // Refs for animation state (no re-renders)
-  const tokenBufferRef = useRef('');
+  // Refs for state that shouldn't trigger re-renders
   const currentTextRef = useRef('');
-  const animationFrameRef = useRef<number | null>(null);
+  const pendingTokensRef = useRef('');
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isStreamingRef = useRef(false);
-  const lastStateUpdateRef = useRef(0);
 
-  // RAF animation loop
-  const animate = useCallback(() => {
-    const now = performance.now();
+  // Start the flush timer
+  const startTimer = useCallback(() => {
+    if (timerRef.current !== null) return;
 
-    if (tokenBufferRef.current.length > 0) {
-      // Extract characters from buffer
-      const chars = tokenBufferRef.current.slice(0, charsPerFrame);
-      tokenBufferRef.current = tokenBufferRef.current.slice(charsPerFrame);
-
-      // Update current text ref (instant, no render)
-      currentTextRef.current += chars;
-
-      // Batch React state updates (every stateUpdateInterval ms)
-      if (now - lastStateUpdateRef.current >= stateUpdateInterval) {
+    timerRef.current = setInterval(() => {
+      if (pendingTokensRef.current.length > 0) {
+        // Move pending tokens to current text
+        currentTextRef.current += pendingTokensRef.current;
+        pendingTokensRef.current = '';
         setDisplayedText(currentTextRef.current);
-        lastStateUpdateRef.current = now;
+      } else if (!isStreamingRef.current) {
+        // No more tokens and streaming stopped — clean up timer
+        if (timerRef.current !== null) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
       }
-    }
+    }, flushInterval);
+  }, [flushInterval]);
 
-    // Continue animation if there's more to render or we're still streaming
-    if (tokenBufferRef.current.length > 0 || isStreamingRef.current) {
-      animationFrameRef.current = requestAnimationFrame(animate);
-    } else {
-      // Final sync when done
-      setDisplayedText(currentTextRef.current);
-      animationFrameRef.current = null;
-    }
-  }, [charsPerFrame, stateUpdateInterval]);
-
-  const startAnimation = useCallback(() => {
-    if (animationFrameRef.current === null) {
-      lastStateUpdateRef.current = performance.now();
-      animationFrameRef.current = requestAnimationFrame(animate);
-    }
-  }, [animate]);
-
-  const addTokens = useCallback((tokens: string) => {
-    tokenBufferRef.current += tokens;
-    isStreamingRef.current = true;
-    startAnimation();
-  }, [startAnimation]);
+  const addTokens = useCallback(
+    (tokens: string) => {
+      pendingTokensRef.current += tokens;
+      isStreamingRef.current = true;
+      startTimer();
+    },
+    [startTimer]
+  );
 
   const flush = useCallback(() => {
-    // Stop animation
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
+    // Stop timer
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
 
-    // Immediately render all remaining tokens
-    if (tokenBufferRef.current.length > 0) {
-      currentTextRef.current += tokenBufferRef.current;
-      tokenBufferRef.current = '';
+    // Flush any remaining pending tokens
+    if (pendingTokensRef.current.length > 0) {
+      currentTextRef.current += pendingTokensRef.current;
+      pendingTokensRef.current = '';
     }
 
-    // Final state sync
     setDisplayedText(currentTextRef.current);
     isStreamingRef.current = false;
 
@@ -104,33 +94,37 @@ export function useSmoothedStreaming(options: UseSmoothedStreamingOptions = {}):
   }, []);
 
   const reset = useCallback(() => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-    tokenBufferRef.current = '';
+    pendingTokensRef.current = '';
     currentTextRef.current = '';
     isStreamingRef.current = false;
     setDisplayedText('');
   }, []);
 
   const stop = useCallback(() => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
     isStreamingRef.current = false;
   }, []);
 
   const isActive = useCallback(() => {
-    return isStreamingRef.current || tokenBufferRef.current.length > 0 || currentTextRef.current.length > 0;
+    return (
+      isStreamingRef.current ||
+      pendingTokensRef.current.length > 0 ||
+      currentTextRef.current.length > 0
+    );
   }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current);
       }
     };
   }, []);

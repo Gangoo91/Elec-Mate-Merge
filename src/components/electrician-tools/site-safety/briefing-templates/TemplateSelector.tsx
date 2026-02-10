@@ -92,7 +92,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
       {templates.map((template) => (
         <Card
           key={template.id}
-          className="bg-card/50 border-primary/20 hover:border-elec-yellow/40 transition-all cursor-pointer group"
+          className="bg-card/50 border-primary/20 hover:border-elec-yellow/40 transition-all cursor-pointer group touch-manipulation"
           onClick={() => onSelectTemplate(template)}
         >
           <CardContent className="p-4">
@@ -105,7 +105,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
                   <h4 className="font-semibold text-elec-light group-hover:text-elec-yellow transition-colors">
                     {template.name}
                   </h4>
-                  <p className="text-sm text-elec-light/60 mt-1">
+                  <p className="text-sm text-elec-light/60 mt-1 line-clamp-2">
                     {template.description}
                   </p>
                 </div>

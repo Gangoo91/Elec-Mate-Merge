@@ -137,7 +137,7 @@ export function BriefingViewer({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="shrink-0"
+                className="shrink-0 touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -148,34 +148,34 @@ export function BriefingViewer({
           <div className="p-4 border-b border-border bg-muted/30">
             <div className="flex flex-wrap gap-4 text-sm">
               {briefing.date && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  {format(new Date(briefing.date), "dd MMM yyyy")}
-                </div>
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <Calendar className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{format(new Date(briefing.date), "dd MMM yyyy")}</span>
+                </span>
               )}
               {briefing.time && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  {briefing.time}
-                </div>
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <Clock className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.time}</span>
+                </span>
               )}
               {briefing.location && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  {briefing.location}
-                </div>
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <MapPin className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.location}</span>
+                </span>
               )}
               {briefing.presenter && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <User className="h-4 w-4" />
-                  {briefing.presenter}
-                </div>
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <User className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.presenter}</span>
+                </span>
               )}
               {briefing.duration_minutes && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  {briefing.duration_minutes} min
-                </div>
+                <span className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <Clock className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.duration_minutes} min</span>
+                </span>
               )}
             </div>
           </div>
@@ -183,15 +183,15 @@ export function BriefingViewer({
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
             <TabsList className="mx-4 mt-4 grid grid-cols-3">
-              <TabsTrigger value="content" className="text-xs">
+              <TabsTrigger value="content" className="text-xs h-11 touch-manipulation">
                 <FileText className="h-3.5 w-3.5 mr-1.5" />
                 Content
               </TabsTrigger>
-              <TabsTrigger value="attendees" className="text-xs">
+              <TabsTrigger value="attendees" className="text-xs h-11 touch-manipulation">
                 <Users className="h-3.5 w-3.5 mr-1.5" />
                 Attendees ({total})
               </TabsTrigger>
-              <TabsTrigger value="photos" className="text-xs">
+              <TabsTrigger value="photos" className="text-xs h-11 touch-manipulation">
                 <Image className="h-3.5 w-3.5 mr-1.5" />
                 Photos
               </TabsTrigger>
@@ -368,9 +368,8 @@ export function BriefingViewer({
             <div className="flex gap-2 mb-3">
               <Button
                 variant="outline"
-                size="sm"
                 onClick={handleCopyLink}
-                className="flex-1"
+                className="flex-1 h-11 touch-manipulation"
               >
                 <Copy className="h-4 w-4 mr-1.5" />
                 Copy Link
@@ -378,9 +377,8 @@ export function BriefingViewer({
               {onEdit && (
                 <Button
                   variant="outline"
-                  size="sm"
                   onClick={() => onEdit(briefing)}
-                  className="flex-1"
+                  className="flex-1 h-11 touch-manipulation"
                 >
                   <Edit3 className="h-4 w-4 mr-1.5" />
                   Edit
@@ -391,7 +389,7 @@ export function BriefingViewer({
               {onSignOff && briefing.status === "Scheduled" && (
                 <Button
                   onClick={() => onSignOff(briefing)}
-                  className="flex-1 h-12 bg-blue-600 hover:bg-blue-700"
+                  className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 touch-manipulation"
                 >
                   <PenTool className="h-4 w-4 mr-2" />
                   Sign-Off
@@ -400,7 +398,7 @@ export function BriefingViewer({
               {onExportPdf && (
                 <Button
                   onClick={() => onExportPdf(briefing)}
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Export PDF

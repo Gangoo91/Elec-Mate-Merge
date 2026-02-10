@@ -25,6 +25,8 @@ import { cn } from "@/lib/utils";
 import { getInitials, getRoleColor } from "@/utils/adminUtils";
 import UserManagementSheet from "@/components/admin/UserManagementSheet";
 import UserActivitySheet from "@/components/admin/UserActivitySheet";
+import { useAdminUsersBase } from "@/hooks/useAdminUsersBase";
+import PullToRefresh from "@/components/admin/PullToRefresh";
 
 // Stripe stats type
 interface StripeStats {
@@ -58,12 +60,16 @@ export default function AdminDashboard() {
     userRole: string;
   } | null>(null);
 
+  // Shared cached edge function call — reused across admin pages
+  const { data: baseUsers } = useAdminUsersBase();
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] }),
       queryClient.invalidateQueries({ queryKey: ["admin-stripe-live-stats"] }),
       queryClient.invalidateQueries({ queryKey: ["admin-online-users"] }),
+      queryClient.invalidateQueries({ queryKey: ["admin-users-base"] }),
     ]);
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
@@ -90,9 +96,9 @@ export default function AdminDashboard() {
   // Fetch dashboard stats
   const { data: stats, isLoading, isFetching } = useQuery({
     queryKey: ["admin-dashboard-stats"],
-    refetchInterval: 30000,
-    refetchOnWindowFocus: true,
-    staleTime: 0,
+    refetchInterval: 60000,
+    refetchOnWindowFocus: false,
+    staleTime: 30000,
     queryFn: async () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -105,7 +111,6 @@ export default function AdminDashboard() {
         signupsWeekRes,
         activeTodayRes,
         trialDataRes,
-        edgeDataRes,
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", today.toISOString()),
@@ -116,11 +121,11 @@ export default function AdminDashboard() {
           .gte("created_at", weekAgo.toISOString()) // Trial = signed up within 7 days
           .or("subscribed.is.null,subscribed.eq.false")
           .or("free_access_granted.is.null,free_access_granted.eq.false"),
-        supabase.functions.invoke("admin-get-users"),
       ]);
 
       const trialData = trialDataRes.data || [];
-      const usersWithEmails = edgeDataRes.data?.users || [];
+      // Use shared cached baseUsers instead of separate edge function call
+      const usersWithEmails = baseUsers || [];
 
       return {
         totalUsers: totalUsersRes.count || 0,
@@ -209,6 +214,7 @@ export default function AdminDashboard() {
   const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
 
   return (
+    <PullToRefresh onRefresh={async () => { await handleRefresh(); }}>
     <div className="space-y-4 pb-24">
       {/* Hero Revenue Card */}
       <div
@@ -229,7 +235,7 @@ export default function AdminDashboard() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-white/60 hover:text-white hover:bg-white/10"
+              className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation"
               onClick={(e) => { e.stopPropagation(); handleRefresh(); }}
               disabled={isFetching || isRefreshing}
             >
@@ -249,20 +255,20 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
               <p className="text-xl sm:text-2xl font-bold text-white">{totalSubs.toLocaleString()}</p>
-              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">Paying</p>
+              <p className="text-emerald-200/60 text-xs sm:text-[11px] uppercase">Paying</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
               <p className="text-xl sm:text-2xl font-bold text-white">
                 {arr >= 10000 ? `£${(arr / 1000).toFixed(0)}k` : `£${(arr / 1000).toFixed(1)}k`}
               </p>
-              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">ARR</p>
+              <p className="text-emerald-200/60 text-xs sm:text-[11px] uppercase">ARR</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 sm:p-3">
               <div className="flex items-center justify-center gap-1">
                 <Crown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
                 <p className="text-xl sm:text-2xl font-bold text-white">{(stripeStats?.stripe.tierCounts?.founder || 0).toLocaleString()}</p>
               </div>
-              <p className="text-emerald-200/60 text-[10px] sm:text-[11px] uppercase">Founders</p>
+              <p className="text-emerald-200/60 text-xs sm:text-[11px] uppercase">Founders</p>
             </div>
           </div>
         </div>
@@ -277,7 +283,7 @@ export default function AdminDashboard() {
           <CardContent className="p-3 sm:p-3 text-center">
             <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
             <p className="text-2xl sm:text-xl font-bold">{stats?.totalUsers?.toLocaleString()}</p>
-            <p className="text-[10px] text-muted-foreground">Users</p>
+            <p className="text-xs text-muted-foreground">Users</p>
           </CardContent>
         </Card>
 
@@ -288,7 +294,7 @@ export default function AdminDashboard() {
           <CardContent className="p-3 sm:p-3 text-center">
             <Activity className="h-5 w-5 text-green-400 mx-auto mb-1" />
             <p className="text-2xl sm:text-xl font-bold">{stats?.activeToday?.toLocaleString()}</p>
-            <p className="text-[10px] text-muted-foreground">Active</p>
+            <p className="text-xs text-muted-foreground">Active</p>
           </CardContent>
         </Card>
 
@@ -299,7 +305,7 @@ export default function AdminDashboard() {
           <CardContent className="p-3 sm:p-3 text-center">
             <UserPlus className="h-5 w-5 text-purple-400 mx-auto mb-1" />
             <p className="text-2xl sm:text-xl font-bold">{stats?.signupsToday?.toLocaleString()}</p>
-            <p className="text-[10px] text-muted-foreground">Today</p>
+            <p className="text-xs text-muted-foreground">Today</p>
           </CardContent>
         </Card>
 
@@ -310,7 +316,7 @@ export default function AdminDashboard() {
           <CardContent className="p-3 sm:p-3 text-center">
             <Clock className="h-5 w-5 text-orange-400 mx-auto mb-1" />
             <p className="text-2xl sm:text-xl font-bold">{stats?.trialUsers?.toLocaleString()}</p>
-            <p className="text-[10px] text-muted-foreground">Trial</p>
+            <p className="text-xs text-muted-foreground">Trial</p>
           </CardContent>
         </Card>
       </div>
@@ -321,7 +327,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
             <span className="font-semibold text-sm">Live Now</span>
-            <Badge variant="secondary" className="text-[10px] px-2 py-0">
+            <Badge variant="secondary" className="text-xs px-2 py-0">
               {liveUserCount} online
             </Badge>
           </div>
@@ -385,7 +391,7 @@ export default function AdminDashboard() {
             <Mail className="h-4 w-4 text-blue-400" />
             <span className="font-semibold text-sm">Recent Signups</span>
           </div>
-          <Badge variant="secondary" className="text-[10px] px-2 py-0">
+          <Badge variant="secondary" className="text-xs px-2 py-0">
             {stats?.signupsThisWeek} this week
           </Badge>
         </div>
@@ -409,11 +415,11 @@ export default function AdminDashboard() {
                   <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-[10px] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     {formatDistanceToNow(new Date(user.created_at), { addSuffix: true }).replace("about ", "")}
                   </p>
                   {user.subscribed && (
-                    <Badge className="text-[9px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0">
+                    <Badge className="text-[11px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0">
                       Pro
                     </Badge>
                   )}
@@ -433,7 +439,7 @@ export default function AdminDashboard() {
               <span className="font-semibold text-sm">Support Inbox</span>
             </div>
             {unreadSupportCount > 0 && (
-              <Badge className="text-[10px] px-2 py-0 bg-pink-500 text-white">
+              <Badge className="text-xs px-2 py-0 bg-pink-500 text-white">
                 {unreadSupportCount} new
               </Badge>
             )}
@@ -466,7 +472,7 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{msg.message}</p>
-                    <p className="text-[10px] text-muted-foreground/60 mt-1">
+                    <p className="text-xs text-muted-foreground/60 mt-1">
                       {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
                     </p>
                   </div>
@@ -486,7 +492,7 @@ export default function AdminDashboard() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <TrendingUp className="h-5 w-5 text-green-400" />
-              <Badge variant="outline" className="text-[10px]">7d</Badge>
+              <Badge variant="outline" className="text-xs">7d</Badge>
             </div>
             <p className="text-2xl font-bold">{stats?.signupsThisWeek}</p>
             <p className="text-xs text-muted-foreground">New this week</p>
@@ -500,7 +506,7 @@ export default function AdminDashboard() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <Zap className="h-5 w-5 text-yellow-400" />
-              <Badge variant="outline" className="text-[10px]">Rate</Badge>
+              <Badge variant="outline" className="text-xs">Rate</Badge>
             </div>
             <p className="text-2xl font-bold">
               {stats?.totalUsers ? ((totalSubs / stats.totalUsers) * 100).toFixed(0) : 0}%
@@ -525,5 +531,6 @@ export default function AdminDashboard() {
         onOpenChange={(open) => !open && setSelectedOnlineUser(null)}
       />
     </div>
+    </PullToRefresh>
   );
 }

@@ -5,7 +5,7 @@
  * Shows full entry info, comments, and actions (share, edit, delete).
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -53,12 +53,27 @@ import {
   Copy,
   Check,
   Loader2,
+  NotebookPen,
+  CheckCircle2,
+  Circle,
+  BookOpen,
+  Tag,
+  ShieldCheck,
+  Hash,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { useSupervisorVerification } from '@/hooks/portfolio/useSupervisorVerification';
+import { SupervisorVerificationQRSheet } from '@/components/portfolio-hub/SupervisorVerificationQRSheet';
+import { useEvidenceValidator } from '@/hooks/portfolio/useEvidenceValidator';
+import { EvidenceValidationReport } from '@/components/portfolio-hub/ai/EvidenceValidationReport';
+import { useAIEvidenceTagger, type AIAnalysisResult, getStrengthColor, getConfidenceBadgeClass } from '@/hooks/portfolio/useAIEvidenceTagger';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
 
 interface PortfolioDetailSheetProps {
   entry: any;
@@ -74,21 +89,171 @@ export function PortfolioDetailSheet({
   onEdit,
 }: PortfolioDetailSheetProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'details' | 'comments'>('details');
   const [newComment, setNewComment] = useState('');
   const { getCommentsForEvidence, addComment } = usePortfolioComments();
   const { createShareLink, getShareUrl } = usePortfolioSharing();
   const { deleteEntry } = usePortfolioData();
+  const {
+    createVerification,
+    getVerificationForPortfolioItem,
+    getVerificationUrl,
+  } = useSupervisorVerification();
+  const { validate, isValidating, result: validationResult } = useEvidenceValidator();
+  const { analyze, isAnalyzing, result: aiAnalysis } = useAIEvidenceTagger();
+  const { qualificationCode } = useStudentQualification();
+  const { updateEntry } = usePortfolioData();
 
   // Dialog states
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showVerificationQR, setShowVerificationQR] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const [isCreatingShare, setIsCreatingShare] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isCreatingVerification, setIsCreatingVerification] = useState(false);
+  const [showValidationReport, setShowValidationReport] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [expandedAC, setExpandedAC] = useState<string | null>(null);
+  const [selectedClaimACs, setSelectedClaimACs] = useState<Set<string>>(new Set());
+
+  // Auto-select ACs with >=75% confidence when AI analysis completes
+  useEffect(() => {
+    if (aiAnalysis?.matchedCriteria?.length) {
+      const highConf = new Set(
+        aiAnalysis.matchedCriteria
+          .filter((mc) => mc.confidence >= 75 && mc.unitCode && mc.acCode)
+          .map((mc) => `${mc.unitCode} AC ${mc.acCode}`)
+      );
+      setSelectedClaimACs(highConf);
+    }
+  }, [aiAnalysis]);
 
   if (!entry) return null;
+
+  const existingVerification = getVerificationForPortfolioItem(entry.id);
+  const isVerified = entry.isVerified || !!existingVerification?.verified_at;
+
+  const handleRequestVerification = async () => {
+    if (existingVerification) {
+      setShowVerificationQR(true);
+      return;
+    }
+
+    setIsCreatingVerification(true);
+    try {
+      const snapshot = {
+        title: entry.title,
+        description: entry.description,
+        site_name: typeof entry.category === 'object' ? entry.category?.name : entry.category,
+        date: entry.dateCreated,
+        tasks: entry.assessmentCriteria || [],
+        skills: entry.skills || [],
+        learned: entry.reflection || '',
+        photos: entry.evidenceFiles?.filter((f: any) => f.type?.startsWith('image/'))
+          .map((f: any) => f.url).filter(Boolean) || [],
+      };
+
+      const profile = user?.user_metadata;
+      const result = await createVerification({
+        portfolioItemId: entry.id,
+        evidenceSnapshot: snapshot,
+        apprenticeName: profile?.full_name || profile?.name || 'Apprentice',
+      });
+
+      if (result) {
+        setShowVerificationQR(true);
+      }
+    } catch (err) {
+      console.error('Error creating verification:', err);
+    } finally {
+      setIsCreatingVerification(false);
+    }
+  };
+
+  const handleValidateEvidence = async () => {
+    setShowValidationReport(true);
+    if (validationResult) return; // Already have results
+
+    const evidenceText = [
+      entry.title,
+      entry.description,
+      entry.reflection,
+      entry.skills?.join(', '),
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    await validate({
+      portfolioItemId: entry.id,
+      evidenceText,
+      evidenceUrls: entry.evidenceFiles
+        ?.filter((f: any) => f.type?.startsWith('image/'))
+        .map((f: any) => f.url)
+        .filter(Boolean),
+      claimedACs: entry.assessmentCriteria || [],
+      qualificationCode: qualificationCode || '',
+    });
+  };
+
+  const handleAnalyseEvidence = async () => {
+    if (aiAnalysis) return; // Already have results
+
+    const evidenceFile = entry.evidenceFiles?.find((f: any) =>
+      f.type?.startsWith('image/') || f.type?.includes('pdf')
+    );
+
+    if (!evidenceFile?.url) {
+      toast({
+        title: 'No evidence file',
+        description: 'Upload a photo or document first to use AI analysis',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const evidenceType = evidenceFile.type?.startsWith('image/')
+      ? 'image' as const
+      : evidenceFile.type?.includes('pdf')
+        ? 'document' as const
+        : 'image' as const;
+
+    const result = await analyze({
+      evidenceUrl: evidenceFile.url,
+      evidenceType,
+      title: entry.title,
+      description: entry.description,
+      qualificationCode,
+      existingTags: entry.tags,
+    });
+
+    // Don't auto-apply — let the user claim ACs via the "Claim" button
+  };
+
+  // Claim selected ACs — saves in canonical "UNIT AC CODE" format for progress tracker
+  const handleClaimACs = async () => {
+    if (selectedClaimACs.size === 0) return;
+
+    const newRefs = Array.from(selectedClaimACs);
+
+    const existing = entry.assessmentCriteria || [];
+    const merged = [...new Set([...existing, ...newRefs])];
+    const added = merged.length - existing.length;
+
+    if (added > 0) {
+      await updateEntry(entry.id, { assessmentCriteria: merged } as any);
+      toast({
+        title: `${added} assessment criteria claimed`,
+        description: 'Your qualification progress has been updated',
+      });
+    } else {
+      toast({
+        title: 'Already claimed',
+        description: 'These criteria are already linked to this evidence',
+      });
+    }
+  };
 
   const comments = getCommentsForEvidence(entry.id) || [];
 
@@ -224,8 +389,20 @@ export function PortfolioDetailSheet({
                   {entry.status || 'draft'}
                 </Badge>
                 <Badge variant="outline" className="text-xs">
-                  {entry.category}
+                  {typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}
                 </Badge>
+                {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
+                  <Badge variant="outline" className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                    <NotebookPen className="h-3 w-3 mr-1" />
+                    From Site Diary
+                  </Badge>
+                )}
+                {isVerified && (
+                  <Badge variant="outline" className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                    <ShieldCheck className="h-3 w-3 mr-1" />
+                    Verified
+                  </Badge>
+                )}
                 {entry.skills?.slice(0, 3).map((skill: string, i: number) => (
                   <Badge key={i} variant="secondary" className="text-xs">
                     {skill}
@@ -267,7 +444,7 @@ export function PortfolioDetailSheet({
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto overscroll-contain">
             {activeTab === 'details' ? (
               <div className="p-4 space-y-6">
                 {/* Description */}
@@ -326,6 +503,241 @@ export function PortfolioDetailSheet({
                   </div>
                 )}
 
+                {/* Assessment Criteria */}
+                {entry.assessmentCriteria?.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+                      Assessment Criteria ({entry.assessmentCriteria.length})
+                    </h3>
+                    <div className="space-y-1.5">
+                      {entry.assessmentCriteria.map((ac: string, i: number) => {
+                        const isExpanded = expandedAC === ac;
+                        // Try to find matching AI criteria for detail
+                        const matchedDetail = aiAnalysis?.matchedCriteria?.find((mc) =>
+                          ac.includes(mc.acCode) && ac.includes(mc.unitCode || '')
+                        );
+                        return (
+                          <button
+                            key={i}
+                            onClick={() => setExpandedAC(isExpanded ? null : ac)}
+                            className="w-full text-left p-2.5 rounded-lg bg-green-500/5 border border-green-500/15 touch-manipulation active:bg-green-500/10 transition-colors"
+                          >
+                            <div className="flex items-start gap-2">
+                              <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                              <span className="text-sm text-white">{ac}</span>
+                            </div>
+                            {isExpanded && matchedDetail && (
+                              <div className="mt-2 ml-6 space-y-1">
+                                <p className="text-xs text-white leading-relaxed">{matchedDetail.acText}</p>
+                                {matchedDetail.reason && (
+                                  <p className="text-[11px] text-white/70 leading-relaxed">{matchedDetail.reason}</p>
+                                )}
+                                <Badge variant="outline" className={cn('text-[10px]', getConfidenceBadgeClass(matchedDetail.confidence))}>
+                                  {matchedDetail.confidence}% confidence match
+                                </Badge>
+                              </div>
+                            )}
+                            {isExpanded && !matchedDetail && (
+                              <p className="mt-2 ml-6 text-xs text-white/60">
+                                Run AI analysis to see match details
+                              </p>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* AI Analysis Results */}
+                {aiAnalysis && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
+                      AI Analysis
+                    </h3>
+                    <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className={getStrengthColor(aiAnalysis.evidenceStrength)}>
+                          {aiAnalysis.evidenceStrength} evidence
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-white">{aiAnalysis.whyGoodEvidence}</p>
+
+                      {/* Matched ACs — promoted above tips, this is the key insight */}
+                      {aiAnalysis.matchedCriteria?.length > 0 && (
+                        <div className="space-y-2 pt-1">
+                          <p className="text-xs font-semibold text-elec-yellow uppercase tracking-wider">
+                            Assessment Criteria Mapped ({aiAnalysis.matchedCriteria.length})
+                          </p>
+                          {(() => {
+                            // Sort by highest confidence first
+                            const sorted = [...aiAnalysis.matchedCriteria].sort((a, b) => b.confidence - a.confidence);
+                            // Group by unit
+                            const byUnit = new Map<string, typeof sorted>();
+                            for (const mc of sorted) {
+                              const key = mc.unitCode || 'General';
+                              if (!byUnit.has(key)) byUnit.set(key, []);
+                              byUnit.get(key)!.push(mc);
+                            }
+                            // Sort unit groups by their best confidence
+                            const unitEntries = Array.from(byUnit.entries()).sort(
+                              (a, b) => Math.max(...b[1].map((m) => m.confidence)) - Math.max(...a[1].map((m) => m.confidence))
+                            );
+                            return unitEntries.map(([unitCode, criteria]) => (
+                              <div key={unitCode} className="rounded-lg bg-white/[0.04] border border-white/[0.08] overflow-hidden">
+                                <div className="px-3 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
+                                  <span className="text-[10px] font-bold text-elec-yellow">Unit {unitCode}</span>
+                                  {criteria[0]?.unitTitle && (
+                                    <p className="text-xs text-white leading-snug mt-0.5">{criteria[0].unitTitle}</p>
+                                  )}
+                                </div>
+                                <div className="px-3 py-2.5 space-y-2">
+                                  {criteria.map((mc, i) => {
+                                    const ref = `${mc.unitCode} AC ${mc.acCode}`;
+                                    const isSelected = selectedClaimACs.has(ref);
+                                    const alreadyClaimed = (entry.assessmentCriteria || []).includes(ref);
+                                    return (
+                                      <button
+                                        key={i}
+                                        onClick={() => {
+                                          if (alreadyClaimed) return;
+                                          setSelectedClaimACs((prev) => {
+                                            const next = new Set(prev);
+                                            if (next.has(ref)) next.delete(ref);
+                                            else next.add(ref);
+                                            return next;
+                                          });
+                                        }}
+                                        className={cn(
+                                          'w-full text-left rounded-lg p-2.5 border transition-colors touch-manipulation',
+                                          alreadyClaimed
+                                            ? 'border-green-500/30 bg-green-500/10 opacity-70'
+                                            : isSelected
+                                              ? 'border-elec-yellow/40 bg-elec-yellow/10'
+                                              : 'border-white/[0.08] bg-transparent active:bg-white/[0.04]'
+                                        )}
+                                      >
+                                        <div className="flex items-start gap-2">
+                                          {alreadyClaimed ? (
+                                            <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                                          ) : isSelected ? (
+                                            <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                                          ) : (
+                                            <Circle className="h-4 w-4 text-white/30 shrink-0 mt-0.5" />
+                                          )}
+                                          <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2">
+                                              <Badge variant="outline" className={cn('text-[10px] shrink-0', getConfidenceBadgeClass(mc.confidence))}>
+                                                {mc.confidence}%
+                                              </Badge>
+                                              {alreadyClaimed && (
+                                                <span className="text-[10px] text-green-400 font-medium">Claimed</span>
+                                              )}
+                                            </div>
+                                            <p className="text-xs text-white leading-relaxed mt-1">
+                                              <span className="font-bold">{mc.acCode}:</span> {mc.acText}
+                                            </p>
+                                            {mc.reason && (
+                                              <p className="text-[11px] text-white/70 leading-relaxed mt-1">
+                                                {mc.reason}
+                                              </p>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ));
+                          })()}
+                        </div>
+                      )}
+
+                      {/* Claim ACs button */}
+                      {aiAnalysis.matchedCriteria?.length > 0 && selectedClaimACs.size > 0 && (
+                        <button
+                          onClick={handleClaimACs}
+                          className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                        >
+                          <CheckCircle2 className="h-4.5 w-4.5" />
+                          Claim {selectedClaimACs.size} Selected ACs
+                        </button>
+                      )}
+
+                      {/* Tips to strengthen */}
+                      {aiAnalysis.qualityTips?.length > 0 && (
+                        <div className="space-y-1 pt-1">
+                          <p className="text-xs font-semibold text-white uppercase tracking-wider">Tips to strengthen:</p>
+                          {aiAnalysis.qualityTips.map((tip, i) => (
+                            <p key={i} className="text-xs text-white flex items-start gap-1.5">
+                              <span className="text-elec-yellow mt-0.5">•</span>
+                              {tip}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Learning Outcomes */}
+                {entry.learningOutcomes?.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                      <BookOpen className="h-3.5 w-3.5 text-blue-500" />
+                      Learning Outcomes ({entry.learningOutcomes.length})
+                    </h3>
+                    <div className="space-y-1.5">
+                      {entry.learningOutcomes.map((lo: string, i: number) => (
+                        <div
+                          key={i}
+                          className="flex items-start gap-2 p-2.5 rounded-lg bg-blue-500/5 border border-blue-500/15"
+                        >
+                          <BookOpen className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+                          <span className="text-sm text-foreground">{lo}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Tags */}
+                {entry.tags?.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                      <Tag className="h-3.5 w-3.5" />
+                      Tags
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {entry.tags.map((tag: string, i: number) => (
+                        <Badge key={i} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Date Completed */}
+                {entry.dateCompleted && (
+                  <div className="space-y-1">
+                    <span className="text-xs text-white/80 flex items-center gap-1">
+                      <FileCheck className="h-3 w-3 text-green-500" />
+                      Completed
+                    </span>
+                    <p className="text-sm text-foreground">
+                      {new Date(entry.dateCompleted).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                )}
+
                 {/* Evidence Files */}
                 {entry.evidenceFiles?.length > 0 && (
                   <div className="space-y-2">
@@ -359,6 +771,52 @@ export function PortfolioDetailSheet({
                     <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                       <p className="text-sm text-foreground">{entry.supervisorFeedback}</p>
                     </div>
+                  </div>
+                )}
+
+                {/* Supervisor Verification Status */}
+                {(isVerified || existingVerification) && (
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
+                      Supervisor Verification
+                    </h3>
+                    {isVerified && existingVerification?.verified_at ? (
+                      <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                          <span className="text-sm font-medium text-emerald-400">
+                            Verified by {existingVerification.supervisor_name}
+                          </span>
+                        </div>
+                        {existingVerification.supervisor_company && (
+                          <p className="text-xs text-white/50 ml-6">{existingVerification.supervisor_company}</p>
+                        )}
+                        {existingVerification.feedback_text && (
+                          <p className="text-sm text-white/70 ml-6 italic">
+                            "{existingVerification.feedback_text}"
+                          </p>
+                        )}
+                        {existingVerification.verification_hash && (
+                          <div className="flex items-center gap-1.5 ml-6 mt-1">
+                            <Hash className="h-3 w-3 text-white/30" />
+                            <span className="text-[9px] text-white/30 font-mono break-all">
+                              {existingVerification.verification_hash}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ) : existingVerification ? (
+                      <button
+                        onClick={() => setShowVerificationQR(true)}
+                        className="w-full p-3 rounded-lg bg-purple-500/10 border border-purple-500/20 text-left touch-manipulation active:scale-[0.98]"
+                      >
+                        <p className="text-sm text-purple-400 font-medium">Verification pending</p>
+                        <p className="text-xs text-white/40 mt-0.5">
+                          Tap to show QR code or share link
+                        </p>
+                      </button>
+                    ) : null}
                   </div>
                 )}
               </div>
@@ -427,33 +885,67 @@ export function PortfolioDetailSheet({
             )}
           </div>
 
-          {/* Actions */}
-          <div className="p-4 border-t border-border shrink-0 bg-background pb-20 sm:pb-4">
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
+          {/* Actions — native icon toolbar */}
+          <div className="border-t border-border shrink-0 bg-background px-2 pt-2 pb-20 sm:pb-3">
+            <div className="flex justify-evenly">
+              <button
                 onClick={handleShare}
-                className="flex-1 h-11 touch-manipulation active:scale-95"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
               >
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
-              </Button>
-              <Button
-                variant="outline"
+                <Share2 className="h-5 w-5 text-white/80" />
+                <span className="text-[10px] text-white/60">Share</span>
+              </button>
+
+              {entry.evidenceFiles?.length > 0 && (
+                <button
+                  onClick={aiAnalysis ? handleValidateEvidence : handleAnalyseEvidence}
+                  disabled={isAnalyzing}
+                  className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-50"
+                >
+                  {isAnalyzing ? (
+                    <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+                  ) : (
+                    <Sparkles className="h-5 w-5 text-elec-yellow" />
+                  )}
+                  <span className="text-[10px] text-elec-yellow/80">
+                    {isAnalyzing ? 'Analysing' : aiAnalysis ? 'Validate' : 'Analyse'}
+                  </span>
+                </button>
+              )}
+
+              <button
+                onClick={handleRequestVerification}
+                disabled={isCreatingVerification || isVerified}
+                className={cn(
+                  'flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-70',
+                  isVerified && 'bg-emerald-500/10'
+                )}
+              >
+                {isCreatingVerification ? (
+                  <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
+                ) : (
+                  <ShieldCheck className={cn('h-5 w-5', isVerified ? 'text-emerald-400' : 'text-purple-400')} />
+                )}
+                <span className={cn('text-[10px]', isVerified ? 'text-emerald-400' : 'text-purple-400/80')}>
+                  {isVerified ? 'Verified' : 'Verify'}
+                </span>
+              </button>
+
+              <button
                 onClick={handleEdit}
-                className="flex-1 h-11 touch-manipulation active:scale-95"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
               >
-                <Edit className="h-4 w-4 mr-2" />
-                Edit
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
+                <Edit className="h-5 w-5 text-white/80" />
+                <span className="text-[10px] text-white/60">Edit</span>
+              </button>
+
+              <button
                 onClick={() => setShowDeleteDialog(true)}
-                className="h-11 w-11 text-destructive hover:text-destructive touch-manipulation active:scale-95"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
               >
-                <Trash2 className="h-4 w-4" />
-              </Button>
+                <Trash2 className="h-5 w-5 text-destructive/80" />
+                <span className="text-[10px] text-destructive/60">Delete</span>
+              </button>
             </div>
           </div>
         </div>
@@ -534,6 +1026,25 @@ export function PortfolioDetailSheet({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Supervisor Verification QR Sheet */}
+      {existingVerification && (
+        <SupervisorVerificationQRSheet
+          open={showVerificationQR}
+          onOpenChange={setShowVerificationQR}
+          verification={existingVerification}
+          verificationUrl={getVerificationUrl(existingVerification.verification_token)}
+          evidenceTitle={entry.title}
+        />
+      )}
+
+      {/* Evidence Validation Report */}
+      <EvidenceValidationReport
+        open={showValidationReport}
+        onOpenChange={setShowValidationReport}
+        result={validationResult}
+        isLoading={isValidating}
+      />
     </Sheet>
   );
 }

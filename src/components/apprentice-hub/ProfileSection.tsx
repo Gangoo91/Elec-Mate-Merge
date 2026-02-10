@@ -175,7 +175,7 @@ export function ProfileSection() {
       if (portfolioEntries.length > 0) {
         const tableData = portfolioEntries.map((entry: any) => [
           entry.title?.slice(0, 40) || 'Untitled',
-          entry.category || 'N/A',
+          (typeof entry.category === 'object' ? entry.category?.name : entry.category) || 'N/A',
           entry.status || 'draft',
           new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB'),
           entry.skills?.slice(0, 3).join(', ') || 'None',
@@ -236,7 +236,7 @@ export function ProfileSection() {
 
       for (const entry of portfolioEntries) {
         summary += `Title: ${entry.title || 'Untitled'}\n`;
-        summary += `Category: ${entry.category || 'N/A'}\n`;
+        summary += `Category: ${(typeof entry.category === 'object' ? entry.category?.name : entry.category) || 'N/A'}\n`;
         summary += `Status: ${entry.status || 'draft'}\n`;
         summary += `Date: ${new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB')}\n`;
         summary += `Description: ${entry.description || 'No description'}\n`;

@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { format, addDays } from "date-fns";
@@ -105,29 +103,29 @@ export const RescheduleBriefingDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <CalendarDays className="h-5 w-5 text-elec-yellow" />
-            Reschedule Briefing
-          </DialogTitle>
-          <DialogDescription>
-            Select a new date and time for "{briefing?.briefing_name || briefing?.title}"
-          </DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="rounded-t-2xl p-0 max-h-[85vh]">
+        <div className="overflow-y-auto p-6 space-y-4">
+          <SheetHeader className="text-left">
+            <SheetTitle className="flex items-center gap-2">
+              <CalendarDays className="h-5 w-5 text-elec-yellow" />
+              Reschedule Briefing
+            </SheetTitle>
+            <SheetDescription>
+              Select a new date and time for "{briefing?.briefing_name || briefing?.title}"
+            </SheetDescription>
+          </SheetHeader>
 
-        <div className="space-y-4 py-4">
           {/* Original Date/Time Display */}
           {originalDate && (
             <div className="bg-muted/50 p-3 rounded-lg border border-border">
               <p className="text-sm font-medium mb-1">Original Schedule:</p>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1">
+              <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
+                <div className="flex items-center gap-1 whitespace-nowrap">
                   <CalendarDays className="h-4 w-4" />
                   {format(originalDate, "PPP")}
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 whitespace-nowrap">
                   <Clock className="h-4 w-4" />
                   {originalTime}
                 </div>
@@ -138,9 +136,8 @@ export const RescheduleBriefingDialog = ({
           {/* Quick Suggestion */}
           <Button
             variant="outline"
-            size="sm"
             onClick={suggestNextSlot}
-            className="w-full"
+            className="w-full h-11 touch-manipulation"
           >
             Suggest Next Day (Same Time)
           </Button>
@@ -148,13 +145,15 @@ export const RescheduleBriefingDialog = ({
           {/* New Date Selection */}
           <div className="space-y-2">
             <Label>New Date</Label>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-              className="rounded-md border"
-            />
+            <div className="flex justify-center">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                className="rounded-md border"
+              />
+            </div>
           </div>
 
           {/* New Time Selection */}
@@ -165,6 +164,7 @@ export const RescheduleBriefingDialog = ({
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
+              className="h-11 touch-manipulation"
             />
           </div>
 
@@ -177,19 +177,20 @@ export const RescheduleBriefingDialog = ({
               value={rescheduleReason}
               onChange={(e) => setRescheduleReason(e.target.value)}
               rows={2}
+              className="touch-manipulation"
             />
           </div>
-        </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
-            Cancel
-          </Button>
-          <Button onClick={handleReschedule} disabled={loading || !date}>
-            {loading ? "Rescheduling..." : "Reschedule"}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <div className="flex gap-2 pt-2">
+            <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading} className="flex-1 h-11 touch-manipulation">
+              Cancel
+            </Button>
+            <Button onClick={handleReschedule} disabled={loading || !date} className="flex-1 h-11 touch-manipulation">
+              {loading ? "Rescheduling..." : "Reschedule"}
+            </Button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };

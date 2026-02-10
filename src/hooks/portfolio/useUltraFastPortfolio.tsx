@@ -272,16 +272,24 @@ export const useUltraFastPortfolio = () => {
         skills: item.skills_demonstrated || [],
         reflection: item.reflection_notes || '',
         dateCreated: item.created_at,
-        dateCompleted: item.updated_at,
-        evidenceFiles: [],
-        tags: [],
+        dateCompleted: item.date_completed || item.updated_at,
+        evidenceFiles: (item.storage_urls || []).map((file: any, idx: number) => ({
+          id: file.id || `file_${idx}`,
+          name: file.name || `File ${idx + 1}`,
+          type: file.type || 'unknown',
+          size: file.size || 0,
+          url: file.url,
+          uploadDate: file.uploadDate || item.created_at,
+        })),
+        tags: item.tags || [],
         assessmentCriteria: item.assessment_criteria_met || [],
         learningOutcomes: item.learning_outcomes_met || [],
         supervisorFeedback: item.supervisor_feedback || '',
-        selfAssessment: 3,
-        status: item.grade ? 'completed' : 'draft',
-        timeSpent: 60,
-        awardingBodyStandards: []
+        selfAssessment: item.self_assessment || 3,
+        status: item.status || (item.grade ? 'completed' : 'draft'),
+        timeSpent: item.time_spent || 0,
+        awardingBodyStandards: item.awarding_body_standards || [],
+        isVerified: item.is_supervisor_verified || false,
       };
     });
 

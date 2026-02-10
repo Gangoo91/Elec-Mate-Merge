@@ -6,10 +6,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Home, Briefcase, Clock, User, Plus } from 'lucide-react';
+import { ArrowLeft, Home, Briefcase, Clock, User, Plus, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type ApprenticeHubTab = 'home' | 'work' | 'hours' | 'me';
+export type ApprenticeHubTab = 'home' | 'work' | 'hours' | 'progress' | 'me';
 
 interface NavItem {
   id: ApprenticeHubTab;
@@ -21,6 +21,7 @@ const navItems: NavItem[] = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'work', label: 'My Work', icon: Briefcase },
   { id: 'hours', label: 'Hours', icon: Clock },
+  { id: 'progress', label: 'Progress', icon: TrendingUp },
   { id: 'me', label: 'Me', icon: User },
 ];
 

@@ -259,6 +259,141 @@ const FunctionalSkills = lazy(() =>
     trackImport('FunctionalSkills', () => import('@/pages/apprentice-courses/FunctionalSkills'))
   )
 );
+const FunctionalSkillsModule1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule1'))
+  )
+);
+const FunctionalSkillsModule1Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule1Section1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule1Section1'))
+  )
+);
+const FunctionalSkillsModule1Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule1Section2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule1Section2'))
+  )
+);
+const FunctionalSkillsModule1Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule1Section3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule1Section3'))
+  )
+);
+const FunctionalSkillsModule1Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule1Section4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule1Section4'))
+  )
+);
+const FunctionalSkillsModule2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule2'))
+  )
+);
+const FunctionalSkillsModule2Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule2Section1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule2Section1'))
+  )
+);
+const FunctionalSkillsModule2Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule2Section2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule2Section2'))
+  )
+);
+const FunctionalSkillsModule2Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule2Section3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule2Section3'))
+  )
+);
+const FunctionalSkillsModule2Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule2Section4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule2Section4'))
+  )
+);
+const FunctionalSkillsModule3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule3'))
+  )
+);
+const FunctionalSkillsModule3Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule3Section1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule3Section1'))
+  )
+);
+const FunctionalSkillsModule3Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule3Section2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule3Section2'))
+  )
+);
+const FunctionalSkillsModule3Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule3Section3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule3Section3'))
+  )
+);
+const FunctionalSkillsModule3Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule3Section4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule3Section4'))
+  )
+);
+const FunctionalSkillsModule4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule4'))
+  )
+);
+const FunctionalSkillsModule4Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule4Section1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule4Section1'))
+  )
+);
+const FunctionalSkillsModule4Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule4Section2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule4Section2'))
+  )
+);
+const FunctionalSkillsModule4Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule4Section3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule4Section3'))
+  )
+);
+const FunctionalSkillsModule4Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule4Section4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule4Section4'))
+  )
+);
+const FunctionalSkillsModule5 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule5', () => import('@/pages/apprentice-courses/FunctionalSkillsModule5'))
+  )
+);
+const FunctionalSkillsModule5Section1 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule5Section1', () => import('@/pages/apprentice-courses/FunctionalSkillsModule5Section1'))
+  )
+);
+const FunctionalSkillsModule5Section2 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule5Section2', () => import('@/pages/apprentice-courses/FunctionalSkillsModule5Section2'))
+  )
+);
+const FunctionalSkillsModule5Section3 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule5Section3', () => import('@/pages/apprentice-courses/FunctionalSkillsModule5Section3'))
+  )
+);
+const FunctionalSkillsModule5Section4 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule5Section4', () => import('@/pages/apprentice-courses/FunctionalSkillsModule5Section4'))
+  )
+);
+const FunctionalSkillsModule6 = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsModule6', () => import('@/pages/apprentice-courses/FunctionalSkillsModule6'))
+  )
+);
+const FunctionalSkillsMockExam = lazy(() =>
+  withTimeout(() =>
+    trackImport('FunctionalSkillsMockExam', () => import('@/pages/apprentice-courses/FunctionalSkillsMockExam'))
+  )
+);
 const HNC = lazy(() =>
   withTimeout(() => trackImport('HNC', () => import('@/pages/apprentice-courses/HNC')))
 );
@@ -8628,6 +8763,34 @@ export default function ApprenticeCourseRoutes() {
         {/* AM2 Module 8 */}
         <Route path="am2/module8" element={<AM2Module8 />} />
         <Route path="functional-skills" element={<FunctionalSkills />} />
+        {/* Functional Skills Modules */}
+        <Route path="functional-skills/module1" element={<FunctionalSkillsModule1 />} />
+        <Route path="functional-skills/module1/section1" element={<FunctionalSkillsModule1Section1 />} />
+        <Route path="functional-skills/module1/section2" element={<FunctionalSkillsModule1Section2 />} />
+        <Route path="functional-skills/module1/section3" element={<FunctionalSkillsModule1Section3 />} />
+        <Route path="functional-skills/module1/section4" element={<FunctionalSkillsModule1Section4 />} />
+        <Route path="functional-skills/module2" element={<FunctionalSkillsModule2 />} />
+        <Route path="functional-skills/module2/section1" element={<FunctionalSkillsModule2Section1 />} />
+        <Route path="functional-skills/module2/section2" element={<FunctionalSkillsModule2Section2 />} />
+        <Route path="functional-skills/module2/section3" element={<FunctionalSkillsModule2Section3 />} />
+        <Route path="functional-skills/module2/section4" element={<FunctionalSkillsModule2Section4 />} />
+        <Route path="functional-skills/module3" element={<FunctionalSkillsModule3 />} />
+        <Route path="functional-skills/module3/section1" element={<FunctionalSkillsModule3Section1 />} />
+        <Route path="functional-skills/module3/section2" element={<FunctionalSkillsModule3Section2 />} />
+        <Route path="functional-skills/module3/section3" element={<FunctionalSkillsModule3Section3 />} />
+        <Route path="functional-skills/module3/section4" element={<FunctionalSkillsModule3Section4 />} />
+        <Route path="functional-skills/module4" element={<FunctionalSkillsModule4 />} />
+        <Route path="functional-skills/module4/section1" element={<FunctionalSkillsModule4Section1 />} />
+        <Route path="functional-skills/module4/section2" element={<FunctionalSkillsModule4Section2 />} />
+        <Route path="functional-skills/module4/section3" element={<FunctionalSkillsModule4Section3 />} />
+        <Route path="functional-skills/module4/section4" element={<FunctionalSkillsModule4Section4 />} />
+        <Route path="functional-skills/module5" element={<FunctionalSkillsModule5 />} />
+        <Route path="functional-skills/module5/section1" element={<FunctionalSkillsModule5Section1 />} />
+        <Route path="functional-skills/module5/section2" element={<FunctionalSkillsModule5Section2 />} />
+        <Route path="functional-skills/module5/section3" element={<FunctionalSkillsModule5Section3 />} />
+        <Route path="functional-skills/module5/section4" element={<FunctionalSkillsModule5Section4 />} />
+        <Route path="functional-skills/module6" element={<FunctionalSkillsModule6 />} />
+        <Route path="functional-skills/module6/mock-exam" element={<FunctionalSkillsMockExam />} />
         <Route path="hnc" element={<HNC />} />
         <Route path="h-n-c-module1" element={<HNCModule1 />} />
         <Route path="h-n-c-module1-section1" element={<HNCModule1Section1 />} />

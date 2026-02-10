@@ -34,7 +34,7 @@ const quickCheckQuestions = [
     question: "What is the minimum acceptable insulation resistance per BS 7671?",
     options: ["0.5 MΩ", "1.0 MΩ", "2.0 MΩ", "5.0 MΩ"],
     correctIndex: 1,
-    explanation: "BS 7671 specifies a minimum insulation resistance of 1.0 MΩ. Values below this require investigation and remedial work."
+    explanation: "BS 7671 specifies minimum insulation resistance of 1.0 MΩ for LV circuits (≤500V). SELV/PELV circuits have a lower minimum of 0.5 MΩ tested at 250V DC. For standard 230V circuits, 1.0 MΩ is the correct minimum."
   }
 ];
 
@@ -343,6 +343,67 @@ const InspectionTestingModule4Section1 = () => {
             </div>
           </div>
         </section>
+
+        {/* IR Test Connection Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">Insulation Resistance Test Connections</h4>
+          <svg viewBox="0 0 800 340" className="w-full h-auto" role="img" aria-label="Insulation resistance test connections showing Line-Neutral, Line-Earth, and Neutral-Earth test configurations">
+            {/* Distribution Board */}
+            <rect x="320" y="10" width="160" height="90" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+            <text x="400" y="30" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">DISTRIBUTION BOARD</text>
+            <text x="400" y="48" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">Main switch OFF, MCBs ON</text>
+
+            {/* Conductor bars */}
+            <line x1="350" y1="65" x2="350" y2="100" stroke="#EF4444" strokeWidth="3" />
+            <text x="350" y="80" textAnchor="middle" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <line x1="400" y1="65" x2="400" y2="100" stroke="#3B82F6" strokeWidth="3" />
+            <text x="400" y="80" textAnchor="middle" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <line x1="450" y1="65" x2="450" y2="100" stroke="#22C55E" strokeWidth="3" />
+            <text x="450" y="80" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+
+            {/* Test 1: L-N */}
+            <rect x="50" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
+            <text x="150" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 1: L – N</text>
+            <circle cx="105" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+            <text x="105" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <line x1="121" y1="175" x2="165" y2="175" stroke="#EF4444" strokeWidth="2" />
+            <text x="175" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <line x1="121" y1="189" x2="165" y2="189" stroke="#3B82F6" strokeWidth="2" />
+            <text x="175" y="193" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+
+            {/* Test 2: L-E */}
+            <rect x="300" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
+            <text x="400" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 2: L – E</text>
+            <circle cx="355" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+            <text x="355" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <line x1="371" y1="175" x2="415" y2="175" stroke="#EF4444" strokeWidth="2" />
+            <text x="425" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <line x1="371" y1="189" x2="415" y2="189" stroke="#22C55E" strokeWidth="2" />
+            <text x="425" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+
+            {/* Test 3: N-E */}
+            <rect x="550" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
+            <text x="650" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 3: N – E</text>
+            <circle cx="605" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+            <text x="605" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <line x1="621" y1="175" x2="665" y2="175" stroke="#3B82F6" strokeWidth="2" />
+            <text x="675" y="179" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <line x1="621" y1="189" x2="665" y2="189" stroke="#22C55E" strokeWidth="2" />
+            <text x="675" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+
+            {/* Pass criteria */}
+            <rect x="100" y="250" width="600" height="80" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+            <text x="400" y="272" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">Minimum Insulation Resistance (BS 7671 Table 6A)</text>
+            <text x="200" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">SELV/PELV: 250V DC</text>
+            <text x="200" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 0.5 MΩ</text>
+            <text x="400" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">≤500V circuits: 500V DC</text>
+            <text x="400" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 1.0 MΩ</text>
+            <text x="600" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">&gt;500V circuits: 1000V DC</text>
+            <text x="600" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 1.0 MΩ</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">Three test configurations for insulation resistance: L-N, L-E, and N-E. Main switch off, all MCBs/fuses on. Disconnect voltage-sensitive equipment before testing.</p>
+        </div>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 

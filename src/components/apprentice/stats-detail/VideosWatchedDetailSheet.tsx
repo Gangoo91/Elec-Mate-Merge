@@ -44,6 +44,7 @@ import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { categoryLabels, type VideoCategory } from '@/data/apprentice/curatedVideos';
 
 const categoryColours: Partial<Record<VideoCategory, string>> = {
+  'electrical-theory': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
   'wiring': 'bg-amber-500/20 text-amber-300 border-amber-500/30',
   'testing-inspection': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
   'bs7671': 'bg-green-500/20 text-green-300 border-green-500/30',
@@ -83,8 +84,8 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
   const navigate = useNavigate();
 
   const goToVideos = () => {
-    onOpenChange(false);
-    setTimeout(() => navigate('/apprentice/learning-videos'), 150);
+    navigate('/apprentice/learning-videos');
+    setTimeout(() => onOpenChange(false), 50);
   };
 
   const {

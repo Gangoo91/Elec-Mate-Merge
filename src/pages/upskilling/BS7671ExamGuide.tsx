@@ -429,7 +429,7 @@ const BS7671ExamGuide = () => {
                 <div>
                   <h4 className="text-lg font-semibold text-yellow-400 mb-2">Must-Have References</h4>
                   <ul className="space-y-2 text-gray-400 text-sm">
-                    <li>• BS 7671:2018+A2:2022 (The Wiring Regulations)</li>
+                    <li>• BS 7671:2018+A3:2024 (The Wiring Regulations)</li>
                     <li>• IET Guidance Note 3: Inspection & Testing</li>
                     <li>• IET On-Site Guide</li>
                     <li>• IET Electrical Installation Work Level 3</li>

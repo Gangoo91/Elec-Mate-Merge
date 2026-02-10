@@ -2,12 +2,13 @@
  * OJTProgressSection
  *
  * Hours tab content - OJT time tracking with:
- * - Weekly and yearly progress
+ * - Weekly and yearly progress (compliance-aware)
+ * - Summary stats row
  * - Quick log and timer
- * - Recent sessions
+ * - Day-grouped recent sessions
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Clock,
   Plus,
@@ -16,9 +17,8 @@ import {
   Square,
   Calendar,
   TrendingUp,
-  ChevronRight,
+  ChevronDown,
   Timer,
-  CheckCircle2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -43,6 +43,14 @@ import { cn } from '@/lib/utils';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useToast } from '@/hooks/use-toast';
+import { TimeEntry } from '@/types/time-tracking';
+
+interface DayGroup {
+  date: string; // YYYY-MM-DD
+  label: string; // "Today", "Yesterday", "Mon 3 Feb"
+  totalMinutes: number;
+  entries: TimeEntry[];
+}
 
 const ACTIVITY_TYPES = [
   { value: 'workshop', label: 'Workshop Training' },
@@ -58,7 +66,7 @@ const ACTIVITY_TYPES = [
 export function OJTProgressSection() {
   const { toast } = useToast();
   const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
-  const { otjGoal } = useComplianceTracking();
+  const { otjGoal, getComplianceStatus } = useComplianceTracking();
 
   // Timer state
   const [timerActive, setTimerActive] = useState(false);
@@ -94,6 +102,9 @@ export function OJTProgressSection() {
     notes: '',
   });
 
+  // Expanded days for grouped sessions
+  const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
+
   // Calculate stats
   const yearlyHours = Math.round(totalTime.hours + totalTime.minutes / 60);
   const yearlyTarget = otjGoal?.target_hours || 400;
@@ -103,8 +114,83 @@ export function OJTProgressSection() {
   const weeklyTarget = 7.5;
   const weeklyPercent = Math.round((weeklyHours / weeklyTarget) * 100);
 
-  // Recent sessions
-  const recentSessions = (entries || []).slice(0, 10);
+  // Compliance status for yearly card
+  const compliance = getComplianceStatus();
+
+  const getYearlyColour = () => {
+    switch (compliance.status) {
+      case 'compliant':
+        return 'green';
+      case 'on-track':
+        return 'blue';
+      case 'at-risk':
+        return 'orange';
+      case 'behind':
+        return 'red';
+      default:
+        return 'blue';
+    }
+  };
+
+  const yearlyColour = getYearlyColour();
+
+  // Day-grouped sessions (last 7 days with entries)
+  const groupedSessions = useMemo((): DayGroup[] => {
+    const allEntries = entries || [];
+    const sorted = [...allEntries].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    const dayMap = new Map<string, TimeEntry[]>();
+    for (const entry of sorted) {
+      const dateKey = entry.date.split('T')[0];
+      const existing = dayMap.get(dateKey) || [];
+      existing.push(entry);
+      dayMap.set(dateKey, existing);
+    }
+
+    const groups: DayGroup[] = [];
+    for (const [date, dayEntries] of dayMap) {
+      groups.push({
+        date,
+        label: formatDateLabel(date),
+        totalMinutes: dayEntries.reduce((sum, e) => sum + e.duration, 0),
+        entries: dayEntries,
+      });
+    }
+
+    return groups.slice(0, 7);
+  }, [entries]);
+
+  // Summary stats
+  const summaryStats = useMemo(() => {
+    const allEntries = entries || [];
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const weekEntries = allEntries.filter(
+      (e) => new Date(e.date) >= startOfWeek
+    );
+    const sessionCount = weekEntries.length;
+    const totalMins = weekEntries.reduce((sum, e) => sum + e.duration, 0);
+    const avgMins = sessionCount > 0 ? Math.round(totalMins / sessionCount) : 0;
+
+    return { sessionCount, avgMins };
+  }, [entries]);
+
+  const toggleDay = (date: string) => {
+    setExpandedDays((prev) => {
+      const next = new Set(prev);
+      if (next.has(date)) {
+        next.delete(date);
+      } else {
+        next.add(date);
+      }
+      return next;
+    });
+  };
 
   // Timer controls
   const startTimer = () => {
@@ -241,7 +327,7 @@ export function OJTProgressSection() {
           </CardContent>
         </Card>
 
-        {/* Yearly Progress */}
+        {/* Yearly Progress — compliance-aware */}
         <Card className="bg-card border-border">
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-3">
@@ -252,19 +338,52 @@ export function OJTProgressSection() {
                   <span className="text-lg text-white/80">/{yearlyTarget}h</span>
                 </p>
               </div>
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <TrendingUp className="h-5 w-5 text-blue-500" />
+              <div
+                className={cn(
+                  'p-2 rounded-lg',
+                  yearlyColour === 'green' && 'bg-green-500/10',
+                  yearlyColour === 'blue' && 'bg-blue-500/10',
+                  yearlyColour === 'orange' && 'bg-orange-500/10',
+                  yearlyColour === 'red' && 'bg-red-500/10'
+                )}
+              >
+                <TrendingUp
+                  className={cn(
+                    'h-5 w-5',
+                    yearlyColour === 'green' && 'text-green-500',
+                    yearlyColour === 'blue' && 'text-blue-500',
+                    yearlyColour === 'orange' && 'text-orange-500',
+                    yearlyColour === 'red' && 'text-red-500'
+                  )}
+                />
               </div>
             </div>
             <div className="space-y-2">
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-blue-500 rounded-full transition-all"
+                  className={cn(
+                    'h-full rounded-full transition-all',
+                    yearlyColour === 'green' && 'bg-green-500',
+                    yearlyColour === 'blue' && 'bg-blue-500',
+                    yearlyColour === 'orange' && 'bg-orange-500',
+                    yearlyColour === 'red' && 'bg-red-500'
+                  )}
                   style={{ width: `${Math.min(yearlyPercent, 100)}%` }}
                 />
               </div>
               <p className="text-xs text-white/80">
                 {yearlyPercent}% complete • {yearlyTarget - yearlyHours}h remaining
+              </p>
+              <p
+                className={cn(
+                  'text-xs font-medium',
+                  yearlyColour === 'green' && 'text-green-400',
+                  yearlyColour === 'blue' && 'text-blue-400',
+                  yearlyColour === 'orange' && 'text-orange-400',
+                  yearlyColour === 'red' && 'text-red-400'
+                )}
+              >
+                {compliance.message}
               </p>
             </div>
           </CardContent>
@@ -331,56 +450,111 @@ export function OJTProgressSection() {
         </Card>
       )}
 
-      {/* Recent Sessions */}
+      {/* Summary Stats */}
+      <div className="grid grid-cols-2 gap-3">
+        <Card className="bg-card border-border">
+          <CardContent className="p-3">
+            <p className="text-xs text-white/80">Sessions this week</p>
+            <p className="text-2xl font-bold text-foreground">
+              {summaryStats.sessionCount}
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="bg-card border-border">
+          <CardContent className="p-3">
+            <p className="text-xs text-white/80">Avg session length</p>
+            <p className="text-2xl font-bold text-foreground">
+              {summaryStats.avgMins > 0
+                ? `${(summaryStats.avgMins / 60).toFixed(1)}h`
+                : '—'}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Sessions — day-grouped */}
       <Card className="bg-card border-border">
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-semibold">Recent Sessions</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
-          {recentSessions.length === 0 ? (
+          {groupedSessions.length === 0 ? (
             <p className="text-sm text-white/80 text-center py-4">
               No sessions logged yet
             </p>
           ) : (
-            <div className="space-y-3">
-              {recentSessions.map((session: any) => (
-                <div
-                  key={session.id}
-                  className="flex items-center gap-3 py-2 border-b border-border last:border-0"
-                >
-                  <div className="p-2 rounded-lg bg-muted">
-                    <Clock className="h-4 w-4 text-white/80" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {session.activity}
-                    </p>
-                    <p className="text-xs text-white/80">
-                      {new Date(session.date).toLocaleDateString('en-GB', {
-                        weekday: 'short',
-                        day: 'numeric',
-                        month: 'short',
-                      })}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-foreground">
-                      {(session.duration / 60).toFixed(1)}h
-                    </p>
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        'text-[10px]',
-                        session.isAutomatic
-                          ? 'border-blue-500/30 text-blue-500'
-                          : 'border-muted-foreground/30 text-white/80'
-                      )}
+            <div className="space-y-1">
+              {groupedSessions.map((group) => {
+                const isExpanded = expandedDays.has(group.date);
+                return (
+                  <div key={group.date}>
+                    {/* Day header row */}
+                    <button
+                      type="button"
+                      onClick={() => toggleDay(group.date)}
+                      className="w-full flex items-center gap-3 py-3 px-2 rounded-lg hover:bg-muted/50 touch-manipulation active:bg-muted/70 transition-colors"
                     >
-                      {session.isAutomatic ? 'Auto' : 'Manual'}
-                    </Badge>
+                      <div className="p-2 rounded-lg bg-muted">
+                        <Calendar className="h-4 w-4 text-white/80" />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="text-sm font-medium text-foreground">
+                          {group.label}
+                        </p>
+                        <p className="text-xs text-white/80">
+                          {group.entries.length} session
+                          {group.entries.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                      <div className="text-right mr-1">
+                        <p className="text-sm font-medium text-foreground">
+                          {(group.totalMinutes / 60).toFixed(1)}h
+                        </p>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white/60 transition-transform',
+                          isExpanded && 'rotate-180'
+                        )}
+                      />
+                    </button>
+
+                    {/* Expanded entries */}
+                    {isExpanded && (
+                      <div className="ml-11 space-y-1 pb-2">
+                        {group.entries.map((session) => (
+                          <div
+                            key={session.id}
+                            className="flex items-center gap-3 py-2 px-2 border-l-2 border-muted"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-foreground truncate">
+                                {session.activity}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
+                              <p className="text-sm text-white/80">
+                                {(session.duration / 60).toFixed(1)}h
+                              </p>
+                              <Badge
+                                variant="outline"
+                                className={cn(
+                                  'text-[10px]',
+                                  session.isAutomatic
+                                    ? 'border-blue-500/30 text-blue-500'
+                                    : 'border-muted-foreground/30 text-white/80'
+                                )}
+                              >
+                                {session.isAutomatic ? 'Auto' : 'Manual'}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </CardContent>
@@ -505,10 +679,10 @@ export function OJTProgressSection() {
 }
 
 // Helper: Get hours logged this week
-function getWeeklyHours(entries: any[]): number {
+function getWeeklyHours(entries: TimeEntry[]): number {
   const now = new Date();
   const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay() + 1);
+  startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7));
   startOfWeek.setHours(0, 0, 0, 0);
 
   return entries
@@ -522,6 +696,25 @@ function formatTime(seconds: number): string {
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Helper: Format date string to friendly label
+function formatDateLabel(dateStr: string): string {
+  const date = new Date(dateStr + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (date.getTime() === today.getTime()) return 'Today';
+  if (date.getTime() === yesterday.getTime()) return 'Yesterday';
+
+  return date.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 }
 
 export default OJTProgressSection;

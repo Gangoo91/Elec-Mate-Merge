@@ -3,9 +3,11 @@
  *
  * Quick capture bottom sheet for adding evidence.
  * Wraps capture flow with option to link to Portfolio, OJT Hours, or Both.
+ * AI analysis is manual — user taps "Analyse Evidence" after uploading.
  */
 
 import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import {
   Sheet,
   SheetContent,
@@ -29,23 +31,32 @@ import {
   Upload,
   Link2,
   Video,
-  FileText,
   X,
   Sparkles,
   Loader2,
   Check,
   Briefcase,
   Clock,
+  CheckSquare,
+  Square,
+  ListChecks,
+  Star,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import { useAIEvidenceTagger } from '@/hooks/portfolio/useAIEvidenceTagger';
+import {
+  useAIEvidenceTagger,
+  getStrengthColor,
+} from '@/hooks/portfolio/useAIEvidenceTagger';
+import type { MatchedCriterion } from '@/hooks/portfolio/useAIEvidenceTagger';
+import type { PortfolioCategory } from '@/types/portfolio';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface UnifiedCaptureSheetProps {
   open: boolean;
@@ -54,7 +65,7 @@ interface UnifiedCaptureSheetProps {
 }
 
 type LinkTo = 'portfolio' | 'ojt' | 'both';
-type CaptureStep = 'capture' | 'details' | 'saving';
+type CaptureStep = 'capture' | 'details';
 
 const FALLBACK_CATEGORIES = [
   'Practical Skills',
@@ -71,16 +82,18 @@ export function UnifiedCaptureSheet({
 }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
   const { user } = useAuth();
+  const haptics = useHaptics();
   const { addEntry } = usePortfolioData();
   const { addTimeEntry } = useTimeEntries();
-  const { analyze, isAnalyzing } = useAIEvidenceTagger();
-  const { requirementCode } = useStudentQualification();
-  const { tree } = useQualificationACs(requirementCode);
+  const { analyze, isAnalyzing, result: aiResult } = useAIEvidenceTagger();
+  const { qualificationCode } = useStudentQualification();
+  const { tree } = useQualificationACs(qualificationCode);
 
   // Dynamic categories from qualification units
-  const categories = tree.units.length > 0
-    ? tree.units.map(u => `Unit ${u.unitCode}: ${u.unitTitle}`)
-    : FALLBACK_CATEGORIES;
+  const categories =
+    tree.units.length > 0
+      ? tree.units.map((u) => `Unit ${u.unitCode}: ${u.unitTitle}`)
+      : FALLBACK_CATEGORIES;
 
   // Form state
   const [step, setStep] = useState<CaptureStep>('capture');
@@ -94,9 +107,8 @@ export function UnifiedCaptureSheet({
   const [linkTo, setLinkTo] = useState<LinkTo>('portfolio');
   const [ojtDuration, setOjtDuration] = useState('');
 
-  // AI suggestions
-  const [suggestions, setSuggestions] = useState<any>(null);
-  const [selectedKsbs, setSelectedKsbs] = useState<string[]>([]);
+  // AI matched criteria selection
+  const [selectedACs, setSelectedACs] = useState<string[]>([]);
 
   // Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -114,8 +126,7 @@ export function UnifiedCaptureSheet({
     setCategory('');
     setLinkTo('portfolio');
     setOjtDuration('');
-    setSuggestions(null);
-    setSelectedKsbs([]);
+    setSelectedACs([]);
   };
 
   // Upload file to Supabase Storage
@@ -162,13 +173,15 @@ export function UnifiedCaptureSheet({
   };
 
   // Get evidence type from file
-  const getEvidenceType = (fileType: string): 'image' | 'document' | 'video' => {
+  const getEvidenceType = (
+    fileType: string
+  ): 'image' | 'document' | 'video' => {
     if (fileType.startsWith('image/')) return 'image';
     if (fileType.startsWith('video/')) return 'video';
     return 'document';
   };
 
-  // Handle file selection
+  // Handle file selection — upload only, no auto-analysis
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
@@ -194,43 +207,79 @@ export function UnifiedCaptureSheet({
     // Move to details step
     setStep('details');
 
-    // Upload file to storage
+    // Upload file to storage (but don't auto-analyse)
     const storageUrl = await uploadFile(selectedFile);
     if (storageUrl) {
       setUploadedUrl(storageUrl);
+    }
+  };
 
-      // Auto-analyze with AI using uploaded URL
-      try {
-        const analysis = await analyze({
-          evidenceUrl: storageUrl,
-          evidenceType: getEvidenceType(selectedFile.type),
-          title: title || undefined,
-          description: description || undefined,
-        });
-        if (analysis) {
-          setSuggestions(analysis);
-          // Auto-select high-confidence KSBs
-          const autoSelected = analysis.ksb_suggestions
-            ?.filter((k: any) => k.confidence >= 0.8)
-            .map((k: any) => k.code) || [];
-          setSelectedKsbs(autoSelected);
+  // Manual AI analysis trigger
+  const handleAnalyse = async () => {
+    const evidenceUrl = uploadedUrl || previewUrl;
+    if (!evidenceUrl || !file) return;
 
-          // Auto-fill title if empty and detected
-          if (!title && analysis.detected_content?.description) {
-            // Use first sentence of description as title
-            const firstSentence = analysis.detected_content.description.split('.')[0];
-            setTitle(firstSentence.slice(0, 100));
-          }
-        }
-      } catch (error) {
-        console.error('AI analysis error:', error);
+    const analysis = await analyze({
+      evidenceUrl,
+      evidenceType: getEvidenceType(file.type),
+      title: title || undefined,
+      description: description || undefined,
+      qualificationCode,
+    });
+
+    if (analysis) {
+      // Auto-select high-confidence ACs
+      const autoSelected =
+        analysis.matchedCriteria
+          ?.filter((ac) => ac.confidence >= 80 && ac.unitCode && ac.acCode)
+          .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
+      setSelectedACs(autoSelected);
+
+      // Auto-fill title if empty
+      if (!title && analysis.suggestedTitle) {
+        setTitle(analysis.suggestedTitle.slice(0, 100));
       }
     }
   };
 
-  // Handle save
+  // Toggle AC selection
+  const toggleAC = (acCode: string) => {
+    haptics.tap();
+    setSelectedACs((prev) =>
+      prev.includes(acCode)
+        ? prev.filter((c) => c !== acCode)
+        : [...prev, acCode]
+    );
+  };
+
+  // Bulk AC selection helpers
+  const selectAllACs = () => {
+    haptics.tap();
+    const allCodes =
+      aiResult?.matchedCriteria
+        ?.filter((ac) => ac.unitCode && ac.acCode)
+        .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
+    setSelectedACs(allCodes);
+  };
+
+  const selectRecommendedACs = () => {
+    haptics.tap();
+    const recommended =
+      aiResult?.matchedCriteria
+        ?.filter((ac) => ac.confidence >= 80 && ac.unitCode && ac.acCode)
+        .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
+    setSelectedACs(recommended);
+  };
+
+  const deselectAllACs = () => {
+    haptics.tap();
+    setSelectedACs([]);
+  };
+
+  // Handle save — optimistic: close immediately, save in background
   const handleSave = async () => {
     if (!title.trim()) {
+      haptics.warning();
       toast({
         title: 'Title required',
         description: 'Please enter a title for this evidence',
@@ -239,78 +288,106 @@ export function UnifiedCaptureSheet({
       return;
     }
 
-    setStep('saving');
+    // Haptic success immediately
+    haptics.success();
 
+    // Snapshot form values before closing
+    const snap = {
+      title,
+      description,
+      category,
+      linkTo,
+      ojtDuration,
+      selectedACs: [...selectedACs],
+      file,
+      uploadedUrl,
+      previewUrl,
+    };
+
+    // Optimistic: close sheet + show success toast immediately
+    const toastMsg =
+      snap.linkTo === 'both'
+        ? 'Added to portfolio and logged as training time'
+        : snap.linkTo === 'ojt'
+          ? 'Logged as training time'
+          : 'Added to portfolio';
+
+    toast({ title: 'Evidence saved', description: toastMsg });
+    resetForm();
+    onComplete();
+
+    // Background save
     try {
-      // Use uploaded URL, or upload now if not done yet
-      let finalUrl = uploadedUrl;
-      if (file && !finalUrl) {
-        finalUrl = await uploadFile(file) || previewUrl;
+      let finalUrl = snap.uploadedUrl;
+      if (snap.file && !finalUrl) {
+        finalUrl = (await uploadFile(snap.file)) || snap.previewUrl;
       }
 
-      const evidenceFile = file ? {
-        name: file.name,
-        type: file.type,
-        url: finalUrl || previewUrl,
-      } : null;
+      const evidenceFile = snap.file
+        ? {
+            name: snap.file.name,
+            type: snap.file.type,
+            url: finalUrl || snap.previewUrl,
+          }
+        : null;
 
-      // Add to portfolio
-      if (linkTo === 'portfolio' || linkTo === 'both') {
+      if (snap.linkTo === 'portfolio' || snap.linkTo === 'both') {
+        const categoryName = snap.category || 'Practical Skills';
+        const categoryObj: PortfolioCategory = {
+          id: categoryName
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, ''),
+          name: categoryName,
+          description: '',
+          icon: 'folder',
+          color: 'gray',
+          requiredEntries: 0,
+          completedEntries: 0,
+        };
+
         await addEntry({
-          title,
-          description,
-          category: category || 'Practical Skills',
-          skills: selectedKsbs,
+          title: snap.title,
+          description: snap.description,
+          category: categoryObj,
+          skills: snap.selectedACs,
           evidenceFiles: evidenceFile ? [evidenceFile] : [],
+          assessmentCriteria: snap.selectedACs,
           status: 'draft',
           dateCreated: new Date().toISOString(),
         });
       }
 
-      // Add to OJT time
-      if ((linkTo === 'ojt' || linkTo === 'both') && ojtDuration) {
+      if (
+        (snap.linkTo === 'ojt' || snap.linkTo === 'both') &&
+        snap.ojtDuration
+      ) {
         await addTimeEntry({
           date: new Date().toISOString().split('T')[0],
-          duration: parseFloat(ojtDuration) * 60, // Convert hours to minutes
-          activity: title,
-          notes: description,
+          duration: parseFloat(snap.ojtDuration) * 60,
+          activity: snap.title,
+          notes: snap.description,
         });
       }
-
-      toast({
-        title: 'Evidence saved',
-        description: linkTo === 'both'
-          ? 'Added to portfolio and logged as training time'
-          : linkTo === 'ojt'
-          ? 'Logged as training time'
-          : 'Added to portfolio',
-      });
-
-      resetForm();
-      onComplete();
     } catch (error) {
       console.error('Save error:', error);
+      haptics.error();
       toast({
-        title: 'Error saving',
-        description: 'Something went wrong. Please try again.',
+        title: 'Error saving evidence',
+        description: 'Something went wrong — please try again.',
         variant: 'destructive',
       });
-      setStep('details');
     }
   };
 
-  // Toggle KSB selection
-  const toggleKsb = (code: string) => {
-    setSelectedKsbs((prev) =>
-      prev.includes(code) ? prev.filter((k) => k !== code) : [...prev, code]
-    );
-  };
-
   return (
-    <Sheet open={open} onOpenChange={(v) => {
-      if (!v) resetForm();
-      onOpenChange(v);
-    }}>
+    <Sheet
+      open={open}
+      onOpenChange={(v) => {
+        if (!v) resetForm();
+        onOpenChange(v);
+      }}
+    >
       <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
         {/* Drag handle */}
         <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
@@ -319,9 +396,9 @@ export function UnifiedCaptureSheet({
           <SheetHeader className="px-4 pb-4">
             <SheetTitle>Add Evidence</SheetTitle>
             <SheetDescription>
-              {step === 'capture' && 'Capture or upload evidence for your portfolio'}
+              {step === 'capture' &&
+                'Capture or upload evidence for your portfolio'}
               {step === 'details' && 'Add details about this evidence'}
-              {step === 'saving' && 'Saving your evidence...'}
             </SheetDescription>
           </SheetHeader>
 
@@ -338,7 +415,9 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-elec-yellow/20">
                       <Camera className="h-6 w-6 text-elec-yellow" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">Camera</span>
+                    <span className="text-sm font-medium text-foreground">
+                      Camera
+                    </span>
                   </button>
 
                   <button
@@ -348,7 +427,9 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-blue-500/20">
                       <Upload className="h-6 w-6 text-blue-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">Upload</span>
+                    <span className="text-sm font-medium text-foreground">
+                      Upload
+                    </span>
                   </button>
 
                   <button
@@ -360,7 +441,9 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-green-500/20">
                       <Link2 className="h-6 w-6 text-green-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">Link</span>
+                    <span className="text-sm font-medium text-foreground">
+                      Link
+                    </span>
                   </button>
 
                   <button
@@ -370,7 +453,9 @@ export function UnifiedCaptureSheet({
                     <div className="p-3 rounded-full bg-purple-500/20">
                       <Video className="h-6 w-6 text-purple-500" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">Video</span>
+                    <span className="text-sm font-medium text-foreground">
+                      Video
+                    </span>
                   </button>
                 </div>
 
@@ -393,7 +478,8 @@ export function UnifiedCaptureSheet({
 
                 {/* Info */}
                 <p className="text-xs text-white/80 text-center">
-                  Max file size: 10MB. Supported: Images, Videos, PDFs, Documents
+                  Max file size: 10MB. Supported: Images, Videos, PDFs,
+                  Documents
                 </p>
               </div>
             )}
@@ -421,12 +507,44 @@ export function UnifiedCaptureSheet({
                   </div>
                 )}
 
-                {/* Upload/Analyzing indicator */}
-                {(isUploading || isAnalyzing) && (
+                {/* Upload indicator */}
+                {isUploading && (
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
                     <span className="text-sm text-elec-yellow">
-                      {isUploading ? 'Uploading file...' : 'AI analysing evidence...'}
+                      Uploading file...
+                    </span>
+                  </div>
+                )}
+
+                {/* Analyse Evidence button — manual trigger */}
+                {file && !isUploading && !aiResult && (
+                  <Button
+                    variant="outline"
+                    onClick={handleAnalyse}
+                    disabled={isAnalyzing || isUploading}
+                    className="w-full h-11 touch-manipulation border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 active:scale-95"
+                  >
+                    {isAnalyzing ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Analysing evidence...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Analyse Evidence
+                      </>
+                    )}
+                  </Button>
+                )}
+
+                {/* Analysing indicator (shown when running) */}
+                {isAnalyzing && (
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                    <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+                    <span className="text-sm text-elec-yellow">
+                      AI analysing evidence...
                     </span>
                   </div>
                 )}
@@ -484,7 +602,14 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Briefcase className={cn('h-5 w-5', linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white/80')} />
+                      <Briefcase
+                        className={cn(
+                          'h-5 w-5',
+                          linkTo === 'portfolio'
+                            ? 'text-elec-yellow'
+                            : 'text-white/80'
+                        )}
+                      />
                       <span className="text-xs font-medium">Portfolio</span>
                     </button>
                     <button
@@ -496,7 +621,14 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Clock className={cn('h-5 w-5', linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white/80')} />
+                      <Clock
+                        className={cn(
+                          'h-5 w-5',
+                          linkTo === 'ojt'
+                            ? 'text-elec-yellow'
+                            : 'text-white/80'
+                        )}
+                      />
                       <span className="text-xs font-medium">OJT Hours</span>
                     </button>
                     <button
@@ -508,7 +640,14 @@ export function UnifiedCaptureSheet({
                           : 'border-border hover:border-muted-foreground/50'
                       )}
                     >
-                      <Check className={cn('h-5 w-5', linkTo === 'both' ? 'text-elec-yellow' : 'text-white/80')} />
+                      <Check
+                        className={cn(
+                          'h-5 w-5',
+                          linkTo === 'both'
+                            ? 'text-elec-yellow'
+                            : 'text-white/80'
+                        )}
+                      />
                       <span className="text-xs font-medium">Both</span>
                     </button>
                   </div>
@@ -517,7 +656,9 @@ export function UnifiedCaptureSheet({
                 {/* OJT Duration (if linking to OJT) */}
                 {(linkTo === 'ojt' || linkTo === 'both') && (
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Time Spent (hours)</label>
+                    <label className="text-sm font-medium">
+                      Time Spent (hours)
+                    </label>
                     <Input
                       type="number"
                       step="0.5"
@@ -530,47 +671,191 @@ export function UnifiedCaptureSheet({
                   </div>
                 )}
 
-                {/* AI Suggestions */}
-                {suggestions?.ksb_suggestions && suggestions.ksb_suggestions.length > 0 && (
-                  <div className="space-y-2">
+                {/* AI Matched Assessment Criteria */}
+                {aiResult && (
+                  <div className="space-y-3">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-elec-yellow" />
-                      <label className="text-sm font-medium">AI Suggested KSBs</label>
+                      <label className="text-sm font-medium">
+                        Matched Assessment Criteria
+                      </label>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {suggestions.ksb_suggestions.map((ksb: any) => (
-                        <button
-                          key={ksb.code}
-                          onClick={() => toggleKsb(ksb.code)}
-                          className={cn(
-                            'px-3 h-9 rounded-full text-xs font-medium border transition-colors touch-manipulation',
-                            selectedKsbs.includes(ksb.code)
-                              ? 'bg-elec-yellow text-black border-elec-yellow'
-                              : 'bg-muted border-border text-white/80 hover:border-muted-foreground'
-                          )}
-                        >
-                          {ksb.code}
-                          {ksb.confidence >= 0.8 && (
-                            <span className="ml-1 opacity-60">*</span>
-                          )}
-                        </button>
-                      ))}
+
+                    {/* Evidence Strength Badge */}
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'text-xs capitalize',
+                          getStrengthColor(aiResult.evidenceStrength)
+                        )}
+                      >
+                        {aiResult.evidenceStrength} evidence
+                      </Badge>
                     </div>
-                    <p className="text-xs text-white/80">
-                      * High confidence suggestions auto-selected
-                    </p>
+
+                    {/* Why good evidence */}
+                    {aiResult.whyGoodEvidence && (
+                      <p className="text-xs text-white/90 leading-relaxed">
+                        {aiResult.whyGoodEvidence}
+                      </p>
+                    )}
+
+                    {/* Matched ACs grouped by unit */}
+                    {aiResult.matchedCriteria &&
+                    aiResult.matchedCriteria.length > 0 ? (
+                      <div className="space-y-3">
+                        {/* Bulk selection buttons */}
+                        <div className="flex gap-2">
+                          {selectedACs.length ===
+                          aiResult.matchedCriteria.length ? (
+                            <button
+                              onClick={deselectAllACs}
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white/70 touch-manipulation active:scale-95 transition-transform"
+                            >
+                              <Square className="h-3 w-3" />
+                              Deselect All
+                            </button>
+                          ) : (
+                            <button
+                              onClick={selectAllACs}
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white/70 touch-manipulation active:scale-95 transition-transform"
+                            >
+                              <ListChecks className="h-3 w-3" />
+                              Select All
+                            </button>
+                          )}
+                          {aiResult.matchedCriteria.some(
+                            (ac) => ac.confidence >= 80
+                          ) && (
+                            <button
+                              onClick={selectRecommendedACs}
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 touch-manipulation active:scale-95 transition-transform"
+                            >
+                              <Star className="h-3 w-3" />
+                              Recommended
+                            </button>
+                          )}
+                        </div>
+
+                        {(() => {
+                          // Group ACs by unit
+                          const grouped = new Map<
+                            string,
+                            { unitTitle: string; criteria: MatchedCriterion[] }
+                          >();
+                          for (const ac of aiResult.matchedCriteria) {
+                            const key = ac.unitCode || 'other';
+                            if (!grouped.has(key)) {
+                              grouped.set(key, {
+                                unitTitle: ac.unitTitle || 'Other',
+                                criteria: [],
+                              });
+                            }
+                            grouped.get(key)!.criteria.push(ac);
+                          }
+
+                          let acIndex = 0;
+                          return Array.from(grouped.entries()).map(
+                            ([unitCode, group]) => (
+                              <div key={unitCode} className="space-y-2">
+                                <p className="text-xs font-semibold text-white/80 uppercase tracking-wide">
+                                  Unit {unitCode}
+                                  {group.unitTitle !== 'Other' &&
+                                    ` — ${group.unitTitle}`}
+                                </p>
+                                {group.criteria.map((ac) => {
+                                  const canonicalRef = `${unitCode} AC ${ac.acCode}`;
+                                  const isSelected = selectedACs.includes(canonicalRef);
+                                  const idx = acIndex++;
+                                  return (
+                                    <motion.button
+                                      key={canonicalRef}
+                                      initial={{ opacity: 0, y: 8 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      transition={{
+                                        delay: idx * 0.05,
+                                        type: 'spring',
+                                        stiffness: 400,
+                                        damping: 25,
+                                      }}
+                                      onClick={() => toggleAC(canonicalRef)}
+                                      className={cn(
+                                        'w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
+                                        isSelected
+                                          ? 'border-elec-yellow/50 bg-elec-yellow/10'
+                                          : 'border-border hover:border-muted-foreground/50'
+                                      )}
+                                    >
+                                      <motion.div
+                                        animate={{
+                                          scale: isSelected ? [1, 1.2, 1] : 1,
+                                        }}
+                                        transition={{ duration: 0.2 }}
+                                      >
+                                        {isSelected ? (
+                                          <CheckSquare className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                                        ) : (
+                                          <Square className="h-5 w-5 text-white/40 shrink-0 mt-0.5" />
+                                        )}
+                                      </motion.div>
+                                      <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-medium text-foreground leading-snug">
+                                          {ac.acCode} {ac.acText}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-1">
+                                          <p className="text-xs text-white/60">
+                                            {ac.confidence}% match
+                                          </p>
+                                          {ac.confidence >= 80 && (
+                                            <Badge
+                                              variant="outline"
+                                              className="text-[9px] px-1 py-0 border-green-500/30 text-green-400"
+                                            >
+                                              Recommended
+                                            </Badge>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </motion.button>
+                                  );
+                                })}
+                              </div>
+                            )
+                          );
+                        })()}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-white/60">
+                        No matching criteria found. Try adding a more specific
+                        title and description.
+                      </p>
+                    )}
+
+                    {/* Quality Tips */}
+                    {aiResult.qualityTips &&
+                      aiResult.qualityTips.length > 0 && (
+                        <div className="space-y-1 pt-1">
+                          <p className="text-xs font-medium text-white/70">
+                            Tips to strengthen evidence:
+                          </p>
+                          {aiResult.qualityTips.map(
+                            (tip: string, i: number) => (
+                              <p
+                                key={i}
+                                className="text-xs text-white/60 pl-3"
+                              >
+                                &bull; {tip}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      )}
                   </div>
                 )}
               </div>
             )}
 
-            {/* Step 3: Saving */}
-            {step === 'saving' && (
-              <div className="flex flex-col items-center justify-center py-12 space-y-4">
-                <Loader2 className="h-10 w-10 text-elec-yellow animate-spin" />
-                <p className="text-sm text-white/80">Saving your evidence...</p>
-              </div>
-            )}
           </div>
 
           {/* Actions */}
@@ -589,7 +874,10 @@ export function UnifiedCaptureSheet({
                 </Button>
                 <Button
                   onClick={handleSave}
-                  disabled={!title.trim() || ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)}
+                  disabled={
+                    !title.trim() ||
+                    ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)
+                  }
                   className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                 >
                   Save Evidence

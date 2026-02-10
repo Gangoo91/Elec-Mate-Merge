@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -57,10 +57,13 @@ import {
   ExternalLink,
   CheckSquare,
   Square,
+  SkipForward,
+  ListChecks,
 } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInMinutes } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 
 interface DocumentRecord {
@@ -162,6 +165,7 @@ const STATUS_CONFIG = {
 export default function AdminDocumentReview() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
+  const haptic = useHaptic();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('needs_attention');
   const [selectedDocument, setSelectedDocument] = useState<DocumentRecord | null>(null);
@@ -177,6 +181,8 @@ export default function AdminDocumentReview() {
   const [showBulkApproveDialog, setShowBulkApproveDialog] = useState(false);
   const [showBulkRejectDialog, setShowBulkRejectDialog] = useState(false);
   const [bulkRejectReason, setBulkRejectReason] = useState('');
+  const [queueMode, setQueueMode] = useState(false);
+  const [queueReviewCount, setQueueReviewCount] = useState(0);
 
   // Fetch documents with real-time updates
   const {
@@ -408,18 +414,32 @@ export default function AdminDocumentReview() {
         new_values: { review_action: action, notes },
       });
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
+      if (variables.action === 'approved') {
+        haptic.success();
+      } else {
+        haptic.warning();
+      }
       queryClient.invalidateQueries({ queryKey: ['admin-document-review'] });
       queryClient.invalidateQueries({ queryKey: ['admin-document-review-stats'] });
-      setSelectedDocument(null);
-      setReviewAction(null);
-      setReviewNotes('');
-      setImageZoom(1);
-      setImageRotation(0);
-      toast({
-        title: 'Document reviewed',
-        description: 'The document has been processed successfully.',
-      });
+
+      if (queueMode) {
+        setReviewAction(null);
+        setReviewNotes('');
+        setImageZoom(1);
+        setImageRotation(0);
+        advanceQueue(variables.id);
+      } else {
+        setSelectedDocument(null);
+        setReviewAction(null);
+        setReviewNotes('');
+        setImageZoom(1);
+        setImageRotation(0);
+        toast({
+          title: 'Document reviewed',
+          description: 'The document has been processed successfully.',
+        });
+      }
     },
     onError: () => {
       toast({
@@ -530,10 +550,15 @@ export default function AdminDocumentReview() {
         .eq('id', id);
       if (error) throw error;
     },
-    onSuccess: () => {
+    onSuccess: (_data, docId) => {
+      haptic.success();
       queryClient.invalidateQueries({ queryKey: ['admin-document-review'] });
       queryClient.invalidateQueries({ queryKey: ['admin-document-review-stats'] });
-      toast({ title: 'Document approved' });
+      if (queueMode) {
+        advanceQueue(docId);
+      } else {
+        toast({ title: 'Document approved' });
+      }
     },
   });
 
@@ -595,6 +620,42 @@ export default function AdminDocumentReview() {
       (d) => d.verification_status !== 'verified' && d.verification_status !== 'rejected'
     ) || [];
 
+  // Queue mode helpers
+  const startQueue = useCallback(() => {
+    if (selectableDocs.length === 0) return;
+    setQueueMode(true);
+    setQueueReviewCount(0);
+    loadDocumentImage(selectableDocs[0]);
+  }, [selectableDocs]);
+
+  const advanceQueue = useCallback(
+    (justReviewedId: string) => {
+      const remaining = selectableDocs.filter((d) => d.id !== justReviewedId);
+      setQueueReviewCount((c) => c + 1);
+      if (remaining.length > 0) {
+        loadDocumentImage(remaining[0]);
+      } else {
+        setSelectedDocument(null);
+        setQueueMode(false);
+        toast({
+          title: 'Queue complete!',
+          description: `All ${queueReviewCount + 1} documents reviewed.`,
+        });
+        setQueueReviewCount(0);
+      }
+    },
+    [selectableDocs, queueReviewCount]
+  );
+
+  const skipInQueue = useCallback(() => {
+    if (!selectedDocument || selectableDocs.length <= 1) return;
+    const currentIdx = selectableDocs.findIndex((d) => d.id === selectedDocument.id);
+    const nextIdx = (currentIdx + 1) % selectableDocs.length;
+    loadDocumentImage(selectableDocs[nextIdx]);
+    setReviewAction(null);
+    setReviewNotes('');
+  }, [selectedDocument, selectableDocs]);
+
   const toggleSelect = (id: string) => {
     const newSet = new Set(selectedIds);
     if (newSet.has(id)) {
@@ -642,19 +703,36 @@ export default function AdminDocumentReview() {
                 Review and verify uploaded documents
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                refetch();
-                refetchStats();
-              }}
-              disabled={isFetching}
-              className="gap-2 h-10 touch-manipulation"
-            >
-              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-              <span className="hidden sm:inline">Refresh</span>
-            </Button>
+            <div className="flex items-center gap-2">
+              {selectableDocs.length > 0 && (
+                <Button
+                  size="sm"
+                  onClick={startQueue}
+                  className={cn(
+                    'gap-2 h-10 touch-manipulation font-medium',
+                    queueMode
+                      ? 'bg-green-500 hover:bg-green-600 text-white'
+                      : 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark'
+                  )}
+                >
+                  <ListChecks className="h-4 w-4" />
+                  {queueMode ? `Reviewing...` : `Queue (${selectableDocs.length})`}
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  refetch();
+                  refetchStats();
+                }}
+                disabled={isFetching}
+                className="gap-2 h-10 touch-manipulation"
+              >
+                <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+                <span className="hidden sm:inline">Refresh</span>
+              </Button>
+            </div>
           </div>
 
           {/* Stats Cards - Horizontal scroll on mobile */}
@@ -1088,7 +1166,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-9 w-9 p-0 text-green-400 hover:bg-green-500/20"
+                            className="h-11 w-11 p-0 text-green-400 hover:bg-green-500/20 touch-manipulation"
                             onClick={(e) => {
                               e.stopPropagation();
                               quickApproveMutation.mutate(doc.id);
@@ -1100,7 +1178,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-9 w-9 p-0 text-foreground/60 hover:text-foreground"
+                            className="h-11 w-11 p-0 text-foreground/60 hover:text-foreground touch-manipulation"
                             onClick={() => loadDocumentImage(doc)}
                           >
                             <Eye className="h-4 w-4" />
@@ -1117,7 +1195,13 @@ export default function AdminDocumentReview() {
       </div>
 
       {/* Document Detail Sheet */}
-      <Sheet open={!!selectedDocument} onOpenChange={() => setSelectedDocument(null)}>
+      <Sheet open={!!selectedDocument} onOpenChange={() => {
+        setSelectedDocument(null);
+        if (queueMode) {
+          setQueueMode(false);
+          setQueueReviewCount(0);
+        }
+      }}>
         <SheetContent
           side="bottom"
           className="h-[95vh] sm:h-[90vh] p-0 rounded-t-2xl overflow-hidden bg-background border-white/20"
@@ -1163,6 +1247,29 @@ export default function AdminDocumentReview() {
               </SheetTitle>
             </SheetHeader>
 
+            {/* Queue progress bar */}
+            {queueMode && (
+              <div className="px-4 py-2 border-b border-white/10 bg-green-500/5 flex-shrink-0">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-green-400 font-medium flex items-center gap-1.5">
+                    <ListChecks className="h-3.5 w-3.5" />
+                    Queue Mode
+                  </span>
+                  <span className="text-foreground/60">
+                    {queueReviewCount} reviewed · {selectableDocs.length} remaining
+                  </span>
+                </div>
+                <div className="mt-1.5 h-1 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full bg-green-500 rounded-full transition-all duration-300"
+                    style={{
+                      width: `${selectableDocs.length + queueReviewCount > 0 ? (queueReviewCount / (selectableDocs.length + queueReviewCount)) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto">
               {selectedDocument && (
@@ -1188,7 +1295,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 bg-black/70 hover:bg-black/90"
+                            className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
                             onClick={() => setImageZoom((z) => Math.max(0.5, z - 0.25))}
                           >
                             <ZoomOut className="h-4 w-4" />
@@ -1196,7 +1303,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 bg-black/70 hover:bg-black/90"
+                            className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
                             onClick={() => setImageZoom((z) => Math.min(3, z + 0.25))}
                           >
                             <ZoomIn className="h-4 w-4" />
@@ -1204,7 +1311,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 bg-black/70 hover:bg-black/90"
+                            className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
                             onClick={() => setImageRotation((r) => (r + 90) % 360)}
                           >
                             <RotateCw className="h-4 w-4" />
@@ -1212,7 +1319,7 @@ export default function AdminDocumentReview() {
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 bg-black/70 hover:bg-black/90"
+                            className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
                             onClick={() => window.open(documentImageUrl, '_blank')}
                           >
                             <ExternalLink className="h-4 w-4" />
@@ -1492,13 +1599,38 @@ export default function AdminDocumentReview() {
             {selectedDocument && selectedDocument.verification_status !== 'verified' && (
               <div className="flex-shrink-0 p-4 border-t border-white/10 bg-background">
                 <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => setSelectedDocument(null)}
-                    className="flex-1 h-12 touch-manipulation border-white/20"
-                  >
-                    Cancel
-                  </Button>
+                  {queueMode ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setQueueMode(false);
+                          setSelectedDocument(null);
+                          setQueueReviewCount(0);
+                        }}
+                        className="h-12 touch-manipulation border-white/20 px-4"
+                      >
+                        Exit Queue
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={skipInQueue}
+                        disabled={selectableDocs.length <= 1}
+                        className="h-12 touch-manipulation border-white/20 px-4"
+                      >
+                        <SkipForward className="h-4 w-4 mr-1.5" />
+                        Skip
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedDocument(null)}
+                      className="flex-1 h-12 touch-manipulation border-white/20"
+                    >
+                      Cancel
+                    </Button>
+                  )}
                   <Button
                     onClick={handleReview}
                     disabled={

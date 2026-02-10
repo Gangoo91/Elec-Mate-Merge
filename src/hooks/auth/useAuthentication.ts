@@ -183,6 +183,26 @@ export function useAuthentication() {
   const signOut = async () => {
     logger.action('Sign out', 'auth');
     logger.info('User signing out');
+
+    // Clear user-scoped quiz/course localStorage keys before sign-out
+    // so stale data doesn't leak to the next user on this device
+    try {
+      const keysToRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('user_') && (
+          key.includes('_quiz_completed') ||
+          key.includes('_quiz_attempts') ||
+          key.includes('_todayTime')
+        )) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+    } catch (e) {
+      console.error('Error clearing quiz localStorage on sign-out:', e);
+    }
+
     await supabase.auth.signOut();
     // Clear user from Sentry
     clearSentryUser();

@@ -1,4 +1,3 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 
 // Convert ArrayBuffer to base64 using chunked approach (avoids stack overflow on large files)
@@ -185,6 +184,14 @@ serve(async (req) => {
     const body: VerificationRequest = await req.json();
     const { fileUrl, documentType, documentName, profileId, documentId, issuingBody, documentNumber, issueDate, expiryDate } = body;
 
+    console.log('[verify-document] Handler invoked', {
+      documentId,
+      documentType,
+      profileId,
+      hasFileUrl: !!fileUrl,
+      timestamp: new Date().toISOString(),
+    });
+
     if (!fileUrl || !documentType || !profileId) {
       return new Response(
         JSON.stringify({
@@ -206,9 +213,23 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    console.log(`🔍 Document Verification - Type: ${documentType}`);
-    console.log(`📄 File URL: ${fileUrl}`);
-    console.log(`👤 Profile ID: ${profileId}`);
+    // Set document to 'processing' status before calling Gemini
+    if (documentId) {
+      const { error: processingError } = await supabase
+        .from('elec_id_documents')
+        .update({
+          verification_status: 'processing',
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', documentId);
+
+      if (processingError) {
+        console.error('[verify-document] Failed to set processing status:', processingError);
+      }
+    }
+
+    console.log(`[verify-document] Type: ${documentType}, File: ${fileUrl.substring(0, 80)}...`);
+    console.log(`[verify-document] Profile: ${profileId}, Document: ${documentId || 'no-id'}`);
 
     // Fetch the image and convert to base64
     console.log('⬇️ Fetching document image...');
@@ -272,34 +293,43 @@ Respond with ONLY valid JSON in this exact format:
   "suggestions": ["helpful suggestion 1", "suggestion 2"]
 }`;
 
-    // Call Gemini Flash Vision API for OCR
-    console.log('🤖 Calling Gemini 2.0 Flash Vision for document analysis...');
-    const visionResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            role: 'user',
-            parts: [
-              { text: systemPrompt + `\n\nPlease analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.` },
-              {
-                inlineData: {
-                  mimeType: mimeType,
-                  data: base64Image
+    // Call Gemini Flash Vision API for OCR (55s timeout to stay within edge function limits)
+    console.log('[verify-document] Calling Gemini 2.0 Flash Vision...');
+    const abortController = new AbortController();
+    const geminiTimeout = setTimeout(() => abortController.abort(), 55000);
+
+    let visionResponse: Response;
+    try {
+      visionResponse = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: abortController.signal,
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [
+                { text: systemPrompt + `\n\nPlease analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.` },
+                {
+                  inlineData: {
+                    mimeType: mimeType,
+                    data: base64Image
+                  }
                 }
-              }
-            ]
-          }],
-          generationConfig: {
-            maxOutputTokens: 2000,
-            temperature: 0.1,
-            responseMimeType: 'application/json'
-          }
-        }),
-      }
-    );
+              ]
+            }],
+            generationConfig: {
+              maxOutputTokens: 2000,
+              temperature: 0.1,
+              responseMimeType: 'application/json'
+            }
+          }),
+        }
+      );
+    } finally {
+      clearTimeout(geminiTimeout);
+    }
 
     const visionData = await visionResponse.json();
 
@@ -365,7 +395,7 @@ Respond with ONLY valid JSON in this exact format:
       .from('elec_id_documents')
       .update({
         verification_status: result.status === 'verified' ? 'verified' :
-                            result.status === 'needs_review' ? 'pending' : 'rejected',
+                            result.status === 'needs_review' ? 'needs_review' : 'rejected',
         verification_confidence: result.confidence,
         extracted_data: result.extractedData,
         extraction_confidence: result.extractionConfidence,
@@ -424,10 +454,37 @@ Respond with ONLY valid JSON in this exact format:
     );
 
   } catch (error) {
-    console.error('Error in verify-document:', error);
+    console.error('[verify-document] Error:', error);
+
+    // Error recovery: mark the document as needs_review + flagged so it doesn't stay stuck
+    try {
+      const body = await req.clone().json().catch(() => null);
+      const docId = body?.documentId;
+      if (docId) {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        await supabase
+          .from('elec_id_documents')
+          .update({
+            verification_status: 'needs_review',
+            flagged_for_review: true,
+            flag_reason: `AI verification failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            flag_severity: 'high',
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', docId);
+
+        console.log(`[verify-document] Marked document ${docId} as needs_review after error`);
+      }
+    } catch (recoveryError) {
+      console.error('[verify-document] Error recovery failed:', recoveryError);
+    }
+
     return new Response(
       JSON.stringify({
-        status: 'rejected',
+        status: 'needs_review',
         confidence: 0,
         extractedData: {},
         extractionConfidence: {},

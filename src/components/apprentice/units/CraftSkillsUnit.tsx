@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { craftSkillsContent } from "@/data/craftSkills/index";
 import { useParams } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { userKey } from "@/lib/userStorage";
 
 interface CraftSkillsUnitProps {
   unitCode: string;
@@ -12,14 +14,15 @@ interface CraftSkillsUnitProps {
 const CraftSkillsUnit = ({ unitCode, onResourceClick }: CraftSkillsUnitProps) => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
-  
-  // Load completion status
+  const { user } = useAuth();
+
+  // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(`unit_${unitCode}_quiz_completed`);
+    const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${unitCode}_quiz_completed`));
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
-  }, [unitCode]);
+  }, [unitCode, user?.id]);
 
   const handleSectionClick = () => {
     // Report study activity when opening a section

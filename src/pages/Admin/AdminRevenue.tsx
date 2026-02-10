@@ -165,7 +165,7 @@ export default function AdminRevenue() {
           <h1 className="text-xl font-bold flex items-center gap-2">
             Revenue
             {stripeStats && (
-              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] gap-1">
+              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 LIVE
               </Badge>
@@ -233,15 +233,15 @@ export default function AdminRevenue() {
             <div className="grid grid-cols-3 gap-2 mt-4">
               <div className="bg-black/20 rounded-xl p-3 text-center">
                 <p className="text-lg font-bold text-white">{totalSubs}</p>
-                <p className="text-[10px] text-emerald-400/70 uppercase">Active Subs</p>
+                <p className="text-xs text-emerald-400/70 uppercase">Active Subs</p>
               </div>
               <div className="bg-black/20 rounded-xl p-3 text-center">
                 <p className="text-lg font-bold text-white">£{arr.toLocaleString('en-GB', { maximumFractionDigits: 0 })}</p>
-                <p className="text-[10px] text-emerald-400/70 uppercase">ARR</p>
+                <p className="text-xs text-emerald-400/70 uppercase">ARR</p>
               </div>
               <div className="bg-black/20 rounded-xl p-3 text-center">
                 <p className="text-lg font-bold text-white">£{arpu.toFixed(2)}</p>
-                <p className="text-[10px] text-emerald-400/70 uppercase">ARPU</p>
+                <p className="text-xs text-emerald-400/70 uppercase">ARPU</p>
               </div>
             </div>
           </div>
@@ -274,7 +274,7 @@ export default function AdminRevenue() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-3">
                   <Icon className="h-6 w-6" />
-                  <Badge variant="outline" className="text-[10px] border-current/30">
+                  <Badge variant="outline" className="text-xs border-current/30">
                     {config.price}/mo
                   </Badge>
                 </div>
@@ -302,18 +302,18 @@ export default function AdminRevenue() {
                 <ArrowUp className="h-4 w-4 text-green-400" />
                 <p className="text-2xl font-bold text-green-400">+{subsLast14Days}</p>
               </div>
-              <p className="text-[11px] text-muted-foreground">New Subs</p>
+              <p className="text-xs text-muted-foreground">New Subs</p>
             </div>
             <div className="bg-gradient-to-br from-red-500/15 to-red-600/5 rounded-xl p-4 text-center border border-red-500/20">
               <div className="flex items-center justify-center gap-1 mb-1">
                 <ArrowDown className="h-4 w-4 text-red-400" />
                 <p className="text-2xl font-bold text-red-400">{churned}</p>
               </div>
-              <p className="text-[11px] text-muted-foreground">Cancelled</p>
+              <p className="text-xs text-muted-foreground">Cancelled</p>
             </div>
             <div className="bg-gradient-to-br from-amber-500/15 to-amber-600/5 rounded-xl p-4 text-center border border-amber-500/20">
               <p className="text-2xl font-bold text-amber-400">{churnRate.toFixed(1)}%</p>
-              <p className="text-[11px] text-muted-foreground">Churn Rate</p>
+              <p className="text-xs text-muted-foreground">Churn Rate</p>
             </div>
           </div>
         </CardContent>
@@ -327,7 +327,7 @@ export default function AdminRevenue() {
               <TrendingUp className="h-4 w-4 text-emerald-400" />
               Daily Revenue
             </CardTitle>
-            <Badge variant="outline" className="text-[10px]">
+            <Badge variant="outline" className="text-xs">
               14 days • £{totalLast14Days.toFixed(0)}
             </Badge>
           </div>
@@ -388,7 +388,7 @@ export default function AdminRevenue() {
             </div>
             <div className="text-right">
               <p className="text-lg font-bold text-emerald-400">{stripeStats?.stripe.activeSubscriptions || 0}</p>
-              <p className="text-[10px] text-muted-foreground">active</p>
+              <p className="text-xs text-muted-foreground">active</p>
             </div>
           </div>
 
@@ -422,7 +422,7 @@ export default function AdminRevenue() {
               )}>
                 {stripeStats?.supabase.subscribedUsers || 0}
               </p>
-              <p className="text-[10px] text-muted-foreground">synced</p>
+              <p className="text-xs text-muted-foreground">synced</p>
             </div>
           </div>
         </CardContent>

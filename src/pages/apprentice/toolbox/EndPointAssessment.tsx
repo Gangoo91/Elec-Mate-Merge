@@ -1,8 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle, Zap, Heart } from "lucide-react";
+import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle, Zap, Heart, ChevronRight } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
@@ -13,6 +13,7 @@ const EndPointAssessment = () => {
   const activeTab = searchParams.get("tab") || "components";
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const quickStats = [
     { label: "Components", value: "3", icon: ClipboardCheck, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
@@ -567,6 +568,27 @@ const EndPointAssessment = () => {
           </Card>
         ))}
       </div>
+
+      {/* EPA Simulator CTA */}
+      <Card
+        className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-purple-500/5 cursor-pointer active:scale-[0.98] transition-transform touch-manipulation"
+        onClick={() => navigate('/apprentice/epa-simulator')}
+      >
+        <CardContent className="p-5 flex items-center gap-4">
+          <div className="h-14 w-14 rounded-2xl bg-purple-500/20 flex items-center justify-center shrink-0">
+            <Zap className="h-7 w-7 text-purple-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base font-semibold text-purple-300">
+              EPA Readiness Simulator
+            </h3>
+            <p className="text-sm text-white/60 mt-0.5">
+              AI-powered mock discussions, knowledge tests, and a readiness dashboard
+            </p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-purple-400 shrink-0" />
+        </CardContent>
+      </Card>
 
       {/* Introduction Card */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">

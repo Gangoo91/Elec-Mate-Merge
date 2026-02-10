@@ -33,6 +33,7 @@ import {
   TrendingUp,
   Timer,
   Zap,
+  ShieldCheck,
 } from 'lucide-react';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useToast } from '@/hooks/use-toast';
@@ -385,12 +386,20 @@ export function TimeSection() {
                     <p className="text-sm font-bold text-foreground">
                       {formatDuration(entry.duration)}
                     </p>
-                    {entry.isAutomatic && (
-                      <Badge variant="secondary" className="text-[10px]">
-                        <Zap className="h-2.5 w-2.5 mr-0.5" />
-                        Auto
-                      </Badge>
-                    )}
+                    <div className="flex items-center gap-1 justify-end">
+                      {entry.is_supervisor_verified && (
+                        <Badge variant="secondary" className="text-[10px] bg-emerald-500/15 text-emerald-400">
+                          <ShieldCheck className="h-2.5 w-2.5 mr-0.5" />
+                          Verified
+                        </Badge>
+                      )}
+                      {entry.isAutomatic && (
+                        <Badge variant="secondary" className="text-[10px]">
+                          <Zap className="h-2.5 w-2.5 mr-0.5" />
+                          Auto
+                        </Badge>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))

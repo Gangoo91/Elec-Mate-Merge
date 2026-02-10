@@ -369,6 +369,95 @@ const InspectionTestingModule7Section1 = () => {
           </div>
         </section>
 
+        {/* Polarity Test Points Diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
+          <h4 className="text-sm font-bold text-white mb-4">Polarity Test Points — Socket, Switch &amp; Luminaire</h4>
+          <svg viewBox="0 0 800 380" className="w-full h-auto" role="img" aria-label="Polarity test points diagram showing correct conductor connections at socket outlets, light switches, and Edison screw lamp holders">
+            {/* Consumer Unit origin reference */}
+            <rect x="320" y="5" width="160" height="30" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <text x="400" y="25" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">From Consumer Unit (known reference)</text>
+
+            {/* Connection lines down */}
+            <line x1="360" y1="35" x2="140" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
+            <line x1="400" y1="35" x2="400" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
+            <line x1="440" y1="35" x2="660" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
+
+            {/* SOCKET OUTLET */}
+            <rect x="30" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+            <text x="140" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">SOCKET OUTLET</text>
+
+            {/* Socket face */}
+            <rect x="70" y="110" width="140" height="80" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            {/* Earth pin (top) */}
+            <rect x="128" y="118" width="24" height="14" rx="3" fill="rgba(34,197,94,0.15)" stroke="#22C55E" strokeWidth="1.5" />
+            <text x="140" y="129" textAnchor="middle" fill="#22C55E" fontSize="8" fontWeight="bold">E</text>
+            {/* Line pin (right when viewed from front) */}
+            <rect x="164" y="152" width="24" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
+            <text x="176" y="163" textAnchor="middle" fill="#EF4444" fontSize="8" fontWeight="bold">L</text>
+            {/* Neutral pin (left) */}
+            <rect x="92" y="152" width="24" height="14" rx="3" fill="rgba(59,130,246,0.15)" stroke="#3B82F6" strokeWidth="1.5" />
+            <text x="104" y="163" textAnchor="middle" fill="#3B82F6" fontSize="8" fontWeight="bold">N</text>
+
+            <text x="140" y="210" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Viewed from front:</text>
+            <text x="140" y="224" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">E=top, L=right, N=left</text>
+            <text x="140" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">Check: L→L, N→N, E→E</text>
+
+            {/* LIGHT SWITCH */}
+            <rect x="290" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+            <text x="400" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">LIGHT SWITCH</text>
+
+            {/* Switch diagram */}
+            <rect x="350" y="110" width="100" height="70" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            {/* Common terminal */}
+            <rect x="365" y="118" width="30" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
+            <text x="380" y="129" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">COM</text>
+            <text x="410" y="129" fill="rgba(255,255,255,0.4)" fontSize="7">← Line IN</text>
+            {/* Switched live */}
+            <rect x="365" y="153" width="30" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
+            <text x="380" y="164" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">L1</text>
+            <text x="410" y="164" fill="rgba(255,255,255,0.4)" fontSize="7">← Line OUT</text>
+            {/* Switch contact */}
+            <line x1="380" y1="132" x2="380" y2="153" stroke="#FBBF24" strokeWidth="2" strokeDasharray="4,3" />
+
+            <text x="400" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Switch must be in LINE</text>
+            <text x="400" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">conductor (not neutral)</text>
+            <text x="400" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">Switch OFF: no continuity L→lamp</text>
+
+            {/* EDISON SCREW LAMP */}
+            <rect x="550" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+            <text x="660" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">ES LAMP HOLDER</text>
+
+            {/* Lamp holder cross-section */}
+            <path d="M640,130 Q640,110 660,110 Q680,110 680,130 L680,165 Q680,175 660,175 Q640,175 640,165 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            {/* Centre contact */}
+            <rect x="652" y="155" width="16" height="10" rx="2" fill="rgba(239,68,68,0.2)" stroke="#EF4444" strokeWidth="1.5" />
+            <text x="660" y="163" textAnchor="middle" fill="#EF4444" fontSize="6" fontWeight="bold">L</text>
+            {/* Screw contact (outer) */}
+            <path d="M640,130 L640,165" stroke="#3B82F6" strokeWidth="3" />
+            <path d="M680,130 L680,165" stroke="#3B82F6" strokeWidth="3" />
+            <text x="628" y="150" textAnchor="end" fill="#3B82F6" fontSize="8">N</text>
+            <text x="692" y="150" fill="#3B82F6" fontSize="8">N</text>
+
+            <text x="660" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Centre contact = LINE</text>
+            <text x="660" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">Outer screw = NEUTRAL</text>
+            <text x="660" y="245" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">Prevents shock changing lamps</text>
+
+            {/* Key */}
+            <rect x="100" y="280" width="600" height="90" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+            <text x="400" y="300" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">Polarity Verification Requirements (BS 7671 Reg 643.6)</text>
+            <circle cx="160" cy="325" r="6" fill="rgba(239,68,68,0.2)" stroke="#EF4444" strokeWidth="1" />
+            <text x="175" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">Single-pole devices in Line only</text>
+            <circle cx="160" cy="348" r="6" fill="rgba(59,130,246,0.2)" stroke="#3B82F6" strokeWidth="1" />
+            <text x="175" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">ES centre contact = Line</text>
+            <circle cx="450" cy="325" r="6" fill="rgba(34,197,94,0.2)" stroke="#22C55E" strokeWidth="1" />
+            <text x="465" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">Verify at every socket &amp; switch</text>
+            <circle cx="450" cy="348" r="6" fill="rgba(251,191,36,0.2)" stroke="#FBBF24" strokeWidth="1" />
+            <text x="465" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">Reversed polarity = C1 (danger)</text>
+          </svg>
+          <p className="text-xs text-white/40 mt-3">Three key polarity test points: socket outlets (L=right, N=left, E=top viewed from front), light switches (must break line conductor), and Edison screw lamp holders (centre contact must be line, outer screw must be neutral).</p>
+        </div>
+
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 4: Continuity Test Procedure */}

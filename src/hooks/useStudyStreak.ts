@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLearningXP } from './useLearningXP';
 
 interface StudyStreak {
   currentStreak: number;
@@ -12,6 +13,7 @@ interface StudyStreak {
 
 export function useStudyStreak() {
   const { user } = useAuth();
+  const { logActivity } = useLearningXP();
   const [streak, setStreak] = useState<StudyStreak>({
     currentStreak: 0,
     longestStreak: 0,
@@ -146,10 +148,18 @@ export function useStudyStreak() {
 
       // Refresh streak data
       fetchStreak();
+
+      // Log XP for this flashcard session
+      logActivity({
+        activityType: 'flashcard_session',
+        sourceTitle: 'Flashcard Study Session',
+        cardsReviewed: cardsReviewed,
+        metadata: { cardsReviewed },
+      });
     } catch {
       // Table may not exist - fail silently
     }
-  }, [user, fetchStreak]);
+  }, [user, fetchStreak, logActivity]);
 
   // Get formatted streak info
   const getStreakDisplay = useCallback(() => {
