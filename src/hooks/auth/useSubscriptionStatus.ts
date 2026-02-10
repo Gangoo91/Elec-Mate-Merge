@@ -116,19 +116,6 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       }
     }
 
-    // OPTIMISATION: Skip Stripe API call for trial users who haven't subscribed yet
-    // Their trial status is already calculated from profile.created_at above
-    // This prevents unnecessary 5-second API calls/timeouts for new users
-    const isAlreadySubscribed = profile.subscribed || profile.free_access_granted;
-    if (!isAlreadySubscribed) {
-      // User is on trial or expired trial - no Stripe subscription to check
-      // Mark as checked so we don't keep trying
-      hasCheckedRef.current = true;
-      profileIdRef.current = profile.id;
-      setState((prev) => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
-      return;
-    }
-
     setState((prev) => ({ ...prev, isCheckingStatus: true, lastError: null }));
 
     const MAX_RETRIES = 2;
