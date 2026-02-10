@@ -116,6 +116,15 @@ export default function OJTHub() {
 
     const durationMinutes = parseFloat(quickLogData.duration) * 60;
 
+    if (isNaN(durationMinutes) || durationMinutes <= 0) {
+      toast({
+        title: 'Invalid duration',
+        description: 'Please enter a valid duration',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     await addTimeEntry({
       date: quickLogData.date,
       duration: durationMinutes,
@@ -257,33 +266,34 @@ export default function OJTHub() {
               />
             </div>
 
-            {/* Duration & Date */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Duration (hours)</label>
-                <Input
-                  type="number"
-                  step="0.5"
-                  min="0.5"
-                  placeholder="e.g., 2.5"
-                  value={quickLogData.duration}
-                  onChange={(e) =>
-                    setQuickLogData({ ...quickLogData, duration: e.target.value })
-                  }
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Date</label>
-                <Input
-                  type="date"
-                  value={quickLogData.date}
-                  onChange={(e) =>
-                    setQuickLogData({ ...quickLogData, date: e.target.value })
-                  }
-                  className="h-11 touch-manipulation"
-                />
-              </div>
+            {/* Duration */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Duration (hours)</label>
+              <Input
+                type="number"
+                step="0.5"
+                min="0.5"
+                inputMode="decimal"
+                placeholder="e.g., 2.5"
+                value={quickLogData.duration}
+                onChange={(e) =>
+                  setQuickLogData({ ...quickLogData, duration: e.target.value })
+                }
+                className="h-12 text-base touch-manipulation"
+              />
+            </div>
+
+            {/* Date */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Date</label>
+              <Input
+                type="date"
+                value={quickLogData.date}
+                onChange={(e) =>
+                  setQuickLogData({ ...quickLogData, date: e.target.value })
+                }
+                className="h-12 text-base touch-manipulation w-full"
+              />
             </div>
 
             {/* Notes */}

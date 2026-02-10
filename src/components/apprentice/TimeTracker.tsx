@@ -28,7 +28,7 @@ const TimeTracker = () => {
     .slice(0, 5);
 
   const handleAddEntry = (duration: number, activity: string, notes: string) => {
-    addTimeEntry(duration, activity, notes);
+    addTimeEntry({ duration, activity, notes });
     setShowForm(false);
   };
 

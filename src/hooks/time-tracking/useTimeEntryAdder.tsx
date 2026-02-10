@@ -2,13 +2,23 @@
 import { supabase } from "@/integrations/supabase/client";
 import { TimeEntry } from "@/types/time-tracking";
 
+interface AddTimeEntryParams {
+  date?: string;
+  duration: number;
+  activity: string;
+  notes?: string;
+  location?: string;
+  supervisor?: string;
+}
+
 export const useTimeEntryAdder = (userId: string | null, setManualEntries: React.Dispatch<React.SetStateAction<TimeEntry[]>>) => {
   // Function to add a new time entry
-  const addTimeEntry = async (duration: number, activity: string, notes: string) => {
+  const addTimeEntry = async (params: AddTimeEntryParams) => {
+    const { date, duration, activity, notes = '', location, supervisor } = params;
     try {
       const newEntry: TimeEntry = {
         id: `entry-${Date.now()}`,
-        date: new Date().toISOString().split('T')[0],
+        date: date || new Date().toISOString().split('T')[0],
         duration,
         activity,
         notes
@@ -57,10 +67,10 @@ export const useTimeEntryAdder = (userId: string | null, setManualEntries: React
       // Fallback to local state only
       setManualEntries(prev => [{
         id: `entry-${Date.now()}`,
-        date: new Date().toISOString().split('T')[0],
+        date: date || new Date().toISOString().split('T')[0],
         duration,
         activity,
-        notes
+        notes: notes || ''
       }, ...prev]);
     }
   };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -35,6 +35,23 @@ export function ProgressSection() {
   const { totalTime, weeklyTime, timeEntries } = useTimeEntries();
   const { qualificationCode, qualificationName } = useStudentQualification();
   const [requirementsOpen, setRequirementsOpen] = useState(false);
+
+  // Build set of evidenced ACs from portfolio entries (same logic as PortfolioHub)
+  const evidencedACs = useMemo(() => {
+    const set = new Set<string>();
+    for (const pe of entries) {
+      for (const ac of pe.assessmentCriteria || []) {
+        const acMatch = ac.match(/\bAC\s+(\S+)/);
+        if (!acMatch) continue;
+        const acCode = acMatch[1];
+        const primaryUnit = ac.match(/^(\S+)/)?.[1];
+        if (primaryUnit) set.add(`${primaryUnit}.${acCode}`);
+        const parenUnit = ac.match(/\(Unit\s+(\S+)\)/i);
+        if (parenUnit) set.add(`${parenUnit[1]}.${acCode}`);
+      }
+    }
+    return set;
+  }, [entries]);
 
   const currentHours = Math.round(otjGoal?.current_hours || 0);
   const targetHours = otjGoal?.target_hours || 400;
@@ -130,6 +147,7 @@ export function ProgressSection() {
           <QualificationProgress
             qualificationCode={qualificationCode}
             qualificationName={qualificationName}
+            evidencedACs={evidencedACs}
           />
 
           {/* View Requirements button */}
@@ -145,6 +163,7 @@ export function ProgressSection() {
             open={requirementsOpen}
             onOpenChange={setRequirementsOpen}
             qualificationCode={qualificationCode}
+            evidencedACs={evidencedACs}
           />
         </>
       )}

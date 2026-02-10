@@ -38,7 +38,7 @@ export const useAutomatedTraining = (autoStart = false) => {
     currentActivity,
     minimumEntryDuration: 30, // Only create entries after 30 minutes
     onSave: (minutes, activity) => {
-      addTimeEntry(minutes, activity, "Auto-tracked training time");
+      addTimeEntry({ duration: minutes, activity, notes: "Auto-tracked training time" });
     }
   });
 

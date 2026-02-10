@@ -149,13 +149,7 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
     [entries, qualificationCode]
   );
 
-  // Auto-fetch when entries change and we don't have a cached insight
-  useEffect(() => {
-    if (entries.length >= 3 && !insight && !isLoading) {
-      fetchInsight();
-    }
-  }, [entries.length, insight, isLoading, fetchInsight]);
-
+  // Manual only — no auto-fetch to avoid burning tokens
   const refresh = useCallback(() => fetchInsight(true), [fetchInsight]);
 
   return { insight, isLoading, error, refresh };

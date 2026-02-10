@@ -414,7 +414,7 @@ export default function SiteDiary() {
           )}
 
           {/* AI Coach card — only when 3+ entries */}
-          {entries.length >= 3 && (coachInsight || coachLoading) && (
+          {entries.length >= 3 && (
             <div className="rounded-xl overflow-hidden border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.06] to-blue-500/[0.06]">
               {/* Gradient accent */}
               <div className="h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500" />
@@ -448,6 +448,30 @@ export default function SiteDiary() {
                   )}
                 </div>
               </button>
+
+              {/* Get insights button — when no cached insight */}
+              {coachExpanded && !coachInsight && !coachLoading && (
+                <div className="px-4 pb-4">
+                  <button
+                    onClick={refreshCoach}
+                    className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    Get AI Insights
+                  </button>
+                  <p className="text-[11px] text-white/40 text-center mt-2">
+                    Analyses your recent diary entries for patterns and guidance
+                  </p>
+                </div>
+              )}
+
+              {/* Loading state */}
+              {coachExpanded && coachLoading && !coachInsight && (
+                <div className="flex items-center justify-center py-6 px-4">
+                  <div className="animate-spin h-5 w-5 border-2 border-purple-400 border-t-transparent rounded-full" />
+                  <span className="text-xs text-white/50 ml-2">Analysing your diary...</span>
+                </div>
+              )}
 
               {/* Expanded content */}
               {coachExpanded && coachInsight && (
