@@ -54,12 +54,12 @@ const typeIcons: Record<string, string> = {
 };
 
 // Status colors
-const statusConfig: Record<BriefingStatus, { bg: string; text: string; label: string }> = {
-  scheduled: { bg: "bg-blue-500/10", text: "text-blue-400", label: "Scheduled" },
-  in_progress: { bg: "bg-amber-500/10", text: "text-amber-400", label: "In Progress" },
-  completed: { bg: "bg-emerald-500/10", text: "text-emerald-400", label: "Completed" },
-  cancelled: { bg: "bg-red-500/10", text: "text-red-400", label: "Cancelled" },
-  draft: { bg: "bg-white/10", text: "text-white/60", label: "Draft" },
+const statusConfig: Record<BriefingStatus, { bg: string; text: string; border: string; label: string }> = {
+  scheduled: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-400/20", label: "Scheduled" },
+  in_progress: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-400/20", label: "In Progress" },
+  completed: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-400/20", label: "Completed" },
+  cancelled: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-400/20", label: "Cancelled" },
+  draft: { bg: "bg-white/10", text: "text-white/60", border: "border-white/20", label: "Draft" },
 };
 
 // Template Card
@@ -214,7 +214,7 @@ export function HistoryCard({
               <h3 className="font-semibold text-white truncate">{briefing.name}</h3>
               <Badge className={cn(
                 "border text-[10px] px-1.5 py-0",
-                status.bg, status.text, `border-${status.text.replace('text-', '')}/20`
+                status.bg, status.text, status.border
               )}>
                 {status.label}
               </Badge>
@@ -244,6 +244,27 @@ export function HistoryCard({
             </span>
           </div>
         </div>
+
+        {/* Signature progress bar */}
+        {briefing.signedCount !== undefined && briefing.attendeeCount > 0 && (
+          <div className="mb-4">
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{
+                  width: `${((briefing.signedCount || 0) / briefing.attendeeCount) * 100}%`,
+                }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className={cn(
+                  "h-full rounded-full",
+                  briefing.signedCount === briefing.attendeeCount
+                    ? "bg-emerald-400"
+                    : "bg-amber-400"
+                )}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex gap-2">

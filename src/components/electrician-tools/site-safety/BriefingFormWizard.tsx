@@ -30,6 +30,7 @@ import {
   AlertTriangle,
   ImageIcon,
   Share2,
+  UserPlus,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -40,9 +41,8 @@ import {
   defaultHazards,
   RiskLevelSlider,
   RiskLevel,
-  SignaturePad,
   BriefingShareSheet,
-  AttendeeSignatureCard,
+  PostSaveShareSheet,
 } from './briefings';
 import { TemplateSelector } from './briefing-templates/TemplateSelector';
 
@@ -69,6 +69,7 @@ const briefingSchema = z.object({
     .array(
       z.object({
         name: z.string(),
+        role: z.string().optional(),
         signature: z.string().optional(),
         timestamp: z.string().optional(),
       })
@@ -102,7 +103,7 @@ interface BriefingFormWizardProps {
   onSuccess: () => void;
 }
 
-const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Review & Signatures'];
+const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Attendees'];
 
 export const BriefingFormWizard = ({
   initialData,
@@ -115,9 +116,9 @@ export const BriefingFormWizard = ({
   const [aiGenerating, setAiGenerating] = useState(false);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
   const [newAttendeeName, setNewAttendeeName] = useState('');
-  const [signingAttendeeIndex, setSigningAttendeeIndex] = useState<number | null>(null);
   const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
   const [showShareSheet, setShowShareSheet] = useState(false);
+  const [showPostSaveShare, setShowPostSaveShare] = useState(false);
   const [savedBriefingId, setSavedBriefingId] = useState<string | null>(initialData?.id || null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
 
@@ -280,10 +281,18 @@ export const BriefingFormWizard = ({
   // Attendee management
   const addAttendee = () => {
     if (!newAttendeeName.trim()) return;
-    setValue('attendees', [
-      ...(formData.attendees || []),
-      { name: newAttendeeName.trim(), signature: undefined, timestamp: undefined },
-    ]);
+    // Support comma-separated names for quick bulk add
+    const names = newAttendeeName
+      .split(',')
+      .map((n) => n.trim())
+      .filter((n) => n.length > 0);
+    const newEntries = names.map((name) => ({
+      name,
+      role: undefined as string | undefined,
+      signature: undefined as string | undefined,
+      timestamp: undefined as string | undefined,
+    }));
+    setValue('attendees', [...(formData.attendees || []), ...newEntries]);
     setNewAttendeeName('');
   };
 
@@ -294,15 +303,10 @@ export const BriefingFormWizard = ({
     );
   };
 
-  const handleSignature = (index: number, signature: string | undefined) => {
+  const updateAttendeeRole = (index: number, role: string) => {
     const updated = [...(formData.attendees || [])];
-    updated[index] = {
-      ...updated[index],
-      signature,
-      timestamp: signature ? new Date().toLocaleString() : undefined,
-    };
+    updated[index] = { ...updated[index], role };
     setValue('attendees', updated);
-    setSigningAttendeeIndex(null);
   };
 
   // Save briefing
@@ -366,11 +370,14 @@ export const BriefingFormWizard = ({
         description: 'Successfully saved.',
       });
 
+      onSuccess();
+
       if (asDraft) {
-        // Keep wizard open so user can share the link
-        onSuccess();
+        // Keep wizard open for drafts
+      } else if ((formData.attendees || []).length > 0) {
+        // Show post-save share sheet when there are attendees to sign
+        setShowPostSaveShare(true);
       } else {
-        onSuccess();
         onClose();
       }
     } catch (error: any) {
@@ -394,7 +401,7 @@ export const BriefingFormWizard = ({
       case 3:
         return true; // Photos optional
       case 4:
-        return true; // Review step
+        return true; // Attendees step
       default:
         return true;
     }
@@ -782,251 +789,172 @@ export const BriefingFormWizard = ({
         );
       }
 
-      // Step 5: Review & Signatures
+      // Step 5: Attendees (Sign-Off Register)
       case 4: {
-        const briefingTypeInfo = briefingTypes.find((t) => t.id === formData.briefingType);
-
-        const riskColorMap: Record<string, { bg: string; text: string; border: string }> = {
-          low: {
-            bg: 'bg-emerald-500/15',
-            text: 'text-emerald-400',
-            border: 'border-emerald-500/30',
-          },
-          medium: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
-          high: { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' },
-        };
-
-        const hazardColorMap: Record<string, { bg: string; text: string }> = {
-          yellow: { bg: 'bg-elec-yellow/15', text: 'text-elec-yellow' },
-          red: { bg: 'bg-red-500/15', text: 'text-red-400' },
-          purple: { bg: 'bg-purple-500/15', text: 'text-purple-400' },
-          amber: { bg: 'bg-amber-500/15', text: 'text-amber-400' },
-          blue: { bg: 'bg-blue-500/15', text: 'text-blue-400' },
-          green: { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
-          pink: { bg: 'bg-pink-500/15', text: 'text-pink-400' },
-          orange: { bg: 'bg-orange-500/15', text: 'text-orange-400' },
-          cyan: { bg: 'bg-cyan-500/15', text: 'text-cyan-400' },
-          gray: { bg: 'bg-gray-500/15', text: 'text-gray-400' },
-          slate: { bg: 'bg-slate-500/15', text: 'text-slate-400' },
-          rose: { bg: 'bg-rose-500/15', text: 'text-rose-400' },
-        };
-
-        const riskColors = riskColorMap[formData.riskLevel] || riskColorMap.medium;
-        const signedCount = (formData.attendees || []).filter((a) => a.signature).length;
         const totalAttendees = (formData.attendees || []).length;
+        const briefingTypeInfo = briefingTypes.find((t) => t.id === formData.briefingType);
 
         return (
           <div className="space-y-5">
-            {/* Summary Document Card */}
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
-              {/* Card Header - type badge */}
-              <div className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    {briefingTypeInfo && (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-elec-yellow/80 mb-1.5">
-                        <FileText className="h-3 w-3" />
-                        {briefingTypeInfo.label} Briefing
-                      </span>
-                    )}
-                    <h3 className="text-base sm:text-lg font-semibold text-white leading-tight truncate">
-                      {formData.briefingTitle}
-                    </h3>
-                  </div>
-                  <div
-                    className={cn(
-                      'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0',
-                      riskColors.bg,
-                      riskColors.text,
-                      'border',
-                      riskColors.border
-                    )}
-                  >
-                    <AlertTriangle className="h-3 w-3" />
-                    {formData.riskLevel.charAt(0).toUpperCase() + formData.riskLevel.slice(1)} Risk
-                  </div>
-                </div>
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-elec-yellow" />
+                <label className="text-sm font-semibold text-white">Sign-Off Register</label>
               </div>
+              {totalAttendees > 0 && (
+                <motion.span
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow"
+                >
+                  {totalAttendees} {totalAttendees === 1 ? 'person' : 'people'}
+                </motion.span>
+              )}
+            </div>
+            <p className="text-xs text-white/50 -mt-2">
+              Add everyone who needs to sign this briefing. Signatures are collected after sharing.
+            </p>
 
-              {/* Info Rows */}
+            {/* Add Attendee — quick add */}
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <IOSInput
+                  placeholder="Name(s) — e.g. John, Dave, Mike"
+                  value={newAttendeeName}
+                  onChange={(e) => setNewAttendeeName(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addAttendee())}
+                  icon={<UserPlus className="h-5 w-5" />}
+                />
+                <Button
+                  type="button"
+                  onClick={addAttendee}
+                  disabled={!newAttendeeName.trim()}
+                  className="h-[50px] px-5 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-semibold"
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add
+                </Button>
+              </div>
+              <p className="text-xs text-white/30">
+                Separate multiple names with commas to add them all at once
+              </p>
+            </div>
+
+            {/* Attendee List — numbered register */}
+            <div className="space-y-2">
+              <AnimatePresence>
+                {(formData.attendees || []).map((attendee, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -20, height: 0 }}
+                    transition={{ delay: idx * 0.03 }}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10"
+                  >
+                    {/* Row number */}
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06] shrink-0">
+                      <span className="text-xs font-bold text-white/50">{idx + 1}</span>
+                    </div>
+
+                    {/* Name & role */}
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <p className="text-sm font-medium text-white truncate">{attendee.name}</p>
+                      <input
+                        type="text"
+                        value={attendee.role || ''}
+                        onChange={(e) => updateAttendeeRole(idx, e.target.value)}
+                        placeholder="Trade / role (optional)"
+                        className={cn(
+                          'w-full text-xs px-0 py-0.5 bg-transparent border-0 text-white/50',
+                          'placeholder:text-white/25 focus:outline-none focus:text-white/70',
+                          'touch-manipulation'
+                        )}
+                      />
+                    </div>
+
+                    {/* Remove button */}
+                    <button
+                      type="button"
+                      onClick={() => removeAttendee(idx)}
+                      className="flex items-center justify-center w-11 h-11 rounded-xl text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+
+              {totalAttendees === 0 && (
+                <div className="text-center py-8">
+                  <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-dashed border-white/15 flex items-center justify-center mx-auto mb-3">
+                    <UserPlus className="h-7 w-7 text-white/15" />
+                  </div>
+                  <p className="text-sm font-medium text-white/30 mb-1">No attendees added</p>
+                  <p className="text-xs text-white/20">
+                    Add the people who need to sign off on this briefing
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Review Summary */}
+            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
+              <div className="px-4 pt-3 pb-2 border-b border-white/[0.06]">
+                <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  Review Summary
+                </span>
+              </div>
               <div className="px-4 py-3 space-y-2.5">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                    <FileText className="h-3.5 w-3.5 text-white/50" />
+                  </div>
+                  <span className="text-white/70 truncate">
+                    {briefingTypeInfo?.label || formData.briefingType} — {formData.briefingTitle}
+                  </span>
+                </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
                     <MapPin className="h-3.5 w-3.5 text-white/50" />
                   </div>
                   <span className="text-white/70 truncate">{formData.siteName}</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm flex-wrap">
-                  <div className="flex items-center gap-3 shrink-0">
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                      <Calendar className="h-3.5 w-3.5 text-white/50" />
-                    </div>
-                    <span className="text-white/70 whitespace-nowrap">
-                      {formData.briefingDate ? new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}
-                    </span>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                    <Calendar className="h-3.5 w-3.5 text-white/50" />
                   </div>
-                  <span className="text-white/25 hidden sm:inline">|</span>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                      <Clock className="h-3.5 w-3.5 text-white/50" />
-                    </div>
-                    <span className="text-white/70 whitespace-nowrap">{formData.briefingTime}</span>
-                  </div>
+                  <span className="text-white/70 whitespace-nowrap">
+                    {formData.briefingDate
+                      ? new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })
+                      : ''}{' '}
+                    at {formData.briefingTime}
+                  </span>
                 </div>
-              </div>
-
-              {/* Hazard Pills */}
-              {formData.hazards && formData.hazards.length > 0 && (
-                <div className="px-4 py-3 border-t border-white/[0.06]">
-                  <div className="flex items-center gap-2 mb-2.5">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
                     <ShieldAlert className="h-3.5 w-3.5 text-white/50" />
-                    <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
-                      Identified Hazards
+                  </div>
+                  <span className="text-white/70">
+                    {formData.hazards?.length || 0} hazards identified
+                  </span>
+                </div>
+                {(formData.photos?.length || 0) > 0 && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
+                      <Camera className="h-3.5 w-3.5 text-white/50" />
+                    </div>
+                    <span className="text-white/70">
+                      {formData.photos!.length} photo{formData.photos!.length > 1 ? 's' : ''}
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {formData.hazards.map((hazardId) => {
-                      const hazardInfo = defaultHazards.find((h) => h.id === hazardId);
-                      const colors = hazardInfo
-                        ? hazardColorMap[hazardInfo.color] || hazardColorMap.gray
-                        : hazardColorMap.gray;
-                      return (
-                        <span
-                          key={hazardId}
-                          className={cn(
-                            'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium',
-                            colors.bg,
-                            colors.text
-                          )}
-                        >
-                          {hazardInfo?.label || hazardId.replace('custom-', '').replace(/-/g, ' ')}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* Photo Thumbnails */}
-              {formData.photos && formData.photos.length > 0 && (
-                <div className="px-4 py-3 border-t border-white/[0.06]">
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <Camera className="h-3.5 w-3.5 text-white/50" />
-                    <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
-                      Site Photos ({formData.photos.length})
-                    </span>
-                  </div>
-                  <div className="flex gap-2 overflow-x-auto pb-1">
-                    {formData.photos.map((photo, idx) => (
-                      <div
-                        key={idx}
-                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-white/10 shrink-0"
-                      >
-                        <img
-                          src={photo.url}
-                          alt={`Photo ${idx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Attendees & Signatures */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4.5 w-4.5 text-elec-yellow" />
-                  <label className="text-sm font-semibold text-white">Attendees & Signatures</label>
-                </div>
-                <span
-                  className={cn(
-                    'text-xs font-medium px-2.5 py-1 rounded-full',
-                    totalAttendees > 0 && signedCount === totalAttendees
-                      ? 'bg-emerald-500/20 text-emerald-400'
-                      : 'bg-white/10 text-white/50'
-                  )}
-                >
-                  {signedCount} of {totalAttendees} signed
-                </span>
+                )}
               </div>
-
-              {/* Add Attendee */}
-              <div className="flex gap-2">
-                <IOSInput
-                  placeholder="Enter attendee name"
-                  value={newAttendeeName}
-                  onChange={(e) => setNewAttendeeName(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addAttendee())}
-                  icon={<Users className="h-5 w-5" />}
-                />
-                <Button
-                  type="button"
-                  onClick={addAttendee}
-                  disabled={!newAttendeeName.trim()}
-                  className="h-[50px] px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Attendee List */}
-              <AnimatePresence>
-                {(formData.attendees || []).map((attendee, idx) => (
-                  <div key={idx}>
-                    {signingAttendeeIndex === idx ? (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="space-y-2"
-                      >
-                        <SignaturePad
-                          name={`Signature for ${attendee.name}`}
-                          value={attendee.signature}
-                          onChange={(sig) => handleSignature(idx, sig)}
-                        />
-                        <div className="flex gap-2">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => setSigningAttendeeIndex(null)}
-                            className="flex-1 h-11 text-white/60"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            type="button"
-                            onClick={() => handleSignature(idx, attendee.signature)}
-                            disabled={!attendee.signature}
-                            className="flex-1 h-11 bg-emerald-500 text-white hover:bg-emerald-600"
-                          >
-                            <Check className="h-4 w-4 mr-1" />
-                            Confirm
-                          </Button>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <AttendeeSignatureCard
-                        name={attendee.name}
-                        signed={!!attendee.signature}
-                        timestamp={attendee.timestamp}
-                        onSign={() => setSigningAttendeeIndex(idx)}
-                        onRemove={() => removeAttendee(idx)}
-                      />
-                    )}
-                  </div>
-                ))}
-              </AnimatePresence>
-
-              {totalAttendees === 0 && (
-                <div className="text-center py-6">
-                  <Users className="h-8 w-8 text-white/10 mx-auto mb-2" />
-                  <p className="text-sm text-white/30">Add attendees to collect signatures</p>
-                </div>
-              )}
             </div>
           </div>
         );
@@ -1055,7 +983,10 @@ export const BriefingFormWizard = ({
               </p>
               <p className="text-sm font-medium text-white">{STEP_TITLES[step]}</p>
             </div>
-            <button onClick={onClose} className="p-2.5 -mr-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center">
+            <button
+              onClick={onClose}
+              className="p-2.5 -mr-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            >
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -1157,6 +1088,21 @@ export const BriefingFormWizard = ({
               briefingId={savedBriefingId}
               briefingName={formData.briefingTitle}
               onClose={() => setShowShareSheet(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Post-save share sheet — shown after saving with attendees */}
+        <AnimatePresence>
+          {showPostSaveShare && savedBriefingId && (
+            <PostSaveShareSheet
+              briefingId={savedBriefingId}
+              briefingName={formData.briefingTitle}
+              attendeeCount={(formData.attendees || []).length}
+              onClose={() => {
+                setShowPostSaveShare(false);
+                onClose();
+              }}
             />
           )}
         </AnimatePresence>

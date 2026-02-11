@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Loader2 } from "lucide-react";
+import { Loader2, FileText, Clock, CheckCircle, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { BriefingFormWizard } from "./BriefingFormWizard";
+import { BriefingDetailView } from "./BriefingDetailView";
 import { TemplateLibrary } from "./briefing-templates/TemplateLibrary";
 import {
   BriefingHeroCard,
@@ -20,7 +21,7 @@ interface TeamBriefing {
   location: string;
   briefing_date: string;
   briefing_time: string;
-  attendees: Array<{ name: string; signature?: string; timestamp?: string; photo?: string }>;
+  attendees: Array<{ name: string; role?: string; signature?: string; timestamp?: string; photo?: string }>;
   key_points: string[];
   safety_points: string[];
   equipment_required: string[];
@@ -57,6 +58,7 @@ const TeamBriefingTemplates = () => {
   const [loading, setLoading] = useState(true);
   const [showAIWizard, setShowAIWizard] = useState(false);
   const [editingBriefing, setEditingBriefing] = useState<any>(null);
+  const [viewingBriefing, setViewingBriefing] = useState<any>(null);
   const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>("templates");
@@ -104,7 +106,7 @@ const TeamBriefingTemplates = () => {
         (data || []).map((item) => ({
           ...item,
           attendees: Array.isArray(item.attendees)
-            ? (item.attendees as Array<{ name: string; signature?: string; timestamp?: string; photo?: string }>)
+            ? (item.attendees as Array<{ name: string; role?: string; signature?: string; timestamp?: string; photo?: string }>)
             : [],
           key_points: item.key_points || [],
           safety_points: item.safety_points || [],
@@ -131,6 +133,10 @@ const TeamBriefingTemplates = () => {
     setEditingBriefing(briefing);
     setNearMissData(null);
     setShowAIWizard(true);
+  };
+
+  const handleView = (briefing: any) => {
+    setViewingBriefing(briefing);
   };
 
   const handleDuplicate = async (briefing: any) => {
@@ -241,6 +247,23 @@ const TeamBriefingTemplates = () => {
     return <TemplateLibrary onClose={() => setShowTemplateLibrary(false)} />;
   }
 
+  if (viewingBriefing) {
+    return (
+      <BriefingDetailView
+        briefing={viewingBriefing}
+        onClose={() => {
+          setViewingBriefing(null);
+          fetchBriefings();
+        }}
+        onEdit={() => {
+          const b = viewingBriefing;
+          setViewingBriefing(null);
+          handleEdit(b);
+        }}
+      />
+    );
+  }
+
   if (showAIWizard) {
     return (
       <BriefingFormWizard
@@ -278,7 +301,6 @@ const TeamBriefingTemplates = () => {
         {/* Templates Tab */}
         {activeTab === "templates" && (
           <div className="space-y-3">
-            {/* Default templates */}
             <TemplateCard
               template={{
                 id: "site-induction",
@@ -327,7 +349,6 @@ const TeamBriefingTemplates = () => {
               index={3}
             />
 
-            {/* View all templates button */}
             <button
               onClick={() => setShowTemplateLibrary(true)}
               className="w-full p-4 rounded-xl border border-dashed border-white/20 text-white/50 hover:text-white hover:bg-white/5 hover:border-white/30 transition-all min-h-[56px] active:scale-[0.98]"
@@ -354,7 +375,7 @@ const TeamBriefingTemplates = () => {
                     status: briefing.status,
                     signedCount: briefing.attendees.filter((a) => a.signature).length,
                   }}
-                  onView={() => handleEdit(briefing)}
+                  onView={() => handleView(briefing)}
                   onShare={() => {
                     toast({
                       title: "Share",
@@ -371,9 +392,21 @@ const TeamBriefingTemplates = () => {
                 />
               ))
             ) : (
-              <div className="text-center py-12 text-white/50">
-                <p>No completed briefings yet</p>
-                <p className="text-sm mt-1">Create your first briefing to see it here</p>
+              <div className="flex flex-col items-center justify-center py-16">
+                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                  <FileText className="h-8 w-8 text-white/20" />
+                </div>
+                <h3 className="text-base font-semibold text-white/70 mb-1">No Completed Briefings</h3>
+                <p className="text-sm text-white/40 text-center max-w-xs mb-5">
+                  Completed briefings will appear here with full signature records.
+                </p>
+                <button
+                  onClick={handleCreateNew}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation min-h-[44px] active:scale-[0.97] transition-transform"
+                >
+                  <Plus className="h-4 w-4" />
+                  Create Briefing
+                </button>
               </div>
             )}
           </div>
@@ -396,14 +429,19 @@ const TeamBriefingTemplates = () => {
                     status: briefing.status,
                     signedCount: briefing.attendees.filter((a) => a.signature).length,
                   }}
-                  onContinue={() => handleEdit(briefing)}
+                  onContinue={() => handleView(briefing)}
                   index={index}
                 />
               ))
             ) : (
-              <div className="text-center py-12 text-white/50">
-                <p>No pending briefings</p>
-                <p className="text-sm mt-1">All briefings are up to date</p>
+              <div className="flex flex-col items-center justify-center py-16">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
+                  <CheckCircle className="h-8 w-8 text-emerald-400/60" />
+                </div>
+                <h3 className="text-base font-semibold text-white/70 mb-1">All Clear</h3>
+                <p className="text-sm text-white/40 text-center max-w-xs">
+                  No pending signatures — all briefings are up to date.
+                </p>
               </div>
             )}
           </div>

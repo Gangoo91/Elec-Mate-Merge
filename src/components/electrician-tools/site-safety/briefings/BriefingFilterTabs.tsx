@@ -146,7 +146,7 @@ export function BriefingFilterPills({
               <span
                 className={cn(
                   "min-w-[18px] h-[18px] flex items-center justify-center",
-                  "px-1 rounded-full text-[10px] font-bold",
+                  "px-1 rounded-full text-xs font-bold",
                   isActive ? "bg-white/20" : "bg-white/10"
                 )}
               >

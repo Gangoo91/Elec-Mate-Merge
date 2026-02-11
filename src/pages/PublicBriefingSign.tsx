@@ -16,6 +16,7 @@ import {
   Users,
   Pen,
   RotateCcw,
+  ChevronDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
@@ -94,10 +95,12 @@ const PublicBriefingSign = () => {
   const [submitting, setSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
+  const [showWalkInForm, setShowWalkInForm] = useState(false);
 
   // Canvas refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const signFormRef = useRef<HTMLDivElement>(null);
   const isDrawing = useRef(false);
 
   useEffect(() => {
@@ -106,7 +109,6 @@ const PublicBriefingSign = () => {
 
   useEffect(() => {
     if (!loading && briefing && !showSuccess) {
-      // Small delay to ensure canvas is mounted in the DOM
       const timer = setTimeout(() => initCanvas(), 50);
       return () => clearTimeout(timer);
     }
@@ -161,7 +163,6 @@ const PublicBriefingSign = () => {
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, rect.width, rect.height);
 
-    // Signature line hint
     ctx.strokeStyle = '#e5e7eb';
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -219,13 +220,21 @@ const PublicBriefingSign = () => {
     initCanvas();
   };
 
+  // Tap-to-sign: pre-fill name and scroll to form
+  const handleTapToSign = (name: string) => {
+    setSignerName(name);
+    setShowWalkInForm(false);
+    setTimeout(() => {
+      signFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
   // --- Submit ---
   const handleSign = async () => {
     if (!signerName.trim() || !signatureData || !token) return;
 
     setSubmitting(true);
     try {
-      // Get IP address (best effort)
       let clientIp = '';
       try {
         const ipRes = await fetch('https://api.ipify.org?format=json');
@@ -304,7 +313,7 @@ const PublicBriefingSign = () => {
           </motion.div>
           <h1 className="text-2xl font-bold text-white mb-2">Signed Successfully</h1>
           <p className="text-white/50 text-sm mb-6">
-            Thank you, {signerName}. Your signature for "{briefing.briefing_name}" has been
+            Thank you, {signerName}. Your signature for &quot;{briefing.briefing_name}&quot; has been
             recorded.
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/40">
@@ -318,7 +327,11 @@ const PublicBriefingSign = () => {
   // --- Main signing page ---
   const riskStyle = RISK_STYLES[briefing.risk_level || 'medium'] || RISK_STYLES.medium;
   const signatures = briefing.attendee_signatures || [];
-  const attendeeNames = (briefing.attendees || []).map((a: any) => a.name);
+  const expectedAttendees = briefing.attendees || [];
+  const signedNames = new Set(signatures.map((s: any) => s.name?.toLowerCase?.()));
+  const signedCount = signatures.length;
+  const totalExpected = expectedAttendees.length;
+  const progressPct = totalExpected > 0 ? Math.round((signedCount / totalExpected) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
@@ -344,7 +357,7 @@ const PublicBriefingSign = () => {
                 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border',
                 riskStyle.bg,
                 riskStyle.text,
-                riskStyle.border
+                riskStyle.border,
               )}
             >
               <AlertTriangle className="h-3 w-3" />
@@ -376,7 +389,11 @@ const PublicBriefingSign = () => {
                   <Calendar className="h-3.5 w-3.5 text-white/50" />
                 </div>
                 <span className="text-white/70 whitespace-nowrap">
-                  {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </span>
               </div>
               <span className="text-white/20 hidden sm:inline">|</span>
@@ -392,7 +409,9 @@ const PublicBriefingSign = () => {
                 <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
                   <User className="h-3.5 w-3.5 text-white/50" />
                 </div>
-                <span className="text-white/70 truncate min-w-0">Presented by {briefing.created_by_name}</span>
+                <span className="text-white/70 truncate min-w-0">
+                  Presented by {briefing.created_by_name}
+                </span>
               </div>
             )}
           </div>
@@ -412,7 +431,7 @@ const PublicBriefingSign = () => {
                     key={h}
                     className={cn(
                       'px-2.5 py-1 rounded-full text-xs font-medium',
-                      HAZARD_COLOURS[h] || 'bg-gray-500/15 text-gray-300'
+                      HAZARD_COLOURS[h] || 'bg-gray-500/15 text-gray-300',
                     )}
                   >
                     {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
@@ -422,7 +441,7 @@ const PublicBriefingSign = () => {
             </div>
           )}
 
-          {/* Key safety points */}
+          {/* Safety warning */}
           {briefing.safety_warning && (
             <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-300">
               <span className="font-semibold">Safety Warning: </span>
@@ -430,170 +449,266 @@ const PublicBriefingSign = () => {
             </div>
           )}
 
-          {/* Already signed */}
-          {signatures.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Users className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
-                  Already Signed ({signatures.length})
+          {/* Attendee Sign-Off Register */}
+          {expectedAttendees.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Users className="h-3.5 w-3.5 text-white/40" />
+                  <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                    Attendees
+                  </span>
+                </div>
+                <span className="text-xs text-white/50">
+                  {signedCount} of {totalExpected} signed
                 </span>
               </div>
+
+              {/* Progress bar */}
+              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className={cn(
+                    'h-full rounded-full',
+                    signedCount === totalExpected ? 'bg-emerald-400' : 'bg-amber-400',
+                  )}
+                />
+              </div>
+
+              {/* Attendee list */}
               <div className="space-y-1.5">
-                {signatures.map((sig: any, idx: number) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-emerald-500/5 border border-emerald-500/10"
-                  >
-                    <div className="flex items-center gap-2 min-w-0 flex-1">
-                      <CheckCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                      <span className="text-sm text-white/80 truncate">{sig.name}</span>
-                      {sig.company && (
-                        <span className="text-xs text-white/40">({sig.company})</span>
+                {expectedAttendees.map((attendee: any, idx: number) => {
+                  const name = attendee.name || '';
+                  const isSigned = signedNames.has(name.toLowerCase());
+                  const sig = isSigned
+                    ? signatures.find(
+                        (s: any) => s.name?.toLowerCase() === name.toLowerCase(),
+                      )
+                    : null;
+
+                  return (
+                    <div
+                      key={idx}
+                      className={cn(
+                        'flex items-center justify-between gap-2 p-3 rounded-xl border transition-all',
+                        isSigned
+                          ? 'bg-emerald-500/5 border-emerald-500/15'
+                          : 'bg-white/[0.03] border-white/10',
+                      )}
+                    >
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <span className="text-xs text-white/30 w-5 text-right shrink-0">
+                          {idx + 1}.
+                        </span>
+                        {isSigned ? (
+                          <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                        ) : (
+                          <div className="h-4 w-4 rounded-full border-2 border-white/20 shrink-0" />
+                        )}
+                        <div className="min-w-0">
+                          <span
+                            className={cn(
+                              'text-sm truncate block',
+                              isSigned ? 'text-white/80' : 'text-white/70',
+                            )}
+                          >
+                            {name}
+                          </span>
+                          {attendee.role && (
+                            <span className="text-xs text-white/30">{attendee.role}</span>
+                          )}
+                        </div>
+                      </div>
+                      {isSigned ? (
+                        <span className="text-xs text-white/30 shrink-0 whitespace-nowrap">
+                          {sig?.signed_at
+                            ? new Date(sig.signed_at).toLocaleTimeString('en-GB', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })
+                            : 'Signed'}
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleTapToSign(name)}
+                          className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 text-xs font-semibold border border-emerald-500/20 touch-manipulation min-h-[36px] active:scale-95 transition-transform"
+                        >
+                          Sign
+                        </button>
                       )}
                     </div>
-                    <span className="text-xs text-white/30 shrink-0 whitespace-nowrap">
-                      {sig.signed_at
-                        ? new Date(sig.signed_at).toLocaleTimeString('en-GB', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })
-                        : ''}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
+          )}
+
+          {/* Walk-in / not on list */}
+          {expectedAttendees.length > 0 && (
+            <button
+              onClick={() => {
+                setShowWalkInForm(!showWalkInForm);
+                if (!showWalkInForm) {
+                  setSignerName('');
+                  setTimeout(() => {
+                    signFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 100);
+                }
+              }}
+              className="w-full flex items-center justify-center gap-2 py-3 text-sm text-white/40 hover:text-white/60 transition-colors touch-manipulation min-h-[44px]"
+            >
+              <span>Not on the list? Sign as a guest</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform',
+                  showWalkInForm && 'rotate-180',
+                )}
+              />
+            </button>
           )}
         </div>
 
         {/* Divider */}
         <div className="mx-5 h-px bg-white/10 my-2" />
 
-        {/* Sign Off Form */}
-        <div className="px-5 py-5 space-y-5 pb-10">
-          <div className="flex items-center gap-2">
-            <Pen className="h-4 w-4 text-yellow-400" />
-            <h2 className="text-sm font-bold text-white">Sign This Briefing</h2>
-          </div>
+        {/* Sign Off Form — always visible if no expected attendees, or when walk-in toggled, or when name pre-filled from tap */}
+        <AnimatePresence>
+          {(expectedAttendees.length === 0 || showWalkInForm || signerName) && (
+            <motion.div
+              ref={signFormRef}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="px-5 py-5 space-y-5 pb-10">
+                <div className="flex items-center gap-2">
+                  <Pen className="h-4 w-4 text-yellow-400" />
+                  <h2 className="text-sm font-bold text-white">Sign This Briefing</h2>
+                </div>
 
-          <p className="text-xs text-white/40 -mt-2">
-            By signing below you confirm you have read and understood this briefing and its safety
-            requirements.
-          </p>
+                <p className="text-xs text-white/40 -mt-2">
+                  By signing below you confirm you have read and understood this briefing and its
+                  safety requirements.
+                </p>
 
-          {/* Name input */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Your Full Name *</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
-              <input
-                type="text"
-                value={signerName}
-                onChange={(e) => setSignerName(e.target.value)}
-                placeholder="Enter your full name"
-                className={cn(
-                  'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                  'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
-                  'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                  'touch-manipulation'
-                )}
-              />
-            </div>
-          </div>
+                {/* Name input */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-white/60">Your Full Name *</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <input
+                      type="text"
+                      value={signerName}
+                      onChange={(e) => setSignerName(e.target.value)}
+                      placeholder="Enter your full name"
+                      className={cn(
+                        'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
+                        'bg-white/[0.06] border border-white/10 text-white',
+                        'placeholder:text-white/30',
+                        'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
+                        'touch-manipulation',
+                      )}
+                    />
+                  </div>
+                </div>
 
-          {/* Company input */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Company (optional)</label>
-            <div className="relative">
-              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
-              <input
-                type="text"
-                value={signerCompany}
-                onChange={(e) => setSignerCompany(e.target.value)}
-                placeholder="Your company name"
-                className={cn(
-                  'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                  'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
-                  'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                  'touch-manipulation'
-                )}
-              />
-            </div>
-          </div>
+                {/* Company input */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-white/60">Company (optional)</label>
+                  <div className="relative">
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <input
+                      type="text"
+                      value={signerCompany}
+                      onChange={(e) => setSignerCompany(e.target.value)}
+                      placeholder="Your company name"
+                      className={cn(
+                        'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
+                        'bg-white/[0.06] border border-white/10 text-white',
+                        'placeholder:text-white/30',
+                        'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
+                        'touch-manipulation',
+                      )}
+                    />
+                  </div>
+                </div>
 
-          {/* Signature pad */}
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-white/60">Your Signature *</label>
-              {hasDrawn && (
-                <button
-                  type="button"
-                  onClick={clearSignature}
-                  className="flex items-center gap-1.5 text-sm text-white/40 hover:text-white/60 touch-manipulation min-h-[44px] px-2"
-                >
-                  <RotateCcw className="h-3.5 w-3.5" />
-                  Clear
-                </button>
-              )}
-            </div>
-            <div className="relative">
-              <div
-                ref={containerRef}
-                className="relative w-full bg-white rounded-xl overflow-hidden border-2 border-dashed border-white/20"
-                style={{ height: '160px' }}
-              >
-                <canvas
-                  ref={canvasRef}
-                  className="absolute inset-0 cursor-crosshair touch-none"
-                  onMouseDown={startDraw}
-                  onMouseMove={draw}
-                  onMouseUp={stopDraw}
-                  onMouseLeave={stopDraw}
-                  onTouchStart={startDraw}
-                  onTouchMove={draw}
-                  onTouchEnd={stopDraw}
-                />
-                {!hasDrawn && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="text-center text-gray-400">
-                      <Pen className="h-5 w-5 mx-auto mb-1 opacity-50" />
-                      <p className="text-xs font-medium">Draw your signature here</p>
+                {/* Signature pad */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-medium text-white/60">Your Signature *</label>
+                    {hasDrawn && (
+                      <button
+                        type="button"
+                        onClick={clearSignature}
+                        className="flex items-center gap-1.5 text-sm text-white/40 hover:text-white/60 touch-manipulation min-h-[44px] px-2"
+                      >
+                        <RotateCcw className="h-3.5 w-3.5" />
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <div
+                      ref={containerRef}
+                      className="relative w-full bg-white rounded-xl overflow-hidden border-2 border-dashed border-white/20"
+                      style={{ height: '160px' }}
+                    >
+                      <canvas
+                        ref={canvasRef}
+                        className="absolute inset-0 cursor-crosshair touch-none"
+                        onMouseDown={startDraw}
+                        onMouseMove={draw}
+                        onMouseUp={stopDraw}
+                        onMouseLeave={stopDraw}
+                        onTouchStart={startDraw}
+                        onTouchMove={draw}
+                        onTouchEnd={stopDraw}
+                      />
+                      {!hasDrawn && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="text-center text-gray-400">
+                            <Pen className="h-5 w-5 mx-auto mb-1 opacity-50" />
+                            <p className="text-xs font-medium">Draw your signature here</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
+                </div>
 
-          {/* Submit button */}
-          <button
-            type="button"
-            onClick={handleSign}
-            disabled={submitting || !signerName.trim() || !hasDrawn}
-            className={cn(
-              'w-full h-14 rounded-xl flex items-center justify-center gap-2',
-              'text-base font-semibold transition-all touch-manipulation',
-              submitting || !signerName.trim() || !hasDrawn
-                ? 'bg-white/10 text-white/30 cursor-not-allowed'
-                : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20'
-            )}
-          >
-            {submitting ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              <>
-                <CheckCircle className="h-5 w-5" />
-                Sign Briefing
-              </>
-            )}
-          </button>
-        </div>
+                {/* Submit button */}
+                <button
+                  type="button"
+                  onClick={handleSign}
+                  disabled={submitting || !signerName.trim() || !hasDrawn}
+                  className={cn(
+                    'w-full h-14 rounded-xl flex items-center justify-center gap-2',
+                    'text-base font-semibold transition-all touch-manipulation',
+                    submitting || !signerName.trim() || !hasDrawn
+                      ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                      : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20',
+                  )}
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="h-5 w-5" />
+                      Sign Briefing
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Footer */}
         <div className="px-5 pb-8 text-center">
