@@ -1,28 +1,22 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,8 +26,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import AdminEmptyState from "@/components/admin/AdminEmptyState";
+} from '@/components/ui/alert-dialog';
+import AdminEmptyState from '@/components/admin/AdminEmptyState';
+import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
   Megaphone,
   Plus,
@@ -48,15 +43,18 @@ import {
   Edit,
   Users,
   Loader2,
-} from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { toast } from "@/hooks/use-toast";
+  Calendar,
+  Clock,
+} from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { toast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface Announcement {
   id: string;
   title: string;
   message: string;
-  type: "info" | "warning" | "success" | "error";
+  type: 'info' | 'warning' | 'success' | 'error';
   target_roles: string[];
   is_active: boolean;
   is_dismissible: boolean;
@@ -68,30 +66,36 @@ interface Announcement {
 }
 
 const defaultAnnouncement = {
-  title: "",
-  message: "",
-  type: "info" as const,
-  target_roles: ["visitor", "apprentice", "electrician", "employer"],
+  title: '',
+  message: '',
+  type: 'info' as const,
+  target_roles: ['visitor', 'apprentice', 'electrician', 'employer'],
   is_dismissible: true,
-  ends_at: "",
+  starts_at: '',
+  ends_at: '',
 };
 
 export default function AdminAnnouncements() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
+  const haptic = useHaptic();
   const [createOpen, setCreateOpen] = useState(false);
   const [editAnnouncement, setEditAnnouncement] = useState<Announcement | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [formData, setFormData] = useState(defaultAnnouncement);
 
-  const isSuperAdmin = profile?.admin_role === "super_admin";
+  const isSuperAdmin = profile?.admin_role === 'super_admin';
 
   // Fetch announcements via edge function
-  const { data: announcements, isLoading } = useQuery({
-    queryKey: ["admin-announcements"],
+  const {
+    data: announcements,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['admin-announcements'],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
-        body: { action: "list" },
+      const { data, error } = await supabase.functions.invoke('admin-manage-announcements', {
+        body: { action: 'list' },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -103,234 +107,333 @@ export default function AdminAnnouncements() {
   // Create announcement via edge function
   const createMutation = useMutation({
     mutationFn: async (formData: typeof defaultAnnouncement) => {
-      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
-        body: { action: "create", announcement: formData },
+      const payload = {
+        ...formData,
+        starts_at: formData.starts_at ? new Date(formData.starts_at).toISOString() : null,
+        ends_at: formData.ends_at ? new Date(formData.ends_at).toISOString() : null,
+      };
+      const { data, error } = await supabase.functions.invoke('admin-manage-announcements', {
+        body: { action: 'create', announcement: payload },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ['admin-announcements'] });
+      const isScheduled = formData.starts_at && new Date(formData.starts_at) > new Date();
       setCreateOpen(false);
       setFormData(defaultAnnouncement);
-      toast({ title: "Announcement created", description: "Your announcement is now live." });
+      toast({
+        title: isScheduled ? 'Announcement scheduled' : 'Announcement created',
+        description: isScheduled
+          ? 'Your announcement will go live at the scheduled time.'
+          : 'Your announcement is now live.',
+      });
     },
     onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      haptic.error();
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 
   // Update announcement via edge function
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Announcement> }) => {
-      const { data: result, error } = await supabase.functions.invoke("admin-manage-announcements", {
-        body: { action: "update", announcement: { id, ...data } },
-      });
+      const payload = {
+        ...data,
+        ...(data.starts_at !== undefined && {
+          starts_at: data.starts_at ? new Date(data.starts_at).toISOString() : null,
+        }),
+        ...(data.ends_at !== undefined && {
+          ends_at: data.ends_at ? new Date(data.ends_at).toISOString() : null,
+        }),
+      };
+      const { data: result, error } = await supabase.functions.invoke(
+        'admin-manage-announcements',
+        {
+          body: { action: 'update', announcement: { id, ...payload } },
+        }
+      );
       if (error) throw error;
       if (result?.error) throw new Error(result.error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ['admin-announcements'] });
       setEditAnnouncement(null);
-      toast({ title: "Announcement updated" });
+      toast({ title: 'Announcement updated' });
+    },
+    onError: () => {
+      haptic.error();
     },
   });
 
   // Delete announcement via edge function
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
-        body: { action: "delete", announcement: { id } },
+      const { data, error } = await supabase.functions.invoke('admin-manage-announcements', {
+        body: { action: 'delete', announcement: { id } },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });
+      haptic.success();
+      queryClient.invalidateQueries({ queryKey: ['admin-announcements'] });
       setDeleteId(null);
-      toast({ title: "Announcement deleted" });
+      toast({ title: 'Announcement deleted' });
+    },
+    onError: () => {
+      haptic.error();
     },
   });
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case "info": return <Info className="h-4 w-4 text-blue-400" />;
-      case "warning": return <AlertTriangle className="h-4 w-4 text-amber-400" />;
-      case "success": return <CheckCircle className="h-4 w-4 text-green-400" />;
-      case "error": return <XCircle className="h-4 w-4 text-red-400" />;
-      default: return <Bell className="h-4 w-4" />;
+      case 'info':
+        return <Info className="h-4 w-4 text-blue-400" />;
+      case 'warning':
+        return <AlertTriangle className="h-4 w-4 text-amber-400" />;
+      case 'success':
+        return <CheckCircle className="h-4 w-4 text-green-400" />;
+      case 'error':
+        return <XCircle className="h-4 w-4 text-red-400" />;
+      default:
+        return <Bell className="h-4 w-4" />;
     }
   };
 
   const getTypeBadge = (type: string) => {
     const colors: Record<string, string> = {
-      info: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      success: "bg-green-500/20 text-green-400 border-green-500/30",
-      error: "bg-red-500/20 text-red-400 border-red-500/30",
+      info: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      warning: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      success: 'bg-green-500/20 text-green-400 border-green-500/30',
+      error: 'bg-red-500/20 text-red-400 border-red-500/30',
     };
-    return <Badge className={colors[type] || ""}>{type}</Badge>;
+    return <Badge className={colors[type] || ''}>{type}</Badge>;
+  };
+
+  const getStatusBadge = (announcement: Announcement) => {
+    if (announcement.starts_at && new Date(announcement.starts_at) > new Date()) {
+      return (
+        <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+          <Clock className="h-3 w-3 mr-1" />
+          Scheduled
+        </Badge>
+      );
+    }
+    if (announcement.ends_at && new Date(announcement.ends_at) < new Date()) {
+      return <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Expired</Badge>;
+    }
+    if (announcement.is_active) {
+      return <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Live</Badge>;
+    }
+    return <Badge variant="outline">Inactive</Badge>;
   };
 
   const activeCount = announcements?.filter((a) => a.is_active).length || 0;
 
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold">Announcements</h2>
-          <p className="text-xs text-muted-foreground">{activeCount} active announcements</p>
+    <PullToRefresh
+      onRefresh={async () => {
+        await refetch();
+      }}
+    >
+      <div className="space-y-4 pb-20">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold">Announcements</h2>
+            <p className="text-xs text-muted-foreground">{activeCount} active announcements</p>
+          </div>
+          <Button
+            className="h-11 gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 touch-manipulation"
+            onClick={() => setCreateOpen(true)}
+          >
+            <Plus className="h-4 w-4" />
+            New
+          </Button>
         </div>
-        <Button
-          className="h-11 gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 touch-manipulation"
-          onClick={() => setCreateOpen(true)}
-        >
-          <Plus className="h-4 w-4" />
-          New
-        </Button>
-      </div>
 
-      {/* Announcements List */}
-      {isLoading ? (
-        <div className="space-y-2">
-          {[...Array(3)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardContent className="pt-4 pb-4"><div className="h-16 bg-muted rounded" /></CardContent>
-            </Card>
-          ))}
-        </div>
-      ) : announcements?.length === 0 ? (
-        <Card>
-          <CardContent className="pt-6">
-            <AdminEmptyState
-              icon={Megaphone}
-              title="No announcements"
-              description="Create your first announcement to notify users."
-              action={{
-                label: "Create Announcement",
-                onClick: () => setCreateOpen(true),
-              }}
-            />
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-2">
-          {announcements?.map((announcement) => (
-            <Card
-              key={announcement.id}
-              className={`touch-manipulation active:scale-[0.99] transition-transform ${!announcement.is_active ? "opacity-60" : ""}`}
-            >
-              <CardContent className="pt-4 pb-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3 min-w-0 flex-1">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      announcement.type === "info" ? "bg-blue-500/10" :
-                      announcement.type === "warning" ? "bg-amber-500/10" :
-                      announcement.type === "success" ? "bg-green-500/10" : "bg-red-500/10"
-                    }`}>
-                      {getTypeIcon(announcement.type)}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-medium text-sm truncate">{announcement.title}</p>
-                        {getTypeBadge(announcement.type)}
-                        {!announcement.is_active && (
-                          <Badge variant="outline" className="text-[10px]">Inactive</Badge>
-                        )}
+        {/* Announcements List */}
+        {isLoading ? (
+          <div className="space-y-2">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <CardContent className="pt-4 pb-4">
+                  <div className="h-16 bg-muted rounded" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : announcements?.length === 0 ? (
+          <Card>
+            <CardContent className="pt-6">
+              <AdminEmptyState
+                icon={Megaphone}
+                title="No announcements"
+                description="Create your first announcement to notify users."
+                action={{
+                  label: 'Create Announcement',
+                  onClick: () => setCreateOpen(true),
+                }}
+              />
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-2">
+            {announcements?.map((announcement) => (
+              <Card
+                key={announcement.id}
+                className={`touch-manipulation active:scale-[0.99] transition-transform ${!announcement.is_active ? 'opacity-60' : ''}`}
+              >
+                <CardContent className="pt-4 pb-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                      <div
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                          announcement.type === 'info'
+                            ? 'bg-blue-500/10'
+                            : announcement.type === 'warning'
+                              ? 'bg-amber-500/10'
+                              : announcement.type === 'success'
+                                ? 'bg-green-500/10'
+                                : 'bg-red-500/10'
+                        }`}
+                      >
+                        {getTypeIcon(announcement.type)}
                       </div>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{announcement.message}</p>
-                      <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          {announcement.target_roles.length} roles
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Eye className="h-3 w-3" />
-                          {announcement.dismissal_count} dismissed
-                        </span>
-                        <span>{formatDistanceToNow(new Date(announcement.created_at), { addSuffix: true })}</span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <p className="font-medium text-sm truncate">{announcement.title}</p>
+                          {getTypeBadge(announcement.type)}
+                          {getStatusBadge(announcement)}
+                        </div>
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {announcement.message}
+                        </p>
+                        <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Users className="h-3 w-3" />
+                            {announcement.target_roles.length} roles
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Eye className="h-3 w-3" />
+                            {announcement.dismissal_count} dismissed
+                          </span>
+                          <span>
+                            {formatDistanceToNow(new Date(announcement.created_at), {
+                              addSuffix: true,
+                            })}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 touch-manipulation"
-                      onClick={() => updateMutation.mutate({ id: announcement.id, data: { is_active: !announcement.is_active } })}
-                    >
-                      {announcement.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 touch-manipulation"
-                      onClick={() => setEditAnnouncement(announcement)}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    {isSuperAdmin && (
+                    <div className="flex items-center gap-1 shrink-0">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-9 w-9 touch-manipulation text-red-400"
-                        onClick={() => setDeleteId(announcement.id)}
+                        className="h-11 w-11 touch-manipulation"
+                        onClick={() =>
+                          updateMutation.mutate({
+                            id: announcement.id,
+                            data: { is_active: !announcement.is_active },
+                          })
+                        }
                       >
-                        <Trash2 className="h-4 w-4" />
+                        {announcement.is_active ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
                       </Button>
-                    )}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-11 w-11 touch-manipulation"
+                        onClick={() => setEditAnnouncement(announcement)}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      {isSuperAdmin && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-11 w-11 touch-manipulation text-red-400"
+                          onClick={() => setDeleteId(announcement.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
-      {/* Create/Edit Sheet */}
-      <Sheet open={createOpen || !!editAnnouncement} onOpenChange={(open) => {
-        if (!open) { setCreateOpen(false); setEditAnnouncement(null); setFormData(defaultAnnouncement); }
-      }}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-          <div className="flex flex-col h-full">
-            <div className="flex justify-center pt-3 pb-2">
-              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-            </div>
-            <SheetHeader className="px-4 pb-4 border-b border-border">
-              <SheetTitle>{editAnnouncement ? "Edit Announcement" : "New Announcement"}</SheetTitle>
-            </SheetHeader>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              <div className="space-y-2">
-                <Label>Title</Label>
-                <Input
-                  value={editAnnouncement?.title || formData.title}
-                  onChange={(e) => editAnnouncement
-                    ? setEditAnnouncement({ ...editAnnouncement, title: e.target.value })
-                    : setFormData({ ...formData, title: e.target.value })}
-                  placeholder="Announcement title"
-                  className="h-11 touch-manipulation"
-                />
+        {/* Create/Edit Sheet */}
+        <Sheet
+          open={createOpen || !!editAnnouncement}
+          onOpenChange={(open) => {
+            if (!open) {
+              setCreateOpen(false);
+              setEditAnnouncement(null);
+              setFormData(defaultAnnouncement);
+            }
+          }}
+        >
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+            <div className="flex flex-col h-full">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
               </div>
-              <div className="space-y-2">
-                <Label>Message</Label>
-                <Textarea
-                  value={editAnnouncement?.message || formData.message}
-                  onChange={(e) => editAnnouncement
-                    ? setEditAnnouncement({ ...editAnnouncement, message: e.target.value })
-                    : setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Announcement message..."
-                  className="min-h-[100px] touch-manipulation"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
+              <SheetHeader className="px-4 pb-4 border-b border-border">
+                <SheetTitle>
+                  {editAnnouncement ? 'Edit Announcement' : 'New Announcement'}
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="space-y-2">
+                  <Label>Title</Label>
+                  <Input
+                    value={editAnnouncement?.title || formData.title}
+                    onChange={(e) =>
+                      editAnnouncement
+                        ? setEditAnnouncement({ ...editAnnouncement, title: e.target.value })
+                        : setFormData({ ...formData, title: e.target.value })
+                    }
+                    placeholder="Announcement title"
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Message</Label>
+                  <Textarea
+                    value={editAnnouncement?.message || formData.message}
+                    onChange={(e) =>
+                      editAnnouncement
+                        ? setEditAnnouncement({ ...editAnnouncement, message: e.target.value })
+                        : setFormData({ ...formData, message: e.target.value })
+                    }
+                    placeholder="Announcement message..."
+                    className="min-h-[100px] touch-manipulation"
+                  />
+                </div>
                 <div className="space-y-2">
                   <Label>Type</Label>
                   <Select
                     value={editAnnouncement?.type || formData.type}
-                    onValueChange={(v: any) => editAnnouncement
-                      ? setEditAnnouncement({ ...editAnnouncement, type: v })
-                      : setFormData({ ...formData, type: v })}
+                    onValueChange={(v: string) => {
+                      const typed = v as 'info' | 'warning' | 'success' | 'error';
+                      if (editAnnouncement) {
+                        setEditAnnouncement({ ...editAnnouncement, type: typed });
+                      } else {
+                        setFormData({ ...formData, type: typed });
+                      }
+                    }}
                   >
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue />
@@ -343,85 +446,121 @@ export default function AdminAnnouncements() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label>Expires (optional)</Label>
-                  <Input
-                    type="date"
-                    value={editAnnouncement?.ends_at?.split("T")[0] || formData.ends_at}
-                    onChange={(e) => editAnnouncement
-                      ? setEditAnnouncement({ ...editAnnouncement, ends_at: e.target.value })
-                      : setFormData({ ...formData, ends_at: e.target.value })}
-                    className="h-11 touch-manipulation"
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-yellow-400" />
+                      Schedule For (optional)
+                    </label>
+                    <Input
+                      type="datetime-local"
+                      value={editAnnouncement?.starts_at?.slice(0, 16) || formData.starts_at}
+                      onChange={(e) =>
+                        editAnnouncement
+                          ? setEditAnnouncement({ ...editAnnouncement, starts_at: e.target.value })
+                          : setFormData({ ...formData, starts_at: e.target.value })
+                      }
+                      className="h-11 touch-manipulation"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to go live immediately
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-red-400" />
+                      Auto-Expire (optional)
+                    </label>
+                    <Input
+                      type="datetime-local"
+                      value={editAnnouncement?.ends_at?.slice(0, 16) || formData.ends_at}
+                      onChange={(e) =>
+                        editAnnouncement
+                          ? setEditAnnouncement({ ...editAnnouncement, ends_at: e.target.value })
+                          : setFormData({ ...formData, ends_at: e.target.value })
+                      }
+                      className="h-11 touch-manipulation"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to stay active until toggled
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                  <div>
+                    <p className="text-sm font-medium">Dismissible</p>
+                    <p className="text-xs text-muted-foreground">Users can dismiss this</p>
+                  </div>
+                  <Switch
+                    checked={editAnnouncement?.is_dismissible ?? formData.is_dismissible}
+                    onCheckedChange={(checked) =>
+                      editAnnouncement
+                        ? setEditAnnouncement({ ...editAnnouncement, is_dismissible: checked })
+                        : setFormData({ ...formData, is_dismissible: checked })
+                    }
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                <div>
-                  <p className="text-sm font-medium">Dismissible</p>
-                  <p className="text-xs text-muted-foreground">Users can dismiss this</p>
-                </div>
-                <Switch
-                  checked={editAnnouncement?.is_dismissible ?? formData.is_dismissible}
-                  onCheckedChange={(checked) => editAnnouncement
-                    ? setEditAnnouncement({ ...editAnnouncement, is_dismissible: checked })
-                    : setFormData({ ...formData, is_dismissible: checked })}
-                />
-              </div>
+              <SheetFooter className="p-4 border-t border-border">
+                <Button
+                  className="w-full h-12 touch-manipulation"
+                  onClick={() => {
+                    if (editAnnouncement) {
+                      updateMutation.mutate({ id: editAnnouncement.id, data: editAnnouncement });
+                    } else {
+                      createMutation.mutate(formData);
+                    }
+                  }}
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                >
+                  {createMutation.isPending || updateMutation.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      {editAnnouncement ? 'Saving...' : 'Creating...'}
+                    </>
+                  ) : editAnnouncement ? (
+                    'Save Changes'
+                  ) : (
+                    'Create Announcement'
+                  )}
+                </Button>
+              </SheetFooter>
             </div>
-            <SheetFooter className="p-4 border-t border-border">
-              <Button
-                className="w-full h-12 touch-manipulation"
-                onClick={() => {
-                  if (editAnnouncement) {
-                    updateMutation.mutate({ id: editAnnouncement.id, data: editAnnouncement });
-                  } else {
-                    createMutation.mutate(formData);
-                  }
-                }}
-                disabled={createMutation.isPending || updateMutation.isPending}
+          </SheetContent>
+        </Sheet>
+
+        {/* Delete Confirmation */}
+        <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Announcement?</AlertDialogTitle>
+              <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                className="h-11 touch-manipulation"
+                disabled={deleteMutation.isPending}
               >
-                {(createMutation.isPending || updateMutation.isPending) ? (
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+                disabled={deleteMutation.isPending}
+              >
+                {deleteMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    {editAnnouncement ? "Saving..." : "Creating..."}
+                    Deleting...
                   </>
                 ) : (
-                  editAnnouncement ? "Save Changes" : "Create Announcement"
+                  'Delete'
                 )}
-              </Button>
-            </SheetFooter>
-          </div>
-        </SheetContent>
-      </Sheet>
-
-      {/* Delete Confirmation */}
-      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Announcement?</AlertDialogTitle>
-            <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteMutation.isPending}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
-              onClick={() => deleteId && deleteMutation.mutate(deleteId)}
-              disabled={deleteMutation.isPending}
-            >
-              {deleteMutation.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Deleting...
-                </>
-              ) : (
-                "Delete"
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    </PullToRefresh>
   );
 }

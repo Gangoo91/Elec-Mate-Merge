@@ -1,14 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Clock,
   Monitor,
@@ -20,10 +15,10 @@ import {
   Shield,
   Calculator,
   TrendingUp,
-} from "lucide-react";
-import { formatDistanceToNow, differenceInMinutes } from "date-fns";
-import { cn } from "@/lib/utils";
-import { getInitials, getRoleColor } from "@/utils/adminUtils";
+} from 'lucide-react';
+import { formatDistanceToNow, differenceInMinutes } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { getInitials, getRoleColor } from '@/utils/adminUtils';
 
 interface UserActivitySheetProps {
   userId: string | null;
@@ -42,41 +37,39 @@ export default function UserActivitySheet({
 }: UserActivitySheetProps) {
   // Fetch user presence and activity data
   const { data: activityData, isLoading } = useQuery({
-    queryKey: ["user-activity", userId],
+    queryKey: ['user-activity', userId],
     queryFn: async () => {
       if (!userId) return null;
 
       // Fetch presence, AI jobs, and profile in parallel
-      const [presenceRes, costJobsRes, ramsJobsRes, circuitJobsRes, profileRes] = await Promise.all([
-        supabase
-          .from("user_presence")
-          .select("*")
-          .eq("user_id", userId)
-          .single(),
-        supabase
-          .from("cost_engineer_jobs")
-          .select("id, status, created_at")
-          .eq("user_id", userId)
-          .order("created_at", { ascending: false })
-          .limit(10),
-        supabase
-          .from("health_safety_jobs")
-          .select("id, status, created_at")
-          .eq("user_id", userId)
-          .order("created_at", { ascending: false })
-          .limit(10),
-        supabase
-          .from("circuit_design_jobs")
-          .select("id, status, created_at")
-          .eq("user_id", userId)
-          .order("created_at", { ascending: false })
-          .limit(10),
-        supabase
-          .from("profiles")
-          .select("created_at, subscribed, subscription_tier, free_access_granted, role")
-          .eq("id", userId)
-          .single(),
-      ]);
+      const [presenceRes, costJobsRes, ramsJobsRes, circuitJobsRes, profileRes] = await Promise.all(
+        [
+          supabase.from('user_presence').select('*').eq('user_id', userId).single(),
+          supabase
+            .from('cost_engineer_jobs')
+            .select('id, status, created_at')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(10),
+          supabase
+            .from('health_safety_jobs')
+            .select('id, status, created_at')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(10),
+          supabase
+            .from('circuit_design_jobs')
+            .select('id, status, created_at')
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(10),
+          supabase
+            .from('profiles')
+            .select('created_at, subscribed, subscription_tier, free_access_granted, role')
+            .eq('id', userId)
+            .single(),
+        ]
+      );
 
       return {
         presence: presenceRes.data,
@@ -112,8 +105,8 @@ export default function UserActivitySheet({
   const diffMins = Math.floor((nowMs - lastSeenMs) / 60000);
   const isOnline = diffMins < 5;
   const isAway = diffMins >= 5 && diffMins < 10;
-  const statusColor = isOnline ? "bg-green-500" : isAway ? "bg-yellow-500" : "bg-gray-500";
-  const statusText = isOnline ? "Online" : isAway ? "Away" : "Offline";
+  const statusColor = isOnline ? 'bg-green-500' : isAway ? 'bg-yellow-500' : 'bg-gray-500';
+  const statusText = isOnline ? 'Online' : isAway ? 'Away' : 'Offline';
 
   // Device info
   const deviceInfo = presence?.device_info as { isMobile?: boolean; platform?: string } | null;
@@ -133,36 +126,44 @@ export default function UserActivitySheet({
           <SheetHeader className="px-4 pt-4 pb-3 border-b border-border">
             <div className="flex items-center gap-4">
               {/* Avatar */}
-              <div className={cn(
-                "w-16 h-16 rounded-2xl flex items-center justify-center relative font-bold text-xl",
-                roleColor.bg, roleColor.text
-              )}>
+              <div
+                className={cn(
+                  'w-16 h-16 rounded-2xl flex items-center justify-center relative font-bold text-xl',
+                  roleColor.bg,
+                  roleColor.text
+                )}
+              >
                 {getInitials(userName)}
-                <div className={cn(
-                  "absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-background",
-                  statusColor
-                )} />
+                <div
+                  className={cn(
+                    'absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-background',
+                    statusColor
+                  )}
+                />
               </div>
 
               <div className="flex-1">
-                <SheetTitle className="text-xl text-left">{userName || "Unknown User"}</SheetTitle>
+                <SheetTitle className="text-xl text-left">{userName || 'Unknown User'}</SheetTitle>
                 <div className="flex items-center gap-2 mt-1">
                   {userRole && (
-                    <Badge className={cn("text-xs capitalize", roleColor.badge)}>
-                      {userRole}
-                    </Badge>
+                    <Badge className={cn('text-xs capitalize', roleColor.badge)}>{userRole}</Badge>
                   )}
-                  <Badge variant="outline" className={cn(
-                    "text-xs",
-                    isOnline ? "border-green-500/50 text-green-400" :
-                    isAway ? "border-yellow-500/50 text-yellow-400" :
-                    "border-gray-500/50 text-gray-400"
-                  )}>
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      'text-xs',
+                      isOnline
+                        ? 'border-green-500/50 text-green-400'
+                        : isAway
+                          ? 'border-yellow-500/50 text-yellow-400'
+                          : 'border-gray-500/50 text-gray-400'
+                    )}
+                  >
                     {statusText}
                   </Badge>
                   {profile?.subscribed && (
                     <Badge className="text-xs bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
-                      {profile.subscription_tier || "Subscribed"}
+                      {profile.subscription_tier || 'Subscribed'}
                     </Badge>
                   )}
                   {profile?.free_access_granted && !profile?.subscribed && (
@@ -197,7 +198,7 @@ export default function UserActivitySheet({
                       <div>
                         <p className="text-xs text-muted-foreground">Session Time</p>
                         <p className="font-semibold text-green-400">
-                          {presence?.session_started_at ? formatDuration(sessionDuration) : "N/A"}
+                          {presence?.session_started_at ? formatDuration(sessionDuration) : 'N/A'}
                         </p>
                       </div>
                     </div>
@@ -212,18 +213,18 @@ export default function UserActivitySheet({
                       <div>
                         <p className="text-xs text-muted-foreground">Device</p>
                         <p className="font-semibold text-blue-400">
-                          {isMobile ? "Mobile" : "Desktop"}
+                          {isMobile ? 'Mobile' : 'Desktop'}
                         </p>
                       </div>
                     </div>
 
                     {/* Current Page */}
-                    <div className="col-span-2 flex items-center gap-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                      <MapPin className="h-5 w-5 text-purple-400" />
+                    <div className="col-span-2 flex items-center gap-3 p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                      <MapPin className="h-5 w-5 text-yellow-400" />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-muted-foreground">Current Page</p>
-                        <p className="font-semibold text-purple-400 truncate">
-                          {presence?.current_page || "Unknown"}
+                        <p className="font-semibold text-yellow-400 truncate">
+                          {presence?.current_page || 'Unknown'}
                         </p>
                       </div>
                     </div>
@@ -236,8 +237,7 @@ export default function UserActivitySheet({
                         <p className="font-medium">
                           {presence?.last_seen
                             ? formatDistanceToNow(new Date(presence.last_seen), { addSuffix: true })
-                            : "Never"
-                          }
+                            : 'Never'}
                         </p>
                       </div>
                     </div>
@@ -287,11 +287,26 @@ export default function UserActivitySheet({
                     </CardHeader>
                     <CardContent className="space-y-2">
                       {[
-                        ...(activityData?.costJobs || []).map(j => ({ ...j, type: 'Cost Engineer', color: 'amber' })),
-                        ...(activityData?.ramsJobs || []).map(j => ({ ...j, type: 'RAMS', color: 'red' })),
-                        ...(activityData?.circuitJobs || []).map(j => ({ ...j, type: 'Circuit', color: 'blue' })),
+                        ...(activityData?.costJobs || []).map((j) => ({
+                          ...j,
+                          type: 'Cost Engineer',
+                          color: 'amber',
+                        })),
+                        ...(activityData?.ramsJobs || []).map((j) => ({
+                          ...j,
+                          type: 'RAMS',
+                          color: 'red',
+                        })),
+                        ...(activityData?.circuitJobs || []).map((j) => ({
+                          ...j,
+                          type: 'Circuit',
+                          color: 'blue',
+                        })),
                       ]
-                        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                        .sort(
+                          (a, b) =>
+                            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                        )
                         .slice(0, 5)
                         .map((job) => (
                           <div
@@ -299,20 +314,27 @@ export default function UserActivitySheet({
                             className="flex items-center justify-between p-2 rounded-lg bg-muted/30"
                           >
                             <div className="flex items-center gap-2">
-                              <Badge className={cn(
-                                "text-[10px]",
-                                job.color === 'amber' && "bg-amber-500/20 text-amber-400",
-                                job.color === 'red' && "bg-red-500/20 text-red-400",
-                                job.color === 'blue' && "bg-blue-500/20 text-blue-400"
-                              )}>
+                              <Badge
+                                className={cn(
+                                  'text-[10px]',
+                                  job.color === 'amber' && 'bg-amber-500/20 text-amber-400',
+                                  job.color === 'red' && 'bg-red-500/20 text-red-400',
+                                  job.color === 'blue' && 'bg-blue-500/20 text-blue-400'
+                                )}
+                              >
                                 {job.type}
                               </Badge>
-                              <Badge variant="outline" className={cn(
-                                "text-[10px]",
-                                job.status === 'completed' && "border-green-500/50 text-green-400",
-                                job.status === 'processing' && "border-yellow-500/50 text-yellow-400",
-                                job.status === 'failed' && "border-red-500/50 text-red-400"
-                              )}>
+                              <Badge
+                                variant="outline"
+                                className={cn(
+                                  'text-[10px]',
+                                  job.status === 'completed' &&
+                                    'border-green-500/50 text-green-400',
+                                  job.status === 'processing' &&
+                                    'border-yellow-500/50 text-yellow-400',
+                                  job.status === 'failed' && 'border-red-500/50 text-red-400'
+                                )}
+                              >
                                 {job.status}
                               </Badge>
                             </div>
@@ -338,21 +360,21 @@ export default function UserActivitySheet({
                           ? new Date(profile.created_at).toLocaleDateString('en-GB', {
                               day: 'numeric',
                               month: 'short',
-                              year: 'numeric'
+                              year: 'numeric',
                             })
-                          : "Unknown"
-                        }
+                          : 'Unknown'}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Subscription</span>
-                      <span className={profile?.subscribed ? "text-green-400" : "text-muted-foreground"}>
+                      <span
+                        className={profile?.subscribed ? 'text-green-400' : 'text-muted-foreground'}
+                      >
                         {profile?.subscribed
-                          ? profile.subscription_tier || "Active"
+                          ? profile.subscription_tier || 'Active'
                           : profile?.free_access_granted
-                            ? "Beta Access"
-                            : "Free Trial"
-                        }
+                            ? 'Beta Access'
+                            : 'Free Trial'}
                       </span>
                     </div>
                   </CardContent>

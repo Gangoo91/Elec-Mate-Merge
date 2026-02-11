@@ -8,7 +8,7 @@ export default function EnrichmentMonitor() {
   const selectedTask = searchParams.get('task') || 'bs7671';
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 max-w-5xl">
+    <div className="container mx-auto p-4 sm:p-6 max-w-5xl pb-20">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
@@ -20,7 +20,7 @@ export default function EnrichmentMonitor() {
             </p>
           </div>
         </div>
-        
+
         <div className="flex flex-wrap items-center gap-2 mt-3">
           <Badge variant="outline" className="font-mono text-xs">
             <Zap className="w-3 h-3 mr-1" />

@@ -1,17 +1,23 @@
-import { useState, useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
+import { useState, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { supabase } from '@/integrations/supabase/client';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Separator } from '@/components/ui/separator';
 import {
   Upload,
   CheckCircle,
@@ -31,10 +37,10 @@ import {
   Tag,
   ImageIcon,
   Settings2,
-  ShieldCheck
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+  ShieldCheck,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 // ============================================================================
 // TYPES
@@ -179,17 +185,17 @@ export default function TrainingPhotoUpload() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const updateUpload = useCallback((index: number, updates: Partial<UploadState>) => {
-    setUploads(prev => prev.map((u, i) => i === index ? { ...u, ...updates } : u));
+    setUploads((prev) => prev.map((u, i) => (i === index ? { ...u, ...updates } : u)));
   }, []);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    const newUploads: UploadState[] = acceptedFiles.map(file => ({
+    const newUploads: UploadState[] = acceptedFiles.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
       status: 'pending' as const,
       progress: 0,
     }));
-    setUploads(prev => [...prev, ...newUploads]);
+    setUploads((prev) => [...prev, ...newUploads]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -204,7 +210,7 @@ export default function TrainingPhotoUpload() {
   });
 
   const removeUpload = (index: number) => {
-    setUploads(prev => {
+    setUploads((prev) => {
       const upload = prev[index];
       if (upload?.preview) {
         URL.revokeObjectURL(upload.preview);
@@ -222,7 +228,9 @@ export default function TrainingPhotoUpload() {
       const compressedBase64 = await compressImage(upload.file);
       updateUpload(index, { status: 'uploading', progress: 30 });
 
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session?.access_token) {
         throw new Error('Not authenticated');
       }
@@ -235,7 +243,7 @@ export default function TrainingPhotoUpload() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
+            Authorization: `Bearer ${session.access_token}`,
           },
           body: JSON.stringify({
             image_base64: compressedBase64,
@@ -269,7 +277,6 @@ export default function TrainingPhotoUpload() {
       toast.success(`Analysed ${upload.file.name}`, {
         description: `${normalisedAnalysis.board.manufacturer} ${normalisedAnalysis.board.total_ways}-way board`,
       });
-
     } catch (error) {
       console.error('Analysis error:', error);
       updateUpload(index, {
@@ -285,8 +292,8 @@ export default function TrainingPhotoUpload() {
     setIsAnalysing(true);
 
     const pendingIndexes = uploads
-      .map((u, i) => u.status === 'pending' ? i : -1)
-      .filter(i => i >= 0);
+      .map((u, i) => (u.status === 'pending' ? i : -1))
+      .filter((i) => i >= 0);
 
     for (const index of pendingIndexes) {
       await analysePhoto(index);
@@ -416,9 +423,14 @@ export default function TrainingPhotoUpload() {
       updateUpload(index, { isVerified: true, isVerifying: false });
 
       // Trigger manufacturer knowledge update
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session?.access_token && upload.analysis.board.manufacturer) {
-        console.log('Calling update-manufacturer-knowledge for:', upload.analysis.board.manufacturer);
+        console.log(
+          'Calling update-manufacturer-knowledge for:',
+          upload.analysis.board.manufacturer
+        );
 
         try {
           const response = await fetch(
@@ -427,7 +439,7 @@ export default function TrainingPhotoUpload() {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`,
+                Authorization: `Bearer ${session.access_token}`,
               },
               body: JSON.stringify({
                 manufacturer: upload.analysis.board.manufacturer,
@@ -460,10 +472,10 @@ export default function TrainingPhotoUpload() {
 
   const stats = {
     total: uploads.length,
-    pending: uploads.filter(u => u.status === 'pending').length,
-    complete: uploads.filter(u => u.status === 'complete').length,
-    error: uploads.filter(u => u.status === 'error').length,
-    verified: uploads.filter(u => u.isVerified).length,
+    pending: uploads.filter((u) => u.status === 'pending').length,
+    complete: uploads.filter((u) => u.status === 'complete').length,
+    error: uploads.filter((u) => u.status === 'error').length,
+    verified: uploads.filter((u) => u.isVerified).length,
   };
 
   return (
@@ -477,9 +489,7 @@ export default function TrainingPhotoUpload() {
             </div>
             Training Photo Upload
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Upload board photos to train the AI scanner
-          </p>
+          <p className="text-muted-foreground mt-1">Upload board photos to train the AI scanner</p>
         </div>
         {stats.pending > 0 && (
           <Button
@@ -501,8 +511,10 @@ export default function TrainingPhotoUpload() {
       <Alert className="border-amber-500/30 bg-amber-500/10">
         <AlertCircle className="h-4 w-4 text-amber-500" />
         <AlertDescription className="text-amber-200">
-          Upload photos of consumer units and distribution boards. The AI will extract all visible details.
-          <strong className="text-amber-100"> Review and edit the analysis</strong> to ensure accuracy before verifying.
+          Upload photos of consumer units and distribution boards. The AI will extract all visible
+          details.
+          <strong className="text-amber-100"> Review and edit the analysis</strong> to ensure
+          accuracy before verifying.
         </AlertDescription>
       </Alert>
 
@@ -563,25 +575,23 @@ export default function TrainingPhotoUpload() {
           <div
             {...getRootProps()}
             className={cn(
-              "p-8 sm:p-12 text-center cursor-pointer transition-all touch-manipulation",
-              isDragActive
-                ? "bg-amber-500/10"
-                : "hover:bg-slate-800/50 active:bg-slate-800/70"
+              'p-8 sm:p-12 text-center cursor-pointer transition-all touch-manipulation',
+              isDragActive ? 'bg-amber-500/10' : 'hover:bg-slate-800/50 active:bg-slate-800/70'
             )}
           >
             <input {...getInputProps()} />
             <div className="flex flex-col items-center gap-4">
-              <div className={cn(
-                "w-20 h-20 rounded-2xl flex items-center justify-center transition-colors",
-                isDragActive
-                  ? "bg-amber-500/20 text-amber-500"
-                  : "bg-slate-800 text-slate-400"
-              )}>
+              <div
+                className={cn(
+                  'w-20 h-20 rounded-2xl flex items-center justify-center transition-colors',
+                  isDragActive ? 'bg-amber-500/20 text-amber-500' : 'bg-slate-800 text-slate-400'
+                )}
+              >
                 <Upload className="h-10 w-10" />
               </div>
               <div>
                 <p className="text-lg font-medium text-foreground">
-                  {isDragActive ? "Drop photos here" : "Tap to upload board photos"}
+                  {isDragActive ? 'Drop photos here' : 'Tap to upload board photos'}
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
                   or drag & drop (up to 20 photos, max 10MB each)
@@ -605,10 +615,12 @@ export default function TrainingPhotoUpload() {
               <Card
                 key={index}
                 className={cn(
-                  "overflow-hidden transition-all",
-                  upload.isVerified && "border-green-500/50 bg-green-500/5",
-                  upload.status === 'complete' && !upload.isVerified && "border-blue-500/30 bg-blue-500/5",
-                  upload.status === 'error' && "border-red-500/30 bg-red-500/5"
+                  'overflow-hidden transition-all',
+                  upload.isVerified && 'border-green-500/50 bg-green-500/5',
+                  upload.status === 'complete' &&
+                    !upload.isVerified &&
+                    'border-blue-500/30 bg-blue-500/5',
+                  upload.status === 'error' && 'border-red-500/30 bg-red-500/5'
                 )}
               >
                 {/* Header Row */}
@@ -725,11 +737,16 @@ export default function TrainingPhotoUpload() {
                     {/* Status Badges */}
                     <div className="mt-3 flex flex-wrap gap-2">
                       {upload.status === 'pending' && (
-                        <Badge variant="secondary" className="bg-slate-700">Pending analysis</Badge>
+                        <Badge variant="secondary" className="bg-slate-700">
+                          Pending analysis
+                        </Badge>
                       )}
                       {['compressing', 'uploading', 'analysing'].includes(upload.status) && (
                         <div className="w-full space-y-2">
-                          <Badge variant="secondary" className="gap-1.5 bg-amber-500/20 text-amber-400">
+                          <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-amber-500/20 text-amber-400"
+                          >
                             <Loader2 className="h-3 w-3 animate-spin" />
                             {upload.status === 'compressing' && 'Compressing...'}
                             {upload.status === 'uploading' && 'Uploading...'}
@@ -743,11 +760,9 @@ export default function TrainingPhotoUpload() {
                           <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                             {upload.analysis.board.manufacturer}
                           </Badge>
-                          <Badge variant="secondary">
-                            {upload.analysis.board.total_ways} ways
-                          </Badge>
+                          <Badge variant="secondary">{upload.analysis.board.total_ways} ways</Badge>
                           {upload.analysis.phase_config.is_three_phase && (
-                            <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+                            <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
                               3-Phase
                             </Badge>
                           )}
@@ -824,22 +839,31 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
   // Ensure structure exists
   const structure = analysis.structure || getDefaultStructure();
 
-  const updateField = (path: string, value: any) => {
-    const updated = JSON.parse(JSON.stringify(analysis));
+  const updateField = (
+    path: string,
+    value:
+      | string
+      | number
+      | boolean
+      | null
+      | Record<string, unknown>[]
+      | TrainingAnalysis['circuits']
+  ) => {
+    const updated: Record<string, Record<string, unknown>> = JSON.parse(JSON.stringify(analysis));
     // Ensure structure exists in updated
     if (!updated.structure) {
-      updated.structure = getDefaultStructure();
+      updated.structure = getDefaultStructure() as unknown as Record<string, unknown>;
     }
     const keys = path.split('.');
-    let obj = updated;
+    let obj: Record<string, unknown> = updated as Record<string, unknown>;
     for (let i = 0; i < keys.length - 1; i++) {
       if (!obj[keys[i]]) {
         obj[keys[i]] = {};
       }
-      obj = obj[keys[i]];
+      obj = obj[keys[i]] as Record<string, unknown>;
     }
     obj[keys[keys.length - 1]] = value;
-    onUpdate(updated);
+    onUpdate(updated as unknown as TrainingAnalysis);
   };
 
   return (
@@ -853,7 +877,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Manufacturer</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Manufacturer
+            </Label>
             {isEditing ? (
               <Input
                 value={analysis.board.manufacturer}
@@ -866,7 +892,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Model/Series</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Model/Series
+            </Label>
             {isEditing ? (
               <Input
                 value={analysis.board.model_series || ''}
@@ -880,9 +908,14 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Age Category</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Age Category
+            </Label>
             {isEditing ? (
-              <Select value={analysis.board.age_category} onValueChange={(v) => updateField('board.age_category', v)}>
+              <Select
+                value={analysis.board.age_category}
+                onValueChange={(v) => updateField('board.age_category', v)}
+              >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue />
                 </SelectTrigger>
@@ -894,12 +927,16 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 </SelectContent>
               </Select>
             ) : (
-              <p className="font-medium text-foreground capitalize">{analysis.board.age_category}</p>
+              <p className="font-medium text-foreground capitalize">
+                {analysis.board.age_category}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Total Ways</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Total Ways
+            </Label>
             {isEditing ? (
               <Input
                 type="number"
@@ -913,7 +950,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Populated Ways</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Populated Ways
+            </Label>
             {isEditing ? (
               <Input
                 type="number"
@@ -927,13 +966,17 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Main Switch</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Main Switch
+            </Label>
             {isEditing ? (
               <div className="flex gap-2">
                 <Input
                   type="number"
                   value={analysis.board.main_switch.rating_amps}
-                  onChange={(e) => updateField('board.main_switch.rating_amps', parseInt(e.target.value) || 0)}
+                  onChange={(e) =>
+                    updateField('board.main_switch.rating_amps', parseInt(e.target.value) || 0)
+                  }
                   className="h-11 touch-manipulation w-20"
                   placeholder="100"
                 />
@@ -966,30 +1009,41 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
       {/* Phase Configuration */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Settings2 className="h-4 w-4 text-purple-500" />
+          <Settings2 className="h-4 w-4 text-yellow-500" />
           <h4 className="font-semibold text-foreground">Configuration</h4>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Three Phase</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Three Phase
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
                   checked={analysis.phase_config.is_three_phase}
                   onCheckedChange={(v) => updateField('phase_config.is_three_phase', v)}
                 />
-                <span className="text-sm">{analysis.phase_config.is_three_phase ? 'Yes' : 'No'}</span>
+                <span className="text-sm">
+                  {analysis.phase_config.is_three_phase ? 'Yes' : 'No'}
+                </span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{analysis.phase_config.is_three_phase ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {analysis.phase_config.is_three_phase ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Phase Layout</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Phase Layout
+            </Label>
             {isEditing ? (
-              <Select value={analysis.phase_config.layout} onValueChange={(v) => updateField('phase_config.layout', v)}>
+              <Select
+                value={analysis.phase_config.layout}
+                onValueChange={(v) => updateField('phase_config.layout', v)}
+              >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue />
                 </SelectTrigger>
@@ -1005,7 +1059,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Split Load</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Split Load
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
@@ -1015,18 +1071,24 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 <span className="text-sm">{structure.is_split_load ? 'Yes' : 'No'}</span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{structure.is_split_load ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {structure.is_split_load ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
 
           {structure.is_split_load && (
             <div className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">Split Point (Way)</Label>
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+                Split Point (Way)
+              </Label>
               {isEditing ? (
                 <Input
                   type="number"
                   value={structure.split_point_way || ''}
-                  onChange={(e) => updateField('structure.split_point_way', parseInt(e.target.value) || null)}
+                  onChange={(e) =>
+                    updateField('structure.split_point_way', parseInt(e.target.value) || null)
+                  }
                   className="h-11 touch-manipulation"
                   placeholder="e.g. 6"
                 />
@@ -1048,29 +1110,35 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[
-            { key: 'mcbs', label: 'MCBs' },
-            { key: 'rcbos', label: 'RCBOs' },
-            { key: 'rcds', label: 'RCDs' },
-            { key: 'afdds', label: 'AFDDs' },
-          ].map(({ key, label }) => (
+          {(
+            [
+              { key: 'mcbs' as const, label: 'MCBs' },
+              { key: 'rcbos' as const, label: 'RCBOs' },
+              { key: 'rcds' as const, label: 'RCDs' },
+              { key: 'afdds' as const, label: 'AFDDs' },
+            ] as const
+          ).map(({ key, label }) => (
             <div key={key} className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">{label}</Label>
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+                {label}
+              </Label>
               {isEditing ? (
                 <Input
                   type="number"
-                  value={(analysis.devices as any)[key]}
+                  value={analysis.devices[key]}
                   onChange={(e) => updateField(`devices.${key}`, parseInt(e.target.value) || 0)}
                   className="h-11 touch-manipulation"
                 />
               ) : (
-                <p className="font-medium text-foreground">{(analysis.devices as any)[key]}</p>
+                <p className="font-medium text-foreground">{analysis.devices[key]}</p>
               )}
             </div>
           ))}
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">SPD Present</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              SPD Present
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
@@ -1080,15 +1148,22 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 <span className="text-sm">{analysis.devices.spd.present ? 'Yes' : 'No'}</span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{analysis.devices.spd.present ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {analysis.devices.spd.present ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
 
           {analysis.devices.spd.present && (
             <div className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">SPD Status</Label>
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+                SPD Status
+              </Label>
               {isEditing ? (
-                <Select value={analysis.devices.spd.status} onValueChange={(v) => updateField('devices.spd.status', v)}>
+                <Select
+                  value={analysis.devices.spd.status}
+                  onValueChange={(v) => updateField('devices.spd.status', v)}
+                >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
@@ -1100,12 +1175,17 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                   </SelectContent>
                 </Select>
               ) : (
-                <Badge className={cn(
-                  "mt-1",
-                  analysis.devices.spd.status === 'green_ok' && "bg-green-500/20 text-green-400 border-green-500/30",
-                  analysis.devices.spd.status === 'yellow_check' && "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-                  analysis.devices.spd.status === 'red_replace' && "bg-red-500/20 text-red-400 border-red-500/30"
-                )}>
+                <Badge
+                  className={cn(
+                    'mt-1',
+                    analysis.devices.spd.status === 'green_ok' &&
+                      'bg-green-500/20 text-green-400 border-green-500/30',
+                    analysis.devices.spd.status === 'yellow_check' &&
+                      'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+                    analysis.devices.spd.status === 'red_replace' &&
+                      'bg-red-500/20 text-red-400 border-red-500/30'
+                  )}
+                >
                   {analysis.devices.spd.status.replace('_', ' ')}
                 </Badge>
               )}
@@ -1125,7 +1205,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Handwritten Labels</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Handwritten Labels
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
@@ -1135,12 +1217,16 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 <span className="text-sm">{analysis.labels.has_handwritten ? 'Yes' : 'No'}</span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{analysis.labels.has_handwritten ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {analysis.labels.has_handwritten ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Printed Labels</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Printed Labels
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
@@ -1150,12 +1236,16 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 <span className="text-sm">{analysis.labels.has_printed ? 'Yes' : 'No'}</span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{analysis.labels.has_printed ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {analysis.labels.has_printed ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Has Pictograms</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Has Pictograms
+            </Label>
             {isEditing ? (
               <div className="flex items-center gap-3 h-11">
                 <Switch
@@ -1165,14 +1255,18 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 <span className="text-sm">{analysis.labels.has_pictograms ? 'Yes' : 'No'}</span>
               </div>
             ) : (
-              <p className="font-medium text-foreground">{analysis.labels.has_pictograms ? 'Yes' : 'No'}</p>
+              <p className="font-medium text-foreground">
+                {analysis.labels.has_pictograms ? 'Yes' : 'No'}
+              </p>
             )}
           </div>
         </div>
 
         {analysis.labels.pictogram_types && analysis.labels.pictogram_types.length > 0 && (
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Pictogram Types</Label>
+            <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+              Pictogram Types
+            </Label>
             <div className="flex flex-wrap gap-2">
               {analysis.labels.pictogram_types.map((type, i) => (
                 <Badge key={i} variant="secondary" className="uppercase text-xs">
@@ -1194,24 +1288,44 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {[
-            { key: 'lighting', label: 'Lighting', options: ['excellent', 'good', 'moderate', 'poor', 'very_poor'] },
-            { key: 'clarity', label: 'Clarity', options: ['sharp', 'acceptable', 'blurry', 'very_blurry'] },
-            { key: 'board_visibility', label: 'Visibility', options: ['full', 'partial', 'obscured'] },
-            { key: 'angle', label: 'Angle', options: ['straight_on', 'slight_angle', 'significant_angle'] },
-          ].map(({ key, label, options }) => (
+          {(
+            [
+              {
+                key: 'lighting' as const,
+                label: 'Lighting',
+                options: ['excellent', 'good', 'moderate', 'poor', 'very_poor'],
+              },
+              {
+                key: 'clarity' as const,
+                label: 'Clarity',
+                options: ['sharp', 'acceptable', 'blurry', 'very_blurry'],
+              },
+              {
+                key: 'board_visibility' as const,
+                label: 'Visibility',
+                options: ['full', 'partial', 'obscured'],
+              },
+              {
+                key: 'angle' as const,
+                label: 'Angle',
+                options: ['straight_on', 'slight_angle', 'significant_angle'],
+              },
+            ] as const
+          ).map(({ key, label, options }) => (
             <div key={key} className="space-y-2">
-              <Label className="text-muted-foreground text-xs uppercase tracking-wide">{label}</Label>
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+                {label}
+              </Label>
               {isEditing ? (
                 <Select
-                  value={(analysis.image_quality as any)[key]}
+                  value={analysis.image_quality[key]}
                   onValueChange={(v) => updateField(`image_quality.${key}`, v)}
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {options.map(opt => (
+                    {options.map((opt) => (
                       <SelectItem key={opt} value={opt} className="capitalize">
                         {opt.replace(/_/g, ' ')}
                       </SelectItem>
@@ -1219,14 +1333,20 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                   </SelectContent>
                 </Select>
               ) : (
-                <Badge className={cn(
-                  ['excellent', 'good', 'sharp', 'full', 'straight_on'].includes((analysis.image_quality as any)[key])
-                    ? "bg-green-500/20 text-green-400 border-green-500/30"
-                    : ['moderate', 'acceptable', 'partial', 'slight_angle'].includes((analysis.image_quality as any)[key])
-                    ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
-                    : "bg-red-500/20 text-red-400 border-red-500/30"
-                )}>
-                  {((analysis.image_quality as any)[key] as string).replace(/_/g, ' ')}
+                <Badge
+                  className={cn(
+                    ['excellent', 'good', 'sharp', 'full', 'straight_on'].includes(
+                      analysis.image_quality[key]
+                    )
+                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                      : ['moderate', 'acceptable', 'partial', 'slight_angle'].includes(
+                            analysis.image_quality[key]
+                          )
+                        ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                        : 'bg-red-500/20 text-red-400 border-red-500/30'
+                  )}
+                >
+                  {analysis.image_quality[key].replace(/_/g, ' ')}
                 </Badge>
               )}
             </div>
@@ -1240,7 +1360,9 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CircuitBoard className="h-4 w-4 text-orange-500" />
-            <h4 className="font-semibold text-foreground">Circuits ({analysis.circuits?.length || 0})</h4>
+            <h4 className="font-semibold text-foreground">
+              Circuits ({analysis.circuits?.length || 0})
+            </h4>
           </div>
           {isEditing && (
             <Button
@@ -1257,7 +1379,7 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                 };
                 updateField('circuits', [...(analysis.circuits || []), newCircuit]);
               }}
-              className="h-9 touch-manipulation gap-1.5 text-green-500 border-green-500/30 hover:bg-green-500/10"
+              className="h-11 touch-manipulation gap-1.5 text-green-500 border-green-500/30 hover:bg-green-500/10"
             >
               <Zap className="h-3.5 w-3.5" />
               Add Circuit
@@ -1420,9 +1542,15 @@ function AnalysisDetails({ analysis, isEditing, onUpdate }: AnalysisDetailsProps
                       {circuit.position}
                     </span>
                     <span className="font-medium">{circuit.device_type}</span>
-                    <span className="text-muted-foreground">{circuit.curve}{circuit.rating_amps}A</span>
+                    <span className="text-muted-foreground">
+                      {circuit.curve}
+                      {circuit.rating_amps}A
+                    </span>
                     {circuit.label_text && (
-                      <span className="truncate text-muted-foreground text-xs ml-auto" title={circuit.label_text}>
+                      <span
+                        className="truncate text-muted-foreground text-xs ml-auto"
+                        title={circuit.label_text}
+                      >
                         {circuit.label_text}
                       </span>
                     )}

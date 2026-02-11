@@ -32,9 +32,8 @@ export const FacetDistributionStats = () => {
     setLoading(true);
     try {
       // Use RPC function for efficient calculation
-      const { data, error } = await supabase
-        .rpc('get_facet_distribution_stats');
-      
+      const { data, error } = await supabase.rpc('get_facet_distribution_stats');
+
       if (error) throw error;
 
       if (!data || data.length === 0) {
@@ -47,11 +46,36 @@ export const FacetDistributionStats = () => {
 
       const ranges: FacetRange[] = [
         { range: 'under_8', count: Number(result.under_8), color: 'bg-red-500', label: 'Under 8' },
-        { range: 'exactly_8', count: Number(result.exactly_8), color: 'bg-yellow-500', label: 'Exactly 8' },
-        { range: 'range_9_20', count: Number(result.range_9_20), color: 'bg-green-500', label: '9-20' },
-        { range: 'range_21_50', count: Number(result.range_21_50), color: 'bg-blue-500', label: '21-50' },
-        { range: 'range_51_100', count: Number(result.range_51_100), color: 'bg-purple-500', label: '51-100' },
-        { range: 'range_101_200', count: Number(result.range_101_200), color: 'bg-orange-500', label: '101-200' },
+        {
+          range: 'exactly_8',
+          count: Number(result.exactly_8),
+          color: 'bg-yellow-500',
+          label: 'Exactly 8',
+        },
+        {
+          range: 'range_9_20',
+          count: Number(result.range_9_20),
+          color: 'bg-green-500',
+          label: '9-20',
+        },
+        {
+          range: 'range_21_50',
+          count: Number(result.range_21_50),
+          color: 'bg-blue-500',
+          label: '21-50',
+        },
+        {
+          range: 'range_51_100',
+          count: Number(result.range_51_100),
+          color: 'bg-yellow-500',
+          label: '51-100',
+        },
+        {
+          range: 'range_101_200',
+          count: Number(result.range_101_200),
+          color: 'bg-orange-500',
+          label: '101-200',
+        },
         { range: 'over_200', count: Number(result.over_200), color: 'bg-gray-500', label: '200+' },
       ];
 
@@ -62,7 +86,7 @@ export const FacetDistributionStats = () => {
         minFacets: Number(result.min_facets),
         maxFacets: Number(result.max_facets),
         qualityScore: Number(result.quality_score),
-        ranges
+        ranges,
       });
       setLastUpdate(new Date());
     } catch (error) {
@@ -70,7 +94,7 @@ export const FacetDistributionStats = () => {
       toast({
         title: 'Error',
         description: 'Failed to fetch facet distribution',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -79,6 +103,7 @@ export const FacetDistributionStats = () => {
 
   useEffect(() => {
     fetchDistribution();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleExport = () => {
@@ -86,9 +111,9 @@ export const FacetDistributionStats = () => {
 
     const csv = [
       'Range,Count,Percentage',
-      ...stats.ranges.map(r => 
-        `"${r.label}",${r.count},${((r.count / stats.totalSources) * 100).toFixed(2)}%`
-      )
+      ...stats.ranges.map(
+        (r) => `"${r.label}",${r.count},${((r.count / stats.totalSources) * 100).toFixed(2)}%`
+      ),
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -101,7 +126,7 @@ export const FacetDistributionStats = () => {
 
     toast({
       title: 'Exported',
-      description: 'Facet distribution exported as CSV'
+      description: 'Facet distribution exported as CSV',
     });
   };
 
@@ -127,7 +152,7 @@ export const FacetDistributionStats = () => {
 
   if (!stats) return null;
 
-  const maxCount = Math.max(...stats.ranges.map(r => r.count));
+  const maxCount = Math.max(...stats.ranges.map((r) => r.count));
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -171,15 +196,11 @@ export const FacetDistributionStats = () => {
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
             <div className="text-xs text-muted-foreground mb-1">Sources</div>
-            <div className="text-lg font-bold">
-              {stats.totalSources.toLocaleString()}
-            </div>
+            <div className="text-lg font-bold">{stats.totalSources.toLocaleString()}</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
             <div className="text-xs text-muted-foreground mb-1">Avg/Source</div>
-            <div className="text-lg font-bold">
-              {stats.avgPerSource.toFixed(1)}
-            </div>
+            <div className="text-lg font-bold">{stats.avgPerSource.toFixed(1)}</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
             <div className="text-xs text-muted-foreground mb-1">Min → Max</div>
@@ -189,15 +210,11 @@ export const FacetDistributionStats = () => {
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
             <div className="text-xs text-muted-foreground mb-1">Quality</div>
-            <div className="text-lg font-bold text-green-400">
-              {stats.qualityScore.toFixed(1)}%
-            </div>
+            <div className="text-lg font-bold text-green-400">{stats.qualityScore.toFixed(1)}%</div>
           </div>
           <div className="bg-elec-dark/50 rounded-lg p-3">
             <div className="text-xs text-muted-foreground mb-1">Incomplete</div>
-            <div className="text-lg font-bold text-red-400">
-              {stats.ranges[0].count}
-            </div>
+            <div className="text-lg font-bold text-red-400">{stats.ranges[0].count}</div>
           </div>
         </div>
 
@@ -207,12 +224,9 @@ export const FacetDistributionStats = () => {
             Distribution by Facet Count Ranges
           </div>
           {stats.ranges.map((range) => {
-            const percentage = stats.totalSources > 0 
-              ? (range.count / stats.totalSources) * 100 
-              : 0;
-            const barWidth = maxCount > 0 
-              ? (range.count / maxCount) * 100 
-              : 0;
+            const percentage =
+              stats.totalSources > 0 ? (range.count / stats.totalSources) * 100 : 0;
+            const barWidth = maxCount > 0 ? (range.count / maxCount) * 100 : 0;
 
             return (
               <div key={range.range} className="space-y-1">
@@ -228,9 +242,7 @@ export const FacetDistributionStats = () => {
                     style={{ width: `${barWidth}%` }}
                   >
                     {barWidth > 15 && (
-                      <span className="text-xs font-bold text-foreground">
-                        {range.count}
-                      </span>
+                      <span className="text-xs font-bold text-foreground">{range.count}</span>
                     )}
                   </div>
                 </div>

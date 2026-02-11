@@ -1,25 +1,20 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useHaptic } from '@/hooks/useHaptic';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/select';
+import { toast } from '@/hooks/use-toast';
 import {
   User,
   Mail,
@@ -27,6 +22,7 @@ import {
   Zap,
   Gift,
   Crown,
+  CreditCard,
   Loader2,
   CheckCircle,
   XCircle,
@@ -42,11 +38,11 @@ import {
   Send,
   Timer,
   AlertTriangle,
-} from "lucide-react";
-import { formatDistanceToNow, format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { getInitials, getRoleColor } from "@/utils/adminUtils";
-import MessageUserSheet from "./MessageUserSheet";
+} from 'lucide-react';
+import { formatDistanceToNow, format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { getInitials, getRoleColor } from '@/utils/adminUtils';
+import MessageUserSheet from './MessageUserSheet';
 
 interface UserData {
   id: string;
@@ -55,6 +51,7 @@ interface UserData {
   role?: string;
   subscribed?: boolean;
   subscription_tier?: string;
+  subscription_end?: string | null;
   stripe_customer_id?: string | null;
   free_access_granted?: boolean;
   free_access_expires_at?: string | null;
@@ -65,7 +62,7 @@ interface UserData {
 
 // Format seconds into human readable time
 const formatTimeSpent = (seconds: number): string => {
-  if (!seconds || seconds === 0) return "0m";
+  if (!seconds || seconds === 0) return '0m';
   if (seconds < 60) return `${seconds}s`;
   if (seconds < 3600) return `${Math.round(seconds / 60)}m`;
   const hours = Math.floor(seconds / 3600);
@@ -80,9 +77,9 @@ interface UserManagementSheetProps {
 }
 
 const tierPricing: Record<string, string> = {
-  Apprentice: "£4.99/mo",
-  Electrician: "£9.99/mo",
-  Employer: "£29.99/mo",
+  Apprentice: '£4.99/mo',
+  Electrician: '£9.99/mo',
+  Employer: '£29.99/mo',
 };
 
 export default function UserManagementSheet({
@@ -91,30 +88,33 @@ export default function UserManagementSheet({
   onOpenChange,
 }: UserManagementSheetProps) {
   const queryClient = useQueryClient();
-  const [selectedTier, setSelectedTier] = useState<string>("Employer");
-  const [expiresOption, setExpiresOption] = useState<string>("7days");
-  const [customExpiry, setCustomExpiry] = useState<string>("");
-  const [reason, setReason] = useState<string>("");
+  const haptic = useHaptic();
+  const [selectedTier, setSelectedTier] = useState<string>('Employer');
+  const [expiresOption, setExpiresOption] = useState<string>('7days');
+  const [customExpiry, setCustomExpiry] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
   const [messageSheetOpen, setMessageSheetOpen] = useState(false);
+  const [extendDate, setExtendDate] = useState('');
+  const [manageTier, setManageTier] = useState(user?.subscription_tier || '');
 
   // Fetch user activity data
   const { data: activityData } = useQuery({
-    queryKey: ["user-activity", user?.id],
+    queryKey: ['user-activity', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
 
       // Get activity summary
       const { data: summary } = await supabase
-        .from("user_activity_summary")
-        .select("*")
-        .eq("user_id", user.id)
+        .from('user_activity_summary')
+        .select('*')
+        .eq('user_id', user.id)
         .maybeSingle();
 
       // Get user_activity for points/streak
       const { data: userActivity } = await supabase
-        .from("user_activity")
-        .select("points, streak, last_active_date")
-        .eq("user_id", user.id)
+        .from('user_activity')
+        .select('points, streak, last_active_date')
+        .eq('user_id', user.id)
         .maybeSingle();
 
       return {
@@ -136,28 +136,28 @@ export default function UserManagementSheet({
   // Send trial reminder email mutation
   const sendEmailMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error("No user selected");
-      const { data, error } = await supabase.functions.invoke("send-trial-reminder", {
-        body: { userId: user.id, type: "reminder" },
+      if (!user) throw new Error('No user selected');
+      const { data, error } = await supabase.functions.invoke('send-trial-reminder', {
+        body: { userId: user.id, type: 'reminder' },
       });
       if (error) throw error;
       if (data?.skipped) {
-        throw new Error("Email already sent today");
+        throw new Error('Email already sent today');
       }
       return data;
     },
     onSuccess: () => {
       toast({
-        title: "Email Sent",
+        title: 'Email Sent',
         description: `Trial reminder sent to ${user?.full_name}`,
       });
-      queryClient.invalidateQueries({ queryKey: ["admin-email-sends-today"] });
+      queryClient.invalidateQueries({ queryKey: ['admin-email-sends-today'] });
     },
     onError: (error) => {
       toast({
-        title: "Email Failed",
+        title: 'Email Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -165,60 +165,57 @@ export default function UserManagementSheet({
   // Grant free access mutation
   const grantMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error("No user selected");
+      if (!user) throw new Error('No user selected');
 
       let expires_at: string | null = null;
-      if (expiresOption === "7days") {
+      if (expiresOption === '7days') {
         const date = new Date();
         date.setDate(date.getDate() + 7);
         expires_at = date.toISOString();
-      } else if (expiresOption === "30days") {
+      } else if (expiresOption === '30days') {
         const date = new Date();
         date.setDate(date.getDate() + 30);
         expires_at = date.toISOString();
-      } else if (expiresOption === "90days") {
+      } else if (expiresOption === '90days') {
         const date = new Date();
         date.setDate(date.getDate() + 90);
         expires_at = date.toISOString();
-      } else if (expiresOption === "1year") {
+      } else if (expiresOption === '1year') {
         const date = new Date();
         date.setFullYear(date.getFullYear() + 1);
         expires_at = date.toISOString();
-      } else if (expiresOption === "custom" && customExpiry) {
+      } else if (expiresOption === 'custom' && customExpiry) {
         expires_at = new Date(customExpiry).toISOString();
       }
 
-      const { data, error } = await supabase.functions.invoke(
-        "admin-manage-subscription",
-        {
-          body: {
-            action: "grant_free_access",
-            target_user_id: user.id,
-            subscription_tier: selectedTier,
-            expires_at,
-            reason: reason || undefined,
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('admin-manage-subscription', {
+        body: {
+          action: 'grant_free_access',
+          target_user_id: user.id,
+          subscription_tier: selectedTier,
+          expires_at,
+          reason: reason || undefined,
+        },
+      });
 
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ['admin-dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       toast({
-        title: "Access Granted",
+        title: 'Access Granted',
         description: `${user?.full_name} now has ${selectedTier} access`,
       });
       onOpenChange(false);
-      setReason("");
+      setReason('');
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -226,40 +223,111 @@ export default function UserManagementSheet({
   // Revoke free access mutation
   const revokeMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error("No user selected");
+      if (!user) throw new Error('No user selected');
 
-      const { data, error } = await supabase.functions.invoke(
-        "admin-manage-subscription",
-        {
-          body: {
-            action: "revoke_free_access",
-            target_user_id: user.id,
-            reason: reason || "Admin revoked",
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('admin-manage-subscription', {
+        body: {
+          action: 'revoke_free_access',
+          target_user_id: user.id,
+          reason: reason || 'Admin revoked',
+        },
+      });
 
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ['admin-dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       toast({
-        title: "Access Revoked",
+        title: 'Access Revoked',
         description: `${user?.full_name}'s free access has been revoked`,
       });
       onOpenChange(false);
-      setReason("");
+      setReason('');
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
+
+  // Extend trial / subscription end date
+  const handleExtendTrial = async () => {
+    if (!user || !extendDate) return;
+    const { error } = await supabase
+      .from('profiles')
+      .update({ subscription_end: new Date(extendDate).toISOString() } as Record<string, unknown>)
+      .eq('id', user.id);
+    if (error) {
+      haptic.error();
+      toast({
+        title: 'Error extending trial',
+        description: error.message,
+        variant: 'destructive',
+      });
+      return;
+    }
+    haptic.success();
+    toast({
+      title: 'Trial extended',
+      description: `Extended until ${extendDate}`,
+    });
+    setExtendDate('');
+    queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+  };
+
+  // Change subscription tier
+  const handleChangeTier = async () => {
+    if (!user || !manageTier || manageTier === user.subscription_tier) return;
+    const { error } = await supabase
+      .from('profiles')
+      .update({ subscription_tier: manageTier } as Record<string, unknown>)
+      .eq('id', user.id);
+    if (error) {
+      haptic.error();
+      toast({
+        title: 'Error updating tier',
+        description: error.message,
+        variant: 'destructive',
+      });
+      return;
+    }
+    haptic.success();
+    toast({
+      title: 'Tier updated',
+      description: `Changed to ${manageTier}`,
+    });
+    queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+  };
+
+  // Cancel subscription
+  const handleCancelSubscription = async () => {
+    if (!user) return;
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        subscribed: false,
+        subscription_tier: null,
+        subscription_end: null,
+      } as Record<string, unknown>)
+      .eq('id', user.id);
+    if (error) {
+      haptic.error();
+      toast({
+        title: 'Error cancelling subscription',
+        description: error.message,
+        variant: 'destructive',
+      });
+      return;
+    }
+    haptic.success();
+    toast({ title: 'Subscription cancelled' });
+    queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+  };
 
   if (!user) return null;
 
@@ -285,7 +353,7 @@ export default function UserManagementSheet({
             <div className="flex items-center gap-4 p-4 rounded-xl bg-muted/50">
               <div
                 className={cn(
-                  "w-14 h-14 rounded-xl flex items-center justify-center text-lg font-bold",
+                  'w-14 h-14 rounded-xl flex items-center justify-center text-lg font-bold',
                   colors.bg,
                   colors.text
                 )}
@@ -293,9 +361,7 @@ export default function UserManagementSheet({
                 {getInitials(user.full_name)}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-lg truncate">
-                  {user.full_name || "Unknown"}
-                </h3>
+                <h3 className="font-semibold text-lg truncate">{user.full_name || 'Unknown'}</h3>
                 {user.email && (
                   <p className="text-sm text-muted-foreground truncate flex items-center gap-1">
                     <Mail className="h-3 w-3" />
@@ -304,7 +370,7 @@ export default function UserManagementSheet({
                 )}
                 <div className="flex items-center gap-2 mt-1">
                   {user.role && (
-                    <Badge className={cn("text-xs capitalize", colors.bg, colors.text)}>
+                    <Badge className={cn('text-xs capitalize', colors.bg, colors.text)}>
                       {user.role}
                     </Badge>
                   )}
@@ -351,7 +417,9 @@ export default function UserManagementSheet({
 
               {/* Activity Status Banner */}
               {(() => {
-                const hasActivity = activityData && (activityData.loginCount > 0 || activityData.totalSecondsTracked > 0);
+                const hasActivity =
+                  activityData &&
+                  (activityData.loginCount > 0 || activityData.totalSecondsTracked > 0);
                 const lastLogin = user.last_sign_in;
                 const neverLoggedIn = !lastLogin && !hasActivity;
                 const signedUpButLeft = lastLogin && !hasActivity;
@@ -362,7 +430,9 @@ export default function UserManagementSheet({
                       <Snowflake className="h-5 w-5 text-blue-400" />
                       <div>
                         <p className="text-sm font-medium text-blue-400">Never Logged In</p>
-                        <p className="text-xs text-muted-foreground">User hasn't returned since signup</p>
+                        <p className="text-xs text-muted-foreground">
+                          User hasn't returned since signup
+                        </p>
                       </div>
                     </div>
                   );
@@ -383,27 +453,38 @@ export default function UserManagementSheet({
                 }
 
                 if (hasActivity) {
-                  const isHot = (activityData?.totalSecondsTracked || 0) > 300 || (activityData?.featureUseCount || 0) > 2;
+                  const isHot =
+                    (activityData?.totalSecondsTracked || 0) > 300 ||
+                    (activityData?.featureUseCount || 0) > 2;
                   return (
-                    <div className={cn(
-                      "flex items-center gap-3 p-3 rounded-lg border",
-                      isHot ? "bg-green-500/10 border-green-500/20" : "bg-amber-500/10 border-amber-500/20"
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center gap-3 p-3 rounded-lg border',
+                        isHot
+                          ? 'bg-green-500/10 border-green-500/20'
+                          : 'bg-amber-500/10 border-amber-500/20'
+                      )}
+                    >
                       {isHot ? (
                         <Flame className="h-5 w-5 text-green-400" />
                       ) : (
                         <Activity className="h-5 w-5 text-amber-400" />
                       )}
                       <div>
-                        <p className={cn("text-sm font-medium", isHot ? "text-green-400" : "text-amber-400")}>
-                          {isHot ? "Engaged User" : "Some Activity"}
+                        <p
+                          className={cn(
+                            'text-sm font-medium',
+                            isHot ? 'text-green-400' : 'text-amber-400'
+                          )}
+                        >
+                          {isHot ? 'Engaged User' : 'Some Activity'}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {activityData?.lastActivity
                             ? `Last active: ${formatDistanceToNow(new Date(activityData.lastActivity), { addSuffix: true })}`
                             : lastLogin
                               ? `Last login: ${formatDistanceToNow(new Date(lastLogin), { addSuffix: true })}`
-                              : ""}
+                              : ''}
                         </p>
                       </div>
                     </div>
@@ -417,7 +498,9 @@ export default function UserManagementSheet({
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="p-3 rounded-lg bg-muted/50">
                   <Timer className="h-4 w-4 text-teal-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">{formatTimeSpent(activityData?.totalSecondsTracked || 0)}</p>
+                  <p className="text-lg font-bold">
+                    {formatTimeSpent(activityData?.totalSecondsTracked || 0)}
+                  </p>
                   <p className="text-[10px] text-muted-foreground">Time in App</p>
                 </div>
                 <div className="p-3 rounded-lg bg-muted/50">
@@ -459,21 +542,21 @@ export default function UserManagementSheet({
                     <span className="font-medium text-green-400">Active</span>
                     {user.subscription_tier && (
                       <Badge className="bg-yellow-500/20 text-yellow-400">
-                        {user.subscription_tier} - {tierPricing[user.subscription_tier] || ""}
+                        {user.subscription_tier} - {tierPricing[user.subscription_tier] || ''}
                       </Badge>
                     )}
                   </div>
 
                   {user.free_access_granted && (
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Gift className="h-4 w-4 text-purple-400" />
+                      <Gift className="h-4 w-4 text-yellow-400" />
                       <span>Admin-granted free access</span>
                     </div>
                   )}
 
                   {user.free_access_expires_at && (
                     <p className="text-sm text-muted-foreground">
-                      Expires: {format(new Date(user.free_access_expires_at), "dd MMM yyyy")}
+                      Expires: {format(new Date(user.free_access_expires_at), 'dd MMM yyyy')}
                     </p>
                   )}
 
@@ -491,12 +574,93 @@ export default function UserManagementSheet({
               )}
             </div>
 
+            {/* Subscription Management */}
+            <div className="space-y-4 border-t border-border pt-4 mt-4">
+              <h4 className="text-sm font-semibold flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-yellow-400" />
+                Subscription Management
+              </h4>
+
+              {/* Current status display */}
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-muted-foreground">Current:</span>
+                <Badge>{user.subscription_tier || 'No tier'}</Badge>
+                <Badge variant={user.subscribed ? 'default' : 'outline'}>
+                  {user.subscribed ? 'Subscribed' : 'Not subscribed'}
+                </Badge>
+              </div>
+
+              {/* Extend Trial / Subscription End Date */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Extend Trial / Subscription Until
+                  {user.subscription_end && (
+                    <span className="ml-2 text-xs text-muted-foreground">
+                      (currently: {format(new Date(user.subscription_end), 'dd MMM yyyy')})
+                    </span>
+                  )}
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    type="date"
+                    value={extendDate}
+                    onChange={(e) => setExtendDate(e.target.value)}
+                    className="h-11 touch-manipulation flex-1"
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                  <Button
+                    onClick={handleExtendTrial}
+                    className="h-11 touch-manipulation bg-green-500 hover:bg-green-600 text-white"
+                    disabled={!extendDate}
+                  >
+                    <Clock className="h-4 w-4 mr-1" />
+                    Extend
+                  </Button>
+                </div>
+              </div>
+
+              {/* Change Subscription Tier */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Subscription Tier</label>
+                <div className="flex gap-2">
+                  <Select value={manageTier} onValueChange={setManageTier}>
+                    <SelectTrigger className="h-11 touch-manipulation flex-1">
+                      <SelectValue placeholder="Select tier" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="free">Free</SelectItem>
+                      <SelectItem value="basic">Basic</SelectItem>
+                      <SelectItem value="pro">Pro</SelectItem>
+                      <SelectItem value="enterprise">Enterprise</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    onClick={handleChangeTier}
+                    className="h-11 touch-manipulation"
+                    disabled={!manageTier || manageTier === user?.subscription_tier}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </div>
+
+              {/* Cancel Subscription */}
+              <Button
+                variant="destructive"
+                onClick={handleCancelSubscription}
+                className="h-11 touch-manipulation w-full"
+              >
+                <XCircle className="h-4 w-4 mr-2" />
+                Cancel Subscription
+              </Button>
+            </div>
+
             {/* Actions */}
             {!user.subscribed || user.free_access_granted ? (
               <div className="rounded-xl border border-border p-4 space-y-4">
                 <h4 className="font-medium flex items-center gap-2">
-                  <Gift className="h-4 w-4 text-purple-400" />
-                  {user.free_access_granted ? "Manage Free Access" : "Grant Free Access"}
+                  <Gift className="h-4 w-4 text-yellow-400" />
+                  {user.free_access_granted ? 'Manage Free Access' : 'Grant Free Access'}
                 </h4>
 
                 {!user.free_access_granted && (
@@ -511,7 +675,7 @@ export default function UserManagementSheet({
                         <SelectContent>
                           <SelectItem value="Apprentice">
                             <div className="flex items-center gap-2">
-                              <GraduationCap className="h-4 w-4 text-purple-400" />
+                              <GraduationCap className="h-4 w-4 text-yellow-400" />
                               Apprentice - £4.99/mo
                             </div>
                           </SelectItem>
@@ -549,7 +713,7 @@ export default function UserManagementSheet({
                       </Select>
                     </div>
 
-                    {expiresOption === "custom" && (
+                    {expiresOption === 'custom' && (
                       <div className="space-y-2">
                         <Label>Expiry Date</Label>
                         <Input
@@ -557,7 +721,7 @@ export default function UserManagementSheet({
                           value={customExpiry}
                           onChange={(e) => setCustomExpiry(e.target.value)}
                           className="h-11 touch-manipulation"
-                          min={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split('T')[0]}
                         />
                       </div>
                     )}
@@ -578,8 +742,8 @@ export default function UserManagementSheet({
             ) : (
               <div className="rounded-xl bg-amber-500/10 border border-amber-500/30 p-4">
                 <p className="text-sm text-amber-400">
-                  This user has an active Stripe subscription. To manage their subscription,
-                  they should use the customer portal or contact support.
+                  This user has an active Stripe subscription. To manage their subscription, they
+                  should use the customer portal or contact support.
                 </p>
               </div>
             )}
@@ -588,7 +752,7 @@ export default function UserManagementSheet({
           {/* Footer Actions */}
           <SheetFooter className="p-4 border-t border-border gap-2">
             {/* Show Revoke for any admin-granted access (free_access_granted OR subscribed without Stripe) */}
-            {(user.free_access_granted || (user.subscribed && !user.stripe_customer_id)) ? (
+            {user.free_access_granted || (user.subscribed && !user.stripe_customer_id) ? (
               <Button
                 variant="destructive"
                 className="flex-1 h-12 touch-manipulation"
@@ -609,7 +773,7 @@ export default function UserManagementSheet({
               </Button>
             ) : !user.subscribed ? (
               <Button
-                className="flex-1 h-12 touch-manipulation bg-purple-600 hover:bg-purple-700"
+                className="flex-1 h-12 touch-manipulation bg-yellow-600 hover:bg-yellow-700"
                 onClick={() => grantMutation.mutate()}
                 disabled={isLoading}
               >
@@ -638,12 +802,16 @@ export default function UserManagementSheet({
       <MessageUserSheet
         open={messageSheetOpen}
         onOpenChange={setMessageSheetOpen}
-        user={user ? {
-          id: user.id,
-          full_name: user.full_name || undefined,
-          email: user.email,
-          role: user.role,
-        } : null}
+        user={
+          user
+            ? {
+                id: user.id,
+                full_name: user.full_name || undefined,
+                email: user.email,
+                role: user.role,
+              }
+            : null
+        }
       />
     </Sheet>
   );
