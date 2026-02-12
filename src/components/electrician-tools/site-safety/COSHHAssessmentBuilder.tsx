@@ -600,9 +600,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       onClick={() =>
                         setControlMeasures((prev) => prev.filter((_, idx) => idx !== i))
                       }
-                      className="h-7 w-7 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation"
+                      className="h-9 w-9 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
                     >
-                      <Trash2 className="h-3 w-3 text-white/40" />
+                      <Trash2 className="h-3.5 w-3.5 text-white/40" />
                     </button>
                   </div>
                 ))}
@@ -631,7 +631,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {ppeRequired.map((item, i) => (
                   <Badge
                     key={i}
-                    className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs cursor-pointer hover:bg-red-500/15"
+                    className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs cursor-pointer touch-manipulation active:bg-red-500/15 py-1.5 px-2.5"
                     onClick={() => setPpeRequired((prev) => prev.filter((_, idx) => idx !== i))}
                   >
                     <Shield className="h-3 w-3 mr-1" />
@@ -923,9 +923,11 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               />
             </div>
 
-            <div className="flex-1 overflow-y-auto px-4 py-4">{renderWizardStep()}</div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              {renderWizardStep()}
+            </div>
 
-            <div className="px-4 py-3 border-t border-white/10 safe-area-bottom">
+            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
               <Button
                 onClick={() => {
                   if (wizardStep < 3) {
@@ -955,12 +957,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 pl-9 text-sm border-white/20 focus:border-yellow-500"
+                  className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
                   placeholder="Search substances..."
                 />
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-2">
               {filteredSubstances.map((substance, i) => (
                 <button
                   key={i}
@@ -1013,7 +1015,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
                 {/* GHS Hazards */}
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">GHS Hazards</h4>

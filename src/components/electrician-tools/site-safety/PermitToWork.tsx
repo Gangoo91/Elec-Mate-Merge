@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -229,8 +229,32 @@ const STATUS_CONFIG: Record<
 
 function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void; label: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasContent, setHasContent] = useState(false);
+
+  // Resize canvas to match container width for responsive rendering
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const resizeCanvas = () => {
+      const { width } = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = 120 * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = '120px';
+      const ctx = canvas.getContext('2d');
+      if (ctx) ctx.scale(dpr, dpr);
+    };
+
+    resizeCanvas();
+    const observer = new ResizeObserver(resizeCanvas);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   const getCoords = (e: React.TouchEvent | React.MouseEvent) => {
     const canvas = canvasRef.current;
@@ -264,6 +288,7 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
     const { x, y } = getCoords(e);
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
     ctx.strokeStyle = '#fbbf24';
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -280,19 +305,26 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    if (ctx) {
+      const dpr = window.devicePixelRatio || 1;
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
     setHasContent(false);
   };
 
   return (
     <div className="space-y-2">
       <Label className="text-white/80 text-sm">{label}</Label>
-      <div className="relative border border-white/20 rounded-xl overflow-hidden bg-white/[0.03]">
+      <div
+        ref={containerRef}
+        className="relative border border-white/20 rounded-xl overflow-hidden bg-white/[0.03]"
+      >
         <canvas
           ref={canvasRef}
-          width={320}
-          height={100}
-          className="w-full h-[100px] touch-none"
+          className="w-full h-[120px] touch-none"
           onMouseDown={startDraw}
           onMouseMove={draw}
           onMouseUp={endDraw}
@@ -308,7 +340,12 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
         )}
       </div>
       {hasContent && (
-        <Button variant="ghost" size="sm" onClick={clear} className="text-white/50 text-xs h-8">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={clear}
+          className="text-white/50 text-xs h-9 touch-manipulation"
+        >
           Clear signature
         </Button>
       )}
@@ -613,7 +650,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           updated[index] = { ...hazard, controls: e.target.value };
                           setHazards(updated);
                         }}
-                        className="h-9 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-2"
+                        className="h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-2"
                         placeholder="Control measures..."
                       />
                     </div>
@@ -798,17 +835,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 pl-9 text-sm border-white/20 focus:border-yellow-500"
+                  className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
                   placeholder="Search permits..."
                 />
               </div>
             </div>
-            <div className="flex gap-1.5 overflow-x-auto pb-1">
+            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
               {(['all', 'active', 'expired', 'closed', 'cancelled'] as const).map((status) => (
                 <button
                   key={status}
                   onClick={() => setFilterStatus(status)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-colors ${
+                  className={`px-4 py-2 min-h-[36px] rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-colors active:scale-[0.97] ${
                     filterStatus === status
                       ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
                       : 'bg-white/[0.05] text-white/60 border border-white/10'
@@ -923,11 +960,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             )}
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto px-4 py-4">{renderWizardStep()}</div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              {renderWizardStep()}
+            </div>
 
             {/* Footer */}
             {wizardStep > 0 && (
-              <div className="px-4 py-3 border-t border-white/10 safe-area-bottom">
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                 <Button
                   onClick={() => {
                     if (wizardStep < 3) {
@@ -981,7 +1020,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     </div>
                   </div>
 
-                  <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+                  <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
                     {/* Details */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-sm">
@@ -1082,7 +1121,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
                   {/* Actions */}
                   {viewingPermit.status === 'active' && (
-                    <div className="px-4 py-3 border-t border-white/10 flex gap-2 safe-area-bottom">
+                    <div className="px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                       <Button
                         onClick={() => closePermit(viewingPermit.id)}
                         className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"

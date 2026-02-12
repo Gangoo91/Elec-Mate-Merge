@@ -535,8 +535,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <Input
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
-                className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 mt-1"
+                className="h-11 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
                 placeholder="Your name"
+                autoComplete="name"
               />
             </div>
             <div>
@@ -544,7 +545,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 mt-1"
+                className="h-11 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
                 placeholder="Site / area"
               />
             </div>
@@ -581,7 +582,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 >
                   <button
                     onClick={() => toggleSection(sectionIdx)}
-                    className="w-full flex items-center justify-between p-3 touch-manipulation active:bg-white/[0.04]"
+                    className="w-full flex items-center justify-between p-3 min-h-[48px] touch-manipulation active:bg-white/[0.04]"
                   >
                     <div className="flex items-center gap-2">
                       <h3 className="text-sm font-bold text-white">{section.title}</h3>
@@ -645,7 +646,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                               <Input
                                 value={item.notes}
                                 onChange={(e) => setItemNotes(sectionIdx, itemIdx, e.target.value)}
-                                className="h-9 text-xs border-red-500/20 focus:border-red-500 bg-transparent"
+                                className="h-11 text-sm touch-manipulation border-red-500/20 focus:border-red-500 focus:ring-red-500/20 bg-transparent"
                                 placeholder="Describe the defect or issue..."
                               />
                             </div>
@@ -672,7 +673,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         </div>
 
         {/* Submit button */}
-        <div className="fixed bottom-0 left-0 right-0 px-4 py-3 bg-background/95 backdrop-blur-sm border-t border-white/10 safe-area-bottom">
+        <div className="fixed bottom-0 left-0 right-0 px-4 py-3 bg-background/95 backdrop-blur-sm border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
           <Button
             onClick={submitInspection}
             disabled={answeredCount === 0 || !inspectorName}
@@ -807,7 +808,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <h2 className="text-base font-bold text-white">Choose Checklist Template</h2>
               <p className="text-xs text-white/50 mt-0.5">Select the type of inspection</p>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-2">
               {TEMPLATES.map((template) => {
                 const Icon = template.icon;
                 return (
@@ -861,7 +862,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
                 {/* Result summary */}
                 <div className="grid grid-cols-3 gap-2">
                   <div className="p-3 rounded-xl bg-green-500/10 text-center">

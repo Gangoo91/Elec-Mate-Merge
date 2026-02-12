@@ -560,7 +560,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       <button
                         key={level}
                         onClick={() => updateForm({ severity: level })}
-                        className={`p-2.5 rounded-xl border text-center touch-manipulation transition-all active:scale-[0.98] ${
+                        className={`p-2.5 min-h-[44px] rounded-xl border text-center touch-manipulation transition-all active:scale-[0.98] ${
                           form.severity === level
                             ? `${config.bg} border-current ring-1 ring-offset-0 ${config.colour}`
                             : 'border-white/10 bg-white/[0.03] text-white/50'
@@ -660,6 +660,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <Label className="text-white/80 text-sm">Days Off</Label>
                     <Input
                       type="number"
+                      inputMode="numeric"
                       value={form.days_off}
                       onChange={(e) => updateForm({ days_off: parseInt(e.target.value) || 0 })}
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
@@ -850,7 +851,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-10 pl-9 text-sm border-white/20 focus:border-yellow-500"
+              className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
               placeholder="Search records..."
             />
           </div>
@@ -946,9 +947,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               />
             </div>
 
-            <div className="flex-1 overflow-y-auto px-4 py-4">{renderFormStep()}</div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              {renderFormStep()}
+            </div>
 
-            <div className="px-4 py-3 border-t border-white/10 safe-area-bottom">
+            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
               <Button
                 onClick={() => {
                   if (formStep < 3) {
@@ -989,7 +992,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
                 {/* Person Details */}
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">Injured Person</h4>
@@ -1139,7 +1142,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
               </p>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
               {/* When to report */}
               <div>
                 <h4 className="text-sm font-bold text-red-300 mb-2">When Must You Report?</h4>

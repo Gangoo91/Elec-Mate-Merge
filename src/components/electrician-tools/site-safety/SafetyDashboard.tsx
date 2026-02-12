@@ -303,7 +303,7 @@ export function SafetyDashboard({ stats, isLoading, onCardTap }: SafetyDashboard
               variants={itemVariants}
               whileTap={{ scale: 0.97 }}
               onClick={() => onCardTap?.(stat.section)}
-              className={`text-left p-3 rounded-xl border ${stat.borderColour} bg-gradient-to-br ${stat.gradient} touch-manipulation active:opacity-80 transition-opacity`}
+              className={`text-left p-3 min-h-[56px] rounded-xl border ${stat.borderColour} bg-gradient-to-br ${stat.gradient} touch-manipulation active:opacity-80 transition-opacity`}
             >
               <div className="flex items-center gap-2 mb-1.5">
                 <IconComponent className={`h-4 w-4 ${stat.iconColour}`} />
