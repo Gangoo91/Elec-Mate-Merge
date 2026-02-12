@@ -81,6 +81,18 @@ export default function AdminWinback() {
   const [showTestEmail, setShowTestEmail] = useState(false);
   const [manualEmail, setManualEmail] = useState('');
 
+  // Auto-batch state
+  const [batchSending, setBatchSending] = useState(false);
+  const [batchProgress, setBatchProgress] = useState({
+    sent: 0,
+    failed: 0,
+    total: 0,
+    batch: 0,
+    totalBatches: 0,
+  });
+  const [confirmResend, setConfirmResend] = useState(false);
+  const [resetting, setResetting] = useState(false);
+
   // Fetch campaign stats
   const {
     data: stats,
@@ -169,32 +181,68 @@ export default function AdminWinback() {
     },
   });
 
-  // Send bulk emails mutation
-  const sendBulkMutation = useMutation({
-    mutationFn: async (userIds: string[]) => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'send_bulk', userIds },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: (data) => {
-      haptic.success();
-      const message = `${data.sent} email${data.sent !== 1 ? 's' : ''} sent${data.skipped ? `, ${data.skipped} skipped` : ''}${data.failed ? `, ${data.failed} failed` : ''}`;
-      toast.success(message);
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
-      setSelectedUsers(new Set());
-      setConfirmSendAll(false);
-    },
-    onError: (error) => {
-      haptic.error();
-      toast.error(`Bulk send failed: ${error.message}`);
-      setConfirmSendAll(false);
-    },
-  });
+  // Auto-batched bulk send — sends in groups of 40 to avoid edge function timeouts
+  const BATCH_SIZE = 40;
+
+  const sendBatchedEmails = async (userIds: string[]) => {
+    const batches: string[][] = [];
+    for (let i = 0; i < userIds.length; i += BATCH_SIZE) {
+      batches.push(userIds.slice(i, i + BATCH_SIZE));
+    }
+
+    setBatchSending(true);
+    setBatchProgress({
+      sent: 0,
+      failed: 0,
+      total: userIds.length,
+      batch: 0,
+      totalBatches: batches.length,
+    });
+
+    let totalSent = 0;
+    let totalFailed = 0;
+
+    for (let i = 0; i < batches.length; i++) {
+      setBatchProgress((prev) => ({ ...prev, batch: i + 1 }));
+
+      try {
+        const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+          body: { action: 'send_bulk', userIds: batches[i] },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+
+        totalSent += data.sent || 0;
+        totalFailed += data.failed || 0;
+        setBatchProgress((prev) => ({ ...prev, sent: totalSent, failed: totalFailed }));
+
+        toast.success(`Batch ${i + 1}/${batches.length} done — ${data.sent} sent`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        totalFailed += batches[i].length;
+        setBatchProgress((prev) => ({ ...prev, failed: totalFailed }));
+        toast.error(`Batch ${i + 1} failed: ${err.message}`);
+      }
+
+      // Small delay between batches to be safe
+      if (i < batches.length - 1) {
+        await new Promise((r) => setTimeout(r, 2000));
+      }
+    }
+
+    haptic.success();
+    toast.success(`All done! ${totalSent} sent, ${totalFailed} failed out of ${userIds.length}`);
+
+    setBatchSending(false);
+    setBatchProgress({ sent: 0, failed: 0, total: 0, batch: 0, totalBatches: 0 });
+    setSelectedUsers(new Set());
+    setConfirmSendAll(false);
+
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+  };
 
   // Send test email mutation
   const sendTestMutation = useMutation({
@@ -276,10 +324,10 @@ export default function AdminWinback() {
     }
   };
 
-  // Handle send to selected
+  // Handle send to selected — auto-batched
   const handleSendSelected = () => {
     if (selectedUsers.size === 0) return;
-    sendBulkMutation.mutate(Array.from(selectedUsers));
+    sendBatchedEmails(Array.from(selectedUsers));
   };
 
   return (
@@ -310,6 +358,56 @@ export default function AdminWinback() {
             <span className="hidden sm:inline">Refresh</span>
           </Button>
         </div>
+
+        {/* Main Action Card — Reset & Send All */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-600/10">
+          <CardContent className="p-4 space-y-3">
+            {batchSending ? (
+              <>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="flex items-center gap-2 text-amber-400 font-semibold">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
+                  </span>
+                  <span className="text-muted-foreground">
+                    {batchProgress.sent}/{batchProgress.total}
+                  </span>
+                </div>
+                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
+                    style={{
+                      width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+                {batchProgress.failed > 0 && (
+                  <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
+                )}
+              </>
+            ) : resetting ? (
+              <div className="flex items-center justify-center gap-2 py-4 text-amber-400">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span className="text-sm font-semibold">Resetting users...</span>
+              </div>
+            ) : (
+              <>
+                <Button
+                  onClick={() => setConfirmResend(true)}
+                  disabled={resetting || batchSending}
+                  className="w-full h-14 touch-manipulation text-base font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-3"
+                >
+                  <Send className="h-5 w-5" />
+                  Resend New Email to All ({stats?.offersSent || 0} users)
+                </Button>
+                <p className="text-xs text-muted-foreground text-center">
+                  Resets previously sent users (24h+ ago) and sends them the new rewritten email in
+                  batches
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
@@ -440,6 +538,31 @@ export default function AdminWinback() {
             <p className="text-xs sm:text-xs text-muted-foreground text-center">
               Payment links go directly to Stripe checkout with discounted pricing
             </p>
+
+            {/* Resend to previously sent users */}
+            <div className="pt-3 border-t border-border/50">
+              <Button
+                variant="outline"
+                onClick={() => setConfirmResend(true)}
+                disabled={resetting || batchSending}
+                className="w-full h-12 touch-manipulation gap-2 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 text-sm sm:text-sm"
+              >
+                {resetting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Resetting...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="h-4 w-4 shrink-0" />
+                    <span>Resend New Email to All</span>
+                  </>
+                )}
+              </Button>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Resets users sent 24h+ ago who haven't subscribed, then sends the new email
+              </p>
+            </div>
           </CardContent>
         </Card>
 
@@ -492,39 +615,58 @@ export default function AdminWinback() {
 
               {/* Bulk Actions */}
               {filteredUsers.length > 0 && (
-                <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      checked={
-                        filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
-                      }
-                      onCheckedChange={toggleSelectAll}
-                      className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
-                    </span>
+                <div className="space-y-3 pt-2 border-t border-border/50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Checkbox
+                        checked={
+                          filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
+                        }
+                        onCheckedChange={toggleSelectAll}
+                        disabled={batchSending}
+                        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                      />
+                      <span className="text-sm text-muted-foreground">
+                        {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
+                      </span>
+                    </div>
+
+                    {selectedUsers.size > 0 && !batchSending && (
+                      <Button
+                        size="sm"
+                        onClick={handleSendSelected}
+                        className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
+                      >
+                        <Send className="h-4 w-4" />
+                        Send to {selectedUsers.size}
+                      </Button>
+                    )}
                   </div>
 
-                  {selectedUsers.size > 0 && (
-                    <Button
-                      size="sm"
-                      onClick={handleSendSelected}
-                      disabled={sendBulkMutation.isPending}
-                      className="gap-2 h-10 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
-                    >
-                      {sendBulkMutation.isPending ? (
-                        <>
+                  {/* Batch progress */}
+                  {batchSending && (
+                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="flex items-center gap-2 text-amber-400 font-semibold">
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          Send to {selectedUsers.size}
-                        </>
+                          Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
+                        </span>
+                        <span className="text-muted-foreground">
+                          {batchProgress.sent}/{batchProgress.total} sent
+                        </span>
+                      </div>
+                      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
+                          style={{
+                            width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%`,
+                          }}
+                        />
+                      </div>
+                      {batchProgress.failed > 0 && (
+                        <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
                       )}
-                    </Button>
+                    </div>
                   )}
                 </div>
               )}
@@ -816,33 +958,89 @@ export default function AdminWinback() {
           </SheetContent>
         </Sheet>
 
-        {/* Confirm Send All Dialog */}
-        <AlertDialog open={confirmSendAll} onOpenChange={setConfirmSendAll}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Send to all eligible users?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will send the win-back offer email to {eligibleUsers?.length || 0} users. This
-                action cannot be undone.
+        {/* Confirm Resend Dialog */}
+        <AlertDialog open={confirmResend} onOpenChange={setConfirmResend}>
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+            <AlertDialogHeader className="space-y-3">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+                Resend new email to all previously sent?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm leading-relaxed">
+                This resets all users sent the old email 24+ hours ago (who haven't subscribed),
+                then sends the new rewritten email in batches of {BATCH_SIZE}. One fresh email each.
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => sendBulkMutation.mutate(eligibleUsers?.map((u) => u.id) || [])}
-                className="h-11 touch-manipulation bg-amber-500 hover:bg-amber-600 text-black"
+                onClick={async () => {
+                  setConfirmResend(false);
+                  setResetting(true);
+                  try {
+                    const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+                      body: { action: 'reset_sent' },
+                    });
+                    if (error) throw error;
+                    if (data?.error) throw new Error(data.error);
+
+                    haptic.success();
+                    toast.success(`${data.reset} users reset — now sending new email...`);
+
+                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+                    const freshData = await refetch();
+                    const freshUsers = freshData.data || [];
+
+                    setResetting(false);
+
+                    if (freshUsers.length > 0) {
+                      sendBatchedEmails(freshUsers.map((u: EligibleUser) => u.id));
+                    } else {
+                      toast.info('No users to resend to (all subscribed or sent < 24h ago)');
+                    }
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } catch (err: any) {
+                    setResetting(false);
+                    haptic.error();
+                    toast.error(`Reset failed: ${err.message}`);
+                  }
+                }}
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
               >
-                {sendBulkMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Send to All
-                  </>
-                )}
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reset &amp; Resend All
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Confirm Send All Dialog */}
+        <AlertDialog open={confirmSendAll} onOpenChange={setConfirmSendAll}>
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+            <AlertDialogHeader className="space-y-3">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+                Send to all {eligibleUsers?.length || 0} eligible users?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm leading-relaxed">
+                Sends the win-back offer in batches of {BATCH_SIZE}. Each person only receives one
+                email ever. This cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  setConfirmSendAll(false);
+                  sendBatchedEmails(eligibleUsers?.map((u) => u.id) || []);
+                }}
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send to All ({eligibleUsers?.length || 0})
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

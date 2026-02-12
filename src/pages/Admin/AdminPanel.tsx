@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import { useSwipeable } from "react-swipeable";
-import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
-import { useAdminPrefetch } from "@/hooks/useAdminPrefetch";
-import OfflineBanner from "@/components/admin/OfflineBanner";
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSwipeable } from 'react-swipeable';
+import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
+import { useAdminPrefetch } from '@/hooks/useAdminPrefetch';
+import OfflineBanner from '@/components/admin/OfflineBanner';
 import {
   LayoutDashboard,
   Users,
@@ -37,35 +37,37 @@ import {
   Rocket,
   Inbox,
   Timer,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+  GraduationCap,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Primary navigation items - always visible
 const primaryNavItems = [
-  { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
-  { name: "Users", path: "/admin/users", icon: Users },
-  { name: "Trials", path: "/admin/trials", icon: Timer },
-  { name: "Revenue", path: "/admin/revenue", icon: DollarSign },
-  { name: "Messages", path: "/admin/user-messages", icon: Inbox },
+  { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+  { name: 'Users', path: '/admin/users', icon: Users },
+  { name: 'Trials', path: '/admin/trials', icon: Timer },
+  { name: 'Revenue', path: '/admin/revenue', icon: DollarSign },
+  { name: 'Messages', path: '/admin/user-messages', icon: Inbox },
 ];
 
 // Secondary navigation items - in expandable section (More)
 const secondaryNavItems = [
-  { name: "Win-Back", path: "/admin/winback", icon: Gift },
-  { name: "Founders", path: "/admin/founders", icon: Crown },
-  { name: "Early Access", path: "/admin/early-access", icon: Rocket },
-  { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },
-  { name: "Verification", path: "/admin/verification", icon: CheckSquare },
-  { name: "Doc Review", path: "/admin/document-review", icon: FileCheck },
-  { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
+  { name: 'Win-Back', path: '/admin/winback', icon: Gift },
+  { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns', icon: GraduationCap },
+  { name: 'Founders', path: '/admin/founders', icon: Crown },
+  { name: 'Early Access', path: '/admin/early-access', icon: Rocket },
+  { name: 'Elec-IDs', path: '/admin/elec-ids', icon: IdCard },
+  { name: 'Verification', path: '/admin/verification', icon: CheckSquare },
+  { name: 'Doc Review', path: '/admin/document-review', icon: FileCheck },
+  { name: 'Subscriptions', path: '/admin/subscriptions', icon: CreditCard },
 ];
 
 // Admin tools - in expandable section (rarely used)
 const adminToolItems = [
-  { name: "Announcements", path: "/admin/announcements", icon: Megaphone },
-  { name: "Emails", path: "/admin/emails", icon: Mail },
-  { name: "Analytics", path: "/admin/analytics", icon: BarChart3 },
-  { name: "System", path: "/admin/system", icon: Activity },
+  { name: 'Announcements', path: '/admin/announcements', icon: Megaphone },
+  { name: 'Emails', path: '/admin/emails', icon: Mail },
+  { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
+  { name: 'System', path: '/admin/system', icon: Activity },
 ];
 
 export default function AdminPanel() {
@@ -80,17 +82,17 @@ export default function AdminPanel() {
   // Protect admin routes
   useEffect(() => {
     if (!isLoading && !profile?.admin_role) {
-      navigate("/dashboard", { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [profile, isLoading, navigate]);
 
   // Auto-expand sections based on current path
   useEffect(() => {
     const isInSecondary = secondaryNavItems.some(
-      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + "/")
+      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
     );
     const isInTools = adminToolItems.some(
-      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + "/")
+      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
     );
     if (isInSecondary) setShowMore(true);
     if (isInTools) setShowTools(true);
@@ -101,7 +103,7 @@ export default function AdminPanel() {
     const idx = primaryNavItems.findIndex(
       (item) =>
         location.pathname === item.path ||
-        (item.path !== "/admin" && location.pathname.startsWith(item.path + "/"))
+        (item.path !== '/admin' && location.pathname.startsWith(item.path + '/'))
     );
     return idx >= 0 ? idx : 0;
   }, [location.pathname]);
@@ -125,6 +127,9 @@ export default function AdminPanel() {
     preventScrollOnSwipe: false,
   });
 
+  // Prefetch data on hover/touch for faster navigation
+  const onPrefetch = useCallback((path: string) => handlePrefetch(path), [handlePrefetch]);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -137,33 +142,31 @@ export default function AdminPanel() {
     return null;
   }
 
-  const isSuperAdmin = profile.admin_role === "super_admin";
+  const isSuperAdmin = profile.admin_role === 'super_admin';
 
-  // Prefetch data on hover/touch for faster navigation
-  const onPrefetch = useCallback(
-    (path: string) => handlePrefetch(path),
-    [handlePrefetch]
-  );
-
-  const renderNavItem = (item: { name: string; path: string; icon: any }) => {
+  const renderNavItem = (item: {
+    name: string;
+    path: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }) => {
     const isActive =
       location.pathname === item.path ||
-      (item.path !== "/admin" && location.pathname.startsWith(item.path + "/"));
+      (item.path !== '/admin' && location.pathname.startsWith(item.path + '/'));
     const Icon = item.icon;
 
     return (
       <Button
         key={item.path}
-        variant={isActive ? "default" : "ghost"}
+        variant={isActive ? 'default' : 'ghost'}
         size="sm"
         onClick={() => navigate(item.path)}
         onMouseEnter={() => onPrefetch(item.path)}
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
-          "shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-11 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm",
+          'shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-11 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm',
           isActive
-            ? "bg-red-500/20 text-red-400 hover:bg-red-500/30"
-            : "text-muted-foreground hover:text-foreground"
+            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+            : 'text-muted-foreground hover:text-foreground'
         )}
       >
         <Icon className="h-4 w-4" />
@@ -182,7 +185,7 @@ export default function AdminPanel() {
         <Button
           variant="ghost"
           className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Dashboard
@@ -206,7 +209,7 @@ export default function AdminPanel() {
                     <Shield className="h-3.5 w-3.5 text-orange-400" />
                   )}
                   <span className="text-xs text-muted-foreground">
-                    {isSuperAdmin ? "Super Admin" : "Admin"}
+                    {isSuperAdmin ? 'Super Admin' : 'Admin'}
                   </span>
                 </div>
               </div>
@@ -221,7 +224,7 @@ export default function AdminPanel() {
 
             {/* More Button */}
             <Button
-              variant={showMore ? "secondary" : "ghost"}
+              variant={showMore ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setShowMore(!showMore)}
               className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
@@ -232,7 +235,7 @@ export default function AdminPanel() {
 
             {/* Tools Button */}
             <Button
-              variant={showTools ? "secondary" : "ghost"}
+              variant={showTools ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setShowTools(!showTools)}
               className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"

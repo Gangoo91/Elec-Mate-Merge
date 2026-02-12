@@ -79,6 +79,7 @@ const AdminFounders = lazy(() => import('@/pages/Admin/AdminFounders'));
 const AdminEarlyAccess = lazy(() => import('@/pages/Admin/AdminEarlyAccess'));
 const AdminTrials = lazy(() => import('@/pages/Admin/AdminTrials'));
 const AdminWinback = lazy(() => import('@/pages/Admin/AdminWinback'));
+const AdminApprenticeCampaigns = lazy(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
 const TrainingPhotoUpload = lazy(() => import('@/pages/Admin/TrainingPhotoUpload'));
 const FounderClaim = lazyWithRetry(() => import('@/pages/founder/FounderClaim'));
 const FounderSignup = lazyWithRetry(() => import('@/pages/founder/FounderSignup'));
@@ -696,6 +697,14 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminWinback />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="apprentice-campaigns"
+              element={
+                <LazyRoute>
+                  <AdminApprenticeCampaigns />
                 </LazyRoute>
               }
             />

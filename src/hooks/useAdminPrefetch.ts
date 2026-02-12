@@ -120,6 +120,18 @@ export const ADMIN_PREFETCH_MAP: Record<string, (qc: QueryClient) => void> = {
   '/admin/emails': prefetchAdminEmailLogs,
   '/admin/elec-ids': prefetchAdminElecIds,
   '/admin/verification': prefetchAdminVerification,
+  '/admin/apprentice-campaigns': (qc: QueryClient) => {
+    qc.prefetchQuery({
+      queryKey: ['apprentice-campaign-stats', 'feature_spotlight'],
+      queryFn: async () => {
+        const { data } = await supabase.functions.invoke('send-apprentice-campaign', {
+          body: { action: 'get_stats', campaignType: 'feature_spotlight' },
+        });
+        return data;
+      },
+      staleTime: 30000,
+    });
+  },
 };
 
 // Hook to get prefetch handler
