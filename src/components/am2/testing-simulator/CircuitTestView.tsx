@@ -7,7 +7,16 @@
  */
 
 import { useCallback, useMemo, useState } from 'react';
-import { ArrowLeft, FileText, Check, ChevronRight, ArrowRight, BookOpen, X } from 'lucide-react';
+import {
+  ArrowLeft,
+  FileText,
+  Check,
+  ChevronRight,
+  ArrowRight,
+  BookOpen,
+  X,
+  AlertTriangle,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type {
   AM2RigCircuit,
@@ -220,114 +229,152 @@ export function CircuitTestView({
             </button>
           </div>
         ) : nextTest ? (
-          <div className="rounded-lg px-3 py-2 border border-cyan-400/15 bg-cyan-500/[0.04]">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
-                <span className="text-[10px] font-bold text-cyan-400">{currentTestNumber + 1}</span>
+          <div className="rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/[0.08] to-cyan-900/[0.04] overflow-hidden">
+            {/* Top row — big test number + counter */}
+            <div className="flex items-center justify-between px-3 pt-2.5 pb-1">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/20 flex items-center justify-center shrink-0">
+                  <span className="text-base font-black text-cyan-400">
+                    {currentTestNumber + 1}
+                  </span>
+                </div>
+                <span className="text-[10px] font-semibold text-cyan-400/60 uppercase tracking-wider">
+                  Test {currentTestNumber + 1} of {progress.totalTests}
+                </span>
               </div>
-              <p className="text-sm font-semibold text-white flex-1 min-w-0">
-                {nextTest.description}
-              </p>
-              <span className="text-[10px] text-white/30 font-mono shrink-0">
-                {currentTestNumber + 1}/{progress.totalTests}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span
+                  className={cn(
+                    'text-[11px] font-bold font-mono px-2 py-1 rounded-md border',
+                    dialCorrect
+                      ? 'bg-green-500/15 text-green-400 border-green-500/20'
+                      : 'bg-amber-500/15 text-amber-300 border-amber-500/20'
+                  )}
+                >
+                  {getDialShort(nextTest.dialPosition)}
+                </span>
+                <span className="text-[11px] font-semibold text-white/40">
+                  {testPointForGuided?.label || nextTest.testPointId}
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5 mt-1 ml-8">
-              <span
-                className={cn(
-                  'text-[10px] font-mono px-1.5 py-0.5 rounded',
-                  dialCorrect ? 'bg-green-500/15 text-green-400' : 'bg-amber-500/15 text-amber-300'
-                )}
-              >
-                {getDialShort(nextTest.dialPosition)}
-              </span>
-              <span className="text-[10px] text-white/25">at</span>
-              <span className="text-[10px] font-semibold text-white/50">
-                {testPointForGuided?.label || nextTest.testPointId}
-              </span>
-              {learnContent && (
+            {/* Description — large and prominent */}
+            <div className="px-3 pb-2">
+              <p className="text-base font-bold text-white leading-snug">{nextTest.description}</p>
+            </div>
+            {/* Bottom bar — learn button */}
+            {learnContent && (
+              <div className="flex items-center justify-end px-3 pb-2.5">
                 <button
                   onClick={() => setShowLearn(!showLearn)}
                   className={cn(
-                    'ml-auto flex items-center gap-1 h-7 px-2.5 rounded-full text-[10px] font-semibold touch-manipulation transition-colors',
+                    'flex items-center gap-1.5 h-8 px-3 rounded-lg text-[11px] font-bold touch-manipulation transition-all',
                     showLearn
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                      : 'bg-white/[0.06] text-white/40 border border-white/10'
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm shadow-amber-500/10'
+                      : 'bg-white/[0.06] text-white/50 border border-white/10'
                   )}
                 >
-                  <BookOpen className="w-3 h-3" />
-                  Learn
+                  <BookOpen className="w-3.5 h-3.5" />
+                  {showLearn ? 'Hide' : 'Learn'}
                 </button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ) : null}
       </div>
 
-      {/* ── Learning Panel (collapsible) ── */}
-      {showLearn && learnContent && (
-        <div className="mx-3 mt-1 shrink-0 rounded-lg border border-amber-500/20 bg-amber-500/[0.04] overflow-hidden">
-          <div className="flex items-center justify-between px-3 py-1.5 border-b border-amber-500/10">
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-[11px] font-semibold text-amber-300">
-                Learn — {nextTest?.description}
-              </span>
+      {/* ── Circuit Diagram OR Learning Panel (share the same flex space) ── */}
+      <div className="mx-3 mt-1 flex-1 min-h-[100px] relative">
+        {showLearn && learnContent ? (
+          /* ── Learning Panel (replaces diagram) ── */
+          <div className="absolute inset-0 flex flex-col rounded-xl border border-amber-500/20 bg-gradient-to-b from-amber-500/[0.06] to-background overflow-hidden z-10">
+            {/* Panel header */}
+            <div className="flex items-center justify-between px-4 py-2 border-b border-amber-500/15 shrink-0">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-bold text-amber-300">Learn</span>
+              </div>
+              <button
+                onClick={() => setShowLearn(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 touch-manipulation"
+              >
+                <X className="w-4 h-4 text-white/50" />
+              </button>
             </div>
-            <button
-              onClick={() => setShowLearn(false)}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/[0.06] touch-manipulation"
-            >
-              <X className="w-3.5 h-3.5 text-white/40" />
-            </button>
-          </div>
-          <div className="px-3 py-2 space-y-2 max-h-[35vh] overflow-y-auto">
-            <div>
-              <p className="text-[10px] font-semibold text-amber-400/80 uppercase tracking-wider mb-0.5">
-                What this test measures
-              </p>
-              <p className="text-[11px] text-white/70 leading-relaxed">{learnContent.whatItIs}</p>
-            </div>
-            <div>
-              <p className="text-[10px] font-semibold text-amber-400/80 uppercase tracking-wider mb-0.5">
-                Why it matters
-              </p>
-              <p className="text-[11px] text-white/70 leading-relaxed">
-                {learnContent.whyItMatters}
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2 rounded-md bg-cyan-500/[0.06] border border-cyan-400/10">
-              <FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+              {/* What it measures */}
               <div>
-                <p className="text-[10px] font-semibold text-cyan-400 mb-0.5">EIC Schedule</p>
-                <p className="text-[11px] text-white/70">{learnContent.eicInfo}</p>
+                <p className="text-[10px] font-bold text-amber-400/80 uppercase tracking-wider mb-1">
+                  What this test measures
+                </p>
+                <p className="text-xs text-white/80 leading-relaxed text-left">
+                  {learnContent.whatItIs}
+                </p>
+              </div>
+              {/* Why it matters */}
+              <div>
+                <p className="text-[10px] font-bold text-amber-400/80 uppercase tracking-wider mb-1">
+                  Why it matters
+                </p>
+                <p className="text-xs text-white/80 leading-relaxed text-left">
+                  {learnContent.whyItMatters}
+                </p>
+              </div>
+              {/* Common fail points */}
+              {learnContent.failPoints && learnContent.failPoints.length > 0 && (
+                <div className="rounded-lg border border-red-500/20 bg-red-500/[0.06] p-3">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                    <p className="text-[10px] font-bold text-red-400 uppercase tracking-wider">
+                      Common Fail Points
+                    </p>
+                  </div>
+                  <ul className="space-y-1.5">
+                    {learnContent.failPoints.map((point, i) => (
+                      <li key={i} className="flex items-start gap-2 text-left">
+                        <span className="text-red-400/60 text-xs mt-0.5 shrink-0">&bull;</span>
+                        <span className="text-xs text-red-200/80 leading-relaxed">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {/* EIC Schedule */}
+              <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-cyan-500/[0.06] border border-cyan-400/15">
+                <FileText className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-[10px] font-bold text-cyan-400 mb-0.5">EIC Schedule</p>
+                  <p className="text-xs text-white/70 leading-relaxed">{learnContent.eicInfo}</p>
+                </div>
+              </div>
+              {/* Practical tip */}
+              <div>
+                <p className="text-[10px] font-bold text-green-400/80 uppercase tracking-wider mb-1">
+                  Practical tip
+                </p>
+                <p className="text-xs text-white/80 leading-relaxed text-left">
+                  {learnContent.practicalTip}
+                </p>
+              </div>
+              {/* Regulation */}
+              <div className="pt-2 border-t border-white/5">
+                <p className="text-[10px] text-white/30 font-mono text-left">
+                  {learnContent.regulation}
+                </p>
               </div>
             </div>
-            <div>
-              <p className="text-[10px] font-semibold text-green-400/80 uppercase tracking-wider mb-0.5">
-                Practical tip
-              </p>
-              <p className="text-[11px] text-white/70 leading-relaxed">
-                {learnContent.practicalTip}
-              </p>
-            </div>
-            <div className="pt-1 border-t border-white/5">
-              <p className="text-[9px] text-white/30 font-mono">{learnContent.regulation}</p>
-            </div>
           </div>
-        </div>
-      )}
-
-      {/* ── Circuit Diagram (realistic SVG — expands to fill) ── */}
-      <div className="mx-3 mt-1 flex-1 min-h-[100px]">
-        <CircuitDiagram
-          testPoints={circuit.testPoints}
-          diagramLayout={circuit.diagramLayout}
-          activeTestPointId={activeTestPointId}
-          guidedTestPointId={!manualTestPointId ? nextTest?.testPointId || null : null}
-          completedTestPointIds={completedTestPointIds}
-          onSelectTestPoint={handleSelectTestPoint}
-        />
+        ) : (
+          <CircuitDiagram
+            testPoints={circuit.testPoints}
+            diagramLayout={circuit.diagramLayout}
+            activeTestPointId={activeTestPointId}
+            guidedTestPointId={!manualTestPointId ? nextTest?.testPointId || null : null}
+            completedTestPointIds={completedTestPointIds}
+            onSelectTestPoint={handleSelectTestPoint}
+          />
+        )}
       </div>
 
       {/* ── MFT Instrument ── */}
