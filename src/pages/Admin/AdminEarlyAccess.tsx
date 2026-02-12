@@ -1,537 +1,231 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import {
-  Mail,
-  Upload,
   Send,
   RefreshCw,
-  ChevronRight,
   ChevronDown,
-  Copy,
-  Trash2,
-  RotateCw,
+  ChevronRight,
   Loader2,
-  Rocket,
+  Search,
+  Mail,
   Eye,
   MousePointerClick,
   UserCheck,
-  XCircle,
-  MailCheck,
-  TrendingUp,
-  Flame,
-  Thermometer,
-  Snowflake,
-  Users,
-  PartyPopper,
-  AlertTriangle,
+  Target,
+  Square,
+  Clock,
 } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
-interface SegmentedLead {
+interface UnconvertedLead {
   id: string;
   email: string;
-  invite_token?: string;
-  status: string;
-  sent_at: string | null;
-  delivered_at: string | null;
-  opened_at: string | null;
-  clicked_at: string | null;
-  claimed_at: string | null;
-  bounced_at: string | null;
-  bounce_type: string | null;
   created_at: string;
-  send_count?: number;
-  launch_email_sent_at?: string | null;
-  launch_email_opened_at?: string | null;
-  launch_email_clicked_at?: string | null;
-  last_activity: {
-    type:
-      | 'signed_up'
-      | 'clicked'
-      | 'clicked_launch'
-      | 'opened'
-      | 'opened_launch'
-      | 'delivered'
-      | 'sent'
-      | 'created';
-    date: string;
-  };
-  user?: {
-    id: string;
+  conversion_status: 'unsent' | 'sent' | 'opened' | 'clicked';
+  conversion_email_sent_at: string | null;
+  conversion_email_opened_at: string | null;
+  conversion_email_clicked_at: string | null;
+}
+
+interface ConvertedLead {
+  id: string;
+  email: string;
+  claimed_at: string | null;
+  user: {
     full_name: string;
     role: string;
     signed_up_at: string;
   } | null;
 }
 
-interface SegmentedData {
-  segments: {
-    signed_up: SegmentedLead[];
-    hot: SegmentedLead[];
-    warm: SegmentedLead[];
-    cold: SegmentedLead[];
-    bounced: SegmentedLead[];
-  };
+interface ConversionData {
+  unconverted: UnconvertedLead[];
+  converted: ConvertedLead[];
   stats: {
-    total: number;
     total_unconverted: number;
-    signed_up: number;
+    unsent: number;
+    sent: number;
+    opened: number;
+    clicked: number;
+    total_converted: number;
     bounced: number;
-    hot_count: number;
-    warm_count: number;
-    cold_count: number;
-    conversion_rate: string;
   };
 }
 
-type SegmentType = 'signed_up' | 'hot' | 'warm' | 'cold' | 'bounced';
+type SortField = 'conversion_status' | 'email' | 'created_at';
+
+const STATUS_ORDER: Record<string, number> = {
+  unsent: 0,
+  sent: 1,
+  opened: 2,
+  clicked: 3,
+};
 
 export default function AdminEarlyAccess() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
-  const [showUpload, setShowUpload] = useState(false);
-  const [emailInput, setEmailInput] = useState('');
-  const [selectedLead, setSelectedLead] = useState<SegmentedLead | null>(null);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [confirmSendSegment, setConfirmSendSegment] = useState<'hot' | 'warm' | 'cold' | null>(
-    null
-  );
-
-  // Collapsible state for each segment
-  const [signedUpOpen, setSignedUpOpen] = useState(true);
-  const [hotOpen, setHotOpen] = useState(true);
-  const [warmOpen, setWarmOpen] = useState(false);
-  const [coldOpen, setColdOpen] = useState(false);
-  const [bouncedOpen, setBouncedOpen] = useState(false);
-
-  // Fetch segmented leads
-  const {
-    data: segmentedData,
-    isLoading,
-    refetch,
-  } = useQuery<SegmentedData>({
-    queryKey: ['admin-segmented-leads'],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'get_segmented_leads' },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-  });
-
-  // Bulk create mutation
-  const bulkCreateMutation = useMutation({
-    mutationFn: async (emails: string[]) => {
-      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'bulk_create', emails },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-
-      // Auto-send pending invites
-      const { data: sendData, error: sendError } = await supabase.functions.invoke(
-        'send-early-access-invite',
-        {
-          body: { action: 'send_all_pending' },
-        }
-      );
-      if (sendError) console.error('Failed to auto-send:', sendError);
-
-      return { ...data, sent: sendData?.sent || 0 };
-    },
-    onSuccess: (data) => {
-      haptic.success();
-      queryClient.invalidateQueries({ queryKey: ['admin-segmented-leads'] });
-      setShowUpload(false);
-      setEmailInput('');
-      toast({
-        title: 'Invites created & sent',
-        description: `Created ${data.created} invites, sent ${data.sent} emails`,
-      });
-    },
-    onError: (error: Error) => {
-      haptic.error();
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
-    },
-  });
-
-  // Track batch sending progress
-  const [batchProgress, setBatchProgress] = useState<{
-    segment: string;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortField, setSortField] = useState<SortField>('conversion_status');
+  const [sortAsc, setSortAsc] = useState(true);
+  const [convertedOpen, setConvertedOpen] = useState(false);
+  const [showSendSheet, setShowSendSheet] = useState(false);
+  const [sendProgress, setSendProgress] = useState<{
     totalSent: number;
     remaining: number;
+    sending: boolean;
   } | null>(null);
+  const stopRef = useRef(false);
 
-  // Send to segment mutation - handles batched sending
-  const sendToSegmentMutation = useMutation({
-    mutationFn: async (segment: 'hot' | 'warm' | 'cold') => {
+  // Fetch conversion leads
+  const {
+    data: conversionData,
+    isLoading,
+    refetch,
+  } = useQuery<ConversionData>({
+    queryKey: ['admin-conversion-leads'],
+    queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'send_to_segment', segment },
+        body: { action: 'get_conversion_leads' },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
       return data;
     },
-    onSuccess: (data) => {
-      haptic.success();
-      queryClient.invalidateQueries({ queryKey: ['admin-segmented-leads'] });
+  });
 
-      // Update progress tracking
-      const newTotalSent = (batchProgress?.totalSent || 0) + data.sent;
+  // Send conversion campaign mutation (single batch)
+  const sendBatchMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
+        body: { action: 'send_conversion_campaign' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+  });
 
-      if (data.complete) {
-        // All done - close dialog and show success
-        setConfirmSendSegment(null);
-        setBatchProgress(null);
-        toast({
-          title: 'All emails sent!',
-          description: `Successfully sent ${newTotalSent} emails to ${data.segment} leads`,
+  // Auto-batch sending with stop support
+  const startSending = useCallback(async () => {
+    stopRef.current = false;
+    setSendProgress({ totalSent: 0, remaining: conversionData?.stats.unsent || 0, sending: true });
+    setShowSendSheet(false);
+
+    let totalSent = 0;
+
+    while (!stopRef.current) {
+      try {
+        const result = await sendBatchMutation.mutateAsync();
+        totalSent += result.sent;
+        setSendProgress({
+          totalSent,
+          remaining: result.remaining,
+          sending: !result.complete,
         });
-      } else {
-        // More to send - update progress and show toast
-        setBatchProgress({
-          segment: data.segment,
-          totalSent: newTotalSent,
-          remaining: data.remaining,
-        });
-        toast({
-          title: `Batch sent (${newTotalSent} so far)`,
-          description: `${data.remaining} remaining - click "Send Next Batch" to continue`,
-        });
+
+        queryClient.invalidateQueries({ queryKey: ['admin-conversion-leads'] });
+
+        if (result.complete || result.sent === 0) {
+          haptic.success();
+          toast({
+            title: 'Campaign complete',
+            description: `Sent ${totalSent} conversion emails`,
+          });
+          break;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        haptic.error();
+        toast({ title: 'Error', description: err.message, variant: 'destructive' });
+        break;
       }
-    },
-    onError: (error: Error) => {
-      haptic.error();
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
-    },
-  });
-
-  // Resend single invite mutation
-  const resendMutation = useMutation({
-    mutationFn: async (inviteId: string) => {
-      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'resend', inviteId },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: (data) => {
-      haptic.success();
-      queryClient.invalidateQueries({ queryKey: ['admin-segmented-leads'] });
-      setSelectedLead(null);
-      toast({ title: 'Email resent', description: `Sent to ${data.email}` });
-    },
-    onError: (error: Error) => {
-      haptic.error();
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
-    },
-  });
-
-  // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: async (inviteId: string) => {
-      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'delete', inviteId },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-    },
-    onSuccess: () => {
-      haptic.success();
-      queryClient.invalidateQueries({ queryKey: ['admin-segmented-leads'] });
-      setDeleteId(null);
-      setSelectedLead(null);
-      toast({ title: 'Lead deleted' });
-    },
-    onError: () => {
-      haptic.error();
-    },
-  });
-
-  const handleBulkUpload = () => {
-    const emails = emailInput
-      .split(/[\n,;]+/)
-      .map((e) => e.trim())
-      .filter((e) => e && e.includes('@'));
-
-    if (emails.length === 0) {
-      toast({
-        title: 'No valid emails',
-        description: 'Please enter valid email addresses',
-        variant: 'destructive',
-      });
-      return;
     }
 
-    bulkCreateMutation.mutate(emails);
+    if (stopRef.current) {
+      toast({ title: 'Stopped', description: `Sent ${totalSent} emails before stopping` });
+    }
+
+    setSendProgress((prev) => (prev ? { ...prev, sending: false } : null));
+  }, [conversionData, sendBatchMutation, queryClient, haptic]);
+
+  const stopSending = () => {
+    stopRef.current = true;
   };
 
-  const copyInviteLink = (token: string) => {
-    const url = `${window.location.origin}/auth/signup?ref=early-access&token=${token}`;
-    navigator.clipboard.writeText(url);
-    toast({ title: 'Link copied' });
+  // Filter and sort leads
+  const filteredLeads = (conversionData?.unconverted || []).filter((lead) =>
+    lead.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedLeads = [...filteredLeads].sort((a, b) => {
+    let cmp = 0;
+    if (sortField === 'conversion_status') {
+      cmp = STATUS_ORDER[a.conversion_status] - STATUS_ORDER[b.conversion_status];
+    } else if (sortField === 'email') {
+      cmp = a.email.localeCompare(b.email);
+    } else if (sortField === 'created_at') {
+      cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    }
+    return sortAsc ? cmp : -cmp;
+  });
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
   };
 
-  const getActivityDescription = (activity: SegmentedLead['last_activity']) => {
-    const timeAgo = formatDistanceToNow(new Date(activity.date), { addSuffix: true });
-    switch (activity.type) {
-      case 'signed_up':
-        return `signed up ${timeAgo}`;
+  const getStatusBadge = (status: string) => {
+    switch (status) {
       case 'clicked':
-        return `clicked ${timeAgo}`;
-      case 'clicked_launch':
-        return `clicked launch ${timeAgo}`;
+        return (
+          <Badge className="bg-green-500/20 text-green-400 text-xs">
+            <MousePointerClick className="h-3 w-3 mr-1" />
+            Clicked
+          </Badge>
+        );
       case 'opened':
-        return `opened ${timeAgo}`;
-      case 'opened_launch':
-        return `opened launch ${timeAgo}`;
-      case 'delivered':
-        return `delivered ${timeAgo}`;
+        return (
+          <Badge className="bg-yellow-500/20 text-yellow-400 text-xs">
+            <Eye className="h-3 w-3 mr-1" />
+            Opened
+          </Badge>
+        );
       case 'sent':
-        return `sent ${timeAgo}`;
+        return (
+          <Badge className="bg-blue-500/20 text-blue-400 text-xs">
+            <Mail className="h-3 w-3 mr-1" />
+            Sent
+          </Badge>
+        );
       default:
-        return `added ${timeAgo}`;
+        return (
+          <Badge className="bg-zinc-500/20 text-zinc-400 text-xs">
+            <Clock className="h-3 w-3 mr-1" />
+            Unsent
+          </Badge>
+        );
     }
   };
 
-  const getSegmentConfig = (segment: SegmentType) => {
-    const configs = {
-      signed_up: {
-        emoji: '🎉',
-        title: 'SIGNED UP',
-        description: 'Converted to users',
-        borderClass: 'border-green-500/30',
-        bgClass: 'bg-gradient-to-br from-green-500/10 to-emerald-500/10',
-        badgeClass: 'bg-green-500/20 text-green-400',
-        canEmail: false,
-      },
-      hot: {
-        emoji: '🔥',
-        title: 'HOT LEADS',
-        description: 'Clicked at least one email',
-        borderClass: 'border-orange-500/30',
-        bgClass: 'bg-gradient-to-br from-orange-500/10 to-red-500/10',
-        badgeClass: 'bg-orange-500/20 text-orange-400',
-        canEmail: true,
-      },
-      warm: {
-        emoji: '🟠',
-        title: 'WARM LEADS',
-        description: "Opened but didn't click",
-        borderClass: 'border-amber-500/30',
-        bgClass: 'bg-gradient-to-br from-amber-500/10 to-yellow-500/10',
-        badgeClass: 'bg-amber-500/20 text-amber-400',
-        canEmail: true,
-      },
-      cold: {
-        emoji: '❄️',
-        title: 'COLD LEADS',
-        description: 'Never opened any email',
-        borderClass: 'border-blue-500/30',
-        bgClass: 'bg-gradient-to-br from-blue-500/10 to-cyan-500/10',
-        badgeClass: 'bg-blue-500/20 text-blue-400',
-        canEmail: true,
-      },
-      bounced: {
-        emoji: '⚠️',
-        title: 'BOUNCED',
-        description: 'Email delivery failed',
-        borderClass: 'border-red-500/30',
-        bgClass: 'bg-gradient-to-br from-red-500/10 to-rose-500/10',
-        badgeClass: 'bg-red-500/20 text-red-400',
-        canEmail: false,
-      },
-    };
-    return configs[segment];
-  };
-
-  // Check if email was sent within the last 24 hours
-  const wasSentRecently = (sentAt: string | null | undefined): boolean => {
-    if (!sentAt) return false;
-    const sentDate = new Date(sentAt);
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    return sentDate > oneDayAgo;
-  };
-
-  const SegmentCard = ({
-    segment,
-    leads,
-    isOpen,
-    onOpenChange,
-  }: {
-    segment: SegmentType;
-    leads: SegmentedLead[];
-    isOpen: boolean;
-    onOpenChange: (open: boolean) => void;
-  }) => {
-    const config = getSegmentConfig(segment);
-
-    // Count how many can be emailed: not signed up AND not sent in last 24 hours
-    const canEmailCount = leads.filter(
-      (l) => !l.user && !wasSentRecently(l.launch_email_sent_at)
-    ).length;
-    const signedUpCount = leads.filter((l) => l.user).length;
-    const recentlySentCount = leads.filter(
-      (l) => !l.user && wasSentRecently(l.launch_email_sent_at)
-    ).length;
-
-    return (
-      <Card className={`${config.bgClass} ${config.borderClass}`}>
-        <Collapsible open={isOpen} onOpenChange={onOpenChange}>
-          <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer touch-manipulation pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{config.emoji}</span>
-                  <div>
-                    <CardTitle className="text-sm font-bold tracking-wide flex items-center gap-2 flex-wrap">
-                      {config.title}
-                      <Badge className={config.badgeClass}>{leads.length}</Badge>
-                      {signedUpCount > 0 && (
-                        <Badge
-                          variant="outline"
-                          className="text-xs px-1.5 py-0 h-4 bg-yellow-500/10 text-yellow-400 border-yellow-500/30"
-                        >
-                          {signedUpCount} signed up
-                        </Badge>
-                      )}
-                      {recentlySentCount > 0 && (
-                        <Badge
-                          variant="outline"
-                          className="text-xs px-1.5 py-0 h-4 bg-green-500/10 text-green-400 border-green-500/30"
-                        >
-                          {recentlySentCount} sent today
-                        </Badge>
-                      )}
-                    </CardTitle>
-                    <p className="text-xs text-muted-foreground mt-0.5">{config.description}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {config.canEmail && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-11 px-3 gap-1.5 touch-manipulation"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setConfirmSendSegment(segment as 'hot' | 'warm' | 'cold');
-                      }}
-                      disabled={canEmailCount === 0}
-                    >
-                      <Send className="h-3.5 w-3.5" />
-                      <span className="hidden sm:inline">Email</span>
-                      {canEmailCount > 0 && <span className="text-xs">({canEmailCount})</span>}
-                    </Button>
-                  )}
-                  {isOpen ? (
-                    <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <CardContent className="pt-0 pb-4">
-              {leads.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-4">
-                  No leads in this segment
-                </p>
-              ) : (
-                <div className="space-y-1.5">
-                  {leads.map((lead) => {
-                    const recentlySent = wasSentRecently(lead.launch_email_sent_at);
-                    const hasSignedUp = lead.user !== null && lead.user !== undefined;
-                    return (
-                      <div
-                        key={lead.id}
-                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer touch-manipulation transition-colors ${
-                          hasSignedUp
-                            ? 'bg-yellow-500/10 hover:bg-yellow-500/15 border border-yellow-500/30'
-                            : recentlySent
-                              ? 'bg-green-500/5 hover:bg-green-500/10 border border-green-500/20'
-                              : 'bg-background/50 hover:bg-background/80'
-                        }`}
-                        onClick={() => setSelectedLead(lead)}
-                      >
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <p className="text-sm font-medium truncate">{lead.email}</p>
-                            {hasSignedUp && (
-                              <Badge className="text-xs px-1.5 py-0 h-4 bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
-                                SIGNED UP
-                              </Badge>
-                            )}
-                            {!hasSignedUp && recentlySent && (
-                              <MailCheck className="h-3.5 w-3.5 text-green-400 shrink-0" />
-                            )}
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            {hasSignedUp ? (
-                              <span className="text-yellow-400">
-                                {lead.user?.full_name} - already a user (won't be emailed)
-                              </span>
-                            ) : recentlySent ? (
-                              <span className="text-green-400">
-                                Sent{' '}
-                                {formatDistanceToNow(new Date(lead.launch_email_sent_at!), {
-                                  addSuffix: true,
-                                })}{' '}
-                                (wait 24h)
-                              </span>
-                            ) : lead.launch_email_sent_at ? (
-                              <span className="text-amber-400">
-                                Last sent{' '}
-                                {formatDistanceToNow(new Date(lead.launch_email_sent_at), {
-                                  addSuffix: true,
-                                })}{' '}
-                                - can resend
-                              </span>
-                            ) : (
-                              getActivityDescription(lead.last_activity)
-                            )}
-                          </p>
-                        </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
-    );
-  };
-
-  const stats = segmentedData?.stats;
+  const stats = conversionData?.stats;
+  const totalTarget = stats?.total_unconverted || 0;
+  const progressPercent =
+    sendProgress && totalTarget > 0 ? Math.round((sendProgress.totalSent / totalTarget) * 100) : 0;
 
   return (
     <PullToRefresh
@@ -544,13 +238,10 @@ export default function AdminEarlyAccess() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold flex items-center gap-2">
-              <Rocket className="h-5 w-5 text-blue-400" />
-              Early Access Leads
+              <Target className="h-5 w-5 text-elec-yellow" />
+              Conversion Campaign
             </h2>
-            <p className="text-xs text-muted-foreground">
-              {stats?.total || 0} total · {stats?.signed_up || 0} signed up (
-              {stats?.conversion_rate || '0%'})
-            </p>
+            <p className="text-xs text-muted-foreground">{totalTarget} leads to convert</p>
           </div>
           <Button
             variant="outline"
@@ -562,575 +253,246 @@ export default function AdminEarlyAccess() {
           </Button>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-5 gap-2">
-          <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
-            <CardContent className="pt-2 pb-2 text-center">
-              <p className="text-lg font-bold text-green-400">{stats?.signed_up || 0}</p>
-              <p className="text-xs text-muted-foreground">Signed Up</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-orange-500/10 to-red-500/10 border-orange-500/20">
-            <CardContent className="pt-2 pb-2 text-center">
-              <p className="text-lg font-bold text-orange-400">{stats?.hot_count || 0}</p>
-              <p className="text-xs text-muted-foreground">Hot</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-amber-500/10 to-yellow-500/10 border-amber-500/20">
-            <CardContent className="pt-2 pb-2 text-center">
-              <p className="text-lg font-bold text-amber-400">{stats?.warm_count || 0}</p>
-              <p className="text-xs text-muted-foreground">Warm</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20">
-            <CardContent className="pt-2 pb-2 text-center">
-              <p className="text-lg font-bold text-blue-400">{stats?.cold_count || 0}</p>
-              <p className="text-xs text-muted-foreground">Cold</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-red-500/10 to-rose-500/10 border-red-500/20">
-            <CardContent className="pt-2 pb-2 text-center">
-              <p className="text-lg font-bold text-red-400">{stats?.bounced || 0}</p>
-              <p className="text-xs text-muted-foreground">Bounced</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Conversion Rate Banner */}
+        {/* Stats Bar */}
         {stats && (
-          <Card className="bg-gradient-to-r from-elec-yellow/5 to-amber-500/5 border-elec-yellow/20">
-            <CardContent className="pt-3 pb-3">
+          <div className="grid grid-cols-4 gap-2">
+            <Card className="bg-gradient-to-br from-zinc-500/10 to-zinc-600/10 border-zinc-500/20">
+              <CardContent className="pt-2 pb-2 text-center">
+                <p className="text-lg font-bold text-zinc-300">{stats.unsent}</p>
+                <p className="text-xs text-muted-foreground">Unsent</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20">
+              <CardContent className="pt-2 pb-2 text-center">
+                <p className="text-lg font-bold text-blue-400">{stats.sent}</p>
+                <p className="text-xs text-muted-foreground">Sent</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border-yellow-500/20">
+              <CardContent className="pt-2 pb-2 text-center">
+                <p className="text-lg font-bold text-yellow-400">{stats.opened}</p>
+                <p className="text-xs text-muted-foreground">Opened</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-green-500/10 to-green-600/10 border-green-500/20">
+              <CardContent className="pt-2 pb-2 text-center">
+                <p className="text-lg font-bold text-green-400">{stats.clicked}</p>
+                <p className="text-xs text-muted-foreground">Clicked</p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Send Progress Bar (visible during/after sending) */}
+        {sendProgress && (
+          <Card className="border-elec-yellow/30 bg-elec-yellow/5">
+            <CardContent className="pt-3 pb-3 space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm font-medium">Conversion</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">
-                    <span className="text-green-400 font-semibold">{stats.signed_up}</span>
-                    <span className="text-muted-foreground"> / {stats.total} total</span>
-                    <span className="text-muted-foreground ml-2">·</span>
-                    <span className="text-elec-yellow font-semibold ml-2">
-                      {stats.conversion_rate}
+                <span className="text-sm font-medium">
+                  {sendProgress.sending ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Sending {sendProgress.totalSent} of {totalTarget}...
                     </span>
-                  </span>
-                </div>
+                  ) : (
+                    `Done — ${sendProgress.totalSent} sent`
+                  )}
+                </span>
+                {sendProgress.sending && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3 gap-1.5 touch-manipulation text-red-400 border-red-500/30 hover:bg-red-500/10"
+                    onClick={stopSending}
+                  >
+                    <Square className="h-3 w-3 fill-current" />
+                    Stop
+                  </Button>
+                )}
               </div>
+              <Progress value={progressPercent} className="h-2" />
+              <p className="text-xs text-muted-foreground">{sendProgress.remaining} remaining</p>
             </CardContent>
           </Card>
         )}
 
-        {/* Loading State */}
+        {/* Send Button */}
+        {stats && stats.unsent > 0 && !sendProgress?.sending && (
+          <Button
+            className="w-full h-12 touch-manipulation gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+            onClick={() => setShowSendSheet(true)}
+          >
+            <Send className="h-4 w-4" />
+            Send Conversion Email to All Unsent ({stats.unsent})
+          </Button>
+        )}
+
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 h-11 touch-manipulation"
+          />
+        </div>
+
+        {/* Sort Buttons */}
+        <div className="flex gap-2">
+          {(
+            [
+              ['conversion_status', 'Status'],
+              ['email', 'Email'],
+              ['created_at', 'Date'],
+            ] as [SortField, string][]
+          ).map(([field, label]) => (
+            <Button
+              key={field}
+              variant={sortField === field ? 'default' : 'outline'}
+              size="sm"
+              className="h-9 touch-manipulation text-xs"
+              onClick={() => handleSort(field)}
+            >
+              {label}
+              {sortField === field && <span className="ml-1">{sortAsc ? '↑' : '↓'}</span>}
+            </Button>
+          ))}
+        </div>
+
+        {/* Lead List */}
         {isLoading ? (
-          <div className="space-y-3">
-            {[...Array(4)].map((_, i) => (
+          <div className="space-y-2">
+            {[...Array(5)].map((_, i) => (
               <Card key={i} className="animate-pulse">
-                <CardContent className="pt-4 pb-4">
-                  <div className="h-16 bg-muted rounded" />
+                <CardContent className="pt-3 pb-3">
+                  <div className="h-10 bg-muted rounded" />
                 </CardContent>
               </Card>
             ))}
           </div>
-        ) : !segmentedData || stats?.total === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Rocket}
-                title="No early access leads yet"
-                description="Upload subscriber emails to get started"
-                action={{
-                  label: 'Upload Emails',
-                  onClick: () => setShowUpload(true),
-                }}
-              />
-            </CardContent>
-          </Card>
         ) : (
-          /* Segmented Lead Cards */
-          <div className="space-y-3">
-            <SegmentCard
-              segment="signed_up"
-              leads={segmentedData.segments.signed_up}
-              isOpen={signedUpOpen}
-              onOpenChange={setSignedUpOpen}
-            />
-            <SegmentCard
-              segment="hot"
-              leads={segmentedData.segments.hot}
-              isOpen={hotOpen}
-              onOpenChange={setHotOpen}
-            />
-            <SegmentCard
-              segment="warm"
-              leads={segmentedData.segments.warm}
-              isOpen={warmOpen}
-              onOpenChange={setWarmOpen}
-            />
-            <SegmentCard
-              segment="cold"
-              leads={segmentedData.segments.cold}
-              isOpen={coldOpen}
-              onOpenChange={setColdOpen}
-            />
-            {segmentedData.segments.bounced.length > 0 && (
-              <SegmentCard
-                segment="bounced"
-                leads={segmentedData.segments.bounced}
-                isOpen={bouncedOpen}
-                onOpenChange={setBouncedOpen}
-              />
-            )}
+          <div className="space-y-1.5">
+            <p className="text-xs text-muted-foreground px-1">
+              {sortedLeads.length} leads
+              {searchQuery && ` matching "${searchQuery}"`}
+            </p>
+            {sortedLeads.map((lead) => (
+              <div
+                key={lead.id}
+                className="flex items-center justify-between p-3 rounded-lg bg-background/50 hover:bg-background/80 transition-colors"
+              >
+                <div className="min-w-0 flex-1 mr-3">
+                  <p className="text-sm font-medium truncate">{lead.email}</p>
+                  <p className="text-xs text-muted-foreground">
+                    Invited {format(new Date(lead.created_at), 'd MMM yyyy')}
+                    {lead.conversion_email_sent_at && (
+                      <span className="text-blue-400">
+                        {' '}
+                        · Sent{' '}
+                        {formatDistanceToNow(new Date(lead.conversion_email_sent_at), {
+                          addSuffix: true,
+                        })}
+                      </span>
+                    )}
+                  </p>
+                </div>
+                {getStatusBadge(lead.conversion_status)}
+              </div>
+            ))}
           </div>
         )}
 
-        {/* Upload Sheet */}
-        <Sheet open={showUpload} onOpenChange={setShowUpload}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
-            <div className="flex flex-col h-full">
+        {/* Already Converted (collapsed) */}
+        {conversionData && conversionData.converted.length > 0 && (
+          <Card className="bg-gradient-to-br from-green-500/5 to-emerald-500/5 border-green-500/20">
+            <Collapsible open={convertedOpen} onOpenChange={setConvertedOpen}>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer touch-manipulation pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <UserCheck className="h-4 w-4 text-green-400" />
+                      <CardTitle className="text-sm font-bold tracking-wide">
+                        Already Converted
+                      </CardTitle>
+                      <Badge className="bg-green-500/20 text-green-400">
+                        {conversionData.converted.length}
+                      </Badge>
+                    </div>
+                    {convertedOpen ? (
+                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                    ) : (
+                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    )}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="pt-0 pb-4">
+                  <div className="space-y-1.5">
+                    {conversionData.converted.map((lead) => (
+                      <div
+                        key={lead.id}
+                        className="flex items-center justify-between p-3 rounded-lg bg-green-500/5"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium truncate">{lead.email}</p>
+                          <p className="text-xs text-green-400">
+                            {lead.user?.full_name || 'Unknown'} · {lead.user?.role || ''}
+                          </p>
+                        </div>
+                        <Badge className="bg-green-500/20 text-green-400 text-xs">
+                          <UserCheck className="h-3 w-3 mr-1" />
+                          Signed Up
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </CollapsibleContent>
+            </Collapsible>
+          </Card>
+        )}
+
+        {/* Send Confirmation Sheet */}
+        <Sheet open={showSendSheet} onOpenChange={setShowSendSheet}>
+          <SheetContent side="bottom" className="h-auto max-h-[50vh] rounded-t-2xl p-0">
+            <div className="flex flex-col">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
               </div>
               <SheetHeader className="px-4 pb-4 border-b border-border">
                 <SheetTitle className="flex items-center gap-2">
-                  <Upload className="h-5 w-5 text-blue-400" />
-                  Upload Subscriber Emails
+                  <Send className="h-5 w-5 text-elec-yellow" />
+                  Send Conversion Campaign
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="p-4 space-y-3">
                 <p className="text-sm text-muted-foreground">
-                  Paste email addresses below, one per line or separated by commas.
+                  This will send the conversion email to{' '}
+                  <strong className="text-foreground">{stats?.unsent || 0}</strong> people who
+                  haven't received it yet.
                 </p>
-                <Textarea
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  placeholder="john@example.com&#10;jane@example.com&#10;..."
-                  className="min-h-[200px] font-mono text-sm touch-manipulation"
-                />
                 <p className="text-xs text-muted-foreground">
-                  {emailInput.split(/[\n,;]+/).filter((e) => e.trim() && e.includes('@')).length}{' '}
-                  valid emails detected
+                  Sends in batches of 10 with 6-second delays. You can stop at any time.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  People who have already signed up ({stats?.total_converted || 0}) and bounced
+                  emails ({stats?.bounced || 0}) are automatically excluded.
                 </p>
               </div>
               <SheetFooter className="p-4 border-t border-border">
                 <Button
-                  className="w-full h-12 touch-manipulation gap-2"
-                  onClick={handleBulkUpload}
-                  disabled={bulkCreateMutation.isPending}
+                  className="w-full h-12 touch-manipulation gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                  onClick={startSending}
                 >
-                  {bulkCreateMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Creating & Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4" />
-                      Create & Send Invites
-                    </>
-                  )}
+                  <Send className="h-4 w-4" />
+                  Start Sending
                 </Button>
               </SheetFooter>
             </div>
           </SheetContent>
         </Sheet>
-
-        {/* Lead Detail Sheet */}
-        <Sheet open={!!selectedLead} onOpenChange={() => setSelectedLead(null)}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
-            <div className="flex flex-col h-full">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-              </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle>{selectedLead?.email}</SheetTitle>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* User Info (if signed up) */}
-                {selectedLead?.user && (
-                  <Card className="border-green-500/20 bg-green-500/5">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2 text-green-400">
-                        <UserCheck className="h-4 w-4" />
-                        Signed Up!
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Name</span>
-                        <span className="text-sm font-medium">{selectedLead.user.full_name}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Role</span>
-                        <span className="text-sm">{selectedLead.user.role}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Tracking Timeline */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                      Tracking Timeline
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <Mail className="h-3 w-3" /> Sent
-                      </span>
-                      <span className="text-sm">
-                        {selectedLead?.sent_at ? (
-                          formatDistanceToNow(new Date(selectedLead.sent_at), { addSuffix: true })
-                        ) : (
-                          <span className="text-muted-foreground">—</span>
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <MailCheck className="h-3 w-3" /> Delivered
-                      </span>
-                      <span className="text-sm">
-                        {selectedLead?.delivered_at ? (
-                          <span className="text-sky-400">
-                            {formatDistanceToNow(new Date(selectedLead.delivered_at), {
-                              addSuffix: true,
-                            })}
-                          </span>
-                        ) : (
-                          <span className="text-muted-foreground">—</span>
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <Eye className="h-3 w-3" /> Opened
-                      </span>
-                      <span className="text-sm">
-                        {selectedLead?.opened_at ? (
-                          <span className="text-yellow-400">
-                            {formatDistanceToNow(new Date(selectedLead.opened_at), {
-                              addSuffix: true,
-                            })}
-                          </span>
-                        ) : (
-                          <span className="text-muted-foreground">—</span>
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <MousePointerClick className="h-3 w-3" /> Clicked
-                      </span>
-                      <span className="text-sm">
-                        {selectedLead?.clicked_at ? (
-                          <span className="text-indigo-400">
-                            {formatDistanceToNow(new Date(selectedLead.clicked_at), {
-                              addSuffix: true,
-                            })}
-                          </span>
-                        ) : (
-                          <span className="text-muted-foreground">—</span>
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <UserCheck className="h-3 w-3" /> Signed Up
-                      </span>
-                      <span className="text-sm">
-                        {selectedLead?.claimed_at ? (
-                          <span className="text-green-400">
-                            {formatDistanceToNow(new Date(selectedLead.claimed_at), {
-                              addSuffix: true,
-                            })}
-                          </span>
-                        ) : (
-                          <span className="text-muted-foreground">—</span>
-                        )}
-                      </span>
-                    </div>
-                    {selectedLead?.bounced_at && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-red-400 flex items-center gap-2">
-                          <XCircle className="h-3 w-3" /> Bounced ({selectedLead.bounce_type})
-                        </span>
-                        <span className="text-sm text-red-400">
-                          {formatDistanceToNow(new Date(selectedLead.bounced_at), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {/* Launch Campaign Tracking */}
-                {selectedLead?.launch_email_sent_at && (
-                  <Card className="border-green-500/20">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <PartyPopper className="h-4 w-4 text-green-400" />
-                        Launch Campaign
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground flex items-center gap-2">
-                          <Mail className="h-3 w-3" /> Sent
-                        </span>
-                        <span className="text-sm text-green-400">
-                          {formatDistanceToNow(new Date(selectedLead.launch_email_sent_at), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground flex items-center gap-2">
-                          <Eye className="h-3 w-3" /> Opened
-                        </span>
-                        <span className="text-sm">
-                          {selectedLead?.launch_email_opened_at ? (
-                            <span className="text-yellow-400">
-                              {formatDistanceToNow(new Date(selectedLead.launch_email_opened_at), {
-                                addSuffix: true,
-                              })}
-                            </span>
-                          ) : (
-                            <span className="text-muted-foreground">—</span>
-                          )}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground flex items-center gap-2">
-                          <MousePointerClick className="h-3 w-3" /> Clicked
-                        </span>
-                        <span className="text-sm">
-                          {selectedLead?.launch_email_clicked_at ? (
-                            <span className="text-blue-400">
-                              {formatDistanceToNow(new Date(selectedLead.launch_email_clicked_at), {
-                                addSuffix: true,
-                              })}
-                            </span>
-                          ) : (
-                            <span className="text-muted-foreground">—</span>
-                          )}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Invite Link */}
-                {selectedLead?.invite_token && !selectedLead?.claimed_at && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Invite Link</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <code className="text-xs bg-muted px-2 py-1 rounded block truncate mb-2">
-                        {`${window.location.origin}/auth/signup?ref=early-access&token=${selectedLead.invite_token}`}
-                      </code>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full h-11 gap-2 touch-manipulation"
-                        onClick={() =>
-                          selectedLead.invite_token && copyInviteLink(selectedLead.invite_token)
-                        }
-                      >
-                        <Copy className="h-4 w-4" /> Copy Link
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-
-              {/* Actions - only show for unconverted leads */}
-              {!selectedLead?.claimed_at && (
-                <SheetFooter className="p-4 border-t border-border space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full h-11 gap-2 touch-manipulation"
-                    onClick={() => selectedLead && resendMutation.mutate(selectedLead.id)}
-                    disabled={resendMutation.isPending}
-                  >
-                    <RotateCw className="h-4 w-4" />
-                    {resendMutation.isPending ? 'Sending...' : 'Resend Email'}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full h-11 gap-2 touch-manipulation text-red-400 hover:bg-red-500/10"
-                    onClick={() => setDeleteId(selectedLead?.id || null)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete Lead
-                  </Button>
-                </SheetFooter>
-              )}
-            </div>
-          </SheetContent>
-        </Sheet>
-
-        {/* Delete Confirmation */}
-        <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete Lead?</AlertDialogTitle>
-              <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation"
-                disabled={deleteMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
-                onClick={() => deleteId && deleteMutation.mutate(deleteId)}
-                disabled={deleteMutation.isPending}
-              >
-                {deleteMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  'Delete'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-
-        {/* Send to Segment Confirmation */}
-        <AlertDialog
-          open={!!confirmSendSegment}
-          onOpenChange={(open) => {
-            if (!open) {
-              setConfirmSendSegment(null);
-              setBatchProgress(null);
-            }
-          }}
-        >
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                {confirmSendSegment && (
-                  <>
-                    <span className="text-xl">{getSegmentConfig(confirmSendSegment).emoji}</span>
-                    {batchProgress
-                      ? `Sending to ${confirmSendSegment.charAt(0).toUpperCase() + confirmSendSegment.slice(1)} Leads...`
-                      : `Send to ${confirmSendSegment.charAt(0).toUpperCase() + confirmSendSegment.slice(1)} Leads?`}
-                  </>
-                )}
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                {batchProgress ? (
-                  <div className="space-y-2">
-                    <p>
-                      <strong>{batchProgress.totalSent}</strong> emails sent so far.{' '}
-                      <strong>{batchProgress.remaining}</strong> remaining.
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Sending in batches of 10 with 6-second delays to avoid rate limits. Click
-                      "Send Next Batch" to continue.
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    {confirmSendSegment &&
-                      segmentedData?.segments[confirmSendSegment] &&
-                      (() => {
-                        const segmentLeads = segmentedData.segments[confirmSendSegment];
-                        const canEmail = segmentLeads.filter(
-                          (l) => !l.user && !wasSentRecently(l.launch_email_sent_at)
-                        ).length;
-                        const alreadySignedUp = segmentLeads.filter((l) => l.user).length;
-                        const recentlySent = segmentLeads.filter(
-                          (l) => !l.user && wasSentRecently(l.launch_email_sent_at)
-                        ).length;
-                        return (
-                          <span>
-                            {canEmail > 0 ? (
-                              <>
-                                Will send to <strong>{canEmail}</strong> {confirmSendSegment} lead
-                                {canEmail !== 1 ? 's' : ''}.
-                                {alreadySignedUp > 0 && (
-                                  <span className="text-yellow-400">
-                                    {' '}
-                                    ({alreadySignedUp} already signed up - skipped)
-                                  </span>
-                                )}
-                                {recentlySent > 0 && (
-                                  <span className="text-green-400">
-                                    {' '}
-                                    ({recentlySent} sent in last 24h - skipped)
-                                  </span>
-                                )}
-                              </>
-                            ) : (
-                              <span className="text-muted-foreground">
-                                No one to email.
-                                {alreadySignedUp > 0 && (
-                                  <span className="text-yellow-400">
-                                    {' '}
-                                    {alreadySignedUp} already signed up.
-                                  </span>
-                                )}
-                                {recentlySent > 0 && (
-                                  <span className="text-green-400">
-                                    {' '}
-                                    {recentlySent} emailed in last 24h.
-                                  </span>
-                                )}
-                              </span>
-                            )}
-                          </span>
-                        );
-                      })()}
-                  </>
-                )}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation"
-                disabled={sendToSegmentMutation.isPending}
-                onClick={() => setBatchProgress(null)}
-              >
-                {batchProgress ? 'Done for now' : 'Cancel'}
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation"
-                onClick={() =>
-                  confirmSendSegment && sendToSegmentMutation.mutate(confirmSendSegment)
-                }
-                disabled={sendToSegmentMutation.isPending}
-              >
-                {sendToSegmentMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Sending batch...
-                  </>
-                ) : batchProgress ? (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Next Batch ({batchProgress.remaining} left)
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Start Sending
-                  </>
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </div>
     </PullToRefresh>
   );

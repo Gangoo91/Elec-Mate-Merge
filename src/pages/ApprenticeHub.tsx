@@ -28,6 +28,7 @@ import {
   FileText,
   Video,
   BookMarked,
+  ShieldAlert,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -90,12 +91,8 @@ function ApprenticeHero() {
           </div>
 
           {/* Greeting and Name */}
-          <p className="text-sm text-white/50 mb-0.5">
-            {getGreeting()}
-          </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            {user.firstName}
-          </h1>
+          <p className="text-sm text-white/50 mb-0.5">{getGreeting()}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">{user.firstName}</h1>
 
           {/* Status badges - horizontal row */}
           <div className="flex items-center gap-2 mt-3">
@@ -231,7 +228,11 @@ function ApprenticeStatsBar() {
       <StudyStreakDetailSheet open={streakSheetOpen} onOpenChange={setStreakSheetOpen} />
       <ProgressDetailSheet open={progressSheetOpen} onOpenChange={setProgressSheetOpen} />
       <VideosWatchedDetailSheet open={videosSheetOpen} onOpenChange={setVideosSheetOpen} />
-      <DiaryEntriesDetailSheet open={diarySheetOpen} onOpenChange={setDiarySheetOpen} entries={entries} />
+      <DiaryEntriesDetailSheet
+        open={diarySheetOpen}
+        onOpenChange={setDiarySheetOpen}
+        entries={entries}
+      />
     </>
   );
 }
@@ -247,7 +248,15 @@ interface ToolCardProps {
   comingSoon?: boolean;
 }
 
-function ToolCard({ title, description, icon: Icon, link, featured, badges, comingSoon }: ToolCardProps) {
+function ToolCard({
+  title,
+  description,
+  icon: Icon,
+  link,
+  featured,
+  badges,
+  comingSoon,
+}: ToolCardProps) {
   const cardContent = (
     <motion.div
       whileHover={comingSoon ? {} : { y: -2, scale: 1.02 }}
@@ -279,17 +288,23 @@ function ToolCard({ title, description, icon: Icon, link, featured, badges, comi
           <Icon className={cn('h-6 w-6', comingSoon ? 'text-white/50' : 'text-elec-yellow')} />
         </div>
 
-        <h3 className={cn(
-          'text-sm sm:text-base font-semibold mb-1 transition-colors',
-          comingSoon ? 'text-white/70' : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
-        )}>
+        <h3
+          className={cn(
+            'text-sm sm:text-base font-semibold mb-1 transition-colors',
+            comingSoon
+              ? 'text-white/70'
+              : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
+          )}
+        >
           {title}
         </h3>
 
-        <p className={cn(
-          'text-xs line-clamp-2 hidden sm:block',
-          comingSoon ? 'text-white/50' : 'text-white/60'
-        )}>
+        <p
+          className={cn(
+            'text-xs line-clamp-2 hidden sm:block',
+            comingSoon ? 'text-white/50' : 'text-white/60'
+          )}
+        >
           {description}
         </p>
 
@@ -407,11 +422,13 @@ const ApprenticeHub = () => {
   // SEO for apprentice hub - high priority for Google ranking
   useSEO({
     title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
-    description: 'Complete electrical apprenticeship training platform. Level 2 and Level 3 courses, AM2 exam prep, 2,000+ practice questions, OJT tracking, and industry-recognised qualifications.',
+    description:
+      'Complete electrical apprenticeship training platform. Level 2 and Level 3 courses, AM2 exam prep, 2,000+ practice questions, OJT tracking, and industry-recognised qualifications.',
     schema: {
       '@type': 'CollectionPage',
       name: 'Electrical Apprentice Training Hub',
-      description: 'Training hub for UK electrical apprentices pursuing Level 2 and Level 3 qualifications',
+      description:
+        'Training hub for UK electrical apprentices pursuing Level 2 and Level 3 qualifications',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -421,117 +438,152 @@ const ApprenticeHub = () => {
 
   return (
     <div className="bg-[hsl(240,5.9%,10%)]">
-        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-6 sm:space-y-8"
-          >
-            {/* Back Button - Larger touch target */}
-            <motion.div variants={itemVariants} className="px-4 sm:px-0">
-              <Link to="/dashboard">
-                <Button
-                  variant="ghost"
-                  className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-                >
-                  <ArrowLeft className="mr-2 h-5 w-5" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Hero */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <ApprenticeHero />
-            </motion.section>
-
-            {/* Stats Bar - Now visible on mobile as carousel */}
-            <motion.section variants={itemVariants} className="sm:px-0">
-              <ApprenticeStatsBar />
-            </motion.section>
-
-            {/* Core Learning — top priority for apprentices */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Core Learning" />
-              <div className="grid grid-cols-2 gap-3 touch-grid">
-                {coreLearningResources.map((resource) => (
-                  <ToolCard key={resource.link} {...resource} />
-                ))}
-              </div>
-            </motion.section>
-
-            {/* My Portfolio — single featured card */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="My Portfolio" />
-              <ToolCard
-                title="My Portfolio"
-                description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
-                icon={FileText}
-                link="/apprentice/hub?tab=work"
-                featured
-                badges={['Evidence', 'AC Mapping', 'OJT Hours']}
-              />
-            </motion.section>
-
-            {/* Elec-ID Banner */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <ElecIdBanner variant="apprentice" />
-            </motion.section>
-
-            {/* EPA Readiness */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="EPA Readiness" />
-              <Link to="/apprentice/epa-simulator" className="block group touch-manipulation">
-                <motion.div
-                  whileHover={{ y: -2, scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative overflow-hidden glass-premium rounded-2xl"
-                >
-                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
-                  <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
-
-                  <div className="relative z-10 p-5 sm:p-6 text-center">
-                    <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
-                      <Award className="h-8 w-8 text-purple-400" />
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                      EPA Simulator
-                    </h3>
-                    <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
-                      Practise mock Professional Discussions and Knowledge Tests with AI-powered scoring and real EPA grade descriptors
-                    </p>
-
-                    <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-                      <span>Start Practising</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            </motion.section>
-
-            {/* Learning Videos */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Learning Videos" />
-              <LearningVideosSection />
-            </motion.section>
-
-            {/* Tools & Resources — merged grid */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Tools & Resources" />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 touch-grid">
-                {toolsAndResources.map((resource) => (
-                  <ToolCard key={resource.link} {...resource} />
-                ))}
-              </div>
-            </motion.section>
-
-            {/* Footer spacing for mobile nav */}
-            <div className="h-6 sm:h-8" />
+      <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-6 sm:space-y-8"
+        >
+          {/* Back Button - Larger touch target */}
+          <motion.div variants={itemVariants} className="px-4 sm:px-0">
+            <Link to="/dashboard">
+              <Button
+                variant="ghost"
+                className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+              >
+                <ArrowLeft className="mr-2 h-5 w-5" />
+                Back to Dashboard
+              </Button>
+            </Link>
           </motion.div>
-        </div>
+
+          {/* Hero */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ApprenticeHero />
+          </motion.section>
+
+          {/* Stats Bar - Now visible on mobile as carousel */}
+          <motion.section variants={itemVariants} className="sm:px-0">
+            <ApprenticeStatsBar />
+          </motion.section>
+
+          {/* Core Learning — top priority for apprentices */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Core Learning" />
+            <div className="grid grid-cols-2 gap-3 touch-grid">
+              {coreLearningResources.map((resource) => (
+                <ToolCard key={resource.link} {...resource} />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* My Portfolio — single featured card */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="My Portfolio" />
+            <ToolCard
+              title="My Portfolio"
+              description="Track evidence, assessment criteria, OJT hours, and build your apprenticeship portfolio"
+              icon={FileText}
+              link="/apprentice/hub?tab=work"
+              featured
+              badges={['Evidence', 'AC Mapping', 'OJT Hours']}
+            />
+          </motion.section>
+
+          {/* Elec-ID Banner */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ElecIdBanner variant="apprentice" />
+          </motion.section>
+
+          {/* EPA Readiness */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="EPA Readiness" />
+            <Link to="/apprentice/epa-simulator" className="block group touch-manipulation">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative overflow-hidden glass-premium rounded-2xl"
+              >
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
+                <div className="absolute -top-16 -right-16 w-32 h-32 bg-purple-500/[0.08] blur-3xl rounded-full pointer-events-none" />
+
+                <div className="relative z-10 p-5 sm:p-6 text-center">
+                  <div className="inline-flex p-3 rounded-2xl bg-purple-500/10 mb-4 group-hover:bg-purple-500/20 group-active:bg-purple-500/25 transition-colors">
+                    <Award className="h-8 w-8 text-purple-400" />
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                    EPA Simulator
+                  </h3>
+                  <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+                    Practise mock Professional Discussions and Knowledge Tests with AI-powered
+                    scoring and real EPA grade descriptors
+                  </p>
+
+                  <div className="inline-flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
+                    <span>Start Practising</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          </motion.section>
+
+          {/* AM2 Readiness */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="AM2 Readiness" />
+            <Link to="/apprentice/am2-simulator" className="block group touch-manipulation">
+              <motion.div
+                whileHover={{ y: -2, scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative overflow-hidden glass-premium rounded-2xl"
+              >
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-500" />
+                <div className="absolute -top-16 -right-16 w-32 h-32 bg-cyan-500/[0.08] blur-3xl rounded-full pointer-events-none" />
+
+                <div className="relative z-10 p-5 sm:p-6 text-center">
+                  <div className="inline-flex p-3 rounded-2xl bg-cyan-500/10 mb-4 group-hover:bg-cyan-500/20 group-active:bg-cyan-500/25 transition-colors">
+                    <ShieldAlert className="h-8 w-8 text-cyan-400" />
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                    AM2 Simulator
+                  </h3>
+                  <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+                    Interactive safe isolation, fault finding, and testing simulations — identify
+                    practical gaps before you book
+                  </p>
+
+                  <div className="inline-flex items-center gap-2 text-cyan-400 font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
+                    <span>Start Practising</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          </motion.section>
+
+          {/* Learning Videos */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Learning Videos" />
+            <LearningVideosSection />
+          </motion.section>
+
+          {/* Tools & Resources — merged grid */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Tools & Resources" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 touch-grid">
+              {toolsAndResources.map((resource) => (
+                <ToolCard key={resource.link} {...resource} />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Footer spacing for mobile nav */}
+          <div className="h-6 sm:h-8" />
+        </motion.div>
+      </div>
     </div>
   );
 };

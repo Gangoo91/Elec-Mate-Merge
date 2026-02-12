@@ -10,6 +10,8 @@ import { reportCloud, VersionConflict } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // === TYPES ===
 
 export interface SyncStatus {
@@ -28,14 +30,14 @@ interface UseReportSyncOptions {
   enabled?: boolean;
   customerId?: string;
   onConflict?: (conflict: VersionConflict, localData: any) => void;
-  onReportCreated?: (reportId: string) => void;  // Called when auto-sync creates a new report
+  onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
 }
 
 // Return type for syncNowImmediate - includes the saved data for PDF generation
 export interface SyncNowImmediateResult {
   success: boolean;
   reportId: string | null;
-  data: any;  // The data that was saved to the database
+  data: any; // The data that was saved to the database
 }
 
 interface UseReportSyncReturn {
@@ -53,9 +55,9 @@ interface UseReportSyncReturn {
   discardDraft: () => void;
   forceSave: () => Promise<{ success: boolean; reportId: string | null }>;
   retrySync: () => Promise<void>;
-  syncNow: () => Promise<{ success: boolean; reportId: string | null }>;  // Immediate sync (cancels debounce)
-  syncNowImmediate: () => Promise<SyncNowImmediateResult>;  // Immediate sync that returns the saved data
-  onTabChange: () => void;  // Trigger sync on tab change
+  syncNow: () => Promise<{ success: boolean; reportId: string | null }>; // Immediate sync (cancels debounce)
+  syncNowImmediate: () => Promise<SyncNowImmediateResult>; // Immediate sync that returns the saved data
+  onTabChange: () => void; // Trigger sync on tab change
 
   // Draft recovery
   hasRecoverableDraft: boolean;
@@ -83,7 +85,7 @@ export const useReportSync = ({
   // CRITICAL: New reports start as 'unsaved' - they haven't synced to cloud yet
   const [status, setStatus] = useState<SyncStatus>({
     local: 'unsaved',
-    cloud: 'unsaved',  // Fixed: was 'synced' which broke auto-sync for new reports
+    cloud: 'unsaved', // Fixed: was 'synced' which broke auto-sync for new reports
     lastLocalSave: null,
     lastCloudSync: null,
     queuedChanges: 0,
@@ -95,7 +97,11 @@ export const useReportSync = ({
   const [authCheckComplete, setAuthCheckComplete] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [hasRecoverableDraft, setHasRecoverableDraft] = useState(false);
-  const [draftPreview, setDraftPreview] = useState<{ clientName?: string; installationAddress?: string; lastModified: Date } | null>(null);
+  const [draftPreview, setDraftPreview] = useState<{
+    clientName?: string;
+    installationAddress?: string;
+    lastModified: Date;
+  } | null>(null);
   const [activeConflict, setActiveConflict] = useState<VersionConflict | null>(null);
 
   // Refs for tracking changes and preventing race conditions
@@ -104,6 +110,7 @@ export const useReportSync = ({
   const currentReportIdRef = useRef(reportId);
   const expectedVersionRef = useRef<number>(1);
   const localDataRef = useRef<any>(null);
+  const consecutiveFailuresRef = useRef<number>(0);
 
   // CRITICAL: Ref to always have the latest formData for syncNowImmediate
   // This solves React closure issues where callbacks capture stale state
@@ -124,16 +131,31 @@ export const useReportSync = ({
   // === AUTH CHECK ===
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setIsAuthenticated(!!session);
       setUserId(session?.user?.id || null);
-      setAuthCheckComplete(true);  // Set AFTER auth check completes
+      setAuthCheckComplete(true); // Set AFTER auth check completes
     };
     checkAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      const wasAuthenticated = isSyncingRef.current ? false : !!userId;
       setIsAuthenticated(!!session);
       setUserId(session?.user?.id || null);
+
+      // When a fresh session arrives (login or token refresh), retry queued syncs
+      // This catches the case where a sync failed due to expired token and is sitting in queue
+      if (session?.user?.id && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+        const cloudStatus = status.cloud;
+        if (cloudStatus === 'queued' || cloudStatus === 'error') {
+          console.log('[ReportSync] Fresh auth session — retrying queued sync');
+          setTimeout(() => processQueue(), 500);
+        }
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -151,7 +173,7 @@ export const useReportSync = ({
 
     const handleOffline = () => {
       setIsOnline(false);
-      setStatus(prev => ({ ...prev, cloud: 'offline' }));
+      setStatus((prev) => ({ ...prev, cloud: 'offline' }));
     };
 
     window.addEventListener('online', handleOnline);
@@ -201,7 +223,7 @@ export const useReportSync = ({
         if (hasData) {
           draftStorage.saveDraft(reportType, currentReportIdRef.current, formData);
           lastFormDataRef.current = currentData;
-          setStatus(prev => ({
+          setStatus((prev) => ({
             ...prev,
             local: 'saved',
             lastLocalSave: new Date(),
@@ -220,17 +242,16 @@ export const useReportSync = ({
   // Increased from 2s to 5s to reduce sync request frequency by ~60%
   // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
   const debouncedCloudSync = useMemo(
-    () => debounce(async () => {
-      const hasData =
-        formData.clientName ||
-        formData.installationAddress ||
-        formData.propertyAddress;
+    () =>
+      debounce(async () => {
+        const hasData =
+          formData.clientName || formData.installationAddress || formData.propertyAddress;
 
-      if (isOnline && isAuthenticated && userId && hasData && !isSyncingRef.current) {
-        console.log('[ReportSync] Debounced cloud sync triggered (auto-draft)');
-        await syncToCloud(false, false, true);  // isAutoSync = true
-      }
-    }, 5000),
+        if (isOnline && isAuthenticated && userId && hasData && !isSyncingRef.current) {
+          console.log('[ReportSync] Debounced cloud sync triggered (auto-draft)');
+          await syncToCloud(false, false, true); // isAutoSync = true
+        }
+      }, 5000),
     [isOnline, isAuthenticated, userId]
   );
 
@@ -238,15 +259,12 @@ export const useReportSync = ({
   useEffect(() => {
     if (!enabled) return;
 
-    const hasData =
-      formData.clientName ||
-      formData.installationAddress ||
-      formData.propertyAddress;
+    const hasData = formData.clientName || formData.installationAddress || formData.propertyAddress;
 
     if (hasData && isOnline && isAuthenticated && userId) {
       // Mark cloud as unsaved immediately when data changes
       if (status.cloud === 'synced') {
-        setStatus(prev => ({ ...prev, cloud: 'unsaved' }));
+        setStatus((prev) => ({ ...prev, cloud: 'unsaved' }));
       }
       debouncedCloudSync();
     }
@@ -262,9 +280,12 @@ export const useReportSync = ({
 
     const interval = setInterval(async () => {
       // Fixed: Sync if cloud status is 'unsaved', 'queued', or 'error' (not just !== 'synced')
-      if (status.local === 'saved' && (status.cloud === 'unsaved' || status.cloud === 'queued' || status.cloud === 'error')) {
+      if (
+        status.local === 'saved' &&
+        (status.cloud === 'unsaved' || status.cloud === 'queued' || status.cloud === 'error')
+      ) {
         console.log('[ReportSync] Backup auto-sync triggered (auto-draft)');
-        await syncToCloud(false, false, true);  // isAutoSync = true
+        await syncToCloud(false, false, true); // isAutoSync = true
       }
     }, 30000); // Every 30 seconds as backup
 
@@ -274,7 +295,7 @@ export const useReportSync = ({
   // === UPDATE QUEUE COUNT ===
   const updateQueueCount = useCallback(async () => {
     const stats = await syncQueue.getStats();
-    setStatus(prev => ({ ...prev, queuedChanges: stats.count }));
+    setStatus((prev) => ({ ...prev, queuedChanges: stats.count }));
   }, []);
 
   // === PROCESS OFFLINE QUEUE ===
@@ -297,7 +318,12 @@ export const useReportSync = ({
 
       try {
         if (operation.type === 'create') {
-          const result = await reportCloud.createReport(userId, operation.reportType, operation.data, customerId);
+          const result = await reportCloud.createReport(
+            userId,
+            operation.reportType,
+            operation.data,
+            customerId
+          );
           if (result.success) {
             await syncQueue.complete(operation.id);
             successCount++;
@@ -305,7 +331,12 @@ export const useReportSync = ({
             throw new Error(result.error || 'Create failed');
           }
         } else if (operation.type === 'update' && operation.reportId) {
-          const result = await reportCloud.updateReport(operation.reportId, userId, operation.data, customerId);
+          const result = await reportCloud.updateReport(
+            operation.reportId,
+            userId,
+            operation.data,
+            customerId
+          );
           if (result.success) {
             await syncQueue.complete(operation.id);
             successCount++;
@@ -339,7 +370,7 @@ export const useReportSync = ({
         description: `${successCount} change${successCount !== 1 ? 's' : ''} synced to cloud.`,
       });
 
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         cloud: failCount > 0 ? 'queued' : 'synced',
         lastCloudSync: new Date(),
@@ -357,188 +388,227 @@ export const useReportSync = ({
 
   // === SYNC TO CLOUD ===
   // isAutoSync: true for debounced/interval syncs (keeps 'auto-draft' status), false for manual saves (promotes to proper status)
-  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false, isAutoSync: boolean = false, dataOverride?: any): Promise<{ success: boolean; reportId: string | null }> => {
-    if (isSyncingRef.current) {
-      return { success: false, reportId: currentReportIdRef.current };
-    }
-
-    if (!userId) {
-      if (showToast) {
-        toast({
-          title: 'Sign in required',
-          description: 'Please sign in to save your work.',
-          variant: 'destructive',
-        });
+  const syncToCloud = useCallback(
+    async (
+      showToast: boolean,
+      forceOverwrite: boolean = false,
+      isAutoSync: boolean = false,
+      dataOverride?: any
+    ): Promise<{ success: boolean; reportId: string | null }> => {
+      if (isSyncingRef.current) {
+        return { success: false, reportId: currentReportIdRef.current };
       }
-      return { success: false, reportId: null };
-    }
 
-    // CRITICAL FIX: Use dataOverride if provided (e.g. from syncNowImmediate),
-    // otherwise use the ref to get the absolute latest form data
-    const currentFormData = dataOverride || latestFormDataRef.current;
-
-    // Check minimum data
-    const hasData =
-      currentFormData.clientName ||
-      currentFormData.installationAddress ||
-      currentFormData.propertyAddress;
-
-    if (!hasData) {
-      if (showToast) {
-        toast({
-          title: 'Cannot save yet',
-          description: 'Please fill in client name or address first.',
-          variant: 'destructive',
-        });
+      if (!userId) {
+        if (showToast) {
+          toast({
+            title: 'Sign in required',
+            description: 'Please sign in to save your work.',
+            variant: 'destructive',
+          });
+        }
+        return { success: false, reportId: null };
       }
-      return { success: false, reportId: null };
-    }
 
-    isSyncingRef.current = true;
-    setStatus(prev => ({ ...prev, cloud: 'syncing' }));
-    localDataRef.current = currentFormData;
+      // CRITICAL FIX: Use dataOverride if provided (e.g. from syncNowImmediate),
+      // otherwise use the ref to get the absolute latest form data
+      const currentFormData = dataOverride || latestFormDataRef.current;
 
-    try {
-      let savedReportId = currentReportIdRef.current;
+      // Check minimum data
+      const hasData =
+        currentFormData.clientName ||
+        currentFormData.installationAddress ||
+        currentFormData.propertyAddress;
 
-      if (savedReportId) {
-        // Update existing report with version check (unless forcing overwrite)
-        if (forceOverwrite) {
-          // Force save - skip version check (always promotes from auto-draft)
-          const result = await reportCloud.updateReport(savedReportId, userId, currentFormData, customerId, false);
-          if (!result.success) throw new Error(result.error || 'Update failed');
-          // Fetch new version after successful update
-          const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
-          if (newVersion) {
-            expectedVersionRef.current = newVersion.version;
+      if (!hasData) {
+        if (showToast) {
+          toast({
+            title: 'Cannot save yet',
+            description: 'Please fill in client name or address first.',
+            variant: 'destructive',
+          });
+        }
+        return { success: false, reportId: null };
+      }
+
+      isSyncingRef.current = true;
+      setStatus((prev) => ({ ...prev, cloud: 'syncing' }));
+      localDataRef.current = currentFormData;
+
+      try {
+        let savedReportId = currentReportIdRef.current;
+
+        if (savedReportId) {
+          // Update existing report with version check (unless forcing overwrite)
+          if (forceOverwrite) {
+            // Force save - skip version check (always promotes from auto-draft)
+            const result = await reportCloud.updateReport(
+              savedReportId,
+              userId,
+              currentFormData,
+              customerId,
+              false
+            );
+            if (!result.success) throw new Error(result.error || 'Update failed');
+            // Fetch new version after successful update
+            const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
+            if (newVersion) {
+              expectedVersionRef.current = newVersion.version;
+            }
+          } else {
+            // Normal save - check for conflicts
+            const result = await reportCloud.updateReportWithVersionCheck(
+              savedReportId,
+              userId,
+              currentFormData,
+              expectedVersionRef.current,
+              customerId,
+              isAutoSync // Pass through auto-sync flag
+            );
+
+            if (result.conflict) {
+              // Version conflict detected
+              console.log('[ReportSync] Conflict detected:', result.conflict);
+              isSyncingRef.current = false;
+              setActiveConflict(result.conflict);
+              setStatus((prev) => ({
+                ...prev,
+                cloud: 'conflict',
+                errorMessage: 'Someone else edited this report. Please resolve the conflict.',
+              }));
+
+              // Notify parent component if callback provided
+              if (onConflict) {
+                onConflict(result.conflict, currentFormData);
+              }
+
+              if (showToast) {
+                toast({
+                  title: 'Edit conflict detected',
+                  description: 'This report was edited elsewhere. Please review the changes.',
+                  variant: 'destructive',
+                });
+              }
+
+              return { success: false, reportId: savedReportId };
+            }
+
+            if (!result.success) throw new Error(result.error || 'Update failed');
+
+            // Update expected version after successful save
+            expectedVersionRef.current += 1;
           }
         } else {
-          // Normal save - check for conflicts
-          const result = await reportCloud.updateReportWithVersionCheck(
-            savedReportId,
+          // Create new report (no version conflict possible)
+          // Pass isAutoSync to set 'auto-draft' status for auto-synced reports
+          const result = await reportCloud.createReport(
             userId,
+            reportType,
             currentFormData,
-            expectedVersionRef.current,
             customerId,
-            isAutoSync  // Pass through auto-sync flag
+            isAutoSync
+          );
+          if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
+          savedReportId = result.reportId;
+          // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
+          currentReportIdRef.current = savedReportId;
+          expectedVersionRef.current = 1;
+          console.log(
+            '[ReportSync] Created new report:',
+            savedReportId,
+            isAutoSync ? '(auto-draft)' : '(draft)'
           );
 
-          if (result.conflict) {
-            // Version conflict detected
-            console.log('[ReportSync] Conflict detected:', result.conflict);
-            isSyncingRef.current = false;
-            setActiveConflict(result.conflict);
-            setStatus(prev => ({
-              ...prev,
-              cloud: 'conflict',
-              errorMessage: 'Someone else edited this report. Please resolve the conflict.',
-            }));
-
-            // Notify parent component if callback provided
-            if (onConflict) {
-              onConflict(result.conflict, currentFormData);
-            }
-
-            if (showToast) {
-              toast({
-                title: 'Edit conflict detected',
-                description: 'This report was edited elsewhere. Please review the changes.',
-                variant: 'destructive',
-              });
-            }
-
-            return { success: false, reportId: savedReportId };
+          // Notify parent component so it can update its state
+          if (onReportCreated) {
+            onReportCreated(savedReportId);
           }
-
-          if (!result.success) throw new Error(result.error || 'Update failed');
-
-          // Update expected version after successful save
-          expectedVersionRef.current += 1;
         }
-      } else {
-        // Create new report (no version conflict possible)
-        // Pass isAutoSync to set 'auto-draft' status for auto-synced reports
-        const result = await reportCloud.createReport(userId, reportType, currentFormData, customerId, isAutoSync);
-        if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
-        savedReportId = result.reportId;
-        // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
-        currentReportIdRef.current = savedReportId;
-        expectedVersionRef.current = 1;
-        console.log('[ReportSync] Created new report:', savedReportId, isAutoSync ? '(auto-draft)' : '(draft)');
 
-        // Notify parent component so it can update its state
-        if (onReportCreated) {
-          onReportCreated(savedReportId);
-        }
-      }
+        // Clear any active conflict
+        setActiveConflict(null);
 
-      // Clear any active conflict
-      setActiveConflict(null);
+        // Reset consecutive failure counter on success
+        consecutiveFailuresRef.current = 0;
 
-      // Clear local draft after successful sync
-      draftStorage.clearDraft(reportType, savedReportId);
+        // Clear local draft after successful sync
+        draftStorage.clearDraft(reportType, savedReportId);
 
-      setStatus(prev => ({
-        ...prev,
-        cloud: 'synced',
-        lastCloudSync: new Date(),
-        queuedChanges: 0,
-        errorMessage: undefined,
-      }));
+        setStatus((prev) => ({
+          ...prev,
+          cloud: 'synced',
+          lastCloudSync: new Date(),
+          queuedChanges: 0,
+          errorMessage: undefined,
+        }));
 
-      if (showToast) {
-        toast({
-          title: 'Saved',
-          description: 'Your report has been saved.',
-        });
-      }
-
-      isSyncingRef.current = false;
-      return { success: true, reportId: savedReportId };
-
-    } catch (error) {
-      console.error('[ReportSync] Sync error:', error);
-      isSyncingRef.current = false;
-
-      // Queue for retry if online, or just mark as queued if offline
-      if (isOnline) {
-        try {
-          await syncQueue.enqueue({
-            type: currentReportIdRef.current ? 'update' : 'create',
-            reportType,
-            reportId: currentReportIdRef.current,
-            data: currentFormData,
-            userId,
+        if (showToast) {
+          toast({
+            title: 'Saved',
+            description: 'Your report has been saved.',
           });
-          await updateQueueCount();
-        } catch (queueError) {
-          console.error('[ReportSync] Failed to queue:', queueError);
         }
+
+        isSyncingRef.current = false;
+        return { success: true, reportId: savedReportId };
+      } catch (error) {
+        console.error('[ReportSync] Sync error:', error);
+        isSyncingRef.current = false;
+
+        // Queue for retry if online, or just mark as queued if offline
+        if (isOnline) {
+          try {
+            await syncQueue.enqueue({
+              type: currentReportIdRef.current ? 'update' : 'create',
+              reportType,
+              reportId: currentReportIdRef.current,
+              data: currentFormData,
+              userId,
+            });
+            await updateQueueCount();
+          } catch (queueError) {
+            console.error('[ReportSync] Failed to queue:', queueError);
+          }
+        }
+
+        setStatus((prev) => ({
+          ...prev,
+          cloud: 'queued',
+          errorMessage: error instanceof Error ? error.message : 'Sync failed',
+        }));
+
+        // Track consecutive auto-sync failures and warn user after 3
+        consecutiveFailuresRef.current += 1;
+
+        if (consecutiveFailuresRef.current >= 3 && !showToast) {
+          toast({
+            title: 'Cloud sync issue',
+            description:
+              "Your changes are saved on this device but haven't synced to the cloud. Check your connection.",
+            variant: 'destructive',
+          });
+          consecutiveFailuresRef.current = 0; // Reset to avoid spamming
+        }
+
+        if (showToast) {
+          toast({
+            title: 'Saved offline',
+            description: 'Will sync to cloud when connection is stable.',
+          });
+        }
+
+        return { success: false, reportId: currentReportIdRef.current };
       }
-
-      setStatus(prev => ({
-        ...prev,
-        cloud: 'queued',
-        errorMessage: error instanceof Error ? error.message : 'Sync failed',
-      }));
-
-      if (showToast) {
-        toast({
-          title: 'Saved offline',
-          description: 'Will sync to cloud when connection is stable.',
-        });
-      }
-
-      return { success: false, reportId: currentReportIdRef.current };
-    }
-  }, [userId, reportType, customerId, isOnline, toast, updateQueueCount, onConflict]);
+    },
+    [userId, reportType, customerId, isOnline, toast, updateQueueCount, onConflict]
+  );
 
   // === MANUAL SAVE ===
   const saveNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
     // Always save locally first - use ref for latest data
     const currentFormData = latestFormDataRef.current;
     draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
-    setStatus(prev => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
 
     // Then sync to cloud
     return await syncToCloud(true);
@@ -553,7 +623,7 @@ export const useReportSync = ({
       _draftCreatedAt: new Date().toISOString(),
     });
     lastFormDataRef.current = JSON.stringify(currentFormData);
-    setStatus(prev => ({
+    setStatus((prev) => ({
       ...prev,
       local: 'saved',
       lastLocalSave: new Date(),
@@ -562,41 +632,51 @@ export const useReportSync = ({
   }, [reportType]);
 
   // === LOAD REPORT ===
-  const loadReport = useCallback(async (loadReportId: string): Promise<{ data: any; databaseId: string | null; updatedAt?: string; lastSyncedAt?: string } | null> => {
-    if (!userId) return null;
+  const loadReport = useCallback(
+    async (
+      loadReportId: string
+    ): Promise<{
+      data: any;
+      databaseId: string | null;
+      updatedAt?: string;
+      lastSyncedAt?: string;
+    } | null> => {
+      if (!userId) return null;
 
-    try {
-      // Get report data with database ID and edit version together
-      const [reportResult, versionInfo] = await Promise.all([
-        reportCloud.getReportDataWithId(loadReportId, userId),
-        reportCloud.getEditVersion(loadReportId, userId),
-      ]);
+      try {
+        // Get report data with database ID and edit version together
+        const [reportResult, versionInfo] = await Promise.all([
+          reportCloud.getReportDataWithId(loadReportId, userId),
+          reportCloud.getEditVersion(loadReportId, userId),
+        ]);
 
-      // Track the expected version for conflict detection
-      if (versionInfo) {
-        expectedVersionRef.current = versionInfo.version;
-        console.log('[ReportSync] Loaded report with version:', versionInfo.version);
-      }
+        // Track the expected version for conflict detection
+        if (versionInfo) {
+          expectedVersionRef.current = versionInfo.version;
+          console.log('[ReportSync] Loaded report with version:', versionInfo.version);
+        }
 
-      if (!reportResult) {
+        if (!reportResult) {
+          return null;
+        }
+
+        return {
+          data: reportResult.data,
+          databaseId: reportResult.databaseId,
+          updatedAt: reportResult.updatedAt,
+          lastSyncedAt: reportResult.lastSyncedAt,
+        };
+      } catch (error) {
+        toast({
+          title: 'Load failed',
+          description: 'Could not load report from cloud.',
+          variant: 'destructive',
+        });
         return null;
       }
-
-      return {
-        data: reportResult.data,
-        databaseId: reportResult.databaseId,
-        updatedAt: reportResult.updatedAt,
-        lastSyncedAt: reportResult.lastSyncedAt,
-      };
-    } catch (error) {
-      toast({
-        title: 'Load failed',
-        description: 'Could not load report from cloud.',
-        variant: 'destructive',
-      });
-      return null;
-    }
-  }, [userId, toast]);
+    },
+    [userId, toast]
+  );
 
   // === DRAFT RECOVERY ===
   const recoverDraft = useCallback((): any | null => {
@@ -616,11 +696,14 @@ export const useReportSync = ({
   }, [reportType]);
 
   // === FORCE SAVE (skip version check) ===
-  const forceSave = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
+  const forceSave = useCallback(async (): Promise<{
+    success: boolean;
+    reportId: string | null;
+  }> => {
     // Save locally first - use ref for latest data
     const currentFormData = latestFormDataRef.current;
     draftStorage.saveDraft(reportType, currentReportIdRef.current, currentFormData);
-    setStatus(prev => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+    setStatus((prev) => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
 
     // Force sync to cloud, overwriting any conflicts
     return await syncToCloud(true, true);
@@ -638,36 +721,39 @@ export const useReportSync = ({
   }, [status.cloud, syncToCloud, userId, processQueue]);
 
   // === RESOLVE CONFLICT ===
-  const resolveConflict = useCallback((useServerVersion: boolean) => {
-    if (!activeConflict) return;
+  const resolveConflict = useCallback(
+    (useServerVersion: boolean) => {
+      if (!activeConflict) return;
 
-    if (useServerVersion) {
-      // User chose to use the server version - they'll need to reload
-      // Clear the conflict and mark as needing refresh
-      setActiveConflict(null);
-      setStatus(prev => ({
-        ...prev,
-        cloud: 'synced',
-        errorMessage: undefined,
-      }));
-      // Update expected version to server version
-      expectedVersionRef.current = activeConflict.serverVersion;
+      if (useServerVersion) {
+        // User chose to use the server version - they'll need to reload
+        // Clear the conflict and mark as needing refresh
+        setActiveConflict(null);
+        setStatus((prev) => ({
+          ...prev,
+          cloud: 'synced',
+          errorMessage: undefined,
+        }));
+        // Update expected version to server version
+        expectedVersionRef.current = activeConflict.serverVersion;
 
-      toast({
-        title: 'Using server version',
-        description: 'The page will reload with the latest changes.',
-      });
+        toast({
+          title: 'Using server version',
+          description: 'The page will reload with the latest changes.',
+        });
 
-      // Trigger a reload after a short delay
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } else {
-      // User chose to keep their local changes - force save
-      setActiveConflict(null);
-      forceSave();
-    }
-  }, [activeConflict, forceSave, toast]);
+        // Trigger a reload after a short delay
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else {
+        // User chose to keep their local changes - force save
+        setActiveConflict(null);
+        forceSave();
+      }
+    },
+    [activeConflict, forceSave, toast]
+  );
 
   // === SYNC NOW (immediate sync, cancels debounce) ===
   const syncNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
@@ -680,7 +766,9 @@ export const useReportSync = ({
   // to the database, such as PDF generation where we need to ensure we're using
   // the synced data and not potentially stale in-memory data
   const syncNowImmediate = useCallback(async (): Promise<SyncNowImmediateResult> => {
-    console.log('[ReportSync] syncNowImmediate called - cancelling debounce and forcing immediate sync');
+    console.log(
+      '[ReportSync] syncNowImmediate called - cancelling debounce and forcing immediate sync'
+    );
 
     // Cancel any pending debounced sync
     debouncedCloudSync.cancel();
@@ -694,7 +782,7 @@ export const useReportSync = ({
       scheduleOfTestsCount: dataToSync.scheduleOfTests?.length || 0,
       inspectionItemsCount: dataToSync.inspectionItems?.length || 0,
       defectObservationsCount: dataToSync.defectObservations?.length || 0,
-      clientName: dataToSync.clientName
+      clientName: dataToSync.clientName,
     });
 
     // Perform the sync — force overwrite and pass captured data directly
@@ -702,14 +790,14 @@ export const useReportSync = ({
 
     console.log('[ReportSync] syncNowImmediate - sync result:', {
       success: result.success,
-      reportId: result.reportId
+      reportId: result.reportId,
     });
 
     // Return the result with the data that was synced
     return {
       success: result.success,
       reportId: result.reportId,
-      data: dataToSync  // Return the data that was saved
+      data: dataToSync, // Return the data that was saved
     };
   }, [syncToCloud, debouncedCloudSync]);
 
@@ -726,7 +814,7 @@ export const useReportSync = ({
 
     if (hasData && isOnline && isAuthenticated && userId) {
       debouncedCloudSync.cancel();
-      syncToCloud(false, false, true);  // isAutoSync = true
+      syncToCloud(false, false, true); // isAutoSync = true
     }
   }, [isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
 
