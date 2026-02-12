@@ -170,7 +170,7 @@ export function SafeIsolationAssessment() {
   }, [handleStart]);
 
   return (
-    <div className="min-h-[60vh]">
+    <div className="flex flex-col h-full overflow-y-auto overscroll-auto">
       <AnimatePresence mode="wait">
         {phase === 'intro' && <IntroPhase key="intro" onStart={handleStart} />}
         {phase === 'sequencer' && (
@@ -205,8 +205,9 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-8 space-y-6"
+      transition={{ duration: 0.25 }}
+      className="px-4 py-6 space-y-5 flex-1 overflow-y-auto overscroll-auto pb-safe"
+      style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
     >
       {/* Hero */}
       <div className="flex flex-col items-center text-center space-y-4">
@@ -266,14 +267,16 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
       </div>
 
       {/* CTA */}
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={onStart}
-        className="w-full h-14 rounded-xl bg-cyan-500 text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
-      >
-        <Zap className="h-5 w-5" />
-        Start Assessment
-      </motion.button>
+      <div className="shrink-0 pt-2">
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={onStart}
+          className="w-full h-14 rounded-xl bg-cyan-500 text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
+        >
+          <Zap className="h-5 w-5" />
+          Start Assessment
+        </motion.button>
+      </div>
     </motion.div>
   );
 }
@@ -298,10 +301,10 @@ function SequencerPhase({
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-5 space-y-4"
+      transition={{ duration: 0.25 }}
+      className="flex flex-col flex-1 min-h-0 px-4 pt-4 pb-safe"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-3 shrink-0">
         <h3 className="text-sm font-semibold text-white/80">Drag steps into the correct order</h3>
         <div className="flex items-center gap-1 text-xs text-white/40">
           <GripVertical className="h-3 w-3" />
@@ -315,8 +318,8 @@ function SequencerPhase({
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="space-y-2 overflow-y-auto overscroll-contain -mx-4 px-4"
-              style={{ maxHeight: 'calc(100vh - 220px)' }}
+              className="flex-1 space-y-2 overflow-y-auto overscroll-auto -mx-4 px-4 pb-2"
+              style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
               {steps.map((step, index) => (
                 <Draggable
@@ -337,12 +340,14 @@ function SequencerPhase({
                         style={{
                           ...provided.draggableProps.style,
                           touchAction: 'none',
+                          willChange: snapshot.isDragging ? 'transform' : 'auto',
                         }}
                         className={cn(
-                          'flex items-center gap-3 p-3.5 rounded-xl border transition-all duration-200 select-none',
+                          'flex items-center gap-3 p-3.5 rounded-xl border select-none touch-manipulation',
+                          'transition-colors duration-150',
                           snapshot.isDragging
                             ? 'bg-cyan-500/10 border-cyan-500/40 shadow-lg shadow-cyan-500/10 scale-[1.02] z-50'
-                            : 'bg-white/[0.03] border-white/10',
+                            : 'bg-white/[0.03] border-white/10 active:bg-white/[0.06] active:border-white/20',
                           isCorrect && 'border-emerald-500/40 bg-emerald-500/10',
                           isWrong && 'border-red-500/40 bg-red-500/10 animate-ios-press'
                         )}
@@ -350,7 +355,7 @@ function SequencerPhase({
                         {/* Position number */}
                         <span
                           className={cn(
-                            'flex items-center justify-center h-7 w-7 rounded-lg text-xs font-bold shrink-0',
+                            'flex items-center justify-center h-8 w-8 rounded-lg text-sm font-bold shrink-0',
                             submitted
                               ? isCorrect
                                 ? 'bg-emerald-500/20 text-emerald-400'
@@ -373,13 +378,15 @@ function SequencerPhase({
 
                         {/* Content */}
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-foreground">{step.title}</p>
-                          <p className="text-xs text-white/50 truncate">{step.description}</p>
+                          <p className="text-sm font-semibold text-foreground">{step.title}</p>
+                          <p className="text-xs text-white/50 leading-snug mt-0.5">
+                            {step.description}
+                          </p>
                         </div>
 
-                        {/* Drag handle indicator */}
+                        {/* Drag handle indicator — larger touch area */}
                         {!submitted && (
-                          <div className="flex flex-col items-center justify-center shrink-0 p-1">
+                          <div className="flex flex-col items-center justify-center shrink-0 w-10 h-10 -mr-1 rounded-lg active:bg-white/[0.06]">
                             <GripVertical
                               className={cn(
                                 'h-5 w-5 transition-colors',
@@ -406,16 +413,18 @@ function SequencerPhase({
         </Droppable>
       </DragDropContext>
 
-      {/* Submit button */}
+      {/* Submit button — pinned to bottom */}
       {!submitted && (
-        <motion.button
-          whileTap={{ scale: 0.97 }}
-          onClick={onSubmit}
-          className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
-        >
-          <ShieldCheck className="h-4 w-4" />
-          Check My Order
-        </motion.button>
+        <div className="shrink-0 pt-3 pb-2">
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={onSubmit}
+            className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
+          >
+            <ShieldCheck className="h-4 w-4" />
+            Check My Order
+          </motion.button>
+        </div>
       )}
     </motion.div>
   );
@@ -441,10 +450,11 @@ function ResultsPhase({
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.97 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-      className="px-4 py-6 space-y-5"
+      transition={{ type: 'spring', stiffness: 180, damping: 22 }}
+      className="px-4 py-6 space-y-5 flex-1 overflow-y-auto overscroll-auto pb-safe"
+      style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
     >
       {/* Score Hero */}
       <div className="flex flex-col items-center text-center space-y-3">
@@ -568,7 +578,7 @@ function ResultsPhase({
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={onRetry}
-          className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
         >
           <RotateCcw className="h-4 w-4" />
           {isPerfect ? 'Practise Again' : 'Try Again'}
