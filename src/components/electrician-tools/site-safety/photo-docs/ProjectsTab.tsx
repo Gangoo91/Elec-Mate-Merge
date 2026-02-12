@@ -1,13 +1,25 @@
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Folder, FolderOpen, ChevronRight, Search, X, Image as ImageIcon, Calendar, Plus, Camera } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { useSafetyPhotos, SafetyPhoto, getCategoryColor } from "@/hooks/useSafetyPhotos";
-import { formatDistanceToNow } from "date-fns";
-import PhotoViewer from "./PhotoViewer";
-import CameraTab from "./CameraTab";
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Folder,
+  FolderOpen,
+  ChevronRight,
+  Search,
+  X,
+  Image as ImageIcon,
+  Calendar,
+  Plus,
+  Camera,
+  Share2,
+} from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { useSafetyPhotos, SafetyPhoto, getCategoryColor } from '@/hooks/useSafetyPhotos';
+import { formatDistanceToNow } from 'date-fns';
+import PhotoViewer from './PhotoViewer';
+import CameraTab from './CameraTab';
+import ShareProjectSheet from './ShareProjectSheet';
 
 interface Project {
   name: string;
@@ -16,16 +28,17 @@ interface Project {
 }
 
 export default function ProjectsTab() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<SafetyPhoto | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [cameraOpen, setCameraOpen] = useState(false);
   const [captureForProject, setCaptureForProject] = useState<string | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareProject, setShareProject] = useState<string>('');
 
-  const { photos, projects, isLoading, refetch, deletePhoto, isDeleting, updatePhoto } = useSafetyPhotos(
-    selectedProject ? { project: selectedProject } : undefined
-  );
+  const { photos, projects, isLoading, refetch, deletePhoto, isDeleting, updatePhoto } =
+    useSafetyPhotos(selectedProject ? { project: selectedProject } : undefined);
 
   const handleRefresh = useCallback(async () => {
     await refetch();
@@ -50,24 +63,34 @@ export default function ProjectsTab() {
     setSelectedPhoto(null);
   }, []);
 
-  const handleNavigate = useCallback((direction: "prev" | "next") => {
-    const newIndex = direction === "prev"
-      ? Math.max(0, selectedIndex - 1)
-      : Math.min(projectPhotos.length - 1, selectedIndex + 1);
-    setSelectedIndex(newIndex);
-    setSelectedPhoto(projectPhotos[newIndex]);
-  }, [selectedIndex, projectPhotos]);
+  const handleNavigate = useCallback(
+    (direction: 'prev' | 'next') => {
+      const newIndex =
+        direction === 'prev'
+          ? Math.max(0, selectedIndex - 1)
+          : Math.min(projectPhotos.length - 1, selectedIndex + 1);
+      setSelectedIndex(newIndex);
+      setSelectedPhoto(projectPhotos[newIndex]);
+    },
+    [selectedIndex, projectPhotos]
+  );
 
-  const handleDelete = useCallback((photo: SafetyPhoto) => {
-    deletePhoto(photo);
-    setSelectedPhoto(null);
-  }, [deletePhoto]);
+  const handleDelete = useCallback(
+    (photo: SafetyPhoto) => {
+      deletePhoto(photo);
+      setSelectedPhoto(null);
+    },
+    [deletePhoto]
+  );
 
-  const handleEdit = useCallback((photo: SafetyPhoto, updates: Partial<SafetyPhoto>) => {
-    updatePhoto({ id: photo.id, updates });
-    // Update the selected photo state to reflect changes immediately
-    setSelectedPhoto(prev => prev ? { ...prev, ...updates } : null);
-  }, [updatePhoto]);
+  const handleEdit = useCallback(
+    (photo: SafetyPhoto, updates: Partial<SafetyPhoto>) => {
+      updatePhoto({ id: photo.id, updates });
+      // Update the selected photo state to reflect changes immediately
+      setSelectedPhoto((prev) => (prev ? { ...prev, ...updates } : null));
+    },
+    [updatePhoto]
+  );
 
   // Camera handlers
   const handleOpenCamera = useCallback((projectName?: string) => {
@@ -95,7 +118,8 @@ export default function ProjectsTab() {
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">No projects yet</h3>
           <p className="text-sm text-white/50 text-center max-w-[250px] mb-6">
-            Take your first photo or add a project reference when uploading photos to organise them into folders
+            Take your first photo or add a project reference when uploading photos to organise them
+            into folders
           </p>
           <button
             onClick={() => handleOpenCamera()}
@@ -138,7 +162,7 @@ export default function ProjectsTab() {
               {searchQuery && (
                 <button
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => setSearchQuery('')}
                 >
                   <X className="h-3.5 w-3.5 text-white/40" />
                 </button>
@@ -176,10 +200,23 @@ export default function ProjectsTab() {
                           <span className="text-xs text-white/30">•</span>
                           <span className="text-xs text-white/40 flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
-                            {formatDistanceToNow(new Date(project.lastUpdated), { addSuffix: true })}
+                            {formatDistanceToNow(new Date(project.lastUpdated), {
+                              addSuffix: true,
+                            })}
                           </span>
                         </div>
                       </div>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShareProject(project.name);
+                        setShareOpen(true);
+                      }}
+                      className="p-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-500/20 hover:border-blue-500/30 transition-colors touch-manipulation active:scale-95"
+                      aria-label={`Share ${project.name}`}
+                    >
+                      <Share2 className="h-4 w-4 text-white/60 hover:text-blue-400" />
                     </button>
                     <button
                       onClick={(e) => {
@@ -202,7 +239,7 @@ export default function ProjectsTab() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: filteredProjects.length * 0.03 }}
-                  onClick={() => setSelectedProject("__unorganised__")}
+                  onClick={() => setSelectedProject('__unorganised__')}
                   className="w-full flex items-center gap-3 p-3 bg-[#1e1e1e] rounded-xl border border-dashed border-white/20 hover:bg-[#252525] active:scale-[0.99] transition-all touch-manipulation"
                 >
                   <div className="p-2.5 rounded-lg bg-white/5 border border-dashed border-white/20 flex-shrink-0">
@@ -236,9 +273,10 @@ export default function ProjectsTab() {
   }
 
   // Project detail view
-  const displayPhotos = selectedProject === "__unorganised__"
-    ? photos.filter((p) => !p.project_reference)
-    : projectPhotos;
+  const displayPhotos =
+    selectedProject === '__unorganised__'
+      ? photos.filter((p) => !p.project_reference)
+      : projectPhotos;
 
   return (
     <>
@@ -252,8 +290,10 @@ export default function ProjectsTab() {
             >
               <ChevronRight className="h-5 w-5 text-white/60 rotate-180" />
             </button>
-            <div className={`p-2 rounded-lg ${selectedProject === "__unorganised__" ? "bg-white/5 border border-dashed border-white/20" : "bg-elec-yellow/10 border border-elec-yellow/20"}`}>
-              {selectedProject === "__unorganised__" ? (
+            <div
+              className={`p-2 rounded-lg ${selectedProject === '__unorganised__' ? 'bg-white/5 border border-dashed border-white/20' : 'bg-elec-yellow/10 border border-elec-yellow/20'}`}
+            >
+              {selectedProject === '__unorganised__' ? (
                 <ImageIcon className="h-5 w-5 text-white/40" />
               ) : (
                 <FolderOpen className="h-5 w-5 text-elec-yellow" />
@@ -261,7 +301,7 @@ export default function ProjectsTab() {
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-sm font-semibold text-white truncate">
-                {selectedProject === "__unorganised__" ? "Unorganised Photos" : selectedProject}
+                {selectedProject === '__unorganised__' ? 'Unorganised Photos' : selectedProject}
               </h2>
               <p className="text-xs text-white/50">{displayPhotos.length} photos</p>
             </div>
@@ -292,7 +332,9 @@ export default function ProjectsTab() {
                       className="w-full h-full object-cover transition-transform duration-150 group-hover:scale-105 group-active:scale-[0.98]"
                       loading="lazy"
                     />
-                    <div className={`absolute top-1.5 left-1.5 w-2.5 h-2.5 rounded-full ${getCategoryColor(photo.category)} ring-2 ring-black/50`} />
+                    <div
+                      className={`absolute top-1.5 left-1.5 w-2.5 h-2.5 rounded-full ${getCategoryColor(photo.category)} ring-2 ring-black/50`}
+                    />
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <p className="text-[10px] text-white line-clamp-2">{photo.description}</p>
                     </div>
@@ -303,12 +345,27 @@ export default function ProjectsTab() {
           </div>
         </PullToRefresh>
 
-        {/* FAB - Add Photo Button (only for real projects, not unorganised) */}
-        {selectedProject !== "__unorganised__" && (
+        {/* FABs - Share and Add Photo */}
+        {selectedProject !== '__unorganised__' && (
           <motion.button
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+            onClick={() => {
+              setShareProject(selectedProject || '');
+              setShareOpen(true);
+            }}
+            className="absolute bottom-4 right-20 w-12 h-12 rounded-full bg-blue-500 shadow-lg shadow-blue-500/30 flex items-center justify-center touch-manipulation active:scale-95 transition-transform z-10"
+            aria-label="Share project"
+          >
+            <Share2 className="h-5 w-5 text-white" />
+          </motion.button>
+        )}
+        {selectedProject !== '__unorganised__' && (
+          <motion.button
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             onClick={() => handleOpenCamera(selectedProject || undefined)}
             className="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-elec-yellow shadow-lg shadow-elec-yellow/30 flex items-center justify-center touch-manipulation active:scale-95 transition-transform z-10"
             aria-label="Add photo"
@@ -345,6 +402,14 @@ export default function ProjectsTab() {
           />
         </SheetContent>
       </Sheet>
+
+      {/* Share Sheet */}
+      <ShareProjectSheet
+        open={shareOpen}
+        onOpenChange={setShareOpen}
+        projectReference={shareProject}
+        photos={shareProject ? photos.filter((p) => p.project_reference === shareProject) : []}
+      />
     </>
   );
 }

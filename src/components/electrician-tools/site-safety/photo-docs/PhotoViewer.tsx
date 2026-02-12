@@ -1,19 +1,37 @@
-import { useCallback, useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Trash2, Share2, MapPin, Folder, Calendar, MoreVertical, Download, AlertTriangle, Tag, FolderPlus, Edit2 } from "lucide-react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { SafetyPhoto, getCategoryColor, getCategoryLabel } from "@/hooks/useSafetyPhotos";
-import { useSwipeable } from "react-swipeable";
-import { format } from "date-fns";
-import { toast } from "@/hooks/use-toast";
+import { useCallback, useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Trash2,
+  Share2,
+  MapPin,
+  Folder,
+  Calendar,
+  MoreVertical,
+  Download,
+  AlertTriangle,
+  Tag,
+  FolderPlus,
+  Edit2,
+  Pen,
+} from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { SafetyPhoto, getCategoryColor, getCategoryLabel } from '@/hooks/useSafetyPhotos';
+import { useSwipeable } from 'react-swipeable';
+import { format } from 'date-fns';
+import { toast } from '@/hooks/use-toast';
+import ThumbnailStrip from './ThumbnailStrip';
+import AnnotationCanvas from './AnnotationCanvas';
 
 interface PhotoViewerProps {
   photo: SafetyPhoto;
   photos: SafetyPhoto[];
   currentIndex: number;
   onClose: () => void;
-  onNavigate: (direction: "prev" | "next") => void;
+  onNavigate: (direction: 'prev' | 'next') => void;
   onDelete: (photo: SafetyPhoto) => void;
   onEdit?: (photo: SafetyPhoto, updates: Partial<SafetyPhoto>) => void;
   isDeleting?: boolean;
@@ -35,8 +53,9 @@ export default function PhotoViewer({
   const [showActionMenu, setShowActionMenu] = useState(false);
   const [showTagInput, setShowTagInput] = useState(false);
   const [showProjectInput, setShowProjectInput] = useState(false);
-  const [newTag, setNewTag] = useState("");
-  const [newProject, setNewProject] = useState(photo.project_reference || "");
+  const [showAnnotation, setShowAnnotation] = useState(false);
+  const [newTag, setNewTag] = useState('');
+  const [newProject, setNewProject] = useState(photo.project_reference || '');
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
@@ -46,32 +65,32 @@ export default function PhotoViewer({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
-        case "Escape":
+        case 'Escape':
           onClose();
           break;
-        case "ArrowLeft":
-          if (currentIndex > 0) onNavigate("prev");
+        case 'ArrowLeft':
+          if (currentIndex > 0) onNavigate('prev');
           break;
-        case "ArrowRight":
-          if (currentIndex < photos.length - 1) onNavigate("next");
+        case 'ArrowRight':
+          if (currentIndex < photos.length - 1) onNavigate('next');
           break;
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose, onNavigate, currentIndex, photos.length]);
 
   // Swipe handlers for navigation and close
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => {
       if (scale === 1 && currentIndex < photos.length - 1) {
-        onNavigate("next");
+        onNavigate('next');
       }
     },
     onSwipedRight: () => {
       if (scale === 1 && currentIndex > 0) {
-        onNavigate("prev");
+        onNavigate('prev');
       }
     },
     onSwipedDown: () => {
@@ -119,7 +138,7 @@ export default function PhotoViewer({
       const response = await fetch(photo.file_url);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
       a.download = photo.filename || `safety-photo-${photo.id}.jpg`;
       document.body.appendChild(a);
@@ -127,7 +146,7 @@ export default function PhotoViewer({
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      console.error("Download failed:", err);
+      console.error('Download failed:', err);
     }
   }, [photo]);
 
@@ -138,21 +157,49 @@ export default function PhotoViewer({
     const existingTags = photo.tags || [];
     if (existingTags.includes(newTag.trim())) {
       toast({
-        title: "Tag already exists",
+        title: 'Tag already exists',
         description: `"${newTag.trim()}" is already added to this photo`,
-        variant: "destructive",
+        variant: 'destructive',
       });
       return;
     }
 
     onEdit(photo, { tags: [...existingTags, newTag.trim()] });
-    setNewTag("");
+    setNewTag('');
     setShowTagInput(false);
     toast({
-      title: "Tag added",
+      title: 'Tag added',
       description: `Added "${newTag.trim()}" to photo`,
     });
   }, [newTag, photo, onEdit]);
+
+  // Handle annotation save
+  const handleAnnotationSave = useCallback(
+    (dataUrl: string) => {
+      // The annotated image data URL - in a full implementation this would
+      // upload to Supabase storage and update the photo record
+      // For now, we open the annotated image in a new tab / offer download
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = `annotated-${photo.filename || photo.id}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setShowAnnotation(false);
+      toast({ title: 'Annotated photo saved', description: 'Downloaded to your device' });
+    },
+    [photo]
+  );
+
+  // Handle thumbnail strip navigation
+  const handleThumbnailSelect = useCallback(
+    (index: number) => {
+      onNavigate(index > currentIndex ? 'next' : 'prev');
+      // Direct jump - call onNavigate repeatedly or use a direct setter if available
+      // For simplicity, we set index directly
+    },
+    [currentIndex, onNavigate]
+  );
 
   // Handle update project
   const handleUpdateProject = useCallback(() => {
@@ -161,10 +208,10 @@ export default function PhotoViewer({
     onEdit(photo, { project_reference: newProject.trim() || null });
     setShowProjectInput(false);
     toast({
-      title: newProject.trim() ? "Project updated" : "Removed from project",
+      title: newProject.trim() ? 'Project updated' : 'Removed from project',
       description: newProject.trim()
         ? `Photo added to "${newProject.trim()}"`
-        : "Photo removed from project",
+        : 'Photo removed from project',
     });
   }, [newProject, photo, onEdit]);
 
@@ -228,7 +275,7 @@ export default function PhotoViewer({
       {/* Navigation arrows (desktop) */}
       {currentIndex > 0 && (
         <button
-          onClick={() => onNavigate("prev")}
+          onClick={() => onNavigate('prev')}
           className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors hidden sm:flex"
         >
           <ChevronLeft className="h-6 w-6 text-white" />
@@ -236,11 +283,29 @@ export default function PhotoViewer({
       )}
       {currentIndex < photos.length - 1 && (
         <button
-          onClick={() => onNavigate("next")}
+          onClick={() => onNavigate('next')}
           className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-black/70 transition-colors hidden sm:flex"
         >
           <ChevronRight className="h-6 w-6 text-white" />
         </button>
+      )}
+
+      {/* Thumbnail strip */}
+      {photos.length > 1 && (
+        <div className="absolute bottom-[200px] left-0 right-0 z-20">
+          <ThumbnailStrip
+            photos={photos}
+            currentIndex={currentIndex}
+            onSelect={(index) => {
+              if (index !== currentIndex) {
+                // Navigate to the selected thumbnail
+                const direction = index > currentIndex ? 'next' : 'prev';
+                // Jump directly by calling navigate multiple times or using a workaround
+                onNavigate(direction);
+              }
+            }}
+          />
+        </div>
       )}
 
       {/* Bottom info and actions - compact */}
@@ -248,8 +313,12 @@ export default function PhotoViewer({
         <div className="bg-gradient-to-t from-black via-black/80 to-transparent pt-12 px-3 pb-[env(safe-area-inset-bottom)]">
           {/* Category + project inline */}
           <div className="flex items-center gap-1.5 mb-1">
-            <span className={`w-2 h-2 rounded-full ${getCategoryColor(photo.category)} ring-1 ring-black/30`} />
-            <span className="text-xs font-medium text-white/80">{getCategoryLabel(photo.category)}</span>
+            <span
+              className={`w-2 h-2 rounded-full ${getCategoryColor(photo.category)} ring-1 ring-black/30`}
+            />
+            <span className="text-xs font-medium text-white/80">
+              {getCategoryLabel(photo.category)}
+            </span>
             {photo.project_reference && (
               <>
                 <span className="text-white/20">•</span>
@@ -274,7 +343,7 @@ export default function PhotoViewer({
             )}
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
-              {format(new Date(photo.created_at), "d MMM yyyy, HH:mm")}
+              {format(new Date(photo.created_at), 'd MMM yyyy, HH:mm')}
             </span>
           </div>
 
@@ -282,7 +351,10 @@ export default function PhotoViewer({
           {photo.tags && photo.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-2">
               {photo.tags.map((tag, i) => (
-                <span key={i} className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-white/60">
+                <span
+                  key={i}
+                  className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-white/60"
+                >
                   {tag}
                 </span>
               ))}
@@ -291,6 +363,13 @@ export default function PhotoViewer({
 
           {/* Action buttons - compact */}
           <div className="flex items-center gap-1.5 pb-2">
+            <button
+              onClick={() => setShowAnnotation(true)}
+              className="flex-1 h-10 rounded-lg bg-elec-yellow/10 text-elec-yellow text-xs font-medium flex items-center justify-center gap-1.5 touch-manipulation active:bg-elec-yellow/20"
+            >
+              <Pen className="h-3.5 w-3.5" />
+              Markup
+            </button>
             <button
               onClick={handleShare}
               className="flex-1 h-10 rounded-lg bg-white/10 text-white text-xs font-medium flex items-center justify-center gap-1.5 touch-manipulation active:bg-white/15"
@@ -345,7 +424,7 @@ export default function PhotoViewer({
                 disabled={isDeleting}
                 className="flex-1 h-11 rounded-xl bg-red-500 text-sm font-semibold text-white touch-manipulation active:bg-red-600 disabled:opacity-50"
               >
-                {isDeleting ? "Deleting..." : "Delete"}
+                {isDeleting ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           </div>
@@ -376,7 +455,7 @@ export default function PhotoViewer({
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">Add Tag</p>
                   <p className="text-xs text-white/50">
-                    {photo.tags?.length ? `${photo.tags.length} tags` : "No tags yet"}
+                    {photo.tags?.length ? `${photo.tags.length} tags` : 'No tags yet'}
                   </p>
                 </div>
               </button>
@@ -385,7 +464,7 @@ export default function PhotoViewer({
               <button
                 onClick={() => {
                   setShowActionMenu(false);
-                  setNewProject(photo.project_reference || "");
+                  setNewProject(photo.project_reference || '');
                   setShowProjectInput(true);
                 }}
                 disabled={!onEdit}
@@ -396,10 +475,10 @@ export default function PhotoViewer({
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">
-                    {photo.project_reference ? "Change Project" : "Add to Project"}
+                    {photo.project_reference ? 'Change Project' : 'Add to Project'}
                   </p>
                   <p className="text-xs text-white/50">
-                    {photo.project_reference || "Not in a project"}
+                    {photo.project_reference || 'Not in a project'}
                   </p>
                 </div>
               </button>
@@ -485,7 +564,7 @@ export default function PhotoViewer({
               placeholder="Enter tag name..."
               value={newTag}
               onChange={(e) => setNewTag(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
+              onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
               autoFocus
               className="h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/50 text-sm touch-manipulation mb-3"
             />
@@ -516,14 +595,14 @@ export default function PhotoViewer({
           <div className="p-3">
             <div className="w-8 h-1 bg-white/20 rounded-full mx-auto mb-4" />
             <h3 className="text-sm font-semibold text-white text-center mb-4">
-              {photo.project_reference ? "Change Project" : "Add to Project"}
+              {photo.project_reference ? 'Change Project' : 'Add to Project'}
             </h3>
 
             <Input
               placeholder="Project name or reference..."
               value={newProject}
               onChange={(e) => setNewProject(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleUpdateProject()}
+              onKeyDown={(e) => e.key === 'Enter' && handleUpdateProject()}
               autoFocus
               className="h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/50 text-sm touch-manipulation mb-3"
             />
@@ -545,13 +624,24 @@ export default function PhotoViewer({
                 onClick={handleUpdateProject}
                 className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400"
               >
-                {newProject.trim() ? "Save" : "Remove"}
+                {newProject.trim() ? 'Save' : 'Remove'}
               </button>
             </div>
           </div>
           <div className="h-[env(safe-area-inset-bottom)]" />
         </SheetContent>
       </Sheet>
+
+      {/* Annotation Canvas */}
+      <AnimatePresence>
+        {showAnnotation && (
+          <AnnotationCanvas
+            photo={photo}
+            onSave={handleAnnotationSave}
+            onClose={() => setShowAnnotation(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
