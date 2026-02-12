@@ -511,7 +511,7 @@ export function FaultFindingSimulator() {
   const currentState = faultStates[currentFaultIndex];
 
   return (
-    <div className="min-h-[60vh]">
+    <div className="h-full overflow-y-auto">
       <AnimatePresence mode="wait">
         {phase === 'intro' && <IntroPhase key="intro" onStart={handleStart} />}
 
@@ -901,7 +901,7 @@ function TestingPhase({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.3 }}
-      className="px-4 py-4 space-y-4"
+      className="px-4 py-4 pb-24 space-y-4"
     >
       {/* Header row: progress + timer */}
       <div className="space-y-2">
