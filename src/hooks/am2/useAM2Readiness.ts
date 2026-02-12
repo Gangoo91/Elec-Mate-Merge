@@ -4,6 +4,10 @@
  * Calculates AM2 practical readiness score from simulation results.
  * Weighted scoring model matching real AM2 assessment weighting.
  *
+ * Persistence: Supabase `am2_scores` table with localStorage offline fallback.
+ * On load → try Supabase first, fall back to localStorage if offline.
+ * On save → write to both Supabase and localStorage simultaneously.
+ *
  * Scoring breakdown:
  *   Testing Sequence   25%
  *   Installation Design 20%
@@ -13,9 +17,14 @@
  *   Knowledge          5%
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { createClient } from '@supabase/supabase-js';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+
+// Untyped client for am2_scores — table not yet in generated Database type.
+// Replace with the typed `supabase` import after regenerating types.
+const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 export type AM2ReadinessStatus = 'ready' | 'nearly_ready' | 'needs_work' | 'not_ready';
 
@@ -46,6 +55,8 @@ export interface AM2ReadinessData {
   totalAttempts: number;
 }
 
+type ScoreMap = Record<string, { score: number; attempts: number }>;
+
 function getStatus(score: number): AM2ReadinessStatus {
   if (score >= 70) return 'ready';
   if (score >= 50) return 'nearly_ready';
@@ -68,22 +79,104 @@ const COMPONENT_WEIGHTS: Record<string, { weight: number; label: string }> = {
   knowledgeAssessment: { weight: 0.05, label: 'Knowledge' },
 };
 
+const STORAGE_KEY = (userId: string) => `am2-scores-${userId}`;
+
+/** Read scores from localStorage */
+function readLocalScores(userId: string): ScoreMap {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY(userId));
+    return stored ? JSON.parse(stored) : {};
+  } catch {
+    return {};
+  }
+}
+
+/** Write scores to localStorage */
+function writeLocalScores(userId: string, scores: ScoreMap) {
+  localStorage.setItem(STORAGE_KEY(userId), JSON.stringify(scores));
+}
+
+/** Fetch scores from Supabase am2_scores table */
+async function fetchSupabaseScores(userId: string): Promise<ScoreMap | null> {
+  const { data, error } = await db
+    .from('am2_scores')
+    .select('component_key, score, attempts')
+    .eq('user_id', userId);
+
+  if (error || !data) return null;
+
+  const scores: ScoreMap = {};
+  for (const row of data) {
+    scores[row.component_key] = {
+      score: row.score,
+      attempts: row.attempts,
+    };
+  }
+  return scores;
+}
+
+/** Upsert a single component score in Supabase */
+async function upsertSupabaseScore(
+  userId: string,
+  componentKey: string,
+  score: number,
+  attempts: number
+): Promise<boolean> {
+  const { error } = await db.from('am2_scores').upsert(
+    {
+      user_id: userId,
+      component_key: componentKey,
+      score,
+      attempts,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'user_id,component_key' }
+  );
+
+  return !error;
+}
+
 export function useAM2Readiness() {
   const { user } = useAuth();
   const [data, setData] = useState<AM2ReadinessData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const syncedRef = useRef(false);
 
   const calculate = useCallback(async (): Promise<AM2ReadinessData | null> => {
     if (!user) return null;
 
     try {
-      // Fetch scores from localStorage (Phase 1)
-      // Will be migrated to Supabase tables in Phase 2
-      const stored = localStorage.getItem(`am2-scores-${user.id}`);
-      const scores: Record<string, { score: number; attempts: number }> = stored
-        ? JSON.parse(stored)
-        : {};
+      let scores: ScoreMap;
+
+      // Try Supabase first, fall back to localStorage
+      const remoteScores = await fetchSupabaseScores(user.id);
+      if (remoteScores) {
+        scores = remoteScores;
+        // Keep localStorage in sync as cache
+        writeLocalScores(user.id, scores);
+
+        // On first load, merge any localStorage-only scores up to Supabase
+        if (!syncedRef.current) {
+          syncedRef.current = true;
+          const localScores = readLocalScores(user.id);
+          for (const [key, local] of Object.entries(localScores)) {
+            const remote = remoteScores[key];
+            if (!remote || local.score > remote.score || local.attempts > remote.attempts) {
+              const merged = {
+                score: Math.max(local.score, remote?.score ?? 0),
+                attempts: Math.max(local.attempts, remote?.attempts ?? 0),
+              };
+              scores[key] = merged;
+              upsertSupabaseScore(user.id, key, merged.score, merged.attempts);
+            }
+          }
+          writeLocalScores(user.id, scores);
+        }
+      } else {
+        // Offline — use localStorage
+        scores = readLocalScores(user.id);
+      }
 
       // Build component map
       const components: Record<string, AM2Component> = {};
@@ -168,25 +261,29 @@ export function useAM2Readiness() {
     calculate().finally(() => setIsLoading(false));
   }, [calculate]);
 
-  // Save a component score
+  // Save a component score — writes to both Supabase and localStorage
   const saveScore = useCallback(
-    (componentKey: string, score: number) => {
+    async (componentKey: string, score: number) => {
       if (!user) return;
 
-      const stored = localStorage.getItem(`am2-scores-${user.id}`);
-      const scores: Record<string, { score: number; attempts: number }> = stored
-        ? JSON.parse(stored)
-        : {};
-
+      const scores = readLocalScores(user.id);
       const existing = scores[componentKey] || { score: 0, attempts: 0 };
 
       // Keep best score, increment attempts
-      scores[componentKey] = {
+      const updated = {
         score: Math.max(existing.score, score),
         attempts: existing.attempts + 1,
       };
 
-      localStorage.setItem(`am2-scores-${user.id}`, JSON.stringify(scores));
+      scores[componentKey] = updated;
+
+      // Write localStorage immediately (fast, always works)
+      writeLocalScores(user.id, scores);
+
+      // Write Supabase in background (async, may fail offline)
+      upsertSupabaseScore(user.id, componentKey, updated.score, updated.attempts);
+
+      // Recalculate
       calculate();
     },
     [user, calculate]
