@@ -8,7 +8,7 @@ export const ppeItems: PPEItem[] = [
       "Steel or composite toe cap boots with anti-static (ESD) soles. Must be S3 rated minimum — steel toe, midsole protection, water resistant, anti-slip sole.",
     standard: "BS EN ISO 20345:2022 (S3 rated)",
     replacementFrequency: "Every 6-12 months or when sole is worn, toe cap exposed, or waterproofing fails",
-    price: "£55-130",
+    price: "£50-120",
     group: "daily",
     apprenticeTip:
       "Cheap boots hurt your feet and fail quickly. Invest in good boots — you are on your feet 8+ hours a day. DeWalt, Scruffs, and Timberland Pro are popular on UK sites.",
@@ -76,7 +76,7 @@ export const ppeItems: PPEItem[] = [
       "Electrically insulated rubber gloves rated for up to 500V AC. Used when working near live parts where there is a risk of contact. Must be worn with leather over-gloves for mechanical protection.",
     standard: "BS EN 60903:2003",
     replacementFrequency: "Inspect before every use. Replace every 6 months or if any signs of damage, cracks, or discolouration",
-    price: "£45-90",
+    price: "£40-80",
     group: "task-specific",
     apprenticeTip:
       "Inflate them like a balloon before each use — if air escapes, they are compromised and must be replaced. Store flat, away from sharp objects and UV light.",

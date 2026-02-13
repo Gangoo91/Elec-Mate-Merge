@@ -37,7 +37,7 @@ export function useSafetyObservations() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("safety_observations")
+        .from("safety_observations" as any)
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -68,7 +68,7 @@ export function useCreateObservation() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("safety_observations")
+        .from("safety_observations" as any)
         .insert({
           user_id: user.id,
           ...observation,

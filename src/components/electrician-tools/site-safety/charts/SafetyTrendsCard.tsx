@@ -41,7 +41,7 @@ export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex-1 px-2 h-11 rounded-lg text-[11px] font-semibold transition-all touch-manipulation ${
+              className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-semibold transition-all touch-manipulation ${
                 activeTab === tab.key
                   ? "bg-white/[0.08] text-white"
                   : "text-white"

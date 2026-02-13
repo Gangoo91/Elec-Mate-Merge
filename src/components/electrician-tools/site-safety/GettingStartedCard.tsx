@@ -93,7 +93,7 @@ export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white/[0.02]"
               >
                 <div className="w-4 h-4 rounded-full border border-white/[0.15] flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-3 w-3 text-white" />
+                  <CheckCircle2 className="h-3 w-3 text-white/[0.15]" />
                 </div>
                 <span className="text-sm text-white">{item}</span>
               </div>

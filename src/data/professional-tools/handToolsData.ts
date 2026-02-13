@@ -9,7 +9,7 @@ export const handToolSections: ToolSubSection[] = [
         name: "VDE Insulated Screwdriver Set",
         description:
           "1000V rated insulated screwdrivers — the absolute first buy. Must include PZ1, PZ2, slotted 3mm, 4mm, 5.5mm, 6.5mm. VDE certification means individually tested to 10,000V and rated for 1000V AC.",
-        price: "£30-55",
+        price: "£25-45",
         priority: "essential",
         standard: "BS EN 60900, VDE",
         brands: ["Wera", "Wiha", "Knipex", "C.K"],
@@ -48,16 +48,6 @@ export const handToolSections: ToolSubSection[] = [
         apprenticeTip:
           "More MCB manufacturers are switching to Torx. A T20 VDE is becoming essential for modern consumer units.",
       },
-      {
-        name: "Voltage Tester Screwdriver",
-        description:
-          "Neon indicator screwdriver that lights up when touching a live conductor. Useful for quick presence/absence checks but NOT a substitute for a proper two-pole tester.",
-        price: "£3-8",
-        priority: "nice-to-have",
-        brands: ["C.K", "Draper", "Faithfull"],
-        apprenticeTip:
-          "Only use as a quick indicator — these can give false results. NEVER rely on a neon screwdriver for safe isolation. Always use a proper GS38-compliant two-pole tester.",
-      },
     ],
   },
   {
@@ -68,7 +58,7 @@ export const handToolSections: ToolSubSection[] = [
         name: "VDE Combination Pliers (180mm)",
         description:
           "All-purpose VDE pliers for gripping, cutting, and bending cable. The flat jaws grip, the cutting edge cuts, and the rounded nose bends.",
-        price: "£20-35",
+        price: "£15-30",
         priority: "essential",
         standard: "BS EN 60900, VDE",
         brands: ["Knipex", "NWS", "C.K"],
@@ -79,7 +69,7 @@ export const handToolSections: ToolSubSection[] = [
         name: "VDE Side Cutters (160mm)",
         description:
           "Precision cutting pliers for cleanly cutting cable to length. Better cutting action than combination pliers for most cable work.",
-        price: "£15-28",
+        price: "£12-25",
         priority: "essential",
         standard: "BS EN 60900, VDE",
         brands: ["Knipex", "NWS", "C.K"],
@@ -101,7 +91,7 @@ export const handToolSections: ToolSubSection[] = [
         name: "Cable Strippers (Auto-Adjusting)",
         description:
           "Self-adjusting strippers that automatically grip and strip insulation without nicking the conductor. Works on 0.5mm to 6mm cables.",
-        price: "£20-42",
+        price: "£15-30",
         priority: "essential",
         brands: ["Knipex", "Jokari", "C.K"],
         apprenticeTip:
@@ -127,26 +117,6 @@ export const handToolSections: ToolSubSection[] = [
         apprenticeTip:
           "BS 7671 requires ferrules on multi-strand conductors in screw terminals. A proper crimper is not optional — pliers will not give a reliable crimp.",
       },
-      {
-        name: "Knipex Cobra Pliers (250mm)",
-        description:
-          "Self-gripping water pump pliers with push-button adjustment. Grips pipes, nuts, cable glands, and conduit fittings. The most versatile plier you will own.",
-        price: "£25-40",
-        priority: "recommended",
-        brands: ["Knipex"],
-        apprenticeTip:
-          "These replace traditional water pump pliers. The push-button adjustment is much faster. Brilliant for tightening cable glands and conduit fittings.",
-      },
-      {
-        name: "Wire Strippers (Fixed Jaw)",
-        description:
-          "Traditional stripping pliers with preset notches for common cable sizes. Backup to your auto-strippers — simpler mechanism means less to go wrong.",
-        price: "£8-15",
-        priority: "nice-to-have",
-        brands: ["C.K", "Knipex", "Stanley"],
-        apprenticeTip:
-          "Keep a pair as a backup. Some electricians actually prefer these for precision work on smaller cables.",
-      },
     ],
   },
   {
@@ -157,7 +127,7 @@ export const handToolSections: ToolSubSection[] = [
         name: "Adjustable Spanner (200mm + 300mm)",
         description:
           "Two adjustable spanners cover most electrical work. 200mm for general use, 300mm for larger glands and fittings.",
-        price: "£15-35 each",
+        price: "£10-25 each",
         priority: "essential",
         brands: ["Bahco", "Knipex", "Stanley"],
         apprenticeTip:
@@ -248,26 +218,6 @@ export const handToolSections: ToolSubSection[] = [
         brands: ["Sharpie", "Stabilo", "Stanley"],
         apprenticeTip:
           "Always label cables at both ends during first fix. Future you (or the next electrician) will thank you.",
-      },
-      {
-        name: "Digital Multimeter",
-        description:
-          "General-purpose meter for measuring voltage, current, resistance, and continuity. Not a substitute for a proper MFT, but useful for everyday fault finding and diagnostics.",
-        price: "£30-80",
-        priority: "recommended",
-        brands: ["Fluke", "Klein", "C.K"],
-        apprenticeTip:
-          "A Fluke 115 or 117 is the electrician's go-to multimeter. The 117 has non-contact voltage detection built in. Always check leads before use.",
-      },
-      {
-        name: "Cable Label Printer",
-        description:
-          "Handheld label printer for professional cable identification. Prints durable labels that withstand heat, moisture, and UV. Required for proper cable identification per BS 7671.",
-        price: "£40-120",
-        priority: "nice-to-have",
-        brands: ["Brother", "Dymo", "Brady"],
-        apprenticeTip:
-          "Printed labels look far more professional than handwritten ones. Worth the investment when you start doing your own jobs. The Brother P-Touch is the industry favourite.",
       },
     ],
   },

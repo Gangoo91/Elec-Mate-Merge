@@ -1,7 +1,7 @@
 /**
  * AM2ReadinessDashboard
  *
- * Hero gauge, 6 component score cards, risk banner, gap analysis, and CTAs.
+ * Hero gauge, 4 component score cards (stacked), risk banner, gap analysis, and CTAs.
  * Mirrors EPA dashboard pattern with AM2-specific scoring and cyan theme.
  */
 
@@ -12,8 +12,6 @@ import { motion } from 'framer-motion';
 import {
   ShieldAlert,
   ShieldCheck,
-  Wrench,
-  Zap,
   TestTube2,
   Search,
   BookOpen,
@@ -68,13 +66,25 @@ const RISK_CONFIG = {
   },
 };
 
-const COMPONENT_ICONS: Record<string, typeof Wrench> = {
+const COMPONENT_ICONS: Record<string, typeof Lock> = {
   safeIsolation: Lock,
-  installationDesign: Wrench,
   testingSequence: TestTube2,
   faultDiagnosis: Search,
-  practicalUnderstanding: Zap,
   knowledgeAssessment: BookOpen,
+};
+
+const COMPONENT_ACCENT: Record<string, string> = {
+  testingSequence: 'border-l-blue-500',
+  faultDiagnosis: 'border-l-orange-500',
+  safeIsolation: 'border-l-cyan-500',
+  knowledgeAssessment: 'border-l-purple-500',
+};
+
+const COMPONENT_TAB: Record<string, string> = {
+  testingSequence: 'testing',
+  faultDiagnosis: 'faults',
+  safeIsolation: 'safe-isolation',
+  knowledgeAssessment: 'knowledge',
 };
 
 const stagger = {
@@ -99,7 +109,7 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         <Loader2 className="h-8 w-8 animate-spin text-cyan-400 shrink-0" />
         <div>
           <p className="text-sm font-medium text-foreground">Calculating readiness...</p>
-          <p className="text-xs text-white/90 mt-1">Analysing simulation results</p>
+          <p className="text-xs text-white mt-1">Analysing simulation results</p>
         </div>
       </div>
     );
@@ -114,7 +124,7 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
           </div>
           <div>
             <p className="text-base font-semibold text-foreground">AM2 Readiness Score</p>
-            <p className="text-sm text-white/70 mt-1 max-w-xs">
+            <p className="text-sm text-white mt-1 max-w-xs">
               Complete simulations to build your readiness score and identify practical gaps before
               you book.
             </p>
@@ -147,7 +157,7 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         <div className="flex items-center gap-2 mt-3">
           <button
             onClick={recalculate}
-            className="flex items-center gap-1 text-xs text-white/50 touch-manipulation h-8 px-2"
+            className="flex items-center gap-1 text-xs text-white touch-manipulation h-8 px-2"
           >
             <RefreshCw className="h-3 w-3" />
             Recalculate
@@ -167,27 +177,32 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         <RiskIcon className={cn('h-6 w-6 shrink-0', riskConfig.text)} />
         <div>
           <p className={cn('text-sm font-semibold', riskConfig.text)}>{riskConfig.label}</p>
-          <p className="text-xs text-white/80">{riskConfig.description}</p>
+          <p className="text-xs text-white">{riskConfig.description}</p>
         </div>
       </motion.div>
 
       {/* Disclaimer */}
-      <motion.p variants={fadeUp} className="text-[10px] text-white/40 text-center px-2">
+      <motion.p variants={fadeUp} className="text-[10px] text-white text-center px-2">
         AM2-style simulation to identify practical gaps. Not affiliated with or endorsed by any
         awarding organisation.
       </motion.p>
 
-      {/* Component Score Cards */}
-      <motion.div variants={fadeUp} className="grid grid-cols-2 gap-2">
+      {/* Component Score Cards — stacked full-width with left accent */}
+      <motion.div variants={fadeUp} className="space-y-2">
         {Object.entries(data.components).map(([key, comp]) => (
-          <ComponentScoreCard key={key} componentKey={key} component={comp} />
+          <ComponentScoreCard
+            key={key}
+            componentKey={key}
+            component={comp}
+            onTap={() => onNavigateToTab(COMPONENT_TAB[key] || 'readiness')}
+          />
         ))}
       </motion.div>
 
       {/* Gaps to Address */}
       {data.gaps.length > 0 && (
         <motion.div variants={fadeUp} className="space-y-2">
-          <h3 className="text-xs font-semibold text-white/80 uppercase tracking-wider">
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
             Priority Areas
           </h3>
           {data.gaps.slice(0, 4).map((gap, i) => {
@@ -207,7 +222,7 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
             return (
               <div
                 key={i}
-                className={cn('flex items-start gap-3 p-3 rounded-xl border', priorityColour)}
+                className={cn('flex items-start gap-3 p-3 rounded-xl border bg-elec-gray', priorityColour)}
               >
                 <span
                   className={cn(
@@ -219,8 +234,8 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground">{gap.area}</p>
-                  <p className="text-xs text-white/70 mt-0.5">{gap.description}</p>
-                  <p className="text-xs text-white/90 mt-1 font-medium">{gap.action}</p>
+                  <p className="text-xs text-white mt-0.5">{gap.description}</p>
+                  <p className="text-xs text-white mt-1 font-medium">{gap.action}</p>
                 </div>
                 <Badge variant="outline" className={cn('text-[10px] shrink-0', priorityText)}>
                   {gap.priority}
@@ -251,7 +266,7 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         </button>
       </motion.div>
 
-      <motion.p variants={fadeUp} className="text-[10px] text-white/40">
+      <motion.p variants={fadeUp} className="text-[10px] text-white">
         Last calculated{' '}
         {data.calculatedAt.toLocaleTimeString('en-GB', {
           hour: '2-digit',
@@ -267,54 +282,66 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
 function ComponentScoreCard({
   componentKey,
   component,
+  onTap,
 }: {
   componentKey: string;
   component: AM2Component;
+  onTap: () => void;
 }) {
-  const Icon = COMPONENT_ICONS[componentKey] || Wrench;
+  const Icon = COMPONENT_ICONS[componentKey] || Lock;
   const statusColour = STATUS_COLOURS[component.status];
+  const accent = COMPONENT_ACCENT[componentKey] || 'border-l-cyan-500';
 
   return (
-    <Card className={cn('border', statusColour.border)}>
-      <CardContent className="p-3.5 space-y-2">
-        <div className="flex items-center gap-2">
-          <Icon className={cn('h-4 w-4', statusColour.text)} />
-          <span className="text-xs text-white/90 truncate">{component.label}</span>
-        </div>
-
-        {component.score === 0 && component.attempts === 0 ? (
-          <p className="text-sm text-white/50 italic">Not Started</p>
-        ) : (
-          <div className="flex items-end gap-1">
-            <span className={cn('text-2xl font-bold', statusColour.text)}>{component.score}</span>
-            <span className="text-xs text-white/60 mb-1">%</span>
+    <button
+      onClick={onTap}
+      className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+    >
+      <Card className={cn('border-l-4 bg-elec-gray', accent, statusColour.border)}>
+        <CardContent className="p-3.5 flex items-center gap-3">
+          <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5')}>
+            <Icon className={cn('h-5 w-5', statusColour.text)} />
           </div>
-        )}
 
-        {/* Score bar */}
-        <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
-          <motion.div
-            className={cn(
-              'h-full rounded-full',
-              component.score >= 70
-                ? 'bg-emerald-500'
-                : component.score >= 40
-                  ? 'bg-amber-500'
-                  : 'bg-red-500'
-            )}
-            initial={{ width: 0 }}
-            animate={{ width: `${component.score}%` }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
-          />
-        </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-white">{component.label}</span>
+              {component.score === 0 && component.attempts === 0 ? (
+                <span className="text-xs text-white italic">Not Started</span>
+              ) : (
+                <span className={cn('text-lg font-bold', statusColour.text)}>
+                  {component.score}%
+                </span>
+              )}
+            </div>
 
-        {component.detail && (
-          <p className="text-[10px] text-white/60 truncate">{component.detail}</p>
-        )}
+            {/* Score bar */}
+            <div className="h-1.5 rounded-full bg-white/10 overflow-hidden mt-1.5">
+              <motion.div
+                className={cn(
+                  'h-full rounded-full',
+                  component.score >= 70
+                    ? 'bg-emerald-500'
+                    : component.score >= 40
+                      ? 'bg-amber-500'
+                      : 'bg-red-500'
+                )}
+                initial={{ width: 0 }}
+                animate={{ width: `${component.score}%` }}
+                transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+              />
+            </div>
 
-        <p className="text-[10px] text-white/50">{Math.round(component.weight * 100)}% weight</p>
-      </CardContent>
-    </Card>
+            <div className="flex items-center justify-between mt-1">
+              <span className="text-[10px] text-white">{component.detail}</span>
+              <span className="text-[10px] text-white">{Math.round(component.weight * 100)}% weight</span>
+            </div>
+          </div>
+
+          <ChevronRight className="h-4 w-4 text-white shrink-0" />
+        </CardContent>
+      </Card>
+    </button>
   );
 }
 

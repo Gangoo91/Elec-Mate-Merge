@@ -1,19 +1,30 @@
-import { useState, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
-import { formatDistanceToNow, parseISO, format } from 'date-fns';
-import PullToRefresh from '@/components/admin/PullToRefresh';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import { useHaptic } from '@/hooks/useHaptic';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useState, useMemo } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { formatDistanceToNow, parseISO, format } from "date-fns";
+import PullToRefresh from "@/components/PullToRefresh";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
+import { useHaptic } from "@/hooks/useHaptic";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,14 +34,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
   Users,
   Send,
@@ -48,54 +59,55 @@ import {
   BookOpen,
   Bell,
   Gift,
-} from 'lucide-react';
+} from "lucide-react";
 
 // Campaign type definitions
 const CAMPAIGN_TYPES = {
   feature_spotlight: {
-    label: 'Feature Spotlight',
-    description: 'Highlight a specific feature to subscribed apprentices',
+    label: "Feature Spotlight",
+    description: "Highlight a specific feature to subscribed apprentices",
     icon: Sparkles,
-    colour: 'from-purple-500 to-violet-500',
-    badgeColour: 'bg-purple-500/20 text-purple-400',
+    colour: "from-purple-500 to-violet-500",
+    badgeColour: "bg-purple-500/20 text-purple-400",
   },
   new_content: {
-    label: 'New Content',
-    description: 'Announce new content or features to subscribed apprentices',
+    label: "New Content",
+    description: "Announce new content or features to subscribed apprentices",
     icon: BookOpen,
-    colour: 'from-green-500 to-emerald-500',
-    badgeColour: 'bg-green-500/20 text-green-400',
+    colour: "from-green-500 to-emerald-500",
+    badgeColour: "bg-green-500/20 text-green-400",
   },
   engagement_nudge: {
-    label: 'Engagement Nudge',
-    description: 'Re-engage subscribed apprentices inactive for 14+ days',
+    label: "Engagement Nudge",
+    description: "Re-engage subscribed apprentices inactive for 14+ days",
     icon: Bell,
-    colour: 'from-blue-500 to-cyan-500',
-    badgeColour: 'bg-blue-500/20 text-blue-400',
+    colour: "from-blue-500 to-cyan-500",
+    badgeColour: "bg-blue-500/20 text-blue-400",
   },
   trial_winback: {
-    label: 'Trial Win-Back',
-    description: 'Win back apprentices whose trial expired without subscribing',
+    label: "Trial Win-Back",
+    description:
+      "Win back apprentices whose trial expired 8+ days ago (once only)",
     icon: Gift,
-    colour: 'from-amber-500 to-orange-500',
-    badgeColour: 'bg-amber-500/20 text-amber-400',
+    colour: "from-amber-500 to-orange-500",
+    badgeColour: "bg-amber-500/20 text-amber-400",
   },
 } as const;
 
 type CampaignType = keyof typeof CAMPAIGN_TYPES;
 
 const SPOTLIGHT_FEATURES = [
-  { key: 'study_centre', label: 'Study Centre' },
-  { key: 'am2_simulator', label: 'AM2 Simulator' },
-  { key: 'epa_simulator', label: 'EPA Simulator' },
-  { key: 'portfolio_hub', label: 'Portfolio Hub' },
-  { key: 'site_diary', label: 'Site Diary' },
-  { key: 'ask_dave', label: 'Ask Dave' },
-  { key: 'mental_health', label: 'Mental Health Hub' },
-  { key: 'career_development', label: 'Career Development' },
-  { key: 'ojt_hub', label: 'OJT Hub' },
-  { key: 'learning_videos', label: 'Learning Videos' },
-  { key: 'calculators', label: 'Calculators' },
+  { key: "study_centre", label: "Study Centre" },
+  { key: "am2_simulator", label: "AM2 Simulator" },
+  { key: "epa_simulator", label: "EPA Simulator" },
+  { key: "portfolio_hub", label: "Portfolio Hub" },
+  { key: "site_diary", label: "Site Diary" },
+  { key: "ask_dave", label: "Ask Dave" },
+  { key: "mental_health", label: "Mental Health Hub" },
+  { key: "career_development", label: "Career Development" },
+  { key: "ojt_hub", label: "OJT Hub" },
+  { key: "learning_videos", label: "Learning Videos" },
+  { key: "calculators", label: "Calculators" },
 ];
 
 interface EligibleUser {
@@ -123,29 +135,34 @@ export default function AdminApprenticeCampaigns() {
   const haptic = useHaptic();
 
   // State
-  const [campaignType, setCampaignType] = useState<CampaignType>('trial_winback');
-  const [search, setSearch] = useState('');
+  const [campaignType, setCampaignType] =
+    useState<CampaignType>("feature_spotlight");
+  const [search, setSearch] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
   const [showSentHistory, setShowSentHistory] = useState(false);
-  const [testEmail, setTestEmail] = useState('');
-  const [manualEmail, setManualEmail] = useState('');
+  const [testEmail, setTestEmail] = useState("");
+  const [manualEmail, setManualEmail] = useState("");
 
   // Campaign-specific config
-  const [featureKey, setFeatureKey] = useState('study_centre');
-  const [contentTitle, setContentTitle] = useState('');
-  const [contentDescription, setContentDescription] = useState('');
+  const [featureKey, setFeatureKey] = useState("study_centre");
+  const [contentTitle, setContentTitle] = useState("");
+  const [contentDescription, setContentDescription] = useState("");
 
   const campaignConfig = CAMPAIGN_TYPES[campaignType];
 
   // ─── Queries ────────────────────────────────────────────
-  const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ['apprentice-campaign-stats', campaignType],
+  const {
+    data: stats,
+    isLoading: statsLoading,
+  } = useQuery({
+    queryKey: ["apprentice-campaign-stats", campaignType],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'get_stats', campaignType },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        { body: { action: "get_stats", campaignType } }
+      );
       if (error) throw error;
       return data;
     },
@@ -153,24 +170,32 @@ export default function AdminApprenticeCampaigns() {
     refetchInterval: 60000,
   });
 
-  const { data: eligibleUsers, isLoading: usersLoading } = useQuery({
-    queryKey: ['apprentice-campaign-eligible', campaignType],
+  const {
+    data: eligibleUsers,
+    isLoading: usersLoading,
+  } = useQuery({
+    queryKey: ["apprentice-campaign-eligible", campaignType],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'get_eligible', campaignType },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        { body: { action: "get_eligible", campaignType } }
+      );
       if (error) throw error;
       return data?.users || [];
     },
     staleTime: 30000,
   });
 
-  const { data: sentUsers, isLoading: sentLoading } = useQuery({
-    queryKey: ['apprentice-campaign-sent'],
+  const {
+    data: sentUsers,
+    isLoading: sentLoading,
+  } = useQuery({
+    queryKey: ["apprentice-campaign-sent"],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'get_sent_history' },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        { body: { action: "get_sent_history" } }
+      );
       if (error) throw error;
       return (data?.users || []) as SentUser[];
     },
@@ -181,16 +206,21 @@ export default function AdminApprenticeCampaigns() {
   // ─── Mutations ──────────────────────────────────────────
   const campaignParams = {
     campaignType,
-    featureKey: campaignType === 'feature_spotlight' ? featureKey : undefined,
-    contentTitle: campaignType === 'new_content' ? contentTitle : undefined,
-    contentDescription: campaignType === 'new_content' ? contentDescription : undefined,
+    featureKey:
+      campaignType === "feature_spotlight" ? featureKey : undefined,
+    contentTitle: campaignType === "new_content" ? contentTitle : undefined,
+    contentDescription:
+      campaignType === "new_content" ? contentDescription : undefined,
   };
 
   const sendSingleMutation = useMutation({
     mutationFn: async (uid: string) => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'send_single', userId: uid, ...campaignParams },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        {
+          body: { action: "send_single", userId: uid, ...campaignParams },
+        }
+      );
       if (error) throw error;
       return data;
     },
@@ -198,13 +228,13 @@ export default function AdminApprenticeCampaigns() {
       haptic.success();
       toast.success(`Campaign email sent to ${data.email}`);
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
+        queryKey: ["apprentice-campaign-stats"],
       });
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-eligible'],
+        queryKey: ["apprentice-campaign-eligible"],
       });
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-sent'],
+        queryKey: ["apprentice-campaign-sent"],
       });
       setSelectedUser(null);
       setSelectedUsers((prev) => {
@@ -213,89 +243,94 @@ export default function AdminApprenticeCampaigns() {
         return next;
       });
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send email');
+      toast.error(err.message || "Failed to send email");
     },
   });
 
   const sendBulkMutation = useMutation({
     mutationFn: async (uids: string[]) => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'send_bulk', userIds: uids, ...campaignParams },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        {
+          body: { action: "send_bulk", userIds: uids, ...campaignParams },
+        }
+      );
       if (error) throw error;
       return data;
     },
     onSuccess: (data) => {
       haptic.success();
       toast.success(
-        `Sent ${data.sent} emails${data.skipped ? `, ${data.skipped} skipped` : ''}${data.failed ? `, ${data.failed} failed` : ''}`
+        `Sent ${data.sent} emails${data.skipped ? `, ${data.skipped} skipped` : ""}${data.failed ? `, ${data.failed} failed` : ""}`
       );
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
+        queryKey: ["apprentice-campaign-stats"],
       });
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-eligible'],
+        queryKey: ["apprentice-campaign-eligible"],
       });
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-sent'],
+        queryKey: ["apprentice-campaign-sent"],
       });
       setSelectedUsers(new Set());
       setConfirmSendAll(false);
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       haptic.error();
-      toast.error(err.message || 'Bulk send failed');
+      toast.error(err.message || "Bulk send failed");
     },
   });
 
   const sendTestMutation = useMutation({
     mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: { action: 'send_test', testEmail: email, ...campaignParams },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        {
+          body: { action: "send_test", testEmail: email, ...campaignParams },
+        }
+      );
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Test email sent!');
-      setTestEmail('');
+      toast.success("Test email sent!");
+      setTestEmail("");
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send test email');
+      toast.error(err.message || "Failed to send test email");
     },
   });
 
   const sendManualMutation = useMutation({
     mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
-        body: {
-          action: 'send_manual',
-          manualEmail: email,
-          ...campaignParams,
-        },
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "send-apprentice-campaign",
+        {
+          body: {
+            action: "send_manual",
+            manualEmail: email,
+            ...campaignParams,
+          },
+        }
+      );
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Email sent!');
-      setManualEmail('');
+      toast.success("Email sent!");
+      setManualEmail("");
       queryClient.invalidateQueries({
-        queryKey: ['apprentice-campaign-stats'],
+        queryKey: ["apprentice-campaign-stats"],
       });
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send email');
+      toast.error(err.message || "Failed to send email");
     },
   });
 
@@ -339,7 +374,7 @@ export default function AdminApprenticeCampaigns() {
   const handleCampaignTypeChange = (ct: CampaignType) => {
     setCampaignType(ct);
     setSelectedUsers(new Set());
-    setSearch('');
+    setSearch("");
   };
 
   return (
@@ -347,10 +382,10 @@ export default function AdminApprenticeCampaigns() {
       onRefresh={async () => {
         await Promise.all([
           queryClient.invalidateQueries({
-            queryKey: ['apprentice-campaign-stats'],
+            queryKey: ["apprentice-campaign-stats"],
           }),
           queryClient.invalidateQueries({
-            queryKey: ['apprentice-campaign-eligible'],
+            queryKey: ["apprentice-campaign-eligible"],
           }),
         ]);
       }}
@@ -378,13 +413,13 @@ export default function AdminApprenticeCampaigns() {
             return (
               <Button
                 key={ct}
-                variant={isActive ? 'default' : 'ghost'}
+                variant={isActive ? "default" : "ghost"}
                 size="sm"
                 onClick={() => handleCampaignTypeChange(ct)}
                 className={`shrink-0 gap-1.5 touch-manipulation h-11 px-3 text-xs ${
                   isActive
                     ? `bg-gradient-to-r ${config.colour} text-white hover:opacity-90`
-                    : 'text-muted-foreground'
+                    : "text-muted-foreground"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -395,7 +430,9 @@ export default function AdminApprenticeCampaigns() {
         </div>
 
         {/* Campaign Description */}
-        <p className="text-sm text-muted-foreground px-1">{campaignConfig.description}</p>
+        <p className="text-sm text-muted-foreground px-1">
+          {campaignConfig.description}
+        </p>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -406,7 +443,7 @@ export default function AdminApprenticeCampaigns() {
                 <span className="text-xs text-muted-foreground">Eligible</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : stats?.totalEligible || 0}
+                {statsLoading ? "..." : stats?.totalEligible || 0}
               </p>
             </CardContent>
           </Card>
@@ -417,7 +454,7 @@ export default function AdminApprenticeCampaigns() {
                 <span className="text-xs text-muted-foreground">Sent</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : stats?.offersSent || 0}
+                {statsLoading ? "..." : stats?.offersSent || 0}
               </p>
             </CardContent>
           </Card>
@@ -428,7 +465,7 @@ export default function AdminApprenticeCampaigns() {
                 <span className="text-xs text-muted-foreground">Converted</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : stats?.conversions || 0}
+                {statsLoading ? "..." : stats?.conversions || 0}
               </p>
             </CardContent>
           </Card>
@@ -439,7 +476,7 @@ export default function AdminApprenticeCampaigns() {
                 <span className="text-xs text-muted-foreground">Rate</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
-                {statsLoading ? '...' : `${stats?.conversionRate || 0}%`}
+                {statsLoading ? "..." : `${stats?.conversionRate || 0}%`}
               </p>
             </CardContent>
           </Card>
@@ -454,7 +491,7 @@ export default function AdminApprenticeCampaigns() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {campaignType === 'feature_spotlight' && (
+            {campaignType === "feature_spotlight" && (
               <div>
                 <label className="text-sm text-muted-foreground mb-2 block">
                   Feature to highlight
@@ -474,10 +511,12 @@ export default function AdminApprenticeCampaigns() {
               </div>
             )}
 
-            {campaignType === 'new_content' && (
+            {campaignType === "new_content" && (
               <>
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">Content title</label>
+                  <label className="text-sm text-muted-foreground mb-2 block">
+                    Content title
+                  </label>
                   <Input
                     value={contentTitle}
                     onChange={(e) => setContentTitle(e.target.value)}
@@ -486,7 +525,9 @@ export default function AdminApprenticeCampaigns() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">Description</label>
+                  <label className="text-sm text-muted-foreground mb-2 block">
+                    Description
+                  </label>
                   <Textarea
                     value={contentDescription}
                     onChange={(e) => setContentDescription(e.target.value)}
@@ -499,7 +540,9 @@ export default function AdminApprenticeCampaigns() {
 
             {/* Test email */}
             <div>
-              <label className="text-sm text-muted-foreground mb-2 block">Send test email</label>
+              <label className="text-sm text-muted-foreground mb-2 block">
+                Send test email
+              </label>
               <div className="flex gap-2">
                 <Input
                   type="email"
@@ -521,7 +564,8 @@ export default function AdminApprenticeCampaigns() {
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Preview the {campaignConfig.label.toLowerCase()} email in your inbox
+                Preview the {campaignConfig.label.toLowerCase()} email in your
+                inbox
               </p>
             </div>
 
@@ -563,7 +607,9 @@ export default function AdminApprenticeCampaigns() {
                   className="h-11 text-base touch-manipulation flex-1"
                 />
                 <Button
-                  onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
+                  onClick={() =>
+                    manualEmail && sendManualMutation.mutate(manualEmail)
+                  }
                   disabled={!manualEmail || sendManualMutation.isPending}
                   className={`h-11 px-4 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white shrink-0`}
                 >
@@ -584,13 +630,16 @@ export default function AdminApprenticeCampaigns() {
                   <div className="flex items-center gap-3">
                     <Checkbox
                       checked={
-                        filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
+                        filteredUsers.length > 0 &&
+                        selectedUsers.size === filteredUsers.length
                       }
                       onCheckedChange={toggleSelectAll}
                       className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                     />
                     <span className="text-sm text-muted-foreground">
-                      {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
+                      {selectedUsers.size > 0
+                        ? `${selectedUsers.size} selected`
+                        : "Select all"}
                     </span>
                   </div>
 
@@ -633,14 +682,18 @@ export default function AdminApprenticeCampaigns() {
               </Badge>
             </CardTitle>
             <CardDescription>
-              Apprentices eligible for {campaignConfig.label.toLowerCase()} campaign
+              Apprentices eligible for {campaignConfig.label.toLowerCase()}{" "}
+              campaign
             </CardDescription>
           </CardHeader>
           <CardContent>
             {usersLoading ? (
               <div className="space-y-2">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
+                  <div
+                    key={i}
+                    className="h-16 bg-muted/50 rounded-lg animate-pulse"
+                  />
                 ))}
               </div>
             ) : filteredUsers.length === 0 ? (
@@ -649,7 +702,7 @@ export default function AdminApprenticeCampaigns() {
                 title="No eligible users"
                 description={
                   search
-                    ? 'No users match your search criteria.'
+                    ? "No users match your search criteria."
                     : `No apprentices eligible for ${campaignConfig.label.toLowerCase()} right now.`
                 }
               />
@@ -673,7 +726,7 @@ export default function AdminApprenticeCampaigns() {
                     >
                       <div className="flex items-center gap-2">
                         <p className="font-medium text-sm truncate">
-                          {user.full_name || 'Unknown'}
+                          {user.full_name || "Unknown"}
                         </p>
                         <Badge className="bg-purple-500/20 text-purple-400 text-xs">
                           <GraduationCap className="h-2.5 w-2.5 mr-0.5" />
@@ -681,11 +734,13 @@ export default function AdminApprenticeCampaigns() {
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span className="truncate max-w-[150px]">{user.email}</span>
+                        <span className="truncate max-w-[150px]">
+                          {user.email}
+                        </span>
                         <span>&middot;</span>
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          Joined{' '}
+                          Joined{" "}
                           {formatDistanceToNow(parseISO(user.created_at), {
                             addSuffix: true,
                           })}
@@ -730,13 +785,18 @@ export default function AdminApprenticeCampaigns() {
                 {sentLoading ? (
                   <div className="space-y-2">
                     {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
+                      <div
+                        key={i}
+                        className="h-16 bg-muted/50 rounded-lg animate-pulse"
+                      />
                     ))}
                   </div>
                 ) : !sentUsers || sentUsers.length === 0 ? (
                   <div className="text-center py-8">
                     <Mail className="h-10 w-10 text-muted-foreground mx-auto mb-3 opacity-50" />
-                    <p className="text-sm text-muted-foreground">No campaign emails sent yet</p>
+                    <p className="text-sm text-muted-foreground">
+                      No campaign emails sent yet
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -754,14 +814,18 @@ export default function AdminApprenticeCampaigns() {
                           </p>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <span>
-                              {CAMPAIGN_TYPES[user.apprentice_campaign_type as CampaignType]
-                                ?.label || user.apprentice_campaign_type}
+                              {
+                                CAMPAIGN_TYPES[
+                                  user.apprentice_campaign_type as CampaignType
+                                ]?.label || user.apprentice_campaign_type
+                              }
                             </span>
                             <span>&middot;</span>
                             <span>
-                              {formatDistanceToNow(parseISO(user.apprentice_campaign_sent_at), {
-                                addSuffix: true,
-                              })}
+                              {formatDistanceToNow(
+                                parseISO(user.apprentice_campaign_sent_at),
+                                { addSuffix: true }
+                              )}
                             </span>
                           </div>
                         </div>
@@ -771,7 +835,9 @@ export default function AdminApprenticeCampaigns() {
                             Subscribed
                           </Badge>
                         ) : (
-                          <Badge className="bg-gray-500/20 text-gray-400 text-xs">Pending</Badge>
+                          <Badge className="bg-gray-500/20 text-gray-400 text-xs">
+                            Pending
+                          </Badge>
                         )}
                       </div>
                     ))}
@@ -783,7 +849,10 @@ export default function AdminApprenticeCampaigns() {
         </Sheet>
 
         {/* User Detail Sheet */}
-        <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
+        <Sheet
+          open={!!selectedUser}
+          onOpenChange={() => setSelectedUser(null)}
+        >
           <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
@@ -796,7 +865,9 @@ export default function AdminApprenticeCampaigns() {
                     <User className="h-6 w-6 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
+                    <p className="text-left">
+                      {selectedUser?.full_name || "Unknown"}
+                    </p>
                     <p className="text-sm font-normal text-muted-foreground">
                       {selectedUser?.email}
                     </p>
@@ -814,29 +885,42 @@ export default function AdminApprenticeCampaigns() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Signed Up</span>
+                      <span className="text-sm text-muted-foreground">
+                        Signed Up
+                      </span>
                       <span className="text-sm">
                         {selectedUser?.created_at &&
-                          format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
+                          format(
+                            parseISO(selectedUser.created_at),
+                            "dd MMM yyyy"
+                          )}
                       </span>
                     </div>
                     {selectedUser?.last_sign_in && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Last Active</span>
+                        <span className="text-sm text-muted-foreground">
+                          Last Active
+                        </span>
                         <span className="text-sm">
-                          {formatDistanceToNow(parseISO(selectedUser.last_sign_in), {
-                            addSuffix: true,
-                          })}
+                          {formatDistanceToNow(
+                            parseISO(selectedUser.last_sign_in),
+                            { addSuffix: true }
+                          )}
                         </span>
                       </div>
                     )}
                     {selectedUser?.apprentice_campaign_sent_at && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Last Campaign</span>
+                        <span className="text-sm text-muted-foreground">
+                          Last Campaign
+                        </span>
                         <span className="text-sm">
-                          {formatDistanceToNow(parseISO(selectedUser.apprentice_campaign_sent_at), {
-                            addSuffix: true,
-                          })}
+                          {formatDistanceToNow(
+                            parseISO(
+                              selectedUser.apprentice_campaign_sent_at
+                            ),
+                            { addSuffix: true }
+                          )}
                         </span>
                       </div>
                     )}
@@ -853,7 +937,10 @@ export default function AdminApprenticeCampaigns() {
                   <CardContent>
                     <Button
                       className={`w-full h-12 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white font-semibold`}
-                      onClick={() => selectedUser && sendSingleMutation.mutate(selectedUser.id)}
+                      onClick={() =>
+                        selectedUser &&
+                        sendSingleMutation.mutate(selectedUser.id)
+                      }
                       disabled={sendSingleMutation.isPending}
                     >
                       {sendSingleMutation.isPending ? (
@@ -880,18 +967,23 @@ export default function AdminApprenticeCampaigns() {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Send {campaignConfig.label.toLowerCase()} to {selectedUsers.size} users?
+                Send {campaignConfig.label.toLowerCase()} to{" "}
+                {selectedUsers.size} users?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                This will send the {campaignConfig.label.toLowerCase()} email to{' '}
-                {selectedUsers.size} apprentice{selectedUsers.size === 1 ? '' : 's'}. This action
-                cannot be undone.
+                This will send the {campaignConfig.label.toLowerCase()} email to{" "}
+                {selectedUsers.size} apprentice{selectedUsers.size === 1 ? "" : "s"}.
+                This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="h-11 touch-manipulation">
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => sendBulkMutation.mutate(Array.from(selectedUsers))}
+                onClick={() =>
+                  sendBulkMutation.mutate(Array.from(selectedUsers))
+                }
                 className={`h-11 touch-manipulation bg-gradient-to-r ${campaignConfig.colour} hover:opacity-90 text-white`}
               >
                 {sendBulkMutation.isPending ? (

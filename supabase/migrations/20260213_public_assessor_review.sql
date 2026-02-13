@@ -29,7 +29,6 @@ BEGIN
     jsonb_build_object(
       'id', ps.id,
       'category_id', ps.category_id,
-      'category_name', COALESCE(qc.name, 'Unknown Category'),
       'qualification_id', ps.qualification_id,
       'status', ps.status,
       'submitted_at', ps.submitted_at,
@@ -47,7 +46,6 @@ BEGIN
     ORDER BY ps.submitted_at DESC
   ), '[]'::jsonb) INTO v_result
   FROM portfolio_submissions ps
-  LEFT JOIN qualification_categories qc ON qc.id = ps.category_id
   WHERE ps.user_id = v_share.user_id;
 
   RETURN jsonb_build_object(

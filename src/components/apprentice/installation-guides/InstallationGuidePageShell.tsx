@@ -18,9 +18,7 @@ const InstallationGuidePageShell = ({
   renderPanel,
   safetyNotice,
 }: InstallationGuidePageShellProps) => {
-  const [activeCardId, setActiveCardId] = useState<string | null>(
-    cards[0]?.id ?? null,
-  );
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const toggleCard = (id: string) => {
     setActiveCardId((prev) => (prev === id ? null : id));

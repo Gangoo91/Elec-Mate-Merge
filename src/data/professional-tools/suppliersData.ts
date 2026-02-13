@@ -127,59 +127,5 @@ export const buyingGuides: BuyingGuide[] = [
   },
 ];
 
-export const apprenticeBudgetGuide = [
-  {
-    phase: "Year 1 — The Basics",
-    budget: "£300-500",
-    items: [
-      "VDE screwdriver set (PZ1, PZ2, slotted 3mm-6.5mm)",
-      "VDE combination pliers, side cutters, long nose pliers",
-      "Auto cable strippers",
-      "Allen key set",
-      "Adjustable spanner (200mm)",
-      "Tape measure, spirit level, stud detector",
-      "Stanley knife, junior hacksaw",
-      "Claw hammer",
-      "Head torch",
-      "Safety boots, glasses, gloves, knee pads",
-      "Voltage indicator + proving unit",
-      "Tool bag or belt",
-    ],
-    tip: "Focus on quality VDE hand tools first. Your employer should provide power tools and test equipment for the first year.",
-  },
-  {
-    phase: "Year 2 — Building Up",
-    budget: "£500-800",
-    items: [
-      "18V combi drill + impact driver (twin pack)",
-      "Spare batteries (2x 5.0Ah)",
-      "SDS drill (corded is fine to start)",
-      "Drill bit sets (masonry + HSS)",
-      "Socket tester",
-      "Crimping tool + ferrules",
-      "Cable rods (Super Rod or similar)",
-      "Extra PPE (ear defenders, dust masks)",
-      "Knipex Cobra pliers",
-    ],
-    tip: "Watch for sales — Screwfix and Toolstation regularly discount power tool kits. Buy a twin pack combi + impact and save 20-30%.",
-  },
-  {
-    phase: "Year 3+ — Professional Kit",
-    budget: "£800-1500",
-    items: [
-      "Multifunction tester (MFT)",
-      "PAT tester (if doing PAT work)",
-      "Clamp meter",
-      "Angle grinder",
-      "Reciprocating saw",
-      "Laser level",
-      "Inspection camera",
-      "Full SDS bit set",
-      "Cable label printer",
-    ],
-    tip: "Your MFT is your biggest purchase. Do not buy the cheapest option — buy the best you can afford and get it calibrated before your first job.",
-  },
-];
-
 export const suppliersTip =
   "Open a trade account at your nearest CEF or Edmundson — the prices are significantly better than retail. Ask about apprentice discounts — many wholesalers offer them. Build relationships with your local branch staff — they will look after you.";

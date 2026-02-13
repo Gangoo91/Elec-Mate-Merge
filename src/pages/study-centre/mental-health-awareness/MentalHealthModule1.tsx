@@ -1,4 +1,4 @@
-import { ArrowLeft, Heart, Brain, HardHat, ShieldAlert } from "lucide-react";
+import { ArrowLeft, Activity, BookOpen, HardHat, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/upskilling/cards";
@@ -8,30 +8,30 @@ const sections = [
   {
     id: 1,
     title: "What Is Mental Health?",
-    icon: Heart,
+    icon: Activity,
     description:
-      "The mental health continuum, what good mental health looks like, and why everyone has mental health",
+      "The mental health continuum, mental health vs mental illness, and why everyone has mental health",
   },
   {
     id: 2,
     title: "Common Mental Health Conditions",
-    icon: Brain,
+    icon: BookOpen,
     description:
-      "Depression, anxiety, PTSD, and other conditions — what they are, how they present, and key facts",
+      "Depression, anxiety, PTSD, and substance misuse — what they look like and how they affect work",
   },
   {
     id: 3,
-    title: "Mental Health in Construction",
+    title: "Risk Factors in Construction",
     icon: HardHat,
     description:
-      "Why the construction industry is disproportionately affected, key statistics, and unique risk factors",
+      "Long hours, job insecurity, physical demands, and why construction has the highest suicide rate of any industry",
   },
   {
     id: 4,
-    title: "Stigma and Barriers",
-    icon: ShieldAlert,
+    title: "Breaking the Stigma",
+    icon: Megaphone,
     description:
-      "Why people do not seek help, challenging misconceptions, and creating environments where people speak up",
+      "Why tradespeople don't talk, masculinity and mental health, and how to change the culture on site",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function MentalHealthModule1() {
   useSEO({
     title: "Module 1: Understanding Mental Health | Mental Health Awareness",
     description:
-      "The mental health continuum, common conditions, construction industry context, and breaking stigma.",
+      "What mental health means, common conditions, risk factors in construction, and breaking the stigma.",
   });
 
   return (
@@ -66,20 +66,18 @@ export default function MentalHealthModule1() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 1
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 1</span>
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">4 Sections</span>
               <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Understanding Mental Health
             </h1>
             <p className="text-white text-sm sm:text-base">
-              The mental health continuum, common conditions, why construction
-              is hit hardest, and how to break down stigma
+              What mental health really means, common conditions in the trades,
+              risk factors unique to construction, and breaking down the stigma
             </p>
           </div>
 

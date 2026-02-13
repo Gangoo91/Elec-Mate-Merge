@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -6,13 +6,12 @@ import {
   Bell,
   ChevronDown,
   ChevronUp,
+  Loader2,
   Shield,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useSafetyAlerts, type SafetyAlert } from "@/hooks/useSafetyAlerts";
 import { SafetyEmptyState } from "../common/SafetyEmptyState";
-import { SafetySkeletonLoader } from "../common/SafetySkeletonLoader";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
 
 interface SafetyAlertsFeedProps {
   onBack: () => void;
@@ -44,7 +43,7 @@ const SEVERITY_CONFIG: Record<
   },
 };
 
-function AlertCard({ alert, index = 0 }: { alert: SafetyAlert; index?: number }) {
+function AlertCard({ alert }: { alert: SafetyAlert }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const config = SEVERITY_CONFIG[alert.severity] ?? SEVERITY_CONFIG.medium;
   const Icon = config.icon;
@@ -53,12 +52,11 @@ function AlertCard({ alert, index = 0 }: { alert: SafetyAlert; index?: number })
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.03, duration: 0.2 }}
       className={`rounded-xl border ${config.bg} overflow-hidden`}
     >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-3 flex items-start gap-3 touch-manipulation text-left active:scale-[0.98] transition-transform"
+        className="w-full p-3 flex items-start gap-3 touch-manipulation text-left"
       >
         <div className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center flex-shrink-0 mt-0.5">
           <Icon className={`h-4 w-4 ${config.colour}`} />
@@ -115,19 +113,10 @@ function AlertCard({ alert, index = 0 }: { alert: SafetyAlert; index?: number })
 }
 
 export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
-  const { data: alerts, isLoading, refetch } = useSafetyAlerts();
-
-  const handleRefresh = useCallback(async () => {
-    await refetch();
-  }, [refetch]);
+  const { data: alerts, isLoading } = useSafetyAlerts();
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="space-y-4"
-    >
+    <div className="space-y-4">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
@@ -141,33 +130,33 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
         </div>
       </div>
 
-      <PullToRefresh onRefresh={handleRefresh}>
-        <div className="px-4 space-y-4 pb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-1">Safety Alerts</h2>
-            <p className="text-sm text-white">
-              Latest safety alerts and industry notices
-            </p>
-          </div>
-
-          {isLoading ? (
-            <SafetySkeletonLoader variant="list" />
-          ) : !alerts || alerts.length === 0 ? (
-            <SafetyEmptyState
-              icon={Bell}
-              heading="No Active Alerts"
-              description="There are no safety alerts at the moment. Check back later for the latest industry notices."
-            />
-          ) : (
-            <div className="space-y-2">
-              {alerts.map((alert, index) => (
-                <AlertCard key={alert.id} alert={alert} index={index} />
-              ))}
-            </div>
-          )}
+      <div className="px-4 space-y-4 pb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-1">Safety Alerts</h2>
+          <p className="text-sm text-white">
+            Latest safety alerts and industry notices
+          </p>
         </div>
-      </PullToRefresh>
-    </motion.div>
+
+        {isLoading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
+          </div>
+        ) : !alerts || alerts.length === 0 ? (
+          <SafetyEmptyState
+            icon={Bell}
+            heading="No Active Alerts"
+            description="There are no safety alerts at the moment. Check back later for the latest industry notices."
+          />
+        ) : (
+          <div className="space-y-2">
+            {alerts.map((alert) => (
+              <AlertCard key={alert.id} alert={alert} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import { ArrowLeft, TrendingUp, Users, FileText, Landmark } from "lucide-react";
+import { ArrowLeft, Users, Scale, Building2, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/upskilling/cards";
@@ -7,39 +7,39 @@ import useSEO from "@/hooks/useSEO";
 const sections = [
   {
     id: 1,
-    title: "The Business Case for Mental Health",
-    icon: TrendingUp,
+    title: "Leadership and Mental Health Culture",
+    icon: Users,
     description:
-      "Productivity, absenteeism, retention, and the financial case for investing in mental health at work",
+      "The role of supervisors, psychological safety, and creating a culture where people talk",
   },
   {
     id: 2,
-    title: "Creating a Culture of Openness",
-    icon: Users,
+    title: "Legal Framework and Workplace Policies",
+    icon: Scale,
     description:
-      "Leadership buy-in, mental health champions, normalising conversations, and challenging toxic masculinity on site",
+      "Equality Act 2010, Health and Safety at Work Act, HSE stress management standards, and employer duties",
   },
   {
     id: 3,
-    title: "Policies and Risk Assessment",
-    icon: FileText,
+    title: "Industry Initiatives — Mates in Mind and Beyond",
+    icon: Building2,
     description:
-      "Mental health policies, stress risk assessments, HSE management standards, and legal duties",
+      "Mates in Mind, Lighthouse Club, Building Mental Health, and how to get your site involved",
   },
   {
     id: 4,
-    title: "Industry Initiatives and Resources",
-    icon: Landmark,
+    title: "Your Personal Wellbeing Action Plan",
+    icon: Target,
     description:
-      "Mates in Mind, Lighthouse Club, MHFA England, Building Mental Health, and how to get involved",
+      "Building your own plan, resilience strategies, daily habits, and committing to ongoing learning",
   },
 ];
 
 export default function MentalHealthModule5() {
   useSEO({
-    title: "Module 5: Building a Mentally Healthy Workplace | Mental Health Awareness",
+    title: "Module 5: Creating a Mentally Healthy Workplace | Mental Health Awareness",
     description:
-      "Business case, culture change, policies, and industry initiatives.",
+      "Leadership and culture, legal framework, industry initiatives, and your personal wellbeing plan.",
   });
 
   return (
@@ -66,20 +66,18 @@ export default function MentalHealthModule5() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 5
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 5</span>
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">4 Sections</span>
               <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Building a Mentally Healthy Workplace
+              Creating a Mentally Healthy Workplace
             </h1>
             <p className="text-white text-sm sm:text-base">
-              The business case for mental health, creating a culture of
-              openness, policies and risk assessment, and industry initiatives
+              How leaders shape mental health culture, what the law says, industry
+              initiatives making a difference, and building your own wellbeing plan
             </p>
           </div>
 

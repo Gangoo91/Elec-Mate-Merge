@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   ArrowLeft,
   Search,
@@ -9,10 +9,9 @@ import {
   Wrench,
   BookOpen,
   ChevronRight,
+  Loader2,
   FolderOpen,
   Edit3,
-  Trash2,
-  Pencil,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -25,11 +24,6 @@ import {
 import { SafetyTemplateViewer } from "./SafetyTemplateViewer";
 import { SafetyTemplateEditor } from "./SafetyTemplateEditor";
 import { SafetyEmptyState } from "../common/SafetyEmptyState";
-import { SafetySkeletonLoader } from "../common/SafetySkeletonLoader";
-import { SwipeableListItem } from "../common/SwipeableListItem";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 interface SafetyTemplateLibraryProps {
   onBack: () => void;
@@ -60,27 +54,11 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
   const [editingDocument, setEditingDocument] =
     useState<UserSafetyDocument | null>(null);
 
-  const { data: templates, isLoading, refetch: refetchTemplates } = useSafetyTemplates(
+  const { data: templates, isLoading } = useSafetyTemplates(
     selectedCategory ?? undefined
   );
-  const { data: userDocs, isLoading: userDocsLoading, refetch: refetchUserDocs } =
+  const { data: userDocs, isLoading: userDocsLoading } =
     useUserSafetyDocuments();
-  const { toast } = useToast();
-
-  const handleDeleteDocument = useCallback(async (docId: string) => {
-    try {
-      const { error } = await supabase
-        .from("user_safety_documents")
-        .delete()
-        .eq("id", docId);
-      if (error) throw error;
-      toast({ title: "Document deleted", description: "Safety document has been removed" });
-      refetchUserDocs();
-    } catch (err) {
-      console.error("Delete error:", err);
-      toast({ title: "Error", description: "Could not delete document", variant: "destructive" });
-    }
-  }, [toast, refetchUserDocs]);
 
   const filtered = (templates ?? []).filter((t) =>
     searchTerm
@@ -99,10 +77,6 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
     (userDocs ?? []).map((d) => d.template_id).filter(Boolean)
   );
 
-  const handleRefresh = useCallback(async () => {
-    await Promise.all([refetchTemplates(), refetchUserDocs()]);
-  }, [refetchTemplates, refetchUserDocs]);
-
   if (viewingTemplate) {
     return (
       <SafetyTemplateViewer
@@ -114,12 +88,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="space-y-4"
-    >
+    <div className="space-y-4">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
@@ -133,7 +102,6 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         </div>
       </div>
 
-      <PullToRefresh onRefresh={handleRefresh}>
       <div className="px-4 space-y-4">
         <div>
           <h2 className="text-2xl font-bold text-white mb-1">
@@ -196,14 +164,6 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           />
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
-          >
         {tab === "browse" ? (
           <>
             {/* Category filter */}
@@ -239,7 +199,9 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
 
             {/* Templates list */}
             {isLoading ? (
-              <SafetySkeletonLoader variant="card" />
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="h-6 w-6 animate-spin text-white" />
+              </div>
             ) : filtered.length === 0 ? (
               <SafetyEmptyState
                 icon={BookOpen}
@@ -252,7 +214,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
               />
             ) : (
               <div className="space-y-2 pb-8">
-                {filtered.map((template, index) => {
+                {filtered.map((template) => {
                   const catConfig = CATEGORIES.find(
                     (c) => c.key === template.category
                   );
@@ -262,9 +224,6 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                   return (
                     <motion.button
                       key={template.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.03, duration: 0.2 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setViewingTemplate(template)}
                       className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
@@ -305,7 +264,9 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           /* My Documents tab */
           <>
             {userDocsLoading ? (
-              <SafetySkeletonLoader variant="card" />
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="h-6 w-6 animate-spin text-white" />
+              </div>
             ) : filteredDocs.length === 0 ? (
               <SafetyEmptyState
                 icon={FolderOpen}
@@ -320,71 +281,46 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
               />
             ) : (
               <div className="space-y-2 pb-8">
-                {filteredDocs.map((doc, index) => (
-                  <SwipeableListItem
+                {filteredDocs.map((doc) => (
+                  <motion.button
                     key={doc.id}
-                    leftActions={[
-                      {
-                        icon: Pencil,
-                        label: "Edit",
-                        color: "bg-blue-500",
-                        onAction: () => setEditingDocument(doc),
-                      },
-                    ]}
-                    rightActions={[
-                      {
-                        icon: Trash2,
-                        label: "Delete",
-                        color: "bg-red-500",
-                        onAction: () => handleDeleteDocument(doc.id),
-                      },
-                    ]}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setEditingDocument(doc)}
+                    className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
                   >
-                    <motion.button
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.03, duration: 0.2 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setEditingDocument(doc)}
-                      className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
-                    >
-                      <div className="p-3 flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                          <FileText className="h-5 w-5 text-elec-yellow" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-[13px] font-semibold text-white truncate">
-                            {doc.name}
-                          </h3>
-                          <div className="flex items-center gap-2 mt-0.5">
-                            <Badge
-                              className={`border-none text-[9px] font-bold ${
-                                STATUS_COLOUR[doc.status] ??
-                                STATUS_COLOUR.Draft
-                              }`}
-                            >
-                              {doc.status}
-                            </Badge>
-                            {doc.company_name && (
-                              <span className="text-[10px] text-white truncate">
-                                {doc.company_name}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <Edit3 className="h-4 w-4 text-white flex-shrink-0" />
+                    <div className="p-3 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                        <FileText className="h-5 w-5 text-elec-yellow" />
                       </div>
-                    </motion.button>
-                  </SwipeableListItem>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-[13px] font-semibold text-white truncate">
+                          {doc.name}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <Badge
+                            className={`border-none text-[9px] font-bold ${
+                              STATUS_COLOUR[doc.status] ??
+                              STATUS_COLOUR.Draft
+                            }`}
+                          >
+                            {doc.status}
+                          </Badge>
+                          {doc.company_name && (
+                            <span className="text-[10px] text-white truncate">
+                              {doc.company_name}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <Edit3 className="h-4 w-4 text-white flex-shrink-0" />
+                    </div>
+                  </motion.button>
                 ))}
               </div>
             )}
           </>
         )}
-          </motion.div>
-        </AnimatePresence>
       </div>
-      </PullToRefresh>
 
       {/* Editor sheet */}
       {editingDocument && (
@@ -397,7 +333,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           onSaved={() => setEditingDocument(null)}
         />
       )}
-    </motion.div>
+    </div>
   );
 }
 

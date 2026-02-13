@@ -91,12 +91,12 @@ export function SafetyStreakCard({ streak }: SafetyStreakCardProps) {
               >
                 <IconComponent
                   className={`h-4 w-4 ${
-                    badge.unlocked ? "text-elec-yellow" : "text-white"
+                    badge.unlocked ? "text-elec-yellow" : "text-white/[0.15]"
                   }`}
                 />
                 <span
                   className={`text-[9px] font-semibold text-center leading-tight ${
-                    badge.unlocked ? "text-white" : "text-white"
+                    badge.unlocked ? "text-white" : "text-white/[0.3]"
                   }`}
                 >
                   {badge.label}

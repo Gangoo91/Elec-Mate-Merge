@@ -10,7 +10,7 @@ const MentalHealthModule6 = () => {
   useSEO({
     title: "Mental Health Awareness Mock Examination",
     description:
-      "Practice mental health awareness knowledge test — 20 questions, 30-minute timer, from 200-question bank covering all 5 modules.",
+      "Practice mental health knowledge test — 20 questions, 30-minute timer, from 200-question bank covering all 5 modules.",
   });
 
   return (

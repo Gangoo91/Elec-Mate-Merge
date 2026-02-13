@@ -34,7 +34,7 @@ export function useElectricianSiteDiary() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("electrician_site_diary")
+        .from("electrician_site_diary" as any)
         .select("*")
         .eq("user_id", user.id)
         .order("entry_date", { ascending: false });
@@ -60,7 +60,7 @@ export function useCreateDiaryEntry() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("electrician_site_diary")
+        .from("electrician_site_diary" as any)
         .insert({
           user_id: user.id,
           ...entry,
@@ -97,7 +97,7 @@ export function useUpdateDiaryEntry() {
       ...updates
     }: Partial<SiteDiaryEntry> & { id: string }) => {
       const { data, error } = await supabase
-        .from("electrician_site_diary")
+        .from("electrician_site_diary" as any)
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq("id", id)
         .select()
@@ -108,36 +108,6 @@ export function useUpdateDiaryEntry() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["electrician-site-diary"] });
-    },
-  });
-}
-
-export function useDeleteDiaryEntry() {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("electrician_site_diary")
-        .delete()
-        .eq("id", id);
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["electrician-site-diary"] });
-      toast({
-        title: "Entry Deleted",
-        description: "Diary entry has been removed.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Could not delete diary entry.",
-        variant: "destructive",
-      });
     },
   });
 }

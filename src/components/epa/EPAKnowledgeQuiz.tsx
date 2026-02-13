@@ -30,6 +30,57 @@ interface EPAKnowledgeQuizProps {
   targetUnitCodes?: string[];
 }
 
+/** Radial SVG progress ring */
+function RadialRing({
+  score,
+  size = 140,
+  strokeWidth = 10,
+  className,
+  ringClass,
+  children,
+}: {
+  score: number;
+  size?: number;
+  strokeWidth?: number;
+  className?: string;
+  ringClass?: string;
+  children?: React.ReactNode;
+}) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (score / 100) * circumference;
+
+  return (
+    <div className={cn('relative inline-flex items-center justify-center', className)}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          className="text-white/10"
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          className={cn('transition-all duration-1000 ease-out', ringClass)}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function EPAKnowledgeQuiz({
   qualificationCode,
   targetUnitCodes,
@@ -101,10 +152,10 @@ export function EPAKnowledgeQuiz({
             <FileText className="h-6 w-6 text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">
+            <h2 className="text-xl font-bold text-white">
               Mock Knowledge Test
             </h2>
-            <p className="text-sm text-white/90 mt-0.5">
+            <p className="text-sm text-white mt-0.5">
               AI generates EPA-style multiple choice questions tailored to
               your qualification and weak areas.
             </p>
@@ -114,7 +165,7 @@ export function EPAKnowledgeQuiz({
         {/* Settings */}
         <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-4">
           <div>
-            <p className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
               Difficulty
             </p>
             <div className="grid grid-cols-4 gap-1.5">
@@ -123,10 +174,10 @@ export function EPAKnowledgeQuiz({
                   key={d}
                   onClick={() => setDifficulty(d)}
                   className={cn(
-                    'h-9 rounded-lg text-xs font-medium touch-manipulation',
+                    'h-11 rounded-lg text-xs font-medium touch-manipulation',
                     difficulty === d
                       ? 'bg-blue-500 text-white'
-                      : 'bg-white/[0.06] text-white/70'
+                      : 'bg-white/[0.06] text-white'
                   )}
                 >
                   {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -136,7 +187,7 @@ export function EPAKnowledgeQuiz({
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
               Questions
             </p>
             <div className="grid grid-cols-3 gap-1.5">
@@ -145,10 +196,10 @@ export function EPAKnowledgeQuiz({
                   key={n}
                   onClick={() => setQuestionCount(n)}
                   className={cn(
-                    'h-9 rounded-lg text-xs font-medium touch-manipulation',
+                    'h-11 rounded-lg text-xs font-medium touch-manipulation',
                     questionCount === n
                       ? 'bg-blue-500 text-white'
-                      : 'bg-white/[0.06] text-white/70'
+                      : 'bg-white/[0.06] text-white'
                   )}
                 >
                   {n} Qs
@@ -190,46 +241,57 @@ export function EPAKnowledgeQuiz({
     const total = quiz.currentSession.totalQuestions;
     const pct = Math.round((correct / total) * 100);
 
-    const scoreColour = pct >= 80
-      ? 'border-emerald-500 text-emerald-400'
+    const ringColour = pct >= 80
+      ? 'stroke-emerald-500'
       : pct >= 60
-        ? 'border-blue-500 text-blue-400'
+        ? 'stroke-blue-500'
         : pct >= 40
-          ? 'border-amber-500 text-amber-400'
-          : 'border-red-500 text-red-400';
+          ? 'stroke-amber-500'
+          : 'stroke-red-500';
+
+    const scoreText = pct >= 80
+      ? 'text-emerald-400'
+      : pct >= 60
+        ? 'text-blue-400'
+        : pct >= 40
+          ? 'text-amber-400'
+          : 'text-red-400';
 
     return (
       <div className="space-y-5 px-4 py-5">
-        {/* Score Hero — left-aligned */}
-        <div className="flex items-center gap-4">
-          <div
-            className={cn(
-              'h-20 w-20 rounded-full flex flex-col items-center justify-center border-4 shrink-0',
-              scoreColour
-            )}
-          >
-            <span className="text-2xl font-bold">{pct}%</span>
-          </div>
-          <div>
-            <p className="text-lg font-semibold text-foreground">
-              {correct}/{total} Correct
-            </p>
-            <p className="text-sm text-white/70">
-              {pct >= 80
-                ? 'Distinction Level'
-                : pct >= 60
-                  ? 'Merit Level'
-                  : pct >= 40
-                    ? 'Pass Level'
-                    : 'Below Pass'}
-            </p>
+        {/* Score Hero — Radial Ring */}
+        <div className="p-5 rounded-xl bg-white/[0.04] border border-white/10">
+          <div className="flex items-center gap-5">
+            <RadialRing
+              score={pct}
+              size={120}
+              strokeWidth={10}
+              ringClass={ringColour}
+            >
+              <span className={cn('text-4xl font-bold', scoreText)}>{pct}%</span>
+            </RadialRing>
+
+            <div className="flex-1 space-y-2">
+              <p className="text-lg font-semibold text-white">
+                {correct}/{total} Correct
+              </p>
+              <p className="text-sm text-white">
+                {pct >= 80
+                  ? 'Distinction Level'
+                  : pct >= 60
+                    ? 'Merit Level'
+                    : pct >= 40
+                      ? 'Pass Level'
+                      : 'Below Pass'}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Category Breakdown */}
+        {/* Category Breakdown — Full-width bars */}
         {quiz.currentSession.questions.length > 0 && (
           <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+            <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
               Category Breakdown
             </h3>
             {Object.entries(
@@ -250,30 +312,29 @@ export function EPAKnowledgeQuiz({
               )
             ).map(([cat, data]) => {
               const catPct = Math.round((data.correct / data.total) * 100);
+              const barColour =
+                catPct >= 70
+                  ? 'bg-emerald-500'
+                  : catPct >= 50
+                    ? 'bg-amber-500'
+                    : 'bg-red-500';
               return (
                 <div
                   key={cat}
-                  className="flex items-center gap-3 p-2 rounded-lg bg-white/[0.03]"
+                  className="p-3 rounded-xl bg-white/[0.03] border border-white/10"
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-foreground truncate">{cat}</p>
-                    <div className="h-1.5 rounded-full bg-white/10 mt-1 overflow-hidden">
-                      <div
-                        className={cn(
-                          'h-full rounded-full',
-                          catPct >= 70
-                            ? 'bg-emerald-500'
-                            : catPct >= 50
-                              ? 'bg-amber-500'
-                              : 'bg-red-500'
-                        )}
-                        style={{ width: `${catPct}%` }}
-                      />
-                    </div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-sm text-white truncate">{cat}</p>
+                    <span className="text-sm font-bold text-white shrink-0">
+                      {data.correct}/{data.total}
+                    </span>
                   </div>
-                  <span className="text-xs text-white/70 shrink-0">
-                    {data.correct}/{data.total}
-                  </span>
+                  <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                    <div
+                      className={cn('h-full rounded-full transition-all duration-500', barColour)}
+                      style={{ width: `${catPct}%` }}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -282,7 +343,7 @@ export function EPAKnowledgeQuiz({
 
         {/* Review Questions */}
         <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
             Question Review
           </h3>
           {quiz.currentSession.questions.map((q, i) => {
@@ -299,7 +360,7 @@ export function EPAKnowledgeQuiz({
                       <XCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-foreground">
+                      <p className="text-sm text-white">
                         {i + 1}. {q.question}
                       </p>
                       {!isCorrect && answer && (
@@ -310,7 +371,7 @@ export function EPAKnowledgeQuiz({
                       <p className="text-xs text-emerald-400 mt-0.5">
                         Correct: {q.options[q.correctAnswer as number]}
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         {q.explanation}
                       </p>
                     </div>
@@ -323,7 +384,7 @@ export function EPAKnowledgeQuiz({
 
         <button
           onClick={handleReset}
-          className="w-full h-11 rounded-xl bg-white/[0.06] border border-white/10 text-white/80 font-medium text-sm touch-manipulation active:scale-95 flex items-center justify-center gap-2"
+          className="w-full h-11 rounded-xl bg-white/[0.06] border border-white/10 text-white font-medium text-sm touch-manipulation active:scale-95 flex items-center justify-center gap-2"
         >
           <RotateCcw className="h-4 w-4" />
           Take Another Test
@@ -343,8 +404,8 @@ export function EPAKnowledgeQuiz({
     <div className="flex flex-col h-full">
       {/* Progress */}
       <div className="px-4 pt-4 pb-2">
-        <div className="flex items-center justify-between text-xs text-white/70 mb-1.5">
-          <span>
+        <div className="flex items-center justify-between text-xs text-white mb-1.5">
+          <span className="font-medium">
             Question {progress.current} of {progress.total}
           </span>
           <span>{progress.answered} answered</span>
@@ -361,16 +422,16 @@ export function EPAKnowledgeQuiz({
       <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
         <div className="flex items-center gap-2 mb-1">
           {currentQ.category && (
-            <Badge variant="outline" className="text-[10px] text-white/70">
+            <Badge variant="outline" className="text-xs text-white">
               {currentQ.category}
             </Badge>
           )}
-          <Badge variant="outline" className="text-[10px] text-white/70">
+          <Badge variant="outline" className="text-xs text-white">
             {currentQ.difficulty}
           </Badge>
         </div>
 
-        <p className="text-base text-foreground leading-relaxed">
+        <p className="text-base text-white leading-relaxed">
           {currentQ.question}
         </p>
 
@@ -387,7 +448,7 @@ export function EPAKnowledgeQuiz({
                 onClick={() => !currentAnswer && handleSelectAnswer(i)}
                 disabled={currentAnswer !== null}
                 className={cn(
-                  'w-full flex items-start gap-3 p-3.5 rounded-xl border text-left touch-manipulation transition-all',
+                  'w-full flex items-start gap-3 p-3.5 rounded-xl border text-left touch-manipulation transition-all min-h-[44px]',
                   showResult && isCorrect
                     ? 'border-emerald-500/40 bg-emerald-500/10'
                     : showResult && isSelected && !isCorrect
@@ -406,12 +467,12 @@ export function EPAKnowledgeQuiz({
                         ? 'bg-red-500 text-white'
                         : isSelected
                           ? 'bg-blue-500 text-white'
-                          : 'bg-white/10 text-white/70'
+                          : 'bg-white/10 text-white'
                   )}
                 >
                   {String.fromCharCode(65 + i)}
                 </span>
-                <span className="text-sm text-foreground flex-1">
+                <span className="text-sm text-white flex-1">
                   {option}
                 </span>
                 {showResult && isCorrect && (
@@ -430,11 +491,11 @@ export function EPAKnowledgeQuiz({
           <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-1.5 mb-1">
               <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-[10px] font-semibold text-white/70 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Explanation
               </span>
             </div>
-            <p className="text-sm text-white/80">{currentQ.explanation}</p>
+            <p className="text-sm text-white">{currentQ.explanation}</p>
           </div>
         )}
       </div>
@@ -444,7 +505,7 @@ export function EPAKnowledgeQuiz({
         <button
           onClick={() => quiz.previousQuestion()}
           disabled={quiz.currentQuestionIndex === 0}
-          className="h-11 px-4 rounded-xl border border-white/10 text-white/80 text-sm touch-manipulation active:scale-95 disabled:opacity-30 flex items-center gap-1"
+          className="h-11 px-4 rounded-xl border border-white/10 text-white text-sm touch-manipulation active:scale-95 disabled:opacity-30 flex items-center gap-1"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
@@ -453,7 +514,7 @@ export function EPAKnowledgeQuiz({
         {quiz.currentQuestionIndex < progress.total - 1 ? (
           <button
             onClick={() => quiz.nextQuestion()}
-            className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/10 text-white/80 text-sm font-medium touch-manipulation active:scale-95 flex items-center gap-1"
+            className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm font-medium touch-manipulation active:scale-95 flex items-center gap-1"
           >
             Next
             <ChevronRight className="h-4 w-4" />

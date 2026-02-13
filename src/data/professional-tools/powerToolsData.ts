@@ -9,7 +9,7 @@ export const powerToolSections: ToolSubSection[] = [
         name: "18V Combi Drill",
         description:
           "Your primary power tool — drill, hammer drill, and screwdriver in one. 18V lithium-ion platform is the industry standard. Choose a brushless motor for longer life and more power.",
-        price: "£90-200",
+        price: "£80-180",
         priority: "essential",
         brands: ["DeWalt", "Milwaukee", "Makita", "Bosch Professional"],
         apprenticeTip:
@@ -19,7 +19,7 @@ export const powerToolSections: ToolSubSection[] = [
         name: "18V Impact Driver",
         description:
           "High-torque rotary impact for driving screws fast. Uses 1/4 hex bits. Much faster than a combi drill for screw driving and removes the risk of wrist strain.",
-        price: "£60-190",
+        price: "£70-150",
         priority: "essential",
         brands: ["DeWalt", "Milwaukee", "Makita"],
         apprenticeTip:
@@ -29,7 +29,7 @@ export const powerToolSections: ToolSubSection[] = [
         name: "Spare Batteries (5.0Ah+)",
         description:
           "Always carry at least 3 batteries — one in each tool and one on charge. 5.0Ah gives a full day of moderate use.",
-        price: "£50-90 each",
+        price: "£40-80 each",
         priority: "essential",
         brands: ["Match your platform"],
         apprenticeTip:
@@ -55,7 +55,7 @@ export const powerToolSections: ToolSubSection[] = [
         name: "SDS-Plus Rotary Hammer Drill",
         description:
           "Dedicated hammer drill for masonry, concrete, and brick. SDS chuck system provides much more impact energy than a combi drill. Essential for concrete and hard masonry.",
-        price: "£120-300",
+        price: "£100-250",
         priority: "essential",
         brands: ["DeWalt", "Milwaukee", "Makita", "Bosch Professional"],
         apprenticeTip:
@@ -157,7 +157,7 @@ export const powerToolSections: ToolSubSection[] = [
         name: "Head Torch (Rechargeable)",
         description:
           "Hands-free lighting for working in dark loft spaces, under floors, and inside consumer units. Rechargeable USB-C is most practical.",
-        price: "£20-55",
+        price: "£15-40",
         priority: "essential",
         brands: ["Milwaukee", "LED Lenser", "Petzl"],
         apprenticeTip:
@@ -239,26 +239,6 @@ export const powerToolSections: ToolSubSection[] = [
         brands: ["Tower", "BG"],
         apprenticeTip:
           "Spacing: 300mm horizontal, 400mm vertical, 150mm from accessories (BS 7671 guidance). Use the right clip size — too big and the cable sags.",
-      },
-      {
-        name: "Heat Gun",
-        description:
-          "Hot air gun for heat-shrink tubing, freeing seized fixings, stripping paint, and drying damp enclosures. Variable temperature control essential.",
-        price: "£25-60",
-        priority: "nice-to-have",
-        brands: ["DeWalt", "Makita", "Bosch"],
-        apprenticeTip:
-          "Heat-shrink is the professional way to insulate cable joints and terminations. A heat gun with temperature control prevents burning the cable insulation.",
-      },
-      {
-        name: "Cordless Torch / Work Light",
-        description:
-          "Battery-powered work light for illuminating dark areas — loft spaces, ceiling voids, under floors. Should run on your main battery platform.",
-        price: "£25-60",
-        priority: "recommended",
-        brands: ["DeWalt", "Milwaukee", "Makita"],
-        apprenticeTip:
-          "Get a work light that uses the same batteries as your drill. A head torch plus a work light means you can always see what you are doing.",
       },
     ],
   },

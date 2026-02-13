@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowLeft,
   Search,
@@ -7,6 +7,7 @@ import {
   FileText,
   BookOpen,
   File,
+  Loader2,
   ExternalLink,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,6 @@ import {
   type SafetyResource,
 } from "@/hooks/useSafetyResources";
 import { SafetyEmptyState } from "../common/SafetyEmptyState";
-import { SafetySkeletonLoader } from "../common/SafetySkeletonLoader";
 
 interface SafetyResourceLibraryProps {
   onBack: () => void;
@@ -54,12 +54,7 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="space-y-4"
-    >
+    <div className="space-y-4">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
@@ -129,7 +124,9 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
 
         {/* Resources list */}
         {isLoading ? (
-          <SafetySkeletonLoader variant="list" />
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
+          </div>
         ) : filtered.length === 0 ? (
           <SafetyEmptyState
             icon={BookOpen}
@@ -142,16 +139,13 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
           />
         ) : (
           <div className="space-y-2">
-            {filtered.map((resource, index) => {
+            {filtered.map((resource) => {
               const FileIcon =
                 FILE_ICONS[resource.file_type] ?? FileText;
 
               return (
                 <motion.button
                   key={resource.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03, duration: 0.2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleDownload(resource)}
                   className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
@@ -192,7 +186,7 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }
 

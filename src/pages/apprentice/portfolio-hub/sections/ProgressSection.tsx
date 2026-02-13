@@ -1,16 +1,18 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
   Clock,
   Target,
-  TrendingUp,
-  CheckCircle2,
-  AlertCircle,
   Calendar,
   BarChart3,
   BookOpen,
+  ChevronDown,
+  ChevronUp,
+  Send,
+  ShieldCheck,
+  ClipboardList,
 } from 'lucide-react';
 import { ProgressRing, MiniProgressRing } from '@/components/portfolio-hub/ProgressRings';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
@@ -19,39 +21,23 @@ import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { QualificationProgress } from '@/components/apprentice/portfolio/QualificationProgress';
 import { QualificationRequirements } from '@/components/apprentice/portfolio/QualificationRequirements';
+import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
+import { useSendVerification } from '@/hooks/portfolio/useSendVerification';
 
 /**
- * ProgressSection - KSB tracking, OTJ hours, timeline view
- *
- * Phase 4 will enhance with:
- * - Visual KSB matrix
- * - Gap analysis
- * - Milestone celebrations
- * - Projections
+ * ProgressSection - KSB tracking, OTJ hours, OJT training log
  */
 export function ProgressSection() {
   const { categories, entries, analytics } = useUltraFastPortfolio();
   const { otjGoal, getRemainingHours } = useComplianceTracking();
-  const { totalTime, weeklyTime, timeEntries } = useTimeEntries();
+  const { entries: timeEntries, totalTime } = useTimeEntries();
   const { qualificationCode, qualificationName } = useStudentQualification();
+  const { sendVerification, isSending } = useSendVerification();
   const [requirementsOpen, setRequirementsOpen] = useState(false);
+  const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null);
 
-  // Build set of evidenced ACs from portfolio entries (same logic as PortfolioHub)
-  const evidencedACs = useMemo(() => {
-    const set = new Set<string>();
-    for (const pe of entries) {
-      for (const ac of pe.assessmentCriteria || []) {
-        const acMatch = ac.match(/\bAC\s+(\S+)/);
-        if (!acMatch) continue;
-        const acCode = acMatch[1];
-        const primaryUnit = ac.match(/^(\S+)/)?.[1];
-        if (primaryUnit) set.add(`${primaryUnit}.${acCode}`);
-        const parenUnit = ac.match(/\(Unit\s+(\S+)\)/i);
-        if (parenUnit) set.add(`${parenUnit[1]}.${acCode}`);
-      }
-    }
-    return set;
-  }, [entries]);
+  // Build set of evidenced ACs using shared parser
+  const evidencedACs = parseEvidencedACs(entries);
 
   const currentHours = Math.round(otjGoal?.current_hours || 0);
   const targetHours = otjGoal?.target_hours || 400;
@@ -62,6 +48,13 @@ export function ProgressSection() {
   const totalCompleted = analytics?.completedEntries || 0;
   const portfolioPercent =
     totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0;
+
+  // Compute weekly training minutes from time entries
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+  const weeklyMinutes = timeEntries
+    .filter((e) => new Date(e.date) >= weekAgo)
+    .reduce((sum, e) => sum + e.duration, 0);
 
   return (
     <div className="p-4 sm:p-6 space-y-6">
@@ -168,6 +161,116 @@ export function ProgressSection() {
         </>
       )}
 
+      {/* OJT Training Log */}
+      <Card className="border-border">
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <ClipboardList className="h-4 w-4 text-purple-500" />
+            OJT Training Log
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {timeEntries.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-6">
+              No training entries yet. Log your first OJT activity to get started.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {timeEntries.slice(0, 20).map((entry) => {
+                const isExpanded = expandedEntryId === entry.id;
+                const isVerified = entry.is_supervisor_verified === true;
+                const durationHours = Math.floor(entry.duration / 60);
+                const durationMins = entry.duration % 60;
+                const formattedDate = new Date(entry.date).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                });
+
+                return (
+                  <div key={entry.id} className="rounded-lg border border-border overflow-hidden">
+                    <button
+                      onClick={() => setExpandedEntryId(isExpanded ? null : entry.id)}
+                      className="w-full flex items-center gap-3 p-3 text-left touch-manipulation active:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground line-clamp-1">
+                          {entry.activity || 'Training activity'}
+                        </p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-xs text-muted-foreground">{formattedDate}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {durationHours > 0 ? `${durationHours}h ` : ''}
+                            {durationMins > 0 ? `${durationMins}m` : ''}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Verification status badge */}
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'text-[10px] shrink-0',
+                          isVerified
+                            ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                            : 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                        )}
+                      >
+                        {isVerified ? 'Verified' : 'Unverified'}
+                      </Badge>
+
+                      {isExpanded ? (
+                        <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
+                      )}
+                    </button>
+
+                    {isExpanded && (
+                      <div className="px-3 pb-3 pt-1 border-t border-border space-y-3">
+                        {entry.notes && (
+                          <p className="text-xs text-white">{entry.notes}</p>
+                        )}
+
+                        <div className="flex gap-2">
+                          {!isVerified && (
+                            <button
+                              onClick={() =>
+                                sendVerification(entry.id, 'time_entry', {
+                                  activity: entry.activity,
+                                  date: entry.date,
+                                  duration: entry.duration,
+                                  notes: entry.notes,
+                                })
+                              }
+                              disabled={isSending}
+                              className={cn(
+                                'flex-1 flex items-center justify-center gap-2 h-11 rounded-lg text-sm font-medium touch-manipulation transition-all active:scale-[0.98]',
+                                'bg-blue-500/10 border border-blue-500/25 text-blue-400',
+                                isSending && 'opacity-50'
+                              )}
+                            >
+                              <Send className="h-4 w-4" />
+                              {isSending ? 'Sending...' : 'Send for Verification'}
+                            </button>
+                          )}
+                          {isVerified && (
+                            <div className="flex-1 flex items-center justify-center gap-2 h-11 rounded-lg text-sm font-medium bg-green-500/10 border border-green-500/25 text-green-400">
+                              <ShieldCheck className="h-4 w-4" />
+                              Verified by Supervisor
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* KSB Category Progress */}
       <Card className="border-border">
         <CardHeader>
@@ -235,7 +338,7 @@ export function ProgressSection() {
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <p className="text-2xl font-bold text-purple-500">{(weeklyTime / 60).toFixed(1)}h</p>
+              <p className="text-2xl font-bold text-purple-500">{(weeklyMinutes / 60).toFixed(1)}h</p>
               <p className="text-xs text-muted-foreground">Training Hours</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
@@ -243,8 +346,6 @@ export function ProgressSection() {
                 {
                   entries.filter((e) => {
                     const created = new Date(e.dateCreated);
-                    const weekAgo = new Date();
-                    weekAgo.setDate(weekAgo.getDate() - 7);
                     return created >= weekAgo;
                   }).length
                 }
@@ -252,12 +353,14 @@ export function ProgressSection() {
               <p className="text-xs text-muted-foreground">New Evidence</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <p className="text-2xl font-bold text-green-500">2</p>
+              <p className="text-2xl font-bold text-green-500">
+                {entries.filter((e) => e.status === 'pending_review').length}
+              </p>
               <p className="text-xs text-muted-foreground">Reviews</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
               <p className="text-2xl font-bold text-amber-500">
-                {7.5 - weeklyTime / 60 > 0 ? (7.5 - weeklyTime / 60).toFixed(1) : '0'}h
+                {7.5 - weeklyMinutes / 60 > 0 ? (7.5 - weeklyMinutes / 60).toFixed(1) : '0'}h
               </p>
               <p className="text-xs text-muted-foreground">Hours Needed</p>
             </div>

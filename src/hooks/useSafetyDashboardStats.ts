@@ -43,64 +43,29 @@ function useComplianceStats() {
       ).toISOString();
       const todayStr = now.toISOString().split("T")[0];
 
-      const sevenDaysAgo = new Date(
-        now.getTime() - 7 * 24 * 60 * 60 * 1000
-      ).toISOString();
-
-      const [
-        permitsRes,
-        coshhRes,
-        inspectionsRes,
-        accidentsRes,
-        ramsRes,
-        nearMissCountRes,
-        nearMissLatestRes,
-        photosRes,
-      ] = await Promise.all([
-        supabase
-          .from("permits_to_work")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .eq("status", "active"),
-        supabase
-          .from("coshh_assessments")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .lt("review_date", todayStr),
-        supabase
-          .from("inspection_records")
-          .select("overall_result")
-          .eq("user_id", user.id)
-          .gte("date", thirtyDaysAgo.split("T")[0]),
-        supabase
-          .from("accident_records")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .gte("incident_date", thirtyDaysAgo.split("T")[0]),
-        // 1.1 — Live RAMS count (all saved documents)
-        supabase
-          .from("rams_documents")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id),
-        // 1.2a — Total near-miss count
-        supabase
-          .from("near_miss_reports")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id),
-        // 1.2b — Most recent near-miss incident date
-        supabase
-          .from("near_miss_reports")
-          .select("incident_date")
-          .eq("user_id", user.id)
-          .order("incident_date", { ascending: false })
-          .limit(1),
-        // 1.3 — Photos taken this week
-        supabase
-          .from("safety_photos")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", user.id)
-          .gte("created_at", sevenDaysAgo),
-      ]);
+      const [permitsRes, coshhRes, inspectionsRes, accidentsRes] =
+        await Promise.all([
+          supabase
+            .from("permits_to_work")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", user.id)
+            .eq("status", "active"),
+          supabase
+            .from("coshh_assessments")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", user.id)
+            .lt("review_date", todayStr),
+          supabase
+            .from("inspection_records")
+            .select("overall_result")
+            .eq("user_id", user.id)
+            .gte("date", thirtyDaysAgo.split("T")[0]),
+          supabase
+            .from("accident_records")
+            .select("id", { count: "exact", head: true })
+            .eq("user_id", user.id)
+            .gte("incident_date", thirtyDaysAgo.split("T")[0]),
+        ]);
 
       const inspections = inspectionsRes.data ?? [];
       const passed = inspections.filter(
@@ -110,26 +75,12 @@ function useComplianceStats() {
         (i) => i.overall_result === "fail"
       ).length;
 
-      // Calculate days since last near miss
-      let daysSinceLastNearMiss: number | null = null;
-      const latestNearMiss = nearMissLatestRes.data?.[0];
-      if (latestNearMiss?.incident_date) {
-        const lastDate = new Date(latestNearMiss.incident_date);
-        daysSinceLastNearMiss = Math.floor(
-          (now.getTime() - lastDate.getTime()) / 86400000
-        );
-      }
-
       return {
         activePermits: permitsRes.count ?? 0,
         coshhOverdueReviews: coshhRes.count ?? 0,
         recentInspectionsPassed: passed,
         recentInspectionsFailed: failed,
         accidentCount30Days: accidentsRes.count ?? 0,
-        activeRams: ramsRes.count ?? 0,
-        totalNearMisses: nearMissCountRes.count ?? 0,
-        daysSinceLastNearMiss,
-        totalPhotosThisWeek: photosRes.count ?? 0,
       };
     },
     staleTime: 60_000,
@@ -145,52 +96,39 @@ export function useRecentDocuments() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const [
-        permitsRes,
-        coshhRes,
-        inspectionsRes,
-        accidentsRes,
-        briefingsRes,
-        ramsDocsRes,
-      ] = await Promise.all([
-        supabase
-          .from("permits_to_work")
-          .select("id, title, created_at, status")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-        supabase
-          .from("coshh_assessments")
-          .select("id, substance_name, created_at, risk_rating")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-        supabase
-          .from("inspection_records")
-          .select("id, template_title, date, overall_result")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-        supabase
-          .from("accident_records")
-          .select("id, injured_name, incident_date, severity")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-        supabase
-          .from("team_briefings")
-          .select("id, briefing_name, briefing_date, status")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-        // 1.4 — RAMS documents in recent feed
-        supabase
-          .from("rams_documents")
-          .select("id, project_name, created_at, status")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(3),
-      ]);
+      const [permitsRes, coshhRes, inspectionsRes, accidentsRes, briefingsRes] =
+        await Promise.all([
+          supabase
+            .from("permits_to_work")
+            .select("id, title, created_at, status")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(3),
+          supabase
+            .from("coshh_assessments")
+            .select("id, substance_name, created_at, risk_rating")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(3),
+          supabase
+            .from("inspection_records")
+            .select("id, template_title, date, overall_result")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(3),
+          supabase
+            .from("accident_records")
+            .select("id, injured_person_name, incident_date, severity")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(3),
+          supabase
+            .from("team_briefings")
+            .select("id, briefing_name, briefing_date, status")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(3),
+        ]);
 
       const docs: RecentDocument[] = [];
 
@@ -228,7 +166,7 @@ export function useRecentDocuments() {
         docs.push({
           id: a.id,
           type: "accident",
-          title: `Accident — ${a.injured_name}`,
+          title: `Accident — ${a.injured_person_name}`,
           date: a.incident_date,
           status: a.severity,
         })
@@ -241,16 +179,6 @@ export function useRecentDocuments() {
           title: b.briefing_name ?? "Briefing",
           date: b.briefing_date,
           status: b.status,
-        })
-      );
-
-      (ramsDocsRes.data ?? []).forEach((r) =>
-        docs.push({
-          id: r.id,
-          type: "rams",
-          title: r.project_name,
-          date: r.created_at,
-          status: r.status,
         })
       );
 
@@ -273,14 +201,14 @@ export function useSafetyDashboardStats() {
     useComplianceStats();
 
   const stats: SafetyDashboardStats = {
-    activeRams: complianceStats?.activeRams ?? 0,
-    daysSinceLastNearMiss: complianceStats?.daysSinceLastNearMiss ?? null,
+    activeRams: 0,
+    daysSinceLastNearMiss: null,
     equipmentDue: equipmentStats?.needsAttention ?? 0,
     equipmentOverdue: equipmentStats?.overdue ?? 0,
     upcomingBriefings: briefingStats?.upcomingCount ?? 0,
     completedBriefingsThisMonth: briefingStats?.completedThisMonth ?? 0,
-    totalPhotosThisWeek: complianceStats?.totalPhotosThisWeek ?? 0,
-    totalNearMisses: complianceStats?.totalNearMisses ?? 0,
+    totalPhotosThisWeek: 0,
+    totalNearMisses: 0,
     equipmentTotal: equipmentStats?.total ?? 0,
     activePermits: complianceStats?.activePermits ?? 0,
     coshhOverdueReviews: complianceStats?.coshhOverdueReviews ?? 0,

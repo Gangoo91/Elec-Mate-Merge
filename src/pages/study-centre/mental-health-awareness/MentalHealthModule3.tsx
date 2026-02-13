@@ -1,4 +1,4 @@
-import { ArrowLeft, MessageCircle, ClipboardList, Ear, MessageSquare } from "lucide-react";
+import { ArrowLeft, HandHeart, Ear, MessageSquare, HardHat } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/upskilling/cards";
@@ -7,31 +7,31 @@ import useSEO from "@/hooks/useSEO";
 const sections = [
   {
     id: 1,
-    title: "Why Conversations Matter",
-    icon: MessageCircle,
+    title: "How to Approach Someone",
+    icon: HandHeart,
     description:
-      "The power of a simple conversation, why people stay silent, and how reaching out saves lives",
+      "Choosing the right moment, creating a safe space, and opening the conversation with care",
   },
   {
     id: 2,
-    title: "The ALGEE Action Plan",
-    icon: ClipboardList,
+    title: "Active Listening and the ALGEE Model",
+    icon: Ear,
     description:
-      "Approach, Listen, Give support, Encourage professional help, Encourage other supports — the MHFA framework",
+      "The MHFA England ALGEE action plan, non-judgemental listening, and being fully present",
   },
   {
     id: 3,
-    title: "Listening Without Judgement",
-    icon: Ear,
-    description:
-      "Active listening techniques, body language, creating safe spaces, and letting someone talk at their own pace",
-  },
-  {
-    id: 4,
     title: "What to Say and What Not to Say",
     icon: MessageSquare,
     description:
-      "Helpful phrases, common mistakes, avoiding toxic positivity, and language that validates rather than dismisses",
+      "Helpful vs harmful language, empathy without fixing, and phrases that shut people down",
+  },
+  {
+    id: 4,
+    title: "Conversations on Site",
+    icon: HardHat,
+    description:
+      "Practical scenarios for the van, the canteen, and the site — making it normal to talk",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function MentalHealthModule3() {
   useSEO({
     title: "Module 3: Starting Conversations | Mental Health Awareness",
     description:
-      "Why conversations matter, the ALGEE action plan, listening skills, and helpful language.",
+      "How to approach someone, active listening, the ALGEE model, and having conversations on site.",
   });
 
   return (
@@ -66,20 +66,18 @@ export default function MentalHealthModule3() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 3
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 3</span>
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">4 Sections</span>
               <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Starting Conversations
             </h1>
             <p className="text-white text-sm sm:text-base">
-              Why conversations matter, the ALGEE action plan, listening without
-              judgement, and choosing the right words
+              How to approach someone you're worried about, listen without
+              judgement, and make talking about mental health normal on site
             </p>
           </div>
 

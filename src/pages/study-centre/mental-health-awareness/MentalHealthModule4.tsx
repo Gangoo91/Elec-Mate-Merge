@@ -1,4 +1,4 @@
-import { ArrowLeft, HandHeart, MapPin, Siren, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Heart, Signpost, RefreshCw, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/upskilling/cards";
@@ -7,31 +7,31 @@ import useSEO from "@/hooks/useSEO";
 const sections = [
   {
     id: 1,
-    title: "Providing Ongoing Support",
-    icon: HandHeart,
+    title: "Mental Health First Aid in Action",
+    icon: Heart,
     description:
-      "Workplace adjustments, reasonable accommodations, staying connected, and supporting return to work",
+      "The MHFA action plan, immediate support techniques, and knowing your role and limits",
   },
   {
     id: 2,
     title: "Signposting to Professional Help",
-    icon: MapPin,
+    icon: Signpost,
     description:
-      "NHS services, EAPs, charities, helplines, and knowing when someone needs more than a conversation",
+      "NHS services, GPs, EAPs, Samaritans, Mates in Mind, and the Lighthouse Club",
   },
   {
     id: 3,
-    title: "Responding to a Crisis",
-    icon: Siren,
+    title: "Supporting Recovery and Return to Work",
+    icon: RefreshCw,
     description:
-      "What to do when someone is in immediate danger, calling emergency services, and staying calm under pressure",
+      "Reasonable adjustments, phased returns, ongoing check-ins, and avoiding assumptions",
   },
   {
     id: 4,
-    title: "Looking After Yourself",
-    icon: ShieldCheck,
+    title: "Looking After Yourself as a Supporter",
+    icon: Shield,
     description:
-      "Compassion fatigue, setting boundaries, self-care strategies, and knowing when you need support too",
+      "Compassion fatigue, setting boundaries, recognising your own limits, and self-care",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function MentalHealthModule4() {
   useSEO({
     title: "Module 4: Supporting Others | Mental Health Awareness",
     description:
-      "Workplace adjustments, signposting to help, crisis response, and self-care.",
+      "Mental health first aid, signposting to help, supporting recovery, and looking after yourself.",
   });
 
   return (
@@ -66,20 +66,18 @@ export default function MentalHealthModule4() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 4
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 4</span>
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">4 Sections</span>
               <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Supporting Others
             </h1>
             <p className="text-white text-sm sm:text-base">
-              Providing ongoing support, signposting to professional help,
-              responding to a crisis, and looking after yourself
+              How to provide immediate support, signpost to professional help,
+              support someone's recovery, and protect your own wellbeing
             </p>
           </div>
 

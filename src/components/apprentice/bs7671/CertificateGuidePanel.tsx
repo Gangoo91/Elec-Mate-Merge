@@ -66,7 +66,7 @@ const renderCertCard = (cert: CertificateType) => {
         <ChevronDown className={`h-4 w-4 ${colors.text} flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180`} />
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-4 text-sm">
           {/* When Required */}
           <div>
             <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-1`}>When Required</h4>
@@ -145,7 +145,7 @@ const renderCertCard = (cert: CertificateType) => {
 
 const CertificateGuidePanel = () => {
   return (
-    <div className="space-y-6 text-left">
+    <div className="space-y-6">
       {/* Certificate Types */}
       <div className="space-y-3">
         {certificateTypes.map(renderCertCard)}

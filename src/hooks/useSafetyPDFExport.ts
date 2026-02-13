@@ -2,31 +2,13 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-type PDFType =
-  | "permit"
-  | "coshh"
-  | "inspection"
-  | "accident"
-  | "near-miss"
-  | "equipment"
-  | "fire-watch"
-  | "observation"
-  | "pre-use-check"
-  | "site-diary"
-  | "safe-isolation";
+type PDFType = "permit" | "coshh" | "inspection" | "accident";
 
 const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   permit: "generate-permit-pdf",
   coshh: "generate-coshh-pdf",
   inspection: "generate-inspection-pdf",
   accident: "generate-accident-pdf",
-  "near-miss": "generate-near-miss-pdf",
-  equipment: "generate-equipment-pdf",
-  "fire-watch": "generate-fire-watch-pdf",
-  observation: "generate-observation-pdf",
-  "pre-use-check": "generate-pre-use-check-pdf",
-  "site-diary": "generate-site-diary-pdf",
-  "safe-isolation": "generate-safe-isolation-pdf",
 };
 
 export function useSafetyPDFExport() {

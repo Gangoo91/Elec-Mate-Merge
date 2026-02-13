@@ -52,7 +52,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
   switch (content.type) {
     case 'steps':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-2 text-sm">
           {content.steps.map((step, idx) => (
             <div key={idx} className="flex items-start gap-2">
               <span className={`${colors.bg} ${colors.text} px-2 py-0.5 rounded text-xs font-bold min-w-[24px] text-center flex-shrink-0`}>
@@ -66,7 +66,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'key-points':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-2 text-sm">
           {content.source && (
             <p className={`text-xs ${colors.text} font-medium mb-2`}>{content.source}</p>
           )}
@@ -81,11 +81,11 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'table':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-2 text-sm">
           {content.rows.map((row, idx) => (
-            <div key={idx} className="p-2 rounded bg-white/[0.03] text-left">
-              <span className="text-white">{row.label}: </span>
-              <span className="text-white font-medium">{row.value}</span>
+            <div key={idx} className="flex justify-between gap-2">
+              <span className="text-white">{row.label}:</span>
+              <span className="text-white text-right">{row.value}</span>
             </div>
           ))}
         </div>
@@ -93,7 +93,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'grouped-table':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-4 text-sm">
           {content.groups.map((group, gIdx) => (
             <div key={gIdx}>
               <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>
@@ -101,9 +101,9 @@ const renderContent = (card: BS7671ReferenceCard) => {
               </h4>
               <div className="space-y-1">
                 {group.rows.map((row, rIdx) => (
-                  <div key={rIdx} className="p-2 rounded bg-white/[0.03] text-left">
-                    <span className="text-white">{row.label}: </span>
-                    <span className="text-white font-mono">{row.value}</span>
+                  <div key={rIdx} className="flex justify-between gap-2 p-2 rounded bg-white/5">
+                    <span className="text-white">{row.label}</span>
+                    <span className="text-white font-mono text-right">{row.value}</span>
                   </div>
                 ))}
               </div>
@@ -114,7 +114,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'colour-codes':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-sm rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-2 space-y-4 text-sm">
           {content.sections.map((section, sIdx) => (
             <div key={sIdx}>
               <h4 className={`text-xs font-semibold ${colors.text} uppercase tracking-wide mb-2`}>
@@ -143,7 +143,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
 const BS7671QuickReferencePanel = () => {
   return (
-    <div className="space-y-3 text-left">
+    <div className="space-y-3">
       {bs7671ReferenceCards.map(card => {
         const Icon = iconMap[card.icon] || AlertTriangle;
         const colors = colorMap[card.color] || colorMap.cyan;

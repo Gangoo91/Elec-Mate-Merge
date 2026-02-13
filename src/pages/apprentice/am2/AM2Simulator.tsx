@@ -6,8 +6,12 @@
  *
  * When immersive tabs (Testing, Isolation, Faults) are active,
  * the page header is hidden to maximise screen space.
+ *
+ * readinessKey forces the dashboard to re-fetch after any simulator
+ * completes a session, so the score updates immediately.
  */
 
+import { useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { Target, Lock, Search, BookOpen, Clock, ShieldAlert, Gauge } from 'lucide-react';
@@ -16,6 +20,8 @@ import { AM2ReadinessDashboard } from '@/components/am2/AM2ReadinessDashboard';
 import { SafeIsolationAssessment } from '@/components/am2/safe-isolation/SafeIsolationAssessment';
 import { FaultFindingSimulator } from '@/components/am2/fault-finding/FaultFindingSimulator';
 import { TestingSimulator } from '@/components/am2/testing-simulator/TestingSimulator';
+import { AM2KnowledgeQuiz } from '@/components/am2/AM2KnowledgeQuiz';
+import { AM2HistoryTab } from '@/components/am2/AM2HistoryTab';
 
 type TabId = 'readiness' | 'safe-isolation' | 'testing' | 'faults' | 'knowledge' | 'history';
 
@@ -35,6 +41,12 @@ const AM2Simulator = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as TabId) || 'readiness';
   const setActiveTab = (tab: TabId) => setSearchParams({ tab }, { replace: false });
+
+  // Incrementing key forces dashboard to re-mount and re-fetch after sessions complete
+  const [readinessKey, setReadinessKey] = useState(0);
+  const invalidateReadiness = useCallback(() => {
+    setReadinessKey((k) => k + 1);
+  }, []);
 
   const isImmersive = IMMERSIVE_TABS.includes(activeTab);
 
@@ -91,52 +103,30 @@ const AM2Simulator = () => {
 
       {/* Tab Content */}
       <div className={cn(isImmersive ? 'flex-1 min-h-0 overflow-hidden' : 'min-h-[60vh]')}>
-        {activeTab === 'readiness' && <AM2ReadinessDashboard onNavigateToTab={setActiveTab} />}
+        {activeTab === 'readiness' && (
+          <AM2ReadinessDashboard key={readinessKey} onNavigateToTab={setActiveTab} />
+        )}
 
-        {activeTab === 'safe-isolation' && <SafeIsolationAssessment />}
+        {activeTab === 'safe-isolation' && (
+          <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
+        )}
 
-        {activeTab === 'testing' && <TestingSimulator />}
+        {activeTab === 'testing' && (
+          <TestingSimulator onSessionComplete={invalidateReadiness} />
+        )}
 
-        {activeTab === 'faults' && <FaultFindingSimulator />}
+        {activeTab === 'faults' && (
+          <FaultFindingSimulator onSessionComplete={invalidateReadiness} />
+        )}
 
         {activeTab === 'knowledge' && (
-          <PlaceholderTab
-            icon={BookOpen}
-            title="Knowledge Test"
-            description="30 multiple-choice questions covering BS 7671, health & safety, building regulations, and installation techniques. Coming soon."
-          />
+          <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />
         )}
 
-        {activeTab === 'history' && (
-          <PlaceholderTab
-            icon={Clock}
-            title="Session History"
-            description="Your past simulation attempts, scores, and progress over time will appear here."
-          />
-        )}
+        {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
       </div>
     </div>
   );
 };
-
-function PlaceholderTab({
-  icon: Icon,
-  title,
-  description,
-}: {
-  icon: typeof Target;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="flex flex-col items-center justify-center py-16 px-6 space-y-3">
-      <div className="h-14 w-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center">
-        <Icon className="h-7 w-7 text-white/20" />
-      </div>
-      <p className="text-sm font-medium text-white text-center">{title}</p>
-      <p className="text-xs text-white text-center max-w-xs">{description}</p>
-    </div>
-  );
-}
 
 export default AM2Simulator;

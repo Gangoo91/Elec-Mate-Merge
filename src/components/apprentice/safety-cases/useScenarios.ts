@@ -1,185 +1,280 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { SafetyScenario, safetyScenarios } from "./safetyScenarios";
 
+const STORAGE_KEY = "elec-mate-safety-progress";
+
+interface ScenarioResult {
+  completedAt: string;
+  stepsCorrect: number;
+  totalSteps: number;
+  score: number;
+}
+
+interface ProgressData {
+  completedScenarios: Record<string, ScenarioResult>;
+  currentStreak: number;
+  lastCompletedDate: string | null;
+  bestStreak: number;
+}
+
+interface StepResult {
+  stepId: string;
+  selectedOptionId: string;
+  isCorrect: boolean;
+}
+
+const defaultProgress: ProgressData = {
+  completedScenarios: {},
+  currentStreak: 0,
+  lastCompletedDate: null,
+  bestStreak: 0,
+};
+
+function loadProgress(): ProgressData {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultProgress;
+    const parsed = JSON.parse(raw) as ProgressData;
+    // Validate streak — reset if last completion was more than 1 day ago
+    if (parsed.lastCompletedDate) {
+      const last = new Date(parsed.lastCompletedDate);
+      const now = new Date();
+      const diffDays = Math.floor(
+        (now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      if (diffDays > 1) {
+        parsed.currentStreak = 0;
+      }
+    }
+    return parsed;
+  } catch {
+    return defaultProgress;
+  }
+}
+
+function saveProgress(data: ProgressData) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // Storage full or unavailable — fail silently
+  }
+}
+
+export type DifficultyFilter = "All" | "Beginner" | "Intermediate" | "Advanced";
+
 export const useScenarios = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedScenario, setSelectedScenario] = useState<SafetyScenario | null>(null);
+  const [progress, setProgress] = useState<ProgressData>(loadProgress);
+  const [selectedScenario, setSelectedScenario] =
+    useState<SafetyScenario | null>(null);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [completedScenarios, setCompletedScenarios] = useState<number[]>([]);
-  
+  const [stepResults, setStepResults] = useState<StepResult[]>([]);
+  const [isComplete, setIsComplete] = useState(false);
+  const [difficultyFilter, setDifficultyFilter] =
+    useState<DifficultyFilter>("All");
+  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+
   const { toast } = useToast();
 
-  // Initialize hook with logging
+  // Persist progress whenever it changes
   useEffect(() => {
-    console.log('useScenarios - Initializing hook');
-    console.log('useScenarios - Available scenarios:', safetyScenarios?.length || 0);
-    
-    try {
-      // Simulate initialization delay and validate data
-      const timer = setTimeout(() => {
-        if (!safetyScenarios || safetyScenarios.length === 0) {
-          console.error('useScenarios - No safety scenarios found');
-          setError('No safety scenarios available');
-        } else {
-          console.log('useScenarios - Successfully initialized with scenarios:', safetyScenarios.map(s => s.id));
-        }
-        setIsLoading(false);
-      }, 100);
+    saveProgress(progress);
+  }, [progress]);
 
-      return () => clearTimeout(timer);
-    } catch (err) {
-      console.error('useScenarios - Initialization error:', err);
-      setError('Failed to initialize safety scenarios');
-      setIsLoading(false);
-    }
+  // Filtered scenarios
+  const scenarios = useMemo(() => {
+    return safetyScenarios.filter((s) => {
+      if (difficultyFilter !== "All" && s.difficulty !== difficultyFilter)
+        return false;
+      if (categoryFilter !== "All" && s.category !== categoryFilter)
+        return false;
+      return true;
+    });
+  }, [difficultyFilter, categoryFilter]);
+
+  // All unique categories
+  const categories = useMemo(() => {
+    const cats = new Set(safetyScenarios.map((s) => s.category));
+    return ["All", ...Array.from(cats).sort()];
   }, []);
 
-  const handleSelectScenario = (scenario: SafetyScenario) => {
-    console.log('useScenarios - Selecting scenario:', scenario.id, scenario.title);
-    try {
-      setSelectedScenario(scenario);
-      setSelectedOption(null);
-      setShowFeedback(false);
-    } catch (err) {
-      console.error('useScenarios - Error selecting scenario:', err);
-      setError('Failed to select scenario');
-    }
-  };
+  // Stats
+  const completedCount = Object.keys(progress.completedScenarios).length;
+  const totalCount = safetyScenarios.length;
+  const completionPercentage =
+    totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-  const handleOptionSelect = (optionId: string) => {
-    console.log('useScenarios - Selecting option:', optionId);
-    if (showFeedback) {
-      console.log('useScenarios - Feedback already shown, ignoring option selection');
-      return;
-    }
-    
-    try {
+  const isScenarioCompleted = useCallback(
+    (id: number) => !!progress.completedScenarios[String(id)],
+    [progress.completedScenarios]
+  );
+
+  const startScenario = useCallback((scenario: SafetyScenario) => {
+    setSelectedScenario(scenario);
+    setCurrentStepIndex(0);
+    setSelectedOption(null);
+    setShowFeedback(false);
+    setStepResults([]);
+    setIsComplete(false);
+  }, []);
+
+  const selectOption = useCallback(
+    (optionId: string) => {
+      if (showFeedback) return;
       setSelectedOption(optionId);
-    } catch (err) {
-      console.error('useScenarios - Error selecting option:', err);
-      setError('Failed to select option');
-    }
-  };
+    },
+    [showFeedback]
+  );
 
-  const handleSubmitAnswer = () => {
-    console.log('useScenarios - Submitting answer:', { selectedOption, selectedScenario: selectedScenario?.id });
-    
+  const submitStep = useCallback(() => {
     if (!selectedOption || !selectedScenario) {
-      console.warn('useScenarios - Submit called without selection');
       toast({
         title: "No option selected",
         description: "Please select an option to continue",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
-    
-    try {
-      setShowFeedback(true);
-      
-      // Mark this scenario as completed
-      if (!completedScenarios.includes(selectedScenario.id)) {
-        const newCompleted = [...completedScenarios, selectedScenario.id];
-        setCompletedScenarios(newCompleted);
-        console.log('useScenarios - Updated completed scenarios:', newCompleted);
-      }
-      
-      const correctOption = selectedScenario.options.find(option => option.isCorrect);
-      const isCorrect = selectedScenario.options.find(option => option.id === selectedOption)?.isCorrect;
-      
-      console.log('useScenarios - Answer evaluation:', { isCorrect, correctOption: correctOption?.id });
-      
-      if (isCorrect) {
-        toast({
-          title: "Excellent decision!",
-          description: "You've made the safe and professional choice",
-          variant: "default"
-        });
-      } else {
-        toast({
-          title: "Consider a different approach",
-          description: `The safer option would be: ${correctOption?.text}`,
-          variant: "destructive"
-        });
-      }
-    } catch (err) {
-      console.error('useScenarios - Error submitting answer:', err);
-      setError('Failed to submit answer');
-    }
-  };
 
-  const handleReset = () => {
-    console.log('useScenarios - Resetting to scenario list');
-    try {
-      setSelectedScenario(null);
+    const step = selectedScenario.steps[currentStepIndex];
+    const chosenOption = step.options.find((o) => o.id === selectedOption);
+    const isCorrect = chosenOption?.isCorrect ?? false;
+
+    setShowFeedback(true);
+    setStepResults((prev) => [
+      ...prev,
+      { stepId: step.id, selectedOptionId: selectedOption, isCorrect },
+    ]);
+
+    if (isCorrect) {
+      toast({
+        title: "Excellent decision!",
+        description: "You have made the safe and professional choice",
+      });
+    } else {
+      const correct = step.options.find((o) => o.isCorrect);
+      toast({
+        title: "Consider a different approach",
+        description: `The safer option would be: ${correct?.text}`,
+        variant: "destructive",
+      });
+    }
+  }, [selectedOption, selectedScenario, currentStepIndex, toast]);
+
+  const advanceStep = useCallback(() => {
+    if (!selectedScenario) return;
+
+    const nextIndex = currentStepIndex + 1;
+    if (nextIndex < selectedScenario.steps.length) {
+      setCurrentStepIndex(nextIndex);
       setSelectedOption(null);
       setShowFeedback(false);
-      setError(null);
-    } catch (err) {
-      console.error('useScenarios - Error resetting:', err);
-      setError('Failed to reset');
-    }
-  };
+    } else {
+      // Scenario complete
+      setIsComplete(true);
+      const allResults = stepResults;
+      const stepsCorrect = allResults.filter((r) => r.isCorrect).length;
+      const totalSteps = selectedScenario.steps.length;
+      const score = Math.round((stepsCorrect / totalSteps) * 100);
+      const today = new Date().toISOString().split("T")[0];
 
-  const handleNextScenario = () => {
-    console.log('useScenarios - Moving to next scenario');
-    if (!selectedScenario) {
-      console.warn('useScenarios - Next scenario called without current scenario');
-      return;
-    }
-    
-    try {
-      const currentIndex = safetyScenarios.findIndex(s => s.id === selectedScenario.id);
-      console.log('useScenarios - Current index:', currentIndex, 'of', safetyScenarios.length);
-      
-      if (currentIndex < safetyScenarios.length - 1) {
-        handleSelectScenario(safetyScenarios[currentIndex + 1]);
-      } else {
-        console.log('useScenarios - All scenarios completed, resetting');
-        handleReset();
-        toast({
-          title: "All scenarios completed!",
-          description: "You've completed all scenarios. Well done!",
-          variant: "default"
-        });
-      }
-    } catch (err) {
-      console.error('useScenarios - Error moving to next scenario:', err);
-      setError('Failed to move to next scenario');
-    }
-  };
+      setProgress((prev) => {
+        const isNewCompletion =
+          !prev.completedScenarios[String(selectedScenario.id)];
+        const wasCompletedToday = prev.lastCompletedDate === today;
+        let newStreak = prev.currentStreak;
 
-  const isLastScenario = selectedScenario 
-    ? safetyScenarios.findIndex(s => s.id === selectedScenario.id) === safetyScenarios.length - 1
-    : false;
+        if (isNewCompletion && !wasCompletedToday) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = yesterday.toISOString().split("T")[0];
 
-  console.log('useScenarios - Current state:', {
-    isLoading,
-    error,
-    totalScenariosCount: safetyScenarios?.length || 0,
-    selectedScenarioId: selectedScenario?.id,
-    completedCount: completedScenarios.length,
-    isLastScenario
-  });
+          if (
+            prev.lastCompletedDate === yesterdayStr ||
+            prev.currentStreak === 0
+          ) {
+            newStreak = prev.currentStreak + 1;
+          }
+        }
+
+        return {
+          completedScenarios: {
+            ...prev.completedScenarios,
+            [String(selectedScenario.id)]: {
+              completedAt: new Date().toISOString(),
+              stepsCorrect,
+              totalSteps,
+              score,
+            },
+          },
+          currentStreak: newStreak,
+          lastCompletedDate: today,
+          bestStreak: Math.max(prev.bestStreak, newStreak),
+        };
+      });
+
+      toast({
+        title: "Scenario complete!",
+        description: `You scored ${score}% — ${stepsCorrect}/${totalSteps} steps correct`,
+      });
+    }
+  }, [selectedScenario, currentStepIndex, stepResults, toast]);
+
+  const exitScenario = useCallback(() => {
+    setSelectedScenario(null);
+    setCurrentStepIndex(0);
+    setSelectedOption(null);
+    setShowFeedback(false);
+    setStepResults([]);
+    setIsComplete(false);
+  }, []);
+
+  const nextScenario = useCallback(() => {
+    if (!selectedScenario) return;
+    const currentIdx = scenarios.findIndex(
+      (s) => s.id === selectedScenario.id
+    );
+    if (currentIdx < scenarios.length - 1) {
+      startScenario(scenarios[currentIdx + 1]);
+    } else {
+      exitScenario();
+    }
+  }, [selectedScenario, scenarios, startScenario, exitScenario]);
 
   return {
-    scenarios: safetyScenarios || [],
-    allScenarios: safetyScenarios || [],
-    isLoading,
-    error,
+    // Data
+    scenarios,
+    allScenarios: safetyScenarios,
+    categories,
+    totalCount,
+    completedCount,
+    completionPercentage,
+    currentStreak: progress.currentStreak,
+    bestStreak: progress.bestStreak,
+
+    // Scenario state
     selectedScenario,
+    currentStepIndex,
     selectedOption,
     showFeedback,
-    completedScenarios,
-    isLastScenario,
-    handleSelectScenario,
-    handleOptionSelect,
-    handleSubmitAnswer,
-    handleReset,
-    handleNextScenario
+    stepResults,
+    isComplete,
+
+    // Filters
+    difficultyFilter,
+    categoryFilter,
+    setDifficultyFilter,
+    setCategoryFilter,
+
+    // Actions
+    startScenario,
+    selectOption,
+    submitStep,
+    advanceStep,
+    exitScenario,
+    nextScenario,
+    isScenarioCompleted,
   };
 };

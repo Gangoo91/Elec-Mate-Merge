@@ -1,4 +1,4 @@
-import { ArrowLeft, Eye, Gauge, CloudRain, AlertTriangle } from "lucide-react";
+import { ArrowLeft, User, Users, Flame, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/upskilling/cards";
@@ -7,31 +7,31 @@ import useSEO from "@/hooks/useSEO";
 const sections = [
   {
     id: 1,
-    title: "Warning Signs and Symptoms",
-    icon: Eye,
+    title: "Signs and Symptoms in Yourself",
+    icon: User,
     description:
-      "Behavioural, emotional, physical, and cognitive changes to look out for in yourself and others",
+      "Self-awareness, mood changes, physical symptoms, and recognising when you're not okay",
   },
   {
     id: 2,
-    title: "Understanding Stress",
-    icon: Gauge,
+    title: "Spotting Changes in Others",
+    icon: Users,
     description:
-      "The stress response, acute vs chronic stress, workplace triggers, and when stress becomes harmful",
+      "Behavioural changes, withdrawal, performance drops, and what to look for on site",
   },
   {
     id: 3,
-    title: "Depression and Anxiety",
-    icon: CloudRain,
+    title: "Stress, Anxiety and Burnout",
+    icon: Flame,
     description:
-      "How depression and anxiety present, the difference between feeling down and clinical conditions, and risk factors",
+      "The difference between stress and burnout, the stages of burnout, and early warning signs",
   },
   {
     id: 4,
-    title: "Crisis and Suicidal Thoughts",
+    title: "Crisis Awareness and Suicide Prevention",
     icon: AlertTriangle,
     description:
-      "Recognising someone in crisis, understanding suicidal ideation, and knowing when to act immediately",
+      "Warning signs, risk factors, construction suicide statistics, and what to do if someone is in crisis",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function MentalHealthModule2() {
   useSEO({
     title: "Module 2: Recognising the Signs | Mental Health Awareness",
     description:
-      "Warning signs, stress, depression, anxiety, and crisis situations.",
+      "Signs and symptoms in yourself and others, stress vs burnout, and crisis awareness.",
   });
 
   return (
@@ -66,20 +66,18 @@ export default function MentalHealthModule2() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">
-                MODULE 2
-              </span>
+              <span className="text-rose-400 text-xs font-semibold">MODULE 2</span>
               <span className="text-white text-xs">&bull;</span>
               <span className="text-white text-xs">4 Sections</span>
               <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Recognising the Signs
             </h1>
             <p className="text-white text-sm sm:text-base">
-              Warning signs and symptoms, understanding stress, depression and
-              anxiety, and recognising crisis situations
+              Signs in yourself and others, the difference between stress and
+              burnout, and how to recognise when someone is in crisis
             </p>
           </div>
 

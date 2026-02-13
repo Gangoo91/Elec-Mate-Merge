@@ -14,24 +14,11 @@ const toolLinks = [
   { to: '/tools/minor-works-certificate', label: 'Minor Works' },
   { to: '/tools/electrical-testing-calculators', label: 'Testing Calculators' },
   { to: '/tools/ai-electrician', label: 'AI Tools' },
-  { to: '/tools/earth-loop-impedance-calculator', label: 'Earth Loop Impedance' },
-  { to: '/tools/max-demand-calculator', label: 'Max Demand' },
-  { to: '/tools/conduit-fill-calculator', label: 'Conduit Fill' },
-  { to: '/tools/ev-charger-certificate', label: 'EV Charger Certificate' },
-  { to: '/tools/rcd-testing-guide', label: 'RCD Testing Guide' },
-  { to: '/tools/eic-certificate', label: 'EIC Certificate' },
-  { to: '/tools/pat-testing', label: 'PAT Testing' },
 ];
 
 const trainingLinks = [
   { to: '/training/18th-edition-course', label: '18th Edition Course' },
   { to: '/training/electrical-apprentice', label: 'Apprentice Training' },
-  { to: '/training/am2-exam-preparation', label: 'AM2 Exam Preparation' },
-  { to: '/training/inspection-and-testing', label: 'Inspection & Testing' },
-];
-
-const guideLinks = [
-  { to: '/guides/bs7671-observation-codes', label: 'Observation Codes Guide' },
 ];
 
 export function PublicPageLayout({ children }: PublicPageLayoutProps) {
@@ -128,19 +115,6 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
               <h4 className="font-semibold text-white mb-3">Training</h4>
               <ul className="space-y-2">
                 {trainingLinks.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <h4 className="font-semibold text-white mb-3 mt-6">Guides</h4>
-              <ul className="space-y-2">
-                {guideLinks.map((link) => (
                   <li key={link.to}>
                     <Link
                       to={link.to}
