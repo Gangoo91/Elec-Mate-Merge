@@ -27,7 +27,7 @@ const faqs = [
   {
     question: 'Is Elec-Mate better than CertsApp?',
     answer:
-      'It depends on what you need from your electrician app. CertsApp is a capable tool for certificates and calculations that has built a solid user base. If you primarily need certificates and some calculators, CertsApp is a reasonable choice. Elec-Mate is a more comprehensive platform that includes everything CertsApp offers plus 5 AI specialist tools, full training courses (18th Edition, Level 2/3, AM2, EPA), and business management features (quoting, invoicing, job scheduling, payment collection). For electricians who want a single app for everything, Elec-Mate provides more value.',
+      'It depends on what you need from your electrician app. CertsApp is a capable tool for certificates and calculations that has built a solid user base. If you primarily need certificates and some calculators, CertsApp is a reasonable choice. Elec-Mate is a more comprehensive platform that includes everything CertsApp offers plus 8 Elec-AI specialist tools, full training courses (18th Edition, Level 2/3, AM2, EPA), and business management features (quoting, invoicing, job scheduling, payment collection). For electricians who want a single app for everything, Elec-Mate provides more value.',
   },
   {
     question: 'Can I switch from CertsApp to Elec-Mate?',
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'Which app has better calculators, Elec-Mate or CertsApp?',
     answer:
-      'CertsApp includes some electrical calculators alongside its certification features. Elec-Mate includes over 50 specialist calculators covering cable sizing (BS 7671 Appendix 4 method), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance (Zs), prospective fault current, disconnection times, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more. For electricians who perform BS 7671 calculations regularly, Elec-Mate offers a significantly more comprehensive calculator suite.',
+      'CertsApp includes some electrical calculators alongside its certification features. Elec-Mate includes over 70 specialist calculators covering cable sizing (BS 7671 Appendix 4 method), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance (Zs), prospective fault current, disconnection times, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more. For electricians who perform BS 7671 calculations regularly, Elec-Mate offers a significantly more comprehensive calculator suite.',
   },
 ];
 
@@ -60,15 +60,15 @@ const features = [
   },
   {
     icon: Calculator,
-    title: '50+ BS 7671 Calculators',
+    title: '70 BS 7671 Calculators',
     description:
       'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more — all referencing 18th Edition tables.',
   },
   {
     icon: Brain,
-    title: '5 AI Specialist Tools',
+    title: '8 Elec-AI Specialist Tools',
     description:
-      'Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, and Health & Safety specialist. AI tools trained on electrical industry data that CertsApp does not offer.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup. AI capabilities that CertsApp does not offer.',
   },
   {
     icon: GraduationCap,
@@ -95,7 +95,7 @@ const softwareAppSchema = {
   name: 'Elec-Mate',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
-  description: 'All-in-one platform for UK electricians: 8 certificates, 50+ calculators, 5 AI tools, training courses, and business management.',
+  description: 'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
   url: 'https://elec-mate.com/compare/elec-mate-vs-certsapp',
   offers: {
     '@type': 'Offer',
@@ -202,7 +202,7 @@ export default function ElecMateVsCertsAppPage() {
               Elec-Mate is a comprehensive all-in-one platform built specifically for UK electricians. It goes well beyond certificates and calculators to include AI-powered specialist tools, full professional training courses, and business management capabilities — all in a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing), over 50 specialist electrical calculators referencing BS 7671:2018+A2:2022, 5 AI tools (Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, and Health & Safety specialist), full training courses (18th Edition, Level 2/3 Electrical Installation, AM2 preparation, EPA simulator), and business management features (job scheduling, quoting, invoicing, Stripe payment collection, Xero accounting integration).
+              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing), over 70 specialist electrical calculators referencing BS 7671:2018+A3:2024, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical Installation, AM2 preparation, EPA simulator), and business management features (job scheduling, quoting, invoicing, Stripe payment collection, Xero accounting integration).
             </p>
             <p>
               Elec-Mate works on iOS, Android, and desktop via a Progressive Web App (PWA). It provides full offline support with automatic local saves every 10 seconds and cloud syncing every 30 seconds when connectivity returns. Pricing starts from £4.99 per month with unlimited usage across all features, and every plan includes a 7-day free trial with full access.
@@ -276,7 +276,7 @@ export default function ElecMateVsCertsAppPage() {
                 CertsApp includes a selection of electrical calculators, which is one of its differentiators compared to certificate-only apps. Having calculators alongside certificates in a single app is genuinely useful for on-site work. The exact range of calculators available varies and may continue to expand.
               </p>
               <p>
-                Elec-Mate includes over 50 specialist electrical calculators. These cover the full range of BS 7671 calculations: cable sizing to Appendix 4, voltage drop verification (including the tabular method and the mV/A/m method), maximum demand calculations, diversity factors (BS 7671 Table 7.1 and beyond), conduit fill rates, trunking fill rates, earth fault loop impedance checks against maximum Zs values for every protective device type, prospective fault current, disconnection time verification, cable derating for grouping (Table 4C1/4C2/4C3), cable derating for ambient temperature (Table 4B1/4B2), the adiabatic equation for protective conductor sizing, and many more.
+                Elec-Mate includes over 70 specialist electrical calculators. These cover the full range of BS 7671 calculations: cable sizing to Appendix 4, voltage drop verification (including the tabular method and the mV/A/m method), maximum demand calculations, diversity factors (BS 7671 Table 7.1 and beyond), conduit fill rates, trunking fill rates, earth fault loop impedance checks against maximum Zs values for every protective device type, prospective fault current, disconnection time verification, cable derating for grouping (Table 4C1/4C2/4C3), cable derating for ambient temperature (Table 4B1/4B2), the adiabatic equation for protective conductor sizing, and many more.
               </p>
               <p>
                 The depth of calculator coverage matters for electricians who work on anything beyond basic domestic installations. Commercial projects, industrial installations, and complex domestic work all require calculations that go beyond simple cable sizing. Having the right calculator available on site — rather than having to look up tables in the book and work through the maths manually — saves time and reduces errors.
@@ -298,7 +298,7 @@ export default function ElecMateVsCertsAppPage() {
                 CertsApp does not currently include AI tools. This is not a criticism — AI features are a relatively new development in the electrician app space, and most apps do not yet offer them.
               </p>
               <p>
-                Elec-Mate includes five AI specialist agents, each designed for a specific aspect of electrical work. These are not generic chatbots — they are specialist tools trained on electrical industry data:
+                Elec-Mate includes eight Elec-AI specialist agents and 12 AI-powered tools, each designed for a specific aspect of electrical work. These are not generic chatbots — they are specialist tools trained on electrical industry data:
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
@@ -344,7 +344,7 @@ export default function ElecMateVsCertsAppPage() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>18th Edition (BS 7671:2018+A2:2022):</strong> Complete course content covering the current Wiring Regulations, structured for both initial learning and revision.</span>
+                  <span><strong>18th Edition (BS 7671:2018+A3:2024):</strong> Complete course content covering the current Wiring Regulations, structured for both initial learning and revision.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -405,7 +405,7 @@ export default function ElecMateVsCertsAppPage() {
                 However, for busier electricians producing 10, 15, or 20+ certificates per month, credit-based pricing adds up quickly. It also creates a subtle disincentive to produce certificates — you might hesitate to certify a small job because of the per-certificate cost, which is not ideal from a compliance perspective.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All features are included: all 8 certificate types (unlimited), all 50+ calculators, all 5 AI tools, all training courses, and all business management features. There are no per-certificate charges, no credit limits, and no feature restrictions. Every plan comes with a 7-day free trial that includes full access to everything.
+                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All features are included: all 8 certificate types (unlimited), all 70 calculators, all 8 Elec-AI tools, all training courses, and all business management features. There are no per-certificate charges, no credit limits, and no feature restrictions. Every plan comes with a 7-day free trial that includes full access to everything.
               </p>
               <p>
                 The break-even point is typically around 3 to 5 certificates per month, depending on CertsApp's credit pricing. Beyond that, Elec-Mate's flat subscription is cheaper per certificate — and you also get access to AI tools, training, and business management that CertsApp does not offer at any price. For electricians producing certificates regularly, the unlimited model provides predictable costs and better value.
@@ -479,7 +479,7 @@ export default function ElecMateVsCertsAppPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You want 50+ BS 7671 calculators covering every calculation you might need on site</span>
+                  <span>You want 70 BS 7671 calculators covering every calculation you might need on site</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -506,7 +506,7 @@ export default function ElecMateVsCertsAppPage() {
               CertsApp is a capable app that combines certificates and calculators in a mobile-friendly package. Its credit-based pricing model works well for electricians who produce a small number of certificates and want a straightforward, no-subscription approach. It does what it does competently and has earned a solid reputation in the market.
             </p>
             <p>
-              Elec-Mate offers substantially more breadth and depth. With 8 certificate types, 50+ calculators, 5 AI specialist tools, complete training courses, and integrated business management, it is designed to be the only app a UK electrician needs. The flat monthly pricing with unlimited usage makes it more economical for anyone producing certificates regularly, and the additional features (AI, training, business) provide value that no certificate-focused app can match.
+              Elec-Mate offers substantially more breadth and depth. With 8 certificate types, 70 calculators, 8 Elec-AI specialist tools, complete training courses, and integrated business management, it is designed to be the only app a UK electrician needs. The flat monthly pricing with unlimited usage makes it more economical for anyone producing certificates regularly, and the additional features (AI, training, business) provide value that no certificate-focused app can match.
             </p>
             <p>
               The best way to decide is to try Elec-Mate alongside your current workflow. The 7-day free trial gives you full access to every feature with no commitment. Compare the experience directly, and choose the tool that genuinely makes your working day easier and more productive.

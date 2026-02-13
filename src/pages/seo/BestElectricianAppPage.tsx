@@ -29,7 +29,7 @@ const faqs = [
   {
     question: 'What is the best app for electricians in the UK?',
     answer:
-      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 8 certificate types, 50+ calculators, 5 AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £4.99 per month with a 7-day free trial.',
+      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 8 certificate types, 70 calculators, 8 Elec-AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £4.99 per month with a 7-day free trial.',
   },
   {
     question: 'Is there an app for EICR certificates?',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Can I use an electrician app for BS 7671 calculations?',
     answer:
-      'Some apps include calculators, but the range varies enormously. Generic calculator apps may cover a few basics like cable sizing or voltage drop. Elec-Mate includes over 50 specialist electrical calculators covering cable sizing (to BS 7671 Appendix 4), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance, prospective fault current, disconnection times, cable ratings for grouping and ambient temperature, and many more. All calculations reference the current 18th Edition tables and formulae.',
+      'Some apps include calculators, but the range varies enormously. Generic calculator apps may cover a few basics like cable sizing or voltage drop. Elec-Mate includes over 70 specialist electrical calculators covering cable sizing (to BS 7671 Appendix 4), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance, prospective fault current, disconnection times, cable ratings for grouping and ambient temperature, and many more. All calculations reference the current 18th Edition tables and formulae.',
   },
 ];
 
@@ -62,15 +62,15 @@ const features = [
   },
   {
     icon: Calculator,
-    title: '50+ BS 7671 Calculators',
+    title: '70 BS 7671 Calculators',
     description:
       'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more — all referencing 18th Edition tables.',
   },
   {
     icon: Brain,
-    title: '5 AI Specialist Tools',
+    title: '8 Elec-AI Specialist Tools',
     description:
-      'Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, and Health & Safety specialist. AI trained on electrical industry data to help you work faster.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup.',
   },
   {
     icon: GraduationCap,
@@ -136,7 +136,7 @@ const itemListSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Elec-Mate',
-      description: 'All-in-one platform: 8 certificates, 50+ calculators, 5 AI tools, training courses, business management.',
+      description: 'All-in-one platform: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, business management.',
       url: 'https://elec-mate.com',
     },
     {
@@ -222,7 +222,7 @@ export default function BestElectricianAppPage() {
               <strong>Calculators:</strong> A good electrician app should include calculators that reference the current 18th Edition tables directly. Cable sizing to BS 7671 Appendix 4, voltage drop verification, maximum demand calculations, diversity factors, conduit and trunking fill rates, earth fault loop impedance checks, prospective fault current, disconnection time verification, cable derating for grouping and ambient temperature — these are the calculations you do every day. Some apps include a handful; others include dozens.
             </p>
             <p>
-              <strong>BS 7671 Compliance:</strong> The app should be built around the current edition of the Wiring Regulations — BS 7671:2018+A2:2022 — with an understanding that Amendment 3 (A3:2024) added Regulation 530.3.201 covering bidirectional and unidirectional devices. Any certificate forms should follow the model forms in Appendix 6, and calculations should reference the correct tables. An app that is not kept up to date with regulation changes is a liability.
+              <strong>BS 7671 Compliance:</strong> The app should be built around the current edition of the Wiring Regulations — BS 7671:2018+A3:2024 — with an understanding that Amendment 3 (A3:2024) added Regulation 530.3.201 covering bidirectional and unidirectional devices. Any certificate forms should follow the model forms in Appendix 6, and calculations should reference the correct tables. An app that is not kept up to date with regulation changes is a liability.
             </p>
             <p>
               <strong>Ease of Use:</strong> Electricians work on site, often in poor lighting, wearing gloves, and under time pressure. The app must be mobile-first with large touch targets, clear navigation, and a workflow that matches how you actually complete an inspection or test. If it takes longer to use the app than to write on paper, it is not fit for purpose.
@@ -248,7 +248,7 @@ export default function BestElectricianAppPage() {
               The market for electrician software in the UK has matured significantly over the past few years. What was once a niche dominated by desktop certificate packages has shifted to mobile-first apps designed for on-site use. Here is an honest overview of the main players.
             </p>
             <p>
-              <strong>Elec-Mate</strong> is the newest and most comprehensive platform, designed as an all-in-one tool for UK electricians. It combines 8 certificate types, over 50 BS 7671 calculators, 5 AI specialist tools (Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, Health & Safety), full training courses (18th Edition, Level 2, Level 3, AM2, EPA), and business management features (quoting, invoicing, job scheduling, Stripe payments, Xero integration) into a single mobile-first app. Pricing starts from £4.99 per month with unlimited usage and a 7-day free trial. It works on iOS, Android, and desktop via PWA.
+              <strong>Elec-Mate</strong> is the newest and most comprehensive platform, designed as an all-in-one tool for UK electricians. It combines 8 certificate types, over 70 BS 7671 calculators, 8 Elec-AI specialist tools (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, Regulation Lookup), full training courses (18th Edition, Level 2, Level 3, AM2, EPA), and business management features (quoting, invoicing, job scheduling, Stripe payments, Xero integration) into a single mobile-first app. Pricing starts from £4.99 per month with unlimited usage and a 7-day free trial. It works on iOS, Android, and desktop via PWA.
             </p>
             <p>
               <strong>iCertifi</strong> is an established certificate-focused app that has been serving UK electricians for several years. It offers EICR, EIC, Minor Works, and some additional certificate types. It includes basic calculators and is well-regarded for its reliability and straightforward interface. iCertifi is a solid choice for electricians whose primary need is producing certificates quickly and professionally.
@@ -292,7 +292,7 @@ export default function BestElectricianAppPage() {
               },
               {
                 feature: 'BS 7671 Calculators',
-                elecmate: '50+ (cable sizing, voltage drop, Zs, max demand, diversity, conduit/trunking fill, and more)',
+                elecmate: '70 (cable sizing, voltage drop, Zs, max demand, diversity, conduit/trunking fill, and more)',
                 icertifi: 'Basic / limited selection',
                 certsapp: 'Some calculators included',
                 generic: 'Varies — standalone apps may cover 5-10',
@@ -303,7 +303,7 @@ export default function BestElectricianAppPage() {
               },
               {
                 feature: 'AI Tools',
-                elecmate: '5 specialists (Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, Health & Safety)',
+                elecmate: '8 Elec-AI specialists (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, Regulation Lookup)',
                 icertifi: 'None',
                 certsapp: 'None',
                 generic: 'None',
@@ -396,13 +396,13 @@ export default function BestElectricianAppPage() {
               The fundamental difference is scope. Most electrician apps solve one or two problems well — typically certificates and perhaps a few calculators. Elec-Mate was designed from the ground up to be the single platform that covers everything a UK electrician needs in their daily work. Instead of switching between a certificate app, a calculator app, a training platform, and separate business software, everything lives in one place.
             </p>
             <p>
-              The AI tools are a significant differentiator. Elec-Mate includes five AI specialist agents, each trained on electrical industry data. The Circuit Designer helps plan circuit layouts and checks against BS 7671 requirements. The Cost Engineer uses real trade pricing data and labour timing to produce accurate job estimates. The Installation Guide provides step-by-step guidance for specific installation scenarios. The Maintenance Agent helps diagnose faults and plan maintenance schedules. The Health & Safety specialist generates RAMS (Risk Assessments and Method Statements) tailored to electrical work.
+              The AI tools are a significant differentiator. Elec-Mate includes eight Elec-AI specialist agents and 12 AI-powered tools, each trained on electrical industry data. The Circuit Designer helps plan circuit layouts and checks against BS 7671 requirements. The Cost Engineer uses real trade pricing data and labour timing to produce accurate job estimates. The Installation Guide provides step-by-step guidance for specific installation scenarios. The Maintenance Agent helps diagnose faults and plan maintenance schedules. The Health & Safety specialist generates RAMS (Risk Assessments and Method Statements) tailored to electrical work.
             </p>
             <p>
               No other electrician app on the UK market currently offers AI tools of this kind. As the industry continues to evolve, AI assistance will become as standard as digital certificates have become — and Elec-Mate is the first platform to bring these capabilities to working electricians.
             </p>
             <p>
-              The training platform is another area where Elec-Mate stands alone. Full courses covering the 18th Edition (BS 7671:2018+A2:2022), City & Guilds Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, and an End Point Assessment simulator are built into the app. Whether you are an apprentice studying for your qualifications or a qualified electrician revising for a regulation update, the learning material is always in your pocket.
+              The training platform is another area where Elec-Mate stands alone. Full courses covering the 18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, and an End Point Assessment simulator are built into the app. Whether you are an apprentice studying for your qualifications or a qualified electrician revising for a regulation update, the learning material is always in your pocket.
             </p>
           </div>
         </div>
@@ -483,7 +483,7 @@ export default function BestElectricianAppPage() {
               <strong>Tiered subscriptions</strong> offer different feature sets at different price points. The lowest tier may include only basic certificates, while calculators, additional certificate types, or business features require a higher tier. This can be cost-effective if the lowest tier covers your needs, but you often end up paying more than expected once you discover which features you actually need.
             </p>
             <p>
-              <strong>Flat monthly pricing with unlimited usage</strong> is the model Elec-Mate uses. Starting from £4.99 per month, every feature is included: all 8 certificate types, all 50+ calculators, all 5 AI tools, all training courses, and all business management features. There is no per-certificate charge, no feature gating, and no surprise costs. The 7-day free trial gives you full access to everything so you can evaluate the platform properly before committing.
+              <strong>Flat monthly pricing with unlimited usage</strong> is the model Elec-Mate uses. Starting from £4.99 per month, every feature is included: all 8 certificate types, all 70 calculators, all 8 Elec-AI tools, all training courses, and all business management features. There is no per-certificate charge, no feature gating, and no surprise costs. The 7-day free trial gives you full access to everything so you can evaluate the platform properly before committing.
             </p>
             <p>
               For a sole trader producing 10 to 15 certificates per month and using calculators daily, the flat monthly model typically saves £20 to £50 per month compared to per-certificate alternatives — and you get all the additional features (AI tools, training, business management) that other apps simply do not offer at any price.
@@ -554,7 +554,7 @@ export default function BestElectricianAppPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Try the most complete electrician app in the UK"
-        subheading="8 certificates, 50+ calculators, 5 AI tools, full training courses, and business management. 7-day free trial, cancel anytime."
+        subheading="8 certificates, 70 calculators, 8 Elec-AI tools, full training courses, and business management. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

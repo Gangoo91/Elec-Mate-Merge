@@ -85,7 +85,7 @@ const features = [
   },
   {
     icon: Calculator,
-    title: '50+ Electrical Calculators',
+    title: '70 Electrical Calculators',
     description:
       'Beyond RCD testing, access cable sizing, voltage drop, maximum demand, Zs verification, prospective fault current, and dozens more calculations.',
   },
@@ -99,7 +99,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Compliant',
     description:
-      'Built to BS 7671:2018 + Amendment 2:2022. All test limit values, observation codes, and form structures follow the current 18th Edition standard.',
+      'Built to BS 7671:2018 + Amendment 3:2024. All test limit values, observation codes, and form structures follow the current 18th Edition standard.',
   },
   {
     icon: Smartphone,
@@ -121,7 +121,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Complete RCD testing tools for UK electricians. Trip time validation, EICR test result recording, and BS 7671 compliance checking. Part of 50+ electrical calculators.',
+    'Complete RCD testing tools for UK electricians. Trip time validation, EICR test result recording, and BS 7671 compliance checking. Part of 70 electrical calculators.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -165,7 +165,7 @@ export default function RCDTestingGuidePage() {
   useSEO({
     title: 'RCD Testing Guide | Procedures & Pass/Fail Criteria',
     description:
-      'Complete guide to RCD testing procedures for UK electricians. Type AC, A, B, F devices. Trip times, test currents, and BS 7671 requirements. 50+ electrical calculators included.',
+      'Complete guide to RCD testing procedures for UK electricians. Type AC, A, B, F devices. Trip times, test currents, and BS 7671 requirements. 70 electrical calculators included.',
   });
 
   return (
@@ -182,7 +182,7 @@ export default function RCDTestingGuidePage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <ShieldCheck className="w-4 h-4" />
-            50+ Electrical Calculators Included
+            70 Electrical Calculators Included
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             RCD Testing Guide

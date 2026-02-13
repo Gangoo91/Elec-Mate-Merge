@@ -97,9 +97,9 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'BS 7671:2018+A2:2022 Compliant',
+    title: 'BS 7671:2018+A3:2024 Compliant',
     description:
-      'All maximum Zs values verified against the current 18th Edition wiring regulations including Amendment 2. Updated tables for all protective device types.',
+      'All maximum Zs values verified against the current 18th Edition wiring regulations including Amendment 3. Updated tables for all protective device types.',
   },
   {
     icon: CircuitBoard,
@@ -160,7 +160,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
   useSEO({
     title: 'Earth Loop Impedance Calculator (Zs) | BS 7671',
     description:
-      'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction. Part of 50+ electrical calculators.',
+      'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction. Part of 70 electrical calculators.',
   });
 
   return (
@@ -177,7 +177,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
-            Part of 50+ Electrical Calculators
+            Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Earth Loop Impedance Calculator
@@ -500,7 +500,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
           </div>
 
           <p className="text-white text-sm leading-relaxed">
-            These values are from BS 7671:2018+A2:2022 and represent the maximum Zs at conductor operating temperature. When comparing against site measurements taken at ambient temperature, use the 80% rule or apply the appropriate correction factor as described above.
+            These values are from BS 7671:2018+A3:2024 and represent the maximum Zs at conductor operating temperature. When comparing against site measurements taken at ambient temperature, use the 80% rule or apply the appropriate correction factor as described above.
           </p>
         </div>
       </section>

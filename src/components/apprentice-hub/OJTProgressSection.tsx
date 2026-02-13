@@ -125,7 +125,6 @@ export function OJTProgressSection() {
   const { entries, totalTime, addTimeEntry } = useTimeEntries();
   const { otjGoal, getComplianceStatus } = useComplianceTracking();
   const { getVerificationForTimeEntry } = useTimeEntryVerification();
-  const { getVerificationForTimeEntry } = useTimeEntryVerification();
   const { goals } = useOJTGoals();
   const { assessments } = useOJTAssessments();
 

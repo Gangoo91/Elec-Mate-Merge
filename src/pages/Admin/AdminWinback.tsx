@@ -87,18 +87,6 @@ export default function AdminWinback() {
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
 
-  // Auto-batch state
-  const [batchSending, setBatchSending] = useState(false);
-  const [batchProgress, setBatchProgress] = useState({
-    sent: 0,
-    failed: 0,
-    total: 0,
-    batch: 0,
-    totalBatches: 0,
-  });
-  const [confirmResend, setConfirmResend] = useState(false);
-  const [resetting, setResetting] = useState(false);
-
   // Fetch campaign stats
   const {
     data: stats,

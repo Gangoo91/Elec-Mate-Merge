@@ -111,3 +111,33 @@ export function useUpdateDiaryEntry() {
     },
   });
 }
+
+export function useDeleteDiaryEntry() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("electrician_site_diary")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["electrician-site-diary"] });
+      toast({
+        title: "Entry Deleted",
+        description: "Site diary entry has been removed.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Could not delete diary entry.",
+        variant: "destructive",
+      });
+    },
+  });
+}

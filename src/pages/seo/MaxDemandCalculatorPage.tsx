@@ -105,7 +105,7 @@ const features = [
     icon: BookOpen,
     title: 'BS 7671 Appendix 12 Compliant',
     description:
-      'All calculations follow the methodology in BS 7671:2018+A2:2022 Appendix 12 and Table 1B. Verified against the current edition of the IET Wiring Regulations.',
+      'All calculations follow the methodology in BS 7671:2018+A3:2024 Appendix 12 and Table 1B. Verified against the current edition of the IET Wiring Regulations.',
   },
 ];
 
@@ -177,7 +177,7 @@ export default function MaxDemandCalculatorPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
-            Part of 50+ Electrical Calculators
+            Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Maximum Demand Calculator
@@ -242,7 +242,7 @@ export default function MaxDemandCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A2:2022 addresses maximum demand estimation in Appendix 12 (previously Appendix 1 in the 16th and 17th Editions). This appendix provides guidance on assessing the maximum demand of an installation and includes Table 1A (standard circuit arrangements for domestic premises) and Table 1B (allowances for diversity).
+              BS 7671:2018+A3:2024 addresses maximum demand estimation in Appendix 12 (previously Appendix 1 in the 16th and 17th Editions). This appendix provides guidance on assessing the maximum demand of an installation and includes Table 1A (standard circuit arrangements for domestic premises) and Table 1B (allowances for diversity).
             </p>
             <p>
               <strong className="text-yellow-400">Table 1A</strong> lists the standard circuit arrangements for a typical domestic dwelling, including the number and type of circuits for lighting, socket outlets, cooker, immersion heater, shower, and other fixed appliances. It serves as a reference for what circuits are expected in a standard domestic installation.

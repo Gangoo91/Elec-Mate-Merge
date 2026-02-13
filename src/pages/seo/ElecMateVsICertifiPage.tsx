@@ -27,7 +27,7 @@ const faqs = [
   {
     question: 'Is Elec-Mate better than iCertifi?',
     answer:
-      'It depends on what you need. iCertifi is an established, reliable certificate-focused app that does its core job well. If you only need to produce electrical certificates and want a proven, focused tool, iCertifi is a solid choice. Elec-Mate is better if you want everything in one app — it includes all the certificate types iCertifi offers plus additional ones (EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT), over 50 BS 7671 calculators, 5 AI specialist tools, full training courses, and business management features like quoting and invoicing. For most electricians, the all-in-one approach saves time and money.',
+      'It depends on what you need. iCertifi is an established, reliable certificate-focused app that does its core job well. If you only need to produce electrical certificates and want a proven, focused tool, iCertifi is a solid choice. Elec-Mate is better if you want everything in one app — it includes all the certificate types iCertifi offers plus additional ones (EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT), over 70 BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management features like quoting and invoicing. For most electricians, the all-in-one approach saves time and money.',
   },
   {
     question: 'Can I switch from iCertifi to Elec-Mate?',
@@ -42,7 +42,7 @@ const faqs = [
   {
     question: 'Which app has more calculators, Elec-Mate or iCertifi?',
     answer:
-      'Elec-Mate includes over 50 specialist electrical calculators covering cable sizing, voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance, prospective fault current, disconnection times, cable derating, and many more. iCertifi includes a more limited selection of basic calculators. If you regularly perform BS 7671 calculations on site, Elec-Mate provides a significantly broader toolkit.',
+      'Elec-Mate includes over 70 specialist electrical calculators covering cable sizing, voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance, prospective fault current, disconnection times, cable derating, and many more. iCertifi includes a more limited selection of basic calculators. If you regularly perform BS 7671 calculations on site, Elec-Mate provides a significantly broader toolkit.',
   },
   {
     question: 'Does Elec-Mate work on both iPhone and Android?',
@@ -60,15 +60,15 @@ const features = [
   },
   {
     icon: Calculator,
-    title: '50+ BS 7671 Calculators',
+    title: '70 BS 7671 Calculators',
     description:
       'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more. Far beyond iCertifi\'s basic calculator set.',
   },
   {
     icon: Brain,
-    title: '5 AI Specialist Tools',
+    title: '8 Elec-AI Specialist Tools',
     description:
-      'Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, and Health & Safety specialist. AI capabilities that no certificate-only app can match.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup. AI capabilities that no certificate-only app can match.',
   },
   {
     icon: GraduationCap,
@@ -95,7 +95,7 @@ const softwareAppSchema = {
   name: 'Elec-Mate',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
-  description: 'All-in-one platform for UK electricians: 8 certificates, 50+ calculators, 5 AI tools, training courses, and business management.',
+  description: 'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
   url: 'https://elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
@@ -202,7 +202,7 @@ export default function ElecMateVsICertifiPage() {
               Elec-Mate is a comprehensive, all-in-one platform built for UK electricians. Rather than focusing on a single aspect of the job, it combines electrical certification, BS 7671 calculators, AI-powered tools, professional training courses, and business management into a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 50 specialist electrical calculators, 5 AI tools (Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, and Health & Safety specialist), full training courses (18th Edition, Level 2/3 Electrical Installation, AM2, EPA simulator), and business management features (job scheduling, quoting, invoicing, Stripe payments, Xero integration).
+              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical Installation, AM2, EPA simulator), and business management features (job scheduling, quoting, invoicing, Stripe payments, Xero integration).
             </p>
             <p>
               Elec-Mate is a newer platform than iCertifi but was designed with the advantage of building on the lessons learned from existing tools in the market. It works on iOS, Android, and desktop via a Progressive Web App, with full offline support and automatic syncing. Pricing starts from £4.99 per month with unlimited usage across all features and a 7-day free trial.
@@ -279,7 +279,7 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                This is an area of significant difference between the two platforms. Elec-Mate includes over 50 specialist electrical calculators that reference BS 7671:2018+A2:2022 tables directly. These cover cable sizing (Appendix 4 method), voltage drop verification, maximum demand calculations, diversity factors, conduit and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault current, disconnection time verification, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more.
+                This is an area of significant difference between the two platforms. Elec-Mate includes over 70 specialist electrical calculators that reference BS 7671:2018+A3:2024 tables directly. These cover cable sizing (Appendix 4 method), voltage drop verification, maximum demand calculations, diversity factors, conduit and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault current, disconnection time verification, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more.
               </p>
               <p>
                 iCertifi includes a more limited selection of calculators. The available calculations may be sufficient for basic domestic work, but electricians who regularly perform complex calculations — commercial installations, industrial work, or any project requiring detailed cable sizing and verification — will find Elec-Mate's calculator suite significantly more comprehensive.
@@ -298,7 +298,7 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                This is the clearest differentiator. iCertifi does not include any AI tools. Elec-Mate includes five AI specialist agents, each designed for a specific aspect of electrical work:
+                This is the clearest differentiator. iCertifi does not include any AI tools. Elec-Mate includes eight Elec-AI specialist agents and 12 AI-powered tools, each designed for a specific aspect of electrical work:
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
@@ -339,7 +339,7 @@ export default function ElecMateVsICertifiPage() {
                 iCertifi does not include a training platform. It is a tool for working electricians, not a learning resource. This is a reasonable design decision — not every app needs to be everything to everyone.
               </p>
               <p>
-                Elec-Mate, by contrast, includes a full training platform with courses covering the 18th Edition (BS 7671:2018+A2:2022), City & Guilds Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, and an End Point Assessment (EPA) simulator. These courses are built into the app and accessible on any device.
+                Elec-Mate, by contrast, includes a full training platform with courses covering the 18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, and an End Point Assessment (EPA) simulator. These courses are built into the app and accessible on any device.
               </p>
               <p>
                 This matters most for apprentices and electricians who are studying for qualifications or revising for regulation updates. Having training material in the same app you use for work means you can study between jobs or during quiet periods without needing a separate platform. It also means employers can provide their apprentices with a single app that covers both training and practical tools.
@@ -377,7 +377,7 @@ export default function ElecMateVsICertifiPage() {
                 iCertifi uses a subscription model with various tiers. Pricing may include per-certificate charges or tiered feature access depending on the plan you choose. Check their current pricing on their website for the latest figures, as pricing structures can change.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All features are included at every tier — all 8 certificate types, all 50+ calculators, all 5 AI tools, all training courses, and all business management features. There are no per-certificate charges and no feature gating. Every plan includes a 7-day free trial with full access.
+                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All features are included at every tier — all 8 certificate types, all 70 calculators, all 8 Elec-AI tools, all training courses, and all business management features. There are no per-certificate charges and no feature gating. Every plan includes a 7-day free trial with full access.
               </p>
               <p>
                 The value calculation is straightforward: if you use certificates, calculators, and any of the additional features (AI tools, training, or business management), Elec-Mate provides significantly more value per pound spent. If you only need basic certificates and nothing else, iCertifi may be sufficient — and you should choose the tool that matches your actual needs.
@@ -444,7 +444,7 @@ export default function ElecMateVsICertifiPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You regularly perform BS 7671 calculations and want 50+ calculators at your fingertips</span>
+                  <span>You regularly perform BS 7671 calculations and want 70 calculators at your fingertips</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -475,7 +475,7 @@ export default function ElecMateVsICertifiPage() {
               iCertifi is a solid, established app that does certificates well. It has earned its place in the market and continues to serve UK electricians reliably. If certificates are your only need, it is a perfectly reasonable choice.
             </p>
             <p>
-              Elec-Mate offers significantly more. By combining certificates with 50+ calculators, 5 AI specialist tools, full training courses, and business management features, it eliminates the need for multiple separate apps and subscriptions. For the majority of UK electricians — whether sole traders, small contractors, or apprentices — the all-in-one approach saves both time and money.
+              Elec-Mate offers significantly more. By combining certificates with 70 calculators, 8 Elec-AI specialist tools, full training courses, and business management features, it eliminates the need for multiple separate apps and subscriptions. For the majority of UK electricians — whether sole traders, small contractors, or apprentices — the all-in-one approach saves both time and money.
             </p>
             <p>
               The best way to decide is to try both. Elec-Mate offers a 7-day free trial with full access to every feature, so you can compare the experience directly with whatever you are currently using. There is no commitment and no payment details required upfront for the trial period.

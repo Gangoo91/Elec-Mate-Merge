@@ -98,7 +98,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Compliance',
     description:
-      'Built to the current 18th Edition (BS 7671:2018 + Amendment 2:2022). Observation coding, test value validation, and form structure all follow the standard.',
+      'Built to the current 18th Edition (BS 7671:2018 + Amendment 3:2024). Observation coding, test value validation, and form structure all follow the standard.',
   },
   {
     icon: Clock,
@@ -205,7 +205,7 @@ export default function EICRCertificatePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <FileCheck2 className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671:2018 + A2:2022 Compliant</span>
+            <span className="text-sm font-medium text-yellow-400">BS 7671:2018 + A3:2024 Compliant</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Create Professional <span className="text-yellow-400">EICR Certificates</span> on Your Phone
@@ -517,7 +517,7 @@ export default function EICRCertificatePage() {
               model forms in BS 7671 Appendix 6, so there is nothing unfamiliar to learn.
             </p>
             <p>
-              The platform also includes 50+ electrical calculators covering cable sizing, voltage drop, maximum demand,
+              The platform also includes 70 electrical calculators covering cable sizing, voltage drop, maximum demand,
               diversity, conduit and trunking fill, and more. Combined with the EICR, EIC, and Minor Works certificate
               forms, it replaces the stack of paper forms, the separate calculator app, and the desktop certificate
               software — all in one mobile-first tool.

@@ -22,9 +22,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-const PAGE_TITLE = 'AI Electrician Tools | 5 BS 7671 Trained Specialists | Elec-Mate';
+const PAGE_TITLE = 'AI Electrician Tools | 8 BS 7671 Trained Specialists | Elec-Mate';
 const PAGE_DESCRIPTION =
-  '5 AI specialists trained on BS 7671:2018 + Amendment 3. Circuit Designer, Cost Engineer, Installation Guide, and Health & Safety. Ask anything about electrical regulations.';
+  '8 Elec-AI specialists trained on BS 7671:2018 + Amendment 3. Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup — plus 12 AI-powered tools. Ask anything about electrical regulations.';
 
 const softwareApplicationSchema = {
   '@type': 'SoftwareApplication',
@@ -51,7 +51,7 @@ const faqData = [
   {
     question: 'How is the AI trained on BS 7671 regulations?',
     answer:
-      'Each of the five AI specialists is built on a large language model that has been fine-tuned and augmented with retrieval-augmented generation (RAG) using the full text of BS 7671:2018+A2:2022, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The RAG system means the AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.3 for TN system disconnection times). The training data is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
+      'Each of the eight Elec-AI specialists is built on a large language model that has been fine-tuned and augmented with retrieval-augmented generation (RAG) using the full text of BS 7671:2018+A3:2024, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The RAG system means the AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.3 for TN system disconnection times). The training data is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
   },
   {
     question: 'Can the AI Circuit Designer produce a complete consumer unit schedule?',
@@ -71,7 +71,7 @@ const faqData = [
   {
     question: 'Is there a limit to how many questions I can ask the AI specialists?',
     answer:
-      'On the standard plan, you get 100 AI queries per month across all five specialists. The Professional plan includes 500 queries per month, and the Business plan offers unlimited queries. Each query includes the full conversation context, so follow-up questions within the same session count as a single query. For example, you can ask the Circuit Designer to create a schedule, then ask follow-up questions about specific circuits or modifications, all within one query allocation. Unused queries do not carry over to the following month.',
+      'On the standard plan, you get 100 AI queries per month across all eight specialists. The Professional plan includes 500 queries per month, and the Business plan offers unlimited queries. Each query includes the full conversation context, so follow-up questions within the same session count as a single query. For example, you can ask the Circuit Designer to create a schedule, then ask follow-up questions about specific circuits or modifications, all within one query allocation. Unused queries do not carry over to the following month.',
   },
 ];
 
@@ -97,7 +97,7 @@ const howToSchema = {
       '@type': 'HowToStep',
       position: 1,
       name: 'Choose your AI specialist',
-      text: 'Select from five specialists: Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, or Health & Safety. Each is optimised for a specific aspect of electrical work.',
+      text: 'Select from eight Elec-AI specialists: Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, or Regulation Lookup. Each is optimised for a specific aspect of electrical work.',
     },
     {
       '@type': 'HowToStep',
@@ -186,7 +186,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function AIElectricianToolsPage() {
   useSEO({
-    title: 'AI Electrician Tools | 5 BS 7671 Trained Specialists',
+    title: 'AI Electrician Tools | 8 BS 7671 Trained Specialists',
     description: PAGE_DESCRIPTION,
     schema: softwareApplicationSchema,
   });
@@ -204,16 +204,17 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Brain className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">5 AI Specialists Trained on BS 7671</span>
+            <span className="text-sm font-medium text-yellow-400">8 Elec-AI Specialists Trained on BS 7671</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
             AI Tools Built for{' '}
             <span className="text-yellow-400">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Five purpose-built AI specialists trained on BS 7671:2018, Amendment 2:2022, and Amendment 3:2024. Design
-            circuits, quote jobs, get installation guidance, plan maintenance, and generate health and safety documents
-            — all with regulation references you can verify.
+            Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A3:2024 (Amendment 3:2024), plus 12
+            AI-powered tools. Design circuits, quote jobs, get installation guidance, commission installations, plan
+            maintenance, generate health and safety documents, diagnose faults, and look up regulations — all with
+            regulation references you can verify.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -228,7 +229,7 @@ export default function AIElectricianToolsPage() {
       <section className="px-5 pb-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-10">
-            Five Specialists, One Platform
+            Eight Specialists, One Platform
           </h2>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -247,7 +248,7 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Circuit Designer is the most technically advanced of the five specialists. It takes a plain-English
+              The Circuit Designer is the most technically advanced of the eight specialists. It takes a plain-English
               description of an installation and produces a complete electrical design that you can take straight to site.
               Describe a property — "four-bedroom detached house, electric vehicle charger in the garage, 10.8kW
               electric shower, induction hob, gas boiler, combination of LED downlights and pendant lights throughout"
@@ -428,7 +429,7 @@ export default function AIElectricianToolsPage() {
                 step: '1',
                 title: 'Choose your specialist',
                 description:
-                  'Pick from Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, or Health & Safety depending on what you need.',
+                  'Pick from eight Elec-AI specialists — Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, or Regulation Lookup — depending on what you need.',
               },
               {
                 step: '2',
@@ -476,7 +477,7 @@ export default function AIElectricianToolsPage() {
               Regulations and supporting guidance documents.
             </p>
             <p>
-              The core training data includes BS 7671:2018+A2:2022, which is the current 18th Edition of the IET Wiring
+              The core training data includes BS 7671:2018+A3:2024, which is the current 18th Edition of the IET Wiring
               Regulations — the standard that governs every electrical installation in the United Kingdom. It also
               includes Amendment 3:2024 (A3:2024), issued on 31 July 2024, which adds Regulation 530.3.201 covering
               the requirements for bidirectional and unidirectional protective devices. This amendment is particularly
@@ -493,7 +494,7 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              'BS 7671:2018+A2:2022 (18th Edition)',
+              'BS 7671:2018+A3:2024 (18th Edition)',
               'Amendment 3:2024 (A3:2024)',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',

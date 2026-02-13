@@ -154,7 +154,7 @@ export default function BS7671ObservationCodesPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <BookOpen className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              BS 7671:2018 + A2:2022
+              BS 7671:2018 + A3:2024
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">

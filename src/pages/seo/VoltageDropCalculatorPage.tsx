@@ -107,9 +107,9 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A2:2022 Compliant',
+    title: 'BS 7671:2018+A3:2024 Compliant',
     description:
-      'All calculations follow the current 18th Edition wiring regulations including Amendment 2. Values verified against the published tables in Appendix 4.',
+      'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the published tables in Appendix 4.',
   },
 ];
 
@@ -163,7 +163,7 @@ export default function VoltageDropCalculatorPage() {
   useSEO({
     title: 'Voltage Drop Calculator UK | BS 7671 Compliant',
     description:
-      'Calculate voltage drop to BS 7671 limits. Check maximum cable run lengths, verify compliance with 3% lighting and 5% power limits. Part of 50+ free electrical calculators.',
+      'Calculate voltage drop to BS 7671 limits. Check maximum cable run lengths, verify compliance with 3% lighting and 5% power limits. Part of 70 free electrical calculators.',
   });
 
   return (
@@ -180,7 +180,7 @@ export default function VoltageDropCalculatorPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
-            Part of 50+ Electrical Calculators
+            Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Voltage Drop Calculator
@@ -242,7 +242,7 @@ export default function VoltageDropCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A2:2022, the 18th Edition of the IET Wiring Regulations, sets out the maximum permitted voltage drop for electrical installations in the United Kingdom. These limits are defined in <strong className="text-yellow-400">Regulation 525.1</strong> and quantified in <strong className="text-yellow-400">Table 4Ab</strong>.
+              BS 7671:2018+A3:2024, the 18th Edition of the IET Wiring Regulations, sets out the maximum permitted voltage drop for electrical installations in the United Kingdom. These limits are defined in <strong className="text-yellow-400">Regulation 525.1</strong> and quantified in <strong className="text-yellow-400">Table 4Ab</strong>.
             </p>
             <p>
               For installations supplied directly from a public low-voltage distribution system (i.e. most domestic and commercial properties connected to the DNO network), the limits in Table 4Ab are:
@@ -532,7 +532,7 @@ export default function VoltageDropCalculatorPage() {
             ))}
           </div>
           <p className="text-white text-sm mt-4 leading-relaxed">
-            These values are extracted from BS 7671:2018+A2:2022, Table 4D5B (Reference Method C — clipped direct). Always verify against the current edition of the regulations for your specific installation method.
+            These values are extracted from BS 7671:2018+A3:2024, Table 4D5B (Reference Method C — clipped direct). Always verify against the current edition of the regulations for your specific installation method.
           </p>
         </div>
       </section>

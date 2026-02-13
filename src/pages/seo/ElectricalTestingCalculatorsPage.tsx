@@ -25,7 +25,7 @@ import { Button } from '@/components/ui/button';
 
 const PAGE_TITLE = 'Electrical Testing Calculators | Zs, Fault Current, RCD | Elec-Mate';
 const PAGE_DESCRIPTION =
-  '50+ electrical calculators for UK electricians. Earth loop impedance, fault current, RCD testing, conduit fill, max demand, and more. All BS 7671 compliant.';
+  '70 electrical calculators for UK electricians. Earth loop impedance, fault current, RCD testing, conduit fill, max demand, and more. All BS 7671 compliant.';
 
 const calculatorList = [
   'Earth Loop Impedance (Zs) Calculator',
@@ -90,7 +90,7 @@ const faqData = [
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A2:2022 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A3:2024), issued 31 July 2024, adds Regulation 530.3.201 covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A3:2024 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A3:2024), issued 31 July 2024, adds Regulation 530.3.201 covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -222,7 +222,7 @@ export default function ElectricalTestingCalculatorsPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Calculator className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">50+ BS 7671 Compliant Calculators</span>
+            <span className="text-sm font-medium text-yellow-400">70 BS 7671 Compliant Calculators</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
             Electrical Testing Calculators for{' '}
@@ -230,7 +230,7 @@ export default function ElectricalTestingCalculatorsPage() {
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Every calculation you need on site, from earth loop impedance and fault current to conduit fill and maximum
-            demand. All values cross-referenced against BS 7671:2018+A2:2022 and Amendment 3:2024.
+            demand. All values cross-referenced against BS 7671:2018+A3:2024 and Amendment 3:2024.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">

@@ -275,7 +275,7 @@ export default function EVChargerCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Section 722 of BS 7671:2018+A2:2022 sets out the particular
+              Section 722 of BS 7671:2018+A3:2024 sets out the particular
               requirements for the supply of electric vehicles. It applies to
               circuits intended to supply electric vehicles, including those for
               charging at residential properties, workplaces, and public charging
