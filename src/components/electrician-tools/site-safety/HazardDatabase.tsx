@@ -115,7 +115,7 @@ const HazardDatabase = () => {
       case "Medium": return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
       case "High": return "bg-orange-500/20 text-orange-300 border-orange-500/30";
       case "Very High": return "bg-red-500/20 text-red-300 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+      default: return "bg-gray-500/20 text-white border-gray-500/30";
     }
   };
 
@@ -128,7 +128,7 @@ const HazardDatabase = () => {
             <Shield className="h-5 w-5" />
             Hazard Database
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Comprehensive database of electrical and workplace hazards with risk assessments and control measures
           </p>
         </CardHeader>
@@ -136,7 +136,7 @@ const HazardDatabase = () => {
           {/* Search Bar */}
           <div className="relative">
             {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search hazards, controls, or regulations..."
@@ -156,7 +156,7 @@ const HazardDatabase = () => {
             <div className="text-2xl font-bold text-red-400">
               {hazards.filter(h => h.riskLevel === "Very High").length}
             </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Very High Risk</div>
+            <div className="text-xs sm:text-sm text-white">Very High Risk</div>
           </CardContent>
         </Card>
         <Card className="border-orange-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
@@ -164,7 +164,7 @@ const HazardDatabase = () => {
             <div className="text-2xl font-bold text-orange-400">
               {hazards.filter(h => h.riskLevel === "High").length}
             </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">High Risk</div>
+            <div className="text-xs sm:text-sm text-white">High Risk</div>
           </CardContent>
         </Card>
         <Card className="border-yellow-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
@@ -172,7 +172,7 @@ const HazardDatabase = () => {
             <div className="text-2xl font-bold text-yellow-400">
               {hazards.filter(h => h.riskLevel === "Medium").length}
             </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Medium Risk</div>
+            <div className="text-xs sm:text-sm text-white">Medium Risk</div>
           </CardContent>
         </Card>
         <Card className="border-green-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
@@ -180,7 +180,7 @@ const HazardDatabase = () => {
             <div className="text-2xl font-bold text-green-400">
               {hazards.filter(h => h.riskLevel === "Low").length}
             </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Low Risk</div>
+            <div className="text-xs sm:text-sm text-white">Low Risk</div>
           </CardContent>
         </Card>
       </div>
@@ -226,7 +226,7 @@ const HazardDatabase = () => {
                 </div>
 
                 {/* Simple description */}
-                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{hazard.description}</p>
+                <p className="text-white mb-4 text-sm leading-relaxed">{hazard.description}</p>
 
                 {/* Clean Content Grid */}
                 <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
@@ -234,7 +234,7 @@ const HazardDatabase = () => {
                     <h4 className="font-medium text-foreground mb-3 text-sm">Control Measures</h4>
                     <ul className="space-y-2">
                       {hazard.commonControls.map((control, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <li key={index} className="flex items-start gap-2 text-sm text-white">
                           <span className="text-elec-yellow mt-1 text-xs">•</span>
                           <span>{control}</span>
                         </li>
@@ -249,7 +249,7 @@ const HazardDatabase = () => {
                         <Badge 
                           key={index} 
                           variant="outline" 
-                          className="text-xs border-elec-yellow/30 text-muted-foreground"
+                          className="text-xs border-elec-yellow/30 text-white"
                         >
                           {regulation}
                         </Badge>
@@ -267,9 +267,9 @@ const HazardDatabase = () => {
       {filteredHazards.length === 0 && (
         <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
           <CardContent className="p-8 text-center">
-            <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground mb-2">No hazards found matching your search criteria.</p>
-            <p className="text-sm text-muted-foreground">Try adjusting your search terms or category filter.</p>
+            <Shield className="h-12 w-12 text-white mx-auto mb-4" />
+            <p className="text-white mb-2">No hazards found matching your search criteria.</p>
+            <p className="text-sm text-white">Try adjusting your search terms or category filter.</p>
           </CardContent>
         </Card>
       )}

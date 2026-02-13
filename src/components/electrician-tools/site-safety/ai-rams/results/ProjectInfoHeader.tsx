@@ -20,7 +20,7 @@ const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
       {icon}
     </div>
     <div className="flex-1 min-w-0">
-      <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">{label}</p>
+      <p className="text-[10px] uppercase tracking-wider text-white font-medium">{label}</p>
       <p className="text-sm font-semibold text-white truncate">{value}</p>
     </div>
   </div>

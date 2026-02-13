@@ -218,7 +218,7 @@ const BS7671QuickReference = () => {
             BS 7671 Quick Reference
           </h1>
         </div>
-        <p className="text-white/80 text-base md:text-lg max-w-3xl mx-auto mb-6">
+        <p className="text-white text-base md:text-lg max-w-3xl mx-auto mb-6">
           Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024). 
           Quick reference guide for electrical installation requirements and compliance.
         </p>
@@ -232,7 +232,7 @@ const BS7671QuickReference = () => {
             <FileText className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">BS 7671 Structure Overview</CardTitle>
           </div>
-          <p className="text-white/70">Key parts of the 18th Edition Wiring Regulations</p>
+          <p className="text-white">Key parts of the 18th Edition Wiring Regulations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-4">
@@ -241,7 +241,7 @@ const BS7671QuickReference = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-base mb-1">{part.part}</h4>
-                    <p className="text-sm text-white/70 mb-3">{part.description}</p>
+                    <p className="text-sm text-white mb-3">{part.description}</p>
                   </div>
                   <Badge variant="outline" className="border-elec-yellow text-elec-yellow ml-4">
                     Section {part.section}
@@ -251,7 +251,7 @@ const BS7671QuickReference = () => {
                   {part.keyPoints.map((point, pointIndex) => (
                     <div key={pointIndex} className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      <span className="text-sm text-white/80">{point}</span>
+                      <span className="text-sm text-white">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -268,20 +268,20 @@ const BS7671QuickReference = () => {
             <Shield className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Protection Requirements (Part 4)</CardTitle>
           </div>
-          <p className="text-white/70">Essential protection methods for electrical safety</p>
+          <p className="text-white">Essential protection methods for electrical safety</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {protectionRequirements.map((protection, index) => (
               <div key={index} className="bg-white/5 border border-white/10 p-5 rounded-lg">
                 <h4 className="font-medium text-white text-lg mb-2">{protection.type}</h4>
-                <p className="text-sm text-white/70 mb-4">{protection.description}</p>
+                <p className="text-sm text-white mb-4">{protection.description}</p>
                 <div className="space-y-2">
                   <h5 className="text-sm font-medium text-elec-yellow">Methods:</h5>
                   {protection.methods.map((method, methodIndex) => (
                     <div key={methodIndex} className="flex items-start gap-2">
                       <Target className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
-                      <span className="text-xs text-white/80">{method}</span>
+                      <span className="text-xs text-white">{method}</span>
                     </div>
                   ))}
                 </div>
@@ -298,7 +298,7 @@ const BS7671QuickReference = () => {
             <Zap className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Testing Sequence (Part 6)</CardTitle>
           </div>
-          <p className="text-white/70">Required testing sequence for electrical installations</p>
+          <p className="text-white">Required testing sequence for electrical installations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="space-y-4">
@@ -313,15 +313,15 @@ const BS7671QuickReference = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-sm">
                       <div>
                         <h5 className="text-elec-yellow font-medium mb-1">Purpose:</h5>
-                        <p className="text-white/70">{test.purpose}</p>
+                        <p className="text-white">{test.purpose}</p>
                       </div>
                       <div>
                         <h5 className="text-elec-yellow font-medium mb-1">Method:</h5>
-                        <p className="text-white/70">{test.method}</p>
+                        <p className="text-white">{test.method}</p>
                       </div>
                       <div>
                         <h5 className="text-elec-yellow font-medium mb-1">Acceptable:</h5>
-                        <p className="text-white/70">{test.acceptable}</p>
+                        <p className="text-white">{test.acceptable}</p>
                       </div>
                     </div>
                   </div>
@@ -339,20 +339,20 @@ const BS7671QuickReference = () => {
             <Award className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Special Locations (Part 7)</CardTitle>
           </div>
-          <p className="text-white/70">Key requirements for special installation locations</p>
+          <p className="text-white">Key requirements for special installation locations</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {specialLocationSummary.map((location, index) => (
               <div key={index} className="bg-white/5 border border-white/10 p-5 rounded-lg">
                 <h4 className="font-medium text-white text-base mb-2">{location.section}</h4>
-                <p className="text-sm text-white/70 mb-3">{location.zones}</p>
+                <p className="text-sm text-white mb-3">{location.zones}</p>
                 <div className="space-y-2">
                   <h5 className="text-sm font-medium text-elec-yellow">Key Requirements:</h5>
                   {location.requirements.map((req, reqIndex) => (
                     <div key={reqIndex} className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      <span className="text-xs text-white/80">{req}</span>
+                      <span className="text-xs text-white">{req}</span>
                     </div>
                   ))}
                 </div>
@@ -369,13 +369,13 @@ const BS7671QuickReference = () => {
             <AlertTriangle className="h-6 w-6 text-orange-400" />
             <CardTitle className="text-orange-300">Amendment 2:2022 Key Changes</CardTitle>
           </div>
-          <p className="text-white/70">Important updates in the latest amendment</p>
+          <p className="text-white">Important updates in the latest amendment</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="font-semibold text-white">New Requirements:</h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5" />
                   Arc Fault Detection Devices (AFDDs) for certain circuits
@@ -396,7 +396,7 @@ const BS7671QuickReference = () => {
             </div>
             <div className="space-y-3">
               <h4 className="font-semibold text-white">Implementation:</h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <Target className="h-4 w-4 text-orange-400 mt-0.5" />
                   New installations from 1st January 2024
@@ -426,33 +426,33 @@ const BS7671QuickReference = () => {
             <BookOpen className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Essential Tables & Appendices</CardTitle>
           </div>
-          <p className="text-white/70">Key reference tables for daily use</p>
+          <p className="text-white">Key reference tables for daily use</p>
         </CardHeader>
         <CardContent className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 2</h4>
-              <p className="text-sm text-white/70">Statutory regulations and associated memoranda</p>
+              <p className="text-sm text-white">Statutory regulations and associated memoranda</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 3</h4>
-              <p className="text-sm text-white/70">Time/current characteristics of overcurrent protective devices</p>
+              <p className="text-sm text-white">Time/current characteristics of overcurrent protective devices</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 4</h4>
-              <p className="text-sm text-white/70">Current-carrying capacity and voltage drop tables</p>
+              <p className="text-sm text-white">Current-carrying capacity and voltage drop tables</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 6</h4>
-              <p className="text-sm text-white/70">Model forms for electrical certificates</p>
+              <p className="text-sm text-white">Model forms for electrical certificates</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 15</h4>
-              <p className="text-sm text-white/70">Ring and radial final circuit arrangements</p>
+              <p className="text-sm text-white">Ring and radial final circuit arrangements</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-medium text-elec-yellow mb-2">Appendix 16</h4>
-              <p className="text-sm text-white/70">Devices for protection against overvoltage</p>
+              <p className="text-sm text-white">Devices for protection against overvoltage</p>
             </div>
           </div>
         </CardContent>

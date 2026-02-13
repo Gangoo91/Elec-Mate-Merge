@@ -168,7 +168,7 @@ const ProfessionalCertifications = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Professional Electrical Certifications</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Advance your electrical career with industry-recognised qualifications. These certifications open new opportunities, 
           increase earning potential, and demonstrate professional competence to clients and employers.
         </p>
@@ -185,7 +185,7 @@ const ProfessionalCertifications = () => {
                   <div>
                     <CardTitle className="text-lg text-elec-yellow">{cert.title}</CardTitle>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-sm text-white/70">{cert.provider}</p>
+                      <p className="text-sm text-white">{cert.provider}</p>
                       <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow text-xs">
                         {cert.code}
                       </Badge>
@@ -196,17 +196,17 @@ const ProfessionalCertifications = () => {
                   {cert.category}
                 </Badge>
               </div>
-              <p className="text-white/70 text-sm">{cert.description}</p>
+              <p className="text-white text-sm">{cert.description}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white/70">{cert.duration}</span>
+                  <span className="text-white">{cert.duration}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Award className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white/70">{cert.cost}</span>
+                  <span className="text-white">{cert.cost}</span>
                 </div>
               </div>
               
@@ -214,7 +214,7 @@ const ProfessionalCertifications = () => {
                 <h4 className="font-semibold text-white mb-2">Entry Requirements:</h4>
                 <ul className="space-y-1">
                   {cert.requirements.map((req, reqIndex) => (
-                    <li key={reqIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={reqIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {req}
                     </li>
@@ -226,7 +226,7 @@ const ProfessionalCertifications = () => {
                 <h4 className="font-semibold text-white mb-2">Career Benefits:</h4>
                 <ul className="space-y-1">
                   {cert.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={benefitIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -243,7 +243,7 @@ const ProfessionalCertifications = () => {
           <CardTitle className="text-elec-yellow">UK Registration Scheme Requirements</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             To maintain your registration with UK competent person schemes, you must complete continuing professional development (CPD):
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -255,10 +255,10 @@ const ProfessionalCertifications = () => {
                     {scheme.cpdHours}
                   </Badge>
                 </div>
-                <p className="text-white/70 text-sm mb-3">{scheme.focus}</p>
+                <p className="text-white text-sm mb-3">{scheme.focus}</p>
                 <ul className="space-y-1">
                   {scheme.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-xs text-white/70 flex items-start gap-2">
+                    <li key={benefitIndex} className="text-xs text-white flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -278,7 +278,7 @@ const ProfessionalCertifications = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">Priority Order for New Electricians:</h4>
-              <ol className="space-y-2 text-sm text-white/70">
+              <ol className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow font-bold">1.</span>
                   Complete Level 3 Electrical Installation NVQ diploma
@@ -311,7 +311,7 @@ const ProfessionalCertifications = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Financial Planning Considerations:</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   Many employers fund essential qualifications (18th Edition, 2391)
@@ -340,7 +340,7 @@ const ProfessionalCertifications = () => {
               
               <div className="mt-4 p-3 bg-elec-yellow/10 rounded-lg">
                 <h5 className="font-semibold text-elec-yellow mb-2">Investment Tip:</h5>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   The average Approved Electrician earns £10,000-£15,000 more annually than a standard electrician. 
                   The initial investment of £2,000-£3,000 in qualifications typically pays for itself within 6-12 months.
                 </p>

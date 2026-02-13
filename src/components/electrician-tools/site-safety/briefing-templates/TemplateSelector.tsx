@@ -69,7 +69,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
       'hse-update': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
       'safety-alert': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
     };
-    return colors[type] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    return colors[type] || 'bg-gray-500/20 text-white border-gray-500/30';
   };
 
   if (loading) {
@@ -105,7 +105,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
                   <h4 className="font-semibold text-elec-light group-hover:text-elec-yellow transition-colors">
                     {template.name}
                   </h4>
-                  <p className="text-sm text-elec-light/60 mt-1 line-clamp-2">
+                  <p className="text-sm text-white mt-1 line-clamp-2">
                     {template.description}
                   </p>
                 </div>
@@ -118,7 +118,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
             </div>
 
             {template.usage_count > 0 && (
-              <p className="text-xs text-elec-light/40">
+              <p className="text-xs text-white">
                 Used {template.usage_count} {template.usage_count === 1 ? 'time' : 'times'}
               </p>
             )}
@@ -129,9 +129,9 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
       {templates.length === 0 && (
         <Card className="bg-card/50 border-primary/20">
           <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-elec-light/30 mx-auto mb-3" />
-            <p className="text-elec-light/60">No templates available for this type</p>
-            <p className="text-sm text-elec-light/40 mt-2">
+            <FileText className="h-12 w-12 text-white mx-auto mb-3" />
+            <p className="text-white">No templates available for this type</p>
+            <p className="text-sm text-white mt-2">
               Try selecting a different briefing type
             </p>
           </CardContent>

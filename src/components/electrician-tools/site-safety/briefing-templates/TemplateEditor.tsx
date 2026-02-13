@@ -150,7 +150,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
             <h2 className="text-lg sm:text-2xl font-bold text-elec-light">
               {templateId ? 'Edit Template' : 'Create Template'}
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Build a custom briefing template
             </p>
           </div>
@@ -246,7 +246,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
             </CardHeader>
             <CardContent className="space-y-3">
               {fields.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
+                <div className="text-center py-8 text-white">
                   <Plus className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>No fields added yet. Click above to add fields.</p>
                 </div>
@@ -258,7 +258,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                       <CardContent className="p-4 space-y-3">
                         <div className="flex items-start justify-between flex-wrap">
                           <div className="flex items-center gap-2">
-                            <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
+                            <GripVertical className="h-5 w-5 text-white cursor-move" />
                             <Icon className="h-5 w-5 text-elec-yellow" />
                             <div className="flex-1">
                               <Input
@@ -327,7 +327,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
             <CardTitle>Preview: {templateName || 'Untitled Template'}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">{templateDescription}</p>
+            <p className="text-sm text-white">{templateDescription}</p>
             {fields.map((field) => {
               const Icon = fieldTypeIcons[field.type];
               return (
@@ -340,7 +340,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                   {field.type === 'textarea' ? (
                     <Textarea placeholder={field.placeholder} rows={3} disabled />
                   ) : field.type === 'checklist' ? (
-                    <div className="border rounded-md p-3 text-sm text-muted-foreground">
+                    <div className="border rounded-md p-3 text-sm text-white">
                       Checklist items will appear here
                     </div>
                   ) : (

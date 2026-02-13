@@ -47,7 +47,7 @@ const EALLevel2Diploma = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">EAL Level 2 Diploma</span>
           </h1>
-          <p className="text-white/70 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Diploma in Electrical Installation
           </p>
         </div>
@@ -57,7 +57,7 @@ const EALLevel2Diploma = () => {
       {/* Course description */}
       <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold mb-2">Course Overview</h2>
-        <p className="text-white/70">
+        <p className="text-white">
           The Level 2 Diploma in Electrical Installation is the foundation qualification for anyone looking to become an electrician. 
           This course covers essential knowledge and skills needed to start your career in the electrical industry.
         </p>
@@ -101,7 +101,7 @@ const EALLevel2Diploma = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-white/70 mb-4">{unit.description}</p>
+                <p className="text-white mb-4">{unit.description}</p>
                 <div className="flex justify-end">
                   <Button 
                     variant="outline" 

@@ -86,7 +86,7 @@ const MentalHealthResources = () => {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
-                      <p className="text-sm text-white/70 mt-1">{resource.description}</p>
+                      <p className="text-sm text-white mt-1">{resource.description}</p>
                     </div>
                     <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400">
                       {resource.type}
@@ -118,7 +118,7 @@ const MentalHealthResources = () => {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
-                      <p className="text-sm text-white/70 mt-1">{resource.description}</p>
+                      <p className="text-sm text-white mt-1">{resource.description}</p>
                     </div>
                     <span className="text-xs px-2 py-1 bg-green-500/10 rounded-md text-green-400">
                       {resource.type}
@@ -146,19 +146,19 @@ const MentalHealthResources = () => {
               <div className="text-center border border-red-500/30 rounded-lg p-4 bg-red-500/10">
                 <h4 className="font-semibold text-red-400 mb-2">Emergency</h4>
                 <a href="tel:999" className="text-2xl font-bold text-white mb-1 block underline hover:text-red-400 transition-colors">999</a>
-                <p className="text-xs text-white/70">Immediate danger or serious mental health crisis</p>
+                <p className="text-xs text-white">Immediate danger or serious mental health crisis</p>
               </div>
 
               <div className="text-center border border-orange-500/30 rounded-lg p-4 bg-orange-500/10">
                 <h4 className="font-semibold text-orange-400 mb-2">Crisis Support</h4>
                 <a href="tel:116123" className="text-lg font-bold text-white mb-1 block underline hover:text-orange-400 transition-colors">116 123</a>
-                <p className="text-xs text-white/70">Samaritans - Free 24/7 emotional support</p>
+                <p className="text-xs text-white">Samaritans - Free 24/7 emotional support</p>
               </div>
 
               <div className="text-center border border-blue-500/30 rounded-lg p-4 bg-blue-500/10">
                 <h4 className="font-semibold text-blue-400 mb-2">Text Support</h4>
                 <a href="sms:85258?body=SHOUT" className="text-lg font-bold text-white mb-1 block underline hover:text-blue-400 transition-colors">Text SHOUT to 85258</a>
-                <p className="text-xs text-white/70">Free 24/7 crisis text line</p>
+                <p className="text-xs text-white">Free 24/7 crisis text line</p>
               </div>
             </div>
           </CardContent>

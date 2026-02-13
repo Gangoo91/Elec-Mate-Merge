@@ -397,7 +397,7 @@ const DomesticReferenceGuide = () => {
                     </Badge>
                     <div>
                       <span className="text-blue-200 font-medium">{reg.topic}: </span>
-                      <span className="text-white/80">{reg.description}</span>
+                      <span className="text-white">{reg.description}</span>
                     </div>
                   </div>
                 ))}
@@ -445,7 +445,7 @@ const DomesticReferenceGuide = () => {
               {ietGuidanceNotes.additionalPublications.map((pub, idx) => (
                 <div key={idx} className="text-sm">
                   <span className="text-teal-300 font-medium">{pub.title}: </span>
-                  <span className="text-white/80">{pub.description}</span>
+                  <span className="text-white">{pub.description}</span>
                 </div>
               ))}
             </div>
@@ -520,7 +520,7 @@ const DomesticReferenceGuide = () => {
                 <p className="text-xs text-amber-100 mb-2">{scheme.fullName}</p>
                 <div className="mb-2">
                   <span className="text-xs text-white">Scheme Types: </span>
-                  <span className="text-xs text-white/80">{scheme.types.join(", ")}</span>
+                  <span className="text-xs text-white">{scheme.types.join(", ")}</span>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {scheme.features.map((feature, idx) => (
@@ -579,7 +579,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-red-300 mb-2">Challenges</h5>
                   <ul className="space-y-1">
                     {scenario.challenges.map((challenge, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {challenge}
                       </li>
@@ -590,7 +590,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-green-300 mb-2">Solutions</h5>
                   <ul className="space-y-1">
                     {scenario.solutions.map((solution, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {solution}
                       </li>
@@ -601,7 +601,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-blue-300 mb-2">Regulations</h5>
                   <ul className="space-y-1">
                     {scenario.regulations.map((regulation, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {regulation}
                       </li>
@@ -626,7 +626,7 @@ const DomesticReferenceGuide = () => {
           {practicalTechniques.map((technique, index) => (
             <div key={index} className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
               <h4 className="font-medium text-white mb-2">{technique.technique}</h4>
-              <p className="text-sm text-white/80 mb-3">{technique.description}</p>
+              <p className="text-sm text-white mb-3">{technique.description}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {technique.tips.map((tip, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs text-indigo-200">
@@ -658,7 +658,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-red-300 mb-2">Common Causes</h5>
                   <ul className="space-y-1">
                     {problem.causes.map((cause, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {cause}
                       </li>
@@ -669,7 +669,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-green-300 mb-2">Solutions</h5>
                   <ul className="space-y-1">
                     {problem.solutions.map((solution, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {solution}
                       </li>
@@ -678,7 +678,7 @@ const DomesticReferenceGuide = () => {
                 </div>
                 <div>
                   <h5 className="font-medium text-blue-300 mb-2">Prevention</h5>
-                  <p className="text-white/80 text-xs">{problem.prevention}</p>
+                  <p className="text-white text-xs">{problem.prevention}</p>
                 </div>
               </div>
             </div>
@@ -710,7 +710,7 @@ const DomesticReferenceGuide = () => {
                   <div className="space-y-1">
                     {estimate.breakdown.map((item, idx) => (
                       <div key={idx} className="flex justify-between text-xs">
-                        <span className="text-white/80">{item.item}</span>
+                        <span className="text-white">{item.item}</span>
                         <span className="text-green-300">{item.cost}</span>
                       </div>
                     ))}
@@ -720,7 +720,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-green-200 mb-2">Cost Factors</h5>
                   <ul className="space-y-1">
                     {estimate.factors.map((factor, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {factor}
                       </li>
@@ -751,7 +751,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-yellow-200 mb-2">Regional Specifics</h5>
                   <ul className="space-y-1">
                     {region.specifics.map((specific, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {specific}
                       </li>
@@ -762,7 +762,7 @@ const DomesticReferenceGuide = () => {
                   <h5 className="font-medium text-yellow-200 mb-2">Key Contacts</h5>
                   <ul className="space-y-1">
                     {region.contacts.map((contact, idx) => (
-                      <li key={idx} className="text-white/80 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {contact}
                       </li>
@@ -820,23 +820,23 @@ const DomesticReferenceGuide = () => {
             <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
               <h4 className="font-medium text-red-200 mb-3">Before Starting Work</h4>
               <ul className="space-y-2 text-sm">
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Identify and isolate all relevant circuits
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Use appropriate test equipment to prove dead
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Lock off isolation points and retain keys
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Post warning notices at isolation points
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Wear appropriate PPE throughout
                 </li>
@@ -846,23 +846,23 @@ const DomesticReferenceGuide = () => {
             <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
               <h4 className="font-medium text-red-200 mb-3">During Installation</h4>
               <ul className="space-y-2 text-sm">
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Maintain safe isolation throughout work
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Use proper lifting techniques for heavy items
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Ensure adequate lighting and ventilation
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Keep work areas clean and hazard-free
                 </li>
-                <li className="text-white/80 flex items-start gap-2">
+                <li className="text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Never work alone on high-risk activities
                 </li>
@@ -887,27 +887,27 @@ const DomesticReferenceGuide = () => {
               <div className="grid grid-cols-2 md:grid-cols-7 gap-2 text-sm">
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 1</div>
-                  <div className="text-xs text-white/80">Site setup & first fix start</div>
+                  <div className="text-xs text-white">Site setup & first fix start</div>
                 </div>
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 2-3</div>
-                  <div className="text-xs text-white/80">First fix installation</div>
+                  <div className="text-xs text-white">First fix installation</div>
                 </div>
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 4</div>
-                  <div className="text-xs text-white/80">Consumer unit installation</div>
+                  <div className="text-xs text-white">Consumer unit installation</div>
                 </div>
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 5</div>
-                  <div className="text-xs text-white/80">Second fix installation</div>
+                  <div className="text-xs text-white">Second fix installation</div>
                 </div>
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 6</div>
-                  <div className="text-xs text-white/80">Testing & commissioning</div>
+                  <div className="text-xs text-white">Testing & commissioning</div>
                 </div>
                 <div className="text-center">
                   <div className="font-medium text-violet-200">Day 7</div>
-                  <div className="text-xs text-white/80">Certification & handover</div>
+                  <div className="text-xs text-white">Certification & handover</div>
                 </div>
               </div>
             </div>

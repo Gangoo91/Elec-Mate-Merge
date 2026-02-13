@@ -85,7 +85,7 @@ const TaskManager: React.FC = () => {
       case 'high': return 'bg-red-100 text-red-800 border-red-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-gray-100 text-white border-gray-200';
     }
   };
 
@@ -94,8 +94,8 @@ const TaskManager: React.FC = () => {
     switch (status) {
       case 'completed': return <CheckCircle className="w-4 h-4 text-green-600" />;
       case 'in-progress': return <Clock className="w-4 h-4 text-blue-600" />;
-      case 'pending': return <AlertTriangle className="w-4 h-4 text-gray-600" />;
-      default: return <Clock className="w-4 h-4 text-gray-600" />;
+      case 'pending': return <AlertTriangle className="w-4 h-4 text-white" />;
+      default: return <Clock className="w-4 h-4 text-white" />;
     }
   };
 
@@ -144,7 +144,7 @@ const TaskManager: React.FC = () => {
                   {task.risk_level}
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">{task.description}</p>
+              <p className="text-sm text-white">{task.description}</p>
             </div>
             
             {showActions && (
@@ -180,7 +180,7 @@ const TaskManager: React.FC = () => {
         <CardContent className="pt-0">
           <div className="space-y-3">
             {/* Task metadata */}
-            <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+            <div className="flex flex-wrap gap-2 text-sm text-white">
               <span>Category: {task.category}</span>
               {task.estimated_duration && (
                 <span>• Duration: {task.estimated_duration}</span>
@@ -281,7 +281,7 @@ const TaskManager: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Task Management</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Manage your work tasks with integrated hazard assessment
           </p>
         </div>
@@ -298,7 +298,7 @@ const TaskManager: React.FC = () => {
             <div className="flex-1">
               <div className="relative">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
                 )}
                 <Input
                   ref={searchInputRef}
@@ -355,9 +355,9 @@ const TaskManager: React.FC = () => {
             {filteredTasks.length === 0 ? (
               <Card>
                 <CardContent className="p-8 text-center">
-                  <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                  <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No tasks found</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-white">
                     {tasks.length === 0 
                       ? "Create your first task to get started"
                       : "Try adjusting your filters or search term"
@@ -378,7 +378,7 @@ const TaskManager: React.FC = () => {
             {/* Pending Tasks */}
             <div>
               <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-gray-600" />
+                <AlertTriangle className="w-4 h-4 text-white" />
                 Pending ({tasksByStatus.pending.length})
               </h3>
               <div className="space-y-4">

@@ -594,7 +594,7 @@ const IndustrialRiskManagement = () => {
             <Shield className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Industrial Risk Management Guide</CardTitle>
           </div>
-          <p className="text-neutral-300">
+          <p className="text-white">
             Critical safety planning and hazard management for industrial electrical environments
             including hazardous areas, permits to work, arc flash protection, and confined spaces.
           </p>
@@ -618,7 +618,7 @@ const IndustrialRiskManagement = () => {
                 <Flame className="h-6 w-6 text-red-400" />
                 <CardTitle className="text-red-300">ATEX & DSEAR Explained</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Understanding explosive atmosphere regulations for industrial electrical work
               </p>
             </CardHeader>
@@ -626,11 +626,11 @@ const IndustrialRiskManagement = () => {
               {/* ATEX */}
               <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
                 <h3 className="font-bold text-red-300 mb-2">{atexDsearBasics.atex.title}</h3>
-                <p className="text-neutral-300 text-sm mb-3">{atexDsearBasics.atex.description}</p>
+                <p className="text-white text-sm mb-3">{atexDsearBasics.atex.description}</p>
                 <h4 className="text-red-200 font-medium text-sm mb-2">Scope:</h4>
                 <ul className="space-y-1">
                   {atexDsearBasics.atex.scope.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <li key={i} className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -641,11 +641,11 @@ const IndustrialRiskManagement = () => {
               {/* DSEAR */}
               <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
                 <h3 className="font-bold text-orange-300 mb-2">{atexDsearBasics.dsear.title}</h3>
-                <p className="text-neutral-300 text-sm mb-3">{atexDsearBasics.dsear.description}</p>
+                <p className="text-white text-sm mb-3">{atexDsearBasics.dsear.description}</p>
                 <h4 className="text-orange-200 font-medium text-sm mb-2">Key Requirements:</h4>
                 <ul className="space-y-1">
                   {atexDsearBasics.dsear.requirements.map((req, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <li key={i} className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                       {req}
                     </li>
@@ -662,7 +662,7 @@ const IndustrialRiskManagement = () => {
                 <Shield className="h-6 w-6 text-purple-400" />
                 <CardTitle className="text-purple-300">Ex Equipment Markings</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Understanding ATEX equipment marking and selection
               </p>
             </CardHeader>
@@ -680,7 +680,7 @@ const IndustrialRiskManagement = () => {
                         <th className="text-left py-2 px-2 text-purple-300">Applications</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {exMarkings.protectionTypes.map((type, i) => (
                         <tr key={i} className="border-b border-purple-500/20">
                           <td className="py-2 px-2 font-medium text-purple-200">{type.code}</td>
@@ -702,7 +702,7 @@ const IndustrialRiskManagement = () => {
                     <div key={i} className="bg-purple-500/5 p-3 rounded border border-purple-500/10 flex items-center justify-between">
                       <div>
                         <span className="text-purple-200 font-medium">Group {group.group}: </span>
-                        <span className="text-neutral-300 text-sm">{group.substances}</span>
+                        <span className="text-white text-sm">{group.substances}</span>
                       </div>
                       <Badge variant="outline" className="border-purple-400 text-purple-300">
                         {group.ignitionEnergy}
@@ -727,7 +727,7 @@ const IndustrialRiskManagement = () => {
                         <th className="text-left py-2 px-2 text-purple-300">Typical Substances</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {exMarkings.temperatureClasses.map((temp, i) => (
                         <tr key={i} className="border-b border-purple-500/20">
                           <td className="py-2 px-2 font-medium text-purple-200">{temp.class}</td>
@@ -750,7 +750,7 @@ const IndustrialRiskManagement = () => {
                   {exMarkings.markingExample.breakdown.map((item, i) => (
                     <div key={i} className="bg-yellow-500/5 p-2 rounded text-center">
                       <div className="text-yellow-300 font-mono font-bold">{item.part}</div>
-                      <div className="text-neutral-400 text-xs">{item.meaning}</div>
+                      <div className="text-white text-xs">{item.meaning}</div>
                     </div>
                   ))}
                 </div>
@@ -790,22 +790,22 @@ const IndustrialRiskManagement = () => {
                       {zone.duration}
                     </Badge>
                   </div>
-                  <p className="text-neutral-300 mb-3">{zone.description}</p>
+                  <p className="text-white mb-3">{zone.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-neutral-200 font-medium text-sm mb-2">Examples:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Examples:</h4>
                       <ul className="space-y-1">
                         {zone.examples.map((example, i) => (
-                          <li key={i} className="text-neutral-300 text-sm flex items-start gap-2">
-                            <MapPin className="h-4 w-4 text-neutral-400 mt-0.5 flex-shrink-0" />
+                          <li key={i} className="text-white text-sm flex items-start gap-2">
+                            <MapPin className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                             {example}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="bg-black/20 p-3 rounded">
-                      <h4 className="text-neutral-200 font-medium text-sm mb-1">Equipment Required:</h4>
-                      <p className="text-neutral-300 text-sm">{zone.equipmentCategory}</p>
+                      <h4 className="text-white font-medium text-sm mb-1">Equipment Required:</h4>
+                      <p className="text-white text-sm">{zone.equipmentCategory}</p>
                     </div>
                   </div>
                 </div>
@@ -842,22 +842,22 @@ const IndustrialRiskManagement = () => {
                       {zone.duration}
                     </Badge>
                   </div>
-                  <p className="text-neutral-300 mb-3">{zone.description}</p>
+                  <p className="text-white mb-3">{zone.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-neutral-200 font-medium text-sm mb-2">Examples:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Examples:</h4>
                       <ul className="space-y-1">
                         {zone.examples.map((example, i) => (
-                          <li key={i} className="text-neutral-300 text-sm flex items-start gap-2">
-                            <MapPin className="h-4 w-4 text-neutral-400 mt-0.5 flex-shrink-0" />
+                          <li key={i} className="text-white text-sm flex items-start gap-2">
+                            <MapPin className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                             {example}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="bg-black/20 p-3 rounded">
-                      <h4 className="text-neutral-200 font-medium text-sm mb-1">Equipment Required:</h4>
-                      <p className="text-neutral-300 text-sm">{zone.equipmentCategory}</p>
+                      <h4 className="text-white font-medium text-sm mb-1">Equipment Required:</h4>
+                      <p className="text-white text-sm">{zone.equipmentCategory}</p>
                     </div>
                   </div>
                 </div>
@@ -874,7 +874,7 @@ const IndustrialRiskManagement = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
                   <h3 className="font-bold text-blue-300 mb-3">Factors Increasing Zone Extent</h3>
-                  <ul className="space-y-2 text-sm text-neutral-300">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5" />
                       High volatility / low flash point
@@ -895,7 +895,7 @@ const IndustrialRiskManagement = () => {
                 </div>
                 <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
                   <h3 className="font-bold text-green-300 mb-3">Factors Reducing Zone Extent</h3>
-                  <ul className="space-y-2 text-sm text-neutral-300">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
                       Good natural/forced ventilation
@@ -928,7 +928,7 @@ const IndustrialRiskManagement = () => {
                 <ClipboardList className="h-6 w-6 text-blue-400" />
                 <CardTitle className="text-blue-300">Permit to Work Systems</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Formal systems for controlling high-risk activities
               </p>
             </CardHeader>
@@ -936,12 +936,12 @@ const IndustrialRiskManagement = () => {
               {permitToWork.types.map((permit, index) => (
                 <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
                   <h3 className="font-bold text-blue-300 mb-2">{permit.type}</h3>
-                  <p className="text-neutral-300 text-sm mb-3">{permit.purpose}</p>
+                  <p className="text-white text-sm mb-3">{permit.purpose}</p>
                   <div className="bg-blue-500/5 p-3 rounded mb-3">
                     <h4 className="text-blue-200 font-medium text-sm mb-2">Essential Elements:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                       {permit.essentialElements.map((element, i) => (
-                        <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                        <div key={i} className="flex items-start gap-2 text-sm text-white">
                           <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                           {element}
                         </div>
@@ -968,12 +968,12 @@ const IndustrialRiskManagement = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-green-300">{stage.stage}</h3>
-                      <p className="text-neutral-400 text-sm">{stage.description}</p>
+                      <p className="text-white text-sm">{stage.description}</p>
                     </div>
                   </div>
                   <ul className="space-y-1 ml-11">
                     {stage.actions.map((action, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         {action}
                       </li>
@@ -1001,12 +1001,12 @@ const IndustrialRiskManagement = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-orange-300">{step.action}</h3>
-                      <p className="text-neutral-400 text-sm">{step.description}</p>
+                      <p className="text-white text-sm">{step.description}</p>
                     </div>
                   </div>
                   <ul className="space-y-1 ml-13">
                     {step.details.map((detail, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
@@ -1020,7 +1020,7 @@ const IndustrialRiskManagement = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">Voltage Indicator Requirements (GS38)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {safeIsolation.voltageIndicatorRequirements.map((req, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <Shield className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       {req}
                     </div>
@@ -1033,7 +1033,7 @@ const IndustrialRiskManagement = () => {
 
         {/* Arc Flash Tab */}
         <TabsContent value="arcflash" className="space-y-4">
-          <Card className="border-red-500/30 bg-gradient-to-r from-red-500/10 to-orange-500/10">
+          <Card className="border-red-500/30 bg-red-500/10">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Zap className="h-6 w-6 text-red-400" />
@@ -1044,13 +1044,13 @@ const IndustrialRiskManagement = () => {
               {/* Definition and Hazards */}
               <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/30">
                 <h3 className="font-bold text-red-300 mb-3">What is Arc Flash?</h3>
-                <p className="text-neutral-300 text-sm mb-3">{arcFlash.basics.definition}</p>
+                <p className="text-white text-sm mb-3">{arcFlash.basics.definition}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-red-200 font-medium text-sm mb-2">Hazards:</h4>
                     <ul className="space-y-1">
                       {arcFlash.basics.hazards.map((hazard, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                        <li key={i} className="flex items-start gap-2 text-sm text-white">
                           <AlertOctagon className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                           {hazard}
                         </li>
@@ -1061,7 +1061,7 @@ const IndustrialRiskManagement = () => {
                     <h4 className="text-orange-200 font-medium text-sm mb-2">Common Causes:</h4>
                     <ul className="space-y-1">
                       {arcFlash.basics.causes.map((cause, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                        <li key={i} className="flex items-start gap-2 text-sm text-white">
                           <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                           {cause}
                         </li>
@@ -1083,10 +1083,10 @@ const IndustrialRiskManagement = () => {
                           Min {cat.minArcRating}
                         </Badge>
                       </div>
-                      <p className="text-neutral-300 text-sm mb-2">{cat.ppeSummary}</p>
+                      <p className="text-white text-sm mb-2">{cat.ppeSummary}</p>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
                         {cat.equipment.map((equip, j) => (
-                          <div key={j} className="text-xs text-neutral-400">- {equip}</div>
+                          <div key={j} className="text-xs text-white">- {equip}</div>
                         ))}
                       </div>
                     </div>
@@ -1099,7 +1099,7 @@ const IndustrialRiskManagement = () => {
                 <h3 className="font-bold text-orange-300 mb-3">Arc Flash Protection Measures</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {arcFlash.protection.map((measure, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <Shield className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                       {measure}
                     </div>
@@ -1110,14 +1110,14 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Critical Warning */}
-          <Card className="border-red-500/50 bg-gradient-to-r from-red-600/20 to-orange-600/20">
+          <Card className="border-red-500/50 bg-red-600/20">
             <CardHeader>
               <CardTitle className="text-red-300 flex items-center gap-2">
                 <AlertOctagon className="h-6 w-6" />
                 Critical Arc Flash Safety
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm text-neutral-300">
+            <CardContent className="space-y-3 text-sm text-white">
               <p>
                 <strong className="text-red-300">Never underestimate arc flash:</strong> Arc flash incidents
                 cause severe burns, blindness, hearing damage, and death. The thermal energy released
@@ -1154,7 +1154,7 @@ const IndustrialRiskManagement = () => {
                   <h3 className="font-bold text-blue-300 mb-2">{item.hazard}</h3>
                   <ul className="space-y-1">
                     {item.considerations.map((consideration, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                         {consideration}
                       </li>
@@ -1174,7 +1174,7 @@ const IndustrialRiskManagement = () => {
                         <th className="text-left py-2 px-3 text-orange-300">Minimum Clearance</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {workingAtHeight.minimumClearances.map((item, i) => (
                         <tr key={i} className="border-b border-orange-500/20">
                           <td className="py-2 px-3">{item.voltage}</td>
@@ -1200,7 +1200,7 @@ const IndustrialRiskManagement = () => {
                       </div>
                       <div>
                         <span className="text-green-200 font-medium text-sm">{level.method}</span>
-                        <span className="text-neutral-400 text-sm ml-2">- {level.description}</span>
+                        <span className="text-white text-sm ml-2">- {level.description}</span>
                       </div>
                     </div>
                   ))}
@@ -1216,7 +1216,7 @@ const IndustrialRiskManagement = () => {
                 <Eye className="h-6 w-6 text-purple-400" />
                 <CardTitle className="text-purple-300">Confined Space Electrical Work</CardTitle>
               </div>
-              <p className="text-neutral-300 text-sm">{confinedSpaces.definition}</p>
+              <p className="text-white text-sm">{confinedSpaces.definition}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Examples */}
@@ -1224,7 +1224,7 @@ const IndustrialRiskManagement = () => {
                 <h3 className="font-bold text-purple-300 mb-3">Examples of Confined Spaces</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {confinedSpaces.examples.map((example, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-center gap-2 text-sm text-white">
                       <MapPin className="h-4 w-4 text-purple-400" />
                       {example}
                     </div>
@@ -1242,11 +1242,11 @@ const IndustrialRiskManagement = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                         <div>
                           <span className="text-orange-300 font-medium">Causes: </span>
-                          <span className="text-neutral-300">{hazard.causes.join(", ")}</span>
+                          <span className="text-white">{hazard.causes.join(", ")}</span>
                         </div>
                         <div>
                           <span className="text-green-300 font-medium">Controls: </span>
-                          <span className="text-neutral-300">{hazard.controls.join(", ")}</span>
+                          <span className="text-white">{hazard.controls.join(", ")}</span>
                         </div>
                       </div>
                     </div>
@@ -1267,13 +1267,13 @@ const IndustrialRiskManagement = () => {
                         <th className="text-left py-2 px-3 text-purple-300">Notes</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {confinedSpaces.atmosphereLimits.map((limit, i) => (
                         <tr key={i} className="border-b border-purple-500/20">
                           <td className="py-2 px-3 font-medium">{limit.parameter}</td>
                           <td className="py-2 px-3 text-center">{limit.min}</td>
                           <td className="py-2 px-3 text-center">{limit.max}</td>
-                          <td className="py-2 px-3 text-xs text-neutral-400">{limit.notes}</td>
+                          <td className="py-2 px-3 text-xs text-white">{limit.notes}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1286,7 +1286,7 @@ const IndustrialRiskManagement = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">Entry Requirements</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {confinedSpaces.requirements.map((req, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       {req}
                     </div>
@@ -1297,14 +1297,14 @@ const IndustrialRiskManagement = () => {
           </Card>
 
           {/* Emergency Procedures Warning */}
-          <Card className="border-red-500/50 bg-gradient-to-r from-red-500/20 to-orange-500/20">
+          <Card className="border-red-500/50 bg-red-500/20">
             <CardHeader>
               <CardTitle className="text-red-300 flex items-center gap-2">
                 <Users className="h-6 w-6" />
                 Emergency Rescue Requirements
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm text-neutral-300">
+            <CardContent className="space-y-3 text-sm text-white">
               <p>
                 <strong className="text-red-300">Never enter to attempt rescue without proper equipment:</strong> Many
                 confined space fatalities involve would-be rescuers. Always have rescue arrangements in place BEFORE entry.
@@ -1323,14 +1323,14 @@ const IndustrialRiskManagement = () => {
       </Tabs>
 
       {/* General Safety Notice */}
-      <Card className="border-red-500/50 bg-gradient-to-r from-red-500/10 to-orange-500/10">
+      <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
           <CardTitle className="text-red-300 flex items-center gap-2">
             <Shield className="h-6 w-6" />
             Industrial Risk Management - Key Points
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm text-neutral-300">
+        <CardContent className="space-y-3 text-sm text-white">
           <p>
             <strong className="text-red-300">Risk Assessment First:</strong> Always conduct a thorough risk
             assessment before starting any industrial electrical work. Identify hazards and implement controls.

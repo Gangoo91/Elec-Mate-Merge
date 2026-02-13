@@ -140,7 +140,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
       case 'low': return 'bg-green-500/20 text-green-300';
       case 'medium': return 'bg-yellow-500/20 text-yellow-300';
       case 'high': return 'bg-red-500/20 text-red-300';
-      default: return 'bg-gray-500/20 text-gray-300';
+      default: return 'bg-gray-500/20 text-white';
     }
   };
 
@@ -216,7 +216,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                     className="h-auto p-3 flex flex-col items-start"
                   >
                     <div className="font-medium text-sm">{template.title}</div>
-                    <div className="text-xs text-muted-foreground">{template.category}</div>
+                    <div className="text-xs text-white">{template.category}</div>
                     <Badge className={`mt-1 ${getRiskColor(template.riskLevel)}`} variant="outline">
                       {template.riskLevel} risk
                     </Badge>
@@ -233,7 +233,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
         <Card className="border-yellow-500/20 bg-yellow-500/5">
           <CardContent className="p-8 text-center">
             <div className="text-yellow-300 mb-2">No method steps added yet</div>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               Click "Add Step" to start building your method statement, or use our step templates for common procedures.
             </p>
             <div className="flex justify-center gap-2">
@@ -269,7 +269,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 <div className="flex items-center gap-3">
                                   <div
                                     {...provided.dragHandleProps}
-                                    className="text-muted-foreground hover:text-elec-yellow cursor-grab"
+                                    className="text-white hover:text-elec-yellow cursor-grab"
                                   >
                                     <GripVertical className="h-5 w-5" />
                                   </div>
@@ -405,7 +405,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                             </div>
                                             <div>
                                               <div className="font-medium text-foreground">{hazard.name}</div>
-                                              <div className="text-xs text-muted-foreground">{hazard.category}</div>
+                                              <div className="text-xs text-white">{hazard.category}</div>
                                             </div>
                                           </div>
                                           <Button
@@ -599,7 +599,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 <div className="flex items-center gap-3">
                                   <div
                                     {...provided.dragHandleProps}
-                                    className="text-muted-foreground hover:text-elec-yellow cursor-grab transition-colors p-1 rounded"
+                                    className="text-white hover:text-elec-yellow cursor-grab transition-colors p-1 rounded"
                                   >
                                     <GripVertical className="h-4 w-4" />
                                   </div>
@@ -636,13 +636,13 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 <h3 className="font-semibold text-foreground text-lg mb-2">
                                   {step.title || `Step ${step.stepNumber}`}
                                 </h3>
-                                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                                <p className="text-sm text-white mb-3 leading-relaxed">
                                   {step.description || 'No description provided'}
                                 </p>
                                 
                                 {/* Duration badge - cleaner placement */}
                                 {step.estimatedDuration && (
-                                  <div className="inline-flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded-full">
+                                  <div className="inline-flex items-center gap-1 text-xs text-white bg-muted/30 px-2 py-1 rounded-full">
                                     <Clock className="h-3 w-3" />
                                     <span>{step.estimatedDuration}</span>
                                   </div>
@@ -663,18 +663,18 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
+                                    <li key={index} className="text-sm text-white flex items-start gap-2">
                                       <span className="text-red-400 flex-shrink-0 w-2">•</span>
                                       <span className="break-words text-left">{req}</span>
                                     </li>
                                   ))}
                                   {step.safetyRequirements.length > 3 && (
-                                    <li className="text-sm text-slate-400 font-medium">
+                                    <li className="text-sm text-white font-medium">
                                       +{step.safetyRequirements.length - 3} more
                                     </li>
                                   )}
                                   {step.safetyRequirements.length === 0 && (
-                                    <li className="text-sm text-slate-400 italic">
+                                    <li className="text-sm text-white italic">
                                       No safety requirements added
                                     </li>
                                   )}
@@ -691,18 +691,18 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
+                                    <li key={index} className="text-sm text-white flex items-start gap-2">
                                       <span className="text-blue-400 flex-shrink-0 w-2">•</span>
                                       <span className="break-words">{equipment}</span>
                                     </li>
                                   ))}
                                   {step.equipmentNeeded.length > 3 && (
-                                    <li className="text-sm text-slate-400 font-medium">
+                                    <li className="text-sm text-white font-medium">
                                       +{step.equipmentNeeded.length - 3} more
                                     </li>
                                   )}
                                   {step.equipmentNeeded.length === 0 && (
-                                    <li className="text-sm text-slate-400 italic">
+                                    <li className="text-sm text-white italic">
                                       No equipment specified
                                     </li>
                                   )}
@@ -719,18 +719,18 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.qualifications.slice(0, 3).map((qual, index) => (
-                                     <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
+                                     <li key={index} className="text-sm text-white flex items-start gap-2">
                                        <span className="text-green-400 w-2 flex-shrink-0">•</span>
                                        <span className="break-words text-left">{qual}</span>
                                     </li>
                                   ))}
                                   {step.qualifications.length > 3 && (
-                                    <li className="text-sm text-slate-400 font-medium">
+                                    <li className="text-sm text-white font-medium">
                                       +{step.qualifications.length - 3} more
                                     </li>
                                   )}
                                   {step.qualifications.length === 0 && (
-                                    <li className="text-sm text-slate-400 italic">
+                                    <li className="text-sm text-white italic">
                                       No qualifications required
                                     </li>
                                   )}

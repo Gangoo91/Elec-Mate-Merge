@@ -57,7 +57,7 @@ const AM2Simulator = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white">AM2 Readiness</h1>
-              <p className="text-white/90 text-sm">
+              <p className="text-white text-sm">
                 Identify practical gaps before you book your AM2
               </p>
             </div>
@@ -79,7 +79,7 @@ const AM2Simulator = () => {
               onClick={() => setActiveTab(tab.id)}
               className={cn(
                 'flex-1 flex flex-col items-center gap-0.5 py-2 text-[10px] font-medium touch-manipulation transition-colors',
-                activeTab === tab.id ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-white/60'
+                activeTab === tab.id ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-white'
               )}
             >
               <tab.icon className="h-4 w-4" />
@@ -133,8 +133,8 @@ function PlaceholderTab({
       <div className="h-14 w-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center">
         <Icon className="h-7 w-7 text-white/20" />
       </div>
-      <p className="text-sm font-medium text-white/60 text-center">{title}</p>
-      <p className="text-xs text-white/40 text-center max-w-xs">{description}</p>
+      <p className="text-sm font-medium text-white text-center">{title}</p>
+      <p className="text-xs text-white text-center max-w-xs">{description}</p>
     </div>
   );
 }

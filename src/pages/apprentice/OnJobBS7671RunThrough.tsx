@@ -28,7 +28,7 @@ const OnJobBS7671RunThrough = () => {
                   BS7671 <span className="text-elec-yellow">Run-Through</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Complete step-by-step 18th Edition inspection and testing procedures,
                 guides, and documentation requirements.
               </p>
@@ -47,7 +47,7 @@ const OnJobBS7671RunThrough = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">18th</div>
-                  <div className="text-xs sm:text-sm text-white/60">Edition</div>
+                  <div className="text-xs sm:text-sm text-white">Edition</div>
                 </div>
               </div>
             </CardContent>
@@ -61,7 +61,7 @@ const OnJobBS7671RunThrough = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">Step</div>
-                  <div className="text-xs sm:text-sm text-white/60">By Step</div>
+                  <div className="text-xs sm:text-sm text-white">By Step</div>
                 </div>
               </div>
             </CardContent>
@@ -75,7 +75,7 @@ const OnJobBS7671RunThrough = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">Docs</div>
-                  <div className="text-xs sm:text-sm text-white/60">Templates</div>
+                  <div className="text-xs sm:text-sm text-white">Templates</div>
                 </div>
               </div>
             </CardContent>
@@ -89,7 +89,7 @@ const OnJobBS7671RunThrough = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-purple-400">Full</div>
-                  <div className="text-xs sm:text-sm text-white/60">Guide</div>
+                  <div className="text-xs sm:text-sm text-white">Guide</div>
                 </div>
               </div>
             </CardContent>
@@ -157,7 +157,7 @@ const OnJobBS7671RunThrough = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-1">BS7671 Compliance Reminder</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All electrical installation work must comply with BS 7671 (18th Edition) requirements.
                   <span className="font-medium text-elec-yellow"> Follow the correct testing sequence</span>, document all results accurately,
                   and ensure safety procedures are followed at all times.

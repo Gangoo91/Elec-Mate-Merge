@@ -142,7 +142,7 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
             </>
           )}
         </h4>
-        <span className="text-xs text-elec-light/60">
+        <span className="text-xs text-white">
           {validCount}/{totalCount} fields
         </span>
       </div>
@@ -158,11 +158,11 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
               <AlertCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
             )}
             <div className="flex-1">
-              <span className={rule.isValid ? 'text-elec-light/70 line-through' : 'text-elec-light'}>
+              <span className={rule.isValid ? 'text-white line-through' : 'text-elec-light'}>
                 {rule.label}
               </span>
               {!rule.isValid && rule.hint && (
-                <p className="text-xs text-elec-light/60 mt-0.5">{rule.hint}</p>
+                <p className="text-xs text-white mt-0.5">{rule.hint}</p>
               )}
             </div>
           </li>
@@ -172,7 +172,7 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
       {!isComplete && (
         <Alert className="mt-3 bg-elec-yellow/5 border-elec-yellow/20">
           <Info className="h-4 w-4 text-elec-yellow" />
-          <AlertDescription className="text-xs text-elec-light/70">
+          <AlertDescription className="text-xs text-white">
             Fill in all required fields to continue to the next step
           </AlertDescription>
         </Alert>

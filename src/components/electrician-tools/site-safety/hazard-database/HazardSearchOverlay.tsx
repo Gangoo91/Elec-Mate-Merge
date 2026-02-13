@@ -124,7 +124,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
         <div className="flex items-center gap-3">
           <div className="flex-1 relative">
             {!query && (
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
             )}
             <input
               ref={inputRef}
@@ -133,7 +133,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
               placeholder="Search hazards, controls, PPE..."
               className={cn(
                 "w-full h-12 bg-white/[0.05] rounded-2xl pr-10 text-white",
-                "placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50",
+                "placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/50",
                 "border border-white/[0.08]",
                 !query && "pl-12"
               )}
@@ -144,7 +144,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
                 onClick={() => setQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/[0.1]"
               >
-                <X className="h-5 w-5 text-white/40" />
+                <X className="h-5 w-5 text-white" />
               </button>
             )}
           </div>
@@ -168,7 +168,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
             {recentSearches.length > 0 && (
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xs text-white/50 uppercase tracking-wider font-medium">
+                  <h3 className="text-xs text-white uppercase tracking-wider font-medium">
                     Recent Searches
                   </h3>
                   <button
@@ -188,8 +188,8 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
                         "hover:bg-white/[0.05] transition-colors text-left"
                       )}
                     >
-                      <Clock className="h-4 w-4 text-white/30" />
-                      <span className="text-white/70">{term}</span>
+                      <Clock className="h-4 w-4 text-white" />
+                      <span className="text-white">{term}</span>
                     </button>
                   ))}
                 </div>
@@ -198,7 +198,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
 
             {/* Browse by Category */}
             <div>
-              <h3 className="text-xs text-white/50 uppercase tracking-wider font-medium mb-3">
+              <h3 className="text-xs text-white uppercase tracking-wider font-medium mb-3">
                 Browse by Category
               </h3>
               <div className="grid grid-cols-2 gap-3">
@@ -218,11 +218,11 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
                         "hover:border-white/[0.12] transition-all active:scale-[0.98]"
                       )}
                     >
-                      <Icon className="h-6 w-6 text-white/70 mb-2" />
+                      <Icon className="h-6 w-6 text-white mb-2" />
                       <span className="text-sm font-medium text-white">
                         {cat.name}
                       </span>
-                      <span className="text-xs text-white/40 mt-0.5">
+                      <span className="text-xs text-white mt-0.5">
                         {count} hazard{count !== 1 ? 's' : ''}
                       </span>
                     </button>
@@ -236,7 +236,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
               <h4 className="text-sm font-medium text-white mb-2">
                 Search Tips
               </h4>
-              <ul className="text-xs text-white/50 space-y-1.5">
+              <ul className="text-xs text-white space-y-1.5">
                 <li>Try searching for specific hazards like "electric shock"</li>
                 <li>Search by PPE type like "insulated gloves"</li>
                 <li>Find by work type like "installation" or "testing"</li>
@@ -246,7 +246,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
         ) : results.length > 0 ? (
           /* Search Results */
           <div>
-            <p className="text-xs text-white/50 mb-3">
+            <p className="text-xs text-white mb-3">
               {results.length} result{results.length !== 1 ? 's' : ''} for "
               {query}"
             </p>
@@ -268,12 +268,12 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
           /* No Results */
           <div className="flex flex-col items-center py-16">
             <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-              <Search className="h-10 w-10 text-white/20" />
+              <Search className="h-10 w-10 text-white" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">
               No Results Found
             </h3>
-            <p className="text-sm text-white/50 text-center max-w-xs">
+            <p className="text-sm text-white text-center max-w-xs">
               No hazards match "{query}". Try different keywords or browse by
               category.
             </p>

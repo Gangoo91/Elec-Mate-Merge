@@ -93,7 +93,7 @@ const ApprenticeAITools = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-white/70 mb-4">{tool.description}</p>
+              <p className="text-white mb-4">{tool.description}</p>
               <Button className="w-full">Launch Tool</Button>
             </CardContent>
           </Card>

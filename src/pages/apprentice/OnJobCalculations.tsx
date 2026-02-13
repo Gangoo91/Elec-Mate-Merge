@@ -75,7 +75,7 @@ const CalculatorLoader = () => (
   <div className="flex items-center justify-center p-12 bg-white/5 border border-white/10 rounded-lg border border-elec-yellow/20">
     <div className="flex flex-col items-center gap-3">
       <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-      <p className="text-sm text-white/70">Loading calculator...</p>
+      <p className="text-sm text-white">Loading calculator...</p>
     </div>
   </div>
 );
@@ -223,7 +223,7 @@ const OnJobCalculations = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{pageTitle}</h1>
-          <p className="text-sm sm:text-base text-white/70">{pageDescription}</p>
+          <p className="text-sm sm:text-base text-white">{pageDescription}</p>
         </div>
         <SmartBackButton />
       </div>

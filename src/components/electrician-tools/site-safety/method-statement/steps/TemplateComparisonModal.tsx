@@ -61,11 +61,11 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                 <GitCompare className="h-5 w-5 flex-shrink-0" />
                 Template Comparison
               </DialogTitle>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 Compare up to {templates.length} templates side by side to choose the best fit for your project
               </p>
             </div>
-            <DialogClose className="text-muted-foreground hover:text-foreground transition-colors">
+            <DialogClose className="text-white hover:text-foreground transition-colors">
               <X className="h-5 w-5" />
             </DialogClose>
           </div>
@@ -89,7 +89,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                         </div>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       {template.description}
                     </p>
                   </CardHeader>
@@ -103,7 +103,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                         <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                         <div>
                           <div className="text-xs font-medium text-elec-yellow">Duration</div>
-                          <div className="text-xs text-muted-foreground">{template.estimatedDuration}</div>
+                          <div className="text-xs text-white">{template.estimatedDuration}</div>
                         </div>
                       </div>
                     </CardContent>
@@ -115,7 +115,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                         <Settings className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                         <div>
                           <div className="text-xs font-medium text-elec-yellow">Steps</div>
-                          <div className="text-xs text-muted-foreground">{template.steps.length} procedures</div>
+                          <div className="text-xs text-white">{template.steps.length} procedures</div>
                         </div>
                       </div>
                     </CardContent>
@@ -143,7 +143,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                       {template.requiredQualifications.map((qual, qualIndex) => (
                         <div key={qualIndex} className="flex items-start gap-1">
                           <CheckCircle2 className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-xs text-muted-foreground break-words">{qual}</span>
+                          <span className="text-xs text-white break-words">{qual}</span>
                         </div>
                       ))}
                     </div>
@@ -163,13 +163,13 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                           <div className="w-4 h-4 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
                             {stepIndex + 1}
                           </div>
-                          <span className="text-xs text-muted-foreground break-words line-clamp-1">
+                          <span className="text-xs text-white break-words line-clamp-1">
                             {step.title}
                           </span>
                         </div>
                       ))}
                       {template.steps.length > 4 && (
-                        <div className="text-xs text-muted-foreground pl-6 italic">
+                        <div className="text-xs text-white pl-6 italic">
                           +{template.steps.length - 4} more steps
                         </div>
                       )}
@@ -198,13 +198,13 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                   <div>
                     <div className="font-medium text-blue-300 mb-2">Duration Range</div>
-                    <div className="text-muted-foreground">
+                    <div className="text-white">
                       {Math.min(...templates.map(t => parseInt(t.estimatedDuration.split('-')[0])))} - {Math.max(...templates.map(t => parseInt(t.estimatedDuration.split('-')[1] || t.estimatedDuration.split('-')[0])))} hours
                     </div>
                   </div>
                   <div>
                     <div className="font-medium text-blue-300 mb-2">Steps Range</div>
-                    <div className="text-muted-foreground">
+                    <div className="text-white">
                       {Math.min(...templates.map(t => t.steps.length))} - {Math.max(...templates.map(t => t.steps.length))} procedures
                     </div>
                   </div>
@@ -228,7 +228,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
 
         <div className="p-6 pt-4 flex-shrink-0">
           <div className="flex items-center justify-between gap-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-white">
               Select the template that best matches your project requirements
             </div>
             <Button

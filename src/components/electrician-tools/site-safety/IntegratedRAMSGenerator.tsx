@@ -454,13 +454,13 @@ const IntegratedRAMSGenerator: React.FC = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <h5 className="font-medium text-foreground">{risk.hazard}</h5>
-                      <p className="text-sm text-muted-foreground mt-1">{risk.risk}</p>
+                      <p className="text-sm text-white mt-1">{risk.risk}</p>
                     </div>
                     <Badge className={`${getRiskLevelColor(risk.riskRating)} text-foreground`}>
                       Risk: {risk.riskRating}
                     </Badge>
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     <strong>Controls:</strong> {risk.controls}
                   </div>
                 </div>
@@ -550,9 +550,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <h5 className="font-medium text-foreground">{step.title}</h5>
-                    <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                    <p className="text-sm text-white mt-1">{step.description}</p>
                     <div className="flex items-center gap-4 mt-2">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-xs text-white flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {step.estimatedDuration}
                       </span>
@@ -586,17 +586,17 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">{ramsData.risks.length}</div>
-                <div className="text-sm text-muted-foreground">Risks Identified</div>
+                <div className="text-sm text-white">Risks Identified</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">{methodData.steps?.length || 0}</div>
-                <div className="text-sm text-muted-foreground">Method Steps</div>
+                <div className="text-sm text-white">Method Steps</div>
               </div>
               <div className="text-center">
                 <div className={`text-2xl font-bold ${validation.isValid ? 'text-green-500' : 'text-red-500'}`}>
                   {validation.isValid ? '✓' : '✗'}
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-white">
                   {validation.isValid ? 'Ready to Export' : 'Needs Completion'}
                 </div>
               </div>
@@ -647,7 +647,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <FileText className="h-5 w-5" />
             Integrated Risk Assessment & Method Statement
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Professional RAMS documentation combining risk assessment and method statements in one workflow
           </p>
         </CardHeader>
@@ -657,7 +657,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
       <Card className="border-primary/20 bg-card/60">
         <CardContent className="pt-6">
           <div className="space-y-4">
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-sm text-white">
               <span>Progress</span>
               <span>{Math.round(currentStepProgress)}% Complete</span>
             </div>
@@ -671,7 +671,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 
                 return (
                   <div key={step.id} className="flex flex-col items-center gap-2">
-                    <div className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-foreground' : 'bg-muted text-muted-foreground'}`}>
+                    <div className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-foreground' : 'bg-muted text-white'}`}>
                       <IconComponent className="h-4 w-4" />
                     </div>
                     <span className="text-xs text-center">{step.title}</span>

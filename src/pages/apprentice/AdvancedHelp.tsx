@@ -37,7 +37,7 @@ const AdvancedHelp = () => {
             </Badge>
           </div>
 
-          <p className="text-white/70 text-sm mt-3 max-w-xl">
+          <p className="text-white text-sm mt-3 max-w-xl">
             AI-powered learning tools built specifically for UK electrical apprentices.
             Get expert guidance from Dave, your 20-year veteran electrical mentor.
           </p>
@@ -94,7 +94,7 @@ const AdvancedHelp = () => {
             </div>
             <div>
               <h3 className="font-medium text-sm text-elec-yellow mb-1">Learning Support, Not Replacement</h3>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 These AI tools are designed to complement your apprenticeship training, not replace it.
                 Always verify critical information with your supervisor or official documentation.
               </p>

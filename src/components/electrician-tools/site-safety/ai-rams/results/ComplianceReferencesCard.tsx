@@ -58,7 +58,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
             </h4>
             <ul className="space-y-2">
               {complianceWarnings.map((warning, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-elec-light/90">
+                <li key={idx} className="flex items-start gap-2 text-sm text-white">
                   <span className="text-red-400 mt-1">⚠️</span>
                   <span className="flex-1">{warning}</span>
                 </li>
@@ -99,15 +99,15 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
                       </div>
                     </div>
                     {expandedCitation === idx ? (
-                      <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+                      <ChevronUp className="h-4 w-4 text-white flex-shrink-0 ml-2" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+                      <ChevronDown className="h-4 w-4 text-white flex-shrink-0 ml-2" />
                     )}
                   </button>
 
                   {expandedCitation === idx && (
                     <div className="px-3 pb-3 border-t border-purple-500/10 pt-2">
-                      <p className="text-xs text-elec-light/80 leading-relaxed whitespace-pre-wrap">
+                      <p className="text-xs text-white leading-relaxed whitespace-pre-wrap">
                         {citation.content}
                       </p>
                     </div>
@@ -119,7 +119,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
         )}
 
         {/* Footer Note */}
-        <p className="text-xs text-muted-foreground pt-2 border-t border-border/40">
+        <p className="text-xs text-white pt-2 border-t border-border/40">
           All work must comply with current UK regulations and industry standards. 
           Consult the latest editions of referenced documents.
         </p>

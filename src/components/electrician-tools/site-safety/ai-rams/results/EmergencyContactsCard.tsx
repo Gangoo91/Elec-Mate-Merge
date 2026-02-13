@@ -24,7 +24,7 @@ const ContactRow: React.FC<ContactRowProps> = ({ role, name, phone, icon }) => {
           {icon}
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">{role}</p>
+          <p className="text-[10px] uppercase tracking-wider text-white font-medium">{role}</p>
           <p className="text-sm font-semibold text-white truncate">{name || 'TBC'}</p>
         </div>
       </div>
@@ -120,7 +120,7 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
 
       {!hasAnyContact && (
         <div className="px-4 pb-4">
-          <p className="text-xs text-white/40 text-center py-2">
+          <p className="text-xs text-white text-center py-2">
             Complete emergency contact details before starting work
           </p>
         </div>

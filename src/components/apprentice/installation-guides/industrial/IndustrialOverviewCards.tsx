@@ -570,7 +570,7 @@ const IndustrialOverviewCards = () => {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-neutral-300">{stat.label}</span>
+                <span className="text-xs text-white">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -600,7 +600,7 @@ const IndustrialOverviewCards = () => {
               {industrialBackground.premises.map((premise, idx) => (
                 <div key={idx} className="bg-blue-600/10 p-3 rounded border border-blue-500/30">
                   <h5 className="font-medium text-blue-200 text-sm mb-1">{premise.type}</h5>
-                  <p className="text-xs text-neutral-300 mb-2">{premise.description}</p>
+                  <p className="text-xs text-white mb-2">{premise.description}</p>
                   <p className="text-xs text-blue-300"><strong>Examples:</strong> {premise.examples}</p>
                 </div>
               ))}
@@ -622,7 +622,7 @@ const IndustrialOverviewCards = () => {
                   {industrialBackground.differences.map((diff, idx) => (
                     <tr key={idx} className="border-b border-blue-500/20">
                       <td className="py-2 text-white font-medium">{diff.aspect}</td>
-                      <td className="py-2 text-neutral-300">{diff.commercial}</td>
+                      <td className="py-2 text-white">{diff.commercial}</td>
                       <td className="py-2 text-blue-300">{diff.industrial}</td>
                     </tr>
                   ))}
@@ -654,7 +654,7 @@ const IndustrialOverviewCards = () => {
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-white text-lg mb-1">{path.role}</h4>
-                  <p className="text-sm text-neutral-300 mb-2">{path.description}</p>
+                  <p className="text-sm text-white mb-2">{path.description}</p>
                 </div>
                 <Badge variant="outline" className="border-green-500 text-green-400 text-sm self-start">
                   {path.salary}
@@ -690,7 +690,7 @@ const IndustrialOverviewCards = () => {
               <CircuitBoard className="h-4 w-4" />
               {manufacturingContent.productionLines.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300">{manufacturingContent.productionLines.description}</p>
+            <p className="text-sm text-white">{manufacturingContent.productionLines.description}</p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -705,8 +705,8 @@ const IndustrialOverviewCards = () => {
                   {manufacturingContent.productionLines.components.map((comp, idx) => (
                     <tr key={idx} className="border-b border-violet-500/20">
                       <td className="py-2 text-white">{comp.name}</td>
-                      <td className="py-2 text-neutral-300">{comp.voltage}</td>
-                      <td className="py-2 text-neutral-300">{comp.control}</td>
+                      <td className="py-2 text-white">{comp.voltage}</td>
+                      <td className="py-2 text-white">{comp.control}</td>
                       <td className="py-2 text-violet-300">{comp.safety}</td>
                     </tr>
                   ))}
@@ -721,13 +721,13 @@ const IndustrialOverviewCards = () => {
               <Box className="h-4 w-4" />
               {manufacturingContent.mcc.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{manufacturingContent.mcc.description}</p>
+            <p className="text-sm text-white mb-3">{manufacturingContent.mcc.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
                 <h5 className="text-sm font-medium text-violet-200 mb-2">MCC Components</h5>
                 {manufacturingContent.mcc.components.map((comp, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1">
+                  <div key={idx} className="text-xs text-white mb-1">
                     <span className="text-violet-300">{comp.item}:</span> {comp.function}
                   </div>
                 ))}
@@ -740,9 +740,9 @@ const IndustrialOverviewCards = () => {
                       <Badge variant="outline" className="border-violet-400 text-violet-300 text-xs">
                         {starter.type}
                       </Badge>
-                      <span className="text-xs text-neutral-400">{starter.use}</span>
+                      <span className="text-xs text-white">{starter.use}</span>
                     </div>
-                    <p className="text-xs text-neutral-300">{starter.characteristics}</p>
+                    <p className="text-xs text-white">{starter.characteristics}</p>
                   </div>
                 ))}
               </div>
@@ -755,13 +755,13 @@ const IndustrialOverviewCards = () => {
               <CircuitBoard className="h-4 w-4" />
               {manufacturingContent.plcAutomation.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{manufacturingContent.plcAutomation.description}</p>
+            <p className="text-sm text-white mb-3">{manufacturingContent.plcAutomation.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h5 className="text-sm font-medium text-violet-200 mb-2">PLC Components</h5>
                 {manufacturingContent.plcAutomation.keyComponents.map((comp, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-violet-400 rounded-full mt-1.5 flex-shrink-0"></span>
                     <span><span className="text-violet-300">{comp.component}:</span> {comp.function}</span>
                   </div>
@@ -774,7 +774,7 @@ const IndustrialOverviewCards = () => {
                     <Badge variant="outline" className="border-violet-400 text-violet-300 text-xs mb-1">
                       {proto.protocol}
                     </Badge>
-                    <p className="text-xs text-neutral-300">{proto.description}</p>
+                    <p className="text-xs text-white">{proto.description}</p>
                   </div>
                 ))}
               </div>
@@ -787,7 +787,7 @@ const IndustrialOverviewCards = () => {
               <Wind className="h-4 w-4" />
               {manufacturingContent.compressedAir.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{manufacturingContent.compressedAir.description}</p>
+            <p className="text-sm text-white mb-3">{manufacturingContent.compressedAir.description}</p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -802,8 +802,8 @@ const IndustrialOverviewCards = () => {
                   {manufacturingContent.compressedAir.components.map((comp, idx) => (
                     <tr key={idx} className="border-b border-violet-500/20">
                       <td className="py-2 text-white">{comp.equipment}</td>
-                      <td className="py-2 text-neutral-300">{comp.typical}</td>
-                      <td className="py-2 text-neutral-300">{comp.starting}</td>
+                      <td className="py-2 text-white">{comp.typical}</td>
+                      <td className="py-2 text-white">{comp.starting}</td>
                       <td className="py-2 text-violet-300">{comp.notes}</td>
                     </tr>
                   ))}
@@ -824,7 +824,7 @@ const IndustrialOverviewCards = () => {
                   <Badge variant="outline" className="border-violet-400 text-violet-300 text-sm mb-2">
                     {level.voltage}
                   </Badge>
-                  <p className="text-xs text-neutral-300 mb-1">{level.use}</p>
+                  <p className="text-xs text-white mb-1">{level.use}</p>
                   <p className="text-xs text-violet-300"><strong>Cable:</strong> {level.cable}</p>
                 </div>
               ))}
@@ -848,7 +848,7 @@ const IndustrialOverviewCards = () => {
               <Lightbulb className="h-4 w-4" />
               {warehousingContent.highBayLighting.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300">{warehousingContent.highBayLighting.description}</p>
+            <p className="text-sm text-white">{warehousingContent.highBayLighting.description}</p>
 
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -865,9 +865,9 @@ const IndustrialOverviewCards = () => {
                   {warehousingContent.highBayLighting.comparison.map((light, idx) => (
                     <tr key={idx} className="border-b border-cyan-500/20">
                       <td className="py-2 text-white">{light.type}</td>
-                      <td className="py-2 text-neutral-300">{light.efficacy}</td>
-                      <td className="py-2 text-neutral-300">{light.lifespan}</td>
-                      <td className="py-2 text-neutral-300">{light.startup}</td>
+                      <td className="py-2 text-white">{light.efficacy}</td>
+                      <td className="py-2 text-white">{light.lifespan}</td>
+                      <td className="py-2 text-white">{light.startup}</td>
                       <td className="py-2 text-cyan-300">{light.dimming}</td>
                     </tr>
                   ))}
@@ -879,7 +879,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-cyan-500/10 p-3 rounded-lg border border-cyan-500/20">
                 <h5 className="text-sm font-medium text-cyan-200 mb-2">Control Options</h5>
                 {warehousingContent.highBayLighting.controlOptions.map((opt, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-2">
+                  <div key={idx} className="text-xs text-white mb-2">
                     <span className="text-cyan-300 font-medium">{opt.method}:</span> {opt.description}
                   </div>
                 ))}
@@ -887,7 +887,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-cyan-500/10 p-3 rounded-lg border border-cyan-500/20">
                 <h5 className="text-sm font-medium text-cyan-200 mb-2">Design Considerations</h5>
                 {warehousingContent.highBayLighting.designConsiderations.map((item, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-cyan-400 mt-0.5 flex-shrink-0" />
                     {item}
                   </div>
@@ -902,7 +902,7 @@ const IndustrialOverviewCards = () => {
               <Truck className="h-4 w-4" />
               {warehousingContent.loadingBays.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{warehousingContent.loadingBays.description}</p>
+            <p className="text-sm text-white mb-3">{warehousingContent.loadingBays.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -915,14 +915,14 @@ const IndustrialOverviewCards = () => {
                         {eq.power}
                       </Badge>
                     </div>
-                    <p className="text-xs text-neutral-300">{eq.requirements}</p>
+                    <p className="text-xs text-white">{eq.requirements}</p>
                   </div>
                 ))}
               </div>
               <div>
                 <h5 className="text-sm font-medium text-cyan-200 mb-2">Safety Circuits</h5>
                 {warehousingContent.loadingBays.safetyCircuits.map((circuit, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <Shield className="h-3 w-3 text-cyan-400 mt-0.5 flex-shrink-0" />
                     {circuit}
                   </div>
@@ -937,7 +937,7 @@ const IndustrialOverviewCards = () => {
               <BatteryCharging className="h-4 w-4" />
               {warehousingContent.forkliftCharging.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{warehousingContent.forkliftCharging.description}</p>
+            <p className="text-sm text-white mb-3">{warehousingContent.forkliftCharging.description}</p>
 
             <div className="overflow-x-auto mb-4">
               <table className="w-full text-sm">
@@ -953,8 +953,8 @@ const IndustrialOverviewCards = () => {
                   {warehousingContent.forkliftCharging.types.map((type, idx) => (
                     <tr key={idx} className="border-b border-cyan-500/20">
                       <td className="py-2 text-white">{type.type}</td>
-                      <td className="py-2 text-neutral-300">{type.charging}</td>
-                      <td className="py-2 text-neutral-300">{type.power}</td>
+                      <td className="py-2 text-white">{type.charging}</td>
+                      <td className="py-2 text-white">{type.power}</td>
                       <td className="py-2 text-cyan-300">{type.current}</td>
                     </tr>
                   ))}
@@ -984,13 +984,13 @@ const IndustrialOverviewCards = () => {
               <Box className="h-4 w-4" />
               {warehousingContent.automatedStorage.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{warehousingContent.automatedStorage.description}</p>
+            <p className="text-sm text-white mb-3">{warehousingContent.automatedStorage.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {warehousingContent.automatedStorage.systems.map((sys, idx) => (
                 <div key={idx} className="bg-cyan-600/10 p-3 rounded border border-cyan-500/30">
                   <h5 className="font-medium text-cyan-200 text-sm mb-1">{sys.system}</h5>
-                  <p className="text-xs text-neutral-300 mb-2">{sys.description}</p>
+                  <p className="text-xs text-white mb-2">{sys.description}</p>
                   <div className="text-xs">
                     <p className="text-cyan-300"><strong>Power:</strong> {sys.power}</p>
                     <p className="text-cyan-300"><strong>Controls:</strong> {sys.controls}</p>
@@ -1006,7 +1006,7 @@ const IndustrialOverviewCards = () => {
               <Snowflake className="h-4 w-4" />
               {warehousingContent.coldStorage.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{warehousingContent.coldStorage.description}</p>
+            <p className="text-sm text-white mb-3">{warehousingContent.coldStorage.description}</p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
               {warehousingContent.coldStorage.zones.map((zone, idx) => (
@@ -1025,7 +1025,7 @@ const IndustrialOverviewCards = () => {
                     {zone.zone}
                   </Badge>
                   <p className="text-sm font-medium text-white">{zone.temp}</p>
-                  <p className="text-xs text-neutral-300 mt-1">{zone.considerations}</p>
+                  <p className="text-xs text-white mt-1">{zone.considerations}</p>
                 </div>
               ))}
             </div>
@@ -1034,7 +1034,7 @@ const IndustrialOverviewCards = () => {
               <h5 className="text-sm font-medium text-cyan-200 mb-2">Special Requirements</h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {warehousingContent.coldStorage.specialRequirements.map((req, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white flex items-start gap-2">
                     <Thermometer className="h-3 w-3 text-cyan-400 mt-0.5 flex-shrink-0" />
                     {req}
                   </div>
@@ -1049,13 +1049,13 @@ const IndustrialOverviewCards = () => {
               <Lock className="h-4 w-4" />
               {warehousingContent.securityAccess.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{warehousingContent.securityAccess.description}</p>
+            <p className="text-sm text-white mb-3">{warehousingContent.securityAccess.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {warehousingContent.securityAccess.systems.map((sys, idx) => (
                 <div key={idx} className="bg-cyan-600/10 p-3 rounded border border-cyan-500/30">
                   <h5 className="font-medium text-cyan-200 text-sm mb-1">{sys.system}</h5>
-                  <p className="text-xs text-neutral-300 mb-2">{sys.description}</p>
+                  <p className="text-xs text-white mb-2">{sys.description}</p>
                   <div className="text-xs">
                     <p className="text-cyan-300"><strong>Power:</strong> {sys.power}</p>
                     <p className="text-cyan-300"><strong>Interface:</strong> {sys.interface}</p>
@@ -1082,7 +1082,7 @@ const IndustrialOverviewCards = () => {
               <Zap className="h-4 w-4" />
               {heavyIndustryContent.hvSupplies.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300">{heavyIndustryContent.hvSupplies.description}</p>
+            <p className="text-sm text-white">{heavyIndustryContent.hvSupplies.description}</p>
 
             <Alert className="border-red-500/50 bg-red-500/10">
               <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -1098,7 +1098,7 @@ const IndustrialOverviewCards = () => {
                     {v.level}
                   </Badge>
                   <p className="text-sm text-white mb-1">{v.typical}</p>
-                  <p className="text-xs text-neutral-300">{v.notes}</p>
+                  <p className="text-xs text-white">{v.notes}</p>
                 </div>
               ))}
             </div>
@@ -1107,7 +1107,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                 <h5 className="text-sm font-medium text-orange-200 mb-2">HV Equipment</h5>
                 {heavyIndustryContent.hvSupplies.equipment.map((eq, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-2">
+                  <div key={idx} className="text-xs text-white mb-2">
                     <span className="text-orange-300 font-medium">{eq.item}:</span> {eq.function}
                   </div>
                 ))}
@@ -1119,7 +1119,7 @@ const IndustrialOverviewCards = () => {
                     <Badge variant="outline" className="border-orange-400 text-orange-300 text-xs mb-1">
                       {auth.level}
                     </Badge>
-                    <p className="text-xs text-neutral-300">{auth.description}</p>
+                    <p className="text-xs text-white">{auth.description}</p>
                   </div>
                 ))}
               </div>
@@ -1132,7 +1132,7 @@ const IndustrialOverviewCards = () => {
               <Cog className="h-4 w-4" />
               {heavyIndustryContent.largeMotors.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{heavyIndustryContent.largeMotors.description}</p>
+            <p className="text-sm text-white mb-3">{heavyIndustryContent.largeMotors.description}</p>
 
             <div className="overflow-x-auto mb-4">
               <table className="w-full text-xs">
@@ -1149,8 +1149,8 @@ const IndustrialOverviewCards = () => {
                   {heavyIndustryContent.largeMotors.startingMethods.map((method, idx) => (
                     <tr key={idx} className="border-b border-orange-500/20">
                       <td className="py-2 text-white font-medium">{method.method}</td>
-                      <td className="py-2 text-neutral-300">{method.motorSize}</td>
-                      <td className="py-2 text-neutral-300">{method.startingCurrent}</td>
+                      <td className="py-2 text-white">{method.motorSize}</td>
+                      <td className="py-2 text-white">{method.startingCurrent}</td>
                       <td className="py-2 text-green-300">{method.advantages}</td>
                       <td className="py-2 text-red-300">{method.disadvantages}</td>
                     </tr>
@@ -1165,7 +1165,7 @@ const IndustrialOverviewCards = () => {
                 {heavyIndustryContent.largeMotors.protection.map((prot, idx) => (
                   <div key={idx} className="text-xs">
                     <span className="text-orange-300 font-medium">{prot.device}:</span>
-                    <span className="text-neutral-300"> {prot.function}</span>
+                    <span className="text-white"> {prot.function}</span>
                   </div>
                 ))}
               </div>
@@ -1178,7 +1178,7 @@ const IndustrialOverviewCards = () => {
               <Flame className="h-4 w-4 text-red-400" />
               {heavyIndustryContent.hazardousAreas.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{heavyIndustryContent.hazardousAreas.description}</p>
+            <p className="text-sm text-white mb-3">{heavyIndustryContent.hazardousAreas.description}</p>
 
             <Alert className="border-red-500/50 bg-red-600/10 mb-4">
               <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -1204,9 +1204,9 @@ const IndustrialOverviewCards = () => {
                       }`}>
                         {zone.zone}
                       </Badge>
-                      <span className="text-xs text-neutral-400">{zone.frequency}</span>
+                      <span className="text-xs text-white">{zone.frequency}</span>
                     </div>
-                    <p className="text-xs text-neutral-300 mb-1">{zone.definition}</p>
+                    <p className="text-xs text-white mb-1">{zone.definition}</p>
                     <p className="text-xs text-cyan-300"><strong>Equipment:</strong> {zone.equipment}</p>
                   </div>
                 ))}
@@ -1227,9 +1227,9 @@ const IndustrialOverviewCards = () => {
                       }`}>
                         {zone.zone}
                       </Badge>
-                      <span className="text-xs text-neutral-400">{zone.frequency}</span>
+                      <span className="text-xs text-white">{zone.frequency}</span>
                     </div>
-                    <p className="text-xs text-neutral-300 mb-1">{zone.definition}</p>
+                    <p className="text-xs text-white mb-1">{zone.definition}</p>
                     <p className="text-xs text-cyan-300"><strong>Equipment:</strong> {zone.equipment}</p>
                   </div>
                 ))}
@@ -1247,7 +1247,7 @@ const IndustrialOverviewCards = () => {
                       </Badge>
                       <span className="text-xs text-white font-medium">{type.name}</span>
                     </div>
-                    <p className="text-xs text-neutral-300">{type.description}</p>
+                    <p className="text-xs text-white">{type.description}</p>
                   </div>
                 ))}
               </div>
@@ -1260,13 +1260,13 @@ const IndustrialOverviewCards = () => {
               <Shield className="h-4 w-4" />
               {heavyIndustryContent.intrinsicSafety.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{heavyIndustryContent.intrinsicSafety.description}</p>
+            <p className="text-sm text-white mb-3">{heavyIndustryContent.intrinsicSafety.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-orange-600/10 p-3 rounded border border-orange-500/30">
                 <h5 className="text-sm font-medium text-orange-200 mb-2">Key Principles</h5>
                 {heavyIndustryContent.intrinsicSafety.principles.map((prin, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0"></span>
                     {prin}
                   </div>
@@ -1279,7 +1279,7 @@ const IndustrialOverviewCards = () => {
                     <Badge variant="outline" className="border-orange-400 text-orange-300 text-xs mb-1">
                       {barrier.type}
                     </Badge>
-                    <p className="text-xs text-neutral-300">{barrier.function}</p>
+                    <p className="text-xs text-white">{barrier.function}</p>
                     <p className="text-xs text-orange-300 mt-1">{barrier.requirements}</p>
                   </div>
                 ))}
@@ -1287,7 +1287,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-orange-600/10 p-3 rounded border border-orange-500/30">
                 <h5 className="text-sm font-medium text-orange-200 mb-2">IS Cabling</h5>
                 {heavyIndustryContent.intrinsicSafety.cabling.map((cable, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></span>
                     {cable}
                   </div>
@@ -1302,7 +1302,7 @@ const IndustrialOverviewCards = () => {
               <Zap className="h-4 w-4" />
               {heavyIndustryContent.earthingSystems.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{heavyIndustryContent.earthingSystems.description}</p>
+            <p className="text-sm text-white mb-3">{heavyIndustryContent.earthingSystems.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
               {heavyIndustryContent.earthingSystems.systems.map((sys, idx) => (
@@ -1310,7 +1310,7 @@ const IndustrialOverviewCards = () => {
                   <Badge variant="outline" className="border-orange-400 text-orange-300 text-sm mb-2">
                     {sys.type}
                   </Badge>
-                  <p className="text-xs text-neutral-300 mb-1">{sys.description}</p>
+                  <p className="text-xs text-white mb-1">{sys.description}</p>
                   <p className="text-xs text-white mb-1"><strong>Use:</strong> {sys.use}</p>
                   <p className="text-xs text-orange-300"><strong>Notes:</strong> {sys.notes}</p>
                 </div>
@@ -1321,7 +1321,7 @@ const IndustrialOverviewCards = () => {
               <h5 className="text-sm font-medium text-orange-200 mb-2">Industrial Bonding Requirements</h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {heavyIndustryContent.earthingSystems.bonding.map((bond, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
                     {bond}
                   </div>
@@ -1347,7 +1347,7 @@ const IndustrialOverviewCards = () => {
               <FlaskConical className="h-4 w-4" />
               {processIndustries.chemical.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{processIndustries.chemical.description}</p>
+            <p className="text-sm text-white mb-3">{processIndustries.chemical.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -1355,14 +1355,14 @@ const IndustrialOverviewCards = () => {
                 {processIndustries.chemical.considerations.map((con, idx) => (
                   <div key={idx} className="bg-teal-600/10 p-2 rounded mb-2">
                     <span className="text-xs text-teal-300 font-medium">{con.aspect}:</span>
-                    <p className="text-xs text-neutral-300">{con.requirements}</p>
+                    <p className="text-xs text-white">{con.requirements}</p>
                   </div>
                 ))}
               </div>
               <div>
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Typical Equipment</h5>
                 {processIndustries.chemical.equipment.map((eq, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-teal-400 mt-0.5 flex-shrink-0" />
                     {eq}
                   </div>
@@ -1377,7 +1377,7 @@ const IndustrialOverviewCards = () => {
               <Utensils className="h-4 w-4" />
               {processIndustries.foodProcessing.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{processIndustries.foodProcessing.description}</p>
+            <p className="text-sm text-white mb-3">{processIndustries.foodProcessing.description}</p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
               {processIndustries.foodProcessing.zones.map((zone, idx) => (
@@ -1388,7 +1388,7 @@ const IndustrialOverviewCards = () => {
                   'bg-green-500/10 border-green-500/30'
                 }`}>
                   <h5 className="text-xs font-medium text-white mb-1">{zone.zone}</h5>
-                  <p className="text-xs text-neutral-300">{zone.requirements}</p>
+                  <p className="text-xs text-white">{zone.requirements}</p>
                 </div>
               ))}
             </div>
@@ -1397,7 +1397,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-teal-600/10 p-3 rounded border border-teal-500/30">
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Hygiene Standards</h5>
                 {processIndustries.foodProcessing.standards.map((std, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-teal-400 rounded-full mt-1.5 flex-shrink-0"></span>
                     {std}
                   </div>
@@ -1406,7 +1406,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-teal-600/10 p-3 rounded border border-teal-500/30">
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Installation Methods</h5>
                 {processIndustries.foodProcessing.installation.map((inst, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <Wrench className="h-3 w-3 text-teal-400 mt-0.5 flex-shrink-0" />
                     {inst}
                   </div>
@@ -1421,7 +1421,7 @@ const IndustrialOverviewCards = () => {
               <Pill className="h-4 w-4" />
               {processIndustries.pharmaceutical.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{processIndustries.pharmaceutical.description}</p>
+            <p className="text-sm text-white mb-3">{processIndustries.pharmaceutical.description}</p>
 
             <div className="overflow-x-auto mb-4">
               <table className="w-full text-xs">
@@ -1437,8 +1437,8 @@ const IndustrialOverviewCards = () => {
                   {processIndustries.pharmaceutical.classifications.map((cls, idx) => (
                     <tr key={idx} className="border-b border-teal-500/20">
                       <td className="py-2 text-white font-medium">{cls.class}</td>
-                      <td className="py-2 text-neutral-300">{cls.particles}</td>
-                      <td className="py-2 text-neutral-300">{cls.description}</td>
+                      <td className="py-2 text-white">{cls.particles}</td>
+                      <td className="py-2 text-white">{cls.description}</td>
                       <td className="py-2 text-teal-300">{cls.electrical}</td>
                     </tr>
                   ))}
@@ -1450,7 +1450,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-teal-600/10 p-3 rounded border border-teal-500/30">
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Equipment Requirements</h5>
                 {processIndustries.pharmaceutical.requirements.map((req, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-teal-400 mt-0.5 flex-shrink-0" />
                     {req}
                   </div>
@@ -1459,7 +1459,7 @@ const IndustrialOverviewCards = () => {
               <div className="bg-teal-600/10 p-3 rounded border border-teal-500/30">
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Validation Requirements</h5>
                 {processIndustries.pharmaceutical.validation.map((val, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <Book className="h-3 w-3 text-teal-400 mt-0.5 flex-shrink-0" />
                     {val}
                   </div>
@@ -1474,7 +1474,7 @@ const IndustrialOverviewCards = () => {
               <Waves className="h-4 w-4" />
               {processIndustries.waterTreatment.subtitle}
             </h4>
-            <p className="text-sm text-neutral-300 mb-3">{processIndustries.waterTreatment.description}</p>
+            <p className="text-sm text-white mb-3">{processIndustries.waterTreatment.description}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
@@ -1482,14 +1482,14 @@ const IndustrialOverviewCards = () => {
                 {processIndustries.waterTreatment.areas.map((area, idx) => (
                   <div key={idx} className="bg-teal-600/10 p-2 rounded mb-2">
                     <span className="text-xs text-teal-300 font-medium">{area.area}:</span>
-                    <p className="text-xs text-neutral-300">{area.considerations}</p>
+                    <p className="text-xs text-white">{area.considerations}</p>
                   </div>
                 ))}
               </div>
               <div>
                 <h5 className="text-sm font-medium text-teal-200 mb-2">Control Systems</h5>
                 {processIndustries.waterTreatment.control.map((ctrl, idx) => (
-                  <div key={idx} className="text-xs text-neutral-300 mb-1 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white mb-1 flex items-start gap-2">
                     <CircuitBoard className="h-3 w-3 text-teal-400 mt-0.5 flex-shrink-0" />
                     {ctrl}
                   </div>
@@ -1511,8 +1511,8 @@ const IndustrialOverviewCards = () => {
                   {processIndustries.waterTreatment.typicalSystems.map((sys, idx) => (
                     <tr key={idx} className="border-b border-teal-500/20">
                       <td className="py-2 text-white">{sys.system}</td>
-                      <td className="py-2 text-neutral-300">{sys.size}</td>
-                      <td className="py-2 text-neutral-300">{sys.control}</td>
+                      <td className="py-2 text-white">{sys.size}</td>
+                      <td className="py-2 text-white">{sys.control}</td>
                       <td className="py-2 text-teal-300">{sys.notes}</td>
                     </tr>
                   ))}
@@ -1547,7 +1547,7 @@ const IndustrialOverviewCards = () => {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-neutral-300">Complexity Level</span>
+                  <span className="text-white">Complexity Level</span>
                   <span className="text-blue-300">{project.complexity}%</span>
                 </div>
                 <Progress value={project.complexity} className="h-2" />
@@ -1571,7 +1571,7 @@ const IndustrialOverviewCards = () => {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-red-200 mb-1">{req.requirement}</h4>
-                  <p className="text-sm text-neutral-300">{req.description}</p>
+                  <p className="text-sm text-white">{req.description}</p>
                 </div>
                 <Badge
                   variant="outline"
@@ -1612,7 +1612,7 @@ const IndustrialOverviewCards = () => {
                   {hazard.risk} Risk
                 </Badge>
               </div>
-              <p className="text-sm text-neutral-300">{hazard.mitigation}</p>
+              <p className="text-sm text-white">{hazard.mitigation}</p>
             </div>
           ))}
         </CardContent>
@@ -1644,7 +1644,7 @@ const IndustrialOverviewCards = () => {
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-              <span className="text-neutral-300">{item}</span>
+              <span className="text-white">{item}</span>
             </div>
           ))}
         </CardContent>

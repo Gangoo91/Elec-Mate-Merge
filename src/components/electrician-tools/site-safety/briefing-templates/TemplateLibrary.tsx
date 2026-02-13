@@ -195,7 +195,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
             <h2 className="text-xl md:text-2xl font-bold text-elec-light">
               Template Library
             </h2>
-            <p className="text-xs md:text-sm text-muted-foreground">
+            <p className="text-xs md:text-sm text-white">
               Manage your briefing templates
             </p>
           </div>
@@ -215,7 +215,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             value={searchQuery}
@@ -266,7 +266,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                       )}
                       {template.name}
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                    <p className="text-sm text-white mt-1 line-clamp-2">
                       {template.description}
                     </p>
                   </div>
@@ -330,7 +330,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
       {filteredTemplates.length === 0 && !loading && (
         <Card>
           <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground mb-4">
+            <p className="text-white mb-4">
               {searchQuery || selectedType
                 ? "No templates found matching your filters"
                 : "No templates yet"}

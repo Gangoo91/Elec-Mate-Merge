@@ -1,5 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -221,7 +224,7 @@ const STATUS_CONFIG: Record<
 > = {
   active: { label: 'Active', colour: 'text-green-400', bg: 'bg-green-500/15', icon: CheckCircle2 },
   expired: { label: 'Expired', colour: 'text-red-400', bg: 'bg-red-500/15', icon: Clock },
-  cancelled: { label: 'Cancelled', colour: 'text-gray-400', bg: 'bg-gray-500/15', icon: XCircle },
+  cancelled: { label: 'Cancelled', colour: 'text-white', bg: 'bg-gray-500/15', icon: XCircle },
   closed: { label: 'Closed', colour: 'text-blue-400', bg: 'bg-blue-500/15', icon: CheckCircle2 },
 };
 
@@ -317,7 +320,7 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
 
   return (
     <div className="space-y-2">
-      <Label className="text-white/80 text-sm">{label}</Label>
+      <Label className="text-white text-sm">{label}</Label>
       <div
         ref={containerRef}
         className="relative border border-white/20 rounded-xl overflow-hidden bg-white/[0.03]"
@@ -335,7 +338,7 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
         />
         {!hasContent && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="text-white/30 text-sm">Sign here</span>
+            <span className="text-white text-sm">Sign here</span>
           </div>
         )}
       </div>
@@ -344,7 +347,7 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
           variant="ghost"
           size="sm"
           onClick={clear}
-          className="text-white/50 text-xs h-9 touch-manipulation"
+          className="text-white text-xs h-9 touch-manipulation"
         >
           Clear signature
         </Button>
@@ -415,6 +418,41 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [hazards, setHazards] = useState<PermitHazard[]>([]);
   const [precautions, setPrecautions] = useState<string[]>([]);
   const [ppeRequired, setPpeRequired] = useState<string[]>([]);
+
+  // ─── Draft persistence ───
+  const permitDraftData = useMemo(
+    () => ({
+      formData,
+      selectedType,
+      hazards,
+      precautions,
+      ppeRequired,
+      wizardStep,
+    }),
+    [formData, selectedType, hazards, precautions, ppeRequired, wizardStep]
+  );
+
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'permit-to-work',
+    data: permitDraftData,
+    enabled: showWizard && wizardStep > 0,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.formData) setFormData(recoveredDraft.formData);
+    if (recoveredDraft.selectedType) setSelectedType(recoveredDraft.selectedType);
+    if (recoveredDraft.hazards) setHazards(recoveredDraft.hazards);
+    if (recoveredDraft.precautions) setPrecautions(recoveredDraft.precautions);
+    if (recoveredDraft.ppeRequired) setPpeRequired(recoveredDraft.ppeRequired);
+    if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
+    dismissDraft();
+  };
 
   // Check for expired permits
   useEffect(() => {
@@ -502,6 +540,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     };
 
     setPermits((prev) => [newPermit, ...prev]);
+    clearDraft();
     setShowWizard(false);
     resetWizard();
     toast.success('Permit to work issued successfully');
@@ -565,9 +604,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-[15px] font-bold text-white">{type.label}</h4>
-                      <p className="text-xs text-white/60 line-clamp-1">{type.description}</p>
+                      <p className="text-xs text-white line-clamp-1">{type.description}</p>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </motion.button>
               );
@@ -581,7 +620,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Job Details</h3>
             <div className="space-y-3">
               <div>
-                <Label className="text-white/80 text-sm">Permit Title</Label>
+                <Label className="text-white text-sm">Permit Title</Label>
                 <Input
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -590,7 +629,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Location</Label>
+                <Label className="text-white text-sm">Location</Label>
                 <Input
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
@@ -599,7 +638,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Description of Work</Label>
+                <Label className="text-white text-sm">Description of Work</Label>
                 <Textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -608,7 +647,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Duration (hours)</Label>
+                <Label className="text-white text-sm">Duration (hours)</Label>
                 <Select
                   value={String(formData.duration_hours)}
                   onValueChange={(v) => setFormData({ ...formData, duration_hours: Number(v) })}
@@ -667,7 +706,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   className="flex items-center gap-2 p-2.5 rounded-lg border border-white/10 bg-white/[0.03]"
                 >
                   <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-                  <span className="text-sm text-white/80">{p}</span>
+                  <span className="text-sm text-white">{p}</span>
                 </div>
               ))}
             </div>
@@ -683,7 +722,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             </div>
 
             <div className="mt-4">
-              <Label className="text-white/80 text-sm">Emergency Procedures</Label>
+              <Label className="text-white text-sm">Emergency Procedures</Label>
               <Textarea
                 value={formData.emergency_procedures}
                 onChange={(e) => setFormData({ ...formData, emergency_procedures: e.target.value })}
@@ -707,7 +746,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </h4>
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-white/80 text-sm">Full Name</Label>
+                    <Label className="text-white text-sm">Full Name</Label>
                     <Input
                       value={formData.issuer_name}
                       onChange={(e) => setFormData({ ...formData, issuer_name: e.target.value })}
@@ -729,7 +768,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </h4>
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-white/80 text-sm">Full Name</Label>
+                    <Label className="text-white text-sm">Full Name</Label>
                     <Input
                       value={formData.receiver_name}
                       onChange={(e) => setFormData({ ...formData, receiver_name: e.target.value })}
@@ -745,7 +784,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Additional Notes</Label>
+                <Label className="text-white text-sm">Additional Notes</Label>
                 <Textarea
                   value={formData.additional_notes}
                   onChange={(e) => setFormData({ ...formData, additional_notes: e.target.value })}
@@ -810,7 +849,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Permit to Work</h1>
-            <p className="text-sm text-white/70">Issue, manage and close work permits</p>
+            <p className="text-sm text-white">Issue, manage and close work permits</p>
           </div>
         </div>
 
@@ -831,7 +870,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -848,7 +887,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   className={`px-4 py-2 min-h-[36px] rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-colors active:scale-[0.97] ${
                     filterStatus === status
                       ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                      : 'bg-white/[0.05] text-white/60 border border-white/10'
+                      : 'bg-white/[0.05] text-white border border-white/10'
                   }`}
                 >
                   {status === 'all' ? 'All' : STATUS_CONFIG[status].label}
@@ -862,14 +901,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         {filteredPermits.length === 0 && permits.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <FileText className="h-8 w-8 text-white/30" />
+              <FileText className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-base font-bold text-white/70 mb-1">No Permits Issued</h3>
-            <p className="text-sm text-white/50">Issue your first permit to work to get started</p>
+            <h3 className="text-base font-bold text-white mb-1">No Permits Issued</h3>
+            <p className="text-sm text-white">Issue your first permit to work to get started</p>
           </div>
         ) : filteredPermits.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-sm text-white/50">No permits match your filter</p>
+            <p className="text-sm text-white">No permits match your filter</p>
           </div>
         ) : (
           <div className="space-y-2 pb-20">
@@ -898,7 +937,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           {permit.title}
                         </h4>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-white/60">
+                      <div className="flex items-center gap-2 text-xs text-white">
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{permit.location}</span>
                       </div>
@@ -912,7 +951,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         {permit.status === 'active' && <TimeRemaining endTime={permit.end_time} />}
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </motion.button>
               );
@@ -939,6 +978,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <h2 className="text-base font-bold text-white">
                   {wizardStep === 0 ? 'New Permit' : `Step ${wizardStep} of 3`}
                 </h2>
+                <DraftSaveIndicator status={draftStatus} />
               </div>
               {typeConfig && (
                 <Badge className={`${typeConfig.colour} bg-white/10 border-none text-xs`}>
@@ -961,6 +1001,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              <AnimatePresence>
+                {recoveredDraft && (
+                  <div className="mb-4">
+                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+                  </div>
+                )}
+              </AnimatePresence>
               {renderWizardStep()}
             </div>
 
@@ -1024,17 +1071,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     {/* Details */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="h-4 w-4 text-white/50" />
-                        <span className="text-white/80">{viewingPermit.location}</span>
+                        <MapPin className="h-4 w-4 text-white" />
+                        <span className="text-white">{viewingPermit.location}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="h-4 w-4 text-white/50" />
-                        <span className="text-white/80">
+                        <Calendar className="h-4 w-4 text-white" />
+                        <span className="text-white">
                           {new Date(viewingPermit.start_time).toLocaleString('en-GB')} —{' '}
                           {new Date(viewingPermit.end_time).toLocaleString('en-GB')}
                         </span>
                       </div>
-                      <p className="text-sm text-white/70 mt-2">{viewingPermit.description}</p>
+                      <p className="text-sm text-white mt-2">{viewingPermit.description}</p>
                     </div>
 
                     {/* Hazards */}
@@ -1051,7 +1098,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                               <div>
                                 <p className="text-sm text-white font-medium">{h.description}</p>
                                 {h.controls && (
-                                  <p className="text-xs text-white/60 mt-0.5">{h.controls}</p>
+                                  <p className="text-xs text-white mt-0.5">{h.controls}</p>
                                 )}
                               </div>
                             </div>
@@ -1082,7 +1129,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         {viewingPermit.precautions.map((p, i) => (
                           <div key={i} className="flex items-center gap-2">
                             <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                            <span className="text-sm text-white/80">{p}</span>
+                            <span className="text-sm text-white">{p}</span>
                           </div>
                         ))}
                       </div>
@@ -1091,7 +1138,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     {/* Signatures */}
                     <div className="grid grid-cols-2 gap-3">
                       <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-[10px] text-white/50 mb-1">ISSUER</p>
+                        <p className="text-[10px] text-white mb-1">ISSUER</p>
                         <p className="text-sm text-white font-medium">
                           {viewingPermit.issuer_name}
                         </p>
@@ -1104,7 +1151,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         )}
                       </div>
                       <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                        <p className="text-[10px] text-white/50 mb-1">RECEIVER</p>
+                        <p className="text-[10px] text-white mb-1">RECEIVER</p>
                         <p className="text-sm text-white font-medium">
                           {viewingPermit.receiver_name}
                         </p>

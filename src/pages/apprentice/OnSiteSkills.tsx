@@ -16,7 +16,7 @@ const OnSiteSkills = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Clock className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">How to log off-the-job learning properly</h2>
-            <p className="text-center text-white/70">
+            <p className="text-center text-white">
               Best practices for tracking and documenting your off-the-job learning hours
             </p>
           </CardContent>
@@ -26,7 +26,7 @@ const OnSiteSkills = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Camera className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Evidence gathering tips</h2>
-            <p className="text-center text-white/70">
+            <p className="text-center text-white">
               Photos, logs, witness statements and other portfolio evidence techniques
             </p>
           </CardContent>
@@ -36,7 +36,7 @@ const OnSiteSkills = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <FileText className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Common mistakes in portfolios</h2>
-            <p className="text-center text-white/70">
+            <p className="text-center text-white">
               How to avoid typical portfolio errors and ensure assessment success
             </p>
           </CardContent>
@@ -46,7 +46,7 @@ const OnSiteSkills = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Briefcase className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Soft skills development</h2>
-            <p className="text-center text-white/70">
+            <p className="text-center text-white">
               Client communication, timekeeping, and workplace professionalism
             </p>
           </CardContent>

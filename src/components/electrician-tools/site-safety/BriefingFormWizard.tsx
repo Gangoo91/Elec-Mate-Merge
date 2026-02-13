@@ -434,7 +434,7 @@ export const BriefingFormWizard = ({
                   variant="outline"
                   onClick={() => setShowTemplateSelector(!showTemplateSelector)}
                   className={cn(
-                    'w-full h-12 border-white/20 text-white/80',
+                    'w-full h-12 border-white/20 text-white',
                     'hover:bg-white/[0.06] hover:border-elec-yellow/40',
                     'touch-manipulation',
                     showTemplateSelector && 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
@@ -442,7 +442,7 @@ export const BriefingFormWizard = ({
                 >
                   <FileText className="h-4 w-4 mr-2 text-elec-yellow" />
                   {showTemplateSelector ? 'Hide Templates' : 'Start from Template'}
-                  <span className="text-xs text-white/40 ml-2">(Optional)</span>
+                  <span className="text-xs text-white ml-2">(Optional)</span>
                 </Button>
 
                 <AnimatePresence>
@@ -542,7 +542,7 @@ export const BriefingFormWizard = ({
             />
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-white/80">Briefing Content</label>
+              <label className="block text-sm font-medium text-white">Briefing Content</label>
               <textarea
                 value={formData.briefingContent}
                 onChange={(e) => setValue('briefingContent', e.target.value)}
@@ -551,12 +551,12 @@ export const BriefingFormWizard = ({
                 className={cn(
                   'w-full px-4 py-3 rounded-xl',
                   'bg-white/5 border border-white/10',
-                  'text-white placeholder:text-white/40',
+                  'text-white placeholder:text-white',
                   'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50',
                   'transition-all resize-none touch-manipulation'
                 )}
               />
-              <div className="flex justify-between text-xs text-white/40">
+              <div className="flex justify-between text-xs text-white">
                 <span>{errors.briefingContent?.message}</span>
                 <span>{formData.briefingContent?.length || 0} / 50 min</span>
               </div>
@@ -594,7 +594,7 @@ export const BriefingFormWizard = ({
               <div className="flex items-center gap-2">
                 <Camera className="h-4.5 w-4.5 text-elec-yellow" />
                 <label className="text-sm font-semibold text-white">Site Photos</label>
-                <span className="text-xs text-white/40 font-normal">(Optional)</span>
+                <span className="text-xs text-white font-normal">(Optional)</span>
               </div>
               {photoCount > 0 && (
                 <motion.span
@@ -606,7 +606,7 @@ export const BriefingFormWizard = ({
                 </motion.span>
               )}
             </div>
-            <p className="text-xs text-white/50 -mt-2">
+            <p className="text-xs text-white -mt-2">
               Photograph site conditions, hazards, or relevant areas
             </p>
 
@@ -633,7 +633,7 @@ export const BriefingFormWizard = ({
                 {uploadingPhotos ? (
                   <div className="flex flex-col items-center gap-2">
                     <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-white/60">Uploading...</span>
+                    <span className="text-sm text-white">Uploading...</span>
                   </div>
                 ) : (
                   <>
@@ -648,10 +648,10 @@ export const BriefingFormWizard = ({
                       <ImagePlus className="h-7 w-7 text-elec-yellow/70 group-hover:text-elec-yellow transition-colors" />
                     </motion.div>
                     <div className="text-center">
-                      <span className="block text-sm font-medium text-white/70 group-hover:text-white/90 transition-colors">
+                      <span className="block text-sm font-medium text-white group-hover:text-white transition-colors">
                         Take or choose photos
                       </span>
-                      <span className="block text-xs text-white/35 mt-1">
+                      <span className="block text-xs text-white mt-1">
                         {remaining} {remaining === 1 ? 'slot' : 'slots'} remaining
                       </span>
                     </div>
@@ -751,8 +751,8 @@ export const BriefingFormWizard = ({
             {/* Empty state */}
             {photoCount === 0 && !uploadingPhotos && (
               <div className="text-center py-4">
-                <ImageIcon className="h-8 w-8 text-white/15 mx-auto mb-2" />
-                <p className="text-xs text-white/30">No photos added yet</p>
+                <ImageIcon className="h-8 w-8 text-white mx-auto mb-2" />
+                <p className="text-xs text-white">No photos added yet</p>
               </div>
             )}
 
@@ -812,7 +812,7 @@ export const BriefingFormWizard = ({
                 </motion.span>
               )}
             </div>
-            <p className="text-xs text-white/50 -mt-2">
+            <p className="text-xs text-white -mt-2">
               Add everyone who needs to sign this briefing. Signatures are collected after sharing.
             </p>
 
@@ -836,7 +836,7 @@ export const BriefingFormWizard = ({
                   Add
                 </Button>
               </div>
-              <p className="text-xs text-white/30">
+              <p className="text-xs text-white">
                 Separate multiple names with commas to add them all at once
               </p>
             </div>
@@ -855,7 +855,7 @@ export const BriefingFormWizard = ({
                   >
                     {/* Row number */}
                     <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06] shrink-0">
-                      <span className="text-xs font-bold text-white/50">{idx + 1}</span>
+                      <span className="text-xs font-bold text-white">{idx + 1}</span>
                     </div>
 
                     {/* Name & role */}
@@ -867,8 +867,8 @@ export const BriefingFormWizard = ({
                         onChange={(e) => updateAttendeeRole(idx, e.target.value)}
                         placeholder="Trade / role (optional)"
                         className={cn(
-                          'w-full text-xs px-0 py-0.5 bg-transparent border-0 text-white/50',
-                          'placeholder:text-white/25 focus:outline-none focus:text-white/70',
+                          'w-full text-xs px-0 py-0.5 bg-transparent border-0 text-white',
+                          'placeholder:text-white focus:outline-none focus:text-white',
                           'touch-manipulation'
                         )}
                       />
@@ -878,7 +878,7 @@ export const BriefingFormWizard = ({
                     <button
                       type="button"
                       onClick={() => removeAttendee(idx)}
-                      className="flex items-center justify-center w-11 h-11 rounded-xl text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
+                      className="flex items-center justify-center w-11 h-11 rounded-xl text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -889,10 +889,10 @@ export const BriefingFormWizard = ({
               {totalAttendees === 0 && (
                 <div className="text-center py-8">
                   <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-dashed border-white/15 flex items-center justify-center mx-auto mb-3">
-                    <UserPlus className="h-7 w-7 text-white/15" />
+                    <UserPlus className="h-7 w-7 text-white" />
                   </div>
-                  <p className="text-sm font-medium text-white/30 mb-1">No attendees added</p>
-                  <p className="text-xs text-white/20">
+                  <p className="text-sm font-medium text-white mb-1">No attendees added</p>
+                  <p className="text-xs text-white">
                     Add the people who need to sign off on this briefing
                   </p>
                 </div>
@@ -902,30 +902,30 @@ export const BriefingFormWizard = ({
             {/* Review Summary */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="px-4 pt-3 pb-2 border-b border-white/[0.06]">
-                <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-white uppercase tracking-wider">
                   Review Summary
                 </span>
               </div>
               <div className="px-4 py-3 space-y-2.5">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <FileText className="h-3.5 w-3.5 text-white/50" />
+                    <FileText className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-white/70 truncate">
+                  <span className="text-white truncate">
                     {briefingTypeInfo?.label || formData.briefingType} — {formData.briefingTitle}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <MapPin className="h-3.5 w-3.5 text-white/50" />
+                    <MapPin className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-white/70 truncate">{formData.siteName}</span>
+                  <span className="text-white truncate">{formData.siteName}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <Calendar className="h-3.5 w-3.5 text-white/50" />
+                    <Calendar className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-white/70 whitespace-nowrap">
+                  <span className="text-white whitespace-nowrap">
                     {formData.briefingDate
                       ? new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString('en-GB', {
                           day: 'numeric',
@@ -938,18 +938,18 @@ export const BriefingFormWizard = ({
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <ShieldAlert className="h-3.5 w-3.5 text-white/50" />
+                    <ShieldAlert className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-white/70">
+                  <span className="text-white">
                     {formData.hazards?.length || 0} hazards identified
                   </span>
                 </div>
                 {(formData.photos?.length || 0) > 0 && (
                   <div className="flex items-center gap-3 text-sm">
                     <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                      <Camera className="h-3.5 w-3.5 text-white/50" />
+                      <Camera className="h-3.5 w-3.5 text-white" />
                     </div>
-                    <span className="text-white/70">
+                    <span className="text-white">
                       {formData.photos!.length} photo{formData.photos!.length > 1 ? 's' : ''}
                     </span>
                   </div>
@@ -973,19 +973,19 @@ export const BriefingFormWizard = ({
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={step === 0 ? onClose : prevStep}
-              className="p-2.5 -ml-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="p-2.5 -ml-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div className="text-center">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 Step {step + 1} of {totalSteps}
               </p>
               <p className="text-sm font-medium text-white">{STEP_TITLES[step]}</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2.5 -mr-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="p-2.5 -mr-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
               <X className="h-5 w-5" />
             </button>
@@ -1026,7 +1026,7 @@ export const BriefingFormWizard = ({
                   type="button"
                   variant="outline"
                   onClick={() => handleSave(true)}
-                  className="flex-1 h-14 border-white/20 text-white/80"
+                  className="flex-1 h-14 border-white/20 text-white"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   Save Draft
@@ -1057,7 +1057,7 @@ export const BriefingFormWizard = ({
                     type="button"
                     variant="outline"
                     onClick={prevStep}
-                    className="h-14 px-6 border-white/20 text-white/80"
+                    className="h-14 px-6 border-white/20 text-white"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Back

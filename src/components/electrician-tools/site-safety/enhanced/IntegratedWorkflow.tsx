@@ -173,7 +173,7 @@ const IntegratedWorkflow: React.FC = () => {
       {/* Header */}
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-2">Integrated Safety Workflow</h1>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Complete safety documentation with task and hazard management
         </p>
       </div>
@@ -183,7 +183,7 @@ const IntegratedWorkflow: React.FC = () => {
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <span className="text-sm font-medium">Workflow Progress</span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               {Math.round(progress)}% Complete
             </span>
           </div>
@@ -199,7 +199,7 @@ const IntegratedWorkflow: React.FC = () => {
                     ? 'bg-primary/10 text-primary' 
                     : step.completed 
                       ? 'text-green-600 hover:bg-green-50' 
-                      : 'text-muted-foreground hover:bg-muted'
+                      : 'text-white hover:bg-muted'
                 }`}
                 onClick={() => goToStep(index)}
               >
@@ -208,7 +208,7 @@ const IntegratedWorkflow: React.FC = () => {
                     ? 'bg-green-100 text-green-600' 
                     : index === currentStep 
                       ? 'bg-primary text-primary-foreground' 
-                      : 'bg-muted text-muted-foreground'
+                      : 'bg-muted text-white'
                 }`}>
                   {step.completed ? (
                     <CheckCircle className="w-4 h-4" />
@@ -236,7 +236,7 @@ const IntegratedWorkflow: React.FC = () => {
                 </span>
                 {workflowSteps[currentStep].title}
               </CardTitle>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-white mt-1">
                 {workflowSteps[currentStep].description}
               </p>
             </div>

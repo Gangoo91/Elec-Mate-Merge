@@ -179,11 +179,11 @@ export const CancelBriefingDialog = ({
               </SheetHeader>
 
               <div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   <strong>Briefing:</strong> {briefing?.briefing_name || briefing?.title}
                 </p>
                 {reason && (
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="text-sm text-white mt-2">
                     <strong>Reason:</strong> {reason}
                   </p>
                 )}

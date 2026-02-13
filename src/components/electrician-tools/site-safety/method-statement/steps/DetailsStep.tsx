@@ -48,7 +48,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
             <FileText className="h-5 w-5" />
             Method Statement Details
           </CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Provide the basic information for your method statement.
           </p>
         </CardHeader>
@@ -257,7 +257,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Based on your work type, consider these recommendations:
             </p>
             
@@ -284,7 +284,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 </ul>
                 <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                   <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Installation Work:</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Electric shock, arc flash, manual handling, falls from height will be suggested in the hazards step.
                   </p>
                 </div>
@@ -302,7 +302,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 </ul>
                 <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                   <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Testing Work:</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Electric shock, faulty equipment, confined spaces will be suggested in the hazards step.
                   </p>
                 </div>
@@ -320,7 +320,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
                 </ul>
                 <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                   <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Maintenance:</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Equipment failure, chemical exposure, manual handling will be suggested in the hazards step.
                   </p>
                 </div>
@@ -329,7 +329,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
             
             <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
               <p className="text-sm text-green-300 font-medium">💡 Next Steps</p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white mt-1">
                 After completing job details, you'll be able to create detailed method steps and link relevant hazards from our comprehensive database.
               </p>
             </div>

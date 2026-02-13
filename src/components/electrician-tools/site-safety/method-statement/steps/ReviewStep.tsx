@@ -39,7 +39,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       case 'low': return 'bg-green-500/20 text-green-300 border-green-500/30';
       case 'medium': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
       case 'high': return 'bg-red-500/20 text-red-300 border-red-500/30';
-      default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+      default: return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -135,7 +135,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
             <Eye className="h-5 w-5" />
             Review Method Statement
           </CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Review your method statement before generating the final document.
           </p>
         </CardHeader>
@@ -150,19 +150,19 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow">{stats.totalSteps}</div>
-              <div className="text-sm text-muted-foreground">Total Steps</div>
+              <div className="text-sm text-white">Total Steps</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-300">{stats.highRiskSteps}</div>
-              <div className="text-sm text-muted-foreground">High Risk Steps</div>
+              <div className="text-sm text-white">High Risk Steps</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-300">{stats.totalSafetyReqs}</div>
-              <div className="text-sm text-muted-foreground">Safety Requirements</div>
+              <div className="text-sm text-white">Safety Requirements</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-300">{data.duration || 'TBD'}</div>
-              <div className="text-sm text-muted-foreground">Estimated Duration</div>
+              <div className="text-sm text-white">Estimated Duration</div>
             </div>
           </div>
         </CardContent>
@@ -227,7 +227,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           {data.description && (
             <div className="space-y-2">
               <div className="text-sm font-medium text-elec-yellow">Description</div>
-              <div className="text-sm text-muted-foreground text-left">{data.description}</div>
+              <div className="text-sm text-white text-left">{data.description}</div>
             </div>
           )}
         </CardContent>
@@ -257,7 +257,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                       {/* Metadata row below title */}
                       <div className="flex flex-wrap items-center gap-2">
                         {step.estimatedDuration && (
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground bg-elec-dark/50 px-2 py-1 rounded">
+                          <div className="flex items-center gap-1 text-xs text-white bg-elec-dark/50 px-2 py-1 rounded">
                             <Clock className="h-3 w-3" />
                             {step.estimatedDuration}
                           </div>
@@ -266,7 +266,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                     </div>
                     
                     {step.description && (
-                      <p className="text-sm text-muted-foreground text-left">{step.description}</p>
+                      <p className="text-sm text-white text-left">{step.description}</p>
                     )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 text-xs text-left">
@@ -278,10 +278,10 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.safetyRequirements.slice(0, 3).map((req, idx) => (
-                              <div key={idx} className="text-muted-foreground">• {req}</div>
+                              <div key={idx} className="text-white">• {req}</div>
                             ))}
                             {step.safetyRequirements.length > 3 && (
-                              <div className="text-muted-foreground">
+                              <div className="text-white">
                                 +{step.safetyRequirements.length - 3} more
                               </div>
                             )}
@@ -297,10 +297,10 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.equipmentNeeded.slice(0, 3).map((eq, idx) => (
-                              <div key={idx} className="text-muted-foreground">• {eq}</div>
+                              <div key={idx} className="text-white">• {eq}</div>
                             ))}
                             {step.equipmentNeeded.length > 3 && (
-                              <div className="text-muted-foreground">
+                              <div className="text-white">
                                 +{step.equipmentNeeded.length - 3} more
                               </div>
                             )}
@@ -316,10 +316,10 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.qualifications.slice(0, 3).map((qual, idx) => (
-                              <div key={idx} className="text-muted-foreground">• {qual}</div>
+                              <div key={idx} className="text-white">• {qual}</div>
                             ))}
                             {step.qualifications.length > 3 && (
-                              <div className="text-muted-foreground">
+                              <div className="text-white">
                                 +{step.qualifications.length - 3} more
                               </div>
                             )}
@@ -355,7 +355,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
             <CheckCircle className="h-5 w-5 text-green-300" />
             <div>
               <div className="font-medium text-green-300">Method Statement Complete</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Ready for approval and distribution to site team.
               </div>
             </div>
@@ -371,7 +371,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
               <AlertTriangle className="h-5 w-5 text-red-300" />
               <div>
                 <div className="font-medium text-red-300">High Risk Activities Identified</div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-white">
                   This method statement contains {stats.highRiskSteps} high-risk step(s). 
                   Ensure additional supervision and safety measures are in place.
                 </div>

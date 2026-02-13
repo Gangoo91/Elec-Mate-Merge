@@ -138,7 +138,7 @@ export const EnhancedPhotoManager = ({
                             {...provided.dragHandleProps}
                             className="flex items-center cursor-grab active:cursor-grabbing"
                           >
-                            <GripVertical className="h-5 w-5 text-elec-light/40" />
+                            <GripVertical className="h-5 w-5 text-white" />
                           </div>
 
                           {/* Photo Preview */}
@@ -190,7 +190,7 @@ export const EnhancedPhotoManager = ({
                                     <p className="text-sm text-elec-light truncate">
                                       {photo.caption || photo.filename}
                                     </p>
-                                    <p className="text-xs text-elec-light/50">
+                                    <p className="text-xs text-white">
                                       Photo {index + 1} of {photos.length}
                                     </p>
                                   </div>
@@ -229,7 +229,7 @@ export const EnhancedPhotoManager = ({
       )}
 
       {photos.length === 0 && (
-        <div className="text-center py-8 text-elec-light/50 text-sm">
+        <div className="text-center py-8 text-white text-sm">
           No photos added yet. Upload or capture photos to document the site.
         </div>
       )}

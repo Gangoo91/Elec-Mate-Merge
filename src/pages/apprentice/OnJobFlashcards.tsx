@@ -282,7 +282,7 @@ const OnJobFlashcards = () => {
                   Flashcards & <span className="text-elec-yellow">Microlearning</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Quick-fire revision for regulations, codes, and essential knowledge.
                 Master key concepts with spaced repetition.
               </p>
@@ -301,7 +301,7 @@ const OnJobFlashcards = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{completedSets}/{totalSets}</div>
-                  <div className="text-xs sm:text-sm text-white/60">Sets Completed</div>
+                  <div className="text-xs sm:text-sm text-white">Sets Completed</div>
                 </div>
               </div>
             </CardContent>
@@ -315,7 +315,7 @@ const OnJobFlashcards = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">{masteredCards}/{totalCards}</div>
-                  <div className="text-xs sm:text-sm text-white/60">Cards Mastered</div>
+                  <div className="text-xs sm:text-sm text-white">Cards Mastered</div>
                 </div>
               </div>
             </CardContent>
@@ -329,7 +329,7 @@ const OnJobFlashcards = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">{overallProgress}%</div>
-                  <div className="text-xs sm:text-sm text-white/60">Overall Progress</div>
+                  <div className="text-xs sm:text-sm text-white">Overall Progress</div>
                 </div>
               </div>
             </CardContent>
@@ -339,13 +339,13 @@ const OnJobFlashcards = () => {
             <CardContent className="p-4 sm:p-5">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-orange-500/10">
-                  <Flame className={`h-5 w-5 ${streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white/40'}`} />
+                  <Flame className={`h-5 w-5 ${streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`} />
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-orange-400">
                     {streakLoading ? '-' : streakInfo.currentStreak}
                   </div>
-                  <div className="text-xs sm:text-sm text-white/60">
+                  <div className="text-xs sm:text-sm text-white">
                     {streakInfo.studiedToday ? 'Day Streak 🔥' : 'Study to continue!'}
                   </div>
                 </div>
@@ -364,7 +364,7 @@ const OnJobFlashcards = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-amber-300 mb-1">Keep Your Streak Alive!</h3>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Complete at least one flashcard session today to maintain your study streak.
                     Even 5 minutes of revision helps with retention.
                   </p>

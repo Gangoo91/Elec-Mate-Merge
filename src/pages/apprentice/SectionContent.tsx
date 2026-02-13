@@ -45,7 +45,7 @@ const SectionContent = () => {
           unitSlug={effectiveUnitSlug}
         />
         <div className="text-center py-12">
-          <p className="text-lg text-white/70">Loading section content...</p>
+          <p className="text-lg text-white">Loading section content...</p>
         </div>
       </div>
     );

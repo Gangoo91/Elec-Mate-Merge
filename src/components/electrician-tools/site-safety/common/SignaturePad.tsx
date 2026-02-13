@@ -145,7 +145,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
         {/* Name and Date inputs */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <Label htmlFor={`name-${label}`} className="text-sm text-muted-foreground">
+            <Label htmlFor={`name-${label}`} className="text-sm text-white">
               Name
             </Label>
             <Input
@@ -158,7 +158,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
             />
           </div>
           <div>
-            <Label htmlFor={`date-${label}`} className="text-sm text-muted-foreground">
+            <Label htmlFor={`date-${label}`} className="text-sm text-white">
               Date
             </Label>
             <div className="flex gap-2 mt-1">
@@ -184,7 +184,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
 
         {/* Signature Canvas */}
         <div>
-          <Label className="text-sm text-muted-foreground mb-2 block">
+          <Label className="text-sm text-white mb-2 block">
             Signature
           </Label>
           <div className="relative">
@@ -210,7 +210,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
               <Trash2 className="h-3 w-3" />
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-white mt-1">
             Sign above using mouse or touch
           </p>
         </div>

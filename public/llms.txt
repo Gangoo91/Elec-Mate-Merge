@@ -1,0 +1,60 @@
+# Elec-Mate
+
+> The complete digital platform for UK electricians. Training, AI tools, certificates, calculators, and business management — all in one app.
+
+## What is Elec-Mate?
+
+Elec-Mate is a mobile-first web application built for UK electrical professionals. It covers every aspect of an electrician's work: creating BS 7671-compliant certificates, performing complex calculations, studying for qualifications, managing apprentices, and running a business.
+
+## Key Features
+
+- **8 Certificate Types**: EICR, EIC, Minor Works, Emergency Lighting, Fire Alarm, PAT Testing, EV Charger, Solar PV — all with digital signatures, observation coding, and PDF export
+- **70 Electrical & Business Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, maximum demand, power factor, solar PV, EV charging, arc flash, plus 14 business calculators (quoting, cash flow, tax, VAT)
+- **8 Elec-AI Specialists + 12 AI Tools**: Circuit Designer, Cost Engineer, Voice Quotes, Inspector, Maintenance Advisor, Regulations Guide, Study Coach, Assistant — plus Fault Diagnosis, Diagram Builder, Visual Analysis, Report Writer, and more. All trained on BS 7671:2018 + Amendment 3:2024
+- **36+ Training Courses**: 18th Edition (BS 7671), Level 2 & 3 Diplomas, AM2 simulator, EPA simulator with AI grading, HNC, plus 24 upskilling courses (IPAF, first aid, fire safety, COSHH, working at height, CDM, confined spaces, and more)
+- **Business Management**: Smart quote builder, invoice builder, expenses, project management, scheduling, staff management, Stripe payments, Xero & QuickBooks integrations
+- **Employer Dashboard**: Team management, apprentice progress tracking, compliance monitoring, timesheets, leave management
+- **Wellbeing & Community**: Mental health support, community chat, Elec-ID digital card, portfolio evidence tracking, OJT hours management
+
+## Who is it for?
+
+- Qualified electricians (domestic and commercial)
+- Electrical apprentices (Level 2, Level 3, AM2)
+- Electrical employers and contractors
+- College tutors managing electrical students
+
+## Compliance
+
+All tools and certificates comply with:
+- BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024 (IET Wiring Regulations, 18th Edition)
+- Part P Building Regulations (England & Wales)
+- Electricity at Work Regulations 1989
+- The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
+
+## Pricing
+
+- 7-day free trial (no charge during trial)
+- From GBP 4.99/month
+- All features included in every plan
+
+## Platform
+
+- Works on iPhone, Android, tablet, and desktop
+- Progressive Web App (PWA) — install from browser, works offline
+- Also available as native iOS and Android app via Capacitor
+
+## Links
+
+- Website: https://elec-mate.com
+- EICR Certificate Tool: https://elec-mate.com/tools/eicr-certificate
+- Cable Sizing Calculator: https://elec-mate.com/tools/cable-sizing-calculator
+- Voltage Drop Calculator: https://elec-mate.com/tools/voltage-drop-calculator
+- Minor Works Certificate: https://elec-mate.com/tools/minor-works-certificate
+- Electrical Testing Calculators: https://elec-mate.com/tools/electrical-testing-calculators
+- AI Electrician Tools: https://elec-mate.com/tools/ai-electrician
+- 18th Edition Course: https://elec-mate.com/training/18th-edition-course
+- Apprentice Training: https://elec-mate.com/training/electrical-apprentice
+
+## Full documentation
+
+For detailed feature descriptions, see [llms-full.txt](https://elec-mate.com/llms-full.txt)

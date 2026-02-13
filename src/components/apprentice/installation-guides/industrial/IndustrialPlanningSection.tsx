@@ -2,7 +2,6 @@
 import IndustrialPlanningPhases from "./IndustrialPlanningPhases";
 import IndustrialDesignConsiderations from "./IndustrialDesignConsiderations";
 import IndustrialComplianceRequirements from "./IndustrialComplianceRequirements";
-import IndustrialRiskManagement from "./IndustrialRiskManagement";
 
 const IndustrialPlanningSection = () => {
   return (
@@ -10,7 +9,6 @@ const IndustrialPlanningSection = () => {
       <IndustrialPlanningPhases />
       <IndustrialDesignConsiderations />
       <IndustrialComplianceRequirements />
-      <IndustrialRiskManagement />
     </div>
   );
 };

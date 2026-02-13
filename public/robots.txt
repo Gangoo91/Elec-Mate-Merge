@@ -22,14 +22,39 @@ User-agent: *
 Allow: /
 Crawl-delay: 5
 
-# Disallow admin and private areas
+# Allow public SEO pages
+Allow: /tools/
+Allow: /training/
+Allow: /guides/
+Allow: /compare/
+
+# Allow AI crawler files
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# Disallow protected app areas (require authentication)
+Disallow: /dashboard
+Disallow: /electrician
+Disallow: /apprentice
+Disallow: /employer
+Disallow: /study-centre
+Disallow: /profile
+Disallow: /settings
+Disallow: /walkthrough
 Disallow: /admin
 Disallow: /api
 Disallow: /auth/callback
+Disallow: /checkout-trial
+Disallow: /notifications
+Disallow: /customers
+Disallow: /subscriptions
+Disallow: /mental-health
+Disallow: /college
+Disallow: /elec-id
 
 # Allow important assets
 Allow: /logo.jpg
-Allow: /og-image.png
+Allow: /og-image.jpg
 Allow: /*.css
 Allow: /*.js
 

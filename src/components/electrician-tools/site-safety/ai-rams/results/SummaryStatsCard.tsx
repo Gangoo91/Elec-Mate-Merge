@@ -71,7 +71,7 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
                 <div className="text-xl font-bold text-elec-light">
                   {stat.value}
                 </div>
-                <div className="text-[10px] text-elec-light/70">
+                <div className="text-[10px] text-white">
                   {stat.label}
                 </div>
                 {stat.badge && (

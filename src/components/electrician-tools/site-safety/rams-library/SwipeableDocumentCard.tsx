@@ -218,18 +218,18 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
                   </Badge>
                 )}
               </div>
-              <p className="text-sm text-white/50 truncate mt-0.5">
+              <p className="text-sm text-white truncate mt-0.5">
                 {doc.location}
               </p>
             </div>
 
             {/* Date + chevron */}
             <div className="text-right shrink-0">
-              <span className="text-xs text-white/40 block">
+              <span className="text-xs text-white block">
                 {formatRelativeDate(doc.created_at)}
               </span>
               {!editMode && (
-                <ChevronRight className="h-5 w-5 text-white/30 mt-1 ml-auto" />
+                <ChevronRight className="h-5 w-5 text-white mt-1 ml-auto" />
               )}
             </div>
           </div>

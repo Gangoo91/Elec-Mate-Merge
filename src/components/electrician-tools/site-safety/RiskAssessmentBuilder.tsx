@@ -111,7 +111,7 @@ const RiskAssessmentBuilder = () => {
             <Shield className="h-5 w-5" />
             Risk Assessment Builder
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Build comprehensive risk assessments for electrical work using the 5x5 risk matrix methodology
           </p>
         </CardHeader>
@@ -122,25 +122,25 @@ const RiskAssessmentBuilder = () => {
         <Card className="border-blue-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-blue-400">{stats.total}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Total Risks</div>
+            <div className="text-xs sm:text-sm text-white">Total Risks</div>
           </CardContent>
         </Card>
         <Card className="border-red-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-red-400">{stats.high}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">High Risk</div>
+            <div className="text-xs sm:text-sm text-white">High Risk</div>
           </CardContent>
         </Card>
         <Card className="border-yellow-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-yellow-400">{stats.medium}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Medium Risk</div>
+            <div className="text-xs sm:text-sm text-white">Medium Risk</div>
           </CardContent>
         </Card>
         <Card className="border-green-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-green-400">{stats.low}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Low Risk</div>
+            <div className="text-xs sm:text-sm text-white">Low Risk</div>
           </CardContent>
         </Card>
       </div>
@@ -173,7 +173,7 @@ const RiskAssessmentBuilder = () => {
                 onClick={() => setShowAddForm(false)}
                 size="sm"
                 variant="outline"
-                className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -285,11 +285,11 @@ const RiskAssessmentBuilder = () => {
               {currentRisk.likelihood && currentRisk.severity && (
                 <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Risk Level:</span>
+                    <span className="text-sm text-white">Risk Level:</span>
                     <Badge className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-foreground`}>
                       {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-white">
                       (Score: {currentRisk.likelihood * currentRisk.severity}/25)
                     </span>
                   </div>
@@ -310,7 +310,7 @@ const RiskAssessmentBuilder = () => {
               <Button
                 onClick={() => setShowAddForm(false)}
                 variant="outline"
-                className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
+                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
               >
                 Cancel
               </Button>
@@ -330,9 +330,9 @@ const RiskAssessmentBuilder = () => {
         <CardContent>
           {riskFactors.length === 0 ? (
             <div className="text-center py-12">
-              <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground mb-2">No risk factors identified yet</p>
-              <p className="text-sm text-muted-foreground">Add your first risk factor to begin the assessment</p>
+              <AlertTriangle className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white mb-2">No risk factors identified yet</p>
+              <p className="text-sm text-white">Add your first risk factor to begin the assessment</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -349,7 +349,7 @@ const RiskAssessmentBuilder = () => {
                             <div className="flex flex-wrap items-center gap-2">
                               <Badge 
                                 variant="outline" 
-                                className="border-elec-yellow/30 text-muted-foreground text-xs"
+                                className="border-elec-yellow/30 text-white text-xs"
                               >
                                 {risk.category}
                               </Badge>
@@ -375,15 +375,15 @@ const RiskAssessmentBuilder = () => {
                         {/* Risk Metrics */}
                         <div className="grid grid-cols-3 gap-4 p-3 bg-elec-dark/30 rounded-lg">
                           <div className="text-center">
-                            <div className="text-sm font-medium text-muted-foreground">Likelihood</div>
+                            <div className="text-sm font-medium text-white">Likelihood</div>
                             <div className="text-lg font-bold text-foreground">{risk.likelihood}/5</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-sm font-medium text-muted-foreground">Severity</div>
+                            <div className="text-sm font-medium text-white">Severity</div>
                             <div className="text-lg font-bold text-foreground">{risk.severity}/5</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-sm font-medium text-muted-foreground">Score</div>
+                            <div className="text-sm font-medium text-white">Score</div>
                             <div className="text-lg font-bold text-elec-yellow">{risk.likelihood * risk.severity}</div>
                           </div>
                         </div>
@@ -408,7 +408,7 @@ const RiskAssessmentBuilder = () => {
               </Button>
               <Button 
                 variant="outline" 
-                className="flex-1 border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-12"
+                className="flex-1 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12"
               >
                 <Eye className="h-4 w-4 mr-2" />
                 Preview Report
@@ -430,7 +430,7 @@ const RiskAssessmentBuilder = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
             <div>
               <h4 className="font-medium text-green-300 mb-3">Risk Assessment Process:</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-1">•</span>
                   Identify all potential hazards on site
@@ -451,7 +451,7 @@ const RiskAssessmentBuilder = () => {
             </div>
             <div>
               <h4 className="font-medium text-green-300 mb-3">UK Compliance:</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-1">•</span>
                   Follow CDM Regulations 2015

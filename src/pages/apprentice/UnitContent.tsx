@@ -47,7 +47,7 @@ const UnitContent = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">{unitData?.title || 'Course Unit'}</span>
           </h1>
-          <p className="text-white/70 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             {unitData?.code || ''}: {unitData?.description || ''}
           </p>
         </div>
@@ -80,7 +80,7 @@ const UnitContent = () => {
       {!isHealthSafetyUnit && !isElectricalTheoryUnit && !isInstallationMethodsUnit && (
         <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-2">Unit Overview</h2>
-          <p className="text-white/70">
+          <p className="text-white">
             {unitData?.description || 'This unit covers essential knowledge and skills for electrical installation work.'}
           </p>
         </div>

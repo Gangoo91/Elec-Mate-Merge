@@ -35,7 +35,7 @@ const OnJobWorkplaceCulture = () => {
                   Workplace <span className="text-purple-400">Culture</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Master workplace communication, understand UK electrical industry culture,
                 and build professional relationships that last.
               </p>
@@ -54,7 +54,7 @@ const OnJobWorkplaceCulture = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-purple-400">6</div>
-                  <div className="text-xs sm:text-sm text-white/60">Modules</div>
+                  <div className="text-xs sm:text-sm text-white">Modules</div>
                 </div>
               </div>
             </CardContent>
@@ -68,7 +68,7 @@ const OnJobWorkplaceCulture = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">Team</div>
-                  <div className="text-xs sm:text-sm text-white/60">Skills</div>
+                  <div className="text-xs sm:text-sm text-white">Skills</div>
                 </div>
               </div>
             </CardContent>
@@ -82,7 +82,7 @@ const OnJobWorkplaceCulture = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">UK</div>
-                  <div className="text-xs sm:text-sm text-white/60">Regional</div>
+                  <div className="text-xs sm:text-sm text-white">Regional</div>
                 </div>
               </div>
             </CardContent>
@@ -96,7 +96,7 @@ const OnJobWorkplaceCulture = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-orange-400">Pro</div>
-                  <div className="text-xs sm:text-sm text-white/60">Relationships</div>
+                  <div className="text-xs sm:text-sm text-white">Relationships</div>
                 </div>
               </div>
             </CardContent>
@@ -196,7 +196,7 @@ const OnJobWorkplaceCulture = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-purple-300 mb-1">Pro Tip: Tea Round Etiquette</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the easiest ways to fit into any UK site is to <span className="font-medium text-purple-300">offer to make the tea</span>.
                   It's not just about the drink - it's about showing you're part of the team. Learn everyone's preferences early!
                 </p>

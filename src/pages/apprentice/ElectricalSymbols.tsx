@@ -84,7 +84,7 @@ const ElectricalSymbols = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Electrical Symbols Guide</h1>
-        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4">
+        <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
           Learn and reference common electrical symbols used in circuit diagrams and schematics
         </p>
         <SmartBackButton />
@@ -92,7 +92,7 @@ const ElectricalSymbols = () => {
 
       <div className="relative mb-6">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
         )}
         <Input
           placeholder="Search symbols..."
@@ -115,7 +115,7 @@ const ElectricalSymbols = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-white/70">{symbol.description}</p>
+                <p className="text-sm text-white">{symbol.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -141,7 +141,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -165,7 +165,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -189,7 +189,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -213,7 +213,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -237,7 +237,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -261,7 +261,7 @@ const ElectricalSymbols = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm text-white/70">{symbol.description}</p>
+                        <p className="text-sm text-white">{symbol.description}</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -281,7 +281,7 @@ const ElectricalSymbols = () => {
             {diagramExamples.map((example, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 bg-white/5">
                 <h4 className="font-semibold text-white mb-2">{example.title}</h4>
-                <p className="text-sm text-white/70 mb-3">{example.description}</p>
+                <p className="text-sm text-white mb-3">{example.description}</p>
                 <div className="space-y-1">
                   <p className="text-xs font-medium">Components:</p>
                   <div className="flex flex-wrap gap-1">

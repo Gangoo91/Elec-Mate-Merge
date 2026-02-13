@@ -43,7 +43,7 @@ const IndustrialDesignConsiderations = () => {
           <Settings className="h-6 w-6 text-purple-400" />
           <CardTitle className="text-purple-300">Critical Design Considerations</CardTitle>
         </div>
-        <p className="text-neutral-300">Key factors for industrial electrical design</p>
+        <p className="text-white">Key factors for industrial electrical design</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {designConsiderations.map((item, index) => (
@@ -56,7 +56,7 @@ const IndustrialDesignConsiderations = () => {
               {item.considerations.map((consideration, conIndex) => (
                 <div key={conIndex} className="flex items-start gap-2 text-sm">
                   <Zap className="h-3 w-3 text-purple-400 mt-1 flex-shrink-0" />
-                  <span className="text-neutral-300">{consideration}</span>
+                  <span className="text-white">{consideration}</span>
                 </div>
               ))}
             </div>

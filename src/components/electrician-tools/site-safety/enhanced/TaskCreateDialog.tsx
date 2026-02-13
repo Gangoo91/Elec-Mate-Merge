@@ -303,7 +303,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = React.memo(({ open, on
                       >
                         <div className="flex-1">
                           <div className="font-medium">{suggestion.name}</div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-white">
                             {suggestion.reason}
                           </div>
                         </div>

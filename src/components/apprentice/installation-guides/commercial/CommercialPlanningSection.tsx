@@ -815,7 +815,7 @@ const CommercialPlanningSection = () => {
                         item.importance === 'Safety' ? 'border-orange-400 text-orange-300' :
                         item.importance === 'Legal' ? 'border-purple-400 text-purple-300' :
                         item.importance === 'Important' ? 'border-yellow-400 text-yellow-300' :
-                        'border-white/40 text-white/80'
+                        'border-white/40 text-white'
                       }`}
                     >
                       {item.importance}
@@ -849,7 +849,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{tradeCoordination.description}</p>
+          <p className="text-sm text-white">{tradeCoordination.description}</p>
 
           {tradeCoordination.trades.map((trade, index) => (
             <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
@@ -898,7 +898,7 @@ const CommercialPlanningSection = () => {
                     <tr key={idx} className="border-b border-blue-500/20">
                       <td className="py-2 text-white text-xs">{meeting.stage}</td>
                       <td className="py-2 text-blue-300 text-xs">{meeting.frequency}</td>
-                      <td className="py-2 text-white/80 text-xs">{meeting.attendees}</td>
+                      <td className="py-2 text-white text-xs">{meeting.attendees}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -917,7 +917,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{phasedInstallation.description}</p>
+          <p className="text-sm text-white">{phasedInstallation.description}</p>
 
           {phasedInstallation.phases.map((phase, index) => (
             <div key={index} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
@@ -984,7 +984,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{businessContinuity.description}</p>
+          <p className="text-sm text-white">{businessContinuity.description}</p>
 
           {businessContinuity.considerations.map((item, index) => (
             <div key={index} className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
@@ -1041,7 +1041,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{accessAndSecurity.description}</p>
+          <p className="text-sm text-white">{accessAndSecurity.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {accessAndSecurity.requirements.map((req, index) => (
@@ -1130,7 +1130,7 @@ const CommercialPlanningSection = () => {
               {cdmRegulations.keyDocuments.map((doc, idx) => (
                 <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/30">
                   <h5 className="font-medium text-red-200 text-sm">{doc.document}</h5>
-                  <p className="text-xs text-white/80 mb-1"><strong>Purpose:</strong> {doc.purpose}</p>
+                  <p className="text-xs text-white mb-1"><strong>Purpose:</strong> {doc.purpose}</p>
                   <p className="text-xs text-white mb-1"><strong>Content:</strong> {doc.content}</p>
                   <p className="text-xs text-red-100"><strong>Responsible:</strong> {doc.responsible}</p>
                 </div>
@@ -1144,7 +1144,7 @@ const CommercialPlanningSection = () => {
             <div className="space-y-2">
               {cdmRegulations.thresholds.thresholds.map((item, idx) => (
                 <div key={idx} className="flex items-start justify-between gap-3 text-sm">
-                  <span className="text-white/80">{item.threshold}</span>
+                  <span className="text-white">{item.threshold}</span>
                   <Badge variant="outline" className="border-red-400 text-red-300 text-xs flex-shrink-0">
                     {item.requirement}
                   </Badge>
@@ -1164,7 +1164,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{healthAndSafety.description}</p>
+          <p className="text-sm text-white">{healthAndSafety.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {healthAndSafety.requirements.map((req, index) => (
@@ -1206,7 +1206,7 @@ const CommercialPlanningSection = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{permitsToWork.description}</p>
+          <p className="text-sm text-white">{permitsToWork.description}</p>
 
           {permitsToWork.types.map((permit, index) => (
             <div key={index} className="bg-rose-500/10 p-4 rounded-lg border border-rose-500/20">

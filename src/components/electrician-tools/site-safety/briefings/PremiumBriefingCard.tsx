@@ -59,7 +59,7 @@ const statusConfig: Record<BriefingStatus, { bg: string; text: string; border: s
   in_progress: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-400/20", label: "In Progress" },
   completed: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-400/20", label: "Completed" },
   cancelled: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-400/20", label: "Cancelled" },
-  draft: { bg: "bg-white/10", text: "text-white/60", border: "border-white/20", label: "Draft" },
+  draft: { bg: "bg-white/10", text: "text-white", border: "border-white/20", label: "Draft" },
 };
 
 // Template Card
@@ -107,14 +107,14 @@ export function TemplateCard({
               )}
             </div>
             {template.description && (
-              <p className="text-sm text-white/50 line-clamp-1 mt-0.5">{template.description}</p>
+              <p className="text-sm text-white line-clamp-1 mt-0.5">{template.description}</p>
             )}
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
         </div>
 
         {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-white/50 mb-4">
+        <div className="flex items-center gap-4 text-xs text-white mb-4">
           <div className="flex items-center gap-1.5">
             <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
             <span>{template.hazardCount} hazards</span>
@@ -206,7 +206,7 @@ export function HistoryCard({
             {isComplete ? (
               <Check className="h-5 w-5 text-emerald-400" />
             ) : (
-              <FileText className="h-5 w-5 text-white/50" />
+              <FileText className="h-5 w-5 text-white" />
             )}
           </div>
           <div className="flex-1 min-w-0">
@@ -219,20 +219,20 @@ export function HistoryCard({
                 {status.label}
               </Badge>
             </div>
-            <div className="flex items-center gap-1.5 text-sm text-white/50 mt-0.5">
+            <div className="flex items-center gap-1.5 text-sm text-white mt-0.5">
               <MapPin className="h-3 w-3" />
               <span className="truncate">{briefing.location}</span>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
         </div>
 
         {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-white/50 mb-4">
+        <div className="flex items-center gap-4 text-xs text-white mb-4">
           <div className="flex items-center gap-1.5">
             <Calendar className="h-3.5 w-3.5" />
             <span>{briefing.date}</span>
-            {briefing.time && <span className="text-white/30">at {briefing.time}</span>}
+            {briefing.time && <span className="text-white">at {briefing.time}</span>}
           </div>
           <div className="flex items-center gap-1.5">
             <Users className="h-3.5 w-3.5" />
@@ -338,7 +338,7 @@ export function PendingCard({
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-white truncate">{briefing.name}</h3>
-            <div className="flex items-center gap-1.5 text-sm text-white/50 mt-0.5">
+            <div className="flex items-center gap-1.5 text-sm text-white mt-0.5">
               <MapPin className="h-3 w-3" />
               <span className="truncate">{briefing.location}</span>
             </div>
@@ -351,8 +351,8 @@ export function PendingCard({
         {/* Progress */}
         <div className="mb-4">
           <div className="flex items-center justify-between text-xs mb-1.5">
-            <span className="text-white/50">Signatures</span>
-            <span className="text-white/70">
+            <span className="text-white">Signatures</span>
+            <span className="text-white">
               {briefing.signedCount || 0} of {briefing.attendeeCount}
             </span>
           </div>

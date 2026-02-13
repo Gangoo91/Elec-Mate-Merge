@@ -39,7 +39,7 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
               <UserCheck className="h-4 w-4 text-purple-400" />
               <span className="text-sm font-semibold text-elec-light">Competency Requirements</span>
             </div>
-            <p className="text-sm text-elec-light/90">{competency.competencyRequirements}</p>
+            <p className="text-sm text-white">{competency.competencyRequirements}</p>
           </div>
         )}
 
@@ -50,7 +50,7 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
               <GraduationCap className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-semibold text-elec-light">Training Required</span>
             </div>
-            <p className="text-sm text-elec-light/90">{competency.trainingRequired}</p>
+            <p className="text-sm text-white">{competency.trainingRequired}</p>
           </div>
         )}
 
@@ -61,7 +61,7 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
               <UserCheck className="h-4 w-4 text-amber-400" />
               <span className="text-sm font-semibold text-amber-400">Supervision Level</span>
             </div>
-            <p className="text-sm text-elec-light/90">{competency.supervisionLevel}</p>
+            <p className="text-sm text-white">{competency.supervisionLevel}</p>
           </div>
         )}
 
@@ -72,13 +72,13 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
               <Award className="h-4 w-4 text-green-400" />
               <span className="text-sm font-semibold text-elec-light">Additional Certifications</span>
             </div>
-            <p className="text-sm text-elec-light/90">{competency.additionalCertifications}</p>
+            <p className="text-sm text-white">{competency.additionalCertifications}</p>
           </div>
         )}
 
         {/* Footer Note */}
         <div className="pt-2 border-t border-border/40">
-          <p className="text-xs text-muted-foreground flex items-start gap-2">
+          <p className="text-xs text-white flex items-start gap-2">
             <FileCheck className="h-3 w-3 mt-0.5 flex-shrink-0" />
             <span>All personnel must have appropriate qualifications verified before commencing work</span>
           </p>

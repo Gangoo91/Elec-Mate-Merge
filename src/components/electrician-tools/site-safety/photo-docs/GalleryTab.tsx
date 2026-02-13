@@ -260,7 +260,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
         )}
         {!batchMode && photo.project_reference && viewMode === 'grid' && (
           <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5">
-            <span className="text-[9px] text-white/90 flex items-center gap-1">
+            <span className="text-[9px] text-white flex items-center gap-1">
               <Folder className="h-2.5 w-2.5" />
               {photo.project_reference}
             </span>
@@ -275,10 +275,10 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
     return (
       <div className="flex flex-col items-center justify-center h-full bg-elec-dark px-4">
         <div className="w-16 h-16 rounded-full bg-[#1e1e1e] border border-white/10 flex items-center justify-center mb-3">
-          <Grid3X3 className="h-8 w-8 text-white/30" />
+          <Grid3X3 className="h-8 w-8 text-white" />
         </div>
         <h3 className="text-base font-semibold text-white mb-1">No photos yet</h3>
-        <p className="text-xs text-white/70 text-center max-w-[200px]">
+        <p className="text-xs text-white text-center max-w-[200px]">
           Take photos in the Camera tab to get started
         </p>
       </div>
@@ -299,7 +299,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
               }}
               className="p-2 -ml-1 rounded-lg hover:bg-white/5 transition-colors touch-manipulation"
             >
-              <ChevronRight className="h-5 w-5 text-white/60 rotate-180" />
+              <ChevronRight className="h-5 w-5 text-white rotate-180" />
             </button>
             <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
               <FolderOpen className="h-5 w-5 text-elec-yellow" />
@@ -308,14 +308,14 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
               <h2 className="text-sm font-semibold text-white truncate">
                 {expandedProject === '__unorganised__' ? 'Unorganised Photos' : expandedProject}
               </h2>
-              <p className="text-xs text-white/70">{displayPhotos.length} photos</p>
+              <p className="text-xs text-white">{displayPhotos.length} photos</p>
             </div>
             <button
               onClick={() => {
                 setBatchMode(!batchMode);
                 setSelectedPhotos(new Set());
               }}
-              className={`p-2 rounded-lg touch-manipulation ${batchMode ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white/50 active:bg-white/5'}`}
+              className={`p-2 rounded-lg touch-manipulation ${batchMode ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/5'}`}
             >
               <CheckSquare className="h-5 w-5" />
             </button>
@@ -415,7 +415,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
       <div className="sticky top-0 bg-elec-dark z-10 px-3 py-2 border-b border-white/10">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               placeholder="Search photos..."
               className="pl-9 pr-8 h-10 bg-[#1e1e1e] border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
@@ -427,7 +427,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
                 onClick={() => handleSearch('')}
               >
-                <X className="h-3.5 w-3.5 text-white/40" />
+                <X className="h-3.5 w-3.5 text-white" />
               </button>
             )}
           </div>
@@ -435,19 +435,19 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           {/* View toggle */}
           <div className="flex items-center bg-[#1e1e1e] border border-white/10 rounded-lg p-0.5">
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'projects' ? 'bg-elec-yellow text-black' : 'text-white/50 hover:text-white'}`}
+              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'projects' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
               onClick={() => setViewMode('projects')}
             >
               <Folder className="h-4 w-4" />
             </button>
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'grid' ? 'bg-elec-yellow text-black' : 'text-white/50 hover:text-white'}`}
+              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'grid' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
               onClick={() => setViewMode('grid')}
             >
               <Grid3X3 className="h-4 w-4" />
             </button>
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'list' ? 'bg-elec-yellow text-black' : 'text-white/50 hover:text-white'}`}
+              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'list' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
               onClick={() => setViewMode('list')}
             >
               <List className="h-4 w-4" />
@@ -456,7 +456,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
 
           {/* Sort */}
           <button
-            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white/50 hover:text-white touch-manipulation"
+            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white hover:text-white touch-manipulation"
             onClick={() =>
               setSortMode((prev) => {
                 const modes: SortMode[] = ['newest', 'oldest', 'category', 'project'];
@@ -470,7 +470,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
 
           {/* Filter */}
           <button
-            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white/50 hover:text-white touch-manipulation"
+            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white hover:text-white touch-manipulation"
             onClick={() => setShowFilters(true)}
           >
             <Filter className="h-4 w-4" />
@@ -482,7 +482,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
               setBatchMode(!batchMode);
               setSelectedPhotos(new Set());
             }}
-            className={`p-2 rounded-lg border touch-manipulation ${batchMode ? 'bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow' : 'bg-[#1e1e1e] border-white/10 text-white/50'}`}
+            className={`p-2 rounded-lg border touch-manipulation ${batchMode ? 'bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow' : 'bg-[#1e1e1e] border-white/10 text-white'}`}
           >
             <CheckSquare className="h-4 w-4" />
           </button>
@@ -492,7 +492,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           {sortMode !== 'newest' && (
             <Badge
-              className="bg-white/5 text-white/60 border-white/10 text-[10px] h-6 px-2"
+              className="bg-white/5 text-white border-white/10 text-[10px] h-6 px-2"
               onClick={() => setSortMode('newest')}
             >
               Sort: {sortMode} <X className="h-2.5 w-2.5 ml-1" />
@@ -542,7 +542,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                       className={`p-2.5 rounded-xl ${project.name === '__unorganised__' ? 'bg-white/[0.05] border border-dashed border-white/20' : 'bg-elec-yellow flex items-center justify-center'}`}
                     >
                       {project.name === '__unorganised__' ? (
-                        <ImageIcon className="h-5 w-5 text-white/60" />
+                        <ImageIcon className="h-5 w-5 text-white" />
                       ) : (
                         <Folder className="h-5 w-5 text-black" />
                       )}
@@ -552,11 +552,11 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                         {project.name === '__unorganised__' ? 'Unorganised Photos' : project.name}
                       </h3>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[12px] text-white/80">
+                        <span className="text-[12px] text-white">
                           {project.photos.length} photos
                         </span>
-                        <span className="text-[12px] text-white/40">•</span>
-                        <span className="text-[12px] text-white/70 flex items-center gap-1">
+                        <span className="text-[12px] text-white">•</span>
+                        <span className="text-[12px] text-white flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           {formatDistanceToNow(project.lastUpdated, { addSuffix: true })}
                         </span>
@@ -570,12 +570,12 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                         />
                       ))}
                       {project.categories.length > 4 && (
-                        <span className="text-[10px] text-white/70">
+                        <span className="text-[10px] text-white">
                           +{project.categories.length - 4}
                         </span>
                       )}
                     </div>
-                    <ChevronRight className="h-5 w-5 text-white/50 flex-shrink-0" />
+                    <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                   </button>
                   <div className="px-3 pb-3">
                     <div className="grid grid-cols-4 md:grid-cols-6 gap-1.5">
@@ -604,10 +604,10 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                           onClick={() => setExpandedProject(project.name)}
                           className="aspect-square rounded-lg bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-1 hover:bg-white/10 transition-colors touch-manipulation"
                         >
-                          <span className="text-lg font-bold text-white/70">
+                          <span className="text-lg font-bold text-white">
                             +{project.photos.length - 8}
                           </span>
-                          <span className="text-[10px] text-white/40">more</span>
+                          <span className="text-[10px] text-white">more</span>
                         </button>
                       )}
                     </div>
@@ -662,7 +662,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                         <span
                           className={`w-2 h-2 rounded-full flex-shrink-0 ${getCategoryColor(photo.category)}`}
                         />
-                        <span className="text-[10px] text-white/70 uppercase font-medium">
+                        <span className="text-[10px] text-white uppercase font-medium">
                           {getCategoryLabel(photo.category)}
                         </span>
                       </div>
@@ -671,20 +671,20 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                       </p>
                       <div className="flex items-center gap-3 mt-1">
                         {photo.project_reference && (
-                          <span className="flex items-center gap-1 text-xs text-white/70">
+                          <span className="flex items-center gap-1 text-xs text-white">
                             <Folder className="h-3 w-3" />
                             {photo.project_reference}
                           </span>
                         )}
                         {photo.location && (
-                          <span className="flex items-center gap-1 text-xs text-white/70">
+                          <span className="flex items-center gap-1 text-xs text-white">
                             <MapPin className="h-3 w-3" />
                             {photo.location}
                           </span>
                         )}
                       </div>
                     </div>
-                    {!batchMode && <ChevronRight className="h-5 w-5 text-white/20 flex-shrink-0" />}
+                    {!batchMode && <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />}
                   </motion.div>
                 );
               })}
@@ -723,7 +723,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           <div className="p-4">
             <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-4" />
             <h3 className="text-base font-semibold text-white mb-4">Filter Photos</h3>
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+            <label className="text-xs font-medium text-white uppercase tracking-wide">
               Category
             </label>
             <Select value={filters.category || 'all'} onValueChange={handleCategoryChange}>
@@ -757,7 +757,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                   }}
                 >
                   <span className={`w-3 h-3 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] text-white/70 text-center leading-tight">
+                  <span className="text-[10px] text-white text-center leading-tight">
                     {cat.label.split(' ')[0]}
                   </span>
                 </button>
@@ -769,7 +769,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                   setFilters({});
                   setShowFilters(false);
                 }}
-                className="w-full h-11 mt-4 rounded-xl bg-white/10 text-sm font-medium text-white/70 hover:bg-white/15 touch-manipulation active:bg-white/15"
+                className="w-full h-11 mt-4 rounded-xl bg-white/10 text-sm font-medium text-white hover:bg-white/15 touch-manipulation active:bg-white/15"
               >
                 Clear Filters
               </button>

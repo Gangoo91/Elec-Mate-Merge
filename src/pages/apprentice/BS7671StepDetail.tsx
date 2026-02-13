@@ -105,8 +105,8 @@ const BS7671StepDetail = () => {
               {adaptedStepData.category}
             </div>
           </div>
-          <p className="text-white/70">{adaptedStepData.description}</p>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <p className="text-white">{adaptedStepData.description}</p>
+          <div className="flex items-center gap-2 text-sm text-white">
             <Timer className="h-4 w-4" />
             <span>Estimated time: 10-20 minutes</span>
           </div>

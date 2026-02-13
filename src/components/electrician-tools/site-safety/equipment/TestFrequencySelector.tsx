@@ -32,7 +32,7 @@ export function TestFrequencySelector({
 
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-white/80">
+      <label className="block text-xs font-medium text-white">
         Test Frequency
       </label>
 
@@ -49,7 +49,7 @@ export function TestFrequencySelector({
                 "text-xs font-medium text-center",
                 "transition-colors duration-200",
                 "touch-manipulation min-h-[40px]",
-                isSelected ? "text-white" : "text-white/50"
+                isSelected ? "text-white" : "text-white"
               )}
             >
               {isSelected && (
@@ -67,7 +67,7 @@ export function TestFrequencySelector({
 
       {/* Display full label */}
       {currentPreset && (
-        <p className="text-[10px] text-white/40 text-center">
+        <p className="text-[10px] text-white text-center">
           Equipment will be due for testing every {currentPreset.label}
         </p>
       )}

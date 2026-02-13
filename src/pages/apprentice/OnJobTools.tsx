@@ -111,7 +111,7 @@ const OnJobTools = () => {
                   On the Job <span className="text-elec-yellow">Tools</span>
                 </h1>
               </div>
-              <p className="hidden sm:block text-white/70 max-w-xl text-base">
+              <p className="hidden sm:block text-white max-w-xl text-base">
                 Everything you need on site - from safety checklists to quick-reference guides.
                 Built by electricians, for apprentices.
               </p>
@@ -130,7 +130,7 @@ const OnJobTools = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">9</div>
-                  <div className="text-xs sm:text-sm text-white/60">Tools Available</div>
+                  <div className="text-xs sm:text-sm text-white">Tools Available</div>
                 </div>
               </div>
             </CardContent>
@@ -144,7 +144,7 @@ const OnJobTools = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">100+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Flashcards</div>
+                  <div className="text-xs sm:text-sm text-white">Flashcards</div>
                 </div>
               </div>
             </CardContent>
@@ -158,7 +158,7 @@ const OnJobTools = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">15+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Checklists</div>
+                  <div className="text-xs sm:text-sm text-white">Checklists</div>
                 </div>
               </div>
             </CardContent>
@@ -172,7 +172,7 @@ const OnJobTools = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-orange-400">25+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Safety Scenarios</div>
+                  <div className="text-xs sm:text-sm text-white">Safety Scenarios</div>
                 </div>
               </div>
             </CardContent>
@@ -222,7 +222,7 @@ const OnJobTools = () => {
                   <Clock className="h-4 w-4 text-blue-400" />
                   <span className="font-medium text-blue-400">Before Starting</span>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     Complete site assessment checklist
@@ -243,7 +243,7 @@ const OnJobTools = () => {
                   <Zap className="h-4 w-4 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow">During Work</span>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     Document as you go
@@ -264,7 +264,7 @@ const OnJobTools = () => {
                   <Award className="h-4 w-4 text-green-400" />
                   <span className="font-medium text-green-400">After Completion</span>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     Test thoroughly before leaving

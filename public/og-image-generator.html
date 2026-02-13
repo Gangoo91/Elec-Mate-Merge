@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+  .og {
+    width: 1200px;
+    height: 630px;
+    background: #050505;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ambient glows */
+  .glow-top { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(234,179,8,0.1) 0%, transparent 70%); }
+  .glow-bl { position: absolute; bottom: -150px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(234,179,8,0.06) 0%, transparent 70%); }
+  .glow-br { position: absolute; bottom: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59,130,246,0.04) 0%, transparent 70%); }
+
+  /* Dot grid */
+  .dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Top accent */
+  .top-line {
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent 5%, #eab308 30%, #f59e0b 50%, #eab308 70%, transparent 95%);
+  }
+
+  .content {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    height: 100%;
+    padding: 40px 44px 36px;
+    gap: 36px;
+  }
+
+  /* LEFT SIDE */
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-img {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #eab308, #d97706);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 900; color: #000;
+    box-shadow: 0 0 30px rgba(234,179,8,0.25);
+  }
+
+  .logo-name {
+    font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+  }
+  .logo-name span { color: #eab308; }
+
+  .compliance-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3);
+    border-radius: 100px; padding: 5px 12px;
+    font-size: 10px; font-weight: 700; color: #eab308;
+    margin-left: 12px; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .compliance-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; }
+
+  h1 {
+    font-size: 38px; font-weight: 900; color: #fff;
+    line-height: 1.08; letter-spacing: -1.5px;
+  }
+  h1 em { font-style: normal; color: #eab308; }
+
+  .subtitle {
+    font-size: 13px; color: rgba(255,255,255,0.55);
+    line-height: 1.5; margin-top: 6px;
+  }
+
+  /* Hero stats row */
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .hero-stat {
+    text-align: center;
+    padding: 10px 4px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+
+  .hero-stat-num {
+    font-size: 26px; font-weight: 900; letter-spacing: -1px;
+    line-height: 1;
+  }
+  .hero-stat-num.gold { color: #eab308; }
+  .hero-stat-num.blue { color: #3b82f6; }
+  .hero-stat-num.green { color: #22c55e; }
+  .hero-stat-num.purple { color: #a855f7; }
+
+  .hero-stat-label {
+    font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-top: 3px;
+  }
+
+  /* Audiences */
+  .audiences {
+    display: flex; gap: 10px;
+  }
+
+  .audience-tag {
+    display: flex; align-items: center; gap: 8px;
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 8px 12px;
+  }
+
+  .audience-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .audience-icon.elec { background: rgba(234,179,8,0.15); }
+  .audience-icon.apprentice { background: rgba(59,130,246,0.15); }
+
+  .audience-label { font-size: 11px; font-weight: 700; color: #fff; }
+  .audience-sub { font-size: 9px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+  .cta-row {
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .cta-btn {
+    background: #eab308; color: #000;
+    font-size: 13px; font-weight: 800;
+    padding: 10px 24px; border-radius: 10px;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 0 30px rgba(234,179,8,0.2);
+    letter-spacing: -0.3px;
+  }
+
+  .cta-sub {
+    font-size: 11px; color: rgba(255,255,255,0.45);
+  }
+  .cta-sub strong { color: #fff; font-weight: 600; }
+
+  /* RIGHT SIDE — 6 cards in 3x2 grid */
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .card.c1::before { background: linear-gradient(90deg, #eab308, transparent); }
+  .card.c2::before { background: linear-gradient(90deg, #3b82f6, transparent); }
+  .card.c3::before { background: linear-gradient(90deg, #22c55e, transparent); }
+  .card.c4::before { background: linear-gradient(90deg, #a855f7, transparent); }
+  .card.c5::before { background: linear-gradient(90deg, #f97316, transparent); }
+  .card.c6::before { background: linear-gradient(90deg, #ef4444, transparent); }
+
+  .card-head {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .card-ico {
+    width: 24px; height: 24px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0;
+  }
+  .card-ico.y { background: rgba(234,179,8,0.15); }
+  .card-ico.b { background: rgba(59,130,246,0.15); }
+  .card-ico.g { background: rgba(34,197,94,0.15); }
+  .card-ico.p { background: rgba(168,85,247,0.15); }
+  .card-ico.o { background: rgba(249,115,22,0.15); }
+  .card-ico.r { background: rgba(239,68,68,0.15); }
+
+  .card-name {
+    font-size: 11px; font-weight: 700; color: #fff;
+  }
+
+  .card-list {
+    display: flex; flex-direction: column; gap: 3px;
+    flex: 1;
+  }
+
+  .card-li {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 9.5px; color: rgba(255,255,255,0.75);
+  }
+
+  .card-li .ck {
+    color: #22c55e; font-size: 9px; font-weight: 700; flex-shrink: 0;
+  }
+
+  .card-big {
+    font-size: 20px; font-weight: 900;
+    margin-top: auto; padding-top: 4px;
+    line-height: 1;
+  }
+  .card-big.gold { color: #eab308; }
+  .card-big.blue { color: #3b82f6; }
+  .card-big.green { color: #22c55e; }
+  .card-big.purple { color: #a855f7; }
+  .card-big.orange { color: #f97316; }
+  .card-big.red { color: #ef4444; }
+
+  .card-big span {
+    font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.35);
+    margin-left: 3px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* Bottom compliance bar */
+  .bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+  }
+
+  .bb-item {
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .bb-val {
+    font-size: 12px; font-weight: 800; color: #eab308;
+  }
+
+  .bb-label {
+    font-size: 9px; color: rgba(255,255,255,0.4);
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+
+  .bb-sep {
+    width: 1px; height: 16px; background: rgba(255,255,255,0.06);
+  }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="dots"></div>
+  <div class="glow-top"></div>
+  <div class="glow-bl"></div>
+  <div class="glow-br"></div>
+  <div class="top-line"></div>
+
+  <div class="content">
+    <!-- LEFT -->
+    <div class="left">
+      <div>
+        <div class="logo-row">
+          <div class="logo-img">E</div>
+          <div class="logo-name">Elec-<span>Mate</span></div>
+          <div class="compliance-badge"><div class="compliance-dot"></div>BS 7671 + A3:2024</div>
+        </div>
+      </div>
+
+      <div>
+        <h1>Everything<br><em>UK Electricians</em><br>& <em>Apprentices</em><br>Need. One App.</h1>
+        <div class="subtitle">Certificates, calculators, AI tools, training, business management &amp; more</div>
+      </div>
+
+      <!-- Big stat numbers -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num gold">70</div>
+          <div class="hero-stat-label">Calculators</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num purple">36+</div>
+          <div class="hero-stat-label">Courses</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num blue">8</div>
+          <div class="hero-stat-label">Cert Types</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num green">8</div>
+          <div class="hero-stat-label">Elec-AI Agents</div>
+        </div>
+      </div>
+
+      <div class="audiences">
+        <div class="audience-tag">
+          <div class="audience-icon elec">&#9889;</div>
+          <div>
+            <div class="audience-label">Qualified Electricians</div>
+            <div class="audience-sub">Certs, AI, quoting, invoicing</div>
+          </div>
+        </div>
+        <div class="audience-tag">
+          <div class="audience-icon apprentice">&#127891;</div>
+          <div>
+            <div class="audience-label">Apprentices &amp; Students</div>
+            <div class="audience-sub">Level 2/3, AM2, EPA, portfolio</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <div class="cta-btn">Start 7-Day Free Trial &#8594;</div>
+        <div class="cta-sub">From <strong>&pound;4.99/mo</strong> &middot; Cancel anytime</div>
+      </div>
+    </div>
+
+    <!-- RIGHT — 6 Feature Cards -->
+    <div class="right">
+      <div class="card-grid">
+        <!-- Card 1: Certificates -->
+        <div class="card c1">
+          <div class="card-head">
+            <div class="card-ico y">&#128196;</div>
+            <div class="card-name">Certificates</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> EICR &amp; EIC</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Minor Works (EWC)</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Fire Alarm &amp; Emergency</div>
+            <div class="card-li"><span class="ck">&#10003;</span> PAT, EV, Solar PV</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Digital signatures &amp; PDF</div>
+          </div>
+          <div class="card-big gold">8 <span>Types</span></div>
+        </div>
+
+        <!-- Card 2: Calculators -->
+        <div class="card c2">
+          <div class="card-head">
+            <div class="card-ico b">&#128290;</div>
+            <div class="card-name">Calculators</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> Cable sizing &amp; Zs</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Voltage drop &amp; PFC</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Solar, EV, renewables</div>
+            <div class="card-li"><span class="ck">&#10003;</span> 14 business calculators</div>
+            <div class="card-li"><span class="ck">&#10003;</span> All BS 7671 compliant</div>
+          </div>
+          <div class="card-big blue">70 <span>Tools</span></div>
+        </div>
+
+        <!-- Card 3: Elec-AI -->
+        <div class="card c3">
+          <div class="card-head">
+            <div class="card-ico g">&#129302;</div>
+            <div class="card-name">Elec-AI</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> Circuit Designer</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Cost Engineer</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Voice Quotes</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Study Coach</div>
+            <div class="card-li"><span class="ck">&#10003;</span> + 12 AI tools</div>
+          </div>
+          <div class="card-big green">8 <span>AI Agents</span></div>
+        </div>
+
+        <!-- Card 4: Training -->
+        <div class="card c4">
+          <div class="card-head">
+            <div class="card-ico p">&#127891;</div>
+            <div class="card-name">Training &amp; Courses</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> 18th Edition / BS 7671</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Level 2 &amp; Level 3</div>
+            <div class="card-li"><span class="ck">&#10003;</span> AM2 &amp; EPA simulators</div>
+            <div class="card-li"><span class="ck">&#10003;</span> 24 upskilling courses</div>
+            <div class="card-li"><span class="ck">&#10003;</span> AI study assistant</div>
+          </div>
+          <div class="card-big purple">36+ <span>Courses</span></div>
+        </div>
+
+        <!-- Card 5: Business Suite -->
+        <div class="card c5">
+          <div class="card-head">
+            <div class="card-ico o">&#128188;</div>
+            <div class="card-name">Business Suite</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> Quoting &amp; invoicing</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Xero &amp; QuickBooks</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Project management</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Schedule &amp; staff</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Stripe payments</div>
+          </div>
+          <div class="card-big orange">Full <span>Suite</span></div>
+        </div>
+
+        <!-- Card 6: Wellbeing & Community -->
+        <div class="card c6">
+          <div class="card-head">
+            <div class="card-ico r">&#129505;</div>
+            <div class="card-name">Wellbeing &amp; More</div>
+          </div>
+          <div class="card-list">
+            <div class="card-li"><span class="ck">&#10003;</span> Mental health support</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Community chat</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Elec-ID digital card</div>
+            <div class="card-li"><span class="ck">&#10003;</span> Portfolio evidence</div>
+            <div class="card-li"><span class="ck">&#10003;</span> OJT hours tracker</div>
+          </div>
+          <div class="card-big red">24/7 <span>Access</span></div>
+        </div>
+      </div>
+
+      <!-- Bottom compliance -->
+      <div class="bottom-bar">
+        <div class="bb-item">
+          <div class="bb-val">BS 7671:2018</div>
+          <div class="bb-label">+ Amd 3</div>
+        </div>
+        <div class="bb-sep"></div>
+        <div class="bb-item">
+          <div class="bb-val">PWA + Native</div>
+          <div class="bb-label">All devices</div>
+        </div>
+        <div class="bb-sep"></div>
+        <div class="bb-item">
+          <div class="bb-val">430+</div>
+          <div class="bb-label">Users</div>
+        </div>
+        <div class="bb-sep"></div>
+        <div class="bb-item">
+          <div class="bb-val">Offline</div>
+          <div class="bb-label">On-site ready</div>
+        </div>
+        <div class="bb-sep"></div>
+        <div class="bb-item">
+          <div class="bb-val">UK Built</div>
+          <div class="bb-label">For the trade</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

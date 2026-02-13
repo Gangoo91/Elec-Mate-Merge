@@ -243,7 +243,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         <Button
           onClick={handleCancelEdit}
           variant="outline"
-          className="border-gray-500/30 text-gray-400 hover:bg-gray-500/10"
+          className="border-gray-500/30 text-white hover:bg-gray-500/10"
         >
           Cancel
         </Button>
@@ -334,7 +334,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                   {/* Description Section */}
                   {task.description && (
                     <div className="px-4 py-3 border-b border-elec-yellow/10">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-sm text-white leading-relaxed">
                         {task.description}
                       </p>
                     </div>
@@ -343,7 +343,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                   {/* Metadata Section */}
                   <div className="px-4 py-3 bg-elec-dark/10">
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-white">
                         {task.estimatedDuration && (
                           <div className="flex items-center gap-1">
                             <div className="w-2 h-2 rounded-full bg-blue-400"></div>
@@ -376,7 +376,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         )}
         
         {tasks.length === 0 && !showAddTask && (
-          <div className="text-center py-6 text-muted-foreground">
+          <div className="text-center py-6 text-white">
             <p className="mb-2">No tasks added yet</p>
             <p className="text-sm">Tasks help organize work and link hazards systematically</p>
           </div>

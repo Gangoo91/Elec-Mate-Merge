@@ -416,7 +416,7 @@ const SpecialistReferenceGuide = () => {
                       </Badge>
                     </td>
                     <td className="py-2 text-white font-medium">{section.title}</td>
-                    <td className="py-2 text-white/80">{section.applicability}</td>
+                    <td className="py-2 text-white">{section.applicability}</td>
                     <td className="py-2 text-white text-xs">{section.keyRegulation}</td>
                   </tr>
                 ))}
@@ -440,7 +440,7 @@ const SpecialistReferenceGuide = () => {
               <span className="text-teal-200 font-medium">{gn7Contents.edition}</span>
               <Badge variant="outline" className="border-teal-400 text-teal-300">Essential Reference</Badge>
             </div>
-            <p className="text-sm text-white/80">{gn7Contents.description}</p>
+            <p className="text-sm text-white">{gn7Contents.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -530,7 +530,7 @@ const SpecialistReferenceGuide = () => {
 
                 <div className="text-xs">
                   <div className="text-amber-300 mb-1">Key Benefits:</div>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     {scheme.benefits.slice(0, 3).map((benefit, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-1">
                         <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
@@ -580,7 +580,7 @@ const SpecialistReferenceGuide = () => {
                 ))}
               </div>
 
-              <div className="text-xs text-white/80">
+              <div className="text-xs text-white">
                 <span className="text-green-300">Prerequisites: </span>
                 {pathway.prerequisites.join(", ")}
               </div>
@@ -628,8 +628,8 @@ const SpecialistReferenceGuide = () => {
                         {ip.rating}
                       </Badge>
                     </td>
-                    <td className="py-2 text-white/80">{ip.firstDigit}</td>
-                    <td className="py-2 text-white/80">{ip.secondDigit}</td>
+                    <td className="py-2 text-white">{ip.firstDigit}</td>
+                    <td className="py-2 text-white">{ip.secondDigit}</td>
                     <td className="py-2 text-white">{ip.typical}</td>
                   </tr>
                 ))}
@@ -666,8 +666,8 @@ const SpecialistReferenceGuide = () => {
                         {rcd.type}
                       </Badge>
                     </td>
-                    <td className="py-2 text-white/80">{rcd.detects}</td>
-                    <td className="py-2 text-white/80">{rcd.applications}</td>
+                    <td className="py-2 text-white">{rcd.detects}</td>
+                    <td className="py-2 text-white">{rcd.applications}</td>
                     <td className="py-2 text-white text-xs">{rcd.notes}</td>
                   </tr>
                 ))}
@@ -753,7 +753,7 @@ const SpecialistReferenceGuide = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6 text-white" />
-            <CardTitle className="text-white/80">Key Industry Contacts</CardTitle>
+            <CardTitle className="text-white">Key Industry Contacts</CardTitle>
           </div>
         </CardHeader>
         <CardContent>

@@ -183,7 +183,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
           <div className="flex items-center justify-between mb-3">
             <div>
               <h2 className="text-lg font-bold text-elec-light">{briefing.briefing_name}</h2>
-              <p className="text-sm text-elec-light/60">{briefing.location}</p>
+              <p className="text-sm text-white">{briefing.location}</p>
             </div>
             <MobileButton
               variant="ghost"
@@ -240,7 +240,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
 
           {/* Progress */}
           <div className="mt-3">
-            <div className="flex justify-between text-xs text-elec-light/60 mb-1">
+            <div className="flex justify-between text-xs text-white mb-1">
               <span>Section {currentSection + 1} of {sections.length}</span>
               <span>{Math.round(progressPercent)}%</span>
             </div>

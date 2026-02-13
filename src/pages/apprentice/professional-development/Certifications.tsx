@@ -125,7 +125,7 @@ const Certifications = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Professional Certifications
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Industry certifications and qualifications for electrical professionals. Plan your certification journey for career success.
         </p>
         <SmartBackButton />
@@ -138,7 +138,7 @@ const Certifications = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -151,7 +151,7 @@ const Certifications = () => {
             <CheckCircle className="h-5 w-5" />
             Essential Certifications
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             These certifications are required for most electrical work in the UK
           </p>
         </CardHeader>
@@ -163,22 +163,22 @@ const Certifications = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white/60">{cert.provider}</p>
+                      <p className="text-sm text-white">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white mb-3">{cert.description}</p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                     <div>
-                      <span className="text-white/60">Duration:</span>
+                      <span className="text-white">Duration:</span>
                       <div className="font-medium text-white">{cert.duration}</div>
                     </div>
                     <div>
-                      <span className="text-white/60">Validity:</span>
+                      <span className="text-white">Validity:</span>
                       <div className="font-medium text-white">{cert.validity}</div>
                     </div>
                     <div>
-                      <span className="text-white/60">Cost:</span>
+                      <span className="text-white">Cost:</span>
                       <div className="font-medium text-elec-yellow">{cert.cost}</div>
                     </div>
                     <div className="flex items-center">
@@ -202,7 +202,7 @@ const Certifications = () => {
             <Star className="h-5 w-5" />
             Specialist Certifications
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             Expand your expertise into high-demand specialist areas
           </p>
         </CardHeader>
@@ -214,18 +214,18 @@ const Certifications = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white/60">{cert.provider}</p>
+                      <p className="text-sm text-white">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white mb-3">{cert.description}</p>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-white/60">Duration:</span>
+                      <span className="text-white">Duration:</span>
                       <span className="font-medium text-white">{cert.duration}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/60">Cost:</span>
+                      <span className="text-white">Cost:</span>
                       <span className="font-medium text-elec-yellow">{cert.cost}</span>
                     </div>
                   </div>
@@ -243,7 +243,7 @@ const Certifications = () => {
             <Award className="h-5 w-5" />
             Advanced Qualifications
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             Higher level qualifications for career advancement and professional recognition
           </p>
         </CardHeader>
@@ -255,18 +255,18 @@ const Certifications = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white/60">{cert.provider}</p>
+                      <p className="text-sm text-white">{cert.provider}</p>
                     </div>
                     {getLevelBadge(cert.level)}
                   </div>
-                  <p className="text-sm text-white/80 mb-3">{cert.description}</p>
+                  <p className="text-sm text-white mb-3">{cert.description}</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
                     <div>
-                      <span className="text-white/60">Duration:</span>
+                      <span className="text-white">Duration:</span>
                       <div className="font-medium text-white">{cert.duration}</div>
                     </div>
                     <div>
-                      <span className="text-white/60">Cost:</span>
+                      <span className="text-white">Cost:</span>
                       <div className="font-medium text-elec-yellow">{cert.cost}</div>
                     </div>
                     <div className="flex items-center">
@@ -295,19 +295,19 @@ const Certifications = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Plan Ahead</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Many courses book up months in advance. Plan your certification journey early.
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Check Employer Support</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Many employers will fund training. Check what support is available before booking.
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Stay Current</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Regulations change regularly. Keep track of when your certifications need renewal.
               </p>
             </div>

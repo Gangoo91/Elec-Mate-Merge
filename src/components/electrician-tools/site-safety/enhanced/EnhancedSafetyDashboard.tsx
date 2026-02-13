@@ -53,10 +53,10 @@ const EnhancedSafetyDashboard: React.FC = () => {
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            <p className="text-sm font-medium text-white">{title}</p>
             <p className="text-2xl font-bold">{value}</p>
             {description && (
-              <p className="text-xs text-muted-foreground mt-1">{description}</p>
+              <p className="text-xs text-white mt-1">{description}</p>
             )}
           </div>
           <Icon className={`w-8 h-8 ${color}`} />
@@ -81,7 +81,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
       {/* Header */}
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-2">Enhanced Safety Management</h1>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Comprehensive risk assessment and method statement system with intelligent task management
         </p>
       </div>
@@ -161,15 +161,15 @@ const EnhancedSafetyDashboard: React.FC = () => {
                   ) : task.status === 'in-progress' ? (
                     <Clock className="w-5 h-5 text-blue-600" />
                   ) : (
-                    <AlertTriangle className="w-5 h-5 text-gray-600" />
+                    <AlertTriangle className="w-5 h-5 text-white" />
                   )}
                   <div>
                     <p className="font-medium">{task.title}</p>
-                    <p className="text-sm text-muted-foreground">{task.category}</p>
+                    <p className="text-sm text-white">{task.category}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     {new Date(task.created_at).toLocaleDateString()}
                   </p>
                   <span className={`text-xs px-2 py-1 rounded ${
@@ -185,9 +185,9 @@ const EnhancedSafetyDashboard: React.FC = () => {
             
             {tasks.length === 0 && (
               <div className="text-center py-8">
-                <ClipboardList className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <ClipboardList className="w-12 h-12 mx-auto mb-4 text-white" />
                 <h3 className="text-lg font-semibold mb-2">No tasks yet</h3>
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Create your first task to get started with the enhanced safety system
                 </p>
               </div>
@@ -227,9 +227,9 @@ const EnhancedSafetyDashboard: React.FC = () => {
             </CardHeader>
             <CardContent>
               <div className="text-center py-8">
-                <BarChart3 className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <BarChart3 className="w-12 h-12 mx-auto mb-4 text-white" />
                 <h3 className="text-lg font-semibold mb-2">Analytics Dashboard</h3>
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Detailed analytics and insights coming soon...
                 </p>
               </div>

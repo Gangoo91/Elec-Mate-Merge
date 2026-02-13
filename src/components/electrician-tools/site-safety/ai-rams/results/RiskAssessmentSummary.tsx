@@ -40,22 +40,22 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
         <div className="grid grid-cols-4 gap-1.5">
           <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-2 text-center">
             <div className="text-lg font-bold text-red-400">{hazardsCount}</div>
-            <div className="text-[10px] text-muted-foreground">Hazards</div>
+            <div className="text-[10px] text-white">Hazards</div>
           </div>
 
           <div className="bg-elec-gray/30 border border-green-500/10 rounded-lg p-2 text-center">
             <div className="text-lg font-bold text-green-400">{controlsCount}</div>
-            <div className="text-[10px] text-muted-foreground">Controls</div>
+            <div className="text-[10px] text-white">Controls</div>
           </div>
 
           <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-2 text-center">
             <div className="text-lg font-bold text-red-400">{highRiskHazards.length}</div>
-            <div className="text-[10px] text-muted-foreground">High</div>
+            <div className="text-[10px] text-white">High</div>
           </div>
 
           <div className="bg-elec-gray/30 border border-amber-500/10 rounded-lg p-2 text-center">
             <div className="text-lg font-bold text-amber-400">{mediumRiskHazards.length}</div>
-            <div className="text-[10px] text-muted-foreground">Medium</div>
+            <div className="text-[10px] text-white">Medium</div>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
                     {risk.riskRating}
                   </Badge>
                   <div className="flex-1">
-                    <p className="text-elec-light/90">{risk.hazard}</p>
+                    <p className="text-white">{risk.hazard}</p>
                     {risk.linkedToStep && risk.linkedToStep > 0 && (
                       <div className="flex items-center gap-1 mt-1">
                         <Link2 className="h-3 w-3 text-blue-400" />
@@ -96,7 +96,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
                 {controlsCount} Control Measure{controlsCount !== 1 ? 's' : ''} Implemented
               </span>
             </div>
-            <p className="text-xs text-elec-light/80">
+            <p className="text-xs text-white">
               All identified hazards have control measures in place to reduce risk to acceptable levels. 
               Review the full Risk Assessment tab for detailed controls.
             </p>
@@ -105,7 +105,7 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
 
         {/* Link to Full Risk Assessment */}
         <div className="pt-2 border-t border-border/40">
-          <p className="text-xs text-muted-foreground text-center">
+          <p className="text-xs text-white text-center">
             View the <strong className="text-red-400">Risk Assessment</strong> tab for complete hazard analysis, 
             control measures, and residual risk ratings
           </p>

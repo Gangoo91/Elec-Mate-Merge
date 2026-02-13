@@ -88,7 +88,7 @@ const RegulationsReference = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">BS 7671 Regulations Quick Reference</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
         </p>
         <SmartBackButton />
@@ -96,7 +96,7 @@ const RegulationsReference = () => {
 
       <div className="relative mb-6">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
         )}
         <Input
           placeholder="Search regulations..."
@@ -116,7 +116,7 @@ const RegulationsReference = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-xs text-white/70">{item.description}</p>
+              <p className="text-xs text-white">{item.description}</p>
             </CardContent>
           </Card>
         ))}
@@ -130,16 +130,16 @@ const RegulationsReference = () => {
                 <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
                   {regulation.section}
                 </Badge>
-                <span className="text-xs text-white/60">{regulation.reference}</span>
+                <span className="text-xs text-white">{regulation.reference}</span>
               </div>
               <CardTitle className="text-xl text-elec-yellow">{regulation.title}</CardTitle>
-              <p className="text-white/70 text-sm">{regulation.description}</p>
+              <p className="text-white text-sm">{regulation.description}</p>
             </CardHeader>
             <CardContent>
               <h4 className="font-semibold text-white mb-2">Key Points:</h4>
               <ul className="space-y-1">
                 {regulation.keyPoints.map((point, pointIndex) => (
-                  <li key={pointIndex} className="text-sm text-white/70 flex items-start gap-2">
+                  <li key={pointIndex} className="text-sm text-white flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
                     {point}
                   </li>
@@ -155,7 +155,7 @@ const RegulationsReference = () => {
           <CardTitle className="text-elec-yellow">Important Notice</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70 text-sm">
+          <p className="text-white text-sm">
             This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024 regulations
             and relevant guidance notes for complete requirements. Ensure you have the latest version of the
             regulations as they are updated periodically.

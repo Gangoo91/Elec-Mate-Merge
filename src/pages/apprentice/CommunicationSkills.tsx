@@ -13,7 +13,7 @@ const CommunicationSkills = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Communication Skills for Apprentices</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Master essential communication skills for the electrical trade - from site conversations to client interactions
         </p>
         <SmartBackButton />
@@ -64,7 +64,7 @@ const CommunicationSkills = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70">
+          <p className="text-white">
             Good communication in the electrical trade isn't just about being polite - it's about safety, efficiency, and building a reputation as a professional. 
             Clear communication prevents mistakes, builds trust with clients, and helps you learn faster from experienced colleagues.
           </p>

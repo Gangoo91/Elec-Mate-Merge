@@ -33,7 +33,7 @@ const OnJobSupervisorKnowledge = () => {
                   Ask a <span className="text-blue-400">Supervisor</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Comprehensive knowledge bank with expert guidance, communication strategies,
                 and resources for building strong professional relationships.
               </p>
@@ -52,7 +52,7 @@ const OnJobSupervisorKnowledge = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">FAQ</div>
-                  <div className="text-xs sm:text-sm text-white/60">Question Bank</div>
+                  <div className="text-xs sm:text-sm text-white">Question Bank</div>
                 </div>
               </div>
             </CardContent>
@@ -66,7 +66,7 @@ const OnJobSupervisorKnowledge = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">When</div>
-                  <div className="text-xs sm:text-sm text-white/60">To Ask Help</div>
+                  <div className="text-xs sm:text-sm text-white">To Ask Help</div>
                 </div>
               </div>
             </CardContent>
@@ -80,7 +80,7 @@ const OnJobSupervisorKnowledge = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-purple-400">Pro</div>
-                  <div className="text-xs sm:text-sm text-white/60">Communication</div>
+                  <div className="text-xs sm:text-sm text-white">Communication</div>
                 </div>
               </div>
             </CardContent>
@@ -94,7 +94,7 @@ const OnJobSupervisorKnowledge = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">Site</div>
-                  <div className="text-xs sm:text-sm text-white/60">Knowledge</div>
+                  <div className="text-xs sm:text-sm text-white">Knowledge</div>
                 </div>
               </div>
             </CardContent>
@@ -186,7 +186,7 @@ const OnJobSupervisorKnowledge = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-blue-300 mb-1">Know When to Ask</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Asking questions is a sign of professionalism, not weakness. A good rule:
                   <span className="font-medium text-blue-300"> if you're unsure about safety or regulations, always ask</span>.
                   It shows you're committed to doing quality work.

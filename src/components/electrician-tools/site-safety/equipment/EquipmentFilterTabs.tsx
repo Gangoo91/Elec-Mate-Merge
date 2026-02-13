@@ -45,7 +45,7 @@ export function EquipmentFilterTabs({
               "active:scale-[0.96]",
               isActive
                 ? "bg-elec-yellow text-black"
-                : "bg-white/5 text-white/60 border border-white/[0.08]"
+                : "bg-white/5 text-white border border-white/[0.08]"
             )}
           >
             <span>{tab.label}</span>
@@ -56,7 +56,7 @@ export function EquipmentFilterTabs({
                   "px-1 rounded-full text-[10px] font-bold",
                   isActive
                     ? "bg-black/20 text-black"
-                    : "bg-white/10 text-white/50"
+                    : "bg-white/10 text-white"
                 )}
               >
                 {tab.count}
@@ -116,19 +116,19 @@ export function EquipmentFilterPills({
   const colorMap = {
     default: {
       active: "bg-white/20 text-white border-white/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     green: {
       active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     amber: {
       active: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     red: {
       active: "bg-red-500/20 text-red-400 border-red-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
   };
 

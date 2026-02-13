@@ -36,7 +36,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
     <div className="bg-elec-card/50 rounded-lg border border-border/50 p-4">
       <div className="mb-3">
         <h3 className="text-sm font-semibold mb-1">Risk Matrix</h3>
-        <p className="text-xs text-muted-foreground">Click cells to filter hazards by risk level</p>
+        <p className="text-xs text-white">Click cells to filter hazards by risk level</p>
       </div>
 
       <div className="overflow-x-auto">
@@ -46,7 +46,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
             {/* Header Row */}
             <div className="text-center font-semibold py-2"></div>
             {[1, 2, 3, 4, 5].map(sev => (
-              <div key={sev} className="text-center font-semibold py-2 text-muted-foreground">
+              <div key={sev} className="text-center font-semibold py-2 text-white">
                 {sev}
               </div>
             ))}
@@ -54,7 +54,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
             {/* Rows */}
             {[5, 4, 3, 2, 1].map(likelihood => (
               <>
-                <div key={`label-${likelihood}`} className="text-right font-semibold py-2 pr-2 text-muted-foreground">
+                <div key={`label-${likelihood}`} className="text-right font-semibold py-2 pr-2 text-white">
                   {likelihood}
                 </div>
                 {[1, 2, 3, 4, 5].map(severity => {
@@ -93,12 +93,12 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
           {/* Labels */}
           <div className="grid grid-cols-6 gap-1 mt-2">
             <div></div>
-            <div className="col-span-5 text-center text-xs font-semibold text-muted-foreground">
+            <div className="col-span-5 text-center text-xs font-semibold text-white">
               SEVERITY →
             </div>
           </div>
           <div className="grid grid-cols-6 gap-1">
-            <div className="text-xs font-semibold text-muted-foreground text-right pr-2">
+            <div className="text-xs font-semibold text-white text-right pr-2">
               ← LIKELIHOOD
             </div>
             <div className="col-span-5"></div>
@@ -111,19 +111,19 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-red-500/80 border border-red-600"></div>
-            <span className="text-muted-foreground">Very High (15-25)</span>
+            <span className="text-white">Very High (15-25)</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-orange-500/80 border border-orange-600"></div>
-            <span className="text-muted-foreground">High (12-14)</span>
+            <span className="text-white">High (12-14)</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-amber-500/80 border border-amber-600"></div>
-            <span className="text-muted-foreground">Medium (6-11)</span>
+            <span className="text-white">Medium (6-11)</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-green-500/80 border border-green-600"></div>
-            <span className="text-muted-foreground">Low (1-5)</span>
+            <span className="text-white">Low (1-5)</span>
           </div>
         </div>
       </div>

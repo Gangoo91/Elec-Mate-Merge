@@ -206,7 +206,7 @@ const OffJobTrainingGuide = () => {
             </div>
             <div className="flex-1">
               <h3 className="text-xl font-bold text-white mb-2">The 20% Off-the-Job Rule</h3>
-              <p className="text-white/80 text-sm leading-relaxed mb-4">
+              <p className="text-white text-sm leading-relaxed mb-4">
                 As an apprentice, at least <span className="text-elec-yellow font-semibold">20% of your working hours</span> must
                 be spent on off-the-job training. This is learning that happens away from your normal work duties,
                 even if it takes place at your workplace.
@@ -223,7 +223,7 @@ const OffJobTrainingGuide = () => {
                   <div key={idx} className="text-center p-3 bg-white/5 border border-white/10 rounded-lg">
                     <div className="text-xl font-bold text-white">{item.value}</div>
                     <div className="text-elec-yellow text-xs">{item.label}</div>
-                    <div className="text-white/60 text-xs">{item.sublabel}</div>
+                    <div className="text-white text-xs">{item.sublabel}</div>
                   </div>
                 ))}
               </div>
@@ -239,7 +239,7 @@ const OffJobTrainingGuide = () => {
             <CheckCircle className="h-5 w-5" />
             What COUNTS as Off-the-Job Training
           </CardTitle>
-          <p className="text-white/70 text-sm">These activities can all be logged towards your 20%</p>
+          <p className="text-white text-sm">These activities can all be logged towards your 20%</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -255,7 +255,7 @@ const OffJobTrainingGuide = () => {
                       Valid
                     </Badge>
                   </div>
-                  <p className="text-white/60 text-xs mt-1">{item.description}</p>
+                  <p className="text-white text-xs mt-1">{item.description}</p>
                   <p className="text-green-400/80 text-xs mt-1">Log: {item.hours}</p>
                 </div>
               </div>
@@ -271,7 +271,7 @@ const OffJobTrainingGuide = () => {
             <XCircle className="h-5 w-5" />
             What DOESN'T Count
           </CardTitle>
-          <p className="text-white/70 text-sm">Don't log these - they won't be accepted</p>
+          <p className="text-white text-sm">Don't log these - they won't be accepted</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -280,7 +280,7 @@ const OffJobTrainingGuide = () => {
                 <item.icon className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-medium text-white text-sm">{item.activity}</h4>
-                  <p className="text-white/60 text-xs mt-1">{item.reason}</p>
+                  <p className="text-white text-xs mt-1">{item.reason}</p>
                 </div>
               </div>
             ))}
@@ -298,7 +298,7 @@ const OffJobTrainingGuide = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               Ask yourself: <span className="text-blue-400 font-medium">"Am I learning something new that relates to my apprenticeship?"</span>
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -309,11 +309,11 @@ const OffJobTrainingGuide = () => {
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                   <item.icon className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                  <span className="text-white/90 text-sm">{item.q}</span>
+                  <span className="text-white text-sm">{item.q}</span>
                 </div>
               ))}
             </div>
-            <p className="text-white/60 text-sm">If yes to all three, it probably counts!</p>
+            <p className="text-white text-sm">If yes to all three, it probably counts!</p>
           </div>
         </CardContent>
       </Card>
@@ -329,7 +329,7 @@ const OffJobTrainingGuide = () => {
             <FileText className="h-5 w-5 text-elec-yellow" />
             Sample Log Entries
           </CardTitle>
-          <p className="text-white/70 text-sm">
+          <p className="text-white text-sm">
             Copy this format for professional, complete entries
           </p>
         </CardHeader>
@@ -363,12 +363,12 @@ const OffJobTrainingGuide = () => {
 
                   <div>
                     <span className="text-elec-yellow text-xs font-medium">Description</span>
-                    <p className="text-white/80 text-sm">{entry.description}</p>
+                    <p className="text-white text-sm">{entry.description}</p>
                   </div>
 
                   <div>
                     <span className="text-elec-yellow text-xs font-medium">Evidence</span>
-                    <p className="text-white/70 text-sm">{entry.evidence}</p>
+                    <p className="text-white text-sm">{entry.evidence}</p>
                   </div>
                 </div>
               </div>
@@ -406,15 +406,15 @@ const OffJobTrainingGuide = () => {
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Weekly Breakdown:</h4>
               <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2 text-white/80">
+                <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-blue-400" />
                   <span><strong className="text-blue-400">College day:</strong> 6.5 hours (full day minus lunch)</span>
                 </li>
-                <li className="flex items-center gap-2 text-white/80">
+                <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-purple-400" />
                   <span><strong className="text-purple-400">Self-study:</strong> 1 hour (evening/weekend revision)</span>
                 </li>
-                <li className="flex items-center gap-2 text-white/80">
+                <li className="flex items-center gap-2 text-white">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   <span><strong className="text-elec-yellow">Total:</strong> 7.5 hours = 20% of 37.5 hour week</span>
                 </li>
@@ -459,11 +459,11 @@ const OffJobTrainingGuide = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
                   <div className="p-2 bg-red-500/10 border border-red-500/20 rounded">
                     <span className="text-red-400 text-xs font-medium">❌ Don't write:</span>
-                    <p className="text-white/70 text-sm mt-1">"{item.bad}"</p>
+                    <p className="text-white text-sm mt-1">"{item.bad}"</p>
                   </div>
                   <div className="p-2 bg-green-500/10 border border-green-500/20 rounded">
                     <span className="text-green-400 text-xs font-medium">✓ Write this:</span>
-                    <p className="text-white/90 text-sm mt-1">"{item.good}"</p>
+                    <p className="text-white text-sm mt-1">"{item.good}"</p>
                   </div>
                 </div>
                 <p className="text-blue-400 text-xs">💡 {item.tip}</p>
@@ -494,7 +494,7 @@ const OffJobTrainingGuide = () => {
                 {type.examples.map((example, idx) => (
                   <li key={idx} className="flex items-center gap-2 text-sm">
                     <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                    <span className="text-white/80">{example}</span>
+                    <span className="text-white">{example}</span>
                   </li>
                 ))}
               </ul>
@@ -528,7 +528,7 @@ const OffJobTrainingGuide = () => {
                 <div className="w-5 h-5 border-2 border-green-400 rounded flex items-center justify-center">
                   <CheckCircle className="h-3 w-3 text-green-400" />
                 </div>
-                <span className="text-white/90 text-sm">{check}</span>
+                <span className="text-white text-sm">{check}</span>
               </div>
             ))}
           </div>
@@ -547,7 +547,7 @@ const OffJobTrainingGuide = () => {
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-3">Recommended Folder Structure:</h4>
-              <div className="font-mono text-sm text-white/80 space-y-1 bg-white/5 border border-white/10 p-3 rounded">
+              <div className="font-mono text-sm text-white space-y-1 bg-white/5 border border-white/10 p-3 rounded">
                 <p>📁 OJT Evidence</p>
                 <p className="pl-4">📁 2024</p>
                 <p className="pl-8">📁 March</p>
@@ -565,7 +565,7 @@ const OffJobTrainingGuide = () => {
               ].map((item, idx) => (
                 <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg">
                   <h5 className="font-semibold text-purple-400 text-sm">{item.tip}</h5>
-                  <p className="text-white/70 text-xs mt-1">{item.detail}</p>
+                  <p className="text-white text-xs mt-1">{item.detail}</p>
                 </div>
               ))}
             </div>
@@ -596,14 +596,14 @@ const OffJobTrainingGuide = () => {
                     item.priority === 'high' ? 'bg-elec-yellow/20' : 'bg-white/10'
                   }`}>
                     <CheckCircle className={`h-4 w-4 ${
-                      item.priority === 'high' ? 'text-elec-yellow' : 'text-white/70'
+                      item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
                     }`} />
                   </div>
                   <div>
                     <h4 className={`font-semibold text-sm ${
                       item.priority === 'high' ? 'text-elec-yellow' : 'text-white'
                     }`}>{item.tip}</h4>
-                    <p className="text-white/70 text-sm mt-1">{item.detail}</p>
+                    <p className="text-white text-sm mt-1">{item.detail}</p>
                   </div>
                   {item.priority === 'high' && (
                     <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs flex-shrink-0">
@@ -626,7 +626,7 @@ const OffJobTrainingGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Time spent learning in this app <span className="text-green-400 font-semibold">counts as off-the-job training!</span>
           </p>
 
@@ -634,7 +634,7 @@ const OffJobTrainingGuide = () => {
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg text-center">
               <BookOpen className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white text-sm">Study Centre</h4>
-              <p className="text-white/70 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 All learning modules, practice questions, and revision materials
               </p>
             </div>
@@ -642,7 +642,7 @@ const OffJobTrainingGuide = () => {
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg text-center">
               <Calculator className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white text-sm">Calculators</h4>
-              <p className="text-white/70 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Working through calculation examples and exercises
               </p>
             </div>
@@ -650,7 +650,7 @@ const OffJobTrainingGuide = () => {
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg text-center">
               <FileText className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white text-sm">Guidance Pages</h4>
-              <p className="text-white/70 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Reading regulations guidance and industry information
               </p>
             </div>
@@ -658,7 +658,7 @@ const OffJobTrainingGuide = () => {
 
           <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
             <h4 className="font-semibold text-white mb-2">How to Log App Usage:</h4>
-            <p className="text-white/80 text-sm italic">
+            <p className="text-white text-sm italic">
               "Self-directed learning using Elec-Mate apprenticeship platform - studied [specific topic],
               completed practice questions on [subject]"
             </p>
@@ -690,7 +690,7 @@ const OffJobTrainingGuide = () => {
               <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <XCircle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white/90 text-sm">{item.mistake}</span>
+                  <span className="text-white text-sm">{item.mistake}</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -711,7 +711,7 @@ const OffJobTrainingGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Set weekly reminders to keep your OJT log up to date:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -722,7 +722,7 @@ const OffJobTrainingGuide = () => {
             ].map((item, idx) => (
               <div key={idx} className="p-3 bg-white/5 border border-white/10 rounded-lg text-center">
                 <div className="text-blue-400 font-semibold text-sm">{item.when}</div>
-                <p className="text-white/70 text-xs mt-1">{item.action}</p>
+                <p className="text-white text-xs mt-1">{item.action}</p>
               </div>
             ))}
           </div>
@@ -794,7 +794,7 @@ const OffJobTrainingGuide = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Off-the-Job Training Guide
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Everything you need to know about logging your 20% off-the-job training hours correctly
         </p>
         <SmartBackButton />
@@ -810,7 +810,7 @@ const OffJobTrainingGuide = () => {
               </div>
               <div>
                 <h3 className="font-bold text-elec-yellow">20% Requirement</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Minimum 7.5 hours per week of structured learning
                 </p>
               </div>
@@ -818,11 +818,11 @@ const OffJobTrainingGuide = () => {
             <div className="flex items-center gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">1,560</div>
-                <div className="text-white/60 text-xs">Total hours</div>
+                <div className="text-white text-xs">Total hours</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">4</div>
-                <div className="text-white/60 text-xs">Years</div>
+                <div className="text-white text-xs">Years</div>
               </div>
             </div>
           </div>

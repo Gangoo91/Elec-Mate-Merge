@@ -56,7 +56,7 @@ const statusConfig: Record<
   },
   draft: {
     bg: "bg-white/10",
-    text: "text-white/60",
+    text: "text-white",
     border: "border-white/20",
     label: "Draft",
   },
@@ -81,7 +81,7 @@ const briefingTypeConfig: Record<string, { label: string; color: string }> = {
     label: "Regulatory",
     color: "bg-green-500/15 text-green-400",
   },
-  general: { label: "General", color: "bg-gray-500/15 text-gray-400" },
+  general: { label: "General", color: "bg-gray-500/15 text-white" },
 };
 
 export const BriefingHistory = ({
@@ -183,7 +183,7 @@ export const BriefingHistory = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-white/50">Loading briefings...</p>
+        <p className="text-white">Loading briefings...</p>
       </div>
     );
   }
@@ -196,7 +196,7 @@ export const BriefingHistory = ({
           <FileText className="h-5 w-5 text-elec-yellow" />
           Briefing History
         </h3>
-        <p className="text-sm text-white/50">View and manage all your briefings</p>
+        <p className="text-sm text-white">View and manage all your briefings</p>
       </div>
 
       {/* Sticky Filters */}
@@ -204,14 +204,14 @@ export const BriefingHistory = ({
         {/* Search */}
         <div className="relative">
           {!searchTerm && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search briefings..."
             className={cn(
-              "h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white/30 touch-manipulation",
+              "h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white touch-manipulation",
               "focus:border-yellow-500 focus:ring-yellow-500",
               !searchTerm && "pl-10"
             )}
@@ -228,7 +228,7 @@ export const BriefingHistory = ({
                 "px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
                 statusFilter === btn.id
                   ? "bg-elec-yellow text-black"
-                  : "bg-[#1e1e1e] border border-white/10 text-white/60 hover:text-white hover:border-white/20"
+                  : "bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20"
               )}
             >
               {btn.label}
@@ -243,7 +243,7 @@ export const BriefingHistory = ({
                 "px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
                 aiFilter === btn.id
                   ? "bg-elec-yellow text-black"
-                  : "bg-[#1e1e1e] border border-white/10 text-white/60 hover:text-white hover:border-white/20"
+                  : "bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20"
               )}
             >
               {btn.icon && <btn.icon className="h-3 w-3 inline mr-1" />}
@@ -257,10 +257,10 @@ export const BriefingHistory = ({
       {filteredBriefings.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16">
           <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-            <FileText className="h-8 w-8 text-white/20" />
+            <FileText className="h-8 w-8 text-white" />
           </div>
-          <h3 className="text-base font-semibold text-white/70 mb-1">No Briefings Found</h3>
-          <p className="text-sm text-white/40 text-center max-w-xs">
+          <h3 className="text-base font-semibold text-white mb-1">No Briefings Found</h3>
+          <p className="text-sm text-white text-center max-w-xs">
             {searchTerm || statusFilter !== "all" || aiFilter !== "all"
               ? "Try adjusting your filters"
               : "Create your first briefing to get started"}
@@ -340,13 +340,13 @@ export const BriefingHistory = ({
 
                 {/* Description preview */}
                 {truncatedDesc && (
-                  <p className="text-sm text-white/50 mb-3">{truncatedDesc}</p>
+                  <p className="text-sm text-white mb-3">{truncatedDesc}</p>
                 )}
 
                 {/* Metadata grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white/60 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white mb-3">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-white/30" />
+                    <Calendar className="h-4 w-4 text-white" />
                     <span className="whitespace-nowrap">
                       {new Date(briefing.briefing_date).toLocaleDateString(
                         "en-GB"
@@ -355,24 +355,24 @@ export const BriefingHistory = ({
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-white/30" />
+                    <MapPin className="h-4 w-4 text-white" />
                     <span className="truncate">{briefing.location}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <User className="h-4 w-4 text-white/30" />
+                    <User className="h-4 w-4 text-white" />
                     <span className="truncate">
                       {briefing.conductor_name || "Not specified"}
                     </span>
                   </div>
                   {briefing.team_size && (
                     <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-white/30" />
+                      <User className="h-4 w-4 text-white" />
                       <span>Team: {briefing.team_size}</span>
                     </div>
                   )}
                   {briefing.duration_minutes && (
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-white/30" />
+                      <Clock className="h-4 w-4 text-white" />
                       <span>{briefing.duration_minutes} min</span>
                     </div>
                   )}
@@ -385,7 +385,7 @@ export const BriefingHistory = ({
                   )}
                   {photoCount > 0 && (
                     <div className="flex items-center gap-2">
-                      <Camera className="h-4 w-4 text-white/30" />
+                      <Camera className="h-4 w-4 text-white" />
                       <span>
                         {photoCount} photo{photoCount > 1 ? "s" : ""}
                       </span>
@@ -393,13 +393,13 @@ export const BriefingHistory = ({
                   )}
                   {equipmentCount > 0 && (
                     <div className="flex items-center gap-2">
-                      <Wrench className="h-4 w-4 text-white/30" />
+                      <Wrench className="h-4 w-4 text-white" />
                       <span>{equipmentCount} equipment</span>
                     </div>
                   )}
                   {keyPointsCount > 0 && (
                     <div className="flex items-center gap-2">
-                      <ClipboardList className="h-4 w-4 text-white/30" />
+                      <ClipboardList className="h-4 w-4 text-white" />
                       <span>{keyPointsCount} key points</span>
                     </div>
                   )}

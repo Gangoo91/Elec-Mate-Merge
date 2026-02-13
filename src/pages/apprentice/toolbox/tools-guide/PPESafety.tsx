@@ -22,7 +22,7 @@ const PPESafety = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           PPE & Safety Equipment
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Personal Protective Equipment is essential for every UK electrical apprentice. Your safety is paramount - never compromise on PPE quality.
         </p>
         <SmartBackButton />
@@ -35,7 +35,7 @@ const PPESafety = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}

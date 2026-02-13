@@ -142,7 +142,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             <h2 className="text-lg font-bold text-white">
               {isComplete ? 'Complete!' : 'Generating RAMS'}
             </h2>
-            <p className="text-[10px] text-white/40 mt-0.5">
+            <p className="text-[10px] text-white mt-0.5">
               {isComplete ? 'Document ready' : 'AI agents working'}
             </p>
           </div>
@@ -199,14 +199,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </div>
 
           {/* Time Stats */}
-          <div className="flex items-center justify-center gap-4 text-xs text-white/50">
+          <div className="flex items-center justify-center gap-4 text-xs text-white">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               <span className="tabular-nums">{formatTime(elapsedTime)}</span>
             </span>
             {!isComplete && (
               <>
-                <span className="text-white/20">•</span>
+                <span className="text-white">•</span>
                 <span className="tabular-nums">~{formatTime(estimatedTimeRemaining)} left</span>
               </>
             )}
@@ -264,7 +264,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                     ) : isActive ? (
                       <Loader2 className="w-4 h-4 text-elec-yellow animate-spin" />
                     ) : (
-                      <Icon className="w-4 h-4 text-white/30" />
+                      <Icon className="w-4 h-4 text-white" />
                     )}
                   </div>
 
@@ -275,7 +275,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                         'font-semibold text-xs truncate',
                         isActive && 'text-elec-yellow',
                         isAgentComplete && 'text-green-400',
-                        isPending && 'text-white/40'
+                        isPending && 'text-white'
                       )}>
                         {getAgentTitle(agent.name)}
                       </h3>
@@ -292,9 +292,9 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                     </div>
                     <p className={cn(
                       'text-[10px] mt-0.5',
-                      isActive && 'text-white/40',
+                      isActive && 'text-white',
                       isAgentComplete && 'text-green-400/40',
-                      isPending && 'text-white/30'
+                      isPending && 'text-white'
                     )}>
                       {getAgentDescription(agent.name, agent.status)}
                     </p>
@@ -321,7 +321,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           <button
             onClick={() => setShowCancelDialog(true)}
             disabled={isCancelling}
-            className="w-full py-3 min-h-[48px] text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
+            className="w-full py-3 min-h-[48px] text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
           >
             {isCancelling ? (
               <>

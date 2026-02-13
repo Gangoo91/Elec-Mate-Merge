@@ -704,7 +704,7 @@ const CommercialTestingGuide = () => {
             </AlertDescription>
           </Alert>
 
-          <p className="text-sm text-white/80">{testSequenceOrder.description}</p>
+          <p className="text-sm text-white">{testSequenceOrder.description}</p>
 
           <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
             <div className="space-y-3">
@@ -733,7 +733,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{continuityTesting.description}</p>
+          <p className="text-sm text-white">{continuityTesting.description}</p>
 
           {continuityTesting.challenges.map((challenge, index) => (
             <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
@@ -776,7 +776,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{insulationResistance.description}</p>
+          <p className="text-sm text-white">{insulationResistance.description}</p>
 
           {/* Test Voltages */}
           <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
@@ -827,7 +827,7 @@ const CommercialTestingGuide = () => {
             <div className="space-y-2">
               {insulationResistance.threePhaseMethod.expectedValues.map((val, idx) => (
                 <div key={idx} className="flex justify-between text-sm">
-                  <span className="text-white/80">{val.installation}</span>
+                  <span className="text-white">{val.installation}</span>
                   <span className="text-amber-300">{val.typical}</span>
                 </div>
               ))}
@@ -873,7 +873,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{loopImpedance.description}</p>
+          <p className="text-sm text-white">{loopImpedance.description}</p>
 
           {/* Considerations */}
           {loopImpedance.considerations.map((item, index) => (
@@ -942,7 +942,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{rcdTesting.description}</p>
+          <p className="text-sm text-white">{rcdTesting.description}</p>
 
           {/* RCD Types */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1011,7 +1011,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{phaseSequenceTesting.description}</p>
+          <p className="text-sm text-white">{phaseSequenceTesting.description}</p>
 
           <Alert className="border-red-500/50 bg-red-500/10">
             <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -1058,7 +1058,7 @@ const CommercialTestingGuide = () => {
               <div className="space-y-2">
                 {phaseSequenceTesting.phaseColours.current.map((item, idx) => (
                   <div key={idx} className="flex justify-between text-sm">
-                    <span className="text-white/80">{item.phase}</span>
+                    <span className="text-white">{item.phase}</span>
                     <span className="text-rose-300">{item.colour}</span>
                   </div>
                 ))}
@@ -1070,7 +1070,7 @@ const CommercialTestingGuide = () => {
               <div className="space-y-2">
                 {phaseSequenceTesting.phaseColours.historic.map((item, idx) => (
                   <div key={idx} className="flex justify-between text-sm">
-                    <span className="text-white/80">{item.phase}</span>
+                    <span className="text-white">{item.phase}</span>
                     <span className="text-rose-300">{item.colour}</span>
                   </div>
                 ))}
@@ -1090,7 +1090,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{emergencyLightingTesting.description}</p>
+          <p className="text-sm text-white">{emergencyLightingTesting.description}</p>
 
           {/* Test Types */}
           <div className="space-y-3">
@@ -1104,7 +1104,7 @@ const CommercialTestingGuide = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-yellow-200 mb-2"><strong>Duration:</strong> {test.duration}</p>
-                <p className="text-sm text-white/80 mb-2"><strong>Requirement:</strong> {test.requirement}</p>
+                <p className="text-sm text-white mb-2"><strong>Requirement:</strong> {test.requirement}</p>
                 <p className="text-sm text-blue-300"><strong>Record:</strong> {test.record}</p>
               </div>
             ))}
@@ -1171,7 +1171,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{fireAlarmTesting.description}</p>
+          <p className="text-sm text-white">{fireAlarmTesting.description}</p>
 
           {/* Electrical Responsibilities */}
           <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
@@ -1242,7 +1242,7 @@ const CommercialTestingGuide = () => {
                     {cert.sections.map((section, idx) => (
                       <div key={idx} className="text-xs">
                         <span className="text-purple-300 font-medium">{section.section}:</span>
-                        <span className="text-white/80 ml-1">{section.content}</span>
+                        <span className="text-white ml-1">{section.content}</span>
                       </div>
                     ))}
                   </div>
@@ -1294,7 +1294,7 @@ const CommercialTestingGuide = () => {
                         >
                           {classification.code}
                         </Badge>
-                        <span className="text-white/80">{classification.meaning}</span>
+                        <span className="text-white">{classification.meaning}</span>
                       </div>
                     ))}
                   </div>
@@ -1307,7 +1307,7 @@ const CommercialTestingGuide = () => {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {cert.frequencyGuide.map((item, idx) => (
                       <div key={idx} className="bg-purple-600/10 p-2 rounded border border-purple-500/30">
-                        <div className="text-xs text-white/80">{item.premises}</div>
+                        <div className="text-xs text-white">{item.premises}</div>
                         <div className="text-sm text-purple-300 font-medium">{item.frequency}</div>
                       </div>
                     ))}
@@ -1332,7 +1332,7 @@ const CommercialTestingGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">{eicrRequirements.description}</p>
+          <p className="text-sm text-white">{eicrRequirements.description}</p>
 
           {/* Inspection Scope */}
           <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
@@ -1357,7 +1357,7 @@ const CommercialTestingGuide = () => {
           {/* Sampling */}
           <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
             <h4 className="font-medium text-white mb-2">{eicrRequirements.sampleTesting.title}</h4>
-            <p className="text-xs text-white/80 mb-3">{eicrRequirements.sampleTesting.description}</p>
+            <p className="text-xs text-white mb-3">{eicrRequirements.sampleTesting.description}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h5 className="text-sm font-medium text-indigo-200 mb-2">Sampling Guidance:</h5>
@@ -1433,9 +1433,9 @@ const CommercialTestingGuide = () => {
             {testEquipment.equipment.map((equip, index) => (
               <div key={index} className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
                 <h4 className="font-medium text-amber-200 text-sm mb-2">{equip.instrument}</h4>
-                <p className="text-xs text-white/80 mb-1"><strong>Function:</strong> {equip.function}</p>
-                <p className="text-xs text-white/80 mb-1"><strong>Requirements:</strong> {equip.requirements}</p>
-                <p className="text-xs text-white/80 mb-1"><strong>Calibration:</strong> {equip.calibration}</p>
+                <p className="text-xs text-white mb-1"><strong>Function:</strong> {equip.function}</p>
+                <p className="text-xs text-white mb-1"><strong>Requirements:</strong> {equip.requirements}</p>
+                <p className="text-xs text-white mb-1"><strong>Calibration:</strong> {equip.calibration}</p>
                 <p className="text-xs text-amber-100"><strong>Note:</strong> {equip.notes}</p>
               </div>
             ))}

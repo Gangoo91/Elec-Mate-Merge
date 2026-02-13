@@ -171,12 +171,12 @@ const HazardDatabase: React.FC = () => {
           </div>
 
           {showCategory && (
-            <p className="text-sm text-muted-foreground mb-2">{hazard.category}</p>
+            <p className="text-sm text-white mb-2">{hazard.category}</p>
           )}
 
           {/* Linked items summary */}
           {(hazard.linked_tasks.length > 0 || hazard.linked_risks.length > 0) && (
-            <div className="flex gap-4 text-xs text-muted-foreground">
+            <div className="flex gap-4 text-xs text-white">
               {hazard.linked_tasks.length > 0 && (
                 <span>{hazard.linked_tasks.length} task(s)</span>
               )}
@@ -189,7 +189,7 @@ const HazardDatabase: React.FC = () => {
           {/* Custom controls preview */}
           {hazard.custom_controls && hazard.custom_controls.length > 0 && (
             <div className="mt-2">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 {hazard.custom_controls.length} custom control(s)
               </p>
             </div>
@@ -216,7 +216,7 @@ const HazardDatabase: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Hazard Database</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Comprehensive hazard library with intelligent categorization
           </p>
         </div>
@@ -233,7 +233,7 @@ const HazardDatabase: React.FC = () => {
             <div className="flex-1">
               <div className="relative">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search hazards..."
@@ -322,9 +322,9 @@ const HazardDatabase: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <TrendingUp className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                  <TrendingUp className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No usage data yet</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-white">
                     Start using hazards in your tasks to see frequency data here
                   </p>
                 </div>
@@ -355,9 +355,9 @@ const HazardDatabase: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                  <Clock className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No recent usage</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-white">
                     Hazards you use will appear here for quick access
                   </p>
                 </div>
@@ -403,9 +403,9 @@ const HazardDatabase: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Star className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                  <Star className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No custom hazards yet</h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-white mb-4">
                     Create custom hazards specific to your work environment
                   </p>
                   <Button onClick={() => setShowCreateDialog(true)}>

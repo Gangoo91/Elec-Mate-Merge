@@ -141,12 +141,12 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                   onClick={handleEditClick}
                   className="h-11 w-11 p-0 touch-manipulation rounded-xl hover:bg-white/10 active:bg-white/20"
                 >
-                  <Edit3 className="h-5 w-5 text-white/60" />
+                  <Edit3 className="h-5 w-5 text-white" />
                 </Button>
               )}
               {!isEditing && (
                 <div className="h-11 w-11 flex items-center justify-center">
-                  <ChevronDown className={cn('h-5 w-5 text-white/40 transition-transform duration-200', isExpanded && 'rotate-180')} />
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform duration-200', isExpanded && 'rotate-180')} />
                 </div>
               )}
             </div>
@@ -175,7 +175,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
         {isExpanded && (
           <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
             <div className="pt-4">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-left block">Description</label>
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">Description</label>
               {isEditing ? (
                 <Textarea
                   value={editedStep.description}
@@ -224,7 +224,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
 
             {(step.equipment?.length > 0 || isEditing) && (
               <div>
-                <label className="text-xs font-medium text-white/60 uppercase tracking-wide">Equipment</label>
+                <label className="text-xs font-medium text-white uppercase tracking-wide">Equipment</label>
                 {isEditing ? (
                   <div className="mt-2 space-y-2">
                     {(props => (editedStep.equipment || []).map((item, idx) => (
@@ -257,7 +257,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/60">Duration</label>
+                <label className="text-xs font-medium text-white">Duration</label>
                 {isEditing ? (
                   <Input
                     value={editedStep.duration || ''}
@@ -270,7 +270,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                 )}
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/60">Risk Level</label>
+                <label className="text-xs font-medium text-white">Risk Level</label>
                 {isEditing ? (
                   <Select
                     value={editedStep.riskLevel || 'low'}
@@ -291,7 +291,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
 
             {(step.personnelRequired || isEditing) && (
               <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <Users className="h-5 w-5 text-white/60" />
+                <Users className="h-5 w-5 text-white" />
                 {isEditing ? (
                   <Input
                     type="number"

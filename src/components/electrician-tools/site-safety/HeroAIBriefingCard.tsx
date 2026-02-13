@@ -19,7 +19,7 @@ export function HeroAIBriefingCard({ onCreateBriefing }: HeroAIBriefingCardProps
             AI-Powered Team Briefing
           </h2>
           
-          <p className="text-sm text-elec-light/70 max-w-md">
+          <p className="text-sm text-white max-w-md">
             Generate BS 7671 compliant safety briefings with AI assistance. Complete setup in minutes with intelligent content generation.
           </p>
         </div>

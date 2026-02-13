@@ -71,7 +71,7 @@ const ContinuingEducation = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Continuing Education
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Keep your skills current and expand into new areas. The electrical industry is constantly evolving - stay ahead of the curve.
         </p>
         <SmartBackButton />
@@ -84,7 +84,7 @@ const ContinuingEducation = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -103,7 +103,7 @@ const ContinuingEducation = () => {
                   </div>
                   <div>
                     <CardTitle className="text-lg text-white">{option.title}</CardTitle>
-                    <p className="text-sm text-white/60">{option.provider}</p>
+                    <p className="text-sm text-white">{option.provider}</p>
                   </div>
                 </div>
                 <span className={`text-xs px-2 py-1 rounded w-fit ${colorClasses.badge}`}>
@@ -111,10 +111,10 @@ const ContinuingEducation = () => {
                 </span>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-white/80">{option.description}</p>
+                <p className="text-white">{option.description}</p>
                 <div className="flex items-center gap-2">
                   <Clock className={`h-4 w-4 ${colorClasses.text}`} />
-                  <span className="text-sm text-white/80">{option.duration}</span>
+                  <span className="text-sm text-white">{option.duration}</span>
                 </div>
                 <Button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20" size="sm">
                   Learn More
@@ -137,19 +137,19 @@ const ContinuingEducation = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Stay Current</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Technology and regulations are constantly evolving. Continuing education keeps you relevant.
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Higher Earnings</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Specialist skills command premium rates and open doors to better opportunities.
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h3 className="font-semibold mb-2 text-elec-yellow">Future-Proof Career</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Green energy and smart technology are the future of electrical work.
               </p>
             </div>
@@ -166,7 +166,7 @@ const ContinuingEducation = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             The best electricians never stop learning. Whether it's keeping up with regulation changes, mastering new technologies, or expanding into specialist areas - continuous development is the key to a successful career.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -177,7 +177,7 @@ const ContinuingEducation = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

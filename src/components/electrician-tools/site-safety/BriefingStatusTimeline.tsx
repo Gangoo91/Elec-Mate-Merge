@@ -44,14 +44,14 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
-      'draft': 'bg-gray-500/20 text-gray-400',
+      'draft': 'bg-gray-500/20 text-white',
       'scheduled': 'bg-blue-500/20 text-blue-400',
       'in_progress': 'bg-yellow-500/20 text-yellow-400',
       'completed': 'bg-green-500/20 text-green-400',
       'cancelled': 'bg-red-500/20 text-red-400',
       'postponed': 'bg-orange-500/20 text-orange-400',
     };
-    return colors[status] || 'bg-gray-500/20 text-gray-400';
+    return colors[status] || 'bg-gray-500/20 text-white';
   };
 
   const formatDate = (dateString: string) => {
@@ -88,7 +88,7 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-elec-light/60 text-center py-6">
+          <p className="text-white text-center py-6">
             No status changes yet
           </p>
         </CardContent>
@@ -118,19 +118,19 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
                   <Badge className={getStatusColor(item.old_status || 'draft')}>
                     {item.old_status || 'draft'}
                   </Badge>
-                  <span className="text-elec-light/60">→</span>
+                  <span className="text-white">→</span>
                   <Badge className={getStatusColor(item.new_status)}>
                     {item.new_status}
                   </Badge>
                 </div>
 
-                <div className="text-sm text-elec-light/60 flex items-center gap-2">
+                <div className="text-sm text-white flex items-center gap-2">
                   <Clock className="h-3 w-3" />
                   <span>{formatDate(item.created_at)}</span>
                 </div>
 
                 {item.reason && (
-                  <div className="text-sm text-elec-light/70 flex items-start gap-2 mt-2">
+                  <div className="text-sm text-white flex items-start gap-2 mt-2">
                     <FileText className="h-3 w-3 mt-0.5" />
                     <span className="italic">{item.reason}</span>
                   </div>

@@ -44,7 +44,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
             <Shield className="h-5 w-5" />
             Hazard Assessment
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Link relevant hazards from the database to your method statement
           </p>
         </CardHeader>
@@ -71,9 +71,9 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                         )}
                         <div className="flex-1">
                           <h4 className="font-medium text-foreground mb-1">{hazard?.name}</h4>
-                          <p className="text-sm text-muted-foreground mb-2">{hazard?.description}</p>
+                          <p className="text-sm text-white mb-2">{hazard?.description}</p>
                           <div className="flex flex-wrap gap-2">
-                            <Badge variant="outline" className="border-elec-yellow/30 text-muted-foreground text-xs">
+                            <Badge variant="outline" className="border-elec-yellow/30 text-white text-xs">
                               {hazard?.category}
                             </Badge>
                             <Badge className={`${getRiskColor(hazard?.riskLevel || '')} text-foreground text-xs`}>
@@ -109,7 +109,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
           <div className="space-y-3">
             <div className="relative">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search hazards..."
@@ -128,7 +128,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                   onClick={() => setSelectedCategory(category)}
                   className={selectedCategory === category 
                     ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                    : "border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:text-elec-yellow"
+                    : "border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow"
                   }
                 >
                   {category}
@@ -160,7 +160,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                           <div className="flex-1 min-w-0">
                             <h4 className="font-medium text-foreground text-base mb-2">{hazard.name}</h4>
                             <div className="flex flex-wrap gap-2">
-                              <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
+                              <Badge variant="outline" className="text-xs border-primary/30 text-white">
                                 {hazard.category}
                               </Badge>
                               <Badge className={`${getRiskColor(hazard.riskLevel)} text-foreground text-xs`}>
@@ -183,11 +183,11 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                       </div>
                       
                       {/* Description */}
-                      <p className="text-sm text-muted-foreground leading-relaxed">{hazard.description}</p>
+                      <p className="text-sm text-white leading-relaxed">{hazard.description}</p>
                       
                       {/* Control Measures */}
                       <div className="pt-2 border-t border-border/20">
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white">
                           <span className="font-medium text-foreground">Control measures:</span> {hazard.commonControls.slice(0, 2).join(', ')}
                           {hazard.commonControls.length > 2 && '...'}
                         </p>
@@ -200,7 +200,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
           </div>
 
           {filteredHazards.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-white">
               <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No hazards found matching your search criteria.</p>
               <p className="text-sm">Try adjusting your search terms or category filter.</p>

@@ -190,7 +190,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           variant="ghost"
           size="icon"
           onClick={handleClose}
-          className="absolute top-2 right-2 text-white/40 hover:text-white hover:bg-white/10 z-10 h-9 w-9 rounded-lg touch-manipulation active:scale-[0.98]"
+          className="absolute top-2 right-2 text-white hover:text-white hover:bg-white/10 z-10 h-9 w-9 rounded-lg touch-manipulation active:scale-[0.98]"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -229,7 +229,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             </h2>
             <div className="flex items-center justify-center gap-1.5">
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
-              <p className="text-white/40 text-xs">
+              <p className="text-white text-xs">
                 Professional safety documentation ready
               </p>
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
@@ -264,7 +264,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
                 <Zap className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="text-center sm:text-left">
-                <p className="text-[9px] text-white/40 uppercase tracking-wider">Time Saved</p>
+                <p className="text-[9px] text-white uppercase tracking-wider">Time Saved</p>
                 <p className="text-base font-bold text-elec-yellow">
                   ~{timeSavedHours} hours
                 </p>
@@ -407,7 +407,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, label, value, bgColor, border
         <div className={cn("p-1.5 rounded-md", bgColor, textColor)}>
           {icon}
         </div>
-        <p className="text-[8px] text-white/40 uppercase tracking-wider">{label}</p>
+        <p className="text-[8px] text-white uppercase tracking-wider">{label}</p>
         <p className={cn(
           "font-bold tabular-nums",
           textColor,

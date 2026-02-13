@@ -427,7 +427,7 @@ const DomesticTestingGuide = () => {
           </Alert>
 
           <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-            <p className="text-sm text-white/80 mb-4">{testSequenceOrder.description}</p>
+            <p className="text-sm text-white mb-4">{testSequenceOrder.description}</p>
             <div className="space-y-2">
               {testSequenceOrder.sequence.map((item) => (
                 <div key={item.order} className="flex items-center gap-3 text-sm">
@@ -467,7 +467,7 @@ const DomesticTestingGuide = () => {
                   <h5 className="font-medium text-green-200 mb-2 text-sm">Method</h5>
                   <ul className="space-y-1">
                     {test.method.map((step, idx) => (
-                      <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="text-green-400 font-medium">{idx + 1}.</span>
                         {step}
                       </li>
@@ -481,7 +481,7 @@ const DomesticTestingGuide = () => {
                     <div className="space-y-1">
                       {test.expectedValues.map((val, idx) => (
                         <div key={idx} className="text-xs">
-                          <span className="text-white/80">
+                          <span className="text-white">
                             {'circuit' in val && <><strong className="text-green-300">{val.circuit}:</strong> R1+R2 {val.typicalR1R2}</>}
                             {'measurement' in val && <><strong className="text-green-300">{val.measurement}:</strong> {val.typical}</>}
                             {'device' in val && <><strong className="text-green-300">{val.device}:</strong> Max Zs {val.maxZs}</>}
@@ -496,7 +496,7 @@ const DomesticTestingGuide = () => {
                   {test.checkpoints && (
                     <ul className="space-y-1">
                       {test.checkpoints.map((checkpoint, idx) => (
-                        <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                        <li key={idx} className="text-xs text-white flex items-start gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                           {checkpoint}
                         </li>
@@ -509,14 +509,14 @@ const DomesticTestingGuide = () => {
               <div className="mt-3 pt-3 border-t border-green-500/20">
                 <div className="flex items-start gap-2">
                   <span className="text-xs text-green-300 font-medium">Equipment:</span>
-                  <span className="text-xs text-white/80">{test.equipment}</span>
+                  <span className="text-xs text-white">{test.equipment}</span>
                 </div>
                 {test.tips && (
                   <div className="mt-2">
                     <span className="text-xs text-green-300 font-medium">Tips:</span>
                     <ul className="mt-1 space-y-1">
                       {test.tips.map((tip, idx) => (
-                        <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                        <li key={idx} className="text-xs text-white flex items-start gap-2">
                           <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0"></span>
                           {tip}
                         </li>
@@ -630,7 +630,7 @@ const DomesticTestingGuide = () => {
                     {cert.sections.map((section, idx) => (
                       <div key={idx} className="text-xs">
                         <span className="text-purple-300 font-medium">{section.section}:</span>
-                        <span className="text-white/80 ml-1">{section.content}</span>
+                        <span className="text-white ml-1">{section.content}</span>
                       </div>
                     ))}
                   </div>
@@ -654,7 +654,7 @@ const DomesticTestingGuide = () => {
                             >
                               {classification.code}
                             </Badge>
-                            <span className="text-white/80">{classification.meaning}</span>
+                            <span className="text-white">{classification.meaning}</span>
                           </div>
                         ))}
                       </div>
@@ -695,10 +695,10 @@ const DomesticTestingGuide = () => {
             {testEquipmentCalibration.equipment.map((equip, index) => (
               <div key={index} className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
                 <h4 className="font-medium text-amber-200 text-sm mb-2">{equip.instrument}</h4>
-                <p className="text-xs text-white/80 mb-1"><strong>Function:</strong> {equip.function}</p>
-                {'voltage' in equip && <p className="text-xs text-white/80 mb-1"><strong>Voltage:</strong> {equip.voltage}</p>}
-                {'accuracy' in equip && <p className="text-xs text-white/80 mb-1"><strong>Accuracy:</strong> {equip.accuracy}</p>}
-                {'features' in equip && <p className="text-xs text-white/80 mb-1"><strong>Features:</strong> {equip.features}</p>}
+                <p className="text-xs text-white mb-1"><strong>Function:</strong> {equip.function}</p>
+                {'voltage' in equip && <p className="text-xs text-white mb-1"><strong>Voltage:</strong> {equip.voltage}</p>}
+                {'accuracy' in equip && <p className="text-xs text-white mb-1"><strong>Accuracy:</strong> {equip.accuracy}</p>}
+                {'features' in equip && <p className="text-xs text-white mb-1"><strong>Features:</strong> {equip.features}</p>}
                 {'calibration' in equip && <p className="text-xs text-amber-100"><strong>Calibration:</strong> {equip.calibration}</p>}
               </div>
             ))}

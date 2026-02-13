@@ -92,7 +92,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
         <div className="space-y-6 py-4 overflow-y-auto">
           {/* Status Filter */}
           <div>
-            <label className="text-xs text-white/50 uppercase tracking-wider font-medium">
+            <label className="text-xs text-white uppercase tracking-wider font-medium">
               Status
             </label>
             <div className="grid grid-cols-4 gap-2 mt-3">
@@ -105,7 +105,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                     "border active:scale-[0.97]",
                     statusFilter === option.value
                       ? "bg-elec-yellow text-black border-elec-yellow"
-                      : "bg-white/[0.03] text-white/70 border-white/[0.06] hover:border-white/[0.12]"
+                      : "bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]"
                   )}
                 >
                   {option.label}
@@ -116,7 +116,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
 
           {/* Date Range Filter */}
           <div>
-            <label className="text-xs text-white/50 uppercase tracking-wider font-medium">
+            <label className="text-xs text-white uppercase tracking-wider font-medium">
               Date Range
             </label>
             <div className="flex flex-wrap gap-2 mt-3">
@@ -129,7 +129,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                     "border active:scale-[0.97]",
                     dateFilter === option.value
                       ? "bg-elec-yellow text-black border-elec-yellow"
-                      : "bg-white/[0.03] text-white/70 border-white/[0.06] hover:border-white/[0.12]"
+                      : "bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]"
                   )}
                 >
                   {option.label}
@@ -141,7 +141,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
           {/* Location Filter */}
           {locations.length > 0 && (
             <div>
-              <label className="text-xs text-white/50 uppercase tracking-wider font-medium">
+              <label className="text-xs text-white uppercase tracking-wider font-medium">
                 Location
               </label>
               <ScrollArea className="h-40 mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
@@ -153,7 +153,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                       "flex items-center justify-between",
                       locationFilter === 'all'
                         ? "bg-elec-yellow/10 text-elec-yellow"
-                        : "text-white/70 hover:bg-white/[0.05]"
+                        : "text-white hover:bg-white/[0.05]"
                     )}
                   >
                     <span>All Locations</span>
@@ -168,7 +168,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                         "flex items-center justify-between",
                         locationFilter === loc
                           ? "bg-elec-yellow/10 text-elec-yellow"
-                          : "text-white/70 hover:bg-white/[0.05]"
+                          : "text-white hover:bg-white/[0.05]"
                       )}
                     >
                       <span className="truncate">{loc}</span>

@@ -110,7 +110,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
           <div className="space-y-3">
             <div className="relative">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search hazards..."
@@ -156,7 +156,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
                           }`} />
                         </div>
                         
-                        <p className="text-sm text-muted-foreground mb-3">{hazard.description}</p>
+                        <p className="text-sm text-white mb-3">{hazard.description}</p>
                         
                         <div className="flex flex-wrap gap-2 mb-3">
                           <Badge variant="outline" className="text-xs">
@@ -167,7 +167,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
                           </Badge>
                         </div>
                         
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-white">
                           <strong>Control measures:</strong> {hazard.commonControls.slice(0, 2).join(', ')}
                           {hazard.commonControls.length > 2 && '...'}
                         </div>
@@ -183,7 +183,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
           </div>
 
           {filteredHazards.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-white">
               <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No hazards found matching your search criteria.</p>
               <p className="text-sm">Try adjusting your search terms or category filter.</p>

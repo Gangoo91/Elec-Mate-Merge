@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Package, Loader2, Search, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import {
   EquipmentFormWizard,
   type EquipmentFilterId,
 } from "./equipment";
+import { PullToRefresh } from "@/components/ui/pull-to-refresh";
 
 export const SafetyEquipmentTracker: React.FC = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
     equipment,
     isLoading,
     stats,
+    refetch,
     addEquipment,
     updateEquipment,
     deleteEquipment,
@@ -148,6 +150,10 @@ export const SafetyEquipmentTracker: React.FC = () => {
     markCalibrated.mutate(id);
   };
 
+  const handleRefresh = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
   const handleCloseForm = () => {
     setShowForm(false);
     setEditingEquipment(null);
@@ -172,7 +178,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
         <div className="px-2 py-2">
           <button
             onClick={() => navigate("/electrician-tools/site-safety")}
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors min-h-[44px] touch-manipulation"
+            className="flex items-center gap-2 text-white hover:text-white transition-colors min-h-[44px] touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">Site Safety</span>
@@ -180,8 +186,9 @@ export const SafetyEquipmentTracker: React.FC = () => {
         </div>
       </div>
 
-      <div className="px-2 py-2 space-y-3">
-        {/* Hero Card with Stats */}
+      <PullToRefresh onRefresh={handleRefresh}>
+        <div className="px-2 py-2 space-y-3">
+          {/* Hero Card with Stats */}
         <EquipmentHeroCard
           totalEquipment={stats.total}
           goodCount={stats.good}
@@ -192,7 +199,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
 
         {/* Compact Search */}
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
           <Input
             placeholder="Search equipment..."
             className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
@@ -204,7 +211,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
               className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
               onClick={() => setSearchQuery("")}
             >
-              <X className="h-3.5 w-3.5 text-white/40" />
+              <X className="h-3.5 w-3.5 text-white" />
             </button>
           )}
         </div>
@@ -227,7 +234,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
                   </div>
                   <div className="text-center">
                     <p className="text-sm font-medium text-white">Loading Equipment</p>
-                    <p className="text-xs text-white/50 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       Fetching your safety equipment...
                     </p>
                   </div>
@@ -243,7 +250,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 <h3 className="text-base font-semibold text-white mb-1">
                   {activeFilter === "all" ? "No Equipment" : `No ${tabs.find(t => t.id === activeFilter)?.label} Equipment`}
                 </h3>
-                <p className="text-xs text-white/50 mb-4 max-w-[200px] mx-auto">
+                <p className="text-xs text-white mb-4 max-w-[200px] mx-auto">
                   {activeFilter === "all"
                     ? "Add your first piece of equipment to start tracking"
                     : `No equipment in ${activeFilter} status`}
@@ -271,8 +278,9 @@ export const SafetyEquipmentTracker: React.FC = () => {
               />
             ))
           )}
+          </div>
         </div>
-      </div>
+      </PullToRefresh>
     </div>
   );
 };

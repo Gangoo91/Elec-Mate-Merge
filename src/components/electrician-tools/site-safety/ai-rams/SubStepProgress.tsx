@@ -26,10 +26,10 @@ export const SubStepProgress: React.FC<SubStepProgressProps> = ({ currentSubStep
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-2 text-xs text-elec-light/80">
+      <div className="flex items-center gap-2 text-xs text-white">
         <Loader2 className="h-3.5 w-3.5 animate-spin text-elec-yellow" />
         <span className="font-medium">{currentSubStep.label}</span>
-        <span className="text-elec-light/50 ml-auto">{currentSubStep.progress}%</span>
+        <span className="text-white ml-auto">{currentSubStep.progress}%</span>
       </div>
       <Progress value={currentSubStep.progress} className="h-1" />
     </div>

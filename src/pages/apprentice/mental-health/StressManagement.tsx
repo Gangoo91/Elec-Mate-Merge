@@ -52,7 +52,7 @@ const StressManagement = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-red-500/20 rounded-lg p-4 bg-red-500/5">
                 <h4 className="font-semibold text-red-400 mb-2">Warning Signs</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Persistent feelings of overwhelm</li>
                   <li>• Physical symptoms affecting work performance</li>
                   <li>• Difficulty sleeping for several nights</li>
@@ -63,7 +63,7 @@ const StressManagement = () => {
 
               <div className="border border-blue-500/20 rounded-lg p-4 bg-blue-500/5">
                 <h4 className="font-semibold text-blue-400 mb-2">Who to Contact</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Your line manager or supervisor</li>
                   <li>• Training provider or college support team</li>
                   <li>• GP or occupational health service</li>

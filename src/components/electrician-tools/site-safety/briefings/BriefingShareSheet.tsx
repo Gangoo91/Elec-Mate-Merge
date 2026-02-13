@@ -222,13 +222,13 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white">Share for Signing</h3>
-              <p className="text-xs text-white/40">Workers sign remotely — no login needed</p>
+              <p className="text-xs text-white">Workers sign remotely — no login needed</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-2 rounded-lg text-white hover:text-white hover:bg-white/10 touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <X className="h-4 w-4" />
           </button>
@@ -251,13 +251,13 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
               )}
             >
               {loading ? (
-                <Loader2 className="h-5 w-5 text-white/40 animate-spin" />
+                <Loader2 className="h-5 w-5 text-white animate-spin" />
               ) : copied ? (
                 <Check className="h-5 w-5 text-emerald-400" />
               ) : (
                 <Link2 className="h-5 w-5 text-blue-400" />
               )}
-              <span className="text-xs font-medium text-white/70">
+              <span className="text-xs font-medium text-white">
                 {copied ? 'Copied!' : 'Copy Link'}
               </span>
             </button>
@@ -274,11 +274,11 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
               )}
             >
               {loading ? (
-                <Loader2 className="h-5 w-5 text-white/40 animate-spin" />
+                <Loader2 className="h-5 w-5 text-white animate-spin" />
               ) : (
                 <MessageCircle className="h-5 w-5 text-green-400" />
               )}
-              <span className="text-xs font-medium text-white/70">WhatsApp</span>
+              <span className="text-xs font-medium text-white">WhatsApp</span>
             </button>
 
             {/* Native Share / More */}
@@ -293,11 +293,11 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
               )}
             >
               {loading ? (
-                <Loader2 className="h-5 w-5 text-white/40 animate-spin" />
+                <Loader2 className="h-5 w-5 text-white animate-spin" />
               ) : (
                 <ExternalLink className="h-5 w-5 text-purple-400" />
               )}
-              <span className="text-xs font-medium text-white/70">More...</span>
+              <span className="text-xs font-medium text-white">More...</span>
             </button>
           </div>
 
@@ -312,8 +312,8 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center gap-2">
-                    <QrCode className="h-3.5 w-3.5 text-white/40" />
-                    <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+                    <QrCode className="h-3.5 w-3.5 text-white" />
+                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
                       QR Code
                     </span>
                   </div>
@@ -329,7 +329,7 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                         fgColor="#000000"
                       />
                     </div>
-                    <p className="text-xs text-white/40 mt-3 text-center">
+                    <p className="text-xs text-white mt-3 text-center">
                       Show this on your phone for workers to scan on site
                     </p>
                   </div>
@@ -341,8 +341,8 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
           {/* Email Send */}
           <div className="space-y-2.5">
             <div className="flex items-center gap-2">
-              <Mail className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <Mail className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Send via Email
               </span>
             </div>
@@ -375,13 +375,13 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 className="overflow-hidden"
               >
                 <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                  <p className="text-xs font-medium text-white/30 uppercase tracking-wider mb-1.5">
+                  <p className="text-xs font-medium text-white uppercase tracking-wider mb-1.5">
                     Signing Link
                   </p>
                   <p className="text-xs text-yellow-400/80 break-all font-mono leading-relaxed">
                     {signingUrl}
                   </p>
-                  <p className="text-xs text-white/25 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Expires in 7 days. Anyone with this link can sign.
                   </p>
                 </div>

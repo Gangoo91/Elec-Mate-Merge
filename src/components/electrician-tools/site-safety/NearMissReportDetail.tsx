@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  ArrowLeft, MapPin, AlertTriangle, Shield, 
+import {
+  ArrowLeft, MapPin, AlertTriangle, Shield,
   Zap, Flame, HardHat, Users, FileText, Calendar, Sparkles,
-  CloudSun, Wrench, UserCheck, Eye
+  CloudSun, Wrench, UserCheck, Eye, Download, Loader2
 } from "lucide-react";
 import { NearMissReport, Witness } from './types';
+import { useSafetyPDFExport } from "@/hooks/useSafetyPDFExport";
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
@@ -62,6 +63,7 @@ const LIGHTING_LABELS: Record<string, string> = {
 
 export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ report, onBack }) => {
   const navigate = useNavigate();
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const category = CATEGORIES[report.category] || CATEGORIES['other'];
   const severity = SEVERITIES[report.severity] || SEVERITIES['low'];
   const CategoryIcon = category.icon;
@@ -136,7 +138,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
         </Button>
         <div className="flex-1">
           <h2 className="text-lg font-semibold text-foreground">Report Details</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Submitted {new Date(report.created_at).toLocaleDateString('en-GB')}
           </p>
         </div>
@@ -164,25 +166,25 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
           {/* Location & Time */}
           <div className="space-y-3 pt-2 border-t border-border">
             <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
+              <MapPin className="h-5 w-5 text-white mt-0.5 shrink-0" />
               <div className="flex-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">Location</p>
+                <p className="text-xs text-white uppercase tracking-wide">Location</p>
                 <p className="text-foreground">{report.location}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Calendar className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
+              <Calendar className="h-5 w-5 text-white mt-0.5 shrink-0" />
               <div className="flex-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">Date & Time</p>
+                <p className="text-xs text-white uppercase tracking-wide">Date & Time</p>
                 <p className="text-foreground">
                   {formatDate(report.incident_date)} at {formatTime(report.incident_time)}
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Users className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
+              <Users className="h-5 w-5 text-white mt-0.5 shrink-0" />
               <div className="flex-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">Reported By</p>
+                <p className="text-xs text-white uppercase tracking-wide">Reported By</p>
                 <p className="text-foreground">{report.reporter_name || 'Anonymous'}</p>
               </div>
             </div>
@@ -202,7 +204,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
             <div className="space-y-4">
               {report.potential_consequences && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                  <p className="text-xs text-white uppercase tracking-wide">
                     Potential Consequences
                   </p>
                   <p className="text-foreground text-sm leading-relaxed">
@@ -213,7 +215,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.immediate_actions && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                  <p className="text-xs text-white uppercase tracking-wide">
                     Immediate Actions Taken
                   </p>
                   <p className="text-foreground text-sm leading-relaxed">
@@ -224,7 +226,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.preventive_measures && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                  <p className="text-xs text-white uppercase tracking-wide">
                     Preventive Measures
                   </p>
                   <p className="text-foreground text-sm leading-relaxed">
@@ -249,13 +251,13 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
             <div className="space-y-4">
               {hasWitnesses && (
                 <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Witnesses</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Witnesses</p>
                   <div className="space-y-2">
                     {(report.witnesses as Witness[]).map((witness, index) => (
                       <div key={index} className="bg-muted/50 rounded-lg p-3">
                         <p className="text-foreground text-sm font-medium">{witness.name}</p>
                         {witness.contact && (
-                          <p className="text-muted-foreground text-xs">{witness.contact}</p>
+                          <p className="text-white text-xs">{witness.contact}</p>
                         )}
                       </div>
                     ))}
@@ -265,7 +267,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.third_party_involved && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Third Party Involved</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Third Party Involved</p>
                   <p className="text-foreground text-sm leading-relaxed">
                     {report.third_party_details || 'Yes (no details provided)'}
                   </p>
@@ -290,13 +292,13 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
                 <div className="grid grid-cols-2 gap-4">
                   {report.weather_conditions && (
                     <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Weather</p>
+                      <p className="text-xs text-white uppercase tracking-wide">Weather</p>
                       <p className="text-foreground text-sm">{WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}</p>
                     </div>
                   )}
                   {report.lighting_conditions && (
                     <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Lighting</p>
+                      <p className="text-xs text-white uppercase tracking-wide">Lighting</p>
                       <p className="text-foreground text-sm">{LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}</p>
                     </div>
                   )}
@@ -305,14 +307,14 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.equipment_involved && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Equipment Involved</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Equipment Involved</p>
                   <p className="text-foreground text-sm">{report.equipment_involved}</p>
                 </div>
               )}
 
               {report.equipment_faulty && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Equipment Fault</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Equipment Fault</p>
                   <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
                     <p className="text-orange-400 text-sm font-medium">Faulty Equipment Reported</p>
                     {report.equipment_fault_details && (
@@ -338,7 +340,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
             <div className="space-y-4">
               {report.supervisor_notified && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Supervisor Notified</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Supervisor Notified</p>
                   <p className="text-foreground text-sm">
                     Yes{report.supervisor_name ? ` - ${report.supervisor_name}` : ''}
                   </p>
@@ -347,7 +349,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.previous_similar_incidents && (
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Previous Similar Incidents</p>
+                  <p className="text-xs text-white uppercase tracking-wide">Previous Similar Incidents</p>
                   <p className="text-foreground text-sm capitalize">{report.previous_similar_incidents}</p>
                 </div>
               )}
@@ -376,9 +378,21 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
         </Card>
       )}
 
-      {/* Fixed Action Button */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border">
-        <Button 
+      {/* Fixed Action Buttons */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border space-y-2">
+        <button
+          onClick={() => exportPDF("near-miss", report.id)}
+          disabled={isExporting && exportingId === report.id}
+          className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+        >
+          {isExporting && exportingId === report.id ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Download className="h-4 w-4" />
+          )}
+          Export PDF
+        </button>
+        <Button
           onClick={handleCreateTeamBriefing}
           className="w-full h-14 text-base font-medium bg-primary text-primary-foreground"
         >

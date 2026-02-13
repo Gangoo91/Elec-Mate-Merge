@@ -50,7 +50,7 @@ export const CategoryPill: React.FC<CategoryPillProps> = ({
         "border active:scale-[0.97]",
         active
           ? "bg-elec-yellow text-black border-elec-yellow shadow-lg shadow-elec-yellow/20"
-          : "bg-white/[0.03] text-white/70 border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05]"
+          : "bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05]"
       )}
     >
       <Icon className={cn("h-4 w-4", active ? "text-black" : "text-current")} />
@@ -60,7 +60,7 @@ export const CategoryPill: React.FC<CategoryPillProps> = ({
           "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
           active
             ? "bg-black/20 text-black/70"
-            : "bg-white/[0.1] text-white/50"
+            : "bg-white/[0.1] text-white"
         )}
       >
         {count}

@@ -35,7 +35,7 @@ export const NearMissSuccessDialog = ({
         </DialogHeader>
 
         <div className="space-y-3 pt-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             What would you like to do next?
           </p>
 

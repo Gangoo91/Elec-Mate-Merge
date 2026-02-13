@@ -200,10 +200,10 @@ const EndPointAssessment = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-white/80 text-sm">{component.description}</p>
+                  <p className="text-white text-sm">{component.description}</p>
                   <div className="flex gap-2 flex-wrap">
-                    <Badge variant="outline" className="text-white/70">{component.duration}</Badge>
-                    <Badge variant="outline" className="text-white/70">{component.format}</Badge>
+                    <Badge variant="outline" className="text-white">{component.duration}</Badge>
+                    <Badge variant="outline" className="text-white">{component.format}</Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -228,13 +228,13 @@ const EndPointAssessment = () => {
                     <Badge className={`bg-${grade.color}-500 text-white px-3`}>
                       {grade.grade}
                     </Badge>
-                    <span className="text-white/80 text-sm">{grade.description}</span>
+                    <span className="text-white text-sm">{grade.description}</span>
                   </div>
                   <ul className="space-y-2">
                     {grade.requirements.map((req, rIndex) => (
                       <li key={rIndex} className="flex items-start gap-2 text-sm">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-white/70">{req}</span>
+                        <span className="text-white">{req}</span>
                       </li>
                     ))}
                   </ul>
@@ -269,7 +269,7 @@ const EndPointAssessment = () => {
                         <span className="bg-elec-yellow text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
                           {tIndex + 1}
                         </span>
-                        <span className="text-sm text-white/80">{tip}</span>
+                        <span className="text-sm text-white">{tip}</span>
                       </li>
                     ))}
                   </ul>
@@ -298,7 +298,7 @@ const EndPointAssessment = () => {
                   </div>
                   <div className="flex items-start gap-2 p-3 bg-green-500/10 rounded-lg">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80 text-sm">{item.solution}</span>
+                    <span className="text-white text-sm">{item.solution}</span>
                   </div>
                 </CardContent>
               </Card>
@@ -320,7 +320,7 @@ const EndPointAssessment = () => {
                 {component.title}
               </CardTitle>
               <div className="flex gap-2">
-                <Badge variant="outline" className="text-white/80">{component.duration}</Badge>
+                <Badge variant="outline" className="text-white">{component.duration}</Badge>
                 <Badge className="bg-elec-yellow/20 text-elec-yellow">
                   {component.weighting} of final grade
                 </Badge>
@@ -328,14 +328,14 @@ const EndPointAssessment = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-white/80">{component.description}</p>
+            <p className="text-white">{component.description}</p>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-3">Topics Covered:</h4>
               <div className="grid gap-2 md:grid-cols-2">
                 {component.topics.map((topic, tIndex) => (
                   <div key={tIndex} className="flex items-center gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    <span className="text-white/70">{topic}</span>
+                    <span className="text-white">{topic}</span>
                   </div>
                 ))}
               </div>
@@ -356,7 +356,7 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 mb-6">
+          <p className="text-white mb-6">
             Your overall EPA grade is determined by your performance across all three assessment
             components. Each component must be passed individually, and your overall grade reflects
             your combined performance.
@@ -371,13 +371,13 @@ const EndPointAssessment = () => {
                   <Badge className={`bg-${grade.color}-500 text-white text-lg px-4 py-1`}>
                     {grade.grade}
                   </Badge>
-                  <span className="text-white/80">{grade.description}</span>
+                  <span className="text-white">{grade.description}</span>
                 </div>
                 <div className="grid gap-2 md:grid-cols-2">
                   {grade.requirements.map((req, rIndex) => (
                     <div key={rIndex} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70">{req}</span>
+                      <span className="text-white">{req}</span>
                     </div>
                   ))}
                 </div>
@@ -395,7 +395,7 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-white">
             Don't panic if you don't pass an EPA component. Here's what happens:
           </p>
           <ul className="space-y-2 text-sm">
@@ -407,7 +407,7 @@ const EndPointAssessment = () => {
             ].map((item, index) => (
               <li key={index} className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/70">{item}</span>
+                <span className="text-white">{item}</span>
               </li>
             ))}
           </ul>
@@ -433,7 +433,7 @@ const EndPointAssessment = () => {
                   <span className="bg-elec-yellow text-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
                     {tIndex + 1}
                   </span>
-                  <span className="text-sm text-white/80">{tip}</span>
+                  <span className="text-sm text-white">{tip}</span>
                 </li>
               ))}
             </ul>
@@ -449,13 +449,13 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-white">
             Before entering EPA, you must pass the "gateway" - confirmation you're ready for assessment:
           </p>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Required Evidence</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>- Completed learning programme</li>
                 <li>- Level 2 English and Maths (minimum)</li>
                 <li>- AM2 practical assessment passed</li>
@@ -465,7 +465,7 @@ const EndPointAssessment = () => {
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Gateway Meeting</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>- Meeting with employer and training provider</li>
                 <li>- Review of all evidence and qualifications</li>
                 <li>- Confirmation you meet all requirements</li>
@@ -489,7 +489,7 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 mb-6">
+          <p className="text-white mb-6">
             Learn from others' experiences. These are the most common mistakes apprentices make during EPA
             and how to avoid them:
           </p>
@@ -505,7 +505,7 @@ const EndPointAssessment = () => {
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="font-semibold text-green-400 text-sm">Solution: </span>
-                      <span className="text-white/80 text-sm">{item.solution}</span>
+                      <span className="text-white text-sm">{item.solution}</span>
                     </div>
                   </div>
                 </div>
@@ -530,7 +530,7 @@ const EndPointAssessment = () => {
               { quote: "The practical assessment isn't about speed. Take your time, work safely, and check everything twice. Quality beats rushing every time.", grade: "Distinction Grade Apprentice" }
             ].map((tip, index) => (
               <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm text-white/80 italic mb-2">"{tip.quote}"</p>
+                <p className="text-sm text-white italic mb-2">"{tip.quote}"</p>
                 <span className="text-xs text-blue-400">- {tip.grade}</span>
               </div>
             ))}
@@ -550,7 +550,7 @@ const EndPointAssessment = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           End Point Assessment Guide
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Everything you need to know about EPA - the final stage of your apprenticeship. Prepare effectively and achieve your best grade.
         </p>
         <SmartBackButton />
@@ -563,7 +563,7 @@ const EndPointAssessment = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -582,7 +582,7 @@ const EndPointAssessment = () => {
             <h3 className="text-base font-semibold text-purple-300">
               EPA Readiness Simulator
             </h3>
-            <p className="text-sm text-white/60 mt-0.5">
+            <p className="text-sm text-white mt-0.5">
               AI-powered mock discussions, knowledge tests, and a readiness dashboard
             </p>
           </div>
@@ -599,7 +599,7 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80">
+          <p className="text-white">
             End Point Assessment (EPA) is the final stage of your apprenticeship. It's an independent assessment
             conducted by an End Point Assessment Organisation (EPAO) to confirm you've achieved the
             Knowledge, Skills, and Behaviours (KSBs) required by the apprenticeship standard.
@@ -608,17 +608,17 @@ const EndPointAssessment = () => {
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-elec-yellow/30 transition-all">
               <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <h4 className="font-semibold text-white">Gateway</h4>
-              <p className="text-sm text-white/70">Must pass gateway requirements before EPA</p>
+              <p className="text-sm text-white">Must pass gateway requirements before EPA</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-blue-500/30 transition-all">
               <Target className="h-8 w-8 text-blue-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white">Assessment Window</h4>
-              <p className="text-sm text-white/70">Usually 3 months to complete all components</p>
+              <p className="text-sm text-white">Usually 3 months to complete all components</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center hover:border-yellow-500/30 transition-all">
               <Star className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
               <h4 className="font-semibold text-white">Graded</h4>
-              <p className="text-sm text-white/70">Pass, Merit, or Distinction</p>
+              <p className="text-sm text-white">Pass, Merit, or Distinction</p>
             </div>
           </div>
         </CardContent>
@@ -675,7 +675,7 @@ const EndPointAssessment = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             EPA is the culmination of your apprenticeship journey. It's your opportunity to demonstrate everything you've learned
             and showcase your skills as a competent electrical professional. With proper preparation and the right mindset,
             you can achieve your best possible grade.
@@ -688,7 +688,7 @@ const EndPointAssessment = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

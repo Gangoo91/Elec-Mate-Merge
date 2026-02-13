@@ -50,7 +50,7 @@ export const RAMSBulkActionBar = ({
       {/* Mobile Version - Sticky Bottom */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/95 border-t border-border p-2.5 shadow-md">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs font-medium text-white">
             {selectedCount} selected
           </span>
           <div className="flex gap-2">

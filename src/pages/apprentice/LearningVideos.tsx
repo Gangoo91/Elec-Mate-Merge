@@ -145,7 +145,7 @@ export default function LearningVideos() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search videos..."
                 autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
               />
               {searchQuery && (
                 <button
@@ -214,9 +214,9 @@ export default function LearningVideos() {
 
                 {/* Metadata chips */}
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[13px] text-white/90">{selectedVideo.channel}</span>
+                  <span className="text-[13px] text-white">{selectedVideo.channel}</span>
                   <span className="text-white/30">|</span>
-                  <span className="flex items-center gap-1 text-[13px] text-white/90">
+                  <span className="flex items-center gap-1 text-[13px] text-white">
                     <Clock className="h-3.5 w-3.5" />
                     {selectedVideo.duration}
                   </span>
@@ -241,7 +241,7 @@ export default function LearningVideos() {
                     className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
                       isBookmarked(selectedVideo.id)
                         ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
-                        : 'bg-white/[0.05] border-white/[0.08] text-white/90'
+                        : 'bg-white/[0.05] border-white/[0.08] text-white'
                     }`}
                   >
                     <Bookmark
@@ -255,7 +255,7 @@ export default function LearningVideos() {
                     href={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/90 touch-manipulation active:scale-[0.98] transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
                   >
                     <ExternalLink className="h-4 w-4" />
                     <span className="text-sm font-medium">Open in YouTube</span>
@@ -264,7 +264,7 @@ export default function LearningVideos() {
 
                 {/* Description */}
                 {selectedVideo.description && (
-                  <p className="text-[13px] text-white/90 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     {selectedVideo.description}
                   </p>
                 )}
@@ -275,7 +275,7 @@ export default function LearningVideos() {
                     {selectedVideo.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[11px] text-white/80"
+                        className="px-2 py-0.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[11px] text-white"
                       >
                         {tag}
                       </span>
@@ -320,7 +320,7 @@ export default function LearningVideos() {
                 <Video className="h-8 w-8 text-white" />
               </div>
               <p className="text-base font-medium text-white mb-1">No videos found</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 {searchQuery ? 'Try a different search term' : 'No videos in this category yet'}
               </p>
             </div>
@@ -443,7 +443,7 @@ function CreatorPromoCard() {
 
       <div className="p-4 space-y-3">
         {/* Bio */}
-        <p className="text-[13px] text-white/90 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Craig is an experienced NVQ assessor and electrical training specialist who's
           helped hundreds of apprentices achieve their electrotechnical qualifications
           through his straightforward, no-nonsense teaching style.
@@ -460,7 +460,7 @@ function CreatorPromoCard() {
             <p className="text-[13px] font-medium text-white leading-snug">
               Electrotechnical NVQ — The Ultimate Guide
             </p>
-            <p className="text-[12px] text-white/80 leading-relaxed">
+            <p className="text-[12px] text-white leading-relaxed">
               Everything you need to pass your Electrotechnical NVQ — practical tips,
               assessment guidance, and insider knowledge.
             </p>
@@ -482,7 +482,7 @@ function CreatorPromoCard() {
               <Video className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <h4 className="text-[13px] font-semibold text-white">YouTube Channel</h4>
             </div>
-            <p className="text-[12px] text-white/80 leading-relaxed flex-1">
+            <p className="text-[12px] text-white leading-relaxed flex-1">
               Follow Craig for more free training content, NVQ tips, and assessment guidance.
             </p>
             <a
@@ -521,7 +521,7 @@ function EngineeringMindsetPromoCard() {
 
       <div className="p-4 space-y-3">
         {/* Bio */}
-        <p className="text-[13px] text-white/90 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Paul Evans breaks down complex electrical engineering concepts with brilliant
           animations and clear explanations. His channel has helped millions of students
           and apprentices understand the theory behind electrical systems.
@@ -530,7 +530,7 @@ function EngineeringMindsetPromoCard() {
         {/* US voltage note */}
         <div className="flex gap-2 rounded-lg bg-indigo-500/[0.08] border border-indigo-500/15 p-3">
           <Zap className="h-4 w-4 text-indigo-400 flex-shrink-0 mt-0.5" />
-          <p className="text-[12px] text-white/70 leading-relaxed">
+          <p className="text-[12px] text-white leading-relaxed">
             Some videos use US voltage examples (120V/240V) — the principles are identical.
             UK mains is 230V single phase, 400V three phase.
           </p>

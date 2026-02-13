@@ -463,7 +463,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
         <div className="flex items-center justify-between px-2 py-2">
           <button
             onClick={onClose}
-            className="px-3 py-2 text-sm text-white/70 font-medium touch-manipulation active:opacity-70"
+            className="px-3 py-2 text-sm text-white font-medium touch-manipulation active:opacity-70"
           >
             Cancel
           </button>
@@ -505,7 +505,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
         ref={containerRef}
         className="flex-1 flex items-center justify-center overflow-hidden bg-black/95"
       >
-        {!imageLoaded && <div className="text-sm text-white/50">Loading image...</div>}
+        {!imageLoaded && <div className="text-sm text-white">Loading image...</div>}
         <canvas
           ref={canvasRef}
           className="touch-none"
@@ -596,7 +596,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
               className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all touch-manipulation ${
                 activeTool === tool.id
                   ? 'bg-elec-yellow/20 text-elec-yellow'
-                  : 'text-white/50 active:text-white/80 active:bg-white/5'
+                  : 'text-white active:text-white active:bg-white/5'
               }`}
             >
               <tool.icon className="h-5 w-5" />

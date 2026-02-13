@@ -268,8 +268,8 @@ export default function SiteDiary() {
             </div>
           ) : (
             <div className="flex items-center gap-1 flex-shrink-0">
-              <Flame className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs text-white/60">{streakMessage}</span>
+              <Flame className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs text-white">{streakMessage}</span>
             </div>
           )}
           <div className="flex items-center gap-1 flex-shrink-0">
@@ -459,7 +459,7 @@ export default function SiteDiary() {
                     <Sparkles className="h-4 w-4" />
                     Get AI Insights
                   </button>
-                  <p className="text-[11px] text-white/40 text-center mt-2">
+                  <p className="text-[11px] text-white text-center mt-2">
                     Analyses your recent diary entries for patterns and guidance
                   </p>
                 </div>
@@ -496,7 +496,7 @@ export default function SiteDiary() {
                   {coachInsight.moodInsight && (
                     <div className="flex items-start gap-2">
                       <Brain className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-xs text-white/80 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         {coachInsight.moodInsight}
                       </p>
                     </div>
@@ -535,7 +535,7 @@ export default function SiteDiary() {
                   {coachInsight.ksbSuggestion && (
                     <div className="flex items-start gap-2">
                       <BookOpen className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-[11px] text-white/70 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         {coachInsight.ksbSuggestion}
                       </p>
                     </div>

@@ -63,7 +63,7 @@ const SupervisorKnowledge = () => {
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-semibold mb-2">Knowledge Bank</h2>
-            <p className="text-white/70">
+            <p className="text-white">
               Access common questions and expert answers from site supervisors and qualified electricians. 
               Can't find what you're looking for? Submit your own question to be answered by verified mentors.
             </p>
@@ -74,7 +74,7 @@ const SupervisorKnowledge = () => {
       <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
-            <Search className="h-5 w-5 text-white/70" />
+            <Search className="h-5 w-5 text-white" />
             <CardTitle>Search FAQs</CardTitle>
           </div>
           <CardDescription>
@@ -95,7 +95,7 @@ const SupervisorKnowledge = () => {
               {filteredFaqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>
                   <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className="whitespace-pre-wrap text-white/70">
+                  <AccordionContent className="whitespace-pre-wrap text-white">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -103,7 +103,7 @@ const SupervisorKnowledge = () => {
             </Accordion>
           ) : (
             <div className="text-center py-6">
-              <p className="text-white/70">No matching questions found</p>
+              <p className="text-white">No matching questions found</p>
             </div>
           )}
         </CardContent>
@@ -112,7 +112,7 @@ const SupervisorKnowledge = () => {
       <Card className="border-elec-yellow/20 bg-white/5 border border-white/10">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
-            <MessageSquare className="h-5 w-5 text-white/70" />
+            <MessageSquare className="h-5 w-5 text-white" />
             <CardTitle>Ask a Question</CardTitle>
           </div>
           <CardDescription>
@@ -123,7 +123,7 @@ const SupervisorKnowledge = () => {
           {questionSubmitted ? (
             <div className="text-center py-8 space-y-4">
               <p className="text-lg font-medium">Your question has been submitted!</p>
-              <p className="text-white/70">
+              <p className="text-white">
                 Verified supervisors will review and answer your question. Check back soon.
               </p>
               <Button onClick={() => setQuestionSubmitted(false)}>Ask Another Question</Button>
@@ -145,7 +145,7 @@ const SupervisorKnowledge = () => {
               <div className="pt-2">
                 <Button type="submit" className="w-full">Submit Question</Button>
               </div>
-              <p className="text-xs text-white/70 text-center pt-2">
+              <p className="text-xs text-white text-center pt-2">
                 Questions are reviewed by qualified electricians and site supervisors
               </p>
             </form>

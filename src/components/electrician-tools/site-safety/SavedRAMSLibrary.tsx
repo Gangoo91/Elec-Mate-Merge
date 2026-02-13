@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -32,6 +32,7 @@ import { SwipeableDocumentCard } from './rams-library/SwipeableDocumentCard';
 import { RAMSFilterSheet } from './rams-library/RAMSFilterSheet';
 import { UserRAMSUpload } from './UserRAMSUpload';
 import { cn } from '@/lib/utils';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 
 interface SavedRAMS {
   id: string;
@@ -355,6 +356,10 @@ export const SavedRAMSLibrary = () => {
     setEditMode(!editMode);
   };
 
+  const handleRefresh = useCallback(async () => {
+    await fetchDocuments();
+  }, []);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'draft':
@@ -364,7 +369,7 @@ export const SavedRAMSLibrary = () => {
       case 'pending':
         return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
       default:
-        return 'bg-gray-500/10 text-gray-500 border-gray-500/20';
+        return 'bg-gray-500/10 text-white border-gray-500/20';
     }
   };
 
@@ -377,7 +382,7 @@ export const SavedRAMSLibrary = () => {
         </div>
         <div className="text-center">
           <p className="text-white font-medium">Loading Documents</p>
-          <p className="text-sm text-white/50 mt-1">Fetching your saved RAMS...</p>
+          <p className="text-sm text-white mt-1">Fetching your saved RAMS...</p>
         </div>
       </div>
     );
@@ -398,7 +403,7 @@ export const SavedRAMSLibrary = () => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-semibold text-white">Saved Documents</h2>
-                <Badge className="bg-white/10 text-white/70 border-0 text-xs">
+                <Badge className="bg-white/10 text-white border-0 text-xs">
                   {filteredDocuments.length}
                 </Badge>
               </div>
@@ -417,7 +422,7 @@ export const SavedRAMSLibrary = () => {
                   onClick={toggleEditMode}
                   className={cn(
                     'h-11 px-3 text-sm font-medium touch-manipulation active:scale-[0.98]',
-                    editMode ? 'text-elec-yellow' : 'text-white/70'
+                    editMode ? 'text-elec-yellow' : 'text-white'
                   )}
                 >
                   {editMode ? 'Done' : 'Edit'}
@@ -426,7 +431,7 @@ export const SavedRAMSLibrary = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setFilterSheetOpen(true)}
-                  className="relative h-11 w-11 text-white/70 touch-manipulation active:scale-[0.98]"
+                  className="relative h-11 w-11 text-white touch-manipulation active:scale-[0.98]"
                 >
                   <SlidersHorizontal className="h-5 w-5" />
                   {activeFilterCount > 0 && (
@@ -446,7 +451,7 @@ export const SavedRAMSLibrary = () => {
                   'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation',
                   sourceFilter === 'all'
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                    : 'bg-white/[0.06] text-white hover:bg-white/10'
                 )}
               >
                 All ({documents.length})
@@ -457,7 +462,7 @@ export const SavedRAMSLibrary = () => {
                   'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation flex items-center gap-1.5',
                   sourceFilter === 'ai-generated'
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                    : 'bg-white/[0.06] text-white hover:bg-white/10'
                 )}
               >
                 <Sparkles className="h-3.5 w-3.5" />
@@ -469,7 +474,7 @@ export const SavedRAMSLibrary = () => {
                   'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation flex items-center gap-1.5',
                   sourceFilter === 'user-uploaded'
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                    : 'bg-white/[0.06] text-white hover:bg-white/10'
                 )}
               >
                 <FileUp className="h-3.5 w-3.5" />
@@ -480,21 +485,21 @@ export const SavedRAMSLibrary = () => {
             {/* Search bar */}
             <div className="relative">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 type="text"
                 placeholder="Search documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white/40", !searchTerm && "pl-10")}
+                className={cn("pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white", !searchTerm && "pl-10")}
               />
               {searchTerm && (
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white/40"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -563,47 +568,49 @@ export const SavedRAMSLibrary = () => {
 
         {/* Mobile Document Cards */}
         {filteredDocuments.length > 0 && (
-          <div className="py-4 space-y-3">
-            {displayedDocuments.map((doc, index) => (
-              <SwipeableDocumentCard
-                key={doc.id}
-                doc={doc}
-                index={index}
-                editMode={editMode}
-                selected={selectedDocIds.has(doc.id)}
-                isDownloading={downloadingId === doc.id}
-                isDeleting={deletingId === doc.id}
-                onToggleSelect={() => toggleSelection(doc.id)}
-                onDownload={() => handleDownload(doc)}
-                onDelete={() => handleDelete(doc.id, doc.pdf_url)}
-                onEdit={() => {
-                  setSelectedDocumentId(doc.id);
-                  setAmendDialogOpen(true);
-                }}
-              />
-            ))}
+          <PullToRefresh onRefresh={handleRefresh}>
+            <div className="py-4 space-y-3">
+              {displayedDocuments.map((doc, index) => (
+                <SwipeableDocumentCard
+                  key={doc.id}
+                  doc={doc}
+                  index={index}
+                  editMode={editMode}
+                  selected={selectedDocIds.has(doc.id)}
+                  isDownloading={downloadingId === doc.id}
+                  isDeleting={deletingId === doc.id}
+                  onToggleSelect={() => toggleSelection(doc.id)}
+                  onDownload={() => handleDownload(doc)}
+                  onDelete={() => handleDelete(doc.id, doc.pdf_url)}
+                  onEdit={() => {
+                    setSelectedDocumentId(doc.id);
+                    setAmendDialogOpen(true);
+                  }}
+                />
+              ))}
 
-            {/* View all toggle */}
-            {filteredDocuments.length > 12 && (
-              <Button
-                variant="ghost"
-                onClick={() => setShowAll(!showAll)}
-                className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98]"
-              >
-                {showAll ? (
-                  <>
-                    <ChevronUp className="h-4 w-4 mr-2" />
-                    Show Less
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown className="h-4 w-4 mr-2" />
-                    View All ({filteredDocuments.length - 12} more)
-                  </>
-                )}
-              </Button>
-            )}
-          </div>
+              {/* View all toggle */}
+              {filteredDocuments.length > 12 && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowAll(!showAll)}
+                  className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98]"
+                >
+                  {showAll ? (
+                    <>
+                      <ChevronUp className="h-4 w-4 mr-2" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4 mr-2" />
+                      View All ({filteredDocuments.length - 12} more)
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </PullToRefresh>
         )}
 
         {/* Edit mode bottom bar */}
@@ -621,11 +628,11 @@ export const SavedRAMSLibrary = () => {
                   variant="ghost"
                   size="sm"
                   onClick={toggleSelectAll}
-                  className="text-white/70 h-11 touch-manipulation active:scale-[0.98]"
+                  className="text-white h-11 touch-manipulation active:scale-[0.98]"
                 >
                   {selectedDocIds.size === displayedDocuments.length ? 'Deselect All' : 'Select All'}
                 </Button>
-                <span className="text-sm text-white/50">{selectedDocIds.size} selected</span>
+                <span className="text-sm text-white">{selectedDocIds.size} selected</span>
               </div>
               <Button
                 size="sm"
@@ -654,7 +661,7 @@ export const SavedRAMSLibrary = () => {
             <div className="space-y-4">
               <div className="relative flex-1 max-w-xl">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   type="text"
@@ -700,7 +707,7 @@ export const SavedRAMSLibrary = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedDocIds(new Set())}
-                className="text-white/70"
+                className="text-white"
               >
                 Clear Selection
               </Button>
@@ -724,7 +731,7 @@ export const SavedRAMSLibrary = () => {
         {/* Document count and View All toggle */}
         {filteredDocuments.length > 12 && (
           <div className="flex items-center justify-between px-1">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Showing {displayedDocuments.length} of {filteredDocuments.length} documents
               {hasActiveFilters && ` (filtered from ${documents.length} total)`}
             </p>
@@ -775,7 +782,7 @@ export const SavedRAMSLibrary = () => {
                 </CardTitle>
                 {displayedDocuments.length > 0 && (
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-white/70">Select All</span>
+                    <span className="text-sm text-white">Select All</span>
                     <Checkbox
                       checked={
                         selectedDocIds.size === displayedDocuments.length &&
@@ -792,22 +799,22 @@ export const SavedRAMSLibrary = () => {
               <table className="w-full">
                 <thead className="bg-[#1a1a1a] border-b border-white/5">
                   <tr>
-                    <th className="px-4 py-3 text-center text-xs font-semibold text-white/70 w-12">
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-white w-12">
                       <span className="sr-only">Select</span>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                       Document
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                       Location
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                       Created
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-white uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
@@ -836,13 +843,13 @@ export const SavedRAMSLibrary = () => {
                           <span className="font-medium text-sm text-white">{doc.project_name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-white/70">{doc.location}</td>
+                      <td className="px-4 py-3 text-sm text-white">{doc.location}</td>
                       <td className="px-4 py-3">
                         <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
                           {doc.status}
                         </Badge>
                       </td>
-                      <td className="px-4 py-3 text-sm text-white/70">
+                      <td className="px-4 py-3 text-sm text-white">
                         {format(new Date(doc.created_at), 'dd MMM yyyy')}
                       </td>
                       <td className="px-4 py-3">

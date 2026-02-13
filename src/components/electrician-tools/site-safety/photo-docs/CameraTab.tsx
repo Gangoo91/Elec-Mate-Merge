@@ -284,7 +284,7 @@ export default function CameraTab({
         {/* Project header when capturing for specific project */}
         {isProjectLocked && (
           <div className="px-4 py-3 bg-elec-yellow/10 border-b border-elec-yellow/20">
-            <p className="text-sm text-white/70">Adding photo to:</p>
+            <p className="text-sm text-white">Adding photo to:</p>
             <p className="text-base font-semibold text-elec-yellow truncate">{initialProject}</p>
           </div>
         )}
@@ -297,7 +297,7 @@ export default function CameraTab({
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation ${
                 captureMode === 'single'
                   ? 'bg-elec-yellow text-black'
-                  : 'text-white/50 active:text-white/80'
+                  : 'text-white active:text-white'
               }`}
             >
               <Camera className="h-4 w-4" />
@@ -308,7 +308,7 @@ export default function CameraTab({
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation ${
                 captureMode === 'quick'
                   ? 'bg-elec-yellow text-black'
-                  : 'text-white/50 active:text-white/80'
+                  : 'text-white active:text-white'
               }`}
             >
               <Zap className="h-4 w-4" />
@@ -321,7 +321,7 @@ export default function CameraTab({
         {captureMode === 'quick' && quickQueue.length > 0 && (
           <div className="flex-shrink-0 px-4 pt-3">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-white/60 font-medium">
+              <span className="text-xs text-white font-medium">
                 {quickQueue.length} photo{quickQueue.length !== 1 ? 's' : ''} queued
               </span>
               <button
@@ -340,7 +340,7 @@ export default function CameraTab({
                   <img src={photo.preview} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => handleRemoveFromQueue(index)}
-                    className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-black/60 text-white/80 touch-manipulation"
+                    className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-black/60 text-white touch-manipulation"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -362,12 +362,12 @@ export default function CameraTab({
               >
                 <Zap className="h-12 w-12 text-black" />
               </motion.button>
-              <p className="text-sm text-white/50 mt-4 text-center">
+              <p className="text-sm text-white mt-4 text-center">
                 Tap to capture. Photos queue up.{'\n'}Add details when you're done.
               </p>
               <button
                 onClick={handleGallerySelect}
-                className="mt-3 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1e1e1e] border border-white/10 text-sm text-white/70 touch-manipulation active:bg-[#252525]"
+                className="mt-3 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1e1e1e] border border-white/10 text-sm text-white touch-manipulation active:bg-[#252525]"
               >
                 <ImageIcon className="h-4 w-4" />
                 Choose multiple from gallery
@@ -386,13 +386,13 @@ export default function CameraTab({
                 </div>
                 <div className="text-center">
                   <p className="text-base font-medium text-white">Take Photo</p>
-                  <p className="text-xs text-white/50">Tap to open camera</p>
+                  <p className="text-xs text-white">Tap to open camera</p>
                 </div>
               </motion.button>
 
               <button
                 onClick={handleGallerySelect}
-                className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1e1e1e] border border-white/10 text-sm text-white/70 touch-manipulation hover:bg-[#252525] active:bg-[#252525] transition-colors"
+                className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1e1e1e] border border-white/10 text-sm text-white touch-manipulation hover:bg-[#252525] active:bg-[#252525] transition-colors"
               >
                 <ImageIcon className="h-4 w-4" />
                 Choose from gallery
@@ -418,7 +418,7 @@ export default function CameraTab({
           )}
           <button
             onClick={handleRetake}
-            className="absolute top-4 left-4 md:top-8 md:left-8 p-2 rounded-full bg-black/60 text-white/80 touch-manipulation hover:bg-black/80"
+            className="absolute top-4 left-4 md:top-8 md:left-8 p-2 rounded-full bg-black/60 text-white touch-manipulation hover:bg-black/80"
           >
             <X className="h-5 w-5" />
           </button>
@@ -455,7 +455,7 @@ export default function CameraTab({
           {isQuickMode ? (
             <div className="bg-[#1e1e1e] rounded-xl p-3 border border-white/10">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                <span className="text-xs font-medium text-white uppercase tracking-wide">
                   {quickQueue.length} Photos Queued
                 </span>
               </div>
@@ -468,7 +468,7 @@ export default function CameraTab({
                     <img src={photo.preview} alt="" className="w-full h-full object-cover" />
                     <button
                       onClick={() => handleRemoveFromQueue(index)}
-                      className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-black/60 text-white/80 touch-manipulation"
+                      className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-black/60 text-white touch-manipulation"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -488,7 +488,7 @@ export default function CameraTab({
               )}
               <button
                 onClick={handleRetake}
-                className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white/80 touch-manipulation hover:bg-black/80"
+                className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white touch-manipulation hover:bg-black/80"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -497,7 +497,7 @@ export default function CameraTab({
 
           {/* Category grid */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
               Category
             </label>
             <div className="grid grid-cols-4 gap-1.5 md:gap-2 mt-2">
@@ -512,7 +512,7 @@ export default function CameraTab({
                   }`}
                 >
                   <span className={`w-2.5 h-2.5 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] md:text-xs text-white/80 text-center leading-tight">
+                  <span className="text-[10px] md:text-xs text-white text-center leading-tight">
                     {cat.label}
                   </span>
                 </button>
@@ -522,7 +522,7 @@ export default function CameraTab({
 
           {/* Description */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
               Description *
             </label>
             <Textarea
@@ -538,7 +538,7 @@ export default function CameraTab({
           {/* Location + Project */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
                 Location
               </label>
               <div className="relative mt-2">
@@ -550,14 +550,14 @@ export default function CameraTab({
                 />
                 <button
                   onClick={handleGetLocation}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 text-white/40 hover:text-elec-yellow touch-manipulation"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 text-white hover:text-elec-yellow touch-manipulation"
                 >
                   <MapPin className="h-4 w-4" />
                 </button>
               </div>
             </div>
             <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
                 Project {isProjectLocked && <span className="text-elec-yellow">(locked)</span>}
               </label>
               <Input
@@ -579,10 +579,10 @@ export default function CameraTab({
             onClick={() => setAddWatermark(!addWatermark)}
             className="w-full flex items-center gap-3 p-3 bg-[#1e1e1e] rounded-xl border border-white/10 touch-manipulation active:bg-[#252525]"
           >
-            <Stamp className={`h-5 w-5 ${addWatermark ? 'text-elec-yellow' : 'text-white/40'}`} />
+            <Stamp className={`h-5 w-5 ${addWatermark ? 'text-elec-yellow' : 'text-white'}`} />
             <div className="flex-1 text-left">
               <p className="text-sm text-white">Timestamp Watermark</p>
-              <p className="text-[10px] text-white/40">
+              <p className="text-[10px] text-white">
                 Burns date, time & location onto the photo
               </p>
             </div>
@@ -597,7 +597,7 @@ export default function CameraTab({
 
           {/* Tags */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-center block">
+            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
               Tags
             </label>
             <div className="flex gap-2 mt-2">
@@ -611,7 +611,7 @@ export default function CameraTab({
               <button
                 onClick={handleAddTag}
                 disabled={!tagInput.trim()}
-                className="px-4 h-10 rounded-lg bg-white/10 text-sm font-medium text-white/70 hover:bg-white/15 disabled:opacity-40 touch-manipulation"
+                className="px-4 h-10 rounded-lg bg-white/10 text-sm font-medium text-white hover:bg-white/15 disabled:opacity-40 touch-manipulation"
               >
                 Add
               </button>
@@ -626,7 +626,7 @@ export default function CameraTab({
                     {tag}
                     <button
                       onClick={() => handleRemoveTag(tag)}
-                      className="text-white/40 hover:text-white"
+                      className="text-white hover:text-white"
                     >
                       <X className="h-3 w-3" />
                     </button>

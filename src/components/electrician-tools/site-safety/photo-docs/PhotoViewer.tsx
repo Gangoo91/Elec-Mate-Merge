@@ -232,7 +232,7 @@ export default function PhotoViewer({
             <X className="h-5 w-5 text-white" />
           </button>
 
-          <span className="text-xs text-white/70 font-medium">
+          <span className="text-xs text-white font-medium">
             {currentIndex + 1} / {photos.length}
           </span>
 
@@ -316,13 +316,13 @@ export default function PhotoViewer({
             <span
               className={`w-2 h-2 rounded-full ${getCategoryColor(photo.category)} ring-1 ring-black/30`}
             />
-            <span className="text-xs font-medium text-white/80">
+            <span className="text-xs font-medium text-white">
               {getCategoryLabel(photo.category)}
             </span>
             {photo.project_reference && (
               <>
-                <span className="text-white/20">•</span>
-                <span className="flex items-center gap-1 text-xs text-white/60">
+                <span className="text-white">•</span>
+                <span className="flex items-center gap-1 text-xs text-white">
                   <Folder className="h-3 w-3" />
                   {photo.project_reference}
                 </span>
@@ -334,7 +334,7 @@ export default function PhotoViewer({
           <p className="text-white text-sm mb-1.5 line-clamp-2">{photo.description}</p>
 
           {/* Location and date - single line */}
-          <div className="flex items-center gap-3 mb-2 text-[10px] text-white/50">
+          <div className="flex items-center gap-3 mb-2 text-[10px] text-white">
             {photo.location && (
               <span className="flex items-center gap-1">
                 <MapPin className="h-3 w-3" />
@@ -353,7 +353,7 @@ export default function PhotoViewer({
               {photo.tags.map((tag, i) => (
                 <span
                   key={i}
-                  className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-white/60"
+                  className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-white"
                 >
                   {tag}
                 </span>
@@ -406,7 +406,7 @@ export default function PhotoViewer({
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-white">Delete Photo?</h3>
-                <p className="text-xs text-white/50">This cannot be undone</p>
+                <p className="text-xs text-white">This cannot be undone</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -454,7 +454,7 @@ export default function PhotoViewer({
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">Add Tag</p>
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-white">
                     {photo.tags?.length ? `${photo.tags.length} tags` : 'No tags yet'}
                   </p>
                 </div>
@@ -477,7 +477,7 @@ export default function PhotoViewer({
                   <p className="text-sm font-medium text-white">
                     {photo.project_reference ? 'Change Project' : 'Add to Project'}
                   </p>
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-white">
                     {photo.project_reference || 'Not in a project'}
                   </p>
                 </div>
@@ -496,7 +496,7 @@ export default function PhotoViewer({
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">Share</p>
-                  <p className="text-xs text-white/50">Share or copy link</p>
+                  <p className="text-xs text-white">Share or copy link</p>
                 </div>
               </button>
 
@@ -513,7 +513,7 @@ export default function PhotoViewer({
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-white">Download</p>
-                  <p className="text-xs text-white/50">Save to device</p>
+                  <p className="text-xs text-white">Save to device</p>
                 </div>
               </button>
 
@@ -530,7 +530,7 @@ export default function PhotoViewer({
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium text-red-400">Delete Photo</p>
-                  <p className="text-xs text-white/50">Permanently remove</p>
+                  <p className="text-xs text-white">Permanently remove</p>
                 </div>
               </button>
             </div>
@@ -552,7 +552,7 @@ export default function PhotoViewer({
                 {photo.tags.map((tag, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-full bg-white/10 text-xs text-white/70"
+                    className="px-2.5 py-1 rounded-full bg-white/10 text-xs text-white"
                   >
                     {tag}
                   </span>
@@ -608,7 +608,7 @@ export default function PhotoViewer({
             />
 
             {photo.project_reference && (
-              <p className="text-xs text-white/50 text-center mb-3">
+              <p className="text-xs text-white text-center mb-3">
                 Leave empty to remove from project
               </p>
             )}

@@ -40,7 +40,7 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-elec-light">Quick Start Templates</h3>
-          <p className="text-sm text-elec-light/60">Use a pre-built briefing template</p>
+          <p className="text-sm text-white">Use a pre-built briefing template</p>
         </div>
         <button
           onClick={onViewAll}
@@ -71,7 +71,7 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
                 </h4>
 
                 {/* Meta Info */}
-                <div className="flex items-center gap-4 mb-4 text-sm text-elec-light/70">
+                <div className="flex items-center gap-4 mb-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
                     <span>{template.duration}</span>
@@ -99,7 +99,7 @@ export function TemplateQuickAccess({ onTemplateSelect, onViewAll }: TemplateQui
 
         {/* Swipe hint (mobile only) */}
         <div className="md:hidden text-center mt-2">
-          <p className="text-xs text-elec-light/50 flex items-center justify-center gap-2">
+          <p className="text-xs text-white flex items-center justify-center gap-2">
             <span className="inline-block w-1 h-1 bg-elec-yellow/50 rounded-full animate-pulse" />
             Swipe for more templates
             <span className="inline-block w-1 h-1 bg-elec-yellow/50 rounded-full animate-pulse" />

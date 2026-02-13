@@ -116,7 +116,7 @@ const SupportNetwork = () => {
             <CardTitle className="text-lg text-purple-400">Support Network Newsletter</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-white/70 mb-4">
+            <p className="text-sm text-white mb-4">
               Stay informed about upcoming events, support groups, and mental health resources specific to electrical apprentices.
             </p>
             {!isSubscribed ? (

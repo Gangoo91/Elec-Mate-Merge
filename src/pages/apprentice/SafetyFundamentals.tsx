@@ -78,7 +78,7 @@ const SafetyFundamentals = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Safety Fundamentals</h1>
-        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4">
+        <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
           Critical safety information for electrical work - your life depends on following these rules
         </p>
         <SmartBackButton />
@@ -92,7 +92,7 @@ const SafetyFundamentals = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70 text-center text-lg">
+          <p className="text-white text-center text-lg">
             <strong>Electricity can kill.</strong> These aren't just guidelines - they're the difference 
             between going home safely and not going home at all. Never compromise on safety, no matter 
             what anyone tells you.
@@ -116,10 +116,10 @@ const SafetyFundamentals = () => {
                   <Badge variant="destructive">Critical</Badge>
                 </div>
                 
-                <p className="text-white/70 mb-4">{rule.description}</p>
+                <p className="text-white mb-4">{rule.description}</p>
                 
                 <div className="bg-card border border-red-500/30 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong className="text-red-300">Why this matters:</strong> {rule.why}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ const SafetyFundamentals = () => {
                   <h5 className="font-medium text-white mb-2">Steps to follow:</h5>
                   <ol className="space-y-1">
                     {rule.steps.map((step, stepIndex) => (
-                      <li key={stepIndex} className="text-sm text-white/70 flex items-start gap-2">
+                      <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                         <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
                         {step}
                       </li>
@@ -153,9 +153,9 @@ const SafetyFundamentals = () => {
             {ppe.map((item, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{item.item}</h4>
-                <p className="text-sm text-white/70 mb-2">{item.purpose}</p>
+                <p className="text-sm text-white mb-2">{item.purpose}</p>
                 <div className="bg-elec-yellow/10 p-2 rounded">
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong className="text-elec-yellow">Standard:</strong> {item.standard}
                   </p>
                 </div>
@@ -183,7 +183,7 @@ const SafetyFundamentals = () => {
                 
                 <ol className="space-y-2">
                   {emergency.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-red-400 font-medium">{stepIndex + 1}.</span>
                       {step}
                     </li>
@@ -204,17 +204,17 @@ const SafetyFundamentals = () => {
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Emergency Services</h4>
               <p className="text-2xl font-bold text-red-400">999</p>
-              <p className="text-sm text-white/70">Life-threatening emergencies</p>
+              <p className="text-sm text-white">Life-threatening emergencies</p>
             </div>
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <h4 className="font-semibold text-white mb-2">HSE Emergency</h4>
               <p className="text-lg font-bold text-orange-400">0300 790 6787</p>
-              <p className="text-sm text-white/70">Serious workplace incidents</p>
+              <p className="text-sm text-white">Serious workplace incidents</p>
             </div>
             <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Site First Aid</h4>
               <p className="text-lg font-bold text-elec-yellow">Check Site Notice</p>
-              <p className="text-sm text-white/70">Site-specific emergency contacts</p>
+              <p className="text-sm text-white">Site-specific emergency contacts</p>
             </div>
           </div>
         </CardContent>
@@ -228,7 +228,7 @@ const SafetyFundamentals = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70">
+          <p className="text-white">
             You have the right and responsibility to refuse unsafe work. No job is worth your life 
             or long-term health. If something doesn't feel right, stop and ask. Experienced 
             electricians will respect you more for taking safety seriously than for taking risks 

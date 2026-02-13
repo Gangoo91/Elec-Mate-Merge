@@ -63,7 +63,7 @@ export function RiskSelect({
           aria-expanded={open}
           className={cn(
             "w-full justify-between bg-background/80 backdrop-blur-sm border-elec-yellow/20 text-left font-normal",
-            !value && "text-muted-foreground",
+            !value && "text-white",
             className
           )}
         >
@@ -106,7 +106,7 @@ export function RiskSelect({
                       />
                       <div className="flex-1">
                         <div className="text-sm font-medium">{risk.consequence}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-white">
                           {risk.suggestedControls?.length || 0} suggested control measures
                         </div>
                       </div>
@@ -131,7 +131,7 @@ export function RiskSelect({
                       />
                       <div className="flex-1">
                         <div className="text-sm font-medium">{risk.consequence}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-white">
                           Risk Level: {risk.severity}x{risk.likelihood} = {risk.riskRating}
                         </div>
                       </div>

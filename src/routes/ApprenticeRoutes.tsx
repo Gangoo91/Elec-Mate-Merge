@@ -38,7 +38,6 @@ const CommercialInstallations = lazy(
 const IndustrialInstallations = lazy(
   () => import('@/pages/apprentice/toolbox/IndustrialInstallations')
 );
-const OutdoorInstallations = lazy(() => import('@/pages/apprentice/toolbox/OutdoorInstallations'));
 const DomesticInstallations = lazy(() => import('@/pages/apprentice/DomesticInstallations'));
 const SpecialistInstallations = lazy(() => import('@/pages/apprentice/SpecialistInstallations'));
 const CommunicationSkills = lazy(() => import('@/pages/apprentice/toolbox/CommunicationSkills'));
@@ -340,14 +339,6 @@ const ApprenticeRoutes = () => (
       element={
         <LazyRoute>
           <IndustrialInstallations />
-        </LazyRoute>
-      }
-    />
-    <Route
-      path="on-job-tools/electrical-installation-guides/outdoor"
-      element={
-        <LazyRoute>
-          <OutdoorInstallations />
         </LazyRoute>
       }
     />

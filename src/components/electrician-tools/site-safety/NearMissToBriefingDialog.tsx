@@ -167,8 +167,8 @@ ${aiData.content.requiredPPE || ''}
               }`} />
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm">{nearMissReport.category}</p>
-                <p className="text-xs text-muted-foreground truncate">{nearMissReport.location}</p>
-                <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                <p className="text-xs text-white truncate">{nearMissReport.location}</p>
+                <p className="text-sm text-white mt-1 line-clamp-2">
                   {nearMissReport.description}
                 </p>
               </div>
@@ -199,10 +199,10 @@ ${aiData.content.requiredPPE || ''}
           />
 
           <div className="pt-2 space-y-2">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               The briefing will include:
             </p>
-            <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+            <ul className="text-sm text-white space-y-1 ml-4">
               <li>• Professional incident summary</li>
               <li>• Key safety discussion points</li>
               <li>• Preventive action items</li>

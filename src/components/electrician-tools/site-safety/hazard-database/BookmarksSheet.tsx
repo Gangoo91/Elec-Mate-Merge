@@ -40,7 +40,7 @@ export const BookmarksSheet: React.FC<BookmarksSheetProps> = ({
           <SheetTitle className="text-lg font-semibold text-white flex items-center gap-2">
             <Bookmark className="h-5 w-5 text-elec-yellow fill-elec-yellow" />
             Saved Hazards
-            <span className="text-sm font-normal text-white/50">
+            <span className="text-sm font-normal text-white">
               ({bookmarkedHazards.length})
             </span>
           </SheetTitle>
@@ -50,12 +50,12 @@ export const BookmarksSheet: React.FC<BookmarksSheetProps> = ({
           {bookmarkedHazards.length === 0 ? (
             <div className="flex flex-col items-center py-16">
               <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-                <Bookmark className="h-10 w-10 text-white/20" />
+                <Bookmark className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 No Saved Hazards
               </h3>
-              <p className="text-sm text-white/50 text-center max-w-xs">
+              <p className="text-sm text-white text-center max-w-xs">
                 Tap the bookmark icon on any hazard to save it for quick access
               </p>
             </div>

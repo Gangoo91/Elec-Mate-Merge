@@ -119,7 +119,7 @@ const TimeManagement = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Time Management & Work-Life Balance
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Master the art of balancing your apprenticeship demands with personal wellbeing. Learn effective time management strategies, stress reduction techniques, and maintain a healthy work-life balance.
         </p>
         <SmartBackButton />
@@ -132,7 +132,7 @@ const TimeManagement = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -154,7 +154,7 @@ const TimeManagement = () => {
                   <benefit.icon className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
-                <p className="text-white/70 text-xs">{benefit.desc}</p>
+                <p className="text-white text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -228,7 +228,7 @@ const TimeManagement = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Effective time management isn't about cramming more into your day - it's about making space for what matters.
             As an electrical apprentice, you're juggling work, study, travel, and personal life. The skills you develop now will serve you throughout your career and beyond.
           </p>
@@ -240,7 +240,7 @@ const TimeManagement = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>
@@ -259,19 +259,19 @@ const TimeManagement = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Apprentice Support</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Speak to your training provider or college about workload concerns
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 They can help adjust study plans and provide additional resources
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Mental Health Resources</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Visit our Mental Health section for professional support options
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Remember: Asking for help is a sign of strength, not weakness
               </p>
             </div>

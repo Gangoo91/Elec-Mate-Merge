@@ -119,7 +119,7 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <h4 className="font-medium mb-1">{hazard.name}</h4>
-            <p className="text-sm text-muted-foreground mb-2">{hazard.category}</p>
+            <p className="text-sm text-white mb-2">{hazard.category}</p>
             <div className="flex gap-2">
               {hazard.is_custom && (
                 <Badge variant="secondary" className="text-xs">Custom</Badge>
@@ -227,9 +227,9 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                    <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-white" />
                     <h3 className="text-lg font-semibold mb-2">No suggestions available</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-white">
                       Browse all hazards to find relevant ones for this task
                     </p>
                   </div>
@@ -247,7 +247,7 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
                   <div className="flex-1">
                     <div className="relative">
                       {!searchTerm && (
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
                       )}
                       <Input
                         placeholder="Search hazards..."
@@ -283,9 +283,9 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <Search className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                    <Search className="w-12 h-12 mx-auto mb-4 text-white" />
                     <h3 className="text-lg font-semibold mb-2">No hazards found</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-white">
                       Try adjusting your search or category filter
                     </p>
                   </div>
@@ -322,9 +322,9 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <TrendingUp className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <TrendingUp className="w-12 h-12 mx-auto mb-4 text-white" />
                       <h3 className="text-lg font-semibold mb-2">No usage data yet</h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-white">
                         Hazards you use frequently will appear here
                       </p>
                     </div>

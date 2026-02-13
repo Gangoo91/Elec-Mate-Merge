@@ -41,7 +41,7 @@ export const JobScaleBadge: React.FC<JobScaleBadgeProps> = ({
       
       {onManualChange && (
         <details className="text-sm">
-          <summary className="cursor-pointer text-muted-foreground hover:text-foreground touch-manipulation py-1">
+          <summary className="cursor-pointer text-white hover:text-foreground touch-manipulation py-1">
             ▼Not right? Change it
           </summary>
           <div className="flex flex-col sm:flex-row gap-2 mt-3">
@@ -52,7 +52,7 @@ export const JobScaleBadge: React.FC<JobScaleBadgeProps> = ({
                 className={`min-h-[44px] w-full sm:w-auto px-4 py-2.5 rounded-lg border transition-all touch-manipulation ${
                   s === scale 
                     ? config[s].color + ' shadow-sm' 
-                    : 'border-muted/50 text-muted-foreground hover:border-foreground/50 active:scale-95'
+                    : 'border-muted/50 text-white hover:border-foreground/50 active:scale-95'
                 }`}
               >
                 {config[s].icon} {config[s].label}

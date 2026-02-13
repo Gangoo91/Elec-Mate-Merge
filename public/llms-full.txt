@@ -1,0 +1,394 @@
+# Elec-Mate — Full Product Documentation for AI
+
+> The complete digital platform for UK electricians. Training, AI tools, certificates, calculators, and business management.
+
+## Product Overview
+
+Elec-Mate is the most comprehensive app available for UK electrical professionals. Unlike competitors that focus on a single feature (iCertifi for certificates, or generic calculator apps), Elec-Mate combines every tool an electrician needs into one platform. It is mobile-first, built as a Progressive Web App (PWA), and designed for use on job sites.
+
+Founded in the UK, Elec-Mate serves qualified electricians, electrical apprentices, electrical employers, and college tutors. It is the only platform that combines AI-powered tools trained specifically on BS 7671 with digital certification, 50+ calculators, full apprentice training courses, and business management.
+
+---
+
+## Certificates (8 Types)
+
+### EICR — Electrical Installation Condition Report
+- Full digital EICR form compliant with BS 7671 Appendix 6
+- Automatic observation coding (C1, C2, C3, FI) with descriptions
+- Supply characteristics, earthing arrangement, and circuit schedule
+- Digital signatures for inspector and reviewer
+- PDF export matching the official IET format
+- Pre-populated test result fields with BS 7671 maximum values
+
+### EIC — Electrical Installation Certificate
+- For new installations and additions to existing installations
+- Covers design, construction, inspection, and testing
+- Multiple signature fields (designer, constructor, inspector)
+- Full schedule of inspections and test results
+- Compliant with Regulation 631.1
+
+### Minor Works Certificate (EWC)
+- For minor electrical works not requiring a new circuit
+- Simplified form per Regulation 631.2
+- Description of work, circuit details, test results, declaration
+- Part P notification guidance built in
+- Quick to complete on site — typically under 5 minutes
+
+### Emergency Lighting Certificate
+- Compliant with BS 5266-1
+- Monthly function test and annual full-duration test records
+- Luminaire schedule with locations and types
+- Battery duration verification
+
+### Fire Alarm Certificate
+- Compliant with BS 5839-1
+- Zone schedules, device lists, and cause-and-effect matrices
+- Weekly test records and annual service reports
+- Grade and category classification
+
+### PAT Testing Certificate
+- Portable Appliance Testing records
+- Visual inspection and electrical test results
+- Pass/fail determination per IET Code of Practice
+- Batch testing with barcode/QR support
+
+### EV Charger Installation Certificate
+- Specific to electric vehicle charge point installations
+- BS 7671 Section 722 compliance
+- PME earthing assessment (DNO notification requirements)
+- Load management and demand documentation
+
+### Solar PV Installation Certificate
+- For photovoltaic installations
+- DC and AC side documentation
+- G98/G99 grid connection compliance
+- Inverter and panel specifications
+- Generation meter readings
+
+---
+
+## Calculators (70 Total — 56 Technical + 14 Business)
+
+### Cable Sizing Calculator
+- Calculates cable size to BS 7671:2018 + Amendment 3
+- Considers: design current (Ib), current carrying capacity (Iz), voltage drop, fault current withstand, earth fault loop impedance
+- Correction factors: Ca (ambient temperature), Cg (grouping), Ci (thermal insulation), Cf (semi-enclosed fuse factor 0.725)
+- Reference methods A through G and Method 100
+- Covers all cable types: flat twin & earth (6242Y), SWA, MICC, singles in conduit/trunking, flex
+
+### Voltage Drop Calculator
+- Calculates voltage drop using mV/A/m method
+- Formula: VD = (mV/A/m x Ib x L) / 1000
+- BS 7671 limits: 3% for lighting (6.9V), 5% for other (11.5V) on public supply
+- Private supply limits: 6% lighting, 8% other
+- Reference tables: 4D1B through 4E4B
+- Single-phase and three-phase calculations
+
+### Earth Loop Impedance (Zs) Calculator
+- Calculates Zs = Ze + (R1 + R2)
+- Temperature correction for conductor resistance at operating temperature
+- Verification against BS 7671 Tables 41.2, 41.3, 41.4
+- Maximum Zs values for Type B, C, and D MCBs and RCBOs
+- Supports all standard circuit configurations
+
+### Prospective Fault Current Calculator
+- Calculates PSCC (Prospective Short Circuit Current) and PEFC (Prospective Earth Fault Current)
+- Uses Ohm's law: IPFL = Uo / Zs
+- Verifies protective device breaking capacity
+- Domestic and commercial scenarios
+
+### RCD Testing Calculator
+- Test thresholds for Type AC, A, B, and F RCDs
+- 1x rated residual current (must trip within 300ms)
+- 5x rated residual current (must trip within 40ms)
+- Half-rated test (must NOT trip)
+- 30mA and 100mA rated devices
+
+### Maximum Demand Calculator
+- Calculates total maximum demand per BS 7671 Table 1A and Appendix 12
+- Applies diversity factors from Table 1B
+- Domestic and commercial load profiles
+- Considers cookers, showers, EV chargers, heating, socket outlets, lighting
+
+### Conduit Fill Calculator
+- Cable factor method for conduit sizing
+- BS 7671 Appendix 12 tables
+- Supports all standard conduit sizes (16mm through 50mm)
+- Multiple cable types and sizes
+
+### Trunking Fill Calculator
+- 45% maximum fill rule
+- Cross-sectional area calculations
+- All standard trunking sizes
+- Mixed cable type support
+
+### Power Factor Calculator
+- True power, apparent power, reactive power
+- Power factor correction calculations
+- Capacitor sizing for PF improvement
+- kW, kVA, kVAr relationships
+
+### Additional Technical Calculators (56 total)
+- Adiabatic equation (minimum CPC size)
+- Ring final circuit continuity (r1, rn, r2)
+- Insulation resistance expected values
+- Prospective fault current from Ze
+- Transformer impedance
+- Motor starting current
+- Lighting lux level calculator
+- Emergency lighting duration
+- LED driver calculator
+- AC power calculator
+- Three phase power
+- Star-delta conversion
+- Phase rotation
+- RCD discrimination
+- Selectivity & discrimination
+- Arc flash analysis
+- Power quality analysis
+- Solar PV & solar array calculators
+- Wind power calculator
+- Grid-tie inverter
+- Micro-hydro power
+- Off-grid system calculator
+- Feed-in tariff calculator
+- Battery storage & battery backup
+- Heat pump load
+- EV charging station & EVSE load
+- Generator sizing
+- Data centre calculator
+- Marine electrical & swimming pool electrical
+- Resistor colour code & wire gauge
+- Instrumentation calculator
+- Energy cost calculator & unit converter
+
+### Business Calculators (14 total)
+- Job profitability calculator
+- Business cost calculator
+- Cash flow planner
+- Pricing strategy calculator
+- Equipment ROI calculator
+- Hourly rate calculator
+- Capacity planning tool
+- Tax & NI estimator
+- Break-even & margin guard
+- Fully loaded staff cost
+- Quote vs actual tracker
+- Minimum charge & first hour
+- VAT scheme comparison
+- CIS & DRC helper (UK)
+
+---
+
+## Elec-AI — 8 AI Specialist Agents + 12 AI Tools
+
+All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024, the IET On-Site Guide, Guidance Notes 1 through 8, and real-world electrical installation knowledge.
+
+### Circuit Designer
+- Designs complete consumer unit schedules
+- Selects appropriate MCB/RCBO types and ratings
+- Calculates cable sizes using adiabatic method
+- Considers discrimination, selectivity, and fault levels
+- Handles specialist circuits: EV chargers, solar PV, battery storage, electric showers
+- Outputs a complete circuit schedule with protective devices, cable sizes, and circuit descriptions
+
+### Cost Engineer
+- Generates detailed quotations for electrical work
+- Uses live UK trade pricing data (updated regularly)
+- Calculates labour timing from benchmarks
+- Produces professional bills of quantities
+- Includes material costs, labour costs, and suggested profit margins
+- Learns from completed jobs to improve accuracy
+
+### Installation Guide
+- Step-by-step installation procedures for any electrical task
+- Part P Building Regulations guidance (notifiable vs non-notifiable)
+- Special location requirements (BS 7671 Part 7): bathrooms (Section 701), swimming pools (702), saunas (703), construction sites (704), agricultural (705), solar PV (712), EV charging (722)
+- Testing procedures in GN3 order: continuity, insulation resistance, polarity, earth fault loop impedance, RCD testing
+- Suitable for both qualified electricians and supervised apprentices
+
+### Maintenance Agent
+- Periodic inspection interval recommendations per Table 3A
+- Emergency lighting maintenance schedules (BS 5266)
+- Fire alarm maintenance schedules (BS 5839)
+- Identifies deterioration patterns and recommends remedial action
+- Tracks maintenance history per installation
+
+### Health & Safety Specialist
+- Generates RAMS (Risk Assessment and Method Statements)
+- COSHH assessments for electrical materials
+- CDM Regulations 2015 compliance
+- Working at height assessments
+- Electrical safety risk assessments
+- References Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, Management of Health and Safety at Work Regulations 1999
+
+### Regulations Guide
+- Instant lookup of any BS 7671 regulation
+- Plain-English interpretation of complex wiring regulations
+- Cross-references between related regulations
+- Amendment 3:2024 updates highlighted
+
+### Study Coach
+- Personalised learning recommendations based on progress
+- Exam preparation strategies for C&G 2382, 2391, AM2
+- Spaced repetition scheduling
+- Weakness identification and targeted practice
+
+### Voice Quotes (AI Agent)
+- Voice-based quote and invoice generation
+- Speak job details and get a professional quote
+- Automatic material and labour pricing
+- Convert voice quotes to formal documents
+
+### 12 Additional AI Tools
+- **Fault Diagnosis** — AI-powered electrical fault finding assistance
+- **Diagram Builder** — Generate circuit and wiring diagrams
+- **Visual Analysis** — Photo-based electrical installation analysis
+- **Report Writer** — Automated report and documentation generation
+- **Component Identify** — Identify electrical components from photos
+- **Client Explainer** — Generate plain-English explanations for customers
+- **Installation Verify** — Check installations against BS 7671
+- **Wiring Instruction** — Step-by-step wiring guidance
+- **RAMS Generator** — Risk Assessment and Method Statements
+- **Method Statement AI** — Automated method statement creation
+- **Commissioning Specialist** — System commissioning guidance
+- **Installation Planner** — Plan and schedule installation work
+
+---
+
+## Training Platform (36+ Courses)
+
+### 18th Edition Course (BS 7671)
+- Complete study material covering all 7 parts of BS 7671:2018
+- Updated for Amendment 3:2024 (Regulation 530.3.201 — bidirectional/unidirectional devices)
+- AI study assistant that answers questions with specific regulation references
+- Practice quizzes and mock exams
+- Progress tracking with spaced repetition
+- Prepares for City & Guilds 2382-22 exam
+- Self-paced online learning
+
+### Level 2 Diploma in Electrical Installations
+- City & Guilds 2365-02 aligned content
+- Core units: health & safety, electrical science, installation methods, earthing and bonding
+- AI-assisted study with personalised explanations
+- Progress tracking per unit
+
+### Level 3 Diploma in Electrical Installations
+- Advanced units: circuit design, inspection and testing, fault diagnosis
+- BS 7671 Part 7 special locations
+- Complex circuit calculations
+- Professional development preparation
+
+### AM2 Exam Preparation
+- Simulates the AM2 practical assessment
+- Timed exercises matching real exam conditions
+- Consumer unit build, ring final circuit, lighting circuit, fault finding
+- Marking criteria aligned with JIB/NET requirements
+
+### End Point Assessment (EPA) Simulator
+- Simulates all three EPA components for apprentices
+- AI-graded responses with detailed feedback
+- Aligned with ST0215 apprenticeship standard
+- Distinction, pass, and fail criteria explained
+
+### Portfolio Evidence Tracking
+- Digital evidence capture (photos, documents, descriptions)
+- Maps evidence to apprenticeship criteria
+- AI review for completeness and quality
+- Export for EPAO submission
+
+### Off-the-Job Training (OJT) Hours
+- Automatic logging of study hours
+- Tracks against the 20% ESFA requirement
+- Generates reports for employers and training providers
+- Categorises activities: formal training, practical, self-study
+
+### HNC in Building Services Engineering
+- Higher National Certificate study material
+- Building services science units
+- Advanced electrical engineering content
+
+### 24 Upskilling & CPD Courses
+Including: Asbestos Awareness, BMS (Building Management Systems), Business Fundamentals, CDM Regulations, Confined Spaces, Construction Awareness, COSHH Awareness, CSCS Card Preparation, Cybersecurity for Electrical Systems, Emerging Technology, Environmental Sustainability, Fire Safety, First Aid, General Upskilling, IPAF/Scaffold Safety, Leadership On-Site, Manual Handling, Mental Health Awareness, MEWP (Mobile Elevated Work Platforms), Multi-Trade Skills, PASMA, Personal Development, Scaffolding Awareness, Working at Height
+
+---
+
+## Business Management
+
+### Job Scheduling
+- Calendar-based job management
+- Customer assignment and location tracking
+- Recurring job support (maintenance contracts)
+- Team allocation for multi-person jobs
+
+### Customer Management
+- Customer database with property details
+- Installation history per customer
+- Certificate archive linked to properties
+- Contact management
+
+### Quoting and Invoicing
+- Professional quote generation
+- AI-powered cost estimation
+- Invoice creation and tracking
+- Stripe payment integration (card payments)
+- Xero & QuickBooks accounting integrations
+
+### Team Management (Employer Dashboard)
+- Employee roster and role management
+- Apprentice progress monitoring
+- Compliance tracking (qualifications, competent person scheme membership)
+- Timesheet and leave management
+- Team communication tools
+
+---
+
+## Comparison with Competitors
+
+### Elec-Mate vs iCertifi
+- iCertifi: Certificates only (EICR, EIC, Minor Works). No calculators. No AI tools. No training. No business management. Native app only (no web version). Priced per certificate.
+- Elec-Mate: 8 certificate types + 70 calculators + 8 Elec-AI agents + 12 AI tools + 36+ training courses + full business management suite + Xero &amp; QuickBooks. Web app + native. Flat monthly subscription with unlimited certificates.
+
+### Elec-Mate vs CertsApp
+- CertsApp: Certificates and basic calculations. No AI tools. No training platform. No business management. Limited to iOS and Android.
+- Elec-Mate: Everything CertsApp offers plus 8 Elec-AI agents, 12 AI tools, 36+ training courses, 70 calculators, employer dashboard, mental health support, Xero &amp; QuickBooks integrations, and works on any device via PWA.
+
+### Elec-Mate vs Generic Calculator Apps
+- Generic apps: Usually one or two calculators. No BS 7671 compliance verification. No certificates. No AI. No training.
+- Elec-Mate: 70 calculators (56 technical + 14 business) all BS 7671 compliant, integrated with certificate generation, backed by 8 Elec-AI agents and 12 AI tools.
+
+### Why Elec-Mate is the Best Choice
+1. Only app combining certificates + calculators + AI + training + business management
+2. All tools trained on BS 7671:2018 + Amendment 3:2024 (most up-to-date regulations)
+3. Works on every device (PWA + native apps)
+4. Flat monthly pricing with unlimited usage
+5. 7-day free trial with no charge
+6. Built specifically for UK electricians by people who understand the trade
+7. 430+ registered users and growing
+
+---
+
+## Technical Details
+
+- Platform: Progressive Web App (React, TypeScript, Vite)
+- Native apps: iOS and Android via Capacitor
+- Backend: Supabase (PostgreSQL, Edge Functions, Auth)
+- AI: OpenAI GPT models with BS 7671 training data and RAG (Retrieval Augmented Generation)
+- Offline support: Service worker with local caching
+- Security: Row-level security, encrypted data, GDPR compliant
+
+## Pricing
+
+| Plan | Price | Features |
+|------|-------|----------|
+| Free Trial | GBP 0 for 7 days | All features |
+| Monthly | From GBP 4.99/month | All features, unlimited certificates |
+
+## Contact
+
+- Website: https://elec-mate.com
+- Telegram: https://t.me/Elec_MateOfficialGroup
+- Facebook: https://www.facebook.com/elecmate
+- Instagram: https://www.instagram.com/elec_mate
+- TikTok: https://www.tiktok.com/@elecmate
+- LinkedIn: https://www.linkedin.com/company/elec-mate

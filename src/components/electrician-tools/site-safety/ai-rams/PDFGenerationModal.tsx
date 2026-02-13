@@ -85,7 +85,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
 
           <div className="text-center space-y-2 w-full">
             <h3 className="text-lg font-semibold">Generating {getPDFTypeName()}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Please wait whilst we create your professional PDF document
             </p>
           </div>
@@ -93,7 +93,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
           <div className="w-full space-y-4">
             <Progress value={progress} className="h-2" />
             
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-white">
               <span>{Math.round(progress)}% complete</span>
               <span>~{estimatedTimeRemaining}s remaining</span>
             </div>
@@ -122,7 +122,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
                   className={`text-sm ${
                     index <= currentStepIndex
                       ? 'text-foreground font-medium'
-                      : 'text-muted-foreground'
+                      : 'text-white'
                   }`}
                 >
                   {step.label}
@@ -132,7 +132,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
           </div>
 
           <div className="w-full pt-4 border-t">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground justify-center">
+            <div className="flex items-center gap-2 text-xs text-white justify-center">
               <Download className="w-4 h-4" />
               <span>Your download will start automatically when ready</span>
             </div>

@@ -99,6 +99,29 @@ const DataProcessingAgreement = lazy(() => import('@/pages/legal/DataProcessingA
 const RegulationSearchPage = lazy(() => import('@/pages/tools/RegulationSearchPage'));
 const QuizPage = lazy(() => import('@/pages/QuizPage'));
 
+// SEO Landing Pages (public, outside ProtectedRoute)
+const EICRCertificatePage = lazy(() => import('@/pages/seo/EICRCertificatePage'));
+const CableSizingCalculatorPage = lazy(() => import('@/pages/seo/CableSizingCalculatorPage'));
+const VoltageDropCalculatorPage = lazy(() => import('@/pages/seo/VoltageDropCalculatorPage'));
+const MinorWorksCertificatePage = lazy(() => import('@/pages/seo/MinorWorksCertificatePage'));
+const ElectricalTestingCalculatorsPage = lazy(() => import('@/pages/seo/ElectricalTestingCalculatorsPage'));
+const AIElectricianToolsPage = lazy(() => import('@/pages/seo/AIElectricianToolsPage'));
+const EighteenthEditionCoursePage = lazy(() => import('@/pages/seo/EighteenthEditionCoursePage'));
+const ApprenticeTrainingPage = lazy(() => import('@/pages/seo/ApprenticeTrainingPage'));
+const EarthLoopImpedanceCalculatorPage = lazy(() => import('@/pages/seo/EarthLoopImpedanceCalculatorPage'));
+const MaxDemandCalculatorPage = lazy(() => import('@/pages/seo/MaxDemandCalculatorPage'));
+const ConduitFillCalculatorPage = lazy(() => import('@/pages/seo/ConduitFillCalculatorPage'));
+const RCDTestingGuidePage = lazy(() => import('@/pages/seo/RCDTestingGuidePage'));
+const EICCertificatePage = lazy(() => import('@/pages/seo/EICCertificatePage'));
+const PATTestingPage = lazy(() => import('@/pages/seo/PATTestingPage'));
+const EVChargerCertificatePage = lazy(() => import('@/pages/seo/EVChargerCertificatePage'));
+const AM2ExamPreparationPage = lazy(() => import('@/pages/seo/AM2ExamPreparationPage'));
+const InspectionTestingCoursePage = lazy(() => import('@/pages/seo/InspectionTestingCoursePage'));
+const BS7671ObservationCodesPage = lazy(() => import('@/pages/seo/BS7671ObservationCodesPage'));
+const BestElectricianAppPage = lazy(() => import('@/pages/seo/BestElectricianAppPage'));
+const ElecMateVsICertifiPage = lazy(() => import('@/pages/seo/ElecMateVsICertifiPage'));
+const ElecMateVsCertsAppPage = lazy(() => import('@/pages/seo/ElecMateVsCertsAppPage'));
+
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
@@ -371,6 +394,29 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
+
+        {/* Public SEO Landing Pages (outside ProtectedRoute) */}
+        <Route path="/tools/eicr-certificate" element={<LazyRoute><EICRCertificatePage /></LazyRoute>} />
+        <Route path="/tools/cable-sizing-calculator" element={<LazyRoute><CableSizingCalculatorPage /></LazyRoute>} />
+        <Route path="/tools/voltage-drop-calculator" element={<LazyRoute><VoltageDropCalculatorPage /></LazyRoute>} />
+        <Route path="/tools/minor-works-certificate" element={<LazyRoute><MinorWorksCertificatePage /></LazyRoute>} />
+        <Route path="/tools/electrical-testing-calculators" element={<LazyRoute><ElectricalTestingCalculatorsPage /></LazyRoute>} />
+        <Route path="/tools/ai-electrician" element={<LazyRoute><AIElectricianToolsPage /></LazyRoute>} />
+        <Route path="/training/18th-edition-course" element={<LazyRoute><EighteenthEditionCoursePage /></LazyRoute>} />
+        <Route path="/training/electrical-apprentice" element={<LazyRoute><ApprenticeTrainingPage /></LazyRoute>} />
+        <Route path="/tools/earth-loop-impedance-calculator" element={<LazyRoute><EarthLoopImpedanceCalculatorPage /></LazyRoute>} />
+        <Route path="/tools/max-demand-calculator" element={<LazyRoute><MaxDemandCalculatorPage /></LazyRoute>} />
+        <Route path="/tools/conduit-fill-calculator" element={<LazyRoute><ConduitFillCalculatorPage /></LazyRoute>} />
+        <Route path="/tools/rcd-testing-guide" element={<LazyRoute><RCDTestingGuidePage /></LazyRoute>} />
+        <Route path="/tools/eic-certificate" element={<LazyRoute><EICCertificatePage /></LazyRoute>} />
+        <Route path="/tools/pat-testing" element={<LazyRoute><PATTestingPage /></LazyRoute>} />
+        <Route path="/tools/ev-charger-certificate" element={<LazyRoute><EVChargerCertificatePage /></LazyRoute>} />
+        <Route path="/tools/best-electrician-app-uk" element={<LazyRoute><BestElectricianAppPage /></LazyRoute>} />
+        <Route path="/training/am2-exam-preparation" element={<LazyRoute><AM2ExamPreparationPage /></LazyRoute>} />
+        <Route path="/training/inspection-and-testing" element={<LazyRoute><InspectionTestingCoursePage /></LazyRoute>} />
+        <Route path="/guides/bs7671-observation-codes" element={<LazyRoute><BS7671ObservationCodesPage /></LazyRoute>} />
+        <Route path="/compare/elec-mate-vs-icertifi" element={<LazyRoute><ElecMateVsICertifiPage /></LazyRoute>} />
+        <Route path="/compare/elec-mate-vs-certsapp" element={<LazyRoute><ElecMateVsCertsAppPage /></LazyRoute>} />
 
         {/* Legacy/Direct Access Routes - Redirect to proper paths */}
         <Route

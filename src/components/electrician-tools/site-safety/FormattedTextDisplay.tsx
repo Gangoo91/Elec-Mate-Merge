@@ -126,7 +126,7 @@ export const FormattedTextDisplay = ({
             {renderFormattedContent(value)}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground italic">{placeholder}</p>
+          <p className="text-sm text-white italic">{placeholder}</p>
         )}
         
         {/* Desktop hover edit button */}

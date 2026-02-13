@@ -19,9 +19,12 @@ import {
   Shield,
   Settings,
   Gauge,
+  Download,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useSafetyPDFExport } from "@/hooks/useSafetyPDFExport";
 
 type EquipmentStatus = "good" | "needs_attention" | "out_of_service" | "overdue";
 
@@ -79,7 +82,7 @@ const statusConfig: Record<EquipmentStatus, {
   },
   out_of_service: {
     bg: "bg-gray-500/10",
-    text: "text-gray-400",
+    text: "text-white",
     border: "border-gray-500/20",
     icon: XCircle,
     label: "Out of Service"
@@ -104,6 +107,7 @@ export function PremiumEquipmentCard({
   index = 0,
 }: PremiumEquipmentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
 
   const status = statusConfig[equipment.status] || statusConfig.good;
   const StatusIcon = status.icon;
@@ -167,7 +171,7 @@ export function PremiumEquipmentCard({
             </div>
 
             {/* Meta row */}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-[10px] text-white/50">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-[10px] text-white">
               <div className="flex items-center gap-0.5">
                 <MapPin className="h-2.5 w-2.5" />
                 <span>{equipment.location}</span>
@@ -191,7 +195,7 @@ export function PremiumEquipmentCard({
             transition={{ duration: 0.2 }}
             className="flex-shrink-0 p-0.5"
           >
-            <ChevronDown className="h-4 w-4 text-white/30" />
+            <ChevronDown className="h-4 w-4 text-white" />
           </motion.div>
         </div>
       </button>
@@ -213,14 +217,14 @@ export function PremiumEquipmentCard({
               {/* Details Grid */}
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <div className="space-y-0.5">
-                  <p className="text-[10px] text-white/40">Last Tested</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-[10px] text-white">Last Tested</p>
+                  <p className="text-xs text-white">
                     {formatDate(equipment.last_inspection)}
                   </p>
                 </div>
                 <div className="space-y-0.5">
-                  <p className="text-[10px] text-white/40">Test Frequency</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-[10px] text-white">Test Frequency</p>
+                  <p className="text-xs text-white">
                     {formatFrequency(equipment.inspection_interval_days)}
                   </p>
                 </div>
@@ -229,8 +233,8 @@ export function PremiumEquipmentCard({
               {/* Notes */}
               {equipment.condition_notes && (
                 <div className="mb-3 p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
-                  <p className="text-[10px] text-white/40 mb-0.5">Notes</p>
-                  <p className="text-xs text-white/70">{equipment.condition_notes}</p>
+                  <p className="text-[10px] text-white mb-0.5">Notes</p>
+                  <p className="text-xs text-white">{equipment.condition_notes}</p>
                 </div>
               )}
 
@@ -241,7 +245,7 @@ export function PremiumEquipmentCard({
                     variant="ghost"
                     size="sm"
                     onClick={(e) => { e.stopPropagation(); onEdit(); }}
-                    className="flex-1 h-10 text-xs text-white/70 hover:text-white hover:bg-white/10 border border-white/[0.08]"
+                    className="flex-1 h-10 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08]"
                   >
                     <Pencil className="h-3.5 w-3.5 mr-1" />
                     Edit
@@ -267,12 +271,25 @@ export function PremiumEquipmentCard({
                     Calibrated
                   </Button>
                 )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => { e.stopPropagation(); exportPDF("equipment", equipment.id); }}
+                  disabled={isExporting && exportingId === equipment.id}
+                  className="h-10 w-10 p-0 text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
+                >
+                  {isExporting && exportingId === equipment.id ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Download className="h-3.5 w-3.5" />
+                  )}
+                </Button>
                 {onDelete && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                    className="h-10 w-10 p-0 text-white/40 hover:text-red-400 hover:bg-red-500/10 border border-white/[0.08]"
+                    className="h-10 w-10 p-0 text-white hover:text-red-400 hover:bg-red-500/10 border border-white/[0.08]"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>

@@ -133,7 +133,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
             <h3 className="text-sm font-semibold text-white">Required PPE</h3>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-white/10 text-white/60 border-0 text-[10px]">
+            <Badge className="bg-white/10 text-white border-0 text-[10px]">
               {isEditing ? editedPPE.length : items.length} items
             </Badge>
             {editable && !isEditing && (
@@ -141,7 +141,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={handleEditClick}
-                className="h-8 w-8 p-0 text-white/40 hover:text-elec-yellow hover:bg-elec-yellow/10"
+                className="h-8 w-8 p-0 text-white hover:text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <Pencil className="h-4 w-4" />
               </Button>
@@ -156,11 +156,11 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <CollapsibleTrigger className="w-full">
                 <div className="flex items-center justify-between py-3 px-1 touch-manipulation min-h-[44px]">
-                  <span className="text-sm text-white/70">
+                  <span className="text-sm text-white">
                     {isOpen ? 'Hide details' : 'Show all PPE requirements'}
                   </span>
                   <ChevronDown className={cn(
-                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    "h-4 w-4 text-white transition-transform duration-200",
                     isOpen && "rotate-180"
                   )} />
                 </div>
@@ -170,14 +170,14 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                   {items.map((item) => {
                     const Icon = getPPEIcon(item.ppeType);
                     return (
-                      <li key={item.id} className="flex items-start gap-3 text-sm text-white/80 py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors">
+                      <li key={item.id} className="flex items-start gap-3 text-sm text-white py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors">
                         <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
                           <Icon className="h-4 w-4 text-elec-yellow" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <span className="font-medium text-white">{item.ppeType}</span>
                           {item.standard && (
-                            <p className="text-xs text-white/50 mt-0.5">{item.standard}</p>
+                            <p className="text-xs text-white mt-0.5">{item.standard}</p>
                           )}
                         </div>
                       </li>
@@ -190,7 +190,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                       variant="outline"
                       size="sm"
                       onClick={handleEditClick}
-                      className="h-9 text-xs border-white/[0.08] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+                      className="h-9 text-xs border-white/[0.08] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
                     >
                       <Pencil className="h-3.5 w-3.5 mr-1.5" />
                       Edit PPE Requirements
@@ -230,13 +230,13 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                           <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
                             <Icon className="h-4 w-4 text-elec-yellow" />
                           </div>
-                          <span className="text-xs font-bold text-white/60">PPE #{index + 1}</span>
+                          <span className="text-xs font-bold text-white">PPE #{index + 1}</span>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveItem(item.id)}
-                          className="h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10"
+                          className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -245,7 +245,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                       {/* Form Fields */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-white/60">PPE Type</label>
+                          <label className="text-xs font-medium text-white">PPE Type</label>
                           <Input
                             value={item.ppeType}
                             onChange={(e) => handleItemChange(item.id, { ppeType: e.target.value })}
@@ -254,7 +254,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-white/60">Standard</label>
+                          <label className="text-xs font-medium text-white">Standard</label>
                           <Input
                             value={item.standard}
                             onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
@@ -263,7 +263,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-white/60">Purpose</label>
+                          <label className="text-xs font-medium text-white">Purpose</label>
                           <Input
                             value={item.purpose}
                             onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
@@ -279,7 +279,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
 
               {/* Empty State */}
               {editedPPE.length === 0 && (
-                <div className="text-center py-8 text-white/50 border border-dashed border-white/10 rounded-xl">
+                <div className="text-center py-8 text-white border border-dashed border-white/10 rounded-xl">
                   <ShieldCheck className="h-12 w-12 mx-auto mb-3 opacity-40" />
                   <p className="text-sm">No PPE items yet</p>
                   <p className="text-xs mt-1">Click "Add PPE Item" to add requirements</p>

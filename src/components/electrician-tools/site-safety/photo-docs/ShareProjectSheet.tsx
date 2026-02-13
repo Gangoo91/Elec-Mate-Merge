@@ -180,13 +180,13 @@ export default function ShareProjectSheet({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">{projectReference}</p>
-                    <p className="text-xs text-white/50">{photos.length} photos will be shared</p>
+                    <p className="text-xs text-white">{photos.length} photos will be shared</p>
                   </div>
                 </div>
 
                 {/* Title */}
                 <div>
-                  <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                  <label className="text-xs font-medium text-white uppercase tracking-wide">
                     Page Title
                   </label>
                   <Input
@@ -199,7 +199,7 @@ export default function ShareProjectSheet({
 
                 {/* Company name */}
                 <div>
-                  <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                  <label className="text-xs font-medium text-white uppercase tracking-wide">
                     Your Company Name
                   </label>
                   <Input
@@ -212,7 +212,7 @@ export default function ShareProjectSheet({
 
                 {/* Message */}
                 <div>
-                  <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                  <label className="text-xs font-medium text-white uppercase tracking-wide">
                     Message for Client
                   </label>
                   <Textarea
@@ -225,7 +225,7 @@ export default function ShareProjectSheet({
 
                 {/* Options */}
                 <div className="space-y-2">
-                  <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                  <label className="text-xs font-medium text-white uppercase tracking-wide">
                     Options
                   </label>
 
@@ -235,11 +235,11 @@ export default function ShareProjectSheet({
                     className="w-full flex items-center gap-3 p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] touch-manipulation active:bg-white/5"
                   >
                     <Shield
-                      className={`h-5 w-5 ${requireSignature ? 'text-elec-yellow' : 'text-white/40'}`}
+                      className={`h-5 w-5 ${requireSignature ? 'text-elec-yellow' : 'text-white'}`}
                     />
                     <div className="flex-1 text-left">
                       <p className="text-sm text-white">Require signature</p>
-                      <p className="text-[10px] text-white/40">
+                      <p className="text-[10px] text-white">
                         Client must sign to confirm they've seen the photos
                       </p>
                     </div>
@@ -254,7 +254,7 @@ export default function ShareProjectSheet({
 
                   {/* Expiry */}
                   <div className="flex items-center gap-3 p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-                    <Clock className="h-5 w-5 text-white/40" />
+                    <Clock className="h-5 w-5 text-white" />
                     <div className="flex-1">
                       <p className="text-sm text-white">Link expires after</p>
                     </div>
@@ -266,7 +266,7 @@ export default function ShareProjectSheet({
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors touch-manipulation ${
                             expiryDays === days
                               ? 'bg-elec-yellow text-black'
-                              : 'bg-white/10 text-white/60 active:bg-white/15'
+                              : 'bg-white/10 text-white active:bg-white/15'
                           }`}
                         >
                           {days}d
@@ -286,12 +286,12 @@ export default function ShareProjectSheet({
                     <Check className="h-8 w-8 text-green-400" />
                   </div>
                   <h3 className="text-lg font-semibold text-white">Link Created!</h3>
-                  <p className="text-sm text-white/50 mt-1">Share this link with your client</p>
+                  <p className="text-sm text-white mt-1">Share this link with your client</p>
                 </div>
 
                 {/* Link display */}
                 <div className="bg-white/[0.03] rounded-xl p-3 border border-white/[0.06]">
-                  <p className="text-xs text-white/40 mb-1.5">Share URL</p>
+                  <p className="text-xs text-white mb-1.5">Share URL</p>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 text-xs text-elec-yellow bg-white/5 rounded-lg px-3 py-2.5 truncate">
                       {getShareUrl(createdLink.share_token)}
@@ -313,17 +313,17 @@ export default function ShareProjectSheet({
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="bg-white/[0.03] rounded-xl p-2.5 border border-white/[0.06]">
                     <p className="text-lg font-bold text-elec-yellow">{photos.length}</p>
-                    <p className="text-[10px] text-white/40">Photos</p>
+                    <p className="text-[10px] text-white">Photos</p>
                   </div>
                   <div className="bg-white/[0.03] rounded-xl p-2.5 border border-white/[0.06]">
                     <p className="text-lg font-bold text-elec-yellow">{expiryDays}d</p>
-                    <p className="text-[10px] text-white/40">Expires</p>
+                    <p className="text-[10px] text-white">Expires</p>
                   </div>
                   <div className="bg-white/[0.03] rounded-xl p-2.5 border border-white/[0.06]">
                     <p className="text-lg font-bold text-elec-yellow">
                       {requireSignature ? 'Yes' : 'No'}
                     </p>
-                    <p className="text-[10px] text-white/40">Signature</p>
+                    <p className="text-[10px] text-white">Signature</p>
                   </div>
                 </div>
               </div>
@@ -334,7 +334,7 @@ export default function ShareProjectSheet({
               <div className="p-4 space-y-3">
                 {projectLinks.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-sm text-white/50">No active share links</p>
+                    <p className="text-sm text-white">No active share links</p>
                   </div>
                 ) : (
                   projectLinks.map((link) => (
@@ -352,7 +352,7 @@ export default function ShareProjectSheet({
                                   ? 'bg-green-500/10 text-green-400'
                                   : link.status === 'active'
                                     ? 'bg-blue-500/10 text-blue-400'
-                                    : 'bg-white/5 text-white/40'
+                                    : 'bg-white/5 text-white'
                               }`}
                             >
                               {link.status === 'signed'
@@ -362,7 +362,7 @@ export default function ShareProjectSheet({
                                   : link.status}
                             </span>
                             {link.view_count > 0 && (
-                              <span className="flex items-center gap-0.5 text-[10px] text-white/40">
+                              <span className="flex items-center gap-0.5 text-[10px] text-white">
                                 <Eye className="h-2.5 w-2.5" />
                                 {link.view_count} views
                               </span>
@@ -374,13 +374,13 @@ export default function ShareProjectSheet({
                             onClick={() => handleCopy(link.share_token)}
                             className="p-2 rounded-lg active:bg-white/10 touch-manipulation"
                           >
-                            <Copy className="h-4 w-4 text-white/50" />
+                            <Copy className="h-4 w-4 text-white" />
                           </button>
                           <button
                             onClick={() => handleNativeShare(link.share_token)}
                             className="p-2 rounded-lg active:bg-white/10 touch-manipulation"
                           >
-                            <Share2 className="h-4 w-4 text-white/50" />
+                            <Share2 className="h-4 w-4 text-white" />
                           </button>
                           <button
                             onClick={() => revokeShare(link.id)}
@@ -391,7 +391,7 @@ export default function ShareProjectSheet({
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 text-[10px] text-white/30">
+                      <div className="flex items-center gap-3 text-[10px] text-white">
                         <span>
                           Created{' '}
                           {formatDistanceToNow(new Date(link.created_at), { addSuffix: true })}

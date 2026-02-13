@@ -156,7 +156,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
             <h2 className="text-lg font-bold text-white">
               RAMS Generator
             </h2>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               Professional documentation
             </p>
           </div>
@@ -181,7 +181,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         className="space-y-3 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '50ms' }}
       >
-        <label className="text-sm font-medium text-white/70 flex items-center gap-2">
+        <label className="text-sm font-medium text-white flex items-center gap-2">
           <Zap className="h-4 w-4 text-elec-yellow" />
           Describe your job <span className="text-elec-yellow">*</span>
         </label>
@@ -190,7 +190,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="e.g., Install new consumer unit in 3-bed house with full rewire of kitchen..."
           disabled={isProcessing}
-          className="resize-none min-h-[100px] text-sm bg-white/5 border-white/[0.08] focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white/30 rounded-xl"
+          className="resize-none min-h-[100px] text-sm bg-white/5 border-white/[0.08] focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white rounded-xl"
           maxLength={1000}
         />
 
@@ -201,7 +201,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               key={idx}
               onClick={() => setJobDescription(prompt)}
               disabled={isProcessing}
-              className="flex-shrink-0 px-3 py-2 text-xs rounded-lg bg-white/[0.03] border border-white/[0.08] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white/70 hover:text-white transition-all active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
+              className="flex-shrink-0 px-3 py-2 text-xs rounded-lg bg-white/[0.03] border border-white/[0.08] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white hover:text-white transition-all active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
             >
               {prompt}
             </button>
@@ -231,7 +231,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         className="space-y-3 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '150ms' }}
       >
-        <h3 className="text-xs font-medium text-white/50">Project Details</h3>
+        <h3 className="text-xs font-medium text-white">Project Details</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MobileInput
@@ -290,11 +290,11 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                 <div className="flex items-center gap-2">
                   <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
                   <span className="text-xs font-medium text-white">Emergency Contacts</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white/50 font-medium">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white font-medium">
                     Optional
                   </span>
                 </div>
-                <ChevronDown className={`h-3.5 w-3.5 text-white/50 transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-3.5 w-3.5 text-white transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-3">
@@ -371,7 +371,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         <button
           onClick={loadMockData}
           disabled={isProcessing}
-          className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white/70 transition-colors disabled:opacity-50 touch-manipulation"
+          className="flex items-center gap-1.5 text-xs text-white hover:text-white transition-colors disabled:opacity-50 touch-manipulation"
         >
           <TestTube2 className="h-3.5 w-3.5" />
           <span>Load test data</span>
@@ -415,7 +415,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
 
       {!isFormValid && (
         <div className="text-center p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-white">
             Please provide job description and project name to continue
           </p>
         </div>

@@ -530,7 +530,7 @@ const EVChargingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-blue-500/10">
+      <Card className="border-green-500/30 bg-green-500/10">
         <CardHeader>
           <div className="flex items-center gap-3">
             <Car className="h-8 w-8 text-green-400" />
@@ -544,22 +544,22 @@ const EVChargingGuide = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30">
               <Award className="h-5 w-5 text-green-400 mb-2" />
-              <p className="text-xs text-white/80">Certification</p>
+              <p className="text-xs text-white">Certification</p>
               <p className="text-sm font-medium text-white">OZEV Approved</p>
             </div>
             <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30">
               <Shield className="h-5 w-5 text-green-400 mb-2" />
-              <p className="text-xs text-white/80">Key Protection</p>
+              <p className="text-xs text-white">Key Protection</p>
               <p className="text-sm font-medium text-white">O-PEN Device</p>
             </div>
             <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30">
               <PlugZap className="h-5 w-5 text-green-400 mb-2" />
-              <p className="text-xs text-white/80">Standard Power</p>
+              <p className="text-xs text-white">Standard Power</p>
               <p className="text-sm font-medium text-white">7kW / 32A</p>
             </div>
             <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30">
               <Clock className="h-5 w-5 text-green-400 mb-2" />
-              <p className="text-xs text-white/80">Typical Install</p>
+              <p className="text-xs text-white">Typical Install</p>
               <p className="text-sm font-medium text-white">2-4 Hours</p>
             </div>
           </div>
@@ -617,7 +617,7 @@ const EVChargingGuide = () => {
 
                   <ul className="space-y-1">
                     {mode.details.map((detail, detailIdx) => (
-                      <li key={detailIdx} className="text-xs text-white/80 flex items-start gap-2">
+                      <li key={detailIdx} className="text-xs text-white flex items-start gap-2">
                         <span className={`w-1 h-1 rounded-full bg-${mode.color}-400 mt-1.5`}></span>
                         {detail}
                       </li>
@@ -654,10 +654,10 @@ const EVChargingGuide = () => {
                 {chargerTypes.map((charger, idx) => (
                   <tr key={idx} className={`border-b border-green-500/20 ${idx % 2 === 0 ? 'bg-green-500/5' : ''}`}>
                     <td className="p-3 text-white font-medium">{charger.type}</td>
-                    <td className="p-3 text-white/80">{charger.current} / {charger.voltage}</td>
-                    <td className="p-3 text-white/80">{charger.typicalUse}</td>
+                    <td className="p-3 text-white">{charger.current} / {charger.voltage}</td>
+                    <td className="p-3 text-white">{charger.typicalUse}</td>
                     <td className="p-3 text-green-300 font-mono text-xs">{charger.cable}</td>
-                    <td className="p-3 text-white/80 text-xs">{charger.protection}</td>
+                    <td className="p-3 text-white text-xs">{charger.protection}</td>
                   </tr>
                 ))}
               </tbody>
@@ -687,7 +687,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-orange-200 mb-3">Factors Affecting Cable Size</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {cableSizing.factors.map((factor, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   {factor}
                 </li>
@@ -711,10 +711,10 @@ const EVChargingGuide = () => {
                 {cableSizing.commonConfigurations.map((config, idx) => (
                   <tr key={idx} className="border-b border-orange-500/20">
                     <td className="p-2 text-white">{config.charger}</td>
-                    <td className="p-2 text-white/80">{config.method}</td>
-                    <td className="p-2 text-white/80">{config.maxLength}</td>
+                    <td className="p-2 text-white">{config.method}</td>
+                    <td className="p-2 text-white">{config.maxLength}</td>
                     <td className="p-2 text-orange-300 font-mono">{config.cable}</td>
-                    <td className="p-2 text-white/80 text-xs">{config.protection}</td>
+                    <td className="p-2 text-white text-xs">{config.protection}</td>
                   </tr>
                 ))}
               </tbody>
@@ -724,7 +724,7 @@ const EVChargingGuide = () => {
           <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30">
             <h4 className="font-medium text-amber-200 mb-2">Voltage Drop Calculation</h4>
             <code className="block bg-amber-900/30 p-2 rounded text-xs text-amber-200 mb-2">{cableSizing.voltageDropCalc}</code>
-            <p className="text-xs text-white/80">Maximum voltage drop for final circuits: {cableSizing.maxVoltageDrop}</p>
+            <p className="text-xs text-white">Maximum voltage drop for final circuits: {cableSizing.maxVoltageDrop}</p>
           </div>
         </CardContent>
       </Card>
@@ -746,15 +746,15 @@ const EVChargingGuide = () => {
                   <Badge variant="outline" className="border-red-400 text-red-300">{rcd.type}</Badge>
                   <span className="text-xs text-white">{rcd.rating}</span>
                 </div>
-                <p className="text-sm text-white/80 mb-2">{rcd.description}</p>
+                <p className="text-sm text-white mb-2">{rcd.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   <div>
                     <span className="text-green-400">When to use:</span>
-                    <p className="text-white/80">{rcd.when}</p>
+                    <p className="text-white">{rcd.when}</p>
                   </div>
                   <div>
                     <span className="text-amber-400">Limitation:</span>
-                    <p className="text-white/80">{rcd.limitation}</p>
+                    <p className="text-white">{rcd.limitation}</p>
                   </div>
                 </div>
               </div>
@@ -792,7 +792,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-purple-200 mb-3">Why O-PEN Protection is Required</h4>
             <ul className="space-y-2">
               {openDevice.reason.map((reason, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   {reason}
                 </li>
@@ -804,7 +804,7 @@ const EVChargingGuide = () => {
             {openDevice.solutions.map((sol, idx) => (
               <div key={idx} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
                 <h5 className="font-medium text-purple-200 mb-2">{sol.solution}</h5>
-                <p className="text-xs text-white/80 mb-2">{sol.description}</p>
+                <p className="text-xs text-white mb-2">{sol.description}</p>
                 <p className="text-xs text-white">{sol.notes}</p>
               </div>
             ))}
@@ -814,7 +814,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-purple-200 mb-3">Installation Points</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {openDevice.installation.map((point, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   {point}
                 </li>
@@ -843,7 +843,7 @@ const EVChargingGuide = () => {
                 <p className="text-sm text-amber-200 mb-3">{supply.description}</p>
                 <ul className="space-y-1">
                   {supply.requirements.map((req, reqIdx) => (
-                    <li key={reqIdx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
                       {req}
                     </li>
@@ -857,7 +857,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-amber-200 mb-3">Bonding Requirements</h4>
             <ul className="space-y-1">
               {earthingConsiderations.bonding.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
@@ -880,7 +880,7 @@ const EVChargingGuide = () => {
             {loadManagement.types.map((type, idx) => (
               <div key={idx} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/30">
                 <h4 className="font-medium text-blue-200 mb-2">{type.type}</h4>
-                <p className="text-xs text-white/80 mb-2">{type.description}</p>
+                <p className="text-xs text-white mb-2">{type.description}</p>
                 <p className="text-xs text-blue-300 mb-1"><strong>When:</strong> {type.when}</p>
                 <p className="text-xs text-white"><strong>How:</strong> {type.implementation}</p>
               </div>
@@ -891,7 +891,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-blue-200 mb-3">Smart Charging Features</h4>
             <ul className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {loadManagement.smartFeatures.map((feature, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <Lightbulb className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                   {feature}
                 </li>
@@ -926,7 +926,7 @@ const EVChargingGuide = () => {
                 <h5 className="text-sm font-medium text-white mb-2">Eligibility</h5>
                 <ul className="space-y-1">
                   {ozevGrant.workplaceScheme.eligibility.map((item, idx) => (
-                    <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -937,7 +937,7 @@ const EVChargingGuide = () => {
                 <h5 className="text-sm font-medium text-white mb-2">Requirements</h5>
                 <ul className="space-y-1">
                   {ozevGrant.workplaceScheme.requirements.map((item, idx) => (
-                    <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -951,7 +951,7 @@ const EVChargingGuide = () => {
             <h4 className="font-medium text-green-200 mb-3">Installer Approval Requirements</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {ozevGrant.installerApproval.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <Award className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
@@ -976,7 +976,7 @@ const EVChargingGuide = () => {
                 <h4 className="font-medium text-purple-200 mb-3">{factor.factor}</h4>
                 <ul className="space-y-1">
                   {factor.considerations.map((item, itemIdx) => (
-                    <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 rounded-full bg-purple-400 mt-1.5"></span>
                       {item}
                     </li>
@@ -1009,7 +1009,7 @@ const EVChargingGuide = () => {
               {testingCommissioning.preInstallation.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20">
                   <CheckCircle className="h-4 w-4 text-cyan-400" />
-                  <span className="text-sm text-white/90">{item}</span>
+                  <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
             </TabsContent>
@@ -1023,7 +1023,7 @@ const EVChargingGuide = () => {
                       {test.acceptable}
                     </Badge>
                   </div>
-                  <p className="text-xs text-white/80">{test.description}</p>
+                  <p className="text-xs text-white">{test.description}</p>
                 </div>
               ))}
             </TabsContent>
@@ -1032,7 +1032,7 @@ const EVChargingGuide = () => {
               {testingCommissioning.oOpenTesting.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20">
                   <Shield className="h-4 w-4 text-cyan-400" />
-                  <span className="text-sm text-white/90">{item}</span>
+                  <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
             </TabsContent>
@@ -1041,7 +1041,7 @@ const EVChargingGuide = () => {
               {testingCommissioning.documentation.map((doc, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20">
                   <FileCheck className="h-4 w-4 text-cyan-400" />
-                  <span className="text-sm text-white/90">{doc}</span>
+                  <span className="text-sm text-white">{doc}</span>
                 </div>
               ))}
             </TabsContent>
@@ -1072,7 +1072,7 @@ const EVChargingGuide = () => {
                   <h5 className="text-sm font-medium text-white mb-2">Key Considerations</h5>
                   <ul className="space-y-1">
                     {scenario.considerations.map((item, itemIdx) => (
-                      <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                      <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                         <CheckCircle className={`h-3 w-3 text-${scenario.color}-400 mt-0.5 flex-shrink-0`} />
                         {item}
                       </li>
@@ -1083,7 +1083,7 @@ const EVChargingGuide = () => {
                   <h5 className="text-sm font-medium text-white mb-2">Challenges</h5>
                   <ul className="space-y-1">
                     {scenario.challenges.map((item, itemIdx) => (
-                      <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                      <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                         <AlertTriangle className={`h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0`} />
                         {item}
                       </li>

@@ -68,13 +68,13 @@ const CollapsibleSection = ({
         )}
       >
         <div className="flex items-center gap-3">
-          <Icon className="h-5 w-5 text-white/50" />
+          <Icon className="h-5 w-5 text-white" />
           <span className="font-medium text-white">{title}</span>
         </div>
         {isOpen ? (
-          <ChevronDown className="h-5 w-5 text-white/40" />
+          <ChevronDown className="h-5 w-5 text-white" />
         ) : (
-          <ChevronRight className="h-5 w-5 text-white/40" />
+          <ChevronRight className="h-5 w-5 text-white" />
         )}
       </button>
       {isOpen && (
@@ -152,7 +152,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               <div className="flex-1 pr-4">
                 <div className="flex items-center gap-2 mb-2">
                   <RiskBadge riskRating={hazard.riskRating} />
-                  <span className="text-xs text-white/40 uppercase tracking-wider">
+                  <span className="text-xs text-white uppercase tracking-wider">
                     {categoryLabel}
                   </span>
                 </div>
@@ -169,14 +169,14 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     "h-6 w-6 transition-all",
                     isBookmarked
                       ? "fill-elec-yellow text-elec-yellow"
-                      : "text-white/30"
+                      : "text-white"
                   )}
                 />
               </button>
             </div>
 
             {/* Consequence */}
-            <p className="text-white/70 leading-relaxed mb-6">
+            <p className="text-white leading-relaxed mb-6">
               {hazard.consequence}
             </p>
 
@@ -205,19 +205,19 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                       <div className="flex items-center gap-3 mb-2">
                         <div className={cn(
                           "w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold",
-                          hasControls ? "bg-white/20 text-white" : "bg-white/10 text-white/40"
+                          hasControls ? "bg-white/20 text-white" : "bg-white/10 text-white"
                         )}>
                           {index + 1}
                         </div>
-                        <Icon className={cn("h-4 w-4", hasControls ? step.color : "text-white/40")} />
+                        <Icon className={cn("h-4 w-4", hasControls ? step.color : "text-white")} />
                         <span className={cn(
                           "text-sm font-medium",
-                          hasControls ? "text-white" : "text-white/40"
+                          hasControls ? "text-white" : "text-white"
                         )}>
                           {step.label}
                         </span>
                         {hasControls && (
-                          <span className="ml-auto text-xs text-white/40">
+                          <span className="ml-auto text-xs text-white">
                             {measures.length}
                           </span>
                         )}
@@ -225,7 +225,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                       {hasControls && (
                         <ul className="space-y-1.5 ml-9">
                           {measures.map((measure, i) => (
-                            <li key={i} className="text-sm text-white/70 leading-relaxed">
+                            <li key={i} className="text-sm text-white leading-relaxed">
                               {measure}
                             </li>
                           ))}
@@ -248,7 +248,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                   {hazard.bs7671References.map((ref, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.08] text-sm text-white/70"
+                      className="px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.08] text-sm text-white"
                     >
                       {ref}
                     </span>
@@ -262,7 +262,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               <CollapsibleSection title="Guidance Notes" icon={Lightbulb} defaultOpen>
                 <ul className="space-y-2">
                   {hazard.guidanceNotes.map((note, i) => (
-                    <li key={i} className="flex gap-2 text-sm text-white/70">
+                    <li key={i} className="flex gap-2 text-sm text-white">
                       <span className="text-elec-yellow mt-1">•</span>
                       <span>{note}</span>
                     </li>
@@ -277,7 +277,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                 <CollapsibleSection title="Emergency Procedures" icon={AlertTriangle}>
                   <ol className="space-y-2">
                     {hazard.emergencyProcedures.map((proc, i) => (
-                      <li key={i} className="flex gap-3 text-sm text-white/70">
+                      <li key={i} className="flex gap-3 text-sm text-white">
                         <span className="w-5 h-5 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-xs text-red-400 shrink-0">
                           {i + 1}
                         </span>
@@ -295,7 +295,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                 <CollapsibleSection title="Training Required" icon={GraduationCap}>
                   <ul className="space-y-2">
                     {hazard.trainingRequired.map((training, i) => (
-                      <li key={i} className="flex gap-2 text-sm text-white/70">
+                      <li key={i} className="flex gap-2 text-sm text-white">
                         <Check className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
                         <span>{training}</span>
                       </li>

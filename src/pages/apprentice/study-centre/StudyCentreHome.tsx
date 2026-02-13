@@ -156,7 +156,7 @@ export default function StudyCentreHome() {
               variant="ghost"
               size="sm"
               onClick={() => navigate("/study-centre")}
-              className="mb-4 text-white/60 hover:text-white hover:bg-white/10 gap-2"
+              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
             >
               <ChevronLeft className="h-4 w-4" />
               Back to Study Centre
@@ -251,14 +251,14 @@ export default function StudyCentreHome() {
           className="relative"
         >
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             type="text"
             placeholder="Search topics..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 focus:ring-blue-500/20", !searchQuery && "pl-10")}
+            className={cn("bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 focus:ring-blue-500/20", !searchQuery && "pl-10")}
           />
         </motion.div>
 
@@ -272,19 +272,19 @@ export default function StudyCentreHome() {
             <TabsList className="w-full sm:w-auto mb-4 flex-wrap h-auto bg-white/5 border border-white/10 p-1">
               <TabsTrigger
                 value="all"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white text-white/60"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white text-white"
               >
                 All ({filteredModules.length})
               </TabsTrigger>
               <TabsTrigger
                 value="Level 2"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white text-white/60"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white text-white"
               >
                 Level 2 ({filterByCategory("Level 2").length})
               </TabsTrigger>
               <TabsTrigger
                 value="AM2"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow data-[state=active]:to-amber-500 data-[state=active]:text-elec-dark text-white/60"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow data-[state=active]:to-amber-500 data-[state=active]:text-elec-dark text-white"
               >
                 AM2 ({filterByCategory("AM2").length})
               </TabsTrigger>
@@ -395,9 +395,9 @@ export default function StudyCentreHome() {
           className="rounded-xl bg-white/5 border border-white/10 p-4"
         >
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-white/40 leading-relaxed">
-              <strong className="text-white/60">Disclaimer:</strong> Elec-Mate study materials are provided for revision and practice purposes only.
+            <AlertTriangle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-white leading-relaxed">
+              <strong className="text-white">Disclaimer:</strong> Elec-Mate study materials are provided for revision and practice purposes only.
               For accredited qualifications, please contact registered training providers.
             </p>
           </div>

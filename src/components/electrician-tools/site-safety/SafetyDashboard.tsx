@@ -160,7 +160,7 @@ function ScoreRing({ score, colour }: { score: number; colour: string }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-xl font-bold ${colour}`}>{score}</span>
-        <span className="text-[10px] text-white/50">/ 100</span>
+        <span className="text-[10px] text-white">/ 100</span>
       </div>
     </div>
   );
@@ -307,7 +307,7 @@ export function SafetyDashboard({ stats, isLoading, onCardTap }: SafetyDashboard
             >
               <div className="flex items-center gap-2 mb-1.5">
                 <IconComponent className={`h-4 w-4 ${stat.iconColour}`} />
-                <span className="text-[11px] text-white/60 font-medium">{stat.label}</span>
+                <span className="text-[11px] text-white font-medium">{stat.label}</span>
               </div>
               <span className="text-xl font-bold text-white">{stat.value}</span>
             </motion.button>

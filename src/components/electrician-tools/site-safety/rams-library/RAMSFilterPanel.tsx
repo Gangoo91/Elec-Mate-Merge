@@ -93,8 +93,8 @@ export const RAMSFilterPanel = ({
       {/* Active Filter Badges */}
       {hasActiveFilters && (
         <div className="flex flex-wrap gap-2 items-center">
-          <Filter className="h-3 w-3 text-muted-foreground" />
-          <span className="text-xs text-muted-foreground">Active filters:</span>
+          <Filter className="h-3 w-3 text-white" />
+          <span className="text-xs text-white">Active filters:</span>
           {statusFilter !== 'all' && (
             <Badge variant="secondary" className="text-xs">
               {statusFilter}

@@ -129,7 +129,7 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
         {/* Likelihood & Severity */}
         <div className="flex gap-4 pt-2 border-t border-border/40">
           <div className="flex-1">
-            <p className="text-xs text-muted-foreground mb-1">Likelihood</p>
+            <p className="text-xs text-white mb-1">Likelihood</p>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((level) => (
                 <div
@@ -143,7 +143,7 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
             </div>
           </div>
           <div className="flex-1">
-            <p className="text-xs text-muted-foreground mb-1">Severity</p>
+            <p className="text-xs text-white mb-1">Severity</p>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((level) => (
                 <div

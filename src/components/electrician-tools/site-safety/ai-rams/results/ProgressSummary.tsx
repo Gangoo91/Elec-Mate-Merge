@@ -29,7 +29,7 @@ export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEs
           {/* Total Steps */}
           <div className="bg-card/50 rounded-lg p-3 border border-white/[0.08]">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] text-elec-light/70">Steps</span>
+              <span className="text-[10px] text-white">Steps</span>
               <CheckCircle2 className="h-3.5 w-3.5 text-blue-400" />
             </div>
             <div className="text-xl font-bold text-elec-light">{totalSteps}</div>
@@ -43,7 +43,7 @@ export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEs
           {/* Progress */}
           <div className="bg-card/50 rounded-lg p-3 border border-white/[0.08]">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] text-elec-light/70">Progress</span>
+              <span className="text-[10px] text-white">Progress</span>
               <TrendingUp className="h-3.5 w-3.5 text-green-400" />
             </div>
             <div className="text-xl font-bold text-elec-light">{progressPercent}%</div>
@@ -58,11 +58,11 @@ export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEs
           {/* Estimated Time */}
           <div className="bg-card/50 rounded-lg p-3 border border-white/[0.08]">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] text-elec-light/70">Time</span>
+              <span className="text-[10px] text-white">Time</span>
               <Clock className="h-3.5 w-3.5 text-amber-400" />
             </div>
             <div className="text-base font-bold text-elec-light">{estimatedTime}</div>
-            <div className="mt-1.5 text-[10px] text-elec-light/60">
+            <div className="mt-1.5 text-[10px] text-white">
               Duration
             </div>
           </div>

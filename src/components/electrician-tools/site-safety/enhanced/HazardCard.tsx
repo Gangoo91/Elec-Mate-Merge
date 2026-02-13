@@ -137,7 +137,7 @@ export const HazardCard = memo(({
           {/* Risk Bar */}
           <div className="mb-2">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-muted-foreground">Risk Score</span>
+              <span className="text-xs text-white">Risk Score</span>
               <Badge className={`text-xs ${getRiskScoreColor(riskScore)}`}>
                 {riskScore}/25 {riskLevel.toUpperCase()}
               </Badge>
@@ -182,7 +182,7 @@ export const HazardCard = memo(({
                         <ul className="space-y-1.5 text-xs text-left">
                           {measures.map((measure: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-2 text-left">
-                              <span className="text-muted-foreground flex-shrink-0 mt-0.5">•</span>
+                              <span className="text-white flex-shrink-0 mt-0.5">•</span>
                               <span className="flex-1">{measure}</span>
                             </li>
                           ))}
@@ -307,7 +307,7 @@ export const HazardCard = memo(({
                   <div className="text-xs font-semibold uppercase mb-2 text-red-400 text-left">
                     Cost of Failure
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed text-left">
+                  <p className="text-xs text-white leading-relaxed text-left">
                     {hazard.costOfFailure}
                   </p>
                 </div>
@@ -333,7 +333,7 @@ export const HazardCard = memo(({
 
           {/* Tap to expand hint */}
           {!isExpanded && (
-            <div className="text-center text-xs text-muted-foreground mt-2">
+            <div className="text-center text-xs text-white mt-2">
               Tap to expand
             </div>
           )}
@@ -397,7 +397,7 @@ export const HazardCard = memo(({
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Likelihood</div>
+                <div className="text-xs text-white mb-1">Likelihood</div>
                 <div className="flex justify-center gap-0.5 mb-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
@@ -409,7 +409,7 @@ export const HazardCard = memo(({
                 <div className="text-sm font-semibold">{hazard.likelihood}/5</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Severity</div>
+                <div className="text-xs text-white mb-1">Severity</div>
                 <div className="flex justify-center gap-0.5 mb-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
@@ -421,7 +421,7 @@ export const HazardCard = memo(({
                 <div className="text-sm font-semibold">{hazard.severity}/5</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Combined</div>
+                <div className="text-xs text-white mb-1">Combined</div>
                 <div className="w-full h-8 bg-elec-gray/30 rounded mb-1 overflow-hidden">
                   <div 
                     className={cn(
@@ -466,7 +466,7 @@ export const HazardCard = memo(({
                         <ul className="space-y-1.5 text-sm leading-relaxed pt-2">
                           {measures.map((measure: string, idx: number) => (
                             <li key={idx} className="flex gap-2">
-                              <span className="text-muted-foreground flex-shrink-0">•</span>
+                              <span className="text-white flex-shrink-0">•</span>
                               <span>{measure}</span>
                             </li>
                           ))}
@@ -541,7 +541,7 @@ export const HazardCard = memo(({
                     {hazard.guidanceNotes.map((note: string, idx: number) => (
                       <div key={idx} className="flex items-start gap-2 text-sm bg-indigo-500/5 p-2 rounded border border-indigo-500/20">
                         <span className="text-indigo-400 flex-shrink-0">•</span>
-                        <span className="text-muted-foreground">{note}</span>
+                        <span className="text-white">{note}</span>
                       </div>
                     ))}
                   </div>
@@ -561,7 +561,7 @@ export const HazardCard = memo(({
                         <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-xs">
                           {idx + 1}
                         </div>
-                        <span className="text-sm text-muted-foreground">{proc}</span>
+                        <span className="text-sm text-white">{proc}</span>
                       </div>
                     ))}
                   </div>
@@ -579,7 +579,7 @@ export const HazardCard = memo(({
                     {hazard.inspectionChecks.map((check: string, idx: number) => (
                       <div key={idx} className="flex items-start gap-2 text-sm bg-cyan-500/5 p-2 rounded border border-cyan-500/20">
                         <Check className="w-3 h-3 text-cyan-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">{check}</span>
+                        <span className="text-white">{check}</span>
                       </div>
                     ))}
                   </div>
@@ -613,7 +613,7 @@ export const HazardCard = memo(({
                   <div className="space-y-2">
                     {hazard.realWorldScenarios.map((scenario: string, idx: number) => (
                       <div key={idx} className="p-3 bg-pink-500/5 rounded border border-pink-500/20">
-                        <p className="text-sm text-muted-foreground italic">{scenario}</p>
+                        <p className="text-sm text-white italic">{scenario}</p>
                       </div>
                     ))}
                   </div>

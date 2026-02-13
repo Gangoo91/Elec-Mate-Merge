@@ -24,7 +24,7 @@ const ApprenticeOJT = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Portfolio & OJT Management</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Comprehensive portfolio building and management of your 20% off-the-job training requirements, evidence tracking, and apprenticeship progression
         </p>
         <SmartBackButton />

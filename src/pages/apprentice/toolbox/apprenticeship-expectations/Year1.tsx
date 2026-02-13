@@ -283,7 +283,7 @@ const Year1 = () => {
           </div>
         </div>
 
-        <p className="text-white/80 text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-3xl">
           Your first year is all about learning the basics - safety comes first, then building your knowledge
           of electrical principles and developing practical skills that will serve you throughout your career.
         </p>
@@ -296,7 +296,7 @@ const Year1 = () => {
             <div className="w-12 h-3 rounded-full bg-white/20" />
             <div className="w-12 h-3 rounded-full bg-white/20" />
           </div>
-          <span className="text-white/60 text-sm ml-2">Year 1 of 4</span>
+          <span className="text-white text-sm ml-2">Year 1 of 4</span>
         </div>
 
         {/* Key stats */}
@@ -304,22 +304,22 @@ const Year1 = () => {
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Calendar className="h-5 w-5 text-elec-yellow mb-2" />
             <div className="text-2xl font-bold text-white">12</div>
-            <div className="text-white/60 text-sm">Months</div>
+            <div className="text-white text-sm">Months</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Briefcase className="h-5 w-5 text-green-400 mb-2" />
             <div className="text-2xl font-bold text-white">£15-18k</div>
-            <div className="text-white/60 text-sm">Typical Salary</div>
+            <div className="text-white text-sm">Typical Salary</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <BookOpen className="h-5 w-5 text-blue-400 mb-2" />
             <div className="text-2xl font-bold text-white">80/20</div>
-            <div className="text-white/60 text-sm">Work/Training Split</div>
+            <div className="text-white text-sm">Work/Training Split</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Target className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl font-bold text-white">Safety</div>
-            <div className="text-white/60 text-sm">Primary Focus</div>
+            <div className="text-white text-sm">Primary Focus</div>
           </div>
         </div>
       </div>
@@ -333,7 +333,7 @@ const Year1 = () => {
           <Star className="h-5 w-5" />
           First Day Survival Guide
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Your first day can be nerve-wracking. Here's how to make a great impression.
         </p>
       </CardHeader>
@@ -346,7 +346,7 @@ const Year1 = () => {
               </div>
               <div>
                 <div className="font-medium text-white text-sm">{item.item}</div>
-                <div className="text-white/60 text-xs">{item.tip}</div>
+                <div className="text-white text-xs">{item.tip}</div>
               </div>
             </div>
           ))}
@@ -362,7 +362,7 @@ const Year1 = () => {
           <Package className="h-5 w-5" />
           Your Basic Toolkit
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Tools you'll need to acquire during Year 1. Many employers provide these, but it's good to have your own.
         </p>
       </CardHeader>
@@ -374,7 +374,7 @@ const Year1 = () => {
                 <Wrench className="h-4 w-4 text-elec-yellow" />
                 <div>
                   <div className="font-medium text-white text-sm">{item.tool}</div>
-                  <div className="text-white/60 text-xs">{item.purpose}</div>
+                  <div className="text-white text-xs">{item.purpose}</div>
                 </div>
               </div>
               <Badge
@@ -390,7 +390,7 @@ const Year1 = () => {
           ))}
         </div>
         <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             <strong className="text-elec-yellow">Tip:</strong> Ask your employer what they provide before buying.
             Quality tools last longer - buy the best you can afford.
           </p>
@@ -406,7 +406,7 @@ const Year1 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Year 1 Journey
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Click each period to see what to expect and tips for success
         </p>
       </CardHeader>
@@ -435,26 +435,26 @@ const Year1 = () => {
                       <Badge variant="outline" className="text-xs bg-white/5">
                         {period.month}
                       </Badge>
-                      <span className="text-white/60 text-sm hidden sm:inline">{period.focus}</span>
+                      <span className="text-white text-sm hidden sm:inline">{period.focus}</span>
                     </div>
                   </div>
                 </div>
                 {expandedMonth === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60" />
+                  <ChevronUp className="h-5 w-5 text-white" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60" />
+                  <ChevronDown className="h-5 w-5 text-white" />
                 )}
               </button>
 
               {expandedMonth === index && (
                 <div className="px-4 pb-4 space-y-4">
                   <div className="pl-12">
-                    <p className="text-white/70 text-sm italic mb-3">"{period.dayInLife}"</p>
+                    <p className="text-white text-sm italic mb-3">"{period.dayInLife}"</p>
                     <div className="space-y-2">
                       {period.activities.map((activity, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white/80 text-sm">{activity}</span>
+                          <span className="text-white text-sm">{activity}</span>
                         </div>
                       ))}
                     </div>
@@ -474,7 +474,7 @@ const Year1 = () => {
         <Target className="h-5 w-5 text-elec-yellow" />
         Key Learning Areas
       </h2>
-      <p className="text-white/70">
+      <p className="text-white">
         These are the main areas you'll develop during Year 1. Progress bars show typical expectations by year end.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -495,7 +495,7 @@ const Year1 = () => {
                 {area.topics.map((topic, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{topic}</span>
+                    <span className="text-white">{topic}</span>
                   </li>
                 ))}
               </ul>
@@ -513,7 +513,7 @@ const Year1 = () => {
           <Clock className="h-5 w-5" />
           Typical Week Example
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Your schedule will vary, but here's what a typical week might look like
         </p>
       </CardHeader>
@@ -531,7 +531,7 @@ const Year1 = () => {
               >
                 {info.location}
               </Badge>
-              <span className="text-white/70 text-sm flex-1">{info.activities}</span>
+              <span className="text-white text-sm flex-1">{info.activities}</span>
             </div>
           ))}
         </div>
@@ -546,7 +546,7 @@ const Year1 = () => {
           <AlertTriangle className="h-5 w-5" />
           Common Year 1 Challenges & How to Overcome Them
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Everyone faces these challenges - knowing about them helps you prepare
         </p>
       </CardHeader>
@@ -571,13 +571,13 @@ const Year1 = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-white">{item.challenge}</div>
-                    <div className="text-white/60 text-sm hidden sm:block">{item.description}</div>
+                    <div className="text-white text-sm hidden sm:block">{item.description}</div>
                   </div>
                 </div>
                 {expandedChallenge === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
+                  <ChevronUp className="h-5 w-5 text-white flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
+                  <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
                 )}
               </button>
 
@@ -588,7 +588,7 @@ const Year1 = () => {
                     {item.solutions.map((solution, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-white/80 text-sm">{solution}</span>
+                        <span className="text-white text-sm">{solution}</span>
                       </div>
                     ))}
                   </div>
@@ -617,23 +617,23 @@ const Year1 = () => {
               Do These Things
             </h4>
             <ul className="space-y-2">
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-green-400">+</span>
                 Ask questions - lots of them
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-green-400">+</span>
                 Be early, every day
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-green-400">+</span>
                 Keep your portfolio up to date
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-green-400">+</span>
                 Help with cleanup and tidying
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-green-400">+</span>
                 Stay off your phone on site
               </li>
@@ -645,23 +645,23 @@ const Year1 = () => {
               Avoid These Mistakes
             </h4>
             <ul className="space-y-2">
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 Pretending you understand when you don't
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 Skipping college or being late
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 Leaving your portfolio until the end
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 Being afraid to make mistakes
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 Thinking you know it all
               </li>
@@ -688,12 +688,12 @@ const Year1 = () => {
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
                 <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
-                <p className="text-white/60 text-xs mb-2">{period.focus}</p>
+                <p className="text-white text-xs mb-2">{period.focus}</p>
                 <div className="space-y-1">
                   {period.activities.slice(0, 2).map((activity, idx) => (
                     <div key={idx} className="flex items-start gap-1">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 text-xs">{activity.split(' - ')[0]}</span>
+                      <span className="text-white text-xs">{activity.split(' - ')[0]}</span>
                     </div>
                   ))}
                 </div>
@@ -715,7 +715,7 @@ const Year1 = () => {
                 <item.icon className="h-4 w-4 text-green-400 mt-0.5" />
                 <div>
                   <div className="text-white text-sm font-medium">{item.item}</div>
-                  <div className="text-white/60 text-xs">{item.tip}</div>
+                  <div className="text-white text-xs">{item.tip}</div>
                 </div>
               </div>
             ))}
@@ -775,8 +775,8 @@ const Year1 = () => {
             {commonChallenges.map((item, index) => (
               <div key={index} className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
-                <p className="text-white/60 text-xs mb-2">{item.description}</p>
-                <div className="text-white/70 text-xs">
+                <p className="text-white text-xs mb-2">{item.description}</p>
+                <div className="text-white text-xs">
                   <strong>Solution:</strong> {item.solutions[0]}
                 </div>
               </div>
@@ -795,17 +795,17 @@ const Year1 = () => {
             <div>
               <h4 className="font-medium text-green-400 text-sm mb-2">Do These:</h4>
               <ul className="space-y-1">
-                <li className="text-white/80 text-xs">+ Ask questions - lots of them</li>
-                <li className="text-white/80 text-xs">+ Be early, every day</li>
-                <li className="text-white/80 text-xs">+ Keep your portfolio up to date</li>
+                <li className="text-white text-xs">+ Ask questions - lots of them</li>
+                <li className="text-white text-xs">+ Be early, every day</li>
+                <li className="text-white text-xs">+ Keep your portfolio up to date</li>
               </ul>
             </div>
             <div>
               <h4 className="font-medium text-red-400 text-sm mb-2">Avoid These:</h4>
               <ul className="space-y-1">
-                <li className="text-white/80 text-xs">- Pretending you understand when you don't</li>
-                <li className="text-white/80 text-xs">- Skipping college or being late</li>
-                <li className="text-white/80 text-xs">- Leaving your portfolio until the end</li>
+                <li className="text-white text-xs">- Pretending you understand when you don't</li>
+                <li className="text-white text-xs">- Skipping college or being late</li>
+                <li className="text-white text-xs">- Leaving your portfolio until the end</li>
               </ul>
             </div>
           </div>

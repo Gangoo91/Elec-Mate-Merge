@@ -265,7 +265,7 @@ const RAMSGenerator: React.FC = () => {
             <FileText className="h-5 w-5" />
             Risk Assessment
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Create comprehensive Risk Assessment & Method Statement documents for safe electrical work
           </p>
         </CardHeader>
@@ -403,31 +403,31 @@ const RAMSGenerator: React.FC = () => {
             <Card className="border-blue-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-blue-400">{riskStats.total}</div>
-                <div className="text-xs text-muted-foreground">Total</div>
+                <div className="text-xs text-white">Total</div>
               </CardContent>
             </Card>
             <Card className="border-green-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-green-400">{riskStats.low}</div>
-                <div className="text-xs text-muted-foreground">Low</div>
+                <div className="text-xs text-white">Low</div>
               </CardContent>
             </Card>
             <Card className="border-yellow-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-yellow-400">{riskStats.medium}</div>
-                <div className="text-xs text-muted-foreground">Medium</div>
+                <div className="text-xs text-white">Medium</div>
               </CardContent>
             </Card>
             <Card className="border-orange-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-orange-400">{riskStats.high}</div>
-                <div className="text-xs text-muted-foreground">High</div>
+                <div className="text-xs text-white">High</div>
               </CardContent>
             </Card>
             <Card className="border-red-500/30 bg-elec-gray/50 col-span-2 sm:col-span-1">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-red-400">{riskStats.veryHigh}</div>
-                <div className="text-xs text-muted-foreground">Very High</div>
+                <div className="text-xs text-white">Very High</div>
               </CardContent>
             </Card>
           </div>
@@ -484,7 +484,7 @@ const RAMSGenerator: React.FC = () => {
                               onClick={handleCancelEdit}
                               size="sm"
                               variant="outline"
-                              className="border-gray-500/30 text-gray-400 hover:bg-gray-500/10"
+                              className="border-gray-500/30 text-white hover:bg-gray-500/10"
                             >
                               Cancel
                             </Button>
@@ -563,7 +563,7 @@ const RAMSGenerator: React.FC = () => {
                           {editRiskData.likelihood > 0 && editRiskData.severity > 0 && (
                             <div className="p-3 bg-elec-gray/30 rounded-lg">
                               <div className="flex items-center gap-2">
-                                <span className="text-sm text-muted-foreground">Risk Level:</span>
+                                <span className="text-sm text-white">Risk Level:</span>
                                 <Badge className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-foreground`}>
                                   {getRiskLevelText(editRiskData.likelihood * editRiskData.severity)} ({editRiskData.likelihood * editRiskData.severity})
                                 </Badge>
@@ -586,7 +586,7 @@ const RAMSGenerator: React.FC = () => {
                               <h5 className="font-medium text-foreground text-sm sm:text-base break-words leading-tight">
                                 {risk.hazard}
                               </h5>
-                              <p className="text-xs sm:text-sm text-muted-foreground break-words leading-relaxed mt-1">
+                              <p className="text-xs sm:text-sm text-white break-words leading-relaxed mt-1">
                                 {risk.risk}
                               </p>
                             </div>
@@ -614,7 +614,7 @@ const RAMSGenerator: React.FC = () => {
                           </div>
                         </div>
                         
-                        <div className="text-xs text-muted-foreground bg-elec-dark/30 p-2 rounded">
+                        <div className="text-xs text-white bg-elec-dark/30 p-2 rounded">
                           <div className="flex flex-wrap gap-4">
                             <span>Likelihood: {risk.likelihood}/5</span>
                             <span>Severity: {risk.severity}/5</span>

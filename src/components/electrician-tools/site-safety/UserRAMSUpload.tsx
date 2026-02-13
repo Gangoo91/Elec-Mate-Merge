@@ -185,7 +185,7 @@ export const UserRAMSUpload = ({
                 variant="ghost"
                 size="sm"
                 onClick={() => onOpenChange(false)}
-                className="h-8 w-8 p-0 text-white/60"
+                className="h-8 w-8 p-0 text-white"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -226,7 +226,7 @@ export const UserRAMSUpload = ({
                   <p className="font-medium text-white text-base mb-1">
                     {selectedFile.name}
                   </p>
-                  <p className="text-sm text-white/50">
+                  <p className="text-sm text-white">
                     {formatFileSize(selectedFile.size)}
                   </p>
                   <Button
@@ -251,10 +251,10 @@ export const UserRAMSUpload = ({
                   <p className="font-medium text-white text-base mb-1">
                     Drop your PDF here
                   </p>
-                  <p className="text-sm text-white/50 mb-3">
+                  <p className="text-sm text-white mb-3">
                     or tap to browse files
                   </p>
-                  <p className="text-xs text-white/30">PDF only, max 50MB</p>
+                  <p className="text-xs text-white">PDF only, max 50MB</p>
                 </>
               )}
             </div>
@@ -271,7 +271,7 @@ export const UserRAMSUpload = ({
             {isUploading && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/70">Uploading...</span>
+                  <span className="text-white">Uploading...</span>
                   <span className="text-elec-yellow font-medium">
                     {uploadProgress}%
                   </span>
@@ -282,14 +282,14 @@ export const UserRAMSUpload = ({
 
             {/* Optional Metadata */}
             <div className="space-y-4">
-              <p className="text-sm font-medium text-white/70 flex items-center gap-2">
+              <p className="text-sm font-medium text-white flex items-center gap-2">
                 <FolderOpen className="h-4 w-4" />
                 Document Details (Optional)
               </p>
 
               <div className="space-y-3">
                 <div>
-                  <Label className="text-xs text-white/50 mb-1.5 block">
+                  <Label className="text-xs text-white mb-1.5 block">
                     Project Name
                   </Label>
                   <Input
@@ -302,7 +302,7 @@ export const UserRAMSUpload = ({
                 </div>
 
                 <div>
-                  <Label className="text-xs text-white/50 mb-1.5 block flex items-center gap-1">
+                  <Label className="text-xs text-white mb-1.5 block flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
                     Location
                   </Label>
@@ -316,7 +316,7 @@ export const UserRAMSUpload = ({
                 </div>
 
                 <div>
-                  <Label className="text-xs text-white/50 mb-1.5 block flex items-center gap-1">
+                  <Label className="text-xs text-white mb-1.5 block flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     Document Date
                   </Label>

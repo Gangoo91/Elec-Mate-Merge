@@ -33,7 +33,7 @@ const OnJobAssessment = () => {
                   Site <span className="text-green-400">Assessment</span> Tools
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Comprehensive checklists, educational guides and regulations for professional
                 site evaluations and safety assessments.
               </p>
@@ -52,7 +52,7 @@ const OnJobAssessment = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">5</div>
-                  <div className="text-xs sm:text-sm text-white/60">Safety Categories</div>
+                  <div className="text-xs sm:text-sm text-white">Safety Categories</div>
                 </div>
               </div>
             </CardContent>
@@ -66,7 +66,7 @@ const OnJobAssessment = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">15+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Checklists</div>
+                  <div className="text-xs sm:text-sm text-white">Checklists</div>
                 </div>
               </div>
             </CardContent>
@@ -80,7 +80,7 @@ const OnJobAssessment = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-orange-400">Risk</div>
-                  <div className="text-xs sm:text-sm text-white/60">Templates</div>
+                  <div className="text-xs sm:text-sm text-white">Templates</div>
                 </div>
               </div>
             </CardContent>
@@ -94,7 +94,7 @@ const OnJobAssessment = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">BS7671</div>
-                  <div className="text-xs sm:text-sm text-white/60">Compliant</div>
+                  <div className="text-xs sm:text-sm text-white">Compliant</div>
                 </div>
               </div>
             </CardContent>
@@ -185,7 +185,7 @@ const OnJobAssessment = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-green-300 mb-1">Safety First</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always complete a thorough site assessment before beginning any electrical work.
                   When in doubt about any condition or procedure, <span className="font-medium text-green-300">stop work and consult with your supervisor</span> or a qualified electrician. Your safety and the safety of others is paramount.
                 </p>

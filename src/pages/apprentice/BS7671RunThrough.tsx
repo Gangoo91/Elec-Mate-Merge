@@ -20,7 +20,7 @@ const BS7671RunThrough = () => {
       case "Electrical Testing": return "text-blue-400";
       case "Visual Inspection": return "text-green-400";
       case "Documentation": return "text-purple-400";
-      default: return "text-white/60";
+      default: return "text-white";
     }
   };
 
@@ -49,7 +49,7 @@ const BS7671RunThrough = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">BS7671 Inspection & Testing Run-Through</h1>
-          <p className="text-white/70">Comprehensive electrical safety testing procedures for apprentices</p>
+          <p className="text-white">Comprehensive electrical safety testing procedures for apprentices</p>
         </div>
         <SmartBackButton className="flex-shrink-0" />
       </div>
@@ -106,7 +106,7 @@ const BS7671RunThrough = () => {
               <span>{completedSteps.size} of {totalSteps}</span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-white">
               Estimated total time: 3-5 hours (depending on installation complexity)
             </p>
           </div>
@@ -166,7 +166,7 @@ const BS7671RunThrough = () => {
                   </span>
                   <div className="flex flex-col">
                     {step.title}
-                    <span className="text-xs text-white/70 font-normal">
+                    <span className="text-xs text-white font-normal">
                       {getCategoryDescription(step.category)}
                     </span>
                   </div>

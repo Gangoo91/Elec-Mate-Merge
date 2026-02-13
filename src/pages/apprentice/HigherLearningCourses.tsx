@@ -16,7 +16,7 @@ const HigherLearningCourses = () => {
           <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">Higher Learning Courses</span>
           </h1>
-          <p className="text-white/70 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Advanced qualification pathways for electrical professionals
           </p>
         </div>

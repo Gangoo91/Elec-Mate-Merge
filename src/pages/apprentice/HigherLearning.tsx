@@ -23,7 +23,7 @@ const HigherLearning = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 HNC Electrical Engineering
               </h3>
-              <p className="text-white/70 text-xs leading-relaxed">
+              <p className="text-white text-xs leading-relaxed">
                 Higher National Certificate in Electrical Engineering
               </p>
             </CardContent>
@@ -39,7 +39,7 @@ const HigherLearning = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 HND Electrical Engineering
               </h3>
-              <p className="text-white/70 text-xs leading-relaxed">
+              <p className="text-white text-xs leading-relaxed">
                 Higher National Diploma in Electrical Engineering
               </p>
             </CardContent>
@@ -55,7 +55,7 @@ const HigherLearning = () => {
               <h3 className="text-sm sm:text-base lg:text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
                 BSc Electrical Engineering
               </h3>
-              <p className="text-white/70 text-xs leading-relaxed">
+              <p className="text-white text-xs leading-relaxed">
                 Bachelor of Science in Electrical Engineering
               </p>
             </CardContent>
@@ -64,12 +64,12 @@ const HigherLearning = () => {
 
         <Card className="bg-card border-border/30 p-4 sm:p-6">
           <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-foreground">Advanced Qualification Pathways</h3>
-          <p className="mb-3 sm:mb-4 text-sm sm:text-base text-white/70 leading-relaxed">
+          <p className="mb-3 sm:mb-4 text-sm sm:text-base text-white leading-relaxed">
             Higher learning qualifications provide opportunities to advance your electrical career
             through formal academic and vocational routes. These qualifications can open doors to
             senior technical roles, management positions, and specialised engineering fields.
           </p>
-          <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+          <p className="text-sm sm:text-base text-white leading-relaxed">
             Each pathway offers a structured curriculum designed to build on your existing skills
             while introducing advanced concepts and methodologies relevant to the electrical industry.
           </p>

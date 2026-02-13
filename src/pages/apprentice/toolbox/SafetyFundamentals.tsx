@@ -66,7 +66,7 @@ const SafetyFundamentals = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Safety Fundamentals
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Essential electrical safety principles, procedures, and practices for apprentices and qualified electricians.
           Your safety and the safety of others depends on following these fundamentals.
         </p>
@@ -80,7 +80,7 @@ const SafetyFundamentals = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -93,7 +93,7 @@ const SafetyFundamentals = () => {
             <Shield className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Core Safety Principles</CardTitle>
           </div>
-          <p className="text-white/70 text-sm">Fundamental safety rules that must never be compromised</p>
+          <p className="text-white text-sm">Fundamental safety rules that must never be compromised</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -101,7 +101,7 @@ const SafetyFundamentals = () => {
               <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg hover:border-elec-yellow/30 transition-all">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/90 font-medium text-sm">{principle}</span>
+                  <span className="text-white font-medium text-sm">{principle}</span>
                 </div>
               </div>
             ))}
@@ -116,7 +116,7 @@ const SafetyFundamentals = () => {
             <Eye className="h-6 w-6 text-blue-400" />
             <CardTitle className="text-blue-400">Personal Protective Equipment (PPE)</CardTitle>
           </div>
-          <p className="text-white/70 text-sm">Essential PPE for electrical work with relevant standards</p>
+          <p className="text-white text-sm">Essential PPE for electrical work with relevant standards</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -125,7 +125,7 @@ const SafetyFundamentals = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white text-sm mb-1">{ppe.item}</h4>
-                    <p className="text-white/70 text-xs">{ppe.requirement}</p>
+                    <p className="text-white text-xs">{ppe.requirement}</p>
                   </div>
                   <Badge variant="outline" className="border-blue-500/40 text-blue-400 w-fit text-xs">
                     {ppe.standard}
@@ -144,7 +144,7 @@ const SafetyFundamentals = () => {
             <Zap className="h-6 w-6 text-red-400" />
             <CardTitle className="text-red-400">Safe Isolation Procedure</CardTitle>
           </div>
-          <p className="text-white/70 text-sm">Critical steps that must be followed in order</p>
+          <p className="text-white text-sm">Critical steps that must be followed in order</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -154,7 +154,7 @@ const SafetyFundamentals = () => {
                   <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
                     {index + 1}
                   </div>
-                  <span className="text-white/90 font-medium text-sm">{step}</span>
+                  <span className="text-white font-medium text-sm">{step}</span>
                 </div>
               </div>
             ))}
@@ -169,7 +169,7 @@ const SafetyFundamentals = () => {
             <AlertTriangle className="h-6 w-6 text-orange-400" />
             <CardTitle className="text-orange-400">Emergency Procedures</CardTitle>
           </div>
-          <p className="text-white/70 text-sm">What to do in electrical emergency situations</p>
+          <p className="text-white text-sm">What to do in electrical emergency situations</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -177,7 +177,7 @@ const SafetyFundamentals = () => {
               <div key={index} className="bg-white/5 border border-orange-500/20 p-4 rounded-lg hover:border-orange-500/40 transition-all">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/90 font-medium text-sm">{procedure}</span>
+                  <span className="text-white font-medium text-sm">{procedure}</span>
                 </div>
               </div>
             ))}
@@ -192,7 +192,7 @@ const SafetyFundamentals = () => {
             <CardTitle className="text-elec-yellow text-base">Risk Assessment</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Always conduct a risk assessment before starting work. Identify potential hazards,
               assess likelihood and severity, and implement control measures.
             </p>
@@ -204,7 +204,7 @@ const SafetyFundamentals = () => {
             <CardTitle className="text-elec-yellow text-base">Permit to Work</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               High-risk electrical work requires permits. Understand when permits are needed,
               how to obtain them, and never begin work without proper authorisation.
             </p>
@@ -216,7 +216,7 @@ const SafetyFundamentals = () => {
             <CardTitle className="text-elec-yellow text-base">Tool Safety</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Maintain tools in good condition with regular PAT testing. Use insulated tools for
               live work and never use damaged or uncalibrated equipment.
             </p>
@@ -235,14 +235,14 @@ const SafetyFundamentals = () => {
         <CardContent className="space-y-4">
           <div className="text-center p-4 bg-red-500/20 rounded-lg border border-red-500/40">
             <p className="text-red-400 font-bold text-lg mb-2">ELECTRICITY CAN KILL</p>
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               Even low voltages can be fatal in the right circumstances. Never take shortcuts with safety procedures.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-orange-500/20 p-4 rounded-lg">
               <h4 className="font-semibold text-orange-400 mb-2">Remember:</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- If in doubt, don't proceed</li>
                 <li>- Ask for help from qualified personnel</li>
                 <li>- Safety is everyone's responsibility</li>
@@ -254,7 +254,7 @@ const SafetyFundamentals = () => {
                 <Phone className="h-4 w-4" />
                 Emergency Numbers:
               </h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- Emergency Services: 999</li>
                 <li>- Electricity Emergency: 105</li>
                 <li>- Gas Emergency: 0800 111 999</li>
@@ -274,7 +274,7 @@ const SafetyFundamentals = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Safety isn't just about following rules - it's about going home to your family every day.
             The habits you form as an apprentice will stay with you throughout your career. Make safety your first instinct.
           </p>
@@ -286,7 +286,7 @@ const SafetyFundamentals = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

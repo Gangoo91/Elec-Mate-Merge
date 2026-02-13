@@ -136,7 +136,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <span className="break-words">Choose a Method Statement Template</span>
             <RequiredFieldTooltip content="Templates are pre-built method statements that comply with BS7671:2018+A3:2024 regulations and include all necessary safety procedures" />
           </CardTitle>
-          <p className="text-muted-foreground mobile-text">
+          <p className="text-white mobile-text">
             Start with a proven template or build from scratch. Templates include BS7671-compliant safety requirements and detailed step-by-step procedures.
           </p>
           {!selectedTemplate && (
@@ -171,7 +171,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             {/* Search Input - Contained within parent */}
             <div className="relative w-full">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground flex-shrink-0 z-10 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white flex-shrink-0 z-10 pointer-events-none" />
               )}
               <Input
                 ref={searchInputRef}
@@ -300,7 +300,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
       {/* Results Summary */}
       {searchTerm && !isSearching && (
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center justify-between text-sm text-white">
           <span>
             {filteredTemplates.length} template{filteredTemplates.length !== 1 ? 's' : ''} found
             {searchTerm && ` for "${searchTerm}"`}
@@ -432,7 +432,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                   <span className="break-words line-clamp-2 leading-tight">{template.name}</span>
                 </CardTitle>
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 leading-relaxed mt-2">
+              <p className="text-xs sm:text-sm text-white line-clamp-3 leading-relaxed mt-2">
                 {template.description}
               </p>
             </CardHeader>
@@ -440,7 +440,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             {/* Card Content - Flexible layout with proper spacing */}
             <CardContent className="p-0 space-y-4 flex-1 flex flex-col">
               {/* Duration Info */}
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-white group-hover:text-foreground transition-colors duration-200">
                 <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow group-hover:scale-110 transition-transform duration-200" />
                 <span className="break-words">{template.estimatedDuration}</span>
               </div>
@@ -479,7 +479,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 </div>
                 <div className="space-y-2 max-h-32 overflow-y-auto pr-1 custom-scrollbar">
                   {template.steps.slice(0, 3).map((step, index) => (
-                    <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <div key={index} className="text-xs text-white flex items-start gap-2">
                       <div className="w-5 h-5 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
                         {index + 1}
                       </div>
@@ -487,7 +487,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     </div>
                   ))}
                   {template.steps.length > 3 && (
-                    <div className="text-xs text-muted-foreground pl-7 italic bg-elec-gray/10 rounded px-2 py-1">
+                    <div className="text-xs text-white pl-7 italic bg-elec-gray/10 rounded px-2 py-1">
                       +{template.steps.length - 3} more steps
                     </div>
                   )}
@@ -507,7 +507,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 <h3 className="font-semibold text-green-300 mobile-subheading break-words">
                   Selected: {selectedTemplate.name}
                 </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   This template includes {selectedTemplate.steps.length} pre-configured steps
                 </p>
               </div>
@@ -544,7 +544,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
         <Card className="border-elec-gray/20 bg-elec-gray/5 mobile-card">
           <CardContent className="p-6 sm:p-8 text-center">
             <div className="text-elec-gray mb-3 mobile-subheading">No templates found</div>
-            <p className="text-muted-foreground mb-6 mobile-text max-w-md mx-auto">
+            <p className="text-white mb-6 mobile-text max-w-md mx-auto">
               Try adjusting your search terms or create a method statement from scratch.
             </p>
             <Button 

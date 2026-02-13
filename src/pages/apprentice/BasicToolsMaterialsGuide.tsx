@@ -459,7 +459,7 @@ const BasicToolsMaterialsGuide = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center mb-6 sm:mb-8 px-2">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">Basic Tools & Materials Guide</h1>
-        <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-3xl mx-auto mb-4 sm:mb-6">
+        <p className="text-sm sm:text-base md:text-lg text-white max-w-3xl mx-auto mb-4 sm:mb-6">
           Complete guide to electrical tools, materials, and equipment for UK apprentices. 
           Learn what you need, when you need it, and where to get the best deals.
         </p>
@@ -474,7 +474,7 @@ const BasicToolsMaterialsGuide = () => {
               <Cable className="h-7 w-7 text-elec-yellow" />
               <div>
                 <CardTitle className="text-elec-yellow text-xl">Cable Selection Master Quiz</CardTitle>
-                <p className="text-sm text-white/70 mt-1">Test your knowledge of UK cable types and applications</p>
+                <p className="text-sm text-white mt-1">Test your knowledge of UK cable types and applications</p>
               </div>
             </div>
             <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
@@ -487,7 +487,7 @@ const BasicToolsMaterialsGuide = () => {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-white/70">
+                  <span className="text-sm text-white">
                     Question {currentQuiz + 1} of {expandedCableQuiz.length}
                   </span>
                   <div className="bg-white/20 rounded-full h-2 w-32">
@@ -497,7 +497,7 @@ const BasicToolsMaterialsGuide = () => {
                     />
                   </div>
                 </div>
-                <span className="text-sm text-white/70">
+                <span className="text-sm text-white">
                   Score: {quizScore}/{currentQuiz + (selectedAnswer ? 1 : 0)}
                 </span>
               </div>
@@ -544,7 +544,7 @@ const BasicToolsMaterialsGuide = () => {
                       <BookOpen className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <div>
                         <h4 className="font-medium text-elec-yellow mb-1">Explanation</h4>
-                        <p className="text-sm text-white/70">
+                        <p className="text-sm text-white">
                           {expandedCableQuiz[currentQuiz].explanation}
                         </p>
                       </div>
@@ -602,7 +602,7 @@ const BasicToolsMaterialsGuide = () => {
             <Wrench className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Essential Tools for UK Electricians</CardTitle>
           </div>
-          <p className="text-white/70">Comprehensive guide to professional electrical tools and equipment</p>
+          <p className="text-white">Comprehensive guide to professional electrical tools and equipment</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
@@ -629,12 +629,12 @@ const BasicToolsMaterialsGuide = () => {
                           {tool.cost}
                         </span>
                       </div>
-                      <p className="text-sm text-white/70 mb-3">{tool.description}</p>
+                      <p className="text-sm text-white mb-3">{tool.description}</p>
                       
                       {tool.brands && (
                         <div className="mb-2">
                           <span className="text-xs font-medium text-elec-yellow">Recommended brands: </span>
-                          <span className="text-xs text-white/70">{tool.brands.join(', ')}</span>
+                          <span className="text-xs text-white">{tool.brands.join(', ')}</span>
                         </div>
                       )}
                       
@@ -671,7 +671,7 @@ const BasicToolsMaterialsGuide = () => {
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">UK Electrical Materials Guide</CardTitle>
           </div>
-          <p className="text-white/70">Understanding British Standards, cable specifications, and applications</p>
+          <p className="text-white">Understanding British Standards, cable specifications, and applications</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
@@ -696,13 +696,13 @@ const BasicToolsMaterialsGuide = () => {
                     </div>
                     
                     <div className="bg-white/5 p-3 rounded">
-                      <p className="text-xs text-white/70 mb-1">
+                      <p className="text-xs text-white mb-1">
                         <strong className="text-elec-yellow">Standard:</strong> {material.standards}
                       </p>
-                      <p className="text-xs text-white/70 mb-1">
+                      <p className="text-xs text-white mb-1">
                         <strong className="text-elec-yellow">Colours:</strong> {material.colours}
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         <strong className="text-elec-yellow">Typical Uses:</strong> {material.typical_uses}
                       </p>
                     </div>
@@ -710,7 +710,7 @@ const BasicToolsMaterialsGuide = () => {
                   
                   <div>
                     <h5 className="text-sm font-medium text-elec-yellow mb-2">Applications by Size</h5>
-                    <ul className="text-xs text-white/70 space-y-1 max-h-40 sm:max-h-32 overflow-y-auto">
+                    <ul className="text-xs text-white space-y-1 max-h-40 sm:max-h-32 overflow-y-auto">
                       {material.applications.map((app, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <span className="text-green-400 mt-0.5">•</span>
@@ -733,14 +733,14 @@ const BasicToolsMaterialsGuide = () => {
             <Plug className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Cable Fittings & Glands Guide</CardTitle>
           </div>
-          <p className="text-white/70">Complete guide to cable termination, gland selection, and installation procedures</p>
+          <p className="text-white">Complete guide to cable termination, gland selection, and installation procedures</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-8">
             {cableFittingsGuide.map((category, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 sm:p-6">
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{category.category}</h3>
-                <p className="text-sm text-white/70 mb-4 sm:mb-6">{category.description}</p>
+                <p className="text-sm text-white mb-4 sm:mb-6">{category.description}</p>
                 
                 <div className="space-y-6">
                   {category.fittings.map((fitting, fittingIndex) => (
@@ -748,13 +748,13 @@ const BasicToolsMaterialsGuide = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4">
                         <div>
                           <h4 className="font-medium text-white mb-2">{fitting.name}</h4>
-                          <p className="text-sm text-white/70 mb-1">
+                          <p className="text-sm text-white mb-1">
                             <strong className="text-elec-yellow">Cable Size:</strong> {fitting.cable_sizes}
                           </p>
-                          <p className="text-sm text-white/70 mb-1">
+                          <p className="text-sm text-white mb-1">
                             <strong className="text-elec-yellow">Typical Cables:</strong> {fitting.typical_cables}
                           </p>
-                          <p className="text-sm text-white/70">
+                          <p className="text-sm text-white">
                             <strong className="text-elec-yellow">Thread:</strong> {fitting.thread}
                           </p>
                         </div>
@@ -763,7 +763,7 @@ const BasicToolsMaterialsGuide = () => {
                           <h5 className="font-medium text-elec-yellow mb-2 sm:mb-3">Installation Steps</h5>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {fitting.termination_steps.map((step, stepIndex) => (
-                              <div key={stepIndex} className="flex items-start gap-2 text-sm text-white/70">
+                              <div key={stepIndex} className="flex items-start gap-2 text-sm text-white">
                                 <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                                   {stepIndex + 1}
                                 </span>
@@ -789,7 +789,7 @@ const BasicToolsMaterialsGuide = () => {
             <Settings className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Tools for Cable Termination Work</CardTitle>
           </div>
-          <p className="text-white/70">Essential tools and safety considerations for different cable work</p>
+          <p className="text-white">Essential tools and safety considerations for different cable work</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -802,7 +802,7 @@ const BasicToolsMaterialsGuide = () => {
                     <h5 className="text-sm font-medium text-elec-yellow mb-2">Required Tools</h5>
                     <ul className="space-y-1">
                       {task.required_tools.map((tool, toolIndex) => (
-                        <li key={toolIndex} className="text-sm text-white/70 flex items-center gap-2">
+                        <li key={toolIndex} className="text-sm text-white flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           {tool}
                         </li>
@@ -814,7 +814,7 @@ const BasicToolsMaterialsGuide = () => {
                     <h5 className="text-sm font-medium text-orange-400 mb-2">Safety Considerations</h5>
                     <ul className="space-y-1">
                       {task.safety_considerations.map((safety, safetyIndex) => (
-                        <li key={safetyIndex} className="text-sm text-white/70 flex items-start gap-2">
+                        <li key={safetyIndex} className="text-sm text-white flex items-start gap-2">
                           <AlertTriangle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
                           {safety}
                         </li>
@@ -835,7 +835,7 @@ const BasicToolsMaterialsGuide = () => {
             <Clock className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">3-Year Apprentice Tool Progression</CardTitle>
           </div>
-          <p className="text-white/70">Strategic approach to building your professional toolkit</p>
+          <p className="text-white">Strategic approach to building your professional toolkit</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -859,7 +859,7 @@ const BasicToolsMaterialsGuide = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <h4 className="font-medium text-white mb-2">Essential Purchases</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       {year.essentials.map((item, idx) => (
                         <li key={idx} className="flex items-center gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400" />
@@ -871,7 +871,7 @@ const BasicToolsMaterialsGuide = () => {
                   
                   <div>
                     <h4 className="font-medium text-white mb-2">Skills Development</h4>
-                    <p className="text-sm text-white/70">{year.skills}</p>
+                    <p className="text-sm text-white">{year.skills}</p>
                   </div>
                 </div>
               </div>
@@ -887,7 +887,7 @@ const BasicToolsMaterialsGuide = () => {
             <ShoppingCart className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Where to Buy - UK Supplier Guide</CardTitle>
           </div>
-          <p className="text-white/70">Best places to purchase electrical tools and materials in the UK</p>
+          <p className="text-white">Best places to purchase electrical tools and materials in the UK</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -901,7 +901,7 @@ const BasicToolsMaterialsGuide = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   <div>
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Suppliers</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       {category.suppliers.map((supplier, idx) => (
                         <li key={idx}>• {supplier}</li>
                       ))}
@@ -910,7 +910,7 @@ const BasicToolsMaterialsGuide = () => {
                   
                   <div>
                     <h4 className="text-sm font-medium text-elec-yellow mb-2">Benefits</h4>
-                    <p className="text-sm text-white/70">{category.benefits}</p>
+                    <p className="text-sm text-white">{category.benefits}</p>
                   </div>
                   
                   <div>
@@ -936,7 +936,7 @@ const BasicToolsMaterialsGuide = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <h4 className="font-semibold text-white mb-2 sm:mb-3 text-sm sm:text-base">Quality Investment Strategy</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Buy quality test equipment first - your safety depends on it
@@ -958,7 +958,7 @@ const BasicToolsMaterialsGuide = () => {
             
             <div>
               <h4 className="font-semibold text-white mb-3">Career Development</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                   Build relationships with suppliers - they're valuable resources

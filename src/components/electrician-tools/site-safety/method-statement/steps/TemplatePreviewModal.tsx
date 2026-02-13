@@ -73,11 +73,11 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                   </Badge>
                 )}
               </DialogTitle>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 {template.description}
               </p>
             </div>
-            <DialogClose className="text-muted-foreground hover:text-foreground transition-colors">
+            <DialogClose className="text-white hover:text-foreground transition-colors">
               <X className="h-5 w-5" />
             </DialogClose>
           </div>
@@ -93,7 +93,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <Clock className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                     <div>
                       <div className="text-sm font-medium text-elec-yellow">Duration</div>
-                      <div className="text-xs text-muted-foreground">{template.estimatedDuration}</div>
+                      <div className="text-xs text-white">{template.estimatedDuration}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -119,7 +119,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <BookOpen className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                     <div>
                       <div className="text-sm font-medium text-elec-yellow">Steps</div>
-                      <div className="text-xs text-muted-foreground">{template.steps.length} procedures</div>
+                      <div className="text-xs text-white">{template.steps.length} procedures</div>
                     </div>
                   </div>
                 </CardContent>
@@ -158,7 +158,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <Zap className="h-4 w-4" />
                     Method Steps ({template.steps.length})
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Est. {totalEstimatedTime} min total
                   </div>
                 </CardTitle>
@@ -177,11 +177,11 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             <Badge className={`${getRiskColor(step.riskLevel)} text-xs`}>
                               {step.riskLevel} risk
                             </Badge>
-                            <div className="text-xs text-muted-foreground">{step.estimatedDuration}</div>
+                            <div className="text-xs text-white">{step.estimatedDuration}</div>
                           </div>
                         </div>
                         
-                        <p className="text-sm text-muted-foreground leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           {step.description}
                         </p>
 
@@ -191,7 +191,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                               <Shield className="h-3 w-3" />
                               Safety Requirements
                             </div>
-                            <ul className="space-y-1 text-muted-foreground">
+                            <ul className="space-y-1 text-white">
                               {step.safetyRequirements.map((req, reqIndex) => (
                                 <li key={reqIndex} className="flex items-start gap-1">
                                   <CheckCircle2 className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
@@ -206,7 +206,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                               <Settings className="h-3 w-3" />
                               Equipment Needed
                             </div>
-                            <ul className="space-y-1 text-muted-foreground">
+                            <ul className="space-y-1 text-white">
                               {step.equipmentNeeded.map((equipment, eqIndex) => (
                                 <li key={eqIndex} className="flex items-start gap-1">
                                   <div className="w-1 h-1 bg-elec-yellow rounded-full flex-shrink-0 mt-2"></div>
@@ -221,7 +221,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                               <Users className="h-3 w-3" />
                               Qualifications
                             </div>
-                            <ul className="space-y-1 text-muted-foreground">
+                            <ul className="space-y-1 text-white">
                               {step.qualifications.map((qual, qualIndex) => (
                                 <li key={qualIndex} className="flex items-start gap-1">
                                   <div className="w-1 h-1 bg-elec-yellow rounded-full flex-shrink-0 mt-2"></div>
@@ -245,7 +245,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-medium text-orange-400 mb-1">Safety & Compliance Notice</div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       This template is designed to meet BS7671:2018+A3:2024 requirements and CDM regulations. 
                       Always conduct site-specific risk assessments and adapt procedures as needed for your specific installation.
                     </p>
@@ -260,7 +260,7 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
 
         <div className="p-6 pt-4 flex-shrink-0">
           <div className="flex items-center justify-between gap-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-white">
               Ready to use this template for your method statement?
             </div>
             <div className="flex items-center gap-3">

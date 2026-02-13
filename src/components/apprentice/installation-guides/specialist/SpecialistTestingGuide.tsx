@@ -618,15 +618,15 @@ const SpecialistTestingGuide = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                         <div>
                           <span className="text-white">Requirement:</span>
-                          <p className="text-white/80">{test.requirement}</p>
+                          <p className="text-white">{test.requirement}</p>
                         </div>
                         <div>
                           <span className="text-white">Method:</span>
-                          <p className="text-white/80">{test.method}</p>
+                          <p className="text-white">{test.method}</p>
                         </div>
                         <div>
                           <span className="text-white">Notes:</span>
-                          <p className="text-white/80">{test.notes}</p>
+                          <p className="text-white">{test.notes}</p>
                         </div>
                       </div>
                     </div>
@@ -677,7 +677,7 @@ const SpecialistTestingGuide = () => {
                 {doc.requiredDocs.map((item, docIdx) => (
                   <li key={docIdx} className="flex items-start gap-2 text-sm">
                     <ClipboardCheck className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -722,7 +722,7 @@ const SpecialistTestingGuide = () => {
                         {freq.maxInterval}
                       </Badge>
                     </td>
-                    <td className="py-3 text-white/80">{freq.notes}</td>
+                    <td className="py-3 text-white">{freq.notes}</td>
                     <td className="py-3">
                       <div className="flex flex-wrap gap-1">
                         {freq.focus.map((f, fIdx) => (
@@ -762,7 +762,7 @@ const SpecialistTestingGuide = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                       <div>
                         <span className="text-white">Likely Cause:</span>
-                        <p className="text-white/80">{failure.cause}</p>
+                        <p className="text-white">{failure.cause}</p>
                       </div>
                       <div>
                         <span className="text-white">Solution:</span>
@@ -792,19 +792,19 @@ const SpecialistTestingGuide = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">Low resistance ohmmeter (less than 0.01 ohm resolution)</span>
+                  <span className="text-white">Low resistance ohmmeter (less than 0.01 ohm resolution)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">Earth electrode tester</span>
+                  <span className="text-white">Earth electrode tester</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">High current bonding tester</span>
+                  <span className="text-white">High current bonding tester</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">RCD tester with Type A/B capability</span>
+                  <span className="text-white">RCD tester with Type A/B capability</span>
                 </li>
               </ul>
             </div>
@@ -814,19 +814,19 @@ const SpecialistTestingGuide = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <Sun className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">DC insulation tester (1000V+) for PV</span>
+                  <span className="text-white">DC insulation tester (1000V+) for PV</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Car className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">EV charging point tester</span>
+                  <span className="text-white">EV charging point tester</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Heart className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">IMD tester for medical IT systems</span>
+                  <span className="text-white">IMD tester for medical IT systems</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Waves className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span className="text-white/80">SELV transformer output tester</span>
+                  <span className="text-white">SELV transformer output tester</span>
                 </li>
               </ul>
             </div>
@@ -843,7 +843,7 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Critical Safety Notice */}
-      <Card className="border-red-500/50 bg-gradient-to-r from-red-500/10 to-orange-500/10">
+      <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
           <CardTitle className="text-red-300 flex items-center gap-2">
             <Shield className="h-6 w-6" />
@@ -855,7 +855,7 @@ const SpecialistTestingGuide = () => {
             <div className="space-y-3">
               <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
                 <h4 className="font-medium text-red-200 mb-2">Solar PV Systems</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>DC systems are live whenever illuminated</li>
                   <li>Cannot be isolated by switching alone</li>
                   <li>Use appropriate DC-rated PPE</li>
@@ -865,7 +865,7 @@ const SpecialistTestingGuide = () => {
 
               <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
                 <h4 className="font-medium text-red-200 mb-2">Swimming Pools</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Water creates additional shock hazard</li>
                   <li>Test when pool is drained where possible</li>
                   <li>Never work on underwater equipment live</li>
@@ -877,7 +877,7 @@ const SpecialistTestingGuide = () => {
             <div className="space-y-3">
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/30">
                 <h4 className="font-medium text-orange-200 mb-2">Medical Locations</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Coordinate with clinical staff</li>
                   <li>Never interrupt life support supplies</li>
                   <li>IT system first fault - system stays live</li>
@@ -887,7 +887,7 @@ const SpecialistTestingGuide = () => {
 
               <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/30">
                 <h4 className="font-medium text-orange-200 mb-2">Construction Sites</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Multiple supplies may be present</li>
                   <li>Generators may not have standard earthing</li>
                   <li>Coordinate with site management</li>

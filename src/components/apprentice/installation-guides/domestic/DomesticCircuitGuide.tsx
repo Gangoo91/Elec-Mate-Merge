@@ -307,7 +307,7 @@ const DomesticCircuitGuide = () => {
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-white text-base mb-1">{circuit.type}</h4>
-                  <p className="text-sm text-white/80">{circuit.description}</p>
+                  <p className="text-sm text-white">{circuit.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
@@ -377,7 +377,7 @@ const DomesticCircuitGuide = () => {
                 <h5 className="text-sm font-medium text-cyan-200">Key Points:</h5>
                 <ul className="space-y-1">
                   {diagram.keyPoints.map((point, idx) => (
-                    <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-1.5 flex-shrink-0"></span>
                       {point}
                     </li>
@@ -424,8 +424,8 @@ const DomesticCircuitGuide = () => {
                       <td className="py-2 text-white font-medium">{cable.size}</td>
                       <td className="py-2 text-amber-300">{cable.method_c}</td>
                       <td className="py-2 text-orange-300">{cable.method_a}</td>
-                      <td className="py-2 text-white/80">{cable.vd_per_m}</td>
-                      <td className="py-2 text-white/80">{cable.typical_use}</td>
+                      <td className="py-2 text-white">{cable.vd_per_m}</td>
+                      <td className="py-2 text-white">{cable.typical_use}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -441,7 +441,7 @@ const DomesticCircuitGuide = () => {
                   <Badge variant="outline" className="border-amber-400 text-amber-300 text-xs flex-shrink-0">
                     {method.method}
                   </Badge>
-                  <span className="text-white/80">{method.description}</span>
+                  <span className="text-white">{method.description}</span>
                 </div>
               ))}
             </div>
@@ -482,7 +482,7 @@ const DomesticCircuitGuide = () => {
                       <td className="py-2 text-white">{limit.circuit}</td>
                       <td className="py-2 text-purple-300">{limit.lighting}</td>
                       <td className="py-2 text-purple-300">{limit.power}</td>
-                      <td className="py-2 text-white/80">{limit.notes}</td>
+                      <td className="py-2 text-white">{limit.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -495,7 +495,7 @@ const DomesticCircuitGuide = () => {
             <p className="text-purple-300 font-mono text-sm mb-3">{maxCableLengths.formula}</p>
             <ul className="space-y-1">
               {maxCableLengths.notes.map((note, idx) => (
-                <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-xs text-white flex items-start gap-2">
                   <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
                   {note}
                 </li>
@@ -521,7 +521,7 @@ const DomesticCircuitGuide = () => {
               {voltageDrop.terms.map((term, idx) => (
                 <div key={idx} className="text-sm">
                   <span className="text-teal-300 font-mono">{term.term}</span>
-                  <span className="text-white/80"> = {term.definition}</span>
+                  <span className="text-white"> = {term.definition}</span>
                 </div>
               ))}
             </div>
@@ -532,7 +532,7 @@ const DomesticCircuitGuide = () => {
               <h4 className="font-medium text-white mb-3">Permitted Limits</h4>
               {voltageDrop.limits.map((limit, idx) => (
                 <div key={idx} className="flex justify-between text-sm mb-2">
-                  <span className="text-white/80">{limit.type}</span>
+                  <span className="text-white">{limit.type}</span>
                   <span className="text-teal-300">{limit.limit} ({limit.voltage})</span>
                 </div>
               ))}
@@ -542,7 +542,7 @@ const DomesticCircuitGuide = () => {
               <h4 className="font-medium text-white mb-3">Worked Examples</h4>
               {voltageDrop.examples.map((example, idx) => (
                 <div key={idx} className="mb-3 last:mb-0">
-                  <p className="text-sm text-white/80 mb-1">{example.scenario}</p>
+                  <p className="text-sm text-white mb-1">{example.scenario}</p>
                   <p className="text-xs text-teal-200 font-mono mb-1">{example.calculation}</p>
                   <p className="text-xs text-green-300">{example.result}</p>
                 </div>
@@ -577,7 +577,7 @@ const DomesticCircuitGuide = () => {
                     <h5 className="font-medium text-rose-200 text-sm">{item.load}</h5>
                   </div>
                   <p className="text-xs text-rose-100 mb-1"><strong>Factor:</strong> {item.factor}</p>
-                  <p className="text-xs text-white/80 mb-1"><strong>Example:</strong> {item.example}</p>
+                  <p className="text-xs text-white mb-1"><strong>Example:</strong> {item.example}</p>
                   <p className="text-xs text-white">{item.notes}</p>
                 </div>
               ))}
@@ -599,7 +599,7 @@ const DomesticCircuitGuide = () => {
                   {diversityCalculations.exampleCalculation.loads.map((load, idx) => (
                     <tr key={idx} className="border-b border-rose-500/20">
                       <td className="py-2 text-white">{load.item}</td>
-                      <td className="py-2 text-white/80 font-mono text-xs">{load.calculation}</td>
+                      <td className="py-2 text-white font-mono text-xs">{load.calculation}</td>
                       <td className="py-2 text-rose-300">{load.result}</td>
                     </tr>
                   ))}
@@ -654,7 +654,7 @@ const DomesticCircuitGuide = () => {
                     <tr key={idx} className="border-b border-green-500/20">
                       <td className="py-2 text-white">{size.lineSize}</td>
                       <td className="py-2 text-green-300">{size.cpcMin}</td>
-                      <td className="py-2 text-white/80">{size.twinAndEarth}</td>
+                      <td className="py-2 text-white">{size.twinAndEarth}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -665,12 +665,12 @@ const DomesticCircuitGuide = () => {
           <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
             <h4 className="font-medium text-white mb-2">Adiabatic Equation</h4>
             <p className="text-green-300 font-mono text-lg mb-2">{earthingConsiderations.adiabatic.formula}</p>
-            <p className="text-sm text-white/80 mb-3">{earthingConsiderations.adiabatic.description}</p>
+            <p className="text-sm text-white mb-3">{earthingConsiderations.adiabatic.description}</p>
             <div className="grid grid-cols-2 gap-2">
               {earthingConsiderations.adiabatic.terms.map((term, idx) => (
                 <div key={idx} className="text-xs">
                   <span className="text-green-300 font-mono">{term.term}</span>
-                  <span className="text-white/80"> = {term.definition}</span>
+                  <span className="text-white"> = {term.definition}</span>
                 </div>
               ))}
             </div>
@@ -689,7 +689,7 @@ const DomesticCircuitGuide = () => {
         <CardContent>
           <ul className="space-y-2">
             {designConsiderations.map((consideration, index) => (
-              <li key={index} className="text-sm text-white/80 flex items-start gap-2">
+              <li key={index} className="text-sm text-white flex items-start gap-2">
                 <Shield className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 {consideration}
               </li>

@@ -1,82 +1,130 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import InstallationGuideTabs from "@/components/apprentice/installation-guides/InstallationGuideTabs";
+import {
+  Factory,
+  FileText,
+  ClipboardList,
+  Zap,
+  TestTube,
+  ShieldAlert,
+  BookOpen,
+} from "lucide-react";
+import InstallationGuidePageShell from "@/components/apprentice/installation-guides/InstallationGuidePageShell";
+import type { ToggleCardDef } from "@/types/installation-guides";
+import IndustrialOverviewCards from "@/components/apprentice/installation-guides/industrial/IndustrialOverviewCards";
 import IndustrialPlanningSection from "@/components/apprentice/installation-guides/industrial/IndustrialPlanningSection";
 import IndustrialCircuitGuide from "@/components/apprentice/installation-guides/industrial/IndustrialCircuitGuide";
-import IndustrialOverviewCards from "@/components/apprentice/installation-guides/industrial/IndustrialOverviewCards";
-import IndustrialReferenceGuide from "@/components/apprentice/installation-guides/industrial/IndustrialReferenceGuide";
 import IndustrialTestingGuide from "@/components/apprentice/installation-guides/industrial/IndustrialTestingGuide";
-import { Factory } from "lucide-react";
+import IndustrialRiskManagement from "@/components/apprentice/installation-guides/industrial/IndustrialRiskManagement";
+import IndustrialReferenceGuide from "@/components/apprentice/installation-guides/industrial/IndustrialReferenceGuide";
 
-const IndustrialInstallations = () => {
-  const commonTypes = [
-    "Motor control systems and VFD installations",
-    "High bay lighting for manufacturing facilities", 
-    "Heavy machinery electrical connections",
-    "ATEX certified hazardous area installations",
-    "Control panel and PLC system integration",
-    "Industrial heating and welding systems"
-  ];
+const cards: ToggleCardDef[] = [
+  {
+    id: "overview",
+    label: "Overview",
+    icon: FileText,
+    colour: "blue",
+    borderColour: "border-blue-500",
+    bgColour: "bg-blue-500/20",
+    textColour: "text-blue-400",
+    ringColour: "ring-blue-500/40",
+  },
+  {
+    id: "planning",
+    label: "Planning",
+    icon: ClipboardList,
+    colour: "green",
+    borderColour: "border-green-500",
+    bgColour: "bg-green-500/20",
+    textColour: "text-green-400",
+    ringColour: "ring-green-500/40",
+  },
+  {
+    id: "circuits",
+    label: "Circuits",
+    icon: Zap,
+    colour: "amber",
+    borderColour: "border-amber-500",
+    bgColour: "bg-amber-500/20",
+    textColour: "text-amber-400",
+    ringColour: "ring-amber-500/40",
+  },
+  {
+    id: "testing",
+    label: "Testing",
+    icon: TestTube,
+    colour: "cyan",
+    borderColour: "border-cyan-500",
+    bgColour: "bg-cyan-500/20",
+    textColour: "text-cyan-400",
+    ringColour: "ring-cyan-500/40",
+  },
+  {
+    id: "safety",
+    label: "Safety",
+    icon: ShieldAlert,
+    colour: "red",
+    borderColour: "border-red-500",
+    bgColour: "bg-red-500/20",
+    textColour: "text-red-400",
+    ringColour: "ring-red-500/40",
+  },
+  {
+    id: "reference",
+    label: "Reference",
+    icon: BookOpen,
+    colour: "purple",
+    borderColour: "border-purple-500",
+    bgColour: "bg-purple-500/20",
+    textColour: "text-purple-400",
+    ringColour: "ring-purple-500/40",
+  },
+];
 
-  const cableTypes = [
-    { application: "Motor circuits (up to 15kW)", cable: "6-10mm² SWA", protection: "32A MCB + Overload", notes: "Star-delta or soft start" },
-    { application: "Heavy machinery (45kW+)", cable: "35mm²+ SWA", protection: "100A+ MCB + VFD", notes: "Variable frequency drive control" },
-    { application: "High bay lighting", cable: "2.5-4mm² SWA", protection: "16A MCB + RCD", notes: "200-400W LED fittings" },
-    { application: "Control circuits (24V)", cable: "Multi-core screened", protection: "6A Fused", notes: "PLC and automation systems" },
-    { application: "Emergency systems", cable: "4mm² FP200", protection: "20A MCB", notes: "Fire-rated cable required" },
-    { application: "Welding outlets", cable: "16-25mm² SWA", protection: "50-63A MCB", notes: "High current demand circuits" }
-  ];
-
-  const keyStandards = [
-    "BS 7671:2018+A3:2024 (18th Edition Wiring Regulations)",
-    "ATEX Directive 2014/34/EU (Equipment for explosive atmospheres)",
-    "DSEAR Regulations 2002 (Dangerous substances and explosive atmospheres)",
-    "BS EN 60204-1 Safety of machinery - Electrical equipment",
-    "BS EN 60079 Series Explosive atmospheres protection standards",
-    "PUWER Regulations 1998 (Provision and use of work equipment)"
-  ];
-
-  return (
-    <div className="max-w-7xl mx-auto animate-fade-in p-4">
-      <div className="mb-6">
-        <SmartBackButton />
-      </div>
-
-      <InstallationGuideTabs
-        title="Industrial Installations"
-        icon={Factory}
-        description="Comprehensive guide to industrial electrical installations including manufacturing facilities, heavy machinery connections, hazardous area installations, and complex motor control systems in the UK."
-        commonTypes={commonTypes}
-        cableTypes={cableTypes}
-        keyStandards={keyStandards}
-        planningContent="Industrial installations require comprehensive hazard assessment, ATEX compliance for explosive atmospheres, and coordination with production schedules. Consider three-phase motor starting methods, control system integration, and maintenance access requirements. All work must comply with machinery safety directives and DSEAR regulations."
-        safetyContent="ATEX compliance is mandatory for explosive atmospheres with appropriate zone classifications and certified equipment. Implement arc flash protection measures for high voltage systems and ensure proper lock-out/tag-out procedures. All personnel must have appropriate industrial electrical qualifications and competency assessments."
-        complianceContent="Complete comprehensive testing including motor insulation testing, earth fault loop impedance verification, and emergency stop system functionality. Provide detailed commissioning documentation, maintenance schedules, and operator training. Ensure compliance with machinery safety directives and workplace regulations."
-        enhancedOverviewComponent={<IndustrialOverviewCards />}
-        enhancedPlanningComponent={<IndustrialPlanningSection />}
-        enhancedCircuitComponent={<IndustrialCircuitGuide />}
-        enhancedTestingComponent={<IndustrialTestingGuide />}
-        enhancedReferenceComponent={<IndustrialReferenceGuide />}
-        bottomSafetyNotice={{
-          title: "Critical Industrial Safety Requirements",
-          points: [
-            {
-              title: "ATEX Compliance",
-              content: "All equipment in explosive atmospheres must have appropriate ATEX certification. Zone classifications must be verified and equipment temperature ratings must not exceed auto-ignition temperatures."
-            },
-            {
-              title: "Arc Flash Protection",
-              content: "High voltage industrial systems present significant arc flash risks. Appropriate PPE, risk assessments, and safety procedures must be implemented for all electrical work."
-            },
-            {
-              title: "Machinery Safety Integration",
-              content: "All electrical installations must integrate with emergency stop systems and safety interlocks. Compliance with BS EN 60204-1 and machinery safety directives is mandatory."
-            }
-          ]
-        }}
-      />
-    </div>
-  );
+const renderPanel = (cardId: string) => {
+  switch (cardId) {
+    case "overview":
+      return <IndustrialOverviewCards />;
+    case "planning":
+      return <IndustrialPlanningSection />;
+    case "circuits":
+      return <IndustrialCircuitGuide />;
+    case "testing":
+      return <IndustrialTestingGuide />;
+    case "safety":
+      return <IndustrialRiskManagement />;
+    case "reference":
+      return <IndustrialReferenceGuide />;
+    default:
+      return null;
+  }
 };
+
+const IndustrialInstallations = () => (
+  <InstallationGuidePageShell
+    title="Industrial Installations"
+    icon={Factory}
+    cards={cards}
+    renderPanel={renderPanel}
+    safetyNotice={{
+      title: "Critical Industrial Safety Requirements",
+      points: [
+        {
+          title: "ATEX Compliance",
+          content:
+            "All equipment in explosive atmospheres must have appropriate ATEX certification. Zone classifications must be verified and equipment temperature ratings must not exceed auto-ignition temperatures.",
+        },
+        {
+          title: "Arc Flash Protection",
+          content:
+            "High voltage industrial systems present significant arc flash risks. Appropriate PPE, risk assessments, and safety procedures must be implemented for all electrical work.",
+        },
+        {
+          title: "Machinery Safety Integration",
+          content:
+            "All electrical installations must integrate with emergency stop systems and safety interlocks. Compliance with BS EN 60204-1 and machinery safety directives is mandatory.",
+        },
+      ],
+    }}
+  />
+);
 
 export default IndustrialInstallations;

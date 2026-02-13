@@ -399,7 +399,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
         onClick={handleGeneratePDF}
         variant="ghost"
         disabled={generating || validating}
-        className="w-full h-11 touch-manipulation text-xs text-elec-light/60 hover:text-elec-yellow"
+        className="w-full h-11 touch-manipulation text-xs text-white hover:text-elec-yellow"
       >
         <RefreshCw className="h-3 w-3 mr-1" />
         Regenerate PDF

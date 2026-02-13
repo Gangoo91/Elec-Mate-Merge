@@ -79,7 +79,7 @@ const ApprenticeshipExpectations = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">What to Expect in Your Apprenticeship</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Essential guidance for starting your electrical apprenticeship and succeeding from day one
         </p>
         <SmartBackButton />
@@ -100,14 +100,14 @@ const ApprenticeshipExpectations = () => {
                 {day1Checklist.map((item, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-white/70">{item}</span>
+                    <span className="text-sm text-white">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="bg-elec-yellow/10 p-4 rounded-lg">
               <h4 className="font-semibold text-elec-yellow mb-2">Pro Tip</h4>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Your first impression matters. Being prepared shows you're serious about the trade and 
                 sets you up for success from day one.
               </p>
@@ -128,7 +128,7 @@ const ApprenticeshipExpectations = () => {
             {siteEtiquette.map((rule, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{rule.rule}</h4>
-                <p className="text-sm text-white/70">{rule.description}</p>
+                <p className="text-sm text-white">{rule.description}</p>
               </div>
             ))}
           </div>
@@ -138,7 +138,7 @@ const ApprenticeshipExpectations = () => {
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Tools You Should Own (Not Borrow)</CardTitle>
-          <p className="text-white/70 text-sm">
+          <p className="text-white text-sm">
             Investing in your own tools shows professionalism and ensures you always have what you need
           </p>
         </CardHeader>
@@ -149,7 +149,7 @@ const ApprenticeshipExpectations = () => {
                 <h4 className="font-semibold text-white mb-3">{category.category}</h4>
                 <ul className="space-y-2">
                   {category.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={itemIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       {item}
                     </li>
@@ -175,7 +175,7 @@ const ApprenticeshipExpectations = () => {
                 <h4 className="font-semibold text-white mb-2">What to Expect</h4>
                 <ul className="space-y-1">
                   {year.expectations.map((expectation, idx) => (
-                    <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       {expectation}
                     </li>
@@ -186,7 +186,7 @@ const ApprenticeshipExpectations = () => {
                 <h4 className="font-semibold text-white mb-2">Your Responsibilities</h4>
                 <ul className="space-y-1">
                   {year.responsibilities.map((responsibility, idx) => (
-                    <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       {responsibility}
                     </li>
@@ -206,7 +206,7 @@ const ApprenticeshipExpectations = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70">
+          <p className="text-white">
             Every site is different, but these fundamentals will serve you well anywhere. Stay curious, 
             work safely, and remember that everyone was new once. Your attitude and willingness to learn 
             matter more than what you don't know yet.

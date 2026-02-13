@@ -119,7 +119,7 @@ const LearningFromMistakes = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Learning From Mistakes
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Master the art of turning mistakes into learning opportunities. Build resilience, develop professional recovery skills, and transform setbacks into career advancement in the electrical trade.
         </p>
         <SmartBackButton />
@@ -132,7 +132,7 @@ const LearningFromMistakes = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -154,7 +154,7 @@ const LearningFromMistakes = () => {
                   <benefit.icon className="h-5 w-5 text-purple-400" />
                 </div>
                 <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
-                <p className="text-white/70 text-xs">{benefit.desc}</p>
+                <p className="text-white text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -228,7 +228,7 @@ const LearningFromMistakes = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Every successful electrician has made mistakes - it's how you respond that defines your career.
             The most experienced professionals will tell you that their biggest growth came from their biggest challenges.
             Embrace mistakes as stepping stones, not stumbling blocks.
@@ -241,7 +241,7 @@ const LearningFromMistakes = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

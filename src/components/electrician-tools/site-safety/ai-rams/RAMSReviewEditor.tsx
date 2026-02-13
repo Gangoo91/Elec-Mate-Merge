@@ -75,7 +75,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             <div className="flex flex-col items-center text-center space-y-4">
               <AlertCircle className="h-12 w-12 text-destructive" />
               <h3 className="text-lg font-semibold">No Data Available</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Both risk assessment and method statement generation failed. Please try again.
               </p>
               {onRetry && (
@@ -764,7 +764,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             {!isMobile && (
               <div className="flex items-center gap-2">
                 {lastSaved && (
-                  <span className="text-[10px] text-white/40 mr-2">
+                  <span className="text-[10px] text-white mr-2">
                     {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
                   </span>
                 )}
@@ -773,7 +773,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     onClick={onRegenerate}
                     size="sm"
                     variant="ghost"
-                    className="h-9 px-2 text-xs text-white/50 hover:text-orange-400 hover:bg-orange-500/10 touch-manipulation"
+                    className="h-9 px-2 text-xs text-white hover:text-orange-400 hover:bg-orange-500/10 touch-manipulation"
                   >
                     <Sparkles className="h-3 w-3 mr-1" />
                     Regenerate
@@ -783,7 +783,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             )}
           </div>
           {lastSaved && isMobile && (
-            <span className="text-[10px] text-white/40 mt-1">
+            <span className="text-[10px] text-white mt-1">
               {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
             </span>
           )}
@@ -795,7 +795,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             <Alert className="border-yellow-500/30 bg-yellow-500/5">
               <AlertCircle className="h-4 w-4 text-yellow-500" />
               <AlertTitle className="text-yellow-500 font-semibold text-sm">Partial Generation</AlertTitle>
-              <AlertDescription className="text-xs text-muted-foreground mt-1.5 space-y-1.5">
+              <AlertDescription className="text-xs text-white mt-1.5 space-y-1.5">
                 <p>
                   {!ramsData && "⚠️ Risk assessment generation failed. "}
                   {!methodData && "⚠️ Method statement generation failed. "}
@@ -823,7 +823,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
-                  "data-[state=inactive]:text-white/50 data-[state=inactive]:hover:text-white/70",
+                  "data-[state=inactive]:text-white data-[state=inactive]:hover:text-white",
                   "data-[state=inactive]:hover:bg-white/[0.05]"
                 )}
               >
@@ -838,7 +838,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
-                  "data-[state=inactive]:text-white/50 data-[state=inactive]:hover:text-white/70",
+                  "data-[state=inactive]:text-white data-[state=inactive]:hover:text-white",
                   "data-[state=inactive]:hover:bg-white/[0.05]"
                 )}
               >
@@ -876,7 +876,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <CardContent className="p-8 text-center">
                       <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold text-elec-light mb-2">No Hazards Identified Yet</h3>
-                      <p className="text-sm text-elec-light/60 mb-4">
+                      <p className="text-sm text-white mb-4">
                         Add hazards manually using the button above or regenerate to identify potential risks for this installation.
                       </p>
                       {onRegenerate && (
@@ -923,7 +923,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <CardContent className="pt-6">
                       <AlertCircle className="h-16 w-16 text-yellow-500/40 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-2">Risk Assessment Not Available</h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-sm text-white mb-4">
                         The risk assessment generation failed. Please retry to generate this section.
                       </p>
                       {onRetry && (
@@ -1018,7 +1018,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         <CardContent className="p-8 text-center">
                           <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
                           <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
-                          <p className="text-sm text-elec-light/60 mb-4">
+                          <p className="text-sm text-white mb-4">
                             Add installation steps manually using the button above or regenerate to create method statement.
                           </p>
                           {onRegenerate && (
@@ -1044,7 +1044,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <AlertCircle className="h-8 w-8 text-orange-400 shrink-0 mt-1" />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-orange-400 mb-2">Method Statement Not Available</h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-sm text-white mb-4">
                         The method statement generation timed out or failed. You can still use the risk assessment data, or retry to generate the full document with the method statement included.
                       </p>
                       {onRegenerate && (

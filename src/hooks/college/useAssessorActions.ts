@@ -83,15 +83,17 @@ export function useAssessorActions() {
 
       // Create notification for student
       await supabase.from('notifications').insert({
-        user_id: (await supabase
-          .from('portfolio_submissions')
-          .select('user_id')
-          .eq('id', data.submissionId)
-          .single()).data?.user_id,
+        recipient_id: (
+          await supabase
+            .from('portfolio_submissions')
+            .select('user_id')
+            .eq('id', data.submissionId)
+            .single()
+        ).data?.user_id,
         title: 'Portfolio Feedback Received',
         message: `Your assessor has reviewed your portfolio submission. Grade: ${data.grade || 'Pending'}`,
-        type: 'portfolio',
-        link: `/apprentice/ojt`
+        notification_type: 'portfolio',
+        action_url: '/apprentice/portfolio-hub?section=tutor',
       });
     },
     onSuccess: () => {
@@ -201,14 +203,33 @@ export function useAssessorActions() {
         .eq('id', submissionId);
 
       if (error) throw error;
+
+      // Create notification for student
+      const { data: subData } = await supabase
+        .from('portfolio_submissions')
+        .select('user_id')
+        .eq('id', submissionId)
+        .single();
+
+      if (subData?.user_id) {
+        await supabase.from('notifications').insert({
+          recipient_id: subData.user_id,
+          title: 'Additional Evidence Requested',
+          message:
+            'Your assessor has requested additional evidence for your portfolio submission.',
+          notification_type: 'portfolio',
+          action_url: '/apprentice/portfolio-hub?section=tutor',
+        });
+      }
     },
     onSuccess: () => {
       toast({
         title: 'Request Sent',
-        description: 'Student has been notified to provide additional evidence.'
+        description: 'Student has been notified to provide additional evidence.',
       });
       queryClient.invalidateQueries({ queryKey: ['submission-queue'] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['submission-detail'] });
+    },
   });
 
   // Create assessor observation

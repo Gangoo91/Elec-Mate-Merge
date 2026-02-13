@@ -39,10 +39,15 @@ import {
   Award,
   Send,
   Loader2,
-  ArrowLeft
+  ArrowLeft,
 } from 'lucide-react';
-import { useSubmissionDetail, SubmissionDetails, SubmissionPortfolioItem } from '@/hooks/college/usePortfolioSubmissions';
+import {
+  useSubmissionDetail,
+  SubmissionDetails,
+  SubmissionPortfolioItem,
+} from '@/hooks/college/usePortfolioSubmissions';
 import { useAssessorActions } from '@/hooks/college/useAssessorActions';
+import { EvidenceComments } from '@/components/portfolio-hub/comments/EvidenceComments';
 
 interface SubmissionReviewPanelProps {
   submissionId: string;
@@ -53,7 +58,7 @@ interface SubmissionReviewPanelProps {
 const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
   submissionId,
   onBack,
-  onComplete
+  onComplete,
 }) => {
   const { submission, isLoading, refetch } = useSubmissionDetail(submissionId);
   const { startReview, submitFeedback, signOff, requestMoreEvidence } = useAssessorActions();
@@ -82,7 +87,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         feedback,
         grade: grade as any,
         strengthsNoted: strengths,
-        areasForImprovement: improvements
+        areasForImprovement: improvements,
       });
       onComplete?.();
     } finally {
@@ -107,7 +112,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
     try {
       await requestMoreEvidence.mutateAsync({
         submissionId,
-        request: rejectionReason
+        request: rejectionReason,
       });
       setShowRejectDialog(false);
       onComplete?.();
@@ -133,7 +138,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -150,7 +155,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       <Card className="bg-white/5 border-elec-gray/40">
         <CardContent className="py-12 text-center">
           <AlertTriangle className="h-12 w-12 text-amber-400 mx-auto mb-4" />
-          <p className="text-white/70">Submission not found</p>
+          <p className="text-foreground">Submission not found</p>
           <Button variant="outline" onClick={onBack} className="mt-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Queue
@@ -170,13 +175,13 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
               Created {formatDate(item.createdAt)} • {Math.floor(item.timeSpent / 60)}h logged
             </CardDescription>
           </div>
-          <Badge variant="outline" className="capitalize">{item.status}</Badge>
+          <Badge variant="outline" className="capitalize">
+            {item.status}
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        {item.description && (
-          <p className="text-sm text-white/80">{item.description}</p>
-        )}
+        {item.description && <p className="text-sm text-foreground">{item.description}</p>}
 
         {item.skillsDemonstrated.length > 0 && (
           <div className="flex flex-wrap gap-1">
@@ -191,15 +196,17 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         {item.reflectionNotes && (
           <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <p className="text-xs text-blue-400 font-medium mb-1">Student Reflection</p>
-            <p className="text-sm text-white/80">{item.reflectionNotes}</p>
+            <p className="text-sm text-foreground">{item.reflectionNotes}</p>
           </div>
         )}
 
         {item.evidenceFiles.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs text-white/60 font-medium">Evidence Files ({item.evidenceFiles.length})</p>
+            <p className="text-xs text-muted-foreground font-medium">
+              Evidence Files ({item.evidenceFiles.length})
+            </p>
             <div className="grid gap-2">
-              {item.evidenceFiles.map(file => (
+              {item.evidenceFiles.map((file) => (
                 <div
                   key={file.id}
                   className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-elec-gray/40"
@@ -207,7 +214,9 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                   <div className="flex items-center gap-2 min-w-0">
                     {getFileIcon(file.fileType)}
                     <span className="text-sm truncate">{file.fileName}</span>
-                    <span className="text-xs text-white/50">{formatFileSize(file.fileSize)}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatFileSize(file.fileSize)}
+                    </span>
                   </div>
                   <Button
                     variant="ghost"
@@ -222,6 +231,11 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             </div>
           </div>
         )}
+
+        {/* Per-item comments */}
+        <div className="pt-3 border-t border-border/50">
+          <EvidenceComments evidenceId={item.id} evidenceTitle={item.title} inline={true} />
+        </div>
       </CardContent>
     </Card>
   );
@@ -236,10 +250,12 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
           </Button>
           <div>
             <h2 className="text-xl font-bold">Review Submission</h2>
-            <p className="text-sm text-white/60">{submission.categoryName}</p>
+            <p className="text-sm text-muted-foreground">{submission.categoryName}</p>
           </div>
         </div>
-        <Badge variant="outline" className="capitalize">{submission.status.replace('_', ' ')}</Badge>
+        <Badge variant="outline" className="capitalize">
+          {submission.status.replace('_', ' ')}
+        </Badge>
       </div>
 
       {/* Student Info */}
@@ -248,19 +264,26 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
           <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">
               <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
-                {submission.studentName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                {submission.studentName
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .toUpperCase()
+                  .slice(0, 2)}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <p className="font-semibold">{submission.studentName}</p>
-              <p className="text-sm text-white/60">{submission.qualificationTitle}</p>
+              <p className="text-sm text-muted-foreground">{submission.qualificationTitle}</p>
             </div>
             <div className="text-right">
               <p className="text-sm">
-                <span className="text-white/60">Submitted:</span> {formatDate(submission.submittedAt)}
+                <span className="text-muted-foreground">Submitted:</span>{' '}
+                {formatDate(submission.submittedAt)}
               </p>
               <p className="text-sm">
-                <span className="text-white/60">Attempt:</span> #{submission.submissionCount}
+                <span className="text-muted-foreground">Attempt:</span> #
+                {submission.submissionCount}
               </p>
             </div>
           </div>
@@ -277,9 +300,11 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-white/80">{submission.previousFeedback}</p>
+            <p className="text-sm text-foreground">{submission.previousFeedback}</p>
             {submission.previousGrade && (
-              <Badge className="mt-2" variant="outline">Previous Grade: {submission.previousGrade}</Badge>
+              <Badge className="mt-2" variant="outline">
+                Previous Grade: {submission.previousGrade}
+              </Badge>
             )}
           </CardContent>
         </Card>
@@ -296,9 +321,11 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             <AccordionItem key={item.id} value={item.id} className="border-elec-gray/40">
               <AccordionTrigger className="hover:no-underline px-4 py-3 bg-white/5 rounded-lg">
                 <div className="flex items-center gap-3 text-left">
-                  <span className="text-white/50 text-sm">#{index + 1}</span>
+                  <span className="text-muted-foreground text-sm">#{index + 1}</span>
                   <span className="font-medium">{item.title}</span>
-                  <Badge variant="outline" className="ml-auto mr-4">{item.evidenceFiles.length} files</Badge>
+                  <Badge variant="outline" className="ml-auto mr-4">
+                    {item.evidenceFiles.length} files
+                  </Badge>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pt-2">
@@ -435,8 +462,8 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
           <DialogHeader>
             <DialogTitle>Confirm Sign-off</DialogTitle>
             <DialogDescription>
-              By signing off this submission, you confirm that all evidence has been reviewed
-              and meets the required standard for this qualification unit.
+              By signing off this submission, you confirm that all evidence has been reviewed and
+              meets the required standard for this qualification unit.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">

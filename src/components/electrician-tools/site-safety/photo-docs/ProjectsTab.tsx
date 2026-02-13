@@ -114,10 +114,10 @@ export default function ProjectsTab() {
       <>
         <div className="flex flex-col items-center justify-center h-full bg-elec-dark px-4">
           <div className="w-20 h-20 rounded-2xl bg-[#1e1e1e] border border-white/10 flex items-center justify-center mb-4">
-            <Folder className="h-10 w-10 text-white/30" />
+            <Folder className="h-10 w-10 text-white" />
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">No projects yet</h3>
-          <p className="text-sm text-white/50 text-center max-w-[250px] mb-6">
+          <p className="text-sm text-white text-center max-w-[250px] mb-6">
             Take your first photo or add a project reference when uploading photos to organise them
             into folders
           </p>
@@ -152,7 +152,7 @@ export default function ProjectsTab() {
           {/* Search header */}
           <div className="sticky top-0 bg-elec-dark z-10 px-3 py-2 border-b border-white/10">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 placeholder="Search projects..."
                 className="pl-9 h-10 bg-[#1e1e1e] border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
@@ -164,7 +164,7 @@ export default function ProjectsTab() {
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
                   onClick={() => setSearchQuery('')}
                 >
-                  <X className="h-3.5 w-3.5 text-white/40" />
+                  <X className="h-3.5 w-3.5 text-white" />
                 </button>
               )}
             </div>
@@ -175,7 +175,7 @@ export default function ProjectsTab() {
             <div className="flex-1 momentum-scroll-y scrollbar-hide p-3 space-y-2">
               {filteredProjects.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-sm text-white/50">No projects found</p>
+                  <p className="text-sm text-white">No projects found</p>
                 </div>
               ) : (
                 filteredProjects.map((project, index) => (
@@ -196,9 +196,9 @@ export default function ProjectsTab() {
                       <div className="flex-1 min-w-0 text-left">
                         <p className="text-sm font-semibold text-white truncate">{project.name}</p>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-xs text-white/50">{project.count} photos</span>
-                          <span className="text-xs text-white/30">•</span>
-                          <span className="text-xs text-white/40 flex items-center gap-1">
+                          <span className="text-xs text-white">{project.count} photos</span>
+                          <span className="text-xs text-white">•</span>
+                          <span className="text-xs text-white flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             {formatDistanceToNow(new Date(project.lastUpdated), {
                               addSuffix: true,
@@ -216,7 +216,7 @@ export default function ProjectsTab() {
                       className="p-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-500/20 hover:border-blue-500/30 transition-colors touch-manipulation active:scale-95"
                       aria-label={`Share ${project.name}`}
                     >
-                      <Share2 className="h-4 w-4 text-white/60 hover:text-blue-400" />
+                      <Share2 className="h-4 w-4 text-white hover:text-blue-400" />
                     </button>
                     <button
                       onClick={(e) => {
@@ -226,9 +226,9 @@ export default function ProjectsTab() {
                       className="p-2.5 rounded-lg bg-white/5 border border-white/10 hover:bg-elec-yellow/20 hover:border-elec-yellow/30 transition-colors touch-manipulation active:scale-95"
                       aria-label={`Add photo to ${project.name}`}
                     >
-                      <Camera className="h-4 w-4 text-white/60 hover:text-elec-yellow" />
+                      <Camera className="h-4 w-4 text-white hover:text-elec-yellow" />
                     </button>
-                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                   </motion.div>
                 ))
               )}
@@ -243,15 +243,15 @@ export default function ProjectsTab() {
                   className="w-full flex items-center gap-3 p-3 bg-[#1e1e1e] rounded-xl border border-dashed border-white/20 hover:bg-[#252525] active:scale-[0.99] transition-all touch-manipulation"
                 >
                   <div className="p-2.5 rounded-lg bg-white/5 border border-dashed border-white/20 flex-shrink-0">
-                    <ImageIcon className="h-5 w-5 text-white/40" />
+                    <ImageIcon className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1 min-w-0 text-left">
-                    <p className="text-sm font-medium text-white/60">Unorganised Photos</p>
-                    <p className="text-xs text-white/40 mt-0.5">
+                    <p className="text-sm font-medium text-white">Unorganised Photos</p>
+                    <p className="text-xs text-white mt-0.5">
                       {photos.filter((p) => !p.project_reference).length} photos without a project
                     </p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white/20 flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </motion.button>
               )}
             </div>
@@ -288,13 +288,13 @@ export default function ProjectsTab() {
               onClick={() => setSelectedProject(null)}
               className="p-2 -ml-1 rounded-lg hover:bg-white/5 transition-colors touch-manipulation"
             >
-              <ChevronRight className="h-5 w-5 text-white/60 rotate-180" />
+              <ChevronRight className="h-5 w-5 text-white rotate-180" />
             </button>
             <div
               className={`p-2 rounded-lg ${selectedProject === '__unorganised__' ? 'bg-white/5 border border-dashed border-white/20' : 'bg-elec-yellow/10 border border-elec-yellow/20'}`}
             >
               {selectedProject === '__unorganised__' ? (
-                <ImageIcon className="h-5 w-5 text-white/40" />
+                <ImageIcon className="h-5 w-5 text-white" />
               ) : (
                 <FolderOpen className="h-5 w-5 text-elec-yellow" />
               )}
@@ -303,7 +303,7 @@ export default function ProjectsTab() {
               <h2 className="text-sm font-semibold text-white truncate">
                 {selectedProject === '__unorganised__' ? 'Unorganised Photos' : selectedProject}
               </h2>
-              <p className="text-xs text-white/50">{displayPhotos.length} photos</p>
+              <p className="text-xs text-white">{displayPhotos.length} photos</p>
             </div>
           </div>
         </div>
@@ -313,7 +313,7 @@ export default function ProjectsTab() {
           <div className="flex-1 momentum-scroll-y scrollbar-hide p-3 pb-20">
             {displayPhotos.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-sm text-white/50">No photos in this project</p>
+                <p className="text-sm text-white">No photos in this project</p>
               </div>
             ) : (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">

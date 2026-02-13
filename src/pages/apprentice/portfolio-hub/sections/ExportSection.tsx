@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import {
@@ -18,30 +17,72 @@ import {
   Briefcase,
   Shield,
   Eye,
+  Trash2,
+  Plus,
+  Loader2,
 } from 'lucide-react';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
+import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
 import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioExportDialog';
 
 /**
  * ExportSection - Export portfolio and share publicly
  *
- * Phase 5 will enhance with:
- * - EPA-ready portfolio export
- * - Public portfolio URL
- * - QR code generation
- * - Employer share links
+ * Creates real share links via usePortfolioSharing hook.
+ * Assessors open the /view/:token URL to review and provide feedback.
  */
 export function ExportSection() {
   const { entries } = useUltraFastPortfolio();
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [publicPortfolioEnabled, setPublicPortfolioEnabled] = useState(false);
+  const {
+    shares,
+    isLoading: sharesLoading,
+    createShareLink,
+    revokeShareLink,
+    getShareUrl,
+    copyShareLink,
+  } = usePortfolioSharing();
 
-  const portfolioUrl = 'https://elec-mate.uk/portfolio/abc123'; // Placeholder
+  const [copiedToken, setCopiedToken] = useState<string | null>(null);
+  const [creating, setCreating] = useState(false);
+  const [revoking, setRevoking] = useState<string | null>(null);
+  const [newShareExpiry, setNewShareExpiry] = useState<'24h' | '7d' | '30d' | 'never'>('7d');
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(portfolioUrl);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 2000);
+  const handleCreateShare = async () => {
+    setCreating(true);
+    try {
+      await createShareLink({
+        title: 'Portfolio for Review',
+        expiresIn: newShareExpiry,
+      });
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const handleCopyLink = async (token: string) => {
+    await copyShareLink(token);
+    setCopiedToken(token);
+    setTimeout(() => setCopiedToken(null), 2000);
+  };
+
+  const handleRevoke = async (shareId: string) => {
+    setRevoking(shareId);
+    try {
+      await revokeShareLink(shareId);
+    } finally {
+      setRevoking(null);
+    }
+  };
+
+  const formatExpiry = (expiresAt: string | null) => {
+    if (!expiresAt) return 'Never expires';
+    const date = new Date(expiresAt);
+    const now = new Date();
+    if (date < now) return 'Expired';
+    const diffDays = Math.ceil((date.getTime() - now.getTime()) / 86400000);
+    if (diffDays <= 1) return 'Expires today';
+    if (diffDays <= 7) return `${diffDays} days left`;
+    return `Expires ${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`;
   };
 
   const exportOptions = [
@@ -76,7 +117,7 @@ export function ExportSection() {
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-foreground">Export & Share</h1>
-        <p className="text-sm text-muted-foreground">Download your portfolio or share with employers</p>
+        <p className="text-sm text-muted-foreground">Download your portfolio or share with assessors and employers</p>
       </div>
 
       {/* Portfolio Summary */}
@@ -154,74 +195,171 @@ export function ExportSection() {
         </CardContent>
       </Card>
 
-      {/* Public Portfolio Link */}
+      {/* Share with Assessor */}
       <Card className="border-border">
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Share2 className="h-4 w-4 text-blue-500" />
-            Public Portfolio Link
+            Share with Assessor
           </CardTitle>
-          <CardDescription>Share your portfolio with potential employers</CardDescription>
+          <CardDescription>
+            Create a link your assessor can use to review your portfolio and provide feedback
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Enable Toggle */}
-          <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
+          {/* Create new share link */}
+          <div className="p-4 rounded-xl bg-muted/50 border border-border space-y-3">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
                 <Eye className="h-5 w-5 text-blue-500" />
               </div>
-              <div>
-                <Label htmlFor="public-toggle" className="text-sm font-medium">
-                  Enable Public Portfolio
-                </Label>
-                <p className="text-xs text-muted-foreground">Allow anyone with the link to view</p>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">Create Share Link</p>
+                <p className="text-xs text-muted-foreground">Your assessor can view evidence and leave feedback</p>
               </div>
             </div>
-            <Switch
-              id="public-toggle"
-              checked={publicPortfolioEnabled}
-              onCheckedChange={setPublicPortfolioEnabled}
-            />
+
+            <div className="flex gap-2">
+              <Label htmlFor="expiry-select" className="sr-only">
+                Expiry
+              </Label>
+              <select
+                id="expiry-select"
+                value={newShareExpiry}
+                onChange={(e) => setNewShareExpiry(e.target.value as '24h' | '7d' | '30d' | 'never')}
+                className="h-11 flex-1 px-3 rounded-lg bg-background border border-border text-foreground text-sm focus:outline-none focus:border-elec-yellow touch-manipulation"
+              >
+                <option value="24h">Expires in 24 hours</option>
+                <option value="7d">Expires in 7 days</option>
+                <option value="30d">Expires in 30 days</option>
+                <option value="never">Never expires</option>
+              </select>
+              <Button
+                onClick={handleCreateShare}
+                disabled={creating}
+                className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/80 touch-manipulation"
+              >
+                {creating ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    <Plus className="h-4 w-4 mr-1.5" />
+                    Create
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
 
-          {/* Share Link */}
-          {publicPortfolioEnabled && (
+          {/* Active shares */}
+          {sharesLoading ? (
+            <div className="flex items-center justify-center py-6">
+              <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+            </div>
+          ) : shares.length > 0 ? (
             <div className="space-y-3">
-              <div className="flex gap-2">
-                <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-lg bg-muted border border-border">
-                  <Link className="h-4 w-4 text-muted-foreground shrink-0" />
-                  <span className="text-sm text-foreground truncate">{portfolioUrl}</span>
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0 border-border"
-                  onClick={handleCopyLink}
-                >
-                  {copiedLink ? (
-                    <Check className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0 border-border"
-                  onClick={() => window.open(portfolioUrl, '_blank')}
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
-              </div>
+              <p className="text-xs text-muted-foreground font-medium">
+                Active Links ({shares.length})
+              </p>
+              {shares.map((share) => {
+                const isExpired = share.expires_at && new Date(share.expires_at) < new Date();
+                const isCopied = copiedToken === share.token;
+                const isRevoking = revoking === share.id;
 
-              <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <Shield className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-xs text-amber-600">
-                  Your public portfolio only shows completed and approved evidence. Personal details and tutor feedback are hidden.
-                </p>
-              </div>
+                return (
+                  <div
+                    key={share.id}
+                    className={cn(
+                      "p-4 rounded-xl border",
+                      isExpired ? "border-red-500/20 bg-red-500/5" : "border-border bg-muted/30"
+                    )}
+                  >
+                    {/* Link URL */}
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-lg bg-background border border-border min-w-0">
+                        <Link className="h-4 w-4 text-muted-foreground shrink-0" />
+                        <span className="text-sm text-foreground truncate">
+                          {getShareUrl(share.token)}
+                        </span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="shrink-0 border-border h-11 w-11 touch-manipulation"
+                        onClick={() => handleCopyLink(share.token)}
+                        disabled={isExpired || false}
+                      >
+                        {isCopied ? (
+                          <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="shrink-0 border-border h-11 w-11 touch-manipulation"
+                        onClick={() => window.open(getShareUrl(share.token), '_blank')}
+                        disabled={isExpired || false}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {/* Stats row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Eye className="h-3 w-3" />
+                          {share.view_count || 0} views
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {formatExpiry(share.expires_at)}
+                        </span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-9 touch-manipulation"
+                        onClick={() => handleRevoke(share.id)}
+                        disabled={isRevoking}
+                      >
+                        {isRevoking ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <>
+                            <Trash2 className="h-3.5 w-3.5 mr-1" />
+                            Revoke
+                          </>
+                        )}
+                      </Button>
+                    </div>
+
+                    {isExpired && (
+                      <Badge className="mt-2 bg-red-500/10 text-red-400 border-red-500/20 text-xs">
+                        Expired
+                      </Badge>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <Share2 className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">No active share links</p>
+              <p className="text-xs text-muted-foreground mt-1">Create one above to share with your assessor</p>
             </div>
           )}
+
+          {/* Security note */}
+          <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+            <Shield className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+            <p className="text-xs text-amber-500">
+              Share links only show completed and approved evidence. Your assessor can leave per-item comments and submit formal reviews. Personal details are hidden.
+            </p>
+          </div>
         </CardContent>
       </Card>
 

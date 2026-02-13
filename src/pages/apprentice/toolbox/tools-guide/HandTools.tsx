@@ -99,7 +99,7 @@ const HandTools = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Hand Tools for Electricians
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Professional hand tools with UK prices. Everything you need for electrical work from quality suppliers.
         </p>
         <SmartBackButton />
@@ -112,7 +112,7 @@ const HandTools = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -123,13 +123,13 @@ const HandTools = () => {
         <CardContent className="p-4 space-y-4">
           <div className="relative w-full">
             {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search hand tools..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn("bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/50", !searchTerm && "pl-10")}
+              className={cn("bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50", !searchTerm && "pl-10")}
             />
           </div>
 
@@ -153,13 +153,13 @@ const HandTools = () => {
 
           {/* Results count */}
           {!isLoading && handTools.length > 0 && (
-            <div className="flex items-center justify-between text-sm text-white/80">
+            <div className="flex items-center justify-between text-sm text-white">
               <span>{handTools.length} tools found</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className="text-white/80 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
               >
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
                 {showAdvanced ? 'Hide' : 'Show'} Advanced
@@ -171,7 +171,7 @@ const HandTools = () => {
 
       {isLoading ? (
         <div className="flex justify-center py-16">
-          <div className="animate-pulse text-white/60">Loading tools...</div>
+          <div className="animate-pulse text-white">Loading tools...</div>
         </div>
       ) : handTools.length === 0 ? (
         <Card className="border-white/10 bg-white/5">
@@ -180,7 +180,7 @@ const HandTools = () => {
               <Search className="h-8 w-8 text-elec-yellow" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No Hand Tools Found</h3>
-            <p className="text-white/80">Try adjusting your filters or search terms.</p>
+            <p className="text-white">Try adjusting your filters or search terms.</p>
             <Button
               variant="outline"
               onClick={() => {

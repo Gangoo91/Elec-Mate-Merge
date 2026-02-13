@@ -95,7 +95,7 @@ const InspectionTesting = () => {
                     <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
                       BS7671 Inspection & Testing
                     </h1>
-                    <p className="hidden sm:block text-lg text-white/80 max-w-2xl leading-relaxed">
+                    <p className="hidden sm:block text-lg text-white max-w-2xl leading-relaxed">
                       Master the essential procedures for electrical inspection and testing with comprehensive learning materials
                     </p>
                   </div>
@@ -112,7 +112,7 @@ const InspectionTesting = () => {
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-white">Safety First</p>
-                      <p className="text-sm text-white/70 leading-relaxed">
+                      <p className="text-sm text-white leading-relaxed">
                         <span className="text-red-400 font-medium">Always work under supervision</span> when performing electrical testing. Follow your company's procedures.
                       </p>
                     </div>
@@ -127,7 +127,7 @@ const InspectionTesting = () => {
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-white">Training Aid</p>
-                      <p className="text-sm text-white/70 leading-relaxed">
+                      <p className="text-sm text-white leading-relaxed">
                         Supplements your <span className="text-amber-400 font-medium">2391 qualification</span> training. Not a replacement for formal qualifications.
                       </p>
                     </div>
@@ -169,7 +169,7 @@ const InspectionTesting = () => {
                             Recommended
                           </span>
                         </div>
-                        <p className="text-base text-white/80 leading-relaxed max-w-xl">
+                        <p className="text-base text-white leading-relaxed max-w-xl">
                           Access comprehensive inspection and testing training with interactive modules covering testing procedures, fault finding techniques, BS 7671 regulations reference, and knowledge assessments.
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -220,7 +220,7 @@ const InspectionTesting = () => {
                         <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">
                           {topic.title}
                         </h3>
-                        <p className="text-sm text-white/70 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           {topic.description}
                         </p>
                         <div className="flex items-center justify-between pt-1">
@@ -228,7 +228,7 @@ const InspectionTesting = () => {
                             {topic.badge}
                           </span>
                           <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg bg-white/5 group-hover:bg-white/10 flex items-center justify-center transition-all duration-300">
-                            <ArrowRight className="h-5 w-5 text-white/70 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
+                            <ArrowRight className="h-5 w-5 text-white group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" />
                           </div>
                         </div>
                       </div>
@@ -258,7 +258,7 @@ const InspectionTesting = () => {
                     <GraduationCap className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-sm font-semibold text-white">I&T Hub</p>
-                  <p className="text-xs text-white/70 mt-1 hidden sm:block">Full training</p>
+                  <p className="text-xs text-white mt-1 hidden sm:block">Full training</p>
                 </CardContent>
               </Card>
             </Link>
@@ -273,7 +273,7 @@ const InspectionTesting = () => {
                     <CheckSquare className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-sm font-semibold text-white">Run-Through</p>
-                  <p className="text-xs text-white/70 mt-1 hidden sm:block">Step-by-step</p>
+                  <p className="text-xs text-white mt-1 hidden sm:block">Step-by-step</p>
                 </CardContent>
               </Card>
             </Link>
@@ -288,7 +288,7 @@ const InspectionTesting = () => {
                     <Zap className="h-5 w-5 text-green-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Test Procedures</p>
-                  <p className="text-xs text-white/70 mt-1 hidden sm:block">Quick toolkit</p>
+                  <p className="text-xs text-white mt-1 hidden sm:block">Quick toolkit</p>
                 </CardContent>
               </Card>
             </Link>
@@ -303,7 +303,7 @@ const InspectionTesting = () => {
                     <BookOpen className="h-5 w-5 text-blue-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Flashcards</p>
-                  <p className="text-xs text-white/70 mt-1 hidden sm:block">Quick revision</p>
+                  <p className="text-xs text-white mt-1 hidden sm:block">Quick revision</p>
                 </CardContent>
               </Card>
             </Link>
@@ -318,7 +318,7 @@ const InspectionTesting = () => {
                     <FileText className="h-5 w-5 text-purple-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Calculators</p>
-                  <p className="text-xs text-white/70 mt-1 hidden sm:block">Zs, R1+R2</p>
+                  <p className="text-xs text-white mt-1 hidden sm:block">Zs, R1+R2</p>
                 </CardContent>
               </Card>
             </Link>
@@ -330,11 +330,11 @@ const InspectionTesting = () => {
           <CardContent className="p-5">
             <div className="flex items-start gap-4">
               <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                <AlertTriangle className="h-5 w-5 text-white/70" />
+                <AlertTriangle className="h-5 w-5 text-white" />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-semibold text-white/80">Disclaimer</p>
-                <p className="text-sm text-white/70 leading-relaxed">
+                <p className="text-sm font-semibold text-white">Disclaimer</p>
+                <p className="text-sm text-white leading-relaxed">
                   These inspection and testing materials are for educational purposes only.
                   Always follow your employer's procedures and work under appropriate supervision.
                   For formal qualifications, contact City & Guilds, EAL, or your registered training provider.

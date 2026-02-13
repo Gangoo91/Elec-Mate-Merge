@@ -710,7 +710,7 @@ const IndustrialTestingGuide = () => {
             <TestTube className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Industrial Testing & Certification Guide</CardTitle>
           </div>
-          <p className="text-neutral-300">
+          <p className="text-white">
             Comprehensive testing procedures for industrial electrical installations including
             high-power systems, motor testing, safety circuits, and commissioning procedures.
           </p>
@@ -734,7 +734,7 @@ const IndustrialTestingGuide = () => {
                 <Shield className="h-6 w-6 text-red-400" />
                 <CardTitle className="text-red-300">High-Power Testing Safety</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Industrial testing requires enhanced safety measures due to higher voltages, currents, and fault levels
               </p>
             </CardHeader>
@@ -744,7 +744,7 @@ const IndustrialTestingGuide = () => {
                   <h3 className="font-bold text-red-300 mb-3">{prep.step}</h3>
                   <ul className="space-y-2">
                     {prep.details.map((detail, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
@@ -766,7 +766,7 @@ const IndustrialTestingGuide = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {highPowerTestingSafety.gs38Requirements.map((req, index) => (
-                  <div key={index} className="flex items-start gap-2 text-sm text-neutral-300 bg-orange-500/10 p-3 rounded">
+                  <div key={index} className="flex items-start gap-2 text-sm text-white bg-orange-500/10 p-3 rounded">
                     <Shield className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                     {req}
                   </div>
@@ -788,7 +788,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-purple-300 mb-3">Why PSCC Matters</h3>
                 <ul className="space-y-2">
                   {prospectiveFaultCurrent.importance.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <li key={i} className="flex items-start gap-2 text-sm text-white">
                       <Zap className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -806,7 +806,7 @@ const IndustrialTestingGuide = () => {
                         <th className="text-left py-2 px-3 text-purple-300">Typical PSCC</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {prospectiveFaultCurrent.typicalValues.map((val, i) => (
                         <tr key={i} className="border-b border-purple-500/20">
                           <td className="py-2 px-3">{val.location}</td>
@@ -829,7 +829,7 @@ const IndustrialTestingGuide = () => {
                 <Cog className="h-6 w-6 text-blue-400" />
                 <CardTitle className="text-blue-300">Motor Testing Procedures</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Comprehensive testing for induction motors including insulation and winding tests
               </p>
             </CardHeader>
@@ -840,14 +840,14 @@ const IndustrialTestingGuide = () => {
                     <h3 className="font-bold text-blue-300 text-lg">{test.test}</h3>
                   </div>
 
-                  <p className="text-neutral-300 mb-4"><strong className="text-blue-200">Purpose:</strong> {test.purpose}</p>
+                  <p className="text-white mb-4"><strong className="text-blue-200">Purpose:</strong> {test.purpose}</p>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="bg-blue-500/5 p-4 rounded border border-blue-500/10">
                       <h4 className="text-blue-200 font-medium mb-3">Test Method</h4>
                       <ol className="space-y-2">
                         {test.method.map((step, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                          <li key={i} className="flex items-start gap-2 text-sm text-white">
                             <span className="text-blue-400 font-medium">{i + 1}.</span>
                             {step}
                           </li>
@@ -859,7 +859,7 @@ const IndustrialTestingGuide = () => {
                       <h4 className="text-green-200 font-medium mb-3">Acceptable Limits</h4>
                       <ul className="space-y-2">
                         {test.acceptableLimits.map((limit, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                          <li key={i} className="flex items-start gap-2 text-sm text-white">
                             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                             {limit}
                           </li>
@@ -872,7 +872,7 @@ const IndustrialTestingGuide = () => {
                     <h4 className="text-yellow-200 font-medium mb-2">Important Notes</h4>
                     <ul className="space-y-1">
                       {test.notes.map((note, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                        <li key={i} className="flex items-start gap-2 text-sm text-white">
                           <AlertTriangle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                           {note}
                         </li>
@@ -894,7 +894,7 @@ const IndustrialTestingGuide = () => {
                 <Gauge className="h-6 w-6 text-green-400" />
                 <CardTitle className="text-green-300">Earth Fault Loop Impedance (Zs)</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Industrial installations present unique challenges for EFLI testing
               </p>
             </CardHeader>
@@ -903,10 +903,10 @@ const IndustrialTestingGuide = () => {
               {earthFaultLoopImpedance.considerations.map((item, index) => (
                 <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
                   <h3 className="font-bold text-green-300 mb-2">{item.factor}</h3>
-                  <p className="text-neutral-300 text-sm mb-3"><strong>Impact:</strong> {item.impact}</p>
+                  <p className="text-white text-sm mb-3"><strong>Impact:</strong> {item.impact}</p>
                   <ul className="space-y-1">
                     {item.solutions.map((sol, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         {sol}
                       </li>
@@ -927,7 +927,7 @@ const IndustrialTestingGuide = () => {
                         <th className="text-left py-2 px-3 text-green-300">Voltage</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {earthFaultLoopImpedance.maxZsValues.map((val, i) => (
                         <tr key={i} className="border-b border-green-500/20">
                           <td className="py-2 px-3">{val.device}</td>
@@ -945,7 +945,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">Testing Procedure</h3>
                 <ol className="space-y-2">
                   {earthFaultLoopImpedance.testingMethod.map((step, i) => (
-                    <li key={i} className="text-sm text-neutral-300">{step}</li>
+                    <li key={i} className="text-sm text-white">{step}</li>
                   ))}
                 </ol>
               </div>
@@ -968,12 +968,12 @@ const IndustrialTestingGuide = () => {
                     {system.tests.map((test, i) => (
                       <div key={i} className="bg-red-500/5 p-3 rounded border border-red-500/10">
                         <h4 className="text-red-200 font-medium mb-1">{test.test}</h4>
-                        <p className="text-neutral-300 text-sm mb-1"><strong>Method:</strong> {test.method}</p>
+                        <p className="text-white text-sm mb-1"><strong>Method:</strong> {test.method}</p>
                         <p className="text-green-300 text-sm"><strong>Acceptance:</strong> {test.acceptance}</p>
                       </div>
                     ))}
                   </div>
-                  <p className="text-neutral-400 text-xs mt-3 italic">{system.documentation}</p>
+                  <p className="text-white text-xs mt-3 italic">{system.documentation}</p>
                 </div>
               ))}
             </CardContent>
@@ -989,7 +989,7 @@ const IndustrialTestingGuide = () => {
                 <Thermometer className="h-6 w-6 text-orange-400" />
                 <CardTitle className="text-orange-300">Thermographic Surveys</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 Non-contact temperature measurement to identify hot spots and failing connections
               </p>
             </CardHeader>
@@ -999,7 +999,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-orange-300 mb-3">Applications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {thermographicSurveys.applications.map((app, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-center gap-2 text-sm text-white">
                       <Eye className="h-4 w-4 text-orange-400" />
                       {app}
                     </div>
@@ -1021,7 +1021,7 @@ const IndustrialTestingGuide = () => {
                       </div>
                       <ul className="space-y-1 ml-10">
                         {proc.details.map((detail, i) => (
-                          <li key={i} className="text-sm text-neutral-300">- {detail}</li>
+                          <li key={i} className="text-sm text-white">- {detail}</li>
                         ))}
                       </ul>
                     </div>
@@ -1049,9 +1049,9 @@ const IndustrialTestingGuide = () => {
                         }`}>
                           {sev.deltaT}
                         </Badge>
-                        <span className="text-neutral-300 text-sm font-medium">{sev.priority}</span>
+                        <span className="text-white text-sm font-medium">{sev.priority}</span>
                       </div>
-                      <span className="text-neutral-300 text-sm">{sev.action}</span>
+                      <span className="text-white text-sm">{sev.action}</span>
                     </div>
                   ))}
                 </div>
@@ -1062,7 +1062,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-orange-300 mb-3">Common Faults Detected</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {thermographicSurveys.commonFaults.map((fault, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-center gap-2 text-sm text-white">
                       <AlertTriangle className="h-4 w-4 text-orange-400" />
                       {fault}
                     </div>
@@ -1079,7 +1079,7 @@ const IndustrialTestingGuide = () => {
                 <Activity className="h-6 w-6 text-blue-400" />
                 <CardTitle className="text-blue-300">Vibration Analysis Basics</CardTitle>
               </div>
-              <p className="text-neutral-300">
+              <p className="text-white">
                 {vibrationAnalysis.purpose}
               </p>
             </CardHeader>
@@ -1091,8 +1091,8 @@ const IndustrialTestingGuide = () => {
                   {vibrationAnalysis.parameters.map((param, i) => (
                     <div key={i} className="bg-blue-500/5 p-3 rounded border border-blue-500/10">
                       <h4 className="text-blue-200 font-medium mb-1">{param.parameter}</h4>
-                      <p className="text-neutral-400 text-xs mb-1">Units: {param.units}</p>
-                      <p className="text-neutral-300 text-sm">Best for: {param.bestFor}</p>
+                      <p className="text-white text-xs mb-1">Units: {param.units}</p>
+                      <p className="text-white text-sm">Best for: {param.bestFor}</p>
                     </div>
                   ))}
                 </div>
@@ -1110,7 +1110,7 @@ const IndustrialTestingGuide = () => {
                         <th className="text-left py-2 px-3 text-blue-300">Characteristics</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {vibrationAnalysis.commonFaults.map((fault, i) => (
                         <tr key={i} className="border-b border-blue-500/20">
                           <td className="py-2 px-3 font-medium text-blue-200">{fault.fault}</td>
@@ -1137,7 +1137,7 @@ const IndustrialTestingGuide = () => {
                         <th className="text-center py-2 px-3 text-red-300">Danger</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {vibrationAnalysis.isoLimits.map((limit, i) => (
                         <tr key={i} className="border-b border-blue-500/20">
                           <td className="py-2 px-3 font-medium text-blue-200">{limit.class}</td>
@@ -1168,7 +1168,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-purple-300 mb-3">Industrial Considerations</h3>
                 <ul className="space-y-2">
                   {patTesting.considerations.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <li key={i} className="flex items-start gap-2 text-sm text-white">
                       <AlertTriangle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -1188,8 +1188,8 @@ const IndustrialTestingGuide = () => {
                           {cat.frequency}
                         </Badge>
                       </div>
-                      <p className="text-neutral-400 text-sm mb-2">{cat.description}</p>
-                      <p className="text-neutral-300 text-sm">
+                      <p className="text-white text-sm mb-2">{cat.description}</p>
+                      <p className="text-white text-sm">
                         <strong>Tests:</strong> {cat.tests.join(", ")}
                       </p>
                     </div>
@@ -1209,12 +1209,12 @@ const IndustrialTestingGuide = () => {
                         <th className="text-left py-2 px-3 text-purple-300">Notes</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {patTesting.testLimits.map((limit, i) => (
                         <tr key={i} className="border-b border-purple-500/20">
                           <td className="py-2 px-3">{limit.test}</td>
                           <td className="py-2 px-3 font-medium text-green-300">{limit.pass}</td>
-                          <td className="py-2 px-3 text-neutral-400">{limit.notes}</td>
+                          <td className="py-2 px-3 text-white">{limit.notes}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1234,14 +1234,14 @@ const IndustrialTestingGuide = () => {
                 <FileCheck className="h-6 w-6 text-green-400" />
                 <CardTitle className="text-green-300">{documentation.eic.title}</CardTitle>
               </div>
-              <p className="text-neutral-300">{documentation.eic.use}</p>
+              <p className="text-white">{documentation.eic.use}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
                 <h3 className="font-bold text-green-300 mb-3">Standard Contents</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {documentation.eic.contents.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
@@ -1253,7 +1253,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">Additional Industrial Requirements</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {documentation.eic.industrialAdditions.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <Factory className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
@@ -1270,7 +1270,7 @@ const IndustrialTestingGuide = () => {
                 <ClipboardCheck className="h-6 w-6 text-blue-400" />
                 <CardTitle className="text-blue-300">{documentation.eicr.title}</CardTitle>
               </div>
-              <p className="text-neutral-300">{documentation.eicr.use}</p>
+              <p className="text-white">{documentation.eicr.use}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Sections */}
@@ -1278,7 +1278,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-blue-300 mb-3">Report Sections</h3>
                 <ul className="space-y-2">
                   {documentation.eicr.sections.map((section, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <li key={i} className="flex items-start gap-2 text-sm text-white">
                       <FileText className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                       {section}
                     </li>
@@ -1305,7 +1305,7 @@ const IndustrialTestingGuide = () => {
                       }`}>
                         {code.code}
                       </Badge>
-                      <span className="text-neutral-300 text-sm">{code.meaning}</span>
+                      <span className="text-white text-sm">{code.meaning}</span>
                     </div>
                   ))}
                 </div>
@@ -1322,7 +1322,7 @@ const IndustrialTestingGuide = () => {
                         <th className="text-left py-2 px-3 text-blue-300">Maximum Interval</th>
                       </tr>
                     </thead>
-                    <tbody className="text-neutral-300">
+                    <tbody className="text-white">
                       {documentation.eicr.inspectionFrequencies.map((freq, i) => (
                         <tr key={i} className="border-b border-blue-500/20">
                           <td className="py-2 px-3">{freq.premises}</td>
@@ -1356,7 +1356,7 @@ const IndustrialTestingGuide = () => {
                   </div>
                   <ul className="space-y-1 ml-11">
                     {stage.activities.map((activity, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                         {activity}
                       </li>
@@ -1370,7 +1370,7 @@ const IndustrialTestingGuide = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">Final Commissioning Checklist</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {commissioning.checklistItems.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-neutral-300">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
@@ -1383,7 +1383,7 @@ const IndustrialTestingGuide = () => {
       </Tabs>
 
       {/* Critical Safety Notice */}
-      <Card className="border-red-500/50 bg-gradient-to-r from-red-500/10 to-orange-500/10">
+      <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
           <CardTitle className="text-red-300 flex items-center gap-2">
             <Shield className="h-6 w-6" />
@@ -1391,7 +1391,7 @@ const IndustrialTestingGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
-          <div className="space-y-3 text-sm text-neutral-300">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-red-300">Arc Flash Protection:</strong> Industrial testing on high-voltage systems requires
               appropriate arc flash PPE and risk assessment. Ensure adequate incident energy calculations are completed.

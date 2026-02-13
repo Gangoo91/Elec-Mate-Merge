@@ -114,7 +114,7 @@ export const HazardDatabaseV2: React.FC = () => {
             <Bookmark
               className={cn(
                 "h-5 w-5",
-                bookmarks.size > 0 ? "text-elec-yellow fill-elec-yellow" : "text-white/50"
+                bookmarks.size > 0 ? "text-elec-yellow fill-elec-yellow" : "text-white"
               )}
             />
             {bookmarks.size > 0 && (
@@ -135,8 +135,8 @@ export const HazardDatabaseV2: React.FC = () => {
               "active:scale-[0.99]"
             )}
           >
-            <Search className="h-5 w-5 text-white/40" />
-            <span className="text-white/40 text-sm">Search hazards...</span>
+            <Search className="h-5 w-5 text-white" />
+            <span className="text-white text-sm">Search hazards...</span>
           </button>
         </div>
 
@@ -161,7 +161,7 @@ export const HazardDatabaseV2: React.FC = () => {
         {activeCategory !== 'all' && (
           <div className="px-4 pb-3">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/50">Filtered by:</span>
+              <span className="text-xs text-white">Filtered by:</span>
               <button
                 onClick={() => setActiveCategory('all')}
                 className={cn(
@@ -191,12 +191,12 @@ export const HazardDatabaseV2: React.FC = () => {
           {filteredHazards.length === 0 ? (
             <div className="flex flex-col items-center py-16">
               <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-                <Search className="h-10 w-10 text-white/20" />
+                <Search className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 No Hazards Found
               </h3>
-              <p className="text-sm text-white/50 text-center max-w-xs">
+              <p className="text-sm text-white text-center max-w-xs">
                 No hazards match the selected category
               </p>
             </div>

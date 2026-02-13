@@ -38,7 +38,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <Truck className="h-4 w-4 text-green-400" />
               <span className="text-sm font-semibold text-elec-light">Vehicle Access</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.vehicleAccess}</p>
+            <p className="text-sm text-white">{logistics.vehicleAccess}</p>
           </div>
         )}
 
@@ -49,7 +49,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <ParkingCircle className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-semibold text-elec-light">Parking Arrangements</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.parking}</p>
+            <p className="text-sm text-white">{logistics.parking}</p>
           </div>
         )}
 
@@ -60,7 +60,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <Package className="h-4 w-4 text-amber-400" />
               <span className="text-sm font-semibold text-elec-light">Material Storage</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.materialStorage}</p>
+            <p className="text-sm text-white">{logistics.materialStorage}</p>
           </div>
         )}
 
@@ -71,7 +71,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <Trash2 className="h-4 w-4 text-red-400" />
               <span className="text-sm font-semibold text-elec-light">Waste Management</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.wasteManagement}</p>
+            <p className="text-sm text-white">{logistics.wasteManagement}</p>
           </div>
         )}
 
@@ -82,7 +82,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <Coffee className="h-4 w-4 text-purple-400" />
               <span className="text-sm font-semibold text-elec-light">Welfare Facilities</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.welfareFacilities}</p>
+            <p className="text-sm text-white">{logistics.welfareFacilities}</p>
           </div>
         )}
 
@@ -93,7 +93,7 @@ export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
               <AlertCircle className="h-4 w-4 text-red-400" />
               <span className="text-sm font-semibold text-red-400">Site Restrictions</span>
             </div>
-            <p className="text-sm text-elec-light/90">{logistics.siteRestrictions}</p>
+            <p className="text-sm text-white">{logistics.siteRestrictions}</p>
           </div>
         )}
       </CardContent>

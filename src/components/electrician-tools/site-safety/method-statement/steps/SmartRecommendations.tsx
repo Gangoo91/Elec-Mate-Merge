@@ -119,7 +119,7 @@ const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
                 </div>
                 <span className="text-elec-yellow">{rec.title}</span>
               </CardTitle>
-              <p className="text-xs text-muted-foreground">{rec.description}</p>
+              <p className="text-xs text-white">{rec.description}</p>
             </CardHeader>
             <CardContent className="p-4 pt-0 space-y-3">
               {rec.templates.map((template, templateIndex) => (
@@ -139,12 +139,12 @@ const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
                     )}
                   </div>
                   
-                  <p className="text-xs text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                  <p className="text-xs text-white line-clamp-2 mb-3 leading-relaxed">
                     {template.description}
                   </p>
 
                   <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-3 text-xs text-white">
                       <div className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         <span>{template.estimatedDuration}</span>

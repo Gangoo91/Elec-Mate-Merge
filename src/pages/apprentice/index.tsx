@@ -61,7 +61,7 @@ const ApprenticeIndex = () => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
           {isLoading ? 'Welcome to Elec-Mate' : `Welcome back, ${user.firstName}`}
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto px-2">
+        <p className="text-base sm:text-lg md:text-xl text-white max-w-2xl mx-auto px-2">
           Your comprehensive electrical apprenticeship companion - designed specifically for UK electrical apprentices
         </p>
       </div>
@@ -75,7 +75,7 @@ const ApprenticeIndex = () => {
                 <Brain className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow shrink-0" />
                 <div>
                   <CardTitle className="text-base sm:text-lg text-elec-yellow">Advanced Help Box</CardTitle>
-                  <p className="text-xs sm:text-sm text-white/70 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     AI-powered assistance and cutting-edge training tools
                   </p>
                 </div>
@@ -123,7 +123,7 @@ const ApprenticeIndex = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 sm:p-6 pt-2 sm:pt-2">
-          <p className="text-sm sm:text-base text-white/70 mb-4">
+          <p className="text-sm sm:text-base text-white mb-4">
             New to Elec-Mate? Check out our getting started guide or explore the Advanced Help Box for AI-powered assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">

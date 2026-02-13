@@ -44,7 +44,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
               accentColor === 'amber-500' ? 'text-amber-500' : 'text-elec-yellow'
             )} />
             <span className="text-sm font-semibold text-white">{title}</span>
-            <Badge className="bg-white/10 text-white/70 border-0 text-xs px-2 py-0.5">
+            <Badge className="bg-white/10 text-white border-0 text-xs px-2 py-0.5">
               {count}
             </Badge>
           </div>
@@ -53,7 +53,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 p-0 text-white/40 hover:text-elec-yellow hover:bg-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="h-8 w-8 p-0 text-white hover:text-elec-yellow hover:bg-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity"
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit();
@@ -63,7 +63,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
               </Button>
             )}
             <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
+              "h-4 w-4 text-white transition-transform duration-200",
               isOpen && "rotate-180"
             )} />
           </div>
@@ -84,7 +84,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
               variant="outline"
               size="sm"
               onClick={onEdit}
-              className="h-9 text-xs border-white/[0.08] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+              className="h-9 text-xs border-white/[0.08] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
             >
               <Pencil className="h-3.5 w-3.5 mr-1.5" />
               Edit {title}
@@ -168,7 +168,7 @@ export function MethodStatementSummary({
             <ClipboardList className="h-4 w-4 text-elec-yellow" />
             <h3 className="text-sm font-semibold text-white">Job Summary</h3>
           </div>
-          <Badge className="bg-white/10 text-white/60 border-0 text-[10px]">
+          <Badge className="bg-white/10 text-white border-0 text-[10px]">
             {totalItems} items
           </Badge>
         </div>

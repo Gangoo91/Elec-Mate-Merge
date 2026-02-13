@@ -128,12 +128,12 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   onClick={handleEditClick}
                   className="h-11 w-11 p-0 touch-manipulation rounded-xl hover:bg-white/10 active:bg-white/20"
                 >
-                  <Edit3 className="h-5 w-5 text-white/60" />
+                  <Edit3 className="h-5 w-5 text-white" />
                 </Button>
               )}
               {!isEditing && (
                 <div className="h-11 w-11 flex items-center justify-center">
-                  <ChevronDown className={cn('h-5 w-5 text-white/40 transition-transform duration-200', isExpanded && 'rotate-180')} />
+                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform duration-200', isExpanded && 'rotate-180')} />
                 </div>
               )}
             </div>
@@ -165,7 +165,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
             {/* Risk Description */}
             <div className="pt-4">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-left block">Risk Description</label>
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">Risk Description</label>
               {isEditing ? (
                 <Textarea
                   value={editedRisk.risk}
@@ -207,7 +207,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
             {/* Likelihood & Severity */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/60">Likelihood</label>
+                <label className="text-xs font-medium text-white">Likelihood</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider
@@ -227,7 +227,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                 )}
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/60">Severity</label>
+                <label className="text-xs font-medium text-white">Severity</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider

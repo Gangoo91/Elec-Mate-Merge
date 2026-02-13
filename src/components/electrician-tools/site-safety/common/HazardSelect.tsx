@@ -61,10 +61,10 @@ export function HazardSelect({
             className="w-full justify-between bg-background/80 backdrop-blur-sm border-elec-yellow/20 hover:border-elec-yellow/40"
           >
             <div className="flex items-center gap-2 flex-1 text-left">
-              <Search className="h-4 w-4 text-muted-foreground" />
+              <Search className="h-4 w-4 text-white" />
               <span className={cn(
                 "truncate",
-                !value && "text-muted-foreground"
+                !value && "text-white"
               )}>
                 {value || placeholder}
               </span>

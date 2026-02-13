@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -278,6 +281,105 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [riskRating, setRiskRating] = useState<'low' | 'medium' | 'high' | 'very-high'>('medium');
   const [assessedBy, setAssessedBy] = useState('');
 
+  // ─── Draft persistence ───
+  const coshhDraftData = useMemo(
+    () => ({
+      substanceName,
+      manufacturer,
+      productCode,
+      locationOfUse,
+      taskDescription,
+      quantityUsed,
+      frequencyOfUse,
+      selectedGHS,
+      exposureRoutes,
+      healthEffects,
+      oelValue,
+      controlMeasures,
+      ppeRequired,
+      storageRequirements,
+      spillProcedure,
+      firstAid,
+      disposalMethod,
+      monitoringRequired,
+      monitoringDetails,
+      riskRating,
+      assessedBy,
+      wizardStep,
+    }),
+    [
+      substanceName,
+      manufacturer,
+      productCode,
+      locationOfUse,
+      taskDescription,
+      quantityUsed,
+      frequencyOfUse,
+      selectedGHS,
+      exposureRoutes,
+      healthEffects,
+      oelValue,
+      controlMeasures,
+      ppeRequired,
+      storageRequirements,
+      spillProcedure,
+      firstAid,
+      disposalMethod,
+      monitoringRequired,
+      monitoringDetails,
+      riskRating,
+      assessedBy,
+      wizardStep,
+    ]
+  );
+
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'coshh-assessment',
+    data: coshhDraftData,
+    enabled: showWizard,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.substanceName !== undefined) setSubstanceName(recoveredDraft.substanceName);
+    if (recoveredDraft.manufacturer !== undefined) setManufacturer(recoveredDraft.manufacturer);
+    if (recoveredDraft.productCode !== undefined) setProductCode(recoveredDraft.productCode);
+    if (recoveredDraft.locationOfUse !== undefined) setLocationOfUse(recoveredDraft.locationOfUse);
+    if (recoveredDraft.taskDescription !== undefined)
+      setTaskDescription(recoveredDraft.taskDescription);
+    if (recoveredDraft.quantityUsed !== undefined) setQuantityUsed(recoveredDraft.quantityUsed);
+    if (recoveredDraft.frequencyOfUse !== undefined)
+      setFrequencyOfUse(recoveredDraft.frequencyOfUse);
+    if (recoveredDraft.selectedGHS !== undefined) setSelectedGHS(recoveredDraft.selectedGHS);
+    if (recoveredDraft.exposureRoutes !== undefined)
+      setExposureRoutes(recoveredDraft.exposureRoutes);
+    if (recoveredDraft.healthEffects !== undefined) setHealthEffects(recoveredDraft.healthEffects);
+    if (recoveredDraft.oelValue !== undefined) setOelValue(recoveredDraft.oelValue);
+    if (recoveredDraft.controlMeasures !== undefined)
+      setControlMeasures(recoveredDraft.controlMeasures);
+    if (recoveredDraft.ppeRequired !== undefined) setPpeRequired(recoveredDraft.ppeRequired);
+    if (recoveredDraft.storageRequirements !== undefined)
+      setStorageRequirements(recoveredDraft.storageRequirements);
+    if (recoveredDraft.spillProcedure !== undefined)
+      setSpillProcedure(recoveredDraft.spillProcedure);
+    if (recoveredDraft.firstAid !== undefined) setFirstAid(recoveredDraft.firstAid);
+    if (recoveredDraft.disposalMethod !== undefined)
+      setDisposalMethod(recoveredDraft.disposalMethod);
+    if (recoveredDraft.monitoringRequired !== undefined)
+      setMonitoringRequired(recoveredDraft.monitoringRequired);
+    if (recoveredDraft.monitoringDetails !== undefined)
+      setMonitoringDetails(recoveredDraft.monitoringDetails);
+    if (recoveredDraft.riskRating !== undefined) setRiskRating(recoveredDraft.riskRating);
+    if (recoveredDraft.assessedBy !== undefined) setAssessedBy(recoveredDraft.assessedBy);
+    if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
+    dismissDraft();
+  };
+
   const resetWizard = () => {
     setWizardStep(0);
     setSubstanceName('');
@@ -359,6 +461,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     };
 
     setAssessments((prev) => [assessment, ...prev]);
+    clearDraft();
     setShowWizard(false);
     resetWizard();
     toast.success('COSHH assessment saved');
@@ -410,7 +513,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </Button>
             <div className="space-y-3">
               <div>
-                <Label className="text-white/80 text-sm">Substance Name *</Label>
+                <Label className="text-white text-sm">Substance Name *</Label>
                 <Input
                   value={substanceName}
                   onChange={(e) => setSubstanceName(e.target.value)}
@@ -420,7 +523,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-white/80 text-sm">Manufacturer</Label>
+                  <Label className="text-white text-sm">Manufacturer</Label>
                   <Input
                     value={manufacturer}
                     onChange={(e) => setManufacturer(e.target.value)}
@@ -428,7 +531,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-white/80 text-sm">Product Code</Label>
+                  <Label className="text-white text-sm">Product Code</Label>
                   <Input
                     value={productCode}
                     onChange={(e) => setProductCode(e.target.value)}
@@ -437,7 +540,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Location of Use</Label>
+                <Label className="text-white text-sm">Location of Use</Label>
                 <Input
                   value={locationOfUse}
                   onChange={(e) => setLocationOfUse(e.target.value)}
@@ -446,7 +549,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Task / How Used</Label>
+                <Label className="text-white text-sm">Task / How Used</Label>
                 <Textarea
                   value={taskDescription}
                   onChange={(e) => setTaskDescription(e.target.value)}
@@ -456,7 +559,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-white/80 text-sm">Quantity Used</Label>
+                  <Label className="text-white text-sm">Quantity Used</Label>
                   <Input
                     value={quantityUsed}
                     onChange={(e) => setQuantityUsed(e.target.value)}
@@ -465,7 +568,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-white/80 text-sm">Frequency</Label>
+                  <Label className="text-white text-sm">Frequency</Label>
                   <Select value={frequencyOfUse} onValueChange={setFrequencyOfUse}>
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow mt-1">
                       <SelectValue placeholder="Select..." />
@@ -490,7 +593,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Hazard Classification</h3>
 
             <div>
-              <Label className="text-white/80 text-sm mb-2 block">GHS Hazard Pictograms</Label>
+              <Label className="text-white text-sm mb-2 block">GHS Hazard Pictograms</Label>
               <div className="grid grid-cols-2 gap-2">
                 {GHS_HAZARDS.map((hazard) => {
                   const Icon = hazard.icon;
@@ -510,16 +613,16 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                           className={`w-8 h-8 rounded-lg flex items-center justify-center ${isSelected ? 'bg-red-500/20' : 'bg-white/[0.06]'}`}
                         >
                           <Icon
-                            className={`h-4 w-4 ${isSelected ? 'text-red-400' : 'text-white/50'}`}
+                            className={`h-4 w-4 ${isSelected ? 'text-red-400' : 'text-white'}`}
                           />
                         </div>
                         <div>
                           <p
-                            className={`text-xs font-bold ${isSelected ? 'text-red-300' : 'text-white/70'}`}
+                            className={`text-xs font-bold ${isSelected ? 'text-red-300' : 'text-white'}`}
                           >
                             {hazard.label}
                           </p>
-                          <p className="text-[10px] text-white/40">{hazard.description}</p>
+                          <p className="text-[10px] text-white">{hazard.description}</p>
                         </div>
                       </div>
                     </button>
@@ -529,7 +632,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm mb-2 block">Exposure Routes</Label>
+              <Label className="text-white text-sm mb-2 block">Exposure Routes</Label>
               <div className="grid grid-cols-2 gap-2">
                 {exposureRoutes.map((route) => {
                   const Icon = route.icon;
@@ -545,10 +648,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     >
                       <div className="flex items-center gap-2">
                         <Icon
-                          className={`h-4 w-4 ${route.selected ? 'text-amber-400' : 'text-white/50'}`}
+                          className={`h-4 w-4 ${route.selected ? 'text-amber-400' : 'text-white'}`}
                         />
                         <span
-                          className={`text-sm font-medium ${route.selected ? 'text-amber-300' : 'text-white/70'}`}
+                          className={`text-sm font-medium ${route.selected ? 'text-amber-300' : 'text-white'}`}
                         >
                           {route.label}
                         </span>
@@ -560,7 +663,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">Health Effects</Label>
+              <Label className="text-white text-sm">Health Effects</Label>
               <Textarea
                 value={healthEffects}
                 onChange={(e) => setHealthEffects(e.target.value)}
@@ -570,7 +673,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">Occupational Exposure Limit (OEL)</Label>
+              <Label className="text-white text-sm">Occupational Exposure Limit (OEL)</Label>
               <Input
                 value={oelValue}
                 onChange={(e) => setOelValue(e.target.value)}
@@ -587,7 +690,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Controls & PPE</h3>
 
             <div>
-              <Label className="text-white/80 text-sm mb-2 block">Control Measures</Label>
+              <Label className="text-white text-sm mb-2 block">Control Measures</Label>
               <div className="space-y-1.5 mb-2">
                 {controlMeasures.map((c, i) => (
                   <div
@@ -595,14 +698,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     className="flex items-center gap-2 p-2 rounded-lg border border-white/10 bg-white/[0.03]"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                    <span className="text-sm text-white/80 flex-1">{c}</span>
+                    <span className="text-sm text-white flex-1">{c}</span>
                     <button
                       onClick={() =>
                         setControlMeasures((prev) => prev.filter((_, idx) => idx !== i))
                       }
                       className="h-9 w-9 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
                     >
-                      <Trash2 className="h-3.5 w-3.5 text-white/40" />
+                      <Trash2 className="h-3.5 w-3.5 text-white" />
                     </button>
                   </div>
                 ))}
@@ -626,7 +729,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm mb-2 block">Required PPE</Label>
+              <Label className="text-white text-sm mb-2 block">Required PPE</Label>
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {ppeRequired.map((item, i) => (
                   <Badge
@@ -658,7 +761,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">Risk Rating (with controls)</Label>
+              <Label className="text-white text-sm">Risk Rating (with controls)</Label>
               <div className="grid grid-cols-4 gap-2 mt-1">
                 {(['low', 'medium', 'high', 'very-high'] as const).map((level) => {
                   const colours = RISK_COLOURS[level];
@@ -673,7 +776,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       }`}
                     >
                       <span
-                        className={`text-xs font-bold ${riskRating === level ? colours.text : 'text-white/50'}`}
+                        className={`text-xs font-bold ${riskRating === level ? colours.text : 'text-white'}`}
                       >
                         {level === 'very-high'
                           ? 'V. High'
@@ -693,7 +796,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Emergency & Storage</h3>
 
             <div>
-              <Label className="text-white/80 text-sm">Storage Requirements</Label>
+              <Label className="text-white text-sm">Storage Requirements</Label>
               <Textarea
                 value={storageRequirements}
                 onChange={(e) => setStorageRequirements(e.target.value)}
@@ -703,7 +806,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">Spill Procedure</Label>
+              <Label className="text-white text-sm">Spill Procedure</Label>
               <Textarea
                 value={spillProcedure}
                 onChange={(e) => setSpillProcedure(e.target.value)}
@@ -713,7 +816,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">First Aid Measures</Label>
+              <Label className="text-white text-sm">First Aid Measures</Label>
               <Textarea
                 value={firstAid}
                 onChange={(e) => setFirstAid(e.target.value)}
@@ -723,7 +826,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div>
-              <Label className="text-white/80 text-sm">Disposal Method</Label>
+              <Label className="text-white text-sm">Disposal Method</Label>
               <Input
                 value={disposalMethod}
                 onChange={(e) => setDisposalMethod(e.target.value)}
@@ -738,14 +841,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 onCheckedChange={(v) => setMonitoringRequired(!!v)}
                 className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
               />
-              <Label className="text-white/80 text-sm cursor-pointer">
+              <Label className="text-white text-sm cursor-pointer">
                 Exposure monitoring required
               </Label>
             </div>
 
             {monitoringRequired && (
               <div>
-                <Label className="text-white/80 text-sm">Monitoring Details</Label>
+                <Label className="text-white text-sm">Monitoring Details</Label>
                 <Input
                   value={monitoringDetails}
                   onChange={(e) => setMonitoringDetails(e.target.value)}
@@ -756,7 +859,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             )}
 
             <div>
-              <Label className="text-white/80 text-sm">Assessed By</Label>
+              <Label className="text-white text-sm">Assessed By</Label>
               <Input
                 value={assessedBy}
                 onChange={(e) => setAssessedBy(e.target.value)}
@@ -812,7 +915,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">COSHH Assessments</h1>
-            <p className="text-sm text-white/70">Control of Substances Hazardous to Health</p>
+            <p className="text-sm text-white">Control of Substances Hazardous to Health</p>
           </div>
         </div>
 
@@ -834,7 +937,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-xs text-amber-300 font-medium">Legal Requirement</p>
-              <p className="text-xs text-white/60 mt-0.5">
+              <p className="text-xs text-white mt-0.5">
                 Under COSHH Regulations 2002, employers must assess risks from hazardous substances
                 and implement appropriate controls. Assessments must be reviewed regularly and when
                 circumstances change.
@@ -847,10 +950,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         {assessments.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <FlaskConical className="h-8 w-8 text-white/30" />
+              <FlaskConical className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-base font-bold text-white/70 mb-1">No Assessments Yet</h3>
-            <p className="text-sm text-white/50">Create your first COSHH assessment</p>
+            <h3 className="text-base font-bold text-white mb-1">No Assessments Yet</h3>
+            <p className="text-sm text-white">Create your first COSHH assessment</p>
           </div>
         ) : (
           <div className="space-y-2 pb-20">
@@ -881,13 +984,13 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                               assessment.risk_rating.slice(1)}{' '}
                           Risk
                         </Badge>
-                        <span className="text-xs text-white/50 flex items-center gap-1">
+                        <span className="text-xs text-white flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           Review: {assessment.review_date}
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </motion.button>
               );
@@ -912,6 +1015,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <h2 className="text-base font-bold text-white">
                 {wizardStep === 0 ? 'Substance Details' : `Step ${wizardStep + 1} of 4`}
               </h2>
+              <DraftSaveIndicator status={draftStatus} />
             </div>
 
             <div className="h-1 bg-white/[0.05]">
@@ -924,6 +1028,13 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             </div>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              <AnimatePresence>
+                {recoveredDraft && (
+                  <div className="mb-4">
+                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+                  </div>
+                )}
+              </AnimatePresence>
               {renderWizardStep()}
             </div>
 
@@ -953,7 +1064,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <div className="px-4 py-3 border-b border-white/10">
               <h2 className="text-base font-bold text-white">Common Electrical Substances</h2>
               <div className="relative mt-2">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -1009,7 +1120,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         viewingAssessment.risk_rating.slice(1)}{' '}
                     Risk
                   </Badge>
-                  <span className="text-xs text-white/50">
+                  <span className="text-xs text-white">
                     Assessed: {viewingAssessment.assessment_date}
                   </span>
                 </div>
@@ -1058,7 +1169,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.health_effects && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Health Effects</h4>
-                    <p className="text-sm text-white/70">{viewingAssessment.health_effects}</p>
+                    <p className="text-sm text-white">{viewingAssessment.health_effects}</p>
                   </div>
                 )}
 
@@ -1069,7 +1180,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     {viewingAssessment.control_measures.map((c, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                        <span className="text-sm text-white/80">{c}</span>
+                        <span className="text-sm text-white">{c}</span>
                       </div>
                     ))}
                   </div>
@@ -1095,7 +1206,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.first_aid && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">First Aid</h4>
-                    <p className="text-sm text-white/70">{viewingAssessment.first_aid}</p>
+                    <p className="text-sm text-white">{viewingAssessment.first_aid}</p>
                   </div>
                 )}
 
@@ -1103,7 +1214,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.storage_requirements && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Storage</h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       {viewingAssessment.storage_requirements}
                     </p>
                   </div>
@@ -1112,12 +1223,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.spill_procedure && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Spill Procedure</h4>
-                    <p className="text-sm text-white/70">{viewingAssessment.spill_procedure}</p>
+                    <p className="text-sm text-white">{viewingAssessment.spill_procedure}</p>
                   </div>
                 )}
 
                 <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03] mt-4">
-                  <div className="flex justify-between text-xs text-white/50">
+                  <div className="flex justify-between text-xs text-white">
                     <span>Assessed by: {viewingAssessment.assessed_by}</span>
                     <span>Review by: {viewingAssessment.review_date}</span>
                   </div>

@@ -237,7 +237,7 @@ const TeamBriefingTemplates = () => {
         </div>
         <div className="text-center">
           <p className="text-white font-medium">Loading Briefings</p>
-          <p className="text-sm text-white/50 mt-1">Fetching your team briefings...</p>
+          <p className="text-sm text-white mt-1">Fetching your team briefings...</p>
         </div>
       </div>
     );
@@ -351,7 +351,7 @@ const TeamBriefingTemplates = () => {
 
             <button
               onClick={() => setShowTemplateLibrary(true)}
-              className="w-full p-4 rounded-xl border border-dashed border-white/20 text-white/50 hover:text-white hover:bg-white/5 hover:border-white/30 transition-all min-h-[56px] active:scale-[0.98]"
+              className="w-full p-4 rounded-xl border border-dashed border-white/20 text-white hover:text-white hover:bg-white/5 hover:border-white/30 transition-all min-h-[56px] active:scale-[0.98]"
             >
               View All Templates
             </button>
@@ -394,10 +394,10 @@ const TeamBriefingTemplates = () => {
             ) : (
               <div className="flex flex-col items-center justify-center py-16">
                 <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                  <FileText className="h-8 w-8 text-white/20" />
+                  <FileText className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-base font-semibold text-white/70 mb-1">No Completed Briefings</h3>
-                <p className="text-sm text-white/40 text-center max-w-xs mb-5">
+                <h3 className="text-base font-semibold text-white mb-1">No Completed Briefings</h3>
+                <p className="text-sm text-white text-center max-w-xs mb-5">
                   Completed briefings will appear here with full signature records.
                 </p>
                 <button
@@ -438,8 +438,8 @@ const TeamBriefingTemplates = () => {
                 <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
                   <CheckCircle className="h-8 w-8 text-emerald-400/60" />
                 </div>
-                <h3 className="text-base font-semibold text-white/70 mb-1">All Clear</h3>
-                <p className="text-sm text-white/40 text-center max-w-xs">
+                <h3 className="text-base font-semibold text-white mb-1">All Clear</h3>
+                <p className="text-sm text-white text-center max-w-xs">
                   No pending signatures — all briefings are up to date.
                 </p>
               </div>

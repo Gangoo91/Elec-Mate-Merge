@@ -96,12 +96,12 @@ const CareerProgression = () => {
               <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
                 Career Progression
               </h1>
-              <p className="text-sm text-white/70 mt-0.5 hidden sm:block">
+              <p className="text-sm text-white mt-0.5 hidden sm:block">
                 Your pathway to success in the electrical industry
               </p>
             </div>
           </div>
-          <p className="hidden sm:block text-base text-white/70 sm:ml-[76px]">
+          <p className="hidden sm:block text-base text-white sm:ml-[76px]">
             Explore career paths, find courses, track your CPD and build your professional future
           </p>
         </div>
@@ -145,7 +145,7 @@ const CareerProgression = () => {
                         <div className={`text-lg sm:text-xl font-bold ${colors.icon} truncate`}>
                           {fact.value}
                         </div>
-                        <div className="text-[10px] sm:text-xs text-white/70 truncate">
+                        <div className="text-[10px] sm:text-xs text-white truncate">
                           {fact.label}
                         </div>
                       </div>
@@ -173,7 +173,7 @@ const CareerProgression = () => {
                   <h2 className="text-lg sm:text-xl font-semibold mb-2 text-white">
                     Your Career Development Hub
                   </h2>
-                  <p className="text-sm text-white/70 leading-relaxed">
+                  <p className="text-sm text-white leading-relaxed">
                     The UK electrical industry is booming with a <span className="text-elec-yellow font-medium">skills shortage of 18,000 electricians</span>.
                     Average salaries have risen to <span className="text-elec-yellow font-medium">£38,500</span> with contractors earning
                     <span className="text-elec-yellow font-medium"> £220+/day</span>. Green technologies like EV charging and solar
@@ -184,19 +184,19 @@ const CareerProgression = () => {
                   <div className="grid grid-cols-2 gap-2 text-center">
                     <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                       <div className="text-2xl font-bold text-elec-yellow">{industryStats.averageSalary}</div>
-                      <div className="text-[10px] text-white/60">Avg Salary</div>
+                      <div className="text-[10px] text-white">Avg Salary</div>
                     </div>
                     <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
                       <div className="text-2xl font-bold text-green-400">{industryStats.jobGrowth}</div>
-                      <div className="text-[10px] text-white/60">Job Growth</div>
+                      <div className="text-[10px] text-white">Job Growth</div>
                     </div>
                     <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                       <div className="text-2xl font-bold text-blue-400">{industryStats.activeElectricians}</div>
-                      <div className="text-[10px] text-white/60">UK Electricians</div>
+                      <div className="text-[10px] text-white">UK Electricians</div>
                     </div>
                     <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                       <div className="text-2xl font-bold text-purple-400">{industryStats.evGrowth}</div>
-                      <div className="text-[10px] text-white/60">EV Growth</div>
+                      <div className="text-[10px] text-white">EV Growth</div>
                     </div>
                   </div>
                 </div>
@@ -251,14 +251,14 @@ const CareerProgression = () => {
                 <div className="space-y-2">
                   {salaryData.map((item, index) => (
                     <div key={index} className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10">
-                      <span className="text-white/70">{item.role}</span>
+                      <span className="text-white">{item.role}</span>
                       <span className="text-green-400 font-medium">{item.salary}</span>
                     </div>
                   ))}
                 </div>
                 <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Salaries vary by region. London rates typically 15-25% higher.
                   </p>
                 </div>
@@ -280,7 +280,7 @@ const CareerProgression = () => {
                 <div className="space-y-2">
                   {growthSectors.map((item, index) => (
                     <div key={index} className="flex justify-between items-center text-sm py-2 px-3 rounded-lg bg-white/5 border border-white/10">
-                      <span className="text-white/70">{item.sector}</span>
+                      <span className="text-white">{item.sector}</span>
                       <div className="flex items-center gap-2">
                         <Badge variant="outline" className={`text-[10px] ${
                           item.demand === "Very High" ? "bg-green-500/10 border-green-500/30 text-green-400" :
@@ -296,7 +296,7 @@ const CareerProgression = () => {
                 </div>
                 <div className="flex items-start gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                   <Rocket className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Net Zero targets driving massive investment in green technology skills.
                   </p>
                 </div>
@@ -315,7 +315,7 @@ const CareerProgression = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-white">Ready to advance your career?</h4>
-                    <p className="text-xs text-white/60">Explore pathways, find courses, or track your professional development</p>
+                    <p className="text-xs text-white">Explore pathways, find courses, or track your professional development</p>
                   </div>
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto">

@@ -224,7 +224,7 @@ const DomesticOverviewCards = () => {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-white/80">{stat.label}</span>
+                <span className="text-xs text-white">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -256,7 +256,7 @@ const DomesticOverviewCards = () => {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/80">Complexity Level</span>
+                  <span className="text-white">Complexity Level</span>
                   <span className="text-blue-300">{project.complexity}%</span>
                 </div>
                 <Progress value={project.complexity} className="h-2" />
@@ -377,7 +377,7 @@ const DomesticOverviewCards = () => {
                 </p>
                 <ul className="space-y-1">
                   {zone.requirements.map((req, reqIdx) => (
-                    <li key={reqIdx} className="text-xs text-white/90 flex items-start gap-2">
+                    <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
                       <span className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${
                         zone.color === 'red' ? 'bg-red-400' :
                         zone.color === 'orange' ? 'bg-orange-400' :
@@ -442,7 +442,7 @@ const DomesticOverviewCards = () => {
               <div className="space-y-2">
                 {consumerUnitRequirements.specifications.map((spec, idx) => (
                   <div key={idx} className="flex justify-between text-sm">
-                    <span className="text-white/80">{spec.item}</span>
+                    <span className="text-white">{spec.item}</span>
                     <span className="text-violet-300">{spec.value}</span>
                   </div>
                 ))}
@@ -482,7 +482,7 @@ const DomesticOverviewCards = () => {
                     {ip.rating}
                   </Badge>
                   <p className="text-xs text-emerald-100 mb-1">{ip.description}</p>
-                  <p className="text-xs text-white/80"><strong>Use:</strong> {ip.use}</p>
+                  <p className="text-xs text-white"><strong>Use:</strong> {ip.use}</p>
                 </div>
               ))}
             </div>
@@ -500,7 +500,7 @@ const DomesticOverviewCards = () => {
                     <span className="text-sm text-white">{cable.cable}</span>
                   </div>
                   <p className="text-xs text-emerald-100 mb-1"><strong>Depth/Clearance:</strong> {cable.depth}</p>
-                  <p className="text-xs text-white/80">{cable.notes}</p>
+                  <p className="text-xs text-white">{cable.notes}</p>
                 </div>
               ))}
             </div>
@@ -534,8 +534,8 @@ const DomesticOverviewCards = () => {
                   {outdoorInstallations.commonApplications.map((app, idx) => (
                     <tr key={idx} className="border-b border-emerald-500/20">
                       <td className="py-2 text-white">{app.application}</td>
-                      <td className="py-2 text-white/80">{app.circuit}</td>
-                      <td className="py-2 text-white/80">{app.cable}</td>
+                      <td className="py-2 text-white">{app.circuit}</td>
+                      <td className="py-2 text-white">{app.cable}</td>
                       <td className="py-2 text-emerald-300">{app.protection}</td>
                     </tr>
                   ))}
@@ -560,7 +560,7 @@ const DomesticOverviewCards = () => {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-orange-200 mb-1">{safety.priority}</h4>
-                  <p className="text-sm text-white/80">{safety.description}</p>
+                  <p className="text-sm text-white">{safety.description}</p>
                 </div>
                 <Badge
                   variant="outline"
@@ -597,7 +597,7 @@ const DomesticOverviewCards = () => {
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-              <span className="text-white/90">{item}</span>
+              <span className="text-white">{item}</span>
             </div>
           ))}
         </CardContent>

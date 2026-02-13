@@ -140,7 +140,7 @@ export function SignaturePad({
     <div className={cn("space-y-3", className)}>
       {name && (
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-white/80">
+          <label className="text-sm font-medium text-white">
             {name}
           </label>
           {hasDrawn && (
@@ -148,7 +148,7 @@ export function SignaturePad({
               type="button"
               variant="ghost"
                             onClick={clearSignature}
-              className="h-11 px-2 text-white/50 hover:text-white hover:bg-white/10 touch-manipulation"
+              className="h-11 px-2 text-white hover:text-white hover:bg-white/10 touch-manipulation"
             >
               <Eraser className="h-4 w-4 mr-1" />
               Clear
@@ -185,7 +185,7 @@ export function SignaturePad({
         {/* Placeholder */}
         {!hasDrawn && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <p className="text-white/30 text-sm">Sign here</p>
+            <p className="text-white text-sm">Sign here</p>
           </div>
         )}
 
@@ -245,7 +245,7 @@ export function AttendeeSignatureCard({
           "w-8 h-8 rounded-full flex items-center justify-center",
           signed
             ? "bg-emerald-500/20 text-emerald-400"
-            : "bg-white/10 text-white/40"
+            : "bg-white/10 text-white"
         )}
       >
         {signed ? (
@@ -257,11 +257,11 @@ export function AttendeeSignatureCard({
 
       {/* Name and timestamp */}
       <div className="flex-1 min-w-0">
-        <p className={cn("font-medium truncate", signed ? "text-white" : "text-white/70")}>
+        <p className={cn("font-medium truncate", signed ? "text-white" : "text-white")}>
           {name}
         </p>
         {signed && timestamp && (
-          <p className="text-xs text-white/40">{timestamp}</p>
+          <p className="text-xs text-white">{timestamp}</p>
         )}
       </div>
 
@@ -278,7 +278,7 @@ export function AttendeeSignatureCard({
         <Button
           variant="ghost"
                     onClick={onRemove}
-          className="h-11 w-11 p-0 text-white/40 hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
+          className="h-11 w-11 p-0 text-white hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
         >
           <X className="h-4 w-4" />
         </Button>

@@ -120,7 +120,7 @@ export const RescheduleBriefingDialog = ({
           {originalDate && (
             <div className="bg-muted/50 p-3 rounded-lg border border-border">
               <p className="text-sm font-medium mb-1">Original Schedule:</p>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
+              <div className="flex items-center gap-4 text-sm text-white flex-wrap">
                 <div className="flex items-center gap-1 whitespace-nowrap">
                   <CalendarDays className="h-4 w-4" />
                   {format(originalDate, "PPP")}

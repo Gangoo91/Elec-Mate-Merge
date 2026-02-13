@@ -28,7 +28,7 @@ const ToolsGuide = () => {
                   Tools & <span className="text-elec-yellow">Materials Guide</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Comprehensive guidance for building your professional electrician toolkit in the UK.
                 From essential tools to smart purchasing decisions.
               </p>
@@ -47,7 +47,7 @@ const ToolsGuide = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-elec-yellow">50+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Essential Tools</div>
+                  <div className="text-xs sm:text-sm text-white">Essential Tools</div>
                 </div>
               </div>
             </CardContent>
@@ -61,7 +61,7 @@ const ToolsGuide = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">Quality</div>
-                  <div className="text-xs sm:text-sm text-white/60">Ratings</div>
+                  <div className="text-xs sm:text-sm text-white">Ratings</div>
                 </div>
               </div>
             </CardContent>
@@ -75,7 +75,7 @@ const ToolsGuide = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">UK</div>
-                  <div className="text-xs sm:text-sm text-white/60">Suppliers</div>
+                  <div className="text-xs sm:text-sm text-white">Suppliers</div>
                 </div>
               </div>
             </CardContent>
@@ -89,7 +89,7 @@ const ToolsGuide = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-purple-400">Cost</div>
-                  <div className="text-xs sm:text-sm text-white/60">Estimates</div>
+                  <div className="text-xs sm:text-sm text-white">Estimates</div>
                 </div>
               </div>
             </CardContent>
@@ -105,7 +105,7 @@ const ToolsGuide = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-blue-300 mb-1">Career-Long Investment</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Building a professional toolkit is a long-term investment. This guide provides everything you need
                   to make <span className="font-medium text-blue-300">informed decisions</span> and build your collection strategically.
                 </p>
@@ -176,7 +176,7 @@ const ToolsGuide = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-orange-300 mb-1">Quality Matters</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <span className="font-medium text-orange-300">Never compromise on safety-critical equipment</span> like test instruments and PPE.
                   Plan your purchases strategically over 12-18 months. Quality tools last a career.
                 </p>

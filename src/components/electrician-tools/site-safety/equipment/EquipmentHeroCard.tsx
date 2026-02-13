@@ -77,7 +77,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
         <p className="text-lg font-bold text-white leading-none">
           <AnimatedCounter value={stat.value} />
         </p>
-        <p className="text-[9px] text-white/60 uppercase tracking-wide">{stat.label}</p>
+        <p className="text-[9px] text-white uppercase tracking-wide">{stat.label}</p>
       </div>
     </motion.div>
   );
@@ -159,7 +159,7 @@ export function EquipmentHeroCard({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-white/50 text-[10px]"
+              className="text-white text-[10px]"
             >
               Track PPE & safety equipment
             </motion.p>

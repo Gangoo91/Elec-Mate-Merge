@@ -29,7 +29,7 @@ export const HazardStatsDashboard = ({
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-bold">Hazard Database</h2>
-          <p className="text-sm text-muted-foreground">Professional Safety Reference</p>
+          <p className="text-sm text-white">Professional Safety Reference</p>
         </div>
       </div>
 
@@ -37,28 +37,28 @@ export const HazardStatsDashboard = ({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         <div className="bg-background/50 rounded-lg p-3 border border-border/30">
           <div className="text-2xl font-bold text-elec-yellow">{totalHazards}</div>
-          <div className="text-xs text-muted-foreground">Total Hazards</div>
+          <div className="text-xs text-white">Total Hazards</div>
         </div>
         
         <div className="bg-red-500/10 rounded-lg p-3 border border-red-500/30">
           <div className="text-2xl font-bold text-red-400">{veryHighRisk}</div>
-          <div className="text-xs text-muted-foreground">Very High Risk</div>
+          <div className="text-xs text-white">Very High Risk</div>
         </div>
         
         <div className="bg-orange-500/10 rounded-lg p-3 border border-orange-500/30">
           <div className="text-2xl font-bold text-orange-400">{highRisk}</div>
-          <div className="text-xs text-muted-foreground">High Risk</div>
+          <div className="text-xs text-white">High Risk</div>
         </div>
         
         <div className="bg-background/50 rounded-lg p-3 border border-border/30">
           <div className="text-2xl font-bold text-foreground">{totalControls}</div>
-          <div className="text-xs text-muted-foreground">Controls</div>
+          <div className="text-xs text-white">Controls</div>
         </div>
       </div>
 
       {/* Category Breakdown */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+        <div className="flex items-center gap-2 text-xs text-white mb-2">
           <TrendingUp className="w-3 h-3" />
           <span>Category Breakdown</span>
         </div>

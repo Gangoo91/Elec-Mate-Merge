@@ -16,7 +16,7 @@ const CourseContent = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Book className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Core Modules</h2>
-            <p className="text-centre text-white/70">
+            <p className="text-centre text-white">
               Essential electrical theory and practice
             </p>
           </CardContent>
@@ -26,7 +26,7 @@ const CourseContent = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Technical Certifications</h2>
-            <p className="text-centre text-white/70">
+            <p className="text-centre text-white">
               Specialised certification paths for electrical professionals
             </p>
           </CardContent>
@@ -36,7 +36,7 @@ const CourseContent = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <FileText className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Study Materials</h2>
-            <p className="text-centre text-white/70">
+            <p className="text-centre text-white">
               Comprehensive resources and learning guides
             </p>
           </CardContent>

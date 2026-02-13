@@ -121,7 +121,7 @@ export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) 
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 flex flex-col items-center justify-center py-2 touch-manipulation transition-colors ${
-                  isActive ? "text-elec-yellow" : "text-white/40 active:text-white/60"
+                  isActive ? "text-elec-yellow" : "text-white active:text-white"
                 }`}
               >
                 {/* Icon with badge */}

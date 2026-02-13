@@ -90,7 +90,7 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
             <h3 className="font-semibold text-white text-[15px] leading-tight pr-8">
               {highlightText(hazard.hazard, highlight)}
             </h3>
-            <p className="text-sm text-white/50 mt-1.5 line-clamp-2 leading-relaxed">
+            <p className="text-sm text-white mt-1.5 line-clamp-2 leading-relaxed">
               {highlightText(hazard.consequence, highlight)}
             </p>
 
@@ -113,7 +113,7 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
                   </div>
                 );
               })}
-              <span className="text-xs text-white/40 ml-auto">
+              <span className="text-xs text-white ml-auto">
                 {totalControls} control{totalControls !== 1 ? 's' : ''}
               </span>
             </div>
@@ -136,11 +136,11 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
                   "h-5 w-5 transition-all duration-200",
                   isBookmarked
                     ? "fill-elec-yellow text-elec-yellow"
-                    : "text-white/30"
+                    : "text-white"
                 )}
               />
             </button>
-            <ChevronRight className="h-5 w-5 text-white/20" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </div>
         </div>
       </div>

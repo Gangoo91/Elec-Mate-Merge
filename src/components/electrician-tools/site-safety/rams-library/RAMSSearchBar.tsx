@@ -12,7 +12,7 @@ export const RAMSSearchBar = ({ searchTerm, onSearchChange }: RAMSSearchBarProps
   return (
     <div className="relative flex-1 max-w-md">
       {!searchTerm && (
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
       )}
       <Input
         type="text"

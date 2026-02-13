@@ -71,7 +71,7 @@ export const equipmentCategories: CategoryOption[] = [
     id: "other",
     label: "Other",
     icon: Settings,
-    color: "text-gray-400",
+    color: "text-white",
     bgColor: "bg-gray-500/10",
     borderColor: "border-gray-500/30",
   },
@@ -90,7 +90,7 @@ export function EquipmentCategoryPicker({
 }: EquipmentCategoryPickerProps) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-white/80">
+      <label className="block text-xs font-medium text-white">
         Category
       </label>
 
@@ -139,7 +139,7 @@ export function EquipmentCategoryPicker({
                 <Icon
                   className={cn(
                     "h-5 w-5",
-                    isSelected ? category.color : "text-white/50"
+                    isSelected ? category.color : "text-white"
                   )}
                 />
               </div>
@@ -148,7 +148,7 @@ export function EquipmentCategoryPicker({
               <span
                 className={cn(
                   "text-[10px] font-medium text-center",
-                  isSelected ? "text-white" : "text-white/50"
+                  isSelected ? "text-white" : "text-white"
                 )}
               >
                 {category.label}

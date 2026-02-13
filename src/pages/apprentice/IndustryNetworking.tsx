@@ -230,7 +230,7 @@ const IndustryNetworking = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Professional Networking in the Electrical Industry</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Build meaningful professional relationships that accelerate career growth, create business opportunities, 
           and keep you connected to industry developments. Networking is essential for long-term success in the electrical trade.
         </p>
@@ -255,14 +255,14 @@ const IndustryNetworking = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-white/70 text-sm">{opportunity.description}</p>
+              <p className="text-white text-sm">{opportunity.description}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <h4 className="font-semibold text-white mb-2">Networking Opportunities:</h4>
                 <ul className="space-y-1">
                   {opportunity.examples.map((example, exampleIndex) => (
-                    <li key={exampleIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={exampleIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {example}
                     </li>
@@ -274,7 +274,7 @@ const IndustryNetworking = () => {
                 <h4 className="font-semibold text-white mb-2">Professional Benefits:</h4>
                 <ul className="space-y-1">
                   {opportunity.benefits.map((benefit, benefitIndex) => (
-                    <li key={benefitIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={benefitIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </li>
@@ -291,7 +291,7 @@ const IndustryNetworking = () => {
           <CardTitle className="text-elec-yellow">UK Electrical Industry Associations & Bodies</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Strategic membership in industry associations provides structured networking opportunities and professional development:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -303,10 +303,10 @@ const IndustryNetworking = () => {
                     {association.membershipCost}
                   </Badge>
                 </div>
-                <p className="text-white/70 text-sm mb-3">{association.focus}</p>
+                <p className="text-white text-sm mb-3">{association.focus}</p>
                 <div className="space-y-1 mb-3">
                   {association.benefits.map((benefit, benefitIndex) => (
-                    <div key={benefitIndex} className="text-xs text-white/70 flex items-center gap-2">
+                    <div key={benefitIndex} className="text-xs text-white flex items-center gap-2">
                       <span className="text-elec-yellow">•</span>
                       {benefit}
                     </div>
@@ -316,7 +316,7 @@ const IndustryNetworking = () => {
                   <Badge variant="outline" className="border-blue-500/40 text-blue-300 text-xs">
                     {association.website}
                   </Badge>
-                  <span className="text-xs text-white/70">{association.bestFor}</span>
+                  <span className="text-xs text-white">{association.bestFor}</span>
                 </div>
               </div>
             ))}
@@ -343,7 +343,7 @@ const IndustryNetworking = () => {
                     <h5 className="font-medium text-white mb-2">Recommended Activities:</h5>
                     <ul className="space-y-1">
                       {stage.activities.map((activity, activityIndex) => (
-                        <li key={activityIndex} className="text-sm text-white/70 flex items-start gap-2">
+                        <li key={activityIndex} className="text-sm text-white flex items-start gap-2">
                           <span className="text-elec-yellow">•</span>
                           {activity}
                         </li>
@@ -354,7 +354,7 @@ const IndustryNetworking = () => {
                     <h5 className="font-medium text-white mb-2">Key Goals:</h5>
                     <ul className="space-y-1">
                       {stage.goals.map((goal, goalIndex) => (
-                        <li key={goalIndex} className="text-sm text-white/70 flex items-start gap-2">
+                        <li key={goalIndex} className="text-sm text-white flex items-start gap-2">
                           <span className="text-elec-yellow">•</span>
                           {goal}
                         </li>
@@ -379,7 +379,7 @@ const IndustryNetworking = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">Before Events</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Research attendees and speakers in advance</li>
                 <li>• Prepare a brief personal introduction</li>
                 <li>• Set specific networking objectives</li>
@@ -390,7 +390,7 @@ const IndustryNetworking = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">During Events</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Be genuinely interested in others' work</li>
                 <li>• Ask open-ended questions about their experiences</li>
                 <li>• Listen actively and remember key details</li>
@@ -401,7 +401,7 @@ const IndustryNetworking = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">After Events</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Follow up within 48 hours with personalised messages</li>
                 <li>• Connect on LinkedIn with personal notes</li>
                 <li>• Share relevant resources or information</li>
@@ -422,7 +422,7 @@ const IndustryNetworking = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">Digital Presence Strategy:</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Maintain professional LinkedIn profile with regular updates</li>
                 <li>• Participate constructively in industry forum discussions</li>
                 <li>• Share knowledge, insights, and helpful resources</li>
@@ -433,7 +433,7 @@ const IndustryNetworking = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Reputation Building Activities:</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Consistently deliver high-quality work</li>
                 <li>• Be reliable, punctual, and professional</li>
                 <li>• Help other professionals solve problems</li>
@@ -445,7 +445,7 @@ const IndustryNetworking = () => {
           </div>
           <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Professional Success Tip:</h4>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               The most successful electrical professionals view networking as relationship building, not just business card collection. 
               Focus on how you can help others first, and opportunities will naturally follow. Remember that strong professional 
               relationships often take years to develop but can provide career opportunities, business referrals, and industry 

@@ -688,7 +688,7 @@ const CommercialOverviewCards = () => {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-neutral-300">{stat.label}</span>
+                <span className="text-xs text-white">{stat.label}</span>
               </div>
               <p className="text-lg font-semibold text-white">{stat.value}</p>
             </CardContent>
@@ -708,7 +708,7 @@ const CommercialOverviewCards = () => {
             </div>
             <div>
               <CardTitle className="text-elec-yellow text-xl">What is Commercial Electrical Work?</CardTitle>
-              <p className="text-neutral-300 text-sm mt-1">Understanding the differences between domestic, commercial, and industrial sectors</p>
+              <p className="text-white text-sm mt-1">Understanding the differences between domestic, commercial, and industrial sectors</p>
             </div>
           </div>
         </CardHeader>
@@ -734,11 +734,11 @@ const CommercialOverviewCards = () => {
                     <tr key={idx} className="border-b border-neutral-700">
                       <td className="py-3">
                         <span className="font-medium text-white">{sector.type}</span>
-                        <p className="text-xs text-neutral-400 mt-1">{sector.description}</p>
+                        <p className="text-xs text-white mt-1">{sector.description}</p>
                       </td>
-                      <td className="py-3 text-neutral-300">{sector.voltage}</td>
-                      <td className="py-3 text-neutral-300">{sector.scale}</td>
-                      <td className="py-3 text-neutral-300 hidden lg:table-cell">{sector.regulations}</td>
+                      <td className="py-3 text-white">{sector.voltage}</td>
+                      <td className="py-3 text-white">{sector.scale}</td>
+                      <td className="py-3 text-white hidden lg:table-cell">{sector.regulations}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -776,10 +776,10 @@ const CommercialOverviewCards = () => {
                     }`} />
                     <span className="font-medium text-white">{premise.type}</span>
                   </div>
-                  <p className="text-xs text-neutral-400 mb-3">{premise.description}</p>
+                  <p className="text-xs text-white mb-3">{premise.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {premise.keyFeatures.map((feature, fidx) => (
-                      <Badge key={fidx} variant="outline" className="text-xs border-neutral-600 text-neutral-300">
+                      <Badge key={fidx} variant="outline" className="text-xs border-neutral-600 text-white">
                         {feature}
                       </Badge>
                     ))}
@@ -801,7 +801,7 @@ const CommercialOverviewCards = () => {
                   <factor.icon className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
                     <span className="font-medium text-white text-sm">{factor.factor}</span>
-                    <p className="text-xs text-neutral-400 mt-1">{factor.description}</p>
+                    <p className="text-xs text-white mt-1">{factor.description}</p>
                   </div>
                 </div>
               ))}
@@ -827,7 +827,7 @@ const CommercialOverviewCards = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <span className="text-xs text-neutral-400">Key Skills:</span>
+                      <span className="text-xs text-white">Key Skills:</span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {stage.skills.map((skill, sidx) => (
                           <Badge key={sidx} variant="outline" className="text-xs border-green-500/50 text-green-400">
@@ -837,7 +837,7 @@ const CommercialOverviewCards = () => {
                       </div>
                     </div>
                     <div>
-                      <span className="text-xs text-neutral-400">Qualifications:</span>
+                      <span className="text-xs text-white">Qualifications:</span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {stage.qualifications.map((qual, qidx) => (
                           <Badge key={qidx} variant="outline" className="text-xs border-blue-500/50 text-blue-400">
@@ -866,7 +866,7 @@ const CommercialOverviewCards = () => {
             </div>
             <div>
               <CardTitle className="text-blue-300 text-xl">Office Fit-Outs</CardTitle>
-              <p className="text-neutral-300 text-sm mt-1">Complete guide to electrical installations in office environments</p>
+              <p className="text-white text-sm mt-1">Complete guide to electrical installations in office environments</p>
             </div>
           </div>
         </CardHeader>
@@ -881,13 +881,13 @@ const CommercialOverviewCards = () => {
               {officeLayoutTypes.map((layout, idx) => (
                 <div key={idx} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
                   <h5 className="font-medium text-blue-300 mb-2">{layout.type}</h5>
-                  <p className="text-xs text-neutral-400 mb-3">{layout.description}</p>
+                  <p className="text-xs text-white mb-3">{layout.description}</p>
                   <Badge variant="outline" className="border-blue-400 text-blue-300 text-xs mb-3">
                     {layout.electrical}
                   </Badge>
                   <ul className="space-y-1">
                     {layout.considerations.map((point, pidx) => (
-                      <li key={pidx} className="text-xs text-neutral-300 flex items-start gap-2">
+                      <li key={pidx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {point}
                       </li>
@@ -929,8 +929,8 @@ const CommercialOverviewCards = () => {
                           {level.lux}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-300 hidden md:table-cell">{level.standard}</td>
-                      <td className="py-2 text-neutral-400 text-xs">{level.notes}</td>
+                      <td className="py-2 text-white hidden md:table-cell">{level.standard}</td>
+                      <td className="py-2 text-white text-xs">{level.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -958,7 +958,7 @@ const CommercialOverviewCards = () => {
                   </Badge>
                   <div>
                     <span className="font-medium text-white text-sm">{req.category}</span>
-                    <p className="text-xs text-neutral-400 mt-1">{req.detail}</p>
+                    <p className="text-xs text-white mt-1">{req.detail}</p>
                   </div>
                 </div>
               ))}
@@ -977,7 +977,7 @@ const CommercialOverviewCards = () => {
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                     <div>
                       <h5 className="font-medium text-blue-300">{system.system}</h5>
-                      <p className="text-sm text-neutral-300 mt-1">{system.description}</p>
+                      <p className="text-sm text-white mt-1">{system.description}</p>
                     </div>
                     <Badge variant="outline" className="border-blue-400 text-blue-300 text-xs flex-shrink-0">
                       {system.uses}
@@ -985,10 +985,10 @@ const CommercialOverviewCards = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <span className="text-xs text-neutral-400">Advantages:</span>
+                      <span className="text-xs text-white">Advantages:</span>
                       <ul className="mt-1 space-y-1">
                         {system.advantages.map((adv, aidx) => (
-                          <li key={aidx} className="text-xs text-neutral-300 flex items-start gap-2">
+                          <li key={aidx} className="text-xs text-white flex items-start gap-2">
                             <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                             {adv}
                           </li>
@@ -996,8 +996,8 @@ const CommercialOverviewCards = () => {
                       </ul>
                     </div>
                     <div>
-                      <span className="text-xs text-neutral-400">Cables:</span>
-                      <p className="text-xs text-neutral-300 mt-1">{system.cables}</p>
+                      <span className="text-xs text-white">Cables:</span>
+                      <p className="text-xs text-white mt-1">{system.cables}</p>
                     </div>
                   </div>
                 </div>
@@ -1035,7 +1035,7 @@ const CommercialOverviewCards = () => {
                           {circuit.protection}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-400 text-xs hidden md:table-cell">{circuit.notes}</td>
+                      <td className="py-2 text-white text-xs hidden md:table-cell">{circuit.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1065,7 +1065,7 @@ const CommercialOverviewCards = () => {
             </div>
             <div>
               <CardTitle className="text-pink-300 text-xl">Retail & Shop Installations</CardTitle>
-              <p className="text-neutral-300 text-sm mt-1">Display lighting, POS systems, security, and accessibility requirements</p>
+              <p className="text-white text-sm mt-1">Display lighting, POS systems, security, and accessibility requirements</p>
             </div>
           </div>
         </CardHeader>
@@ -1080,13 +1080,13 @@ const CommercialOverviewCards = () => {
               {retailLightingTypes.map((lighting, idx) => (
                 <div key={idx} className="bg-pink-500/10 p-4 rounded-lg border border-pink-500/20">
                   <h5 className="font-medium text-pink-300 mb-2">{lighting.type}</h5>
-                  <p className="text-xs text-neutral-400 mb-2">{lighting.description}</p>
+                  <p className="text-xs text-white mb-2">{lighting.description}</p>
                   <Badge variant="outline" className="border-pink-400 text-pink-300 text-xs mb-3">
                     {lighting.typical}
                   </Badge>
                   <ul className="space-y-1">
                     {lighting.considerations.map((point, pidx) => (
-                      <li key={pidx} className="text-xs text-neutral-300 flex items-start gap-2">
+                      <li key={pidx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-pink-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {point}
                       </li>
@@ -1123,9 +1123,9 @@ const CommercialOverviewCards = () => {
                   {retailPOSCircuits.map((item, idx) => (
                     <tr key={idx} className="border-b border-blue-500/20">
                       <td className="py-2 text-white font-medium">{item.equipment}</td>
-                      <td className="py-2 text-neutral-300">{item.circuit}</td>
-                      <td className="py-2 text-neutral-300">{item.protection}</td>
-                      <td className="py-2 text-neutral-400 text-xs hidden md:table-cell">{item.notes}</td>
+                      <td className="py-2 text-white">{item.circuit}</td>
+                      <td className="py-2 text-white">{item.protection}</td>
+                      <td className="py-2 text-white text-xs hidden md:table-cell">{item.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1144,9 +1144,9 @@ const CommercialOverviewCards = () => {
                 <div key={idx} className="bg-purple-600/10 p-3 rounded border border-purple-500/20">
                   <h5 className="font-medium text-purple-300 mb-2">{system.system}</h5>
                   <div className="space-y-1 text-xs">
-                    <p className="text-neutral-300"><strong className="text-purple-200">Power:</strong> {system.power}</p>
-                    <p className="text-neutral-300"><strong className="text-purple-200">Cable:</strong> {system.cable}</p>
-                    <p className="text-neutral-400">{system.notes}</p>
+                    <p className="text-white"><strong className="text-purple-200">Power:</strong> {system.power}</p>
+                    <p className="text-white"><strong className="text-purple-200">Cable:</strong> {system.cable}</p>
+                    <p className="text-white">{system.notes}</p>
                   </div>
                 </div>
               ))}
@@ -1179,8 +1179,8 @@ const CommercialOverviewCards = () => {
                   {retailRefrigerationCircuits.map((item, idx) => (
                     <tr key={idx} className="border-b border-cyan-500/20">
                       <td className="py-2 text-white font-medium">{item.equipment}</td>
-                      <td className="py-2 text-neutral-300">{item.rating}</td>
-                      <td className="py-2 text-neutral-300">{item.circuit}</td>
+                      <td className="py-2 text-white">{item.rating}</td>
+                      <td className="py-2 text-white">{item.circuit}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-cyan-400 text-cyan-300 text-xs">
                           {item.protection}
@@ -1210,9 +1210,9 @@ const CommercialOverviewCards = () => {
                 <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/20">
                   <h5 className="font-medium text-red-300 mb-2">{area.area}</h5>
                   <div className="space-y-1 text-xs">
-                    <p className="text-neutral-300"><strong className="text-red-200">Requirement:</strong> {area.requirement}</p>
-                    <p className="text-neutral-300"><strong className="text-red-200">Type:</strong> {area.type}</p>
-                    <p className="text-neutral-300"><strong className="text-red-200">Duration:</strong> {area.duration}</p>
+                    <p className="text-white"><strong className="text-red-200">Requirement:</strong> {area.requirement}</p>
+                    <p className="text-white"><strong className="text-red-200">Type:</strong> {area.type}</p>
+                    <p className="text-white"><strong className="text-red-200">Duration:</strong> {area.duration}</p>
                   </div>
                 </div>
               ))}
@@ -1237,7 +1237,7 @@ const CommercialOverviewCards = () => {
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="font-medium text-white text-sm">{req.requirement}</span>
-                    <p className="text-xs text-neutral-400 mt-1">{req.detail}</p>
+                    <p className="text-xs text-white mt-1">{req.detail}</p>
                     <Badge variant="outline" className="border-green-400 text-green-300 text-xs mt-2">
                       {req.reference}
                     </Badge>
@@ -1261,7 +1261,7 @@ const CommercialOverviewCards = () => {
             </div>
             <div>
               <CardTitle className="text-amber-300 text-xl">Restaurant & Commercial Kitchen</CardTitle>
-              <p className="text-neutral-300 text-sm mt-1">Three-phase equipment, IP ratings, extraction, and fire suppression</p>
+              <p className="text-white text-sm mt-1">Three-phase equipment, IP ratings, extraction, and fire suppression</p>
             </div>
           </div>
         </CardHeader>
@@ -1298,8 +1298,8 @@ const CommercialOverviewCards = () => {
                           {item.rating}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-300">{item.phase}</td>
-                      <td className="py-2 text-neutral-300 hidden md:table-cell">{item.cable}</td>
+                      <td className="py-2 text-white">{item.phase}</td>
+                      <td className="py-2 text-white hidden md:table-cell">{item.cable}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-amber-400 text-amber-300 text-xs">
                           {item.protection}
@@ -1343,8 +1343,8 @@ const CommercialOverviewCards = () => {
                           {zone.ipRating}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-400 text-xs hidden md:table-cell">{zone.reason}</td>
-                      <td className="py-2 text-neutral-300 text-xs">{zone.fittingType}</td>
+                      <td className="py-2 text-white text-xs hidden md:table-cell">{zone.reason}</td>
+                      <td className="py-2 text-white text-xs">{zone.fittingType}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1370,7 +1370,7 @@ const CommercialOverviewCards = () => {
                           {comp.typical}
                         </Badge>
                       </div>
-                      <p className="text-xs text-neutral-400">{comp.phase} - {comp.notes}</p>
+                      <p className="text-xs text-white">{comp.phase} - {comp.notes}</p>
                     </div>
                   ))}
                 </div>
@@ -1385,7 +1385,7 @@ const CommercialOverviewCards = () => {
                 </Alert>
                 <ul className="space-y-2">
                   {extractionSystemSupply.interlock.map((item, idx) => (
-                    <li key={idx} className="text-sm text-neutral-300 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -1412,9 +1412,9 @@ const CommercialOverviewCards = () => {
                 <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/20">
                   <h5 className="font-medium text-red-300 mb-2">{system.system}</h5>
                   <div className="space-y-1 text-xs">
-                    <p className="text-neutral-300"><strong className="text-red-200">Electrical:</strong> {system.electrical}</p>
-                    <p className="text-neutral-300"><strong className="text-red-200">Integration:</strong> {system.integration}</p>
-                    <p className="text-neutral-400">{system.notes}</p>
+                    <p className="text-white"><strong className="text-red-200">Electrical:</strong> {system.electrical}</p>
+                    <p className="text-white"><strong className="text-red-200">Integration:</strong> {system.integration}</p>
+                    <p className="text-white">{system.notes}</p>
                   </div>
                 </div>
               ))}
@@ -1435,7 +1435,7 @@ const CommercialOverviewCards = () => {
             </Alert>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {haccpConsiderations.map((item, idx) => (
-                <div key={idx} className="text-sm text-neutral-300 flex items-start gap-2">
+                <div key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </div>
@@ -1457,7 +1457,7 @@ const CommercialOverviewCards = () => {
             </div>
             <div>
               <CardTitle className="text-purple-300 text-xl">Hotels & Hospitality</CardTitle>
-              <p className="text-neutral-300 text-sm mt-1">Guest room circuits, card key systems, and emergency requirements</p>
+              <p className="text-white text-sm mt-1">Guest room circuits, card key systems, and emergency requirements</p>
             </div>
           </div>
         </CardHeader>
@@ -1492,7 +1492,7 @@ const CommercialOverviewCards = () => {
                           {circuit.protection}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-400 text-xs">{circuit.notes}</td>
+                      <td className="py-2 text-white text-xs">{circuit.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1510,13 +1510,13 @@ const CommercialOverviewCards = () => {
               {cardKeySystemTypes.map((system, idx) => (
                 <div key={idx} className="bg-purple-600/10 p-4 rounded border border-purple-500/20">
                   <h5 className="font-medium text-purple-300 mb-2">{system.type}</h5>
-                  <p className="text-sm text-neutral-300 mb-2">{system.description}</p>
+                  <p className="text-sm text-white mb-2">{system.description}</p>
                   <Badge variant="outline" className="border-purple-400 text-purple-300 text-xs mb-3">
                     {system.technology}
                   </Badge>
                   <ul className="space-y-1">
                     {system.considerations.map((point, pidx) => (
-                      <li key={pidx} className="text-xs text-neutral-400 flex items-start gap-2">
+                      <li key={pidx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
                         {point}
                       </li>
@@ -1552,8 +1552,8 @@ const CommercialOverviewCards = () => {
                           {area.lux}
                         </Badge>
                       </td>
-                      <td className="py-2 text-neutral-300 text-xs">{area.control}</td>
-                      <td className="py-2 text-neutral-400 text-xs hidden md:table-cell">{area.features}</td>
+                      <td className="py-2 text-white text-xs">{area.control}</td>
+                      <td className="py-2 text-white text-xs hidden md:table-cell">{area.features}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1568,10 +1568,10 @@ const CommercialOverviewCards = () => {
                 <Sparkles className="h-5 w-5" />
                 {backOfHouseVsFrontOfHouse.frontOfHouse.title}
               </h5>
-              <p className="text-xs text-neutral-400 mb-3">{backOfHouseVsFrontOfHouse.frontOfHouse.description}</p>
+              <p className="text-xs text-white mb-3">{backOfHouseVsFrontOfHouse.frontOfHouse.description}</p>
               <ul className="space-y-2">
                 {backOfHouseVsFrontOfHouse.frontOfHouse.items.map((item, idx) => (
-                  <li key={idx} className="text-sm text-neutral-300 flex items-start gap-2">
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-pink-400 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -1579,15 +1579,15 @@ const CommercialOverviewCards = () => {
               </ul>
             </div>
             <div className="bg-neutral-700/30 p-4 rounded-lg border border-neutral-600">
-              <h5 className="font-semibold text-neutral-300 mb-3 flex items-center gap-2">
+              <h5 className="font-semibold text-white mb-3 flex items-center gap-2">
                 <Wrench className="h-5 w-5" />
                 {backOfHouseVsFrontOfHouse.backOfHouse.title}
               </h5>
-              <p className="text-xs text-neutral-400 mb-3">{backOfHouseVsFrontOfHouse.backOfHouse.description}</p>
+              <p className="text-xs text-white mb-3">{backOfHouseVsFrontOfHouse.backOfHouse.description}</p>
               <ul className="space-y-2">
                 {backOfHouseVsFrontOfHouse.backOfHouse.items.map((item, idx) => (
-                  <li key={idx} className="text-sm text-neutral-300 flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-neutral-400 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -1617,8 +1617,8 @@ const CommercialOverviewCards = () => {
                     </Badge>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                    <p className="text-neutral-300"><strong className="text-red-200">Requirement:</strong> {system.requirement}</p>
-                    <p className="text-neutral-300"><strong className="text-red-200">Testing:</strong> {system.testing}</p>
+                    <p className="text-white"><strong className="text-red-200">Requirement:</strong> {system.requirement}</p>
+                    <p className="text-white"><strong className="text-red-200">Testing:</strong> {system.testing}</p>
                   </div>
                 </div>
               ))}
@@ -1655,7 +1655,7 @@ const CommercialOverviewCards = () => {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-neutral-300">Complexity Level</span>
+                  <span className="text-white">Complexity Level</span>
                   <span className="text-blue-300">{project.complexity}%</span>
                 </div>
                 <Progress value={project.complexity} className="h-2" />
@@ -1679,7 +1679,7 @@ const CommercialOverviewCards = () => {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-orange-200 mb-1">{req.requirement}</h4>
-                  <p className="text-sm text-neutral-300">{req.description}</p>
+                  <p className="text-sm text-white">{req.description}</p>
                 </div>
                 <Badge
                   variant="outline"
@@ -1718,7 +1718,7 @@ const CommercialOverviewCards = () => {
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-              <span className="text-neutral-300">{item}</span>
+              <span className="text-white">{item}</span>
             </div>
           ))}
         </CardContent>

@@ -247,7 +247,7 @@ const ApprenticeshipExpectations = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <p className="text-white/90 text-base sm:text-lg leading-relaxed">
+          <p className="text-white text-base sm:text-lg leading-relaxed">
             An electrical apprenticeship is a <span className="text-elec-yellow font-semibold">4-year career investment</span> that
             combines hands-on practical training with college-based learning. You'll progress from complete beginner to
             <span className="text-green-400 font-semibold"> fully qualified electrician</span>, earning while you learn.
@@ -259,10 +259,10 @@ const ApprenticeshipExpectations = () => {
               <div key={index} className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4 border border-white/10 hover:border-elec-yellow/30 transition-all">
                 <div className="flex items-center gap-2 mb-2">
                   <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${stat.color}`} />
-                  <span className="text-white/70 text-xs sm:text-sm">{stat.label}</span>
+                  <span className="text-white text-xs sm:text-sm">{stat.label}</span>
                 </div>
                 <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.sublabel}</div>
+                <div className="text-white text-xs">{stat.sublabel}</div>
               </div>
             ))}
           </div>
@@ -277,7 +277,7 @@ const ApprenticeshipExpectations = () => {
               {industryStats.map((item, index) => (
                 <div key={index} className="text-center">
                   <div className="text-xl sm:text-2xl font-bold text-white">{item.stat}</div>
-                  <div className="text-white/70 text-xs">{item.label}</div>
+                  <div className="text-white text-xs">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -309,7 +309,7 @@ const ApprenticeshipExpectations = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white text-sm">{item.title}</h4>
-                  <p className="text-white/70 text-xs">{item.desc}</p>
+                  <p className="text-white text-xs">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -337,7 +337,7 @@ const ApprenticeshipExpectations = () => {
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <span className="text-white text-sm font-medium">{item.text}</span>
-                        <p className="text-white/60 text-xs mt-0.5">{item.detail}</p>
+                        <p className="text-white text-xs mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   </li>
@@ -366,7 +366,7 @@ const ApprenticeshipExpectations = () => {
             ].map((item, index) => (
               <div key={index} className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <item.icon className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                <span className="text-white/90 text-sm">{item.text}</span>
+                <span className="text-white text-sm">{item.text}</span>
               </div>
             ))}
           </div>
@@ -403,7 +403,7 @@ const ApprenticeshipExpectations = () => {
                   </Badge>
                 </div>
                 <CardTitle className="text-xl sm:text-2xl text-white">{stage.title}</CardTitle>
-                <p className="text-white/80 mt-1">{stage.focus}</p>
+                <p className="text-white mt-1">{stage.focus}</p>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -417,7 +417,7 @@ const ApprenticeshipExpectations = () => {
                     {stage.keyMilestones.map((milestone, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm bg-white/5 border border-white/10 p-2 rounded-lg">
                         <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                        <span className="text-white/90">{milestone}</span>
+                        <span className="text-white">{milestone}</span>
                       </div>
                     ))}
                   </div>
@@ -432,7 +432,7 @@ const ApprenticeshipExpectations = () => {
                     </h5>
                     <div className="flex flex-wrap gap-2">
                       {stage.skills.map((skill, idx) => (
-                        <Badge key={idx} variant="outline" className="text-white/80 border-white/20">
+                        <Badge key={idx} variant="outline" className="text-white border-white/20">
                           {skill}
                         </Badge>
                       ))}
@@ -444,7 +444,7 @@ const ApprenticeshipExpectations = () => {
                       <Coffee className="h-4 w-4" />
                       Day in the Life
                     </h5>
-                    <p className="text-white/80 text-sm">{stage.dayInLife}</p>
+                    <p className="text-white text-sm">{stage.dayInLife}</p>
                   </div>
                 </div>
 
@@ -465,8 +465,8 @@ const ApprenticeshipExpectations = () => {
 
                 {/* Quote */}
                 <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border-l-4 border-elec-yellow">
-                  <p className="text-white/90 italic text-sm">"{stage.quote}"</p>
-                  <p className="text-white/60 text-xs mt-1">- Former Year {stage.year} Apprentice</p>
+                  <p className="text-white italic text-sm">"{stage.quote}"</p>
+                  <p className="text-white text-xs mt-1">- Former Year {stage.year} Apprentice</p>
                 </div>
 
                 {/* View Details Button */}
@@ -501,7 +501,7 @@ const ApprenticeshipExpectations = () => {
                   <Progress value={(index + 1) * 25} className="h-3" />
                 </div>
                 <div className="w-24 text-right">
-                  <span className="text-white/90 text-sm font-semibold">{stage.salary.split(' - ')[1]}</span>
+                  <span className="text-white text-sm font-semibold">{stage.salary.split(' - ')[1]}</span>
                 </div>
               </div>
             ))}
@@ -574,7 +574,7 @@ const ApprenticeshipExpectations = () => {
                   {phase.items.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/90">{item}</span>
+                      <span className="text-white">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -611,11 +611,11 @@ const ApprenticeshipExpectations = () => {
                 }`}>
                   {day.activity}
                 </div>
-                <div className="text-white/60 text-xs mt-1">{day.hours}</div>
+                <div className="text-white text-xs mt-1">{day.hours}</div>
               </div>
             ))}
           </div>
-          <p className="text-white/60 text-sm mt-4 text-center">
+          <p className="text-white text-sm mt-4 text-center">
             Note: Schedules vary by employer and training provider. Some use block release instead of day release.
           </p>
         </CardContent>
@@ -639,7 +639,7 @@ const ApprenticeshipExpectations = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">{item.item}</span>
-                    <p className="text-white/60 text-xs">{item.note}</p>
+                    <p className="text-white text-xs">{item.note}</p>
                   </div>
                 </li>
               ))}
@@ -663,7 +663,7 @@ const ApprenticeshipExpectations = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">{item.item}</span>
-                    <p className="text-white/60 text-xs">{item.note}</p>
+                    <p className="text-white text-xs">{item.note}</p>
                   </div>
                 </li>
               ))}
@@ -693,8 +693,8 @@ const ApprenticeshipExpectations = () => {
                   <person.icon className="h-6 w-6 text-blue-400" />
                 </div>
                 <h4 className="font-semibold text-white">{person.role}</h4>
-                <p className="text-white/70 text-sm mt-1">{person.desc}</p>
-                <Badge variant="outline" className="mt-2 text-xs text-white/60">{person.contact}</Badge>
+                <p className="text-white text-sm mt-1">{person.desc}</p>
+                <Badge variant="outline" className="mt-2 text-xs text-white">{person.contact}</Badge>
               </div>
             ))}
           </div>
@@ -728,7 +728,7 @@ const ApprenticeshipExpectations = () => {
                 <li key={index} className="flex items-start justify-between gap-3 p-2 bg-white/5 border border-white/10 rounded-lg">
                   <div>
                     <span className="text-white font-medium">{item.factor}</span>
-                    <p className="text-white/60 text-xs">{item.desc}</p>
+                    <p className="text-white text-xs">{item.desc}</p>
                   </div>
                   <Badge variant="outline" className={`text-xs flex-shrink-0 ${
                     item.impact === 'High' ? 'text-green-400 border-green-400/30' : 'text-blue-400 border-blue-400/30'
@@ -759,7 +759,7 @@ const ApprenticeshipExpectations = () => {
                 { benefit: "PPE", value: "All safety equipment provided" }
               ].map((item, index) => (
                 <li key={index} className="flex items-center justify-between p-2 bg-white/5 border border-white/10 rounded-lg">
-                  <span className="text-white/90">{item.benefit}</span>
+                  <span className="text-white">{item.benefit}</span>
                   <span className="text-purple-400 text-sm font-medium">{item.value}</span>
                 </li>
               ))}
@@ -787,7 +787,7 @@ const ApprenticeshipExpectations = () => {
               <div key={index} className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
                 <h4 className="font-semibold text-white">{path.title}</h4>
                 <div className="text-2xl font-bold text-green-400 my-2">{path.salary}</div>
-                <p className="text-white/60 text-xs">{path.desc}</p>
+                <p className="text-white text-xs">{path.desc}</p>
               </div>
             ))}
           </div>
@@ -859,7 +859,7 @@ const ApprenticeshipExpectations = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Apprenticeship Expectations
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Your comprehensive guide to what to expect during your electrical apprenticeship journey -
           from day one to qualification day
         </p>

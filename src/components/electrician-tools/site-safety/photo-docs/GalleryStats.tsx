@@ -17,9 +17,9 @@ export default function GalleryStats({ total, byCategory }: GalleryStatsProps) {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <span className="text-lg font-bold text-elec-yellow">{total}</span>
-          <span className="text-xs text-white/50">photos</span>
+          <span className="text-xs text-white">photos</span>
         </div>
-        <span className="text-[10px] text-white/30">~{estimatedStorageMB} MB</span>
+        <span className="text-[10px] text-white">~{estimatedStorageMB} MB</span>
       </div>
 
       {/* Category bar chart */}
@@ -44,7 +44,7 @@ export default function GalleryStats({ total, byCategory }: GalleryStatsProps) {
         {PHOTO_CATEGORIES.filter((cat) => (byCategory[cat.value] || 0) > 0).map((cat) => (
           <div key={cat.value} className="flex items-center gap-1">
             <span className={`w-1.5 h-1.5 rounded-full ${cat.color}`} />
-            <span className="text-[10px] text-white/40">
+            <span className="text-[10px] text-white">
               {cat.label.split(' ')[0]} {byCategory[cat.value]}
             </span>
           </div>

@@ -54,7 +54,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
               title="PDF Preview"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-muted-foreground">
+            <div className="flex items-center justify-center h-full text-white">
               No preview available
             </div>
           )}
@@ -62,7 +62,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
 
         <div className="px-6 py-4 border-t bg-muted/30">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Ready to download your professional PDF document
             </p>
             <Button onClick={onDownload} className="gap-2">

@@ -38,7 +38,7 @@ export function BriefingFilterTabs({
               "px-3 py-2.5 rounded-lg text-sm font-medium",
               "transition-colors duration-200",
               "touch-manipulation min-h-[44px]",
-              isActive ? "text-white" : "text-white/50 hover:text-white/70"
+              isActive ? "text-white" : "text-white hover:text-white"
             )}
           >
             {isActive && (
@@ -56,7 +56,7 @@ export function BriefingFilterTabs({
                   "px-1.5 rounded-full text-xs font-bold",
                   isActive
                     ? "bg-elec-yellow text-black"
-                    : "bg-white/10 text-white/60"
+                    : "bg-white/10 text-white"
                 )}
               >
                 {tab.count}
@@ -93,27 +93,27 @@ export function BriefingFilterPills({
   const colorMap = {
     default: {
       active: "bg-white/20 text-white border-white/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     yellow: {
       active: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     green: {
       active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     blue: {
       active: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     amber: {
       active: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
     red: {
       active: "bg-red-500/20 text-red-400 border-red-500/30",
-      inactive: "bg-white/5 text-white/50 border-white/10",
+      inactive: "bg-white/5 text-white border-white/10",
     },
   };
 

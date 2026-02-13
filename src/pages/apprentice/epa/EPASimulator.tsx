@@ -133,7 +133,7 @@ const EPASimulator = () => {
             <h1 className="text-2xl font-bold tracking-tight text-white">
               EPA Simulator
             </h1>
-            <p className="text-white/90 text-sm">
+            <p className="text-white text-sm">
               Practise for your End Point Assessment with AI-powered mock sessions
             </p>
           </div>
@@ -151,7 +151,7 @@ const EPASimulator = () => {
                 'flex-1 flex flex-col items-center gap-0.5 py-3 text-xs font-medium touch-manipulation transition-colors',
                 activeTab === tab.id
                   ? 'text-elec-yellow border-b-2 border-elec-yellow'
-                  : 'text-white/60'
+                  : 'text-white'
               )}
             >
               <tab.icon className="h-4 w-4" />
@@ -174,7 +174,7 @@ const EPASimulator = () => {
 
         {activeTab === 'readiness' && !qualificationCode && (
           <div className="flex flex-col items-center justify-center py-16 px-4">
-            <p className="text-sm text-white/80 text-center">
+            <p className="text-sm text-white text-center">
               Set your qualification in your profile to see EPA readiness data.
             </p>
           </div>
@@ -236,7 +236,7 @@ function HistoryTab({
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 space-y-3">
         <Clock className="h-10 w-10 text-white/20" />
-        <p className="text-sm text-white/80 text-center">
+        <p className="text-sm text-white text-center">
           No mock sessions completed yet. Start a discussion or knowledge test to see your history.
         </p>
       </div>
@@ -245,7 +245,7 @@ function HistoryTab({
 
   return (
     <div className="space-y-2 px-4 py-5">
-      <h3 className="text-xs font-semibold text-white/80 uppercase tracking-wider">
+      <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
         Past Sessions
       </h3>
       {items.map((item) => (
@@ -264,7 +264,7 @@ function HistoryTab({
                 ? 'Professional Discussion'
                 : 'Knowledge Test'}
             </p>
-            <p className="text-[10px] text-white/60">
+            <p className="text-[10px] text-white">
               {item.completedAt.toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'short',

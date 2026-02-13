@@ -222,7 +222,7 @@ const ApprenticeshipFunding = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white mb-2">Understanding Your Funding</h3>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Apprenticeship funding in England is managed through the Education and Skills Funding Agency (ESFA).
                 The type of funding depends on your employer's size. Either way,
                 <span className="text-green-400 font-semibold"> you should never pay anything towards your training</span>.
@@ -240,7 +240,7 @@ const ApprenticeshipFunding = () => {
             ].map((stat, index) => (
               <div key={index} className="text-center p-3 bg-white/5 border border-white/10 rounded-lg">
                 <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.label}</div>
+                <div className="text-white text-xs">{stat.label}</div>
                 <div className="text-elec-yellow text-xs">{stat.sublabel}</div>
               </div>
             ))}
@@ -259,20 +259,20 @@ const ApprenticeshipFunding = () => {
                 </div>
                 <div>
                   <CardTitle className={`text-lg text-${model.color}-400`}>{model.title}</CardTitle>
-                  <p className="text-white/60 text-xs">{model.subtitle}</p>
+                  <p className="text-white text-xs">{model.subtitle}</p>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-white/80 text-sm">{model.description}</p>
+              <p className="text-white text-sm">{model.description}</p>
 
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between items-center p-2 bg-white/5 border border-white/10 rounded">
-                  <span className="text-white/70">Eligibility:</span>
+                  <span className="text-white">Eligibility:</span>
                   <span className="text-white text-xs">{model.eligibility}</span>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-white/5 border border-white/10 rounded">
-                  <span className="text-white/70">Funding:</span>
+                  <span className="text-white">Funding:</span>
                   <Badge className={`bg-${model.color}-500/20 text-${model.color}-400 text-xs`}>{model.amount}</Badge>
                 </div>
               </div>
@@ -283,17 +283,17 @@ const ApprenticeshipFunding = () => {
                   {model.keyPoints.map((point, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/80">{point}</span>
+                      <span className="text-white">{point}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               <div className="border-t border-white/10 pt-3">
-                <h5 className="font-semibold text-white/70 text-xs mb-2">Common Examples:</h5>
+                <h5 className="font-semibold text-white text-xs mb-2">Common Examples:</h5>
                 <div className="flex flex-wrap gap-1">
                   {model.examples.map((ex, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs text-white/60 border-white/20">
+                    <Badge key={idx} variant="outline" className="text-xs text-white border-white/20">
                       {ex}
                     </Badge>
                   ))}
@@ -320,7 +320,7 @@ const ApprenticeshipFunding = () => {
                 Maximum Funding
               </h3>
               <div className="text-4xl sm:text-5xl font-bold text-white mb-2">£21,000</div>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 This is the maximum amount the government will contribute towards your training
                 over the full 4-year apprenticeship duration.
               </p>
@@ -352,7 +352,7 @@ const ApprenticeshipFunding = () => {
                     ) : (
                       <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
                     )}
-                    <span className={item.covered ? "text-white/90" : "text-white/50 line-through"}>
+                    <span className={item.covered ? "text-white" : "text-white/50 line-through"}>
                       {item.item}
                     </span>
                   </li>
@@ -373,7 +373,7 @@ const ApprenticeshipFunding = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               You don't need to worry about which funding model applies - your employer and training provider
               handle this. Here's how to find out:
             </p>
@@ -389,7 +389,7 @@ const ApprenticeshipFunding = () => {
                   </div>
                   <div>
                     <h5 className="font-semibold text-white text-sm">{item.action}</h5>
-                    <p className="text-white/60 text-xs">{item.detail}</p>
+                    <p className="text-white text-xs">{item.detail}</p>
                   </div>
                 </div>
               ))}
@@ -406,9 +406,9 @@ const ApprenticeshipFunding = () => {
       <Card className="border-green-500/30 bg-gradient-to-br from-green-500/15 via-green-500/10 to-emerald-500/5">
         <CardContent className="pt-6">
           <div className="text-center">
-            <h3 className="text-white/80 text-sm mb-2">Total Potential Additional Funding</h3>
+            <h3 className="text-white text-sm mb-2">Total Potential Additional Funding</h3>
             <div className="text-5xl sm:text-6xl font-bold text-green-400 mb-2">£14,500+</div>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Available to eligible employers over a 4-year electrical apprenticeship
             </p>
           </div>
@@ -420,7 +420,7 @@ const ApprenticeshipFunding = () => {
             ].map((item, idx) => (
               <div key={idx} className="text-center p-3 bg-white/5 border border-white/10 rounded-lg">
                 <div className="text-xl font-bold text-white">{item.amount}</div>
-                <div className="text-white/60 text-xs">{item.source}</div>
+                <div className="text-white text-xs">{item.source}</div>
               </div>
             ))}
           </div>
@@ -437,7 +437,7 @@ const ApprenticeshipFunding = () => {
               </div>
               <div>
                 <CardTitle className={`text-${category.color}-400`}>{category.category}</CardTitle>
-                <p className="text-white/60 text-sm">{category.description}</p>
+                <p className="text-white text-sm">{category.description}</p>
               </div>
             </div>
           </CardHeader>
@@ -447,7 +447,7 @@ const ApprenticeshipFunding = () => {
                 <div key={pIndex} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 border border-white/10 rounded-lg gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-white">{payment.name}</h4>
-                    <p className="text-white/60 text-xs">Paid to: {payment.recipient}</p>
+                    <p className="text-white text-xs">Paid to: {payment.recipient}</p>
                     <p className="text-white/50 text-xs">Timing: {payment.timing}</p>
                   </div>
                   <Badge className="bg-green-500/20 text-green-400 text-lg sm:text-xl px-4 py-2 w-fit">
@@ -463,7 +463,7 @@ const ApprenticeshipFunding = () => {
                   <span className="font-semibold text-white">Total Potential CITB Funding:</span>
                   <span className="text-3xl font-bold text-orange-400">{category.totalPotential}</span>
                 </div>
-                <p className="text-white/70 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   Over a 4-year apprenticeship (£2,500 × 4 years + £3,500 completion bonus)
                 </p>
               </div>
@@ -481,7 +481,7 @@ const ApprenticeshipFunding = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             CITB grants are separate from apprenticeship funding and only available to employers
             who are registered with CITB and pay the construction industry levy.
           </p>
@@ -496,7 +496,7 @@ const ApprenticeshipFunding = () => {
                   "Apprentice on approved programme",
                   "Claims submitted on time"
                 ].map((req, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-white/80">
+                  <li key={idx} className="flex items-center gap-2 text-white">
                     <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
                     {req}
                   </li>
@@ -513,7 +513,7 @@ const ApprenticeshipFunding = () => {
                   "Provide apprentice details",
                   "Payment within 28 days"
                 ].map((step, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-white/80">
+                  <li key={idx} className="flex items-center gap-2 text-white">
                     <span className="text-orange-400 font-bold text-xs">{idx + 1}.</span>
                     {step}
                   </li>
@@ -542,7 +542,7 @@ const ApprenticeshipFunding = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Additional grants may be available depending on your employer's memberships and location:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -554,7 +554,7 @@ const ApprenticeshipFunding = () => {
                     {grant.amount}
                   </Badge>
                 </div>
-                <p className="text-white/60 text-xs">{grant.eligibility}</p>
+                <p className="text-white text-xs">{grant.eligibility}</p>
               </div>
             ))}
           </div>
@@ -574,16 +574,16 @@ const ApprenticeshipFunding = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             This section provides information you can share with employers who may be unfamiliar with
             apprenticeship funding. Use it when discussing your apprenticeship with potential or current employers.
           </p>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" className="text-white/70 border-white/20">
+            <Button variant="outline" size="sm" className="text-white border-white/20">
               <FileText className="h-4 w-4 mr-2" />
               Share this page
             </Button>
-            <Button variant="outline" size="sm" className="text-white/70 border-white/20">
+            <Button variant="outline" size="sm" className="text-white border-white/20">
               <Mail className="h-4 w-4 mr-2" />
               Email summary
             </Button>
@@ -599,7 +599,7 @@ const ApprenticeshipFunding = () => {
               <Landmark className="h-5 w-5" />
               Levy-Paying Employers
             </CardTitle>
-            <p className="text-white/60 text-sm">Pay bill over £3 million</p>
+            <p className="text-white text-sm">Pay bill over £3 million</p>
           </CardHeader>
           <CardContent className="space-y-4">
             <ul className="space-y-3">
@@ -612,7 +612,7 @@ const ApprenticeshipFunding = () => {
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <CheckCircle className={`h-4 w-4 mt-0.5 flex-shrink-0 ${item.highlight ? 'text-blue-400' : 'text-green-400'}`} />
-                  <span className={`text-sm ${item.highlight ? 'text-blue-400 font-medium' : 'text-white/90'}`}>
+                  <span className={`text-sm ${item.highlight ? 'text-blue-400 font-medium' : 'text-white'}`}>
                     {item.text}
                   </span>
                 </li>
@@ -632,7 +632,7 @@ const ApprenticeshipFunding = () => {
               <HandCoins className="h-5 w-5" />
               Non-Levy Employers (SMEs)
             </CardTitle>
-            <p className="text-white/60 text-sm">Pay bill under £3 million</p>
+            <p className="text-white text-sm">Pay bill under £3 million</p>
           </CardHeader>
           <CardContent className="space-y-4">
             <ul className="space-y-3">
@@ -645,7 +645,7 @@ const ApprenticeshipFunding = () => {
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <CheckCircle className={`h-4 w-4 mt-0.5 flex-shrink-0 ${item.highlight ? 'text-green-400' : 'text-green-400'}`} />
-                  <span className={`text-sm ${item.highlight ? 'text-green-400 font-medium' : 'text-white/90'}`}>
+                  <span className={`text-sm ${item.highlight ? 'text-green-400 font-medium' : 'text-white'}`}>
                     {item.text}
                   </span>
                 </li>
@@ -667,7 +667,7 @@ const ApprenticeshipFunding = () => {
             <TrendingUp className="h-5 w-5" />
             Making the Business Case
           </CardTitle>
-          <p className="text-white/60 text-sm">Return on investment for a 4-year electrical apprenticeship</p>
+          <p className="text-white text-sm">Return on investment for a 4-year electrical apprenticeship</p>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
@@ -679,7 +679,7 @@ const ApprenticeshipFunding = () => {
               <ul className="space-y-2 text-sm">
                 {employerROI.costs.map((item, idx) => (
                   <li key={idx} className="flex justify-between">
-                    <span className="text-white/70">{item.item}</span>
+                    <span className="text-white">{item.item}</span>
                     <span className="text-white font-medium">{item.amount}</span>
                   </li>
                 ))}
@@ -698,7 +698,7 @@ const ApprenticeshipFunding = () => {
               <ul className="space-y-2 text-sm">
                 {employerROI.returns.map((item, idx) => (
                   <li key={idx} className="flex justify-between">
-                    <span className="text-white/70">{item.item}</span>
+                    <span className="text-white">{item.item}</span>
                     <span className="text-green-400 font-medium">{item.amount}</span>
                   </li>
                 ))}
@@ -723,7 +723,7 @@ const ApprenticeshipFunding = () => {
                   "No recruitment agency fees",
                   "Loyal, trained workforce"
                 ].map((benefit, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-white/80">
+                  <li key={idx} className="flex items-center gap-2 text-white">
                     <CheckCircle className="h-3 w-3 text-elec-yellow flex-shrink-0" />
                     {benefit}
                   </li>
@@ -737,19 +737,19 @@ const ApprenticeshipFunding = () => {
             <h4 className="font-semibold text-elec-yellow mb-2">Compare: Hiring a Qualified Electrician</h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-white/70">Recruitment fees</span>
+                <span className="text-white">Recruitment fees</span>
                 <div className="text-white font-bold">£4,000 - £8,000</div>
               </div>
               <div>
-                <span className="text-white/70">Salary (Year 1)</span>
+                <span className="text-white">Salary (Year 1)</span>
                 <div className="text-white font-bold">£35,000 - £42,000</div>
               </div>
               <div>
-                <span className="text-white/70">Training to standards</span>
+                <span className="text-white">Training to standards</span>
                 <div className="text-white font-bold">Time + Cost</div>
               </div>
               <div>
-                <span className="text-white/70">Loyalty risk</span>
+                <span className="text-white">Loyalty risk</span>
                 <div className="text-white font-bold">Higher turnover</div>
               </div>
             </div>
@@ -775,7 +775,7 @@ const ApprenticeshipFunding = () => {
             ].map((item, idx) => (
               <div key={idx} className="text-center p-4 bg-white/5 border border-white/10 rounded-lg">
                 <div className="text-2xl sm:text-3xl font-bold text-blue-400">{item.stat}</div>
-                <div className="text-white/60 text-xs mt-1">{item.label}</div>
+                <div className="text-white text-xs mt-1">{item.label}</div>
               </div>
             ))}
           </div>
@@ -793,7 +793,7 @@ const ApprenticeshipFunding = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </CardTitle>
-          <p className="text-white/70 text-sm">
+          <p className="text-white text-sm">
             Everything you need to know about apprenticeship funding
           </p>
         </CardHeader>
@@ -814,7 +814,7 @@ const ApprenticeshipFunding = () => {
                   </div>
                 </MobileAccordionTrigger>
                 <MobileAccordionContent className="px-4 pb-4">
-                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </MobileAccordionContent>
               </MobileAccordionItem>
             ))}
@@ -835,13 +835,13 @@ const ApprenticeshipFunding = () => {
             <p className="text-white font-medium mb-2">
               You should NEVER be asked to pay for your apprenticeship training.
             </p>
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               If an employer asks you to contribute towards training costs, this is against
               funding rules and should be reported immediately.
             </p>
           </div>
 
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             If you believe your employer is not meeting their funding obligations:
           </p>
 
@@ -874,7 +874,7 @@ const ApprenticeshipFunding = () => {
                 </div>
                 <div>
                   <h5 className="font-semibold text-white text-sm">{item.action}</h5>
-                  <p className="text-white/60 text-xs">{item.detail}</p>
+                  <p className="text-white text-xs">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -911,7 +911,7 @@ const ApprenticeshipFunding = () => {
                 key={idx}
                 variant="outline"
                 size="sm"
-                className="justify-between text-white/80 border-white/20 hover:border-blue-500/50"
+                className="justify-between text-white border-white/20 hover:border-blue-500/50"
                 onClick={() => window.open(`https://www.${link.url}`, '_blank')}
               >
                 {link.name}
@@ -987,7 +987,7 @@ const ApprenticeshipFunding = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Apprenticeship Funding Guide
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Everything you need to know about how your apprenticeship training is funded -
           and why you should never pay a penny
         </p>
@@ -1003,7 +1003,7 @@ const ApprenticeshipFunding = () => {
             </div>
             <div>
               <h3 className="font-bold text-green-400">Key Point</h3>
-              <p className="text-white/90 text-sm">
+              <p className="text-white text-sm">
                 You should <strong>never</strong> be asked to pay for your apprenticeship training.
                 All training costs are covered by government funding or your employer.
               </p>

@@ -407,7 +407,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
           </Button>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-bold text-white truncate">RAMS Generator</h1>
-            <p className="text-[10px] text-white/50">Risk Assessment & Method Statement</p>
+            <p className="text-[10px] text-white">Risk Assessment & Method Statement</p>
           </div>
           {showResults && status === 'complete' && (
             <Button

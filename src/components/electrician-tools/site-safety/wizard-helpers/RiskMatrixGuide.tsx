@@ -141,14 +141,14 @@ export const RiskMatrixGuide = ({
                     <level.icon className="h-4 w-4 text-elec-yellow" />
                     {level.label}
                   </h4>
-                  <p className="text-sm text-elec-light/70 text-left">{level.description}</p>
+                  <p className="text-sm text-white text-left">{level.description}</p>
                 </div>
 
                 <div className="text-left">
                   <h5 className="text-xs font-semibold text-elec-yellow uppercase tracking-wide mb-2">
                     Examples
                   </h5>
-                  <ul className="text-sm text-elec-light/70 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {level.examples.map((example, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-left">
                         <span className="text-elec-yellow mt-1 shrink-0">•</span>
@@ -179,7 +179,7 @@ export const RiskMatrixGuide = ({
                   <h5 className="text-xs font-semibold text-elec-yellow uppercase tracking-wide mb-2">
                     Required Controls
                   </h5>
-                  <ul className="text-sm text-elec-light/70 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {level.controls.map((control, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-left">
                         <span className="text-elec-yellow mt-1 shrink-0">✓</span>

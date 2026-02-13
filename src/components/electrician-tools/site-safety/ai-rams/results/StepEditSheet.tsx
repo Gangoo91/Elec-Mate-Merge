@@ -143,7 +143,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               {editedStep.safetyRequirements.map((req, idx) => (
                 <div key={idx} className="flex items-start gap-2 bg-background/50 rounded p-2">
                   <span className="text-amber-500 mt-1">•</span>
-                  <span className="flex-1 text-sm text-elec-light/90">{req}</span>
+                  <span className="flex-1 text-sm text-white">{req}</span>
                   <Button
                     variant="ghost"
                     size="sm"

@@ -112,7 +112,7 @@ const StudyTips = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Study Hub
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Your complete study companion for electrical training success. Master 18th Edition, Level 3, and all electrical qualifications with comprehensive learning resources and proven study strategies.
         </p>
         <SmartBackButton />
@@ -125,7 +125,7 @@ const StudyTips = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -151,7 +151,7 @@ const StudyTips = () => {
                   <benefit.icon className="h-5 w-5 text-blue-400" />
                 </div>
                 <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
-                <p className="text-white/70 text-xs">{benefit.desc}</p>
+                <p className="text-white text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -225,7 +225,7 @@ const StudyTips = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Success in electrical training comes from consistent, focused study habits.
             Our integrated study tools, practice resources, and psychological techniques help you build a solid foundation and achieve exam success.
             Consistent daily engagement - even just 30 minutes - is more effective than cramming sessions.
@@ -239,7 +239,7 @@ const StudyTips = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

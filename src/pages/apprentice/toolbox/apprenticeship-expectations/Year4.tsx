@@ -297,7 +297,7 @@ const Year4 = () => {
           </div>
         </div>
 
-        <p className="text-white/80 text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-3xl">
           The finish line is in sight. Year 4 is about completing your EPA, choosing your specialisation,
           and launching your career as a fully qualified electrician. This is what you've been working towards.
         </p>
@@ -310,7 +310,7 @@ const Year4 = () => {
             <div className="w-12 h-3 rounded-full bg-purple-500" />
             <div className="w-12 h-3 rounded-full bg-elec-yellow" />
           </div>
-          <span className="text-white/60 text-sm ml-2">Year 4 of 4 - Final Year!</span>
+          <span className="text-white text-sm ml-2">Year 4 of 4 - Final Year!</span>
         </div>
 
         {/* Key stats */}
@@ -318,22 +318,22 @@ const Year4 = () => {
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Calendar className="h-5 w-5 text-elec-yellow mb-2" />
             <div className="text-2xl font-bold text-white">12</div>
-            <div className="text-white/60 text-sm">Final Months</div>
+            <div className="text-white text-sm">Final Months</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Briefcase className="h-5 w-5 text-green-400 mb-2" />
             <div className="text-2xl font-bold text-white">£28-35k</div>
-            <div className="text-white/60 text-sm">Final Year Salary</div>
+            <div className="text-white text-sm">Final Year Salary</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Award className="h-5 w-5 text-yellow-400 mb-2" />
             <div className="text-2xl font-bold text-white">EPA</div>
-            <div className="text-white/60 text-sm">Your Goal</div>
+            <div className="text-white text-sm">Your Goal</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <GraduationCap className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl font-bold text-white">Qualified</div>
-            <div className="text-white/60 text-sm">Electrician!</div>
+            <div className="text-white text-sm">Electrician!</div>
           </div>
         </div>
       </div>
@@ -347,22 +347,22 @@ const Year4 = () => {
           <TrendingUp className="h-5 w-5" />
           Your Complete Salary Journey
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           From apprentice to qualified - see how your earnings have grown
         </p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-5 gap-2 text-center mb-4">
           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white/60 text-xs mb-1">Year 1</p>
+            <p className="text-white text-xs mb-1">Year 1</p>
             <p className="text-sm font-bold text-white">£16.5k</p>
           </div>
           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white/60 text-xs mb-1">Year 2</p>
+            <p className="text-white text-xs mb-1">Year 2</p>
             <p className="text-sm font-bold text-white">£20k</p>
           </div>
           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white/60 text-xs mb-1">Year 3</p>
+            <p className="text-white text-xs mb-1">Year 3</p>
             <p className="text-sm font-bold text-white">£26k</p>
           </div>
           <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
@@ -375,7 +375,7 @@ const Year4 = () => {
           </div>
         </div>
         <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             <strong className="text-green-400">The payoff:</strong> From £16.5k to £35k+ in 4 years - more than
             double your starting salary. Specialists and those who go self-employed can earn £45k-£60k+.
           </p>
@@ -391,7 +391,7 @@ const Year4 = () => {
           <Star className="h-5 w-5" />
           EPA Success Statistics
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           National statistics - you've got strong odds if you've done the work
         </p>
       </CardHeader>
@@ -401,28 +401,28 @@ const Year4 = () => {
             <h4 className="font-semibold text-white mb-3">Component Pass Rates</h4>
             <div className="space-y-3">
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-                <span className="text-white/80 text-sm">Overall EPA</span>
+                <span className="text-white text-sm">Overall EPA</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.overall} className="w-20 h-2" />
                   <span className="text-sm font-bold text-green-400">{epaResults.passRates.overall}%</span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-                <span className="text-white/80 text-sm">Practical Assessment</span>
+                <span className="text-white text-sm">Practical Assessment</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.practical} className="w-20 h-2" />
                   <span className="text-sm font-bold text-green-400">{epaResults.passRates.practical}%</span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-                <span className="text-white/80 text-sm">Professional Discussion</span>
+                <span className="text-white text-sm">Professional Discussion</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.professional} className="w-20 h-2" />
                   <span className="text-sm font-bold text-green-400">{epaResults.passRates.professional}%</span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-                <span className="text-white/80 text-sm">Knowledge Test</span>
+                <span className="text-white text-sm">Knowledge Test</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.knowledge} className="w-20 h-2" />
                   <span className="text-sm font-bold text-green-400">{epaResults.passRates.knowledge}%</span>
@@ -436,7 +436,7 @@ const Year4 = () => {
               {epaResults.tips.map((tip, index) => (
                 <div key={index} className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80 text-sm">{tip}</span>
+                  <span className="text-white text-sm">{tip}</span>
                 </div>
               ))}
             </div>
@@ -453,7 +453,7 @@ const Year4 = () => {
           <Target className="h-5 w-5" />
           Specialisation Pathways
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Choose your area of expertise to focus your career
         </p>
       </CardHeader>
@@ -465,21 +465,21 @@ const Year4 = () => {
                 <option.icon className={`h-6 w-6 ${option.color}`} />
                 <span className={`font-semibold ${option.color}`}>{option.title}</span>
               </div>
-              <p className="text-white/70 text-sm mb-3">{option.description}</p>
+              <p className="text-white text-sm mb-3">{option.description}</p>
 
               <div className="space-y-2 mb-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-white/60 text-xs">Salary Range:</span>
+                  <span className="text-white text-xs">Salary Range:</span>
                   <span className="text-green-400 font-medium text-sm">{option.averageSalary}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-white/60 text-xs">Market:</span>
+                  <span className="text-white text-xs">Market:</span>
                   <Badge variant="outline" className="text-xs bg-white/10">{option.growth}</Badge>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <p className="text-white/60 text-xs">Career paths:</p>
+                <p className="text-white text-xs">Career paths:</p>
                 <div className="flex flex-wrap gap-1">
                   {option.careerPaths.map((path, idx) => (
                     <Badge key={idx} variant="outline" className="text-xs bg-white/5">
@@ -490,7 +490,7 @@ const Year4 = () => {
               </div>
 
               <div className="mt-3 pt-3 border-t border-white/10">
-                <p className="text-white/60 text-xs mb-1">Useful qualifications:</p>
+                <p className="text-white text-xs mb-1">Useful qualifications:</p>
                 <div className="flex flex-wrap gap-1">
                   {option.qualifications.map((qual, idx) => (
                     <Badge key={idx} variant="outline" className={`text-xs ${option.bgColor} ${option.color}`}>
@@ -513,7 +513,7 @@ const Year4 = () => {
           <Briefcase className="h-5 w-5" />
           Post-Apprenticeship Career Options
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Three main paths for newly qualified electricians
         </p>
       </CardHeader>
@@ -544,22 +544,22 @@ const Year4 = () => {
                   </div>
                 </div>
                 {expandedPathway === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60" />
+                  <ChevronUp className="h-5 w-5 text-white" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60" />
+                  <ChevronDown className="h-5 w-5 text-white" />
                 )}
               </button>
 
               {expandedPathway === index && (
                 <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm mb-4 pl-12">{pathway.description}</p>
+                  <p className="text-white text-sm mb-4 pl-12">{pathway.description}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-12">
                     <div>
                       <p className="font-medium text-green-400 text-sm mb-2">Advantages:</p>
                       {pathway.advantages.map((adv, idx) => (
                         <div key={idx} className="flex items-start gap-2 mb-1">
                           <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white/70 text-xs">{adv}</span>
+                          <span className="text-white text-xs">{adv}</span>
                         </div>
                       ))}
                     </div>
@@ -568,7 +568,7 @@ const Year4 = () => {
                       {pathway.considerations.map((con, idx) => (
                         <div key={idx} className="flex items-start gap-2 mb-1">
                           <AlertTriangle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white/70 text-xs">{con}</span>
+                          <span className="text-white text-xs">{con}</span>
                         </div>
                       ))}
                     </div>
@@ -589,7 +589,7 @@ const Year4 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Final Year Journey
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Click each period to see what to expect
         </p>
       </CardHeader>
@@ -618,26 +618,26 @@ const Year4 = () => {
                       <Badge variant="outline" className="text-xs bg-white/5">
                         {period.month}
                       </Badge>
-                      <span className="text-white/60 text-sm hidden sm:inline">{period.focus}</span>
+                      <span className="text-white text-sm hidden sm:inline">{period.focus}</span>
                     </div>
                   </div>
                 </div>
                 {expandedMonth === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60" />
+                  <ChevronUp className="h-5 w-5 text-white" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60" />
+                  <ChevronDown className="h-5 w-5 text-white" />
                 )}
               </button>
 
               {expandedMonth === index && (
                 <div className="px-4 pb-4 space-y-4">
                   <div className="pl-12">
-                    <p className="text-white/70 text-sm italic mb-3">"{period.dayInLife}"</p>
+                    <p className="text-white text-sm italic mb-3">"{period.dayInLife}"</p>
                     <div className="space-y-2">
                       {period.activities.map((activity, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white/80 text-sm">{activity}</span>
+                          <span className="text-white text-sm">{activity}</span>
                         </div>
                       ))}
                     </div>
@@ -658,7 +658,7 @@ const Year4 = () => {
           <Briefcase className="h-5 w-5" />
           Job Search Success Guide
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Practical tips for landing your first qualified role
         </p>
       </CardHeader>
@@ -674,7 +674,7 @@ const Year4 = () => {
                 {section.tips.map((tip, idx) => (
                   <div key={idx} className="flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70 text-xs">{tip}</span>
+                    <span className="text-white text-xs">{tip}</span>
                   </div>
                 ))}
               </div>
@@ -701,19 +701,19 @@ const Year4 = () => {
               EPA Success
             </h4>
             <ul className="space-y-2">
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Start preparing 6+ months early
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Complete your portfolio well ahead
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Know your portfolio inside out
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Practice practical under time pressure
               </li>
@@ -725,19 +725,19 @@ const Year4 = () => {
               Career Launch
             </h4>
             <ul className="space-y-2">
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Research employers before graduating
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Network at every opportunity
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Know your worth in negotiations
               </li>
-              <li className="text-white/80 text-sm flex items-start gap-2">
+              <li className="text-white text-sm flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Consider specialisation early
               </li>
@@ -749,7 +749,7 @@ const Year4 = () => {
             <Heart className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-white font-medium mb-1">Congratulations on making it this far!</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Whatever your first day felt like, you've grown into a skilled professional. Be proud of
                 your achievement - you've earned the right to call yourself an electrician.
               </p>
@@ -770,15 +770,15 @@ const Year4 = () => {
         <MobileAccordionContent>
           <div className="grid grid-cols-5 gap-1 pt-2">
             <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white/60 text-xs">Y1</p>
+              <p className="text-white text-xs">Y1</p>
               <p className="font-bold text-white text-xs">£16k</p>
             </div>
             <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white/60 text-xs">Y2</p>
+              <p className="text-white text-xs">Y2</p>
               <p className="font-bold text-white text-xs">£20k</p>
             </div>
             <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white/60 text-xs">Y3</p>
+              <p className="text-white text-xs">Y3</p>
               <p className="font-bold text-white text-xs">£26k</p>
             </div>
             <div className="p-2 rounded-lg bg-elec-yellow/20 text-center">
@@ -801,19 +801,19 @@ const Year4 = () => {
         <MobileAccordionContent>
           <div className="space-y-2 pt-2">
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-white/80 text-sm">Overall Pass</span>
+              <span className="text-white text-sm">Overall Pass</span>
               <span className="text-green-400 font-bold">{epaResults.passRates.overall}%</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-white/80 text-sm">Practical</span>
+              <span className="text-white text-sm">Practical</span>
               <span className="text-green-400 font-bold">{epaResults.passRates.practical}%</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-white/80 text-sm">Discussion</span>
+              <span className="text-white text-sm">Discussion</span>
               <span className="text-green-400 font-bold">{epaResults.passRates.professional}%</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-white/80 text-sm">Knowledge</span>
+              <span className="text-white text-sm">Knowledge</span>
               <span className="text-green-400 font-bold">{epaResults.passRates.knowledge}%</span>
             </div>
           </div>
@@ -834,7 +834,7 @@ const Year4 = () => {
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
                 <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
-                <p className="text-white/60 text-xs">{period.focus}</p>
+                <p className="text-white text-xs">{period.focus}</p>
               </div>
             ))}
           </div>
@@ -854,7 +854,7 @@ const Year4 = () => {
                   <option.icon className={`h-4 w-4 ${option.color}`} />
                   <span className={`font-medium text-sm ${option.color}`}>{option.title}</span>
                 </div>
-                <p className="text-white/60 text-xs mb-2">{option.description}</p>
+                <p className="text-white text-xs mb-2">{option.description}</p>
                 <p className="text-green-400 text-xs font-medium">{option.averageSalary}</p>
               </div>
             ))}
@@ -875,7 +875,7 @@ const Year4 = () => {
                   <span className={`font-medium text-sm ${pathway.color}`}>{pathway.path}</span>
                   <span className="text-green-400 text-xs">{pathway.typicalSalary}</span>
                 </div>
-                <p className="text-white/60 text-xs">{pathway.description}</p>
+                <p className="text-white text-xs">{pathway.description}</p>
               </div>
             ))}
           </div>
@@ -896,7 +896,7 @@ const Year4 = () => {
                   {section.tips.slice(0, 2).map((tip, idx) => (
                     <div key={idx} className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 text-xs">{tip}</span>
+                      <span className="text-white text-xs">{tip}</span>
                     </div>
                   ))}
                 </div>

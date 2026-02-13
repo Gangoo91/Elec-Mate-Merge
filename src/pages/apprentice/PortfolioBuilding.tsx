@@ -58,7 +58,7 @@ const PortfolioBuilding = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Enhanced Portfolio Builder</h1>
-        <p className="text-white/70 text-center max-w-3xl mb-4">
+        <p className="text-white text-center max-w-3xl mb-4">
           Build a professional portfolio that showcases your skills, meets assessment standards, and impresses employers. 
           Our comprehensive toolkit guides you through every step of the process.
         </p>
@@ -90,10 +90,10 @@ const PortfolioBuilding = () => {
                 {portfolioSections.map((section, index) => (
                   <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                     <h4 className="font-semibold text-white mb-2">{section.title}</h4>
-                    <p className="text-sm text-white/70 mb-3">{section.description}</p>
+                    <p className="text-sm text-white mb-3">{section.description}</p>
                     <ul className="space-y-2">
                       {section.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-sm text-white/70 flex items-start gap-2">
+                        <li key={itemIndex} className="text-sm text-white flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
@@ -118,7 +118,7 @@ const PortfolioBuilding = () => {
                   <h4 className="font-semibold text-white mb-3">Essential Tips</h4>
                   <ul className="space-y-2">
                     {documentationTips.map((tip, index) => (
-                      <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                      <li key={index} className="text-sm text-white flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         {tip}
                       </li>
@@ -127,7 +127,7 @@ const PortfolioBuilding = () => {
                 </div>
                 <div className="bg-elec-yellow/10 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Pro Tip</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Start documenting from day one! It's much harder to reconstruct your portfolio 
                     later than to maintain it as you go. Set aside 10 minutes each day to update 
                     your records.
@@ -145,7 +145,7 @@ const PortfolioBuilding = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-white/70">
+              <p className="text-white">
                 Your portfolio is more than just a collection of photos - it's proof of your learning 
                 journey and professional development. Quality documentation now will make your 
                 end-point assessment much smoother.
@@ -190,7 +190,7 @@ const PortfolioBuilding = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h4 className="font-medium text-white">Digital Enhancement Techniques</h4>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <Lightbulb className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       Use QR codes to link physical documentation to digital evidence
@@ -211,7 +211,7 @@ const PortfolioBuilding = () => {
                 </div>
                 <div className="space-y-4">
                   <h4 className="font-medium text-white">Professional Presentation</h4>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       Create executive summaries for major projects
@@ -245,7 +245,7 @@ const PortfolioBuilding = () => {
               <div className="space-y-4">
                 <div className="p-4 bg-yellow-500/20 rounded-lg border border-yellow-500/30">
                   <h5 className="font-medium text-yellow-400 mb-2">Important Legal Considerations</h5>
-                  <ul className="text-sm text-white/70 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Always obtain permission before photographing client premises</li>
                     <li>• Respect data protection laws when documenting work</li>
                     <li>• Ensure you have rights to use all images and content</li>
@@ -255,7 +255,7 @@ const PortfolioBuilding = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 border border-white/10 rounded border border-cyan-500/20">
                     <h5 className="font-medium text-white mb-2">Privacy Protection</h5>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Blur or crop out personal information</li>
                       <li>• Avoid showing house numbers or addresses</li>
                       <li>• Don't include client names without permission</li>
@@ -264,7 +264,7 @@ const PortfolioBuilding = () => {
                   </div>
                   <div className="p-4 bg-white/5 border border-white/10 rounded border border-cyan-500/20">
                     <h5 className="font-medium text-white mb-2">Professional Standards</h5>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>• Follow industry codes of conduct</li>
                       <li>• Maintain accurate and honest documentation</li>
                       <li>• Respect intellectual property rights</li>

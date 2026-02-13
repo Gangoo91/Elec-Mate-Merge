@@ -88,7 +88,7 @@ const StudyTips = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4 text-center">Study Tips for Electrical Apprentices</h1>
-        <p className="text-sm sm:text-base text-white/70 text-center max-w-2xl mb-3 sm:mb-4">
+        <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
           Proven revision strategies for 18th Edition and Level 3 exams, plus free resources to help you succeed
         </p>
         <SmartBackButton />
@@ -108,7 +108,7 @@ const StudyTips = () => {
                 <h4 className="font-semibold text-white mb-3">{strategy.category}</h4>
                 <ul className="space-y-2">
                   {strategy.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={tipIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="text-elec-yellow mt-1">•</span>
                       {tip}
                     </li>
@@ -132,9 +132,9 @@ const StudyTips = () => {
             {revisionTechniques.map((item, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{item.technique}</h4>
-                <p className="text-sm text-white/70 mb-3">{item.description}</p>
+                <p className="text-sm text-white mb-3">{item.description}</p>
                 <div className="bg-elec-yellow/10 p-3 rounded-lg">
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong className="text-elec-yellow">Example:</strong> {item.example}
                   </p>
                 </div>
@@ -158,7 +158,7 @@ const StudyTips = () => {
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                   <div>
                     <h4 className="font-semibold text-white">{item.resource}</h4>
-                    <p className="text-sm text-white/70">{item.description}</p>
+                    <p className="text-sm text-white">{item.description}</p>
                   </div>
                   <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow w-fit">
                     {item.access}
@@ -181,7 +181,7 @@ const StudyTips = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-3">Daily Routine (30-45 minutes)</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• 10 mins: Review yesterday's notes</li>
                 <li>• 20 mins: New material or practice questions</li>
                 <li>• 10 mins: Quick quiz or flashcards</li>
@@ -190,7 +190,7 @@ const StudyTips = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Weekly Goals</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Monday: New regulations/theory</li>
                 <li>• Tuesday: Calculations practice</li>
                 <li>• Wednesday: Review and consolidate</li>
@@ -207,7 +207,7 @@ const StudyTips = () => {
           <CardTitle className="text-green-300">Success Mindset</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70">
+          <p className="text-white">
             Remember: consistent daily study beats cramming every time. 30 minutes every day 
             for 3 months is better than 8-hour sessions the week before your exam. 
             The electrical trade rewards methodical, steady progress - apply that same 

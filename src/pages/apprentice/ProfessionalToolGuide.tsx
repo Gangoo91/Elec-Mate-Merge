@@ -14,7 +14,7 @@ const ProfessionalToolGuide = () => {
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Professional Tool Guide</h1>
-        <p className="text-white/70 text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Complete guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions
         </p>
         <SmartBackButton />
@@ -65,7 +65,7 @@ const ProfessionalToolGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/70">
+          <p className="text-white">
             Building a professional toolkit is an investment in your career. Focus on quality over quantity, 
             and build your collection gradually. A well-maintained set of quality tools will serve you throughout 
             your entire electrical career.

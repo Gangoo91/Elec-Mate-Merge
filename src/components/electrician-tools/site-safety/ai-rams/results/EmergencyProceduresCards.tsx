@@ -17,7 +17,7 @@ export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> =
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-elec-light/60">No emergency procedures specified</p>
+          <p className="text-sm text-white">No emergency procedures specified</p>
         </CardContent>
       </Card>
     );

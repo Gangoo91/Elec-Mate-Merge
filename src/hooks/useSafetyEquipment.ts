@@ -36,7 +36,7 @@ export function useSafetyEquipment() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: equipment = [], isLoading, error } = useQuery({
+  const { data: equipment = [], isLoading, error, refetch } = useQuery({
     queryKey: ['safety-equipment', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
@@ -216,6 +216,7 @@ export function useSafetyEquipment() {
     isLoading,
     error,
     stats,
+    refetch,
     addEquipment,
     updateEquipment,
     deleteEquipment,

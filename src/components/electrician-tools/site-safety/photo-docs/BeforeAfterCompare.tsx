@@ -98,7 +98,7 @@ export default function BeforeAfterCompare({
               <h3 className="text-sm font-semibold text-white">
                 {isSelectingBefore ? "Select 'Before' Photo" : "Select 'After' Photo"}
               </h3>
-              <p className="text-[10px] text-white/50 mt-0.5">
+              <p className="text-[10px] text-white mt-0.5">
                 Step {isSelectingBefore ? '1' : '2'} of 2
               </p>
             </div>
@@ -127,7 +127,7 @@ export default function BeforeAfterCompare({
               />
               <div className="flex-1 min-w-0">
                 <span className="text-[10px] text-blue-400 font-medium uppercase">Before</span>
-                <p className="text-xs text-white/70 truncate">{beforePhoto.description}</p>
+                <p className="text-xs text-white truncate">{beforePhoto.description}</p>
               </div>
             </div>
           </div>
@@ -274,14 +274,14 @@ export default function BeforeAfterCompare({
           <div className="p-3">
             <span className="text-[10px] text-blue-400 font-medium uppercase">Before</span>
             <p className="text-xs text-white mt-0.5 line-clamp-1">{beforePhoto.description}</p>
-            <p className="text-[10px] text-white/40 mt-0.5">
+            <p className="text-[10px] text-white mt-0.5">
               {format(new Date(beforePhoto.created_at), 'd MMM yyyy')}
             </p>
           </div>
           <div className="p-3">
             <span className="text-[10px] text-green-400 font-medium uppercase">After</span>
             <p className="text-xs text-white mt-0.5 line-clamp-1">{afterPhoto.description}</p>
-            <p className="text-[10px] text-white/40 mt-0.5">
+            <p className="text-[10px] text-white mt-0.5">
               {format(new Date(afterPhoto.created_at), 'd MMM yyyy')}
             </p>
           </div>

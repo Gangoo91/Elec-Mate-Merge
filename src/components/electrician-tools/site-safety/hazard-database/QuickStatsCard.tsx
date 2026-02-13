@@ -29,7 +29,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
       <div className="flex items-center justify-between">
         {/* Left - Total count */}
         <div>
-          <h3 className="text-sm font-medium text-white/70">
+          <h3 className="text-sm font-medium text-white">
             {categoryName ? `${categoryName} Hazards` : 'All Hazards'}
           </h3>
           <p className="text-3xl font-bold text-white mt-1">{stats.total}</p>
@@ -43,7 +43,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
               <AlertTriangle className="h-5 w-5 text-orange-400" />
             </div>
             <p className="text-lg font-bold text-white">{stats.highRisk}</p>
-            <p className="text-[10px] text-white/40 uppercase tracking-wider">
+            <p className="text-[10px] text-white uppercase tracking-wider">
               High Risk
             </p>
           </div>
@@ -54,7 +54,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
               <HardHat className="h-5 w-5 text-elec-yellow" />
             </div>
             <p className="text-lg font-bold text-white">{stats.withPPE}</p>
-            <p className="text-[10px] text-white/40 uppercase tracking-wider">
+            <p className="text-[10px] text-white uppercase tracking-wider">
               PPE Req.
             </p>
           </div>

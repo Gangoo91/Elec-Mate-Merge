@@ -33,7 +33,7 @@ const OnJobSafetyCases = () => {
                   Safety <span className="text-red-400">Case Studies</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="text-white max-w-xl text-sm sm:text-base">
                 Learn from real-world electrical safety scenarios through interactive case studies,
                 comprehensive assessments, and detailed safety knowledge modules.
               </p>
@@ -52,7 +52,7 @@ const OnJobSafetyCases = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-red-400">25+</div>
-                  <div className="text-xs sm:text-sm text-white/60">Scenarios</div>
+                  <div className="text-xs sm:text-sm text-white">Scenarios</div>
                 </div>
               </div>
             </CardContent>
@@ -66,7 +66,7 @@ const OnJobSafetyCases = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-orange-400">Real</div>
-                  <div className="text-xs sm:text-sm text-white/60">Incidents</div>
+                  <div className="text-xs sm:text-sm text-white">Incidents</div>
                 </div>
               </div>
             </CardContent>
@@ -80,7 +80,7 @@ const OnJobSafetyCases = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-blue-400">Interactive</div>
-                  <div className="text-xs sm:text-sm text-white/60">Learning</div>
+                  <div className="text-xs sm:text-sm text-white">Learning</div>
                 </div>
               </div>
             </CardContent>
@@ -94,7 +94,7 @@ const OnJobSafetyCases = () => {
                 </div>
                 <div>
                   <div className="text-xl sm:text-2xl font-bold text-green-400">Badges</div>
-                  <div className="text-xs sm:text-sm text-white/60">Earn Awards</div>
+                  <div className="text-xs sm:text-sm text-white">Earn Awards</div>
                 </div>
               </div>
             </CardContent>
@@ -175,7 +175,7 @@ const OnJobSafetyCases = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-red-300 mb-1">Safety First - Learn From Experience</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   These safety scenarios are based on real incidents and near-misses in the electrical industry.
                   Always follow proper safety procedures and <span className="font-medium text-red-300">consult with qualified professionals</span> when uncertain.
                   Your safety and the safety of others is paramount in all electrical work.

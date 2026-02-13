@@ -91,7 +91,7 @@ const CraftSkillsSubsection = () => {
               <div className="w-full h-64 bg-white/5 rounded-lg mb-4 flex items-center justify-center border border-elec-yellow/20">
                 <p className="text-elec-yellow/70">Practical demonstration image for {subsectionData.title}</p>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Visual reference for the techniques described in this section
               </p>
             </div>

@@ -208,7 +208,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
             <TabsContent value="items" className="flex-1 overflow-y-auto px-4 pb-24 mt-0">
               <div className="space-y-3 py-4">
                 {editedItems.length === 0 ? (
-                  <div className="text-center py-8 text-white/50">
+                  <div className="text-center py-8 text-white">
                     <Icon className="h-12 w-12 mx-auto mb-3 opacity-40" />
                     <p className="text-sm">{config.emptyMessage}</p>
                     <Button
@@ -240,7 +240,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => handleRemoveItem(index)}
-                        className="h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10 shrink-0"
+                        className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10 shrink-0"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -251,7 +251,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                   <Button
                     variant="outline"
                     onClick={() => handleAddItem()}
-                    className="w-full h-12 border-dashed border-white/[0.15] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+                    className="w-full h-12 border-dashed border-white/[0.15] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Custom Item
@@ -265,7 +265,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
               <div className="space-y-4 py-4">
                 {/* Search */}
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -282,7 +282,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                       "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
                       selectedCategory === 'all'
                         ? "bg-elec-yellow text-black"
-                        : "bg-white/[0.05] text-white/60 hover:bg-white/[0.08]"
+                        : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
                     )}
                   >
                     All
@@ -297,7 +297,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                           "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
                           selectedCategory === cat.id
                             ? "bg-elec-yellow text-black"
-                            : "bg-white/[0.05] text-white/60 hover:bg-white/[0.08]"
+                            : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
                         )}
                       >
                         <CatIcon className="h-3 w-3" />
@@ -310,7 +310,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                 {/* Items List */}
                 <div className="space-y-2">
                   {filteredItems.length === 0 ? (
-                    <div className="text-center py-6 text-white/50">
+                    <div className="text-center py-6 text-white">
                       <p className="text-sm">No matching {isTools ? 'tools' : 'materials'} found</p>
                       <Button
                         variant="outline"
@@ -337,10 +337,10 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                           <div className="flex-1 min-w-0">
                             <span className="text-sm font-medium text-white block">{item.name}</span>
                             {item.description && (
-                              <span className="text-xs text-white/50 block mt-0.5">{item.description}</span>
+                              <span className="text-xs text-white block mt-0.5">{item.description}</span>
                             )}
                           </div>
-                          <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-white shrink-0" />
                         </button>
                       );
                     })
@@ -351,7 +351,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                 <Button
                   variant="outline"
                   onClick={() => handleAddItem()}
-                  className="w-full h-12 border-dashed border-white/[0.15] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+                  className="w-full h-12 border-dashed border-white/[0.15] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Custom {isTools ? 'Tool' : 'Material'}
@@ -363,7 +363,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
           /* Simple list for tips, mistakes (no database) */
           <div className="flex-1 overflow-y-auto px-4 pb-24">
             <div className="flex items-center justify-between py-4">
-              <Badge className="bg-white/10 text-white/70 border-0">
+              <Badge className="bg-white/10 text-white border-0">
                 {editedItems.length} item{editedItems.length !== 1 ? 's' : ''}
               </Badge>
               <Button
@@ -379,7 +379,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
 
             <div className="space-y-3">
               {editedItems.length === 0 ? (
-                <div className="text-center py-8 text-white/50">
+                <div className="text-center py-8 text-white">
                   <Icon className="h-12 w-12 mx-auto mb-3 opacity-40" />
                   <p className="text-sm">{config.emptyMessage}</p>
                   <p className="text-xs mt-1">Tap "Add Item" to get started</p>
@@ -403,7 +403,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => handleRemoveItem(index)}
-                      className="h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10 shrink-0"
+                      className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10 shrink-0"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

@@ -224,7 +224,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
           <TabsContent value="items" className="flex-1 overflow-y-auto px-4 pb-24 mt-0">
             <div className="space-y-3 py-4">
               {editedItems.length === 0 ? (
-                <div className="text-center py-8 text-white/50">
+                <div className="text-center py-8 text-white">
                   <ShieldCheck className="h-12 w-12 mx-auto mb-3 opacity-40" />
                   <p className="text-sm">No PPE items yet</p>
                   <p className="text-xs mt-1">Tap "Add PPE" to add requirements</p>
@@ -252,13 +252,13 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                           <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
                             <Icon className="h-4 w-4 text-elec-yellow" />
                           </div>
-                          <span className="text-xs font-bold text-white/60">#{index + 1}</span>
+                          <span className="text-xs font-bold text-white">#{index + 1}</span>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveItem(item.id)}
-                          className="h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10"
+                          className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -266,7 +266,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
                       {/* PPE Type - with database suggestions */}
                       <div className="space-y-1.5 mb-3">
-                        <label className="text-xs font-medium text-white/60">PPE Type</label>
+                        <label className="text-xs font-medium text-white">PPE Type</label>
                         <Select
                           value={item.ppeType}
                           onValueChange={(value) => handlePPETypeChange(item.id, value)}
@@ -286,7 +286,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                               const CatIcon = CATEGORY_ICONS[cat.id] || ShieldCheck;
                               return (
                                 <React.Fragment key={cat.id}>
-                                  <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white/40 flex items-center gap-2 bg-[#1c1c1e] sticky top-0 z-10">
+                                  <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white flex items-center gap-2 bg-[#1c1c1e] sticky top-0 z-10">
                                     <CatIcon className="h-3 w-3" />
                                     {cat.name}
                                   </div>
@@ -304,7 +304,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
                       {/* Standard - auto-filled but editable */}
                       <div className="space-y-1.5 mb-3">
-                        <label className="text-xs font-medium text-white/60">BS EN Standard</label>
+                        <label className="text-xs font-medium text-white">BS EN Standard</label>
                         <Input
                           value={item.standard}
                           onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
@@ -315,7 +315,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
                       {/* Purpose - auto-filled but editable */}
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-white/60">Purpose</label>
+                        <label className="text-xs font-medium text-white">Purpose</label>
                         <Input
                           value={item.purpose}
                           onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
@@ -335,7 +335,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
             <div className="space-y-4 py-4">
               {/* Quick Presets */}
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-white/60 uppercase tracking-wide">Quick Presets</h4>
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">Quick Presets</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { key: 'domestic-electrical', label: 'Domestic', icon: '🏠' },
@@ -353,7 +353,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                       <span className="text-lg">{preset.icon}</span>
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium text-white block">{preset.label}</span>
-                        <span className="text-[10px] text-white/40">
+                        <span className="text-[10px] text-white">
                           {PPE_PRESETS[preset.key as PPEPresetKey].length} items
                         </span>
                       </div>
@@ -365,9 +365,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
               {/* Search & Filter */}
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-white/60 uppercase tracking-wide">Browse PPE Database</h4>
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">Browse PPE Database</h4>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -382,7 +382,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                       "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
                       selectedCategory === 'all'
                         ? "bg-elec-yellow text-black"
-                        : "bg-white/[0.05] text-white/60 hover:bg-white/[0.08]"
+                        : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
                     )}
                   >
                     All
@@ -397,7 +397,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                           "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
                           selectedCategory === cat.id
                             ? "bg-elec-yellow text-black"
-                            : "bg-white/[0.05] text-white/60 hover:bg-white/[0.08]"
+                            : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
                         )}
                       >
                         <CatIcon className="h-3 w-3" />
@@ -411,7 +411,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
               {/* PPE List */}
               <div className="space-y-2">
                 {filteredPPE.length === 0 ? (
-                  <div className="text-center py-6 text-white/50">
+                  <div className="text-center py-6 text-white">
                     <p className="text-sm">No matching PPE found</p>
                     <Button
                       variant="outline"
@@ -445,9 +445,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                             )}
                           </div>
                           <p className="text-xs text-elec-yellow/80 font-mono mt-0.5">{ppe.standard}</p>
-                          <p className="text-xs text-white/50 mt-1 line-clamp-2">{ppe.purpose}</p>
+                          <p className="text-xs text-white mt-1 line-clamp-2">{ppe.purpose}</p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-white/30 shrink-0 mt-1" />
+                        <ChevronRight className="h-4 w-4 text-white shrink-0 mt-1" />
                       </button>
                     );
                   })
@@ -458,7 +458,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
               <Button
                 variant="outline"
                 onClick={handleAddCustom}
-                className="w-full h-12 border-dashed border-white/[0.15] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+                className="w-full h-12 border-dashed border-white/[0.15] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Custom PPE Item

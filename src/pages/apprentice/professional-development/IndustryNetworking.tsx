@@ -71,7 +71,7 @@ const IndustryNetworking = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Industry Networking
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Build connections and advance your career through professional networks. Your network is your net worth in this industry.
         </p>
         <SmartBackButton />
@@ -84,7 +84,7 @@ const IndustryNetworking = () => {
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
               <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white/70">{stat.label}</p>
+              <p className="text-xs text-white">{stat.label}</p>
             </CardContent>
           </Card>
         ))}
@@ -100,16 +100,16 @@ const IndustryNetworking = () => {
                   <CardTitle className="text-lg text-white">{org.title}</CardTitle>
                   <span className="text-sm text-blue-400">{org.type}</span>
                 </div>
-                <ExternalLink className="h-4 w-4 text-white/40" />
+                <ExternalLink className="h-4 w-4 text-white" />
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-white/80">{org.description}</p>
+              <p className="text-white">{org.description}</p>
               <div>
                 <h4 className="font-semibold mb-2 text-white">Key Benefits:</h4>
                 <ul className="space-y-1">
                   {org.benefits.map((benefit, idx) => (
-                    <li key={idx} className="text-sm text-white/80 flex items-center gap-2">
+                    <li key={idx} className="text-sm text-white flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
                       {benefit}
                     </li>
@@ -117,7 +117,7 @@ const IndustryNetworking = () => {
                 </ul>
               </div>
               <div className="pt-2 border-t border-white/10">
-                <p className="text-sm text-white/60">{org.website}</p>
+                <p className="text-sm text-white">{org.website}</p>
               </div>
             </CardContent>
           </Card>
@@ -137,7 +137,7 @@ const IndustryNetworking = () => {
             {networkingTips.map((tip, index) => (
               <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-elec-yellow/30 transition-all">
                 <h3 className="font-semibold mb-2 text-elec-yellow">{tip.title}</h3>
-                <p className="text-sm text-white/80">{tip.description}</p>
+                <p className="text-sm text-white">{tip.description}</p>
               </div>
             ))}
           </div>
@@ -153,21 +153,21 @@ const IndustryNetworking = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white/80 mb-4">
+          <p className="text-white mb-4">
             Check these websites regularly for upcoming events, training sessions, and networking opportunities:
           </p>
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
               <MapPin className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white/80">Electrical Trade Shows & Exhibitions</span>
+              <span className="text-sm text-white">Electrical Trade Shows & Exhibitions</span>
             </div>
             <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
               <Users className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white/80">Local ECA Branch Meetings</span>
+              <span className="text-sm text-white">Local ECA Branch Meetings</span>
             </div>
             <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
               <Calendar className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white/80">IET Technical Talks and Seminars</span>
+              <span className="text-sm text-white">IET Technical Talks and Seminars</span>
             </div>
           </div>
         </CardContent>
@@ -182,7 +182,7 @@ const IndustryNetworking = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Networking isn't just about finding jobs - it's about building relationships that support your entire career. The connections you make as an apprentice can become lifelong professional relationships and friendships.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -193,7 +193,7 @@ const IndustryNetworking = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

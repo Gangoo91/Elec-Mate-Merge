@@ -148,7 +148,7 @@ export function EquipmentFormWizard({
         <div className="flex items-center justify-between p-3">
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors min-h-[44px] touch-manipulation"
+            className="flex items-center gap-2 text-white hover:text-white transition-colors min-h-[44px] touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">
@@ -176,7 +176,7 @@ export function EquipmentFormWizard({
               />
             ))}
           </div>
-          <p className="text-[10px] text-white/50 text-center mt-1.5">
+          <p className="text-[10px] text-white text-center mt-1.5">
             Step {currentStep} of {TOTAL_STEPS}:{" "}
             {currentStep === 1 && "Equipment"}
             {currentStep === 2 && "Testing Details"}
@@ -291,7 +291,7 @@ export function EquipmentFormWizard({
                     </div>
                   )}
                   <div>
-                    <p className="text-[10px] text-white/50">{selectedCategory?.label || "Equipment"}</p>
+                    <p className="text-[10px] text-white">{selectedCategory?.label || "Equipment"}</p>
                     <h3 className="text-sm font-semibold text-white">{watchedValues.name || "Unnamed"}</h3>
                   </div>
                 </div>
@@ -299,16 +299,16 @@ export function EquipmentFormWizard({
                 <div className="space-y-2">
                   {watchedValues.serial_number && (
                     <div className="flex justify-between">
-                      <span className="text-xs text-white/50">Serial</span>
+                      <span className="text-xs text-white">Serial</span>
                       <span className="text-xs text-white">{watchedValues.serial_number}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-xs text-white/50">Location</span>
+                    <span className="text-xs text-white">Location</span>
                     <span className="text-xs text-white">{watchedValues.location || "Not set"}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-xs text-white/50">Last Test</span>
+                    <span className="text-xs text-white">Last Test</span>
                     <span className="text-xs text-white">
                       {watchedValues.last_inspection
                         ? new Date(watchedValues.last_inspection).toLocaleDateString("en-GB")
@@ -317,12 +317,12 @@ export function EquipmentFormWizard({
                   </div>
                   {nextInspection && (
                     <div className="flex justify-between">
-                      <span className="text-xs text-white/50">Next Test</span>
+                      <span className="text-xs text-white">Next Test</span>
                       <span className="text-xs text-emerald-400">{nextInspection}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-xs text-white/50">Frequency</span>
+                    <span className="text-xs text-white">Frequency</span>
                     <span className="text-xs text-white">
                       {watchedValues.inspection_interval_days <= 90 && "3 months"}
                       {watchedValues.inspection_interval_days === 180 && "6 months"}
@@ -335,7 +335,7 @@ export function EquipmentFormWizard({
 
               {/* Notes */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-medium text-white/80">
+                <label className="block text-xs font-medium text-white">
                   Notes (Optional)
                 </label>
                 <textarea
@@ -343,7 +343,7 @@ export function EquipmentFormWizard({
                   className={cn(
                     "w-full min-h-[80px] p-3 rounded-lg text-sm",
                     "bg-white/5 border border-white/[0.08]",
-                    "text-white placeholder:text-white/40",
+                    "text-white placeholder:text-white",
                     "focus:outline-none focus:border-elec-yellow/50",
                     "resize-none touch-manipulation"
                   )}

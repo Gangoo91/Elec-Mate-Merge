@@ -321,10 +321,10 @@ export default function ExportTab() {
     return (
       <div className="flex flex-col items-center justify-center h-full bg-black px-4">
         <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-3">
-          <Download className="h-8 w-8 text-white/30" />
+          <Download className="h-8 w-8 text-white" />
         </div>
         <h3 className="text-base font-semibold text-white mb-1">No photos to export</h3>
-        <p className="text-xs text-white/50 text-center max-w-[200px]">
+        <p className="text-xs text-white text-center max-w-[200px]">
           Take photos first to export as PDF or ZIP
         </p>
       </div>
@@ -337,22 +337,22 @@ export default function ExportTab() {
       <div className="grid grid-cols-3 gap-[1px] bg-white/5">
         <div className="bg-black p-3 text-center">
           <div className="text-xl font-bold text-elec-yellow">{stats.total}</div>
-          <div className="text-[10px] text-white/50">Photos</div>
+          <div className="text-[10px] text-white">Photos</div>
         </div>
         <div className="bg-black p-3 text-center">
           <div className="text-xl font-bold text-elec-yellow">{projects.length}</div>
-          <div className="text-[10px] text-white/50">Projects</div>
+          <div className="text-[10px] text-white">Projects</div>
         </div>
         <div className="bg-black p-3 text-center">
           <div className="text-xl font-bold text-elec-yellow">{Object.keys(stats.byCategory).length}</div>
-          <div className="text-[10px] text-white/50">Categories</div>
+          <div className="text-[10px] text-white">Categories</div>
         </div>
       </div>
 
       {/* Filter options - compact */}
       <div className="px-3 py-3 space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-white/60 uppercase tracking-wide">Filters</span>
+          <span className="text-xs font-medium text-white uppercase tracking-wide">Filters</span>
           <span className="text-xs text-elec-yellow">{filteredCount} photos</span>
         </div>
 
@@ -393,13 +393,13 @@ export default function ExportTab() {
           <div className={`w-4 h-4 rounded border flex items-center justify-center ${includeMetadata ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'}`}>
             {includeMetadata && <Check className="h-3 w-3 text-black" />}
           </div>
-          <span className="text-sm text-white/80">Include metadata</span>
+          <span className="text-sm text-white">Include metadata</span>
         </button>
       </div>
 
       {/* Export options - compact list */}
       <div className="px-3 pt-2">
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">Export As</span>
+        <span className="text-xs font-medium text-white uppercase tracking-wide">Export As</span>
       </div>
       <div className="divide-y divide-white/5">
         {exportOptions.map((option, index) => (
@@ -417,9 +417,9 @@ export default function ExportTab() {
             </div>
             <div className="flex-1 min-w-0 text-left">
               <p className="text-sm font-medium text-white">{option.title}</p>
-              <p className="text-[10px] text-white/50">{option.description}</p>
+              <p className="text-[10px] text-white">{option.description}</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/20 flex-shrink-0" />
+            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
           </motion.button>
         ))}
       </div>
@@ -438,11 +438,11 @@ export default function ExportTab() {
             {/* Summary - compact grid */}
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-white/5 rounded-lg p-2.5">
-                <span className="text-white/50">Photos</span>
+                <span className="text-white">Photos</span>
                 <span className="float-right font-medium text-white">{filteredCount}</span>
               </div>
               <div className="bg-white/5 rounded-lg p-2.5">
-                <span className="text-white/50">Metadata</span>
+                <span className="text-white">Metadata</span>
                 <span className="float-right font-medium text-white">{includeMetadata ? "Yes" : "No"}</span>
               </div>
             </div>
@@ -451,7 +451,7 @@ export default function ExportTab() {
             {isExporting && (
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="text-white/50">Generating...</span>
+                  <span className="text-white">Generating...</span>
                   <span className="text-elec-yellow font-medium">{exportProgress}%</span>
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">

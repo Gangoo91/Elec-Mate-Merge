@@ -40,7 +40,7 @@ export default function BatchSelectBar({
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-elec-yellow">{count}</span>
-            <span className="text-xs text-white/60">selected</span>
+            <span className="text-xs text-white">selected</span>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -53,7 +53,7 @@ export default function BatchSelectBar({
               onClick={onClearSelection}
               className="p-1.5 rounded-lg active:bg-white/10 touch-manipulation"
             >
-              <X className="h-4 w-4 text-white/50" />
+              <X className="h-4 w-4 text-white" />
             </button>
           </div>
         </div>

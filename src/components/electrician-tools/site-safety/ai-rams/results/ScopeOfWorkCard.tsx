@@ -31,7 +31,7 @@ export function ScopeOfWorkCard({ methodData }: ScopeOfWorkCardProps) {
         {/* Description */}
         <div>
           <h4 className="text-sm font-semibold text-elec-light mb-2">Work Description</h4>
-          <p className="text-sm text-elec-light/90 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             {scopeOfWork?.description || methodData.description || 'Work scope to be defined'}
           </p>
         </div>
@@ -45,7 +45,7 @@ export function ScopeOfWorkCard({ methodData }: ScopeOfWorkCardProps) {
             </h4>
             <ul className="space-y-2">
               {scopeOfWork.keyDeliverables.map((deliverable, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-elec-light/90">
+                <li key={idx} className="flex items-start gap-2 text-sm text-white">
                   <span className="text-green-400 mt-1 font-bold">✓</span>
                   <span className="flex-1">{deliverable}</span>
                 </li>
@@ -61,14 +61,14 @@ export function ScopeOfWorkCard({ methodData }: ScopeOfWorkCardProps) {
               <XCircle className="h-4 w-4" />
               Work Exclusions
             </h4>
-            <p className="text-sm text-elec-light/90">{scopeOfWork.exclusions}</p>
+            <p className="text-sm text-white">{scopeOfWork.exclusions}</p>
           </div>
         )}
 
         {/* Work Type Badge */}
         {methodData.workType && (
           <div className="flex items-center gap-2 pt-2 border-t border-border/40">
-            <span className="text-xs text-muted-foreground">Work Type:</span>
+            <span className="text-xs text-white">Work Type:</span>
             <span className="text-xs font-semibold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">
               {methodData.workType}
             </span>

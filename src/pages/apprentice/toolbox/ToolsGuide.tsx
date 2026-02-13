@@ -81,7 +81,7 @@ const ToolsGuide = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Professional Tool Guide
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment.
         </p>
         <SmartBackButton />
@@ -91,7 +91,7 @@ const ToolsGuide = () => {
       <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
         <CardContent className="p-4 flex items-start gap-3">
           <Shield className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Building a professional toolkit is an investment in your career. This comprehensive guide provides everything you need for informed decision-making and strategic purchasing.
           </p>
         </CardContent>
@@ -103,7 +103,7 @@ const ToolsGuide = () => {
           <Card key={index} className={`${category.border} bg-gradient-to-br ${category.bg}`}>
             <CardContent className="p-4 text-center">
               <h4 className={`font-semibold ${category.color} mb-2`}>{category.name}</h4>
-              <p className="text-white/80 text-sm mb-2">{category.count}</p>
+              <p className="text-white text-sm mb-2">{category.count}</p>
               <Badge
                 variant="outline"
                 className={`mb-2 ${
@@ -114,7 +114,7 @@ const ToolsGuide = () => {
               >
                 {category.priority}
               </Badge>
-              <p className="text-xs text-white/60">{category.cost}</p>
+              <p className="text-xs text-white">{category.cost}</p>
             </CardContent>
           </Card>
         ))}
@@ -136,7 +136,7 @@ const ToolsGuide = () => {
                   <benefit.icon className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
-                <p className="text-white/70 text-xs">{benefit.desc}</p>
+                <p className="text-white text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -181,7 +181,7 @@ const ToolsGuide = () => {
       <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
         <CardContent className="p-4 flex items-start gap-3">
           <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             <strong className="text-orange-400">Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE. Plan strategically and invest wisely.
           </p>
         </CardContent>
@@ -196,7 +196,7 @@ const ToolsGuide = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Building a professional toolkit is a career-long investment in your success. Focus on quality over quantity,
             plan your purchases strategically, and maintain your tools properly. A well-chosen and maintained toolkit will serve you throughout
             your entire electrical career and contribute to your professional reputation.
@@ -209,7 +209,7 @@ const ToolsGuide = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>

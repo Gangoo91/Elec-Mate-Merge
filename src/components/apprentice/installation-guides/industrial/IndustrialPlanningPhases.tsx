@@ -47,7 +47,7 @@ const IndustrialPlanningPhases = () => {
           <ClipboardList className="h-6 w-6 text-blue-400" />
           <CardTitle className="text-blue-300">Industrial Project Planning Phases</CardTitle>
         </div>
-        <p className="text-neutral-300">Structured approach to complex industrial installations</p>
+        <p className="text-white">Structured approach to complex industrial installations</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {planningPhases.map((phase, index) => (
@@ -62,7 +62,7 @@ const IndustrialPlanningPhases = () => {
               {phase.tasks.map((task, taskIndex) => (
                 <div key={taskIndex} className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0" />
-                  <span className="text-neutral-300">{task}</span>
+                  <span className="text-white">{task}</span>
                 </div>
               ))}
             </div>

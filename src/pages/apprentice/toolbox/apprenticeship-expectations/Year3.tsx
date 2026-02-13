@@ -342,7 +342,7 @@ const Year3 = () => {
           </div>
         </div>
 
-        <p className="text-white/80 text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-3xl">
           Year 3 is where you step up - more complex installations, fault finding, and the beginning of your
           End Point Assessment preparation. You'll also start mentoring junior apprentices.
         </p>
@@ -355,7 +355,7 @@ const Year3 = () => {
             <div className="w-12 h-3 rounded-full bg-purple-500" />
             <div className="w-12 h-3 rounded-full bg-white/20" />
           </div>
-          <span className="text-white/60 text-sm ml-2">Year 3 of 4</span>
+          <span className="text-white text-sm ml-2">Year 3 of 4</span>
         </div>
 
         {/* Key stats */}
@@ -363,22 +363,22 @@ const Year3 = () => {
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Calendar className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl font-bold text-white">12</div>
-            <div className="text-white/60 text-sm">Months</div>
+            <div className="text-white text-sm">Months</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Briefcase className="h-5 w-5 text-green-400 mb-2" />
             <div className="text-2xl font-bold text-white">£24-28k</div>
-            <div className="text-white/60 text-sm">Typical Salary</div>
+            <div className="text-white text-sm">Typical Salary</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Award className="h-5 w-5 text-yellow-400 mb-2" />
             <div className="text-2xl font-bold text-white">EPA</div>
-            <div className="text-white/60 text-sm">Preparation</div>
+            <div className="text-white text-sm">Preparation</div>
           </div>
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <Users className="h-5 w-5 text-blue-400 mb-2" />
             <div className="text-2xl font-bold text-white">Mentor</div>
-            <div className="text-white/60 text-sm">New Role</div>
+            <div className="text-white text-sm">New Role</div>
           </div>
         </div>
       </div>
@@ -392,18 +392,18 @@ const Year3 = () => {
           <TrendingUp className="h-5 w-5" />
           Salary Progression
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Your skills and experience are worth more each year
         </p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-4 gap-3 text-center">
           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white/60 text-xs mb-1">Year 1</p>
+            <p className="text-white text-xs mb-1">Year 1</p>
             <p className="text-lg font-bold text-white">£16.5k</p>
           </div>
           <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white/60 text-xs mb-1">Year 2</p>
+            <p className="text-white text-xs mb-1">Year 2</p>
             <p className="text-lg font-bold text-white">£20k</p>
           </div>
           <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
@@ -411,12 +411,12 @@ const Year3 = () => {
             <p className="text-lg font-bold text-green-400">£26k</p>
           </div>
           <div className="p-3 rounded-lg bg-green-500/20 border border-green-500/30">
-            <p className="text-white/60 text-xs mb-1">Total Rise</p>
+            <p className="text-white text-xs mb-1">Total Rise</p>
             <p className="text-lg font-bold text-green-400">+58%</p>
           </div>
         </div>
         <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             <strong className="text-green-400">Looking ahead:</strong> Qualified electricians typically earn £32k-£45k,
             with specialists earning significantly more. Your investment is nearly paying off.
           </p>
@@ -432,7 +432,7 @@ const Year3 = () => {
           <Award className="h-5 w-5" />
           End Point Assessment (EPA) Guide
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           The final assessment to complete your apprenticeship - here's what to expect
         </p>
       </CardHeader>
@@ -446,7 +446,7 @@ const Year3 = () => {
                   <span className={`font-medium ${item.color}`}>{item.component}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-white/10 text-white/80 border-white/20">
+                  <Badge variant="outline" className="bg-white/10 text-white border-white/20">
                     {item.duration}
                   </Badge>
                   <Badge variant="outline" className={`${item.bgColor} ${item.color}`}>
@@ -454,17 +454,17 @@ const Year3 = () => {
                   </Badge>
                 </div>
               </div>
-              <p className="text-white/70 text-sm mb-3">{item.description}</p>
+              <p className="text-white text-sm mb-3">{item.description}</p>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 mb-3">
-                <p className="text-white/60 text-xs mb-1">What to expect:</p>
-                <p className="text-white/80 text-sm">{item.whatToExpect}</p>
+                <p className="text-white text-xs mb-1">What to expect:</p>
+                <p className="text-white text-sm">{item.whatToExpect}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-white/80 text-xs font-medium mb-2">Preparation Tips:</p>
+                <p className="text-white text-xs font-medium mb-2">Preparation Tips:</p>
                 {item.preparationTips.map((tip, idx) => (
                   <div key={idx} className="flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70 text-xs">{tip}</span>
+                    <span className="text-white text-xs">{tip}</span>
                   </div>
                 ))}
               </div>
@@ -472,7 +472,7 @@ const Year3 = () => {
           ))}
         </div>
         <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             <strong className="text-purple-400">EPA Success Rate:</strong> Over 90% of apprentices who attend regularly
             and maintain their portfolio pass first time. If you've put in the work, you're ready.
           </p>
@@ -488,7 +488,7 @@ const Year3 = () => {
           <Users className="h-5 w-5" />
           Leadership Opportunities
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Year 3 apprentices often take on mentoring and leadership roles
         </p>
       </CardHeader>
@@ -500,23 +500,23 @@ const Year3 = () => {
                 <item.icon className={`h-5 w-5 ${item.color}`} />
                 <span className={`font-medium ${item.color}`}>{item.opportunity}</span>
               </div>
-              <p className="text-white/70 text-sm mb-3">{item.description}</p>
+              <p className="text-white text-sm mb-3">{item.description}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-white/80 text-xs font-medium mb-2">Benefits:</p>
+                  <p className="text-white text-xs font-medium mb-2">Benefits:</p>
                   {item.benefits.map((benefit, idx) => (
                     <div key={idx} className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 text-xs">{benefit}</span>
+                      <span className="text-white text-xs">{benefit}</span>
                     </div>
                   ))}
                 </div>
                 <div>
-                  <p className="text-white/80 text-xs font-medium mb-2">Responsibilities:</p>
+                  <p className="text-white text-xs font-medium mb-2">Responsibilities:</p>
                   {item.responsibilities.map((resp, idx) => (
                     <div key={idx} className="flex items-start gap-2">
                       <Target className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 text-xs">{resp}</span>
+                      <span className="text-white text-xs">{resp}</span>
                     </div>
                   ))}
                 </div>
@@ -535,7 +535,7 @@ const Year3 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Year 3 Journey
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Click each period to see what to expect
         </p>
       </CardHeader>
@@ -564,26 +564,26 @@ const Year3 = () => {
                       <Badge variant="outline" className="text-xs bg-white/5">
                         {period.month}
                       </Badge>
-                      <span className="text-white/60 text-sm hidden sm:inline">{period.focus}</span>
+                      <span className="text-white text-sm hidden sm:inline">{period.focus}</span>
                     </div>
                   </div>
                 </div>
                 {expandedMonth === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60" />
+                  <ChevronUp className="h-5 w-5 text-white" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60" />
+                  <ChevronDown className="h-5 w-5 text-white" />
                 )}
               </button>
 
               {expandedMonth === index && (
                 <div className="px-4 pb-4 space-y-4">
                   <div className="pl-12">
-                    <p className="text-white/70 text-sm italic mb-3">"{period.dayInLife}"</p>
+                    <p className="text-white text-sm italic mb-3">"{period.dayInLife}"</p>
                     <div className="space-y-2">
                       {period.activities.map((activity, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white/80 text-sm">{activity}</span>
+                          <span className="text-white text-sm">{activity}</span>
                         </div>
                       ))}
                     </div>
@@ -603,7 +603,7 @@ const Year3 = () => {
         <Target className="h-5 w-5 text-elec-yellow" />
         Key Learning Areas
       </h2>
-      <p className="text-white/70">
+      <p className="text-white">
         By Year 3 end, you should be at or above these competency levels.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -624,7 +624,7 @@ const Year3 = () => {
                 {area.topics.map((topic, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{topic}</span>
+                    <span className="text-white">{topic}</span>
                   </li>
                 ))}
               </ul>
@@ -642,7 +642,7 @@ const Year3 = () => {
           <Clock className="h-5 w-5" />
           Typical Week Example
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Complex projects, EPA prep, and mentoring responsibilities
         </p>
       </CardHeader>
@@ -660,7 +660,7 @@ const Year3 = () => {
               >
                 {info.location}
               </Badge>
-              <span className="text-white/70 text-sm flex-1">{info.activities}</span>
+              <span className="text-white text-sm flex-1">{info.activities}</span>
             </div>
           ))}
         </div>
@@ -675,7 +675,7 @@ const Year3 = () => {
           <AlertTriangle className="h-5 w-5" />
           Year 3 Challenges & Solutions
         </CardTitle>
-        <p className="text-white/70 text-sm">
+        <p className="text-white text-sm">
           Common hurdles and how to overcome them
         </p>
       </CardHeader>
@@ -700,13 +700,13 @@ const Year3 = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-white">{item.challenge}</div>
-                    <div className="text-white/60 text-sm hidden sm:block">{item.description}</div>
+                    <div className="text-white text-sm hidden sm:block">{item.description}</div>
                   </div>
                 </div>
                 {expandedChallenge === index ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
+                  <ChevronUp className="h-5 w-5 text-white flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
+                  <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
                 )}
               </button>
 
@@ -717,7 +717,7 @@ const Year3 = () => {
                     {item.solutions.map((solution, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-white/80 text-sm">{solution}</span>
+                        <span className="text-white text-sm">{solution}</span>
                       </div>
                     ))}
                   </div>
@@ -740,11 +740,11 @@ const Year3 = () => {
         <MobileAccordionContent>
           <div className="grid grid-cols-4 gap-2 pt-2">
             <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white/60 text-xs">Y1</p>
+              <p className="text-white text-xs">Y1</p>
               <p className="font-bold text-white text-sm">£16.5k</p>
             </div>
             <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white/60 text-xs">Y2</p>
+              <p className="text-white text-xs">Y2</p>
               <p className="font-bold text-white text-sm">£20k</p>
             </div>
             <div className="p-2 rounded-lg bg-green-500/20 text-center">
@@ -752,7 +752,7 @@ const Year3 = () => {
               <p className="font-bold text-green-400 text-sm">£26k</p>
             </div>
             <div className="p-2 rounded-lg bg-green-500/10 text-center">
-              <p className="text-white/60 text-xs">Rise</p>
+              <p className="text-white text-xs">Rise</p>
               <p className="font-bold text-green-400 text-sm">+58%</p>
             </div>
           </div>
@@ -772,7 +772,7 @@ const Year3 = () => {
                   <span className={`font-medium text-sm ${item.color}`}>{item.component}</span>
                   <Badge variant="outline" className="text-xs bg-white/10">{item.weighting}</Badge>
                 </div>
-                <p className="text-white/60 text-xs mb-2">{item.description}</p>
+                <p className="text-white text-xs mb-2">{item.description}</p>
                 <div className="flex gap-2">
                   <Badge variant="outline" className="text-xs">{item.duration}</Badge>
                 </div>
@@ -796,7 +796,7 @@ const Year3 = () => {
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
                 <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
-                <p className="text-white/60 text-xs">{period.focus}</p>
+                <p className="text-white text-xs">{period.focus}</p>
               </div>
             ))}
           </div>
@@ -836,7 +836,7 @@ const Year3 = () => {
                   <item.icon className={`h-4 w-4 ${item.color}`} />
                   <span className={`font-medium text-sm ${item.color}`}>{item.opportunity}</span>
                 </div>
-                <p className="text-white/60 text-xs">{item.description}</p>
+                <p className="text-white text-xs">{item.description}</p>
               </div>
             ))}
           </div>
@@ -853,8 +853,8 @@ const Year3 = () => {
             {commonChallenges.map((item, index) => (
               <div key={index} className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
-                <p className="text-white/60 text-xs mb-2">{item.description}</p>
-                <div className="text-white/70 text-xs">
+                <p className="text-white text-xs mb-2">{item.description}</p>
+                <div className="text-white text-xs">
                   <strong>Top tip:</strong> {item.solutions[0]}
                 </div>
               </div>

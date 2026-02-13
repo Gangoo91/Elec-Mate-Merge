@@ -49,8 +49,8 @@ const HAZARD_COLOURS: Record<string, string> = {
   'hazardous-substances': 'bg-pink-500/15 text-pink-400',
   noise: 'bg-orange-500/15 text-orange-400',
   'wet-slippery': 'bg-cyan-500/15 text-cyan-400',
-  vehicles: 'bg-gray-500/15 text-gray-400',
-  machinery: 'bg-slate-500/15 text-slate-400',
+  vehicles: 'bg-gray-500/15 text-white',
+  machinery: 'bg-slate-500/15 text-white',
   asbestos: 'bg-rose-500/15 text-rose-400',
 };
 
@@ -65,7 +65,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
   in_progress: { bg: 'bg-amber-500/15', text: 'text-amber-400', label: 'In Progress' },
   completed: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Completed' },
   cancelled: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Cancelled' },
-  draft: { bg: 'bg-white/10', text: 'text-white/60', label: 'Draft' },
+  draft: { bg: 'bg-white/10', text: 'text-white', label: 'Draft' },
 };
 
 const BRIEFING_TYPE_LABELS: Record<string, string> = {
@@ -119,7 +119,7 @@ export function BriefingDetailView({
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={onClose}
-            className="p-2.5 -ml-2 text-white/60 hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-2.5 -ml-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
@@ -168,33 +168,33 @@ export function BriefingDetailView({
           <div className="px-4 py-3 space-y-2.5">
             <div className="flex items-center gap-3 text-sm">
               <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                <MapPin className="h-3.5 w-3.5 text-white/50" />
+                <MapPin className="h-3.5 w-3.5 text-white" />
               </div>
-              <span className="text-white/70 truncate">{briefing.location}</span>
+              <span className="text-white truncate">{briefing.location}</span>
             </div>
             <div className="flex items-center gap-3 text-sm flex-wrap">
               <div className="flex items-center gap-3 shrink-0">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <Calendar className="h-3.5 w-3.5 text-white/50" />
+                  <Calendar className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 whitespace-nowrap">
+                <span className="text-white whitespace-nowrap">
                   {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </span>
               </div>
-              <span className="text-white/25 hidden sm:inline">|</span>
+              <span className="text-white hidden sm:inline">|</span>
               <div className="flex items-center gap-3 shrink-0">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <Clock className="h-3.5 w-3.5 text-white/50" />
+                  <Clock className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 whitespace-nowrap">{briefing.briefing_time}</span>
+                <span className="text-white whitespace-nowrap">{briefing.briefing_time}</span>
               </div>
             </div>
             {(briefing.created_by_name || briefing.conductor_name) && (
               <div className="flex items-center gap-3 text-sm">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <User className="h-3.5 w-3.5 text-white/50" />
+                  <User className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 truncate">
+                <span className="text-white truncate">
                   {briefing.created_by_name || briefing.conductor_name}
                 </span>
               </div>
@@ -206,12 +206,12 @@ export function BriefingDetailView({
         {description && (
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <FileText className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+              <FileText className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Briefing Content
               </span>
             </div>
-            <p className="text-sm text-white/70 whitespace-pre-wrap leading-relaxed">
+            <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">
               {description}
             </p>
           </div>
@@ -221,8 +221,8 @@ export function BriefingDetailView({
         {hazards.length > 0 && (
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldAlert className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+              <ShieldAlert className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Identified Hazards
               </span>
             </div>
@@ -232,7 +232,7 @@ export function BriefingDetailView({
                   key={h}
                   className={cn(
                     'px-2.5 py-1 rounded-full text-xs font-medium',
-                    HAZARD_COLOURS[h] || 'bg-gray-500/15 text-gray-400'
+                    HAZARD_COLOURS[h] || 'bg-gray-500/15 text-white'
                   )}
                 >
                   {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
@@ -246,8 +246,8 @@ export function BriefingDetailView({
         {photos.length > 0 && (
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Camera className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+              <Camera className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Site Photos ({photos.length})
               </span>
             </div>
@@ -275,8 +275,8 @@ export function BriefingDetailView({
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Users className="h-3.5 w-3.5 text-white/40" />
-              <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+              <Users className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-semibold text-white uppercase tracking-wider">
                 Sign-Off Register
               </span>
             </div>
@@ -287,7 +287,7 @@ export function BriefingDetailView({
                   ? 'bg-emerald-500/20 text-emerald-400'
                   : totalAttendees > 0
                     ? 'bg-amber-500/20 text-amber-400'
-                    : 'bg-white/10 text-white/40'
+                    : 'bg-white/10 text-white'
               )}
             >
               {signedCount} of {totalAttendees} signed
@@ -329,7 +329,7 @@ export function BriefingDetailView({
                         'flex items-center justify-center w-6 h-6 rounded-md shrink-0 text-xs font-bold',
                         isSigned
                           ? 'bg-emerald-500/15 text-emerald-400'
-                          : 'bg-white/[0.06] text-white/30'
+                          : 'bg-white/[0.06] text-white'
                       )}
                     >
                       {isSigned ? <CheckCircle className="h-3.5 w-3.5" /> : idx + 1}
@@ -338,19 +338,19 @@ export function BriefingDetailView({
                       <p
                         className={cn(
                           'text-sm font-medium truncate',
-                          isSigned ? 'text-emerald-300/80' : 'text-white/60'
+                          isSigned ? 'text-emerald-300/80' : 'text-white'
                         )}
                       >
                         {attendee.name}
                       </p>
                       {attendee.role && (
-                        <p className="text-xs text-white/25 truncate">{attendee.role}</p>
+                        <p className="text-xs text-white truncate">{attendee.role}</p>
                       )}
                     </div>
                     <span
                       className={cn(
                         'text-xs shrink-0',
-                        isSigned ? 'text-emerald-400/50' : 'text-white/20'
+                        isSigned ? 'text-emerald-400/50' : 'text-white'
                       )}
                     >
                       {isSigned ? 'Signed' : 'Pending'}
@@ -361,8 +361,8 @@ export function BriefingDetailView({
             </div>
           ) : (
             <div className="text-center py-4">
-              <Users className="h-6 w-6 text-white/10 mx-auto mb-2" />
-              <p className="text-xs text-white/25">No attendees added</p>
+              <Users className="h-6 w-6 text-white mx-auto mb-2" />
+              <p className="text-xs text-white">No attendees added</p>
             </div>
           )}
 
@@ -388,7 +388,7 @@ export function BriefingDetailView({
             type="button"
             variant="outline"
             onClick={onEdit}
-            className="flex-1 h-14 border-white/20 text-white/80 touch-manipulation"
+            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
           >
             <Edit className="h-4 w-4 mr-2" />
             Edit
@@ -397,7 +397,7 @@ export function BriefingDetailView({
             type="button"
             variant="outline"
             onClick={() => setShowShare(true)}
-            className="flex-1 h-14 border-white/20 text-white/80 touch-manipulation"
+            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share
@@ -406,7 +406,7 @@ export function BriefingDetailView({
             type="button"
             variant="outline"
             onClick={() => setShowPDF(!showPDF)}
-            className="flex-1 h-14 border-white/20 text-white/80 touch-manipulation"
+            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
           >
             <Download className="h-4 w-4 mr-2" />
             PDF

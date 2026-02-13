@@ -66,7 +66,7 @@ export const TimelineExpectation: React.FC = () => {
             </div>
             <p 
               key={currentFactIndex} 
-              className="text-base text-gray-300 leading-relaxed animate-fade-in"
+              className="text-base text-white leading-relaxed animate-fade-in"
             >
               {funFacts[currentFactIndex]}
             </p>

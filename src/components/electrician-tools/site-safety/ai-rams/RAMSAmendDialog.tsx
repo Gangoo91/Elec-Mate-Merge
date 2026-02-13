@@ -135,7 +135,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             <Edit3 className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
             Amend RAMS Document
           </DialogTitle>
-          <DialogDescription className="hidden sm:block text-sm text-muted-foreground">
+          <DialogDescription className="hidden sm:block text-sm text-white">
             Choose how you'd like to update this document
           </DialogDescription>
         </DialogHeader>
@@ -151,21 +151,21 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
               <div className="flex items-start gap-2 sm:gap-2.5">
                 <User className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Project</p>
+                  <p className="text-xs sm:text-sm font-medium text-white">Project</p>
                   <p className="text-sm sm:text-base font-semibold break-words">{documentData.project_name}</p>
                 </div>
               </div>
               <div className="flex items-start gap-2 sm:gap-2.5">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Location</p>
+                  <p className="text-xs sm:text-sm font-medium text-white">Location</p>
                   <p className="text-sm sm:text-base break-words">{documentData.location}</p>
                 </div>
               </div>
               <div className="flex items-start gap-2 sm:gap-2.5">
                 <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Created</p>
+                  <p className="text-xs sm:text-sm font-medium text-white">Created</p>
                   <p className="text-sm sm:text-base">{new Date(documentData.created_at).toLocaleDateString('en-GB')}</p>
                 </div>
               </div>
@@ -195,7 +195,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
                   <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                   <span className="text-sm sm:text-lg font-bold">Regenerate with AI</span>
                 </div>
-                <span className="hidden sm:block text-xs sm:text-sm font-medium text-muted-foreground">
+                <span className="hidden sm:block text-xs sm:text-sm font-medium text-white">
                   Use AI to rebuild from scratch with new information
                 </span>
               </Button>

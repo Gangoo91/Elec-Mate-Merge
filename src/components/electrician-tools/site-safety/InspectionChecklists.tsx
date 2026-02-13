@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -387,7 +387,7 @@ const TEMPLATES: ChecklistTemplate[] = [
 const RESULT_CONFIG = {
   pass: { icon: CheckCircle2, colour: 'text-green-400', bg: 'bg-green-500/15', label: 'Pass' },
   fail: { icon: XCircle, colour: 'text-red-400', bg: 'bg-red-500/15', label: 'Fail' },
-  na: { icon: MinusCircle, colour: 'text-gray-400', bg: 'bg-gray-500/15', label: 'N/A' },
+  na: { icon: MinusCircle, colour: 'text-white', bg: 'bg-gray-500/15', label: 'N/A' },
 };
 
 // ─── Main Component ───
@@ -509,7 +509,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <span className="text-sm font-medium">Cancel</span>
             </button>
             <div className="text-right">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 {answeredCount}/{totalItems} items
               </p>
               <div className="w-20 h-1.5 bg-white/10 rounded-full mt-1">
@@ -525,13 +525,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         <div className="px-4 py-4 space-y-4">
           <div>
             <h1 className="text-lg font-bold text-white">{activeTemplate.title}</h1>
-            <p className="text-xs text-white/50 mt-0.5">{activeTemplate.regulation}</p>
+            <p className="text-xs text-white mt-0.5">{activeTemplate.regulation}</p>
           </div>
 
           {/* Inspector details */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label className="text-white/80 text-xs">Inspector</Label>
+              <Label className="text-white text-xs">Inspector</Label>
               <Input
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
@@ -541,7 +541,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               />
             </div>
             <div>
-              <Label className="text-white/80 text-xs">Location</Label>
+              <Label className="text-white text-xs">Location</Label>
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -563,8 +563,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 <p className="text-[10px] text-red-300/70">Fail</p>
               </div>
               <div className="flex-1 p-2 rounded-lg bg-gray-500/10 text-center">
-                <p className="text-lg font-bold text-gray-400">{naCount}</p>
-                <p className="text-[10px] text-gray-300/70">N/A</p>
+                <p className="text-lg font-bold text-white">{naCount}</p>
+                <p className="text-[10px] text-white">N/A</p>
               </div>
             </div>
           )}
@@ -593,13 +593,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-white/40">
+                      <span className="text-xs text-white">
                         {sectionAnswered}/{section.items.length}
                       </span>
                       {section.isOpen ? (
-                        <ChevronUp className="h-4 w-4 text-white/40" />
+                        <ChevronUp className="h-4 w-4 text-white" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-white/40" />
+                        <ChevronDown className="h-4 w-4 text-white" />
                       )}
                     </div>
                   </button>
@@ -617,7 +617,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                 : 'border-white/10 bg-white/[0.02]'
                           }`}
                         >
-                          <p className="text-sm text-white/90 mb-2">{item.text}</p>
+                          <p className="text-sm text-white mb-2">{item.text}</p>
                           <div className="flex gap-1.5">
                             {(['pass', 'fail', 'na'] as const).map((result) => {
                               const config = RESULT_CONFIG[result];
@@ -632,7 +632,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                   className={`flex-1 flex items-center justify-center gap-1.5 h-10 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
                                     isActive
                                       ? `${config.bg} ${config.colour} border-current`
-                                      : 'border-white/10 bg-white/[0.03] text-white/40'
+                                      : 'border-white/10 bg-white/[0.03] text-white'
                                   }`}
                                 >
                                   <Icon className="h-3.5 w-3.5" />
@@ -661,7 +661,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
 
             {/* Additional notes */}
             <div>
-              <Label className="text-white/80 text-sm">Additional Notes</Label>
+              <Label className="text-white text-sm">Additional Notes</Label>
               <Textarea
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
@@ -690,7 +690,12 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   // ─── Main List View ───
 
   return (
-    <div className="bg-background min-h-screen animate-fade-in">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      className="bg-background min-h-screen"
+    >
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
           <button
@@ -711,7 +716,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Inspection Checklists</h1>
-            <p className="text-sm text-white/70">Standardised safety inspection forms</p>
+            <p className="text-sm text-white">Standardised safety inspection forms</p>
           </div>
         </div>
 
@@ -728,18 +733,18 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         {completedInspections.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <ClipboardCheck className="h-8 w-8 text-white/30" />
+              <ClipboardCheck className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-base font-bold text-white/70 mb-1">No Inspections Yet</h3>
-            <p className="text-sm text-white/50">Start an inspection to build your records</p>
+            <h3 className="text-base font-bold text-white mb-1">No Inspections Yet</h3>
+            <p className="text-sm text-white">Start an inspection to build your records</p>
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            <h3 className="text-sm font-bold text-white/70 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <Clock className="h-4 w-4" />
               Completed Inspections
             </h3>
-            {completedInspections.map((inspection) => {
+            {completedInspections.map((inspection, index) => {
               const template = TEMPLATES.find((t) => t.id === inspection.template_id);
               const Icon = template?.icon || ClipboardCheck;
               const gradient = template?.gradient || 'from-gray-400 to-gray-500';
@@ -759,6 +764,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               return (
                 <motion.button
                   key={inspection.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.03, duration: 0.2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setViewingInspection(inspection)}
                   className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
@@ -773,7 +781,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                       <h4 className="text-[15px] font-bold text-white truncate">
                         {inspection.template_title}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-white/60 mt-0.5">
+                      <div className="flex items-center gap-2 text-xs text-white mt-0.5">
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{inspection.location || 'No location'}</span>
                         <span>•</span>
@@ -785,13 +793,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                         >
                           {inspection.overall_result}
                         </Badge>
-                        <span className="text-[10px] text-white/40">
+                        <span className="text-[10px] text-white">
                           {inspection.pass_count}P / {inspection.fail_count}F /{' '}
                           {inspection.na_count}NA
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </motion.button>
               );
@@ -806,14 +814,18 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           <div className="flex flex-col h-full bg-background">
             <div className="px-4 py-3 border-b border-white/10">
               <h2 className="text-base font-bold text-white">Choose Checklist Template</h2>
-              <p className="text-xs text-white/50 mt-0.5">Select the type of inspection</p>
+              <p className="text-xs text-white mt-0.5">Select the type of inspection</p>
             </div>
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-2">
-              {TEMPLATES.map((template) => {
+              {TEMPLATES.map((template, index) => {
                 const Icon = template.icon;
                 return (
-                  <button
+                  <motion.button
                     key={template.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.03, duration: 0.2 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => startInspection(template)}
                     className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] p-4 touch-manipulation"
                   >
@@ -825,15 +837,15 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-[15px] font-bold text-white">{template.title}</h4>
-                        <p className="text-xs text-white/60">{template.description}</p>
-                        <p className="text-[10px] text-white/40 mt-0.5">
+                        <p className="text-xs text-white">{template.description}</p>
+                        <p className="text-[10px] text-white mt-0.5">
                           {template.sections.reduce((acc, s) => acc + s.items.length, 0)} check
                           items
                         </p>
                       </div>
-                      <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                     </div>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -850,7 +862,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 <h2 className="text-base font-bold text-white">
                   {viewingInspection.template_title}
                 </h2>
-                <div className="flex items-center gap-2 text-xs text-white/50 mt-1">
+                <div className="flex items-center gap-2 text-xs text-white mt-1">
                   <User className="h-3 w-3" />
                   <span>{viewingInspection.inspector_name}</span>
                   <span>•</span>
@@ -878,8 +890,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     <p className="text-xs text-red-300/70">Fail</p>
                   </div>
                   <div className="p-3 rounded-xl bg-gray-500/10 text-center">
-                    <p className="text-2xl font-bold text-gray-400">{viewingInspection.na_count}</p>
-                    <p className="text-xs text-gray-300/70">N/A</p>
+                    <p className="text-2xl font-bold text-white">{viewingInspection.na_count}</p>
+                    <p className="text-xs text-white">N/A</p>
                   </div>
                 </div>
 
@@ -923,7 +935,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                         return (
                           <div key={item.id} className="flex items-center gap-2 py-1">
                             <ResultIcon className={`h-3.5 w-3.5 ${config.colour} flex-shrink-0`} />
-                            <span className="text-xs text-white/70">{item.text}</span>
+                            <span className="text-xs text-white">{item.text}</span>
                           </div>
                         );
                       })}
@@ -934,7 +946,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 {viewingInspection.additional_notes && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Additional Notes</h4>
-                    <p className="text-sm text-white/70">{viewingInspection.additional_notes}</p>
+                    <p className="text-sm text-white">{viewingInspection.additional_notes}</p>
                   </div>
                 )}
               </div>
@@ -942,7 +954,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           )}
         </SheetContent>
       </Sheet>
-    </div>
+    </motion.div>
   );
 }
 

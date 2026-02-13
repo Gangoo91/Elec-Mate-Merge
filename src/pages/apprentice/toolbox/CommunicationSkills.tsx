@@ -108,7 +108,7 @@ const CommunicationSkills = () => {
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           Communication Skills for Apprentices
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           Master essential communication skills for the electrical trade - from site conversations to client interactions and handling difficult situations professionally
         </p>
         <SmartBackButton />
@@ -120,7 +120,7 @@ const CommunicationSkills = () => {
           <div key={index} className="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4 hover:border-blue-400/30 transition-all">
             <div className="flex items-center gap-2 mb-2">
               <stat.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${stat.color}`} />
-              <span className="text-white/70 text-xs sm:text-sm">{stat.label}</span>
+              <span className="text-white text-xs sm:text-sm">{stat.label}</span>
             </div>
             <div className="text-xl sm:text-2xl font-bold text-white">{stat.value}</div>
           </div>
@@ -143,7 +143,7 @@ const CommunicationSkills = () => {
                   <benefit.icon className="h-5 w-5 text-blue-400" />
                 </div>
                 <h4 className="font-semibold text-white text-sm mb-1">{benefit.title}</h4>
-                <p className="text-white/70 text-xs">{benefit.desc}</p>
+                <p className="text-white text-xs">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -201,7 +201,7 @@ const CommunicationSkills = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Effective communication in the electrical trade isn't just about being polite - it's about safety, efficiency, and building a reputation as a professional.
             Clear communication prevents mistakes, builds trust with clients, helps you learn faster from experienced colleagues, and opens doors to career advancement.
           </p>
@@ -213,7 +213,7 @@ const CommunicationSkills = () => {
             ].map((tip, index) => (
               <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
                 <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white/90 text-sm">{tip.text}</span>
+                <span className="text-white text-sm">{tip.text}</span>
               </div>
             ))}
           </div>
@@ -235,7 +235,7 @@ const CommunicationSkills = () => {
                 <Phone className="h-4 w-4 text-purple-400" />
                 <span className="font-semibold text-white">Phone Calls</span>
               </div>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>• Answer within 3 rings when possible</li>
                 <li>• State your name and company clearly</li>
                 <li>• Speak slowly and professionally</li>
@@ -247,7 +247,7 @@ const CommunicationSkills = () => {
                 <Mail className="h-4 w-4 text-purple-400" />
                 <span className="font-semibold text-white">Written Messages</span>
               </div>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>• Keep messages clear and concise</li>
                 <li>• Check spelling before sending</li>
                 <li>• Include all relevant details</li>

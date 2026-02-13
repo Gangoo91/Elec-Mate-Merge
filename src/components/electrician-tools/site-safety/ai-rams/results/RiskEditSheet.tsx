@@ -137,7 +137,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
               className="min-h-[140px] text-base"
               placeholder="List all control measures to mitigate the risk..."
             />
-            <p className="text-xs text-elec-light/60 mt-2">
+            <p className="text-xs text-white mt-2">
               💡 Be specific: What actions will prevent or reduce this risk?
             </p>
           </div>
@@ -160,7 +160,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
               step={1}
               className="w-full py-4"
             />
-            <div className="flex justify-between text-xs text-elec-light/60">
+            <div className="flex justify-between text-xs text-white">
               <span>Rare</span>
               <span>Unlikely</span>
               <span>Possible</span>
@@ -187,7 +187,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
               step={1}
               className="w-full py-4"
             />
-            <div className="flex justify-between text-xs text-elec-light/60">
+            <div className="flex justify-between text-xs text-white">
               <span>Minor</span>
               <span>Low</span>
               <span>Moderate</span>

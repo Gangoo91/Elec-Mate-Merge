@@ -42,7 +42,7 @@ export function PPEDetailsGrid({ methodData }: PPEDetailsGridProps) {
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <IconComponent className="h-4 w-4 text-amber-400" />
-                      <span className="text-xs text-muted-foreground">#{ppe.itemNumber}</span>
+                      <span className="text-xs text-white">#{ppe.itemNumber}</span>
                     </div>
                     {ppe.mandatory && (
                       <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
@@ -62,15 +62,15 @@ export function PPEDetailsGrid({ methodData }: PPEDetailsGridProps) {
                   </div>
 
                   {/* Purpose */}
-                  <p className="text-xs text-elec-light/80 leading-relaxed">{ppe.purpose}</p>
+                  <p className="text-xs text-white leading-relaxed">{ppe.purpose}</p>
                 </div>
               );
             })}
           </div>
         ) : (
           <div className="text-center py-6">
-            <Shield className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
-            <p className="text-sm text-muted-foreground">
+            <Shield className="h-12 w-12 text-white mx-auto mb-3" />
+            <p className="text-sm text-white">
               PPE requirements to be determined based on site conditions
             </p>
           </div>
@@ -78,7 +78,7 @@ export function PPEDetailsGrid({ methodData }: PPEDetailsGridProps) {
 
         {/* Safety Note */}
         <div className="mt-4 bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-          <p className="text-xs text-elec-light/90">
+          <p className="text-xs text-white">
             <strong className="text-red-400">⚠️ Important:</strong> All PPE must be inspected before use and replaced if damaged. 
             Ensure proper fit and training on correct usage.
           </p>

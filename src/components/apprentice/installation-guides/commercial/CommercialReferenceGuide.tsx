@@ -135,7 +135,7 @@ const CommercialReferenceGuide = () => {
         <CardContent className="p-4">
           <div className="relative">
             {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300 h-4 w-4 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
             )}
             <Input
               placeholder="Search commercial cables, emergency systems, or standards..."
@@ -187,7 +187,7 @@ const CommercialReferenceGuide = () => {
                           <span className="text-elec-yellow font-medium">Applications:</span>
                           <ul className="mt-1 space-y-1">
                             {cable.applications.map((app, idx) => (
-                              <li key={idx} className="text-neutral-300 flex items-center gap-2">
+                              <li key={idx} className="text-white flex items-center gap-2">
                                 <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
                                 {app}
                               </li>
@@ -195,13 +195,13 @@ const CommercialReferenceGuide = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-neutral-300 mb-1">
+                          <p className="text-white mb-1">
                             <span className="text-green-300">Max Current:</span> {cable.maxCurrent}
                           </p>
-                          <p className="text-neutral-300 mb-1">
+                          <p className="text-white mb-1">
                             <span className="text-blue-300">Protection:</span> {cable.protection}
                           </p>
-                          <p className="text-neutral-300">
+                          <p className="text-white">
                             <span className="text-orange-300">Notes:</span> {cable.notes}
                           </p>
                         </div>
@@ -238,10 +238,10 @@ const CommercialReferenceGuide = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <p className="text-neutral-300">
+                    <p className="text-white">
                       <span className="text-green-300">Application:</span> {light.application}
                     </p>
-                    <p className="text-neutral-300">
+                    <p className="text-white">
                       <span className="text-orange-300">Notes:</span> {light.notes}
                     </p>
                   </div>
@@ -269,7 +269,7 @@ const CommercialReferenceGuide = () => {
                       <span className="text-red-300 font-medium">Devices:</span>
                       <ul className="mt-1 space-y-1">
                         {zone.devices.map((device, idx) => (
-                          <li key={idx} className="text-neutral-300 flex items-center gap-2">
+                          <li key={idx} className="text-white flex items-center gap-2">
                             <span className="w-1 h-1 bg-red-400 rounded-full"></span>
                             {device}
                           </li>
@@ -277,10 +277,10 @@ const CommercialReferenceGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-neutral-300 mb-2">
+                      <p className="text-white mb-2">
                         <span className="text-blue-300">Coverage:</span> {zone.coverage}
                       </p>
-                      <p className="text-neutral-300">
+                      <p className="text-white">
                         <span className="text-purple-300">Standard:</span> {zone.standard}
                       </p>
                     </div>
@@ -315,7 +315,7 @@ const CommercialReferenceGuide = () => {
                   <BookOpen className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-purple-200">{item.standard}</h4>
-                    <p className="text-sm text-neutral-300">{item.description}</p>
+                    <p className="text-sm text-white">{item.description}</p>
                   </div>
                 </div>
               ))}

@@ -126,7 +126,7 @@ export function RiskLevelSlider({ value, onChange, error }: RiskLevelSliderProps
                 transition={{ duration: 0.3 }}
                 className={cn(
                   'flex items-center justify-center w-10 h-10 rounded-xl transition-colors duration-200',
-                  isActive ? cn(colors.iconBg, colors.text) : 'bg-white/[0.06] text-white/30'
+                  isActive ? cn(colors.iconBg, colors.text) : 'bg-white/[0.06] text-white'
                 )}
               >
                 <IconComponent className="h-5 w-5" />
@@ -136,7 +136,7 @@ export function RiskLevelSlider({ value, onChange, error }: RiskLevelSliderProps
               <span
                 className={cn(
                   'text-sm font-semibold transition-colors duration-200',
-                  isActive ? colors.text : 'text-white/50'
+                  isActive ? colors.text : 'text-white'
                 )}
               >
                 {level.label}
@@ -146,7 +146,7 @@ export function RiskLevelSlider({ value, onChange, error }: RiskLevelSliderProps
               <span
                 className={cn(
                   'text-xs leading-tight text-center transition-colors duration-200',
-                  isActive ? 'text-white/60' : 'text-white/30'
+                  isActive ? 'text-white' : 'text-white'
                 )}
               >
                 {level.description}

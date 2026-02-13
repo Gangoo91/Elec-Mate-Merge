@@ -246,7 +246,7 @@ export function PostSaveShareSheet({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-sm text-white/50"
+              className="text-sm text-white"
             >
               {briefingName}
             </motion.p>
@@ -271,7 +271,7 @@ export function PostSaveShareSheet({
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-white">Share for Signing</h3>
-                <p className="text-xs text-white/40">Workers sign remotely — no login needed</p>
+                <p className="text-xs text-white">Workers sign remotely — no login needed</p>
               </div>
             </div>
 
@@ -310,7 +310,7 @@ export function PostSaveShareSheet({
                 )}
               >
                 <MessageCircle className="h-5 w-5 text-green-400" />
-                <span className="text-xs font-medium text-white/70">WhatsApp</span>
+                <span className="text-xs font-medium text-white">WhatsApp</span>
               </button>
 
               <button
@@ -326,7 +326,7 @@ export function PostSaveShareSheet({
                 )}
               >
                 <QrCode className="h-5 w-5 text-yellow-400" />
-                <span className="text-xs font-medium text-white/70">QR Code</span>
+                <span className="text-xs font-medium text-white">QR Code</span>
               </button>
 
               <button
@@ -340,7 +340,7 @@ export function PostSaveShareSheet({
                 )}
               >
                 <ExternalLink className="h-5 w-5 text-purple-400" />
-                <span className="text-xs font-medium text-white/70">More...</span>
+                <span className="text-xs font-medium text-white">More...</span>
               </button>
             </div>
 
@@ -364,7 +364,7 @@ export function PostSaveShareSheet({
                         fgColor="#000000"
                       />
                     </div>
-                    <p className="text-xs text-white/40 mt-3 text-center">
+                    <p className="text-xs text-white mt-3 text-center">
                       Show this on your phone for workers to scan on site
                     </p>
                   </div>
@@ -375,8 +375,8 @@ export function PostSaveShareSheet({
             {/* Email Send */}
             <div className="space-y-2.5">
               <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+                <Mail className="h-3.5 w-3.5 text-white" />
+                <span className="text-xs font-semibold text-white uppercase tracking-wider">
                   Send via Email
                 </span>
               </div>
@@ -405,7 +405,7 @@ export function PostSaveShareSheet({
               type="button"
               variant="ghost"
               onClick={onClose}
-              className="w-full h-12 text-white/40 hover:text-white/60 touch-manipulation"
+              className="w-full h-12 text-white hover:text-white touch-manipulation"
             >
               Skip — I'll share later
             </Button>

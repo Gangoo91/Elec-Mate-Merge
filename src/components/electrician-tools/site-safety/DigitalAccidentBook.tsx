@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -233,6 +236,25 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
 
+  // ─── Draft persistence ───
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'accident-book',
+    data: { form, formStep },
+    enabled: showForm,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.form) setForm((prev) => ({ ...prev, ...recoveredDraft.form }));
+    if (recoveredDraft.formStep !== undefined) setFormStep(recoveredDraft.formStep);
+    dismissDraft();
+  };
+
   // Form state
   const [form, setForm] = useState<Partial<AccidentRecord>>({
     injured_name: '',
@@ -355,6 +377,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     };
 
     setRecords((prev) => [record, ...prev]);
+    clearDraft();
     setShowForm(false);
     resetForm();
 
@@ -384,7 +407,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Injured Person</h3>
             <div className="space-y-3">
               <div>
-                <Label className="text-white/80 text-sm">Full Name *</Label>
+                <Label className="text-white text-sm">Full Name *</Label>
                 <Input
                   value={form.injured_name}
                   onChange={(e) => updateForm({ injured_name: e.target.value })}
@@ -394,7 +417,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-white/80 text-sm">Role / Job Title</Label>
+                  <Label className="text-white text-sm">Role / Job Title</Label>
                   <Input
                     value={form.injured_role}
                     onChange={(e) => updateForm({ injured_role: e.target.value })}
@@ -403,7 +426,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-white/80 text-sm">Employer</Label>
+                  <Label className="text-white text-sm">Employer</Label>
                   <Input
                     value={form.injured_employer}
                     onChange={(e) => updateForm({ injured_employer: e.target.value })}
@@ -413,7 +436,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Address (for RIDDOR records)</Label>
+                <Label className="text-white text-sm">Address (for RIDDOR records)</Label>
                 <Input
                   value={form.injured_address}
                   onChange={(e) => updateForm({ injured_address: e.target.value })}
@@ -432,7 +455,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-white/80 text-sm">Date of Incident *</Label>
+                  <Label className="text-white text-sm">Date of Incident *</Label>
                   <Input
                     type="date"
                     value={form.incident_date}
@@ -441,7 +464,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   />
                 </div>
                 <div>
-                  <Label className="text-white/80 text-sm">Time</Label>
+                  <Label className="text-white text-sm">Time</Label>
                   <Input
                     type="time"
                     value={form.incident_time}
@@ -451,7 +474,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Location *</Label>
+                <Label className="text-white text-sm">Location *</Label>
                 <Input
                   value={form.location}
                   onChange={(e) => updateForm({ location: e.target.value })}
@@ -460,7 +483,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Specific Location</Label>
+                <Label className="text-white text-sm">Specific Location</Label>
                 <Input
                   value={form.location_detail}
                   onChange={(e) => updateForm({ location_detail: e.target.value })}
@@ -469,7 +492,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Activity at Time of Incident</Label>
+                <Label className="text-white text-sm">Activity at Time of Incident</Label>
                 <Input
                   value={form.activity_at_time}
                   onChange={(e) => updateForm({ activity_at_time: e.target.value })}
@@ -478,7 +501,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">How Did the Incident Happen? *</Label>
+                <Label className="text-white text-sm">How Did the Incident Happen? *</Label>
                 <Textarea
                   value={form.incident_description}
                   onChange={(e) => updateForm({ incident_description: e.target.value })}
@@ -487,7 +510,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Cause / Contributing Factors</Label>
+                <Label className="text-white text-sm">Cause / Contributing Factors</Label>
                 <Input
                   value={form.cause}
                   onChange={(e) => updateForm({ cause: e.target.value })}
@@ -496,7 +519,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <Label className="text-white/80 text-sm">Witnesses</Label>
+                <Label className="text-white text-sm">Witnesses</Label>
                 <Input
                   value={form.witnesses}
                   onChange={(e) => updateForm({ witnesses: e.target.value })}
@@ -514,7 +537,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <h3 className="text-base font-bold text-white">Injury Details</h3>
             <div className="space-y-3">
               <div>
-                <Label className="text-white/80 text-sm">Type of Injury *</Label>
+                <Label className="text-white text-sm">Type of Injury *</Label>
                 <Select
                   value={form.injury_type}
                   onValueChange={(v) => updateForm({ injury_type: v as InjuryType })}
@@ -533,7 +556,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Body Part Injured *</Label>
+                <Label className="text-white text-sm">Body Part Injured *</Label>
                 <Select
                   value={form.body_part}
                   onValueChange={(v) => updateForm({ body_part: v as BodyPart })}
@@ -552,7 +575,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Severity *</Label>
+                <Label className="text-white text-sm">Severity *</Label>
                 <div className="grid grid-cols-4 gap-2 mt-1">
                   {(['minor', 'moderate', 'major', 'fatal'] as Severity[]).map((level) => {
                     const config = SEVERITY_CONFIG[level];
@@ -563,7 +586,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         className={`p-2.5 min-h-[44px] rounded-xl border text-center touch-manipulation transition-all active:scale-[0.98] ${
                           form.severity === level
                             ? `${config.bg} border-current ring-1 ring-offset-0 ${config.colour}`
-                            : 'border-white/10 bg-white/[0.03] text-white/50'
+                            : 'border-white/10 bg-white/[0.03] text-white'
                         }`}
                       >
                         <span className="text-xs font-bold">{config.label}</span>
@@ -574,7 +597,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Injury Description</Label>
+                <Label className="text-white text-sm">Injury Description</Label>
                 <Textarea
                   value={form.injury_description}
                   onChange={(e) => updateForm({ injury_description: e.target.value })}
@@ -598,13 +621,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   onCheckedChange={(v) => updateForm({ first_aid_given: !!v })}
                   className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                 />
-                <Label className="text-white/80 text-sm">First aid given</Label>
+                <Label className="text-white text-sm">First aid given</Label>
               </div>
 
               {form.first_aid_given && (
                 <>
                   <div>
-                    <Label className="text-white/80 text-sm">First Aid Details</Label>
+                    <Label className="text-white text-sm">First Aid Details</Label>
                     <Textarea
                       value={form.first_aid_details}
                       onChange={(e) => updateForm({ first_aid_details: e.target.value })}
@@ -613,7 +636,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     />
                   </div>
                   <div>
-                    <Label className="text-white/80 text-sm">First Aider Name</Label>
+                    <Label className="text-white text-sm">First Aider Name</Label>
                     <Input
                       value={form.first_aider_name}
                       onChange={(e) => updateForm({ first_aider_name: e.target.value })}
@@ -630,12 +653,12 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   onCheckedChange={(v) => updateForm({ hospital_visit: !!v })}
                   className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                 />
-                <Label className="text-white/80 text-sm">Hospital visit required</Label>
+                <Label className="text-white text-sm">Hospital visit required</Label>
               </div>
 
               {form.hospital_visit && (
                 <div>
-                  <Label className="text-white/80 text-sm">Hospital Name</Label>
+                  <Label className="text-white text-sm">Hospital Name</Label>
                   <Input
                     value={form.hospital_name}
                     onChange={(e) => updateForm({ hospital_name: e.target.value })}
@@ -651,13 +674,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   onCheckedChange={(v) => updateForm({ time_off_work: !!v })}
                   className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                 />
-                <Label className="text-white/80 text-sm">Time off work required</Label>
+                <Label className="text-white text-sm">Time off work required</Label>
               </div>
 
               {form.time_off_work && (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <Label className="text-white/80 text-sm">Days Off</Label>
+                    <Label className="text-white text-sm">Days Off</Label>
                     <Input
                       type="number"
                       inputMode="numeric"
@@ -667,7 +690,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     />
                   </div>
                   <div>
-                    <Label className="text-white/80 text-sm">Expected Return</Label>
+                    <Label className="text-white text-sm">Expected Return</Label>
                     <Input
                       type="date"
                       value={form.return_date}
@@ -710,7 +733,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               )}
 
               <div>
-                <Label className="text-white/80 text-sm">Reported To</Label>
+                <Label className="text-white text-sm">Reported To</Label>
                 <Input
                   value={form.reported_to}
                   onChange={(e) => updateForm({ reported_to: e.target.value })}
@@ -720,7 +743,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Corrective Actions Taken</Label>
+                <Label className="text-white text-sm">Corrective Actions Taken</Label>
                 <Textarea
                   value={form.corrective_actions}
                   onChange={(e) => updateForm({ corrective_actions: e.target.value })}
@@ -730,7 +753,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Recorded By *</Label>
+                <Label className="text-white text-sm">Recorded By *</Label>
                 <Input
                   value={form.recorded_by}
                   onChange={(e) => updateForm({ recorded_by: e.target.value })}
@@ -740,7 +763,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               <div>
-                <Label className="text-white/80 text-sm">Additional Notes</Label>
+                <Label className="text-white text-sm">Additional Notes</Label>
                 <Textarea
                   value={form.additional_notes}
                   onChange={(e) => updateForm({ additional_notes: e.target.value })}
@@ -804,7 +827,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Accident Book</h1>
-            <p className="text-sm text-white/70">RIDDOR-compliant incident records</p>
+            <p className="text-sm text-white">RIDDOR-compliant incident records</p>
           </div>
         </div>
 
@@ -835,7 +858,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <Shield className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-xs text-amber-300 font-medium">Legal Requirement</p>
-              <p className="text-xs text-white/60 mt-0.5">
+              <p className="text-xs text-white mt-0.5">
                 Under the Social Security (Claims and Payments) Regulations 1979 and RIDDOR 2013,
                 employers must keep records of workplace accidents. Records must be kept for at
                 least 3 years.
@@ -847,7 +870,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         {/* Search */}
         {records.length > 0 && (
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -861,10 +884,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         {filteredRecords.length === 0 && records.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="h-8 w-8 text-white/30" />
+              <BookOpen className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-base font-bold text-white/70 mb-1">No Records</h3>
-            <p className="text-sm text-white/50">No accidents recorded — good safety record!</p>
+            <h3 className="text-base font-bold text-white mb-1">No Records</h3>
+            <p className="text-sm text-white">No accidents recorded — good safety record!</p>
           </div>
         ) : (
           <div className="space-y-2 pb-20">
@@ -887,7 +910,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       <h4 className="text-[15px] font-bold text-white truncate">
                         {record.injured_name}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-white/60 mt-0.5">
+                      <div className="flex items-center gap-2 text-xs text-white mt-0.5">
                         <Calendar className="h-3 w-3" />
                         <span>{record.incident_date}</span>
                         <span>•</span>
@@ -900,7 +923,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         >
                           {sevConfig.label}
                         </Badge>
-                        <Badge className="bg-white/5 text-white/60 border-none text-[10px]">
+                        <Badge className="bg-white/5 text-white border-none text-[10px]">
                           {INJURY_TYPES.find((t) => t.id === record.injury_type)?.label ||
                             record.injury_type}
                         </Badge>
@@ -911,7 +934,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                         )}
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </motion.button>
               );
@@ -936,6 +959,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               <h2 className="text-base font-bold text-white">
                 Record Accident — Step {formStep + 1} of 4
               </h2>
+              <DraftSaveIndicator status={draftStatus} />
             </div>
 
             <div className="h-1 bg-white/[0.05]">
@@ -948,6 +972,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             </div>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              <AnimatePresence>
+                {recoveredDraft && (
+                  <div className="mb-4">
+                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+                  </div>
+                )}
+              </AnimatePresence>
               {renderFormStep()}
             </div>
 
@@ -988,7 +1019,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       RIDDOR Reportable
                     </Badge>
                   )}
-                  <span className="text-xs text-white/50">{viewingRecord.incident_date}</span>
+                  <span className="text-xs text-white">{viewingRecord.incident_date}</span>
                 </div>
               </div>
 
@@ -996,18 +1027,18 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {/* Person Details */}
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">Injured Person</h4>
-                  <div className="space-y-1 text-sm text-white/70">
+                  <div className="space-y-1 text-sm text-white">
                     <p>
-                      <span className="text-white/40">Name:</span> {viewingRecord.injured_name}
+                      <span className="text-white">Name:</span> {viewingRecord.injured_name}
                     </p>
                     {viewingRecord.injured_role && (
                       <p>
-                        <span className="text-white/40">Role:</span> {viewingRecord.injured_role}
+                        <span className="text-white">Role:</span> {viewingRecord.injured_role}
                       </p>
                     )}
                     {viewingRecord.injured_employer && (
                       <p>
-                        <span className="text-white/40">Employer:</span>{' '}
+                        <span className="text-white">Employer:</span>{' '}
                         {viewingRecord.injured_employer}
                       </p>
                     )}
@@ -1017,25 +1048,25 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {/* Incident */}
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">Incident</h4>
-                  <div className="space-y-1 text-sm text-white/70">
+                  <div className="space-y-1 text-sm text-white">
                     <p>
-                      <span className="text-white/40">Location:</span> {viewingRecord.location}{' '}
+                      <span className="text-white">Location:</span> {viewingRecord.location}{' '}
                       {viewingRecord.location_detail && `— ${viewingRecord.location_detail}`}
                     </p>
                     <p>
-                      <span className="text-white/40">Date/Time:</span>{' '}
+                      <span className="text-white">Date/Time:</span>{' '}
                       {viewingRecord.incident_date} {viewingRecord.incident_time}
                     </p>
                     {viewingRecord.activity_at_time && (
                       <p>
-                        <span className="text-white/40">Activity:</span>{' '}
+                        <span className="text-white">Activity:</span>{' '}
                         {viewingRecord.activity_at_time}
                       </p>
                     )}
                     <p className="mt-2">{viewingRecord.incident_description}</p>
                     {viewingRecord.cause && (
                       <p>
-                        <span className="text-white/40">Cause:</span> {viewingRecord.cause}
+                        <span className="text-white">Cause:</span> {viewingRecord.cause}
                       </p>
                     )}
                   </div>
@@ -1045,15 +1076,15 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">Injury</h4>
                   <div className="flex flex-wrap gap-1.5 mb-2">
-                    <Badge className="bg-white/5 text-white/70 border-none text-xs">
+                    <Badge className="bg-white/5 text-white border-none text-xs">
                       {INJURY_TYPES.find((t) => t.id === viewingRecord.injury_type)?.label}
                     </Badge>
-                    <Badge className="bg-white/5 text-white/70 border-none text-xs">
+                    <Badge className="bg-white/5 text-white border-none text-xs">
                       {BODY_PARTS.find((p) => p.id === viewingRecord.body_part)?.label}
                     </Badge>
                   </div>
                   {viewingRecord.injury_description && (
-                    <p className="text-sm text-white/70">{viewingRecord.injury_description}</p>
+                    <p className="text-sm text-white">{viewingRecord.injury_description}</p>
                   )}
                 </div>
 
@@ -1061,7 +1092,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {(viewingRecord.first_aid_given || viewingRecord.hospital_visit) && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-2">Treatment</h4>
-                    <div className="space-y-1 text-sm text-white/70">
+                    <div className="space-y-1 text-sm text-white">
                       {viewingRecord.first_aid_given && (
                         <>
                           <p>
@@ -1072,7 +1103,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                             <p className="ml-5">{viewingRecord.first_aid_details}</p>
                           )}
                           {viewingRecord.first_aider_name && (
-                            <p className="ml-5 text-white/40">
+                            <p className="ml-5 text-white">
                               By: {viewingRecord.first_aider_name}
                             </p>
                           )}
@@ -1092,7 +1123,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {viewingRecord.time_off_work && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Time Off Work</h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       {viewingRecord.days_off} days
                       {viewingRecord.return_date ? ` — Return: ${viewingRecord.return_date}` : ''}
                     </p>
@@ -1105,7 +1136,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <h4 className="text-sm font-bold text-red-300 mb-1">RIDDOR Status</h4>
                     <p className="text-xs text-red-200/70">{viewingRecord.riddor_category}</p>
                     {viewingRecord.riddor_reference && (
-                      <p className="text-xs text-white/50 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Reference: {viewingRecord.riddor_reference}
                       </p>
                     )}
@@ -1116,12 +1147,12 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {viewingRecord.corrective_actions && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Corrective Actions</h4>
-                    <p className="text-sm text-white/70">{viewingRecord.corrective_actions}</p>
+                    <p className="text-sm text-white">{viewingRecord.corrective_actions}</p>
                   </div>
                 )}
 
                 <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03] mt-4">
-                  <div className="flex justify-between text-xs text-white/50">
+                  <div className="flex justify-between text-xs text-white">
                     <span>Recorded by: {viewingRecord.recorded_by}</span>
                     <span>Reported to: {viewingRecord.reported_to}</span>
                   </div>
@@ -1138,7 +1169,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           <div className="flex flex-col h-full bg-background">
             <div className="px-4 py-3 border-b border-white/10">
               <h2 className="text-base font-bold text-white">RIDDOR Reporting Guide</h2>
-              <p className="text-xs text-white/50 mt-0.5">
+              <p className="text-xs text-white mt-0.5">
                 Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
               </p>
             </div>
@@ -1149,17 +1180,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <div className="space-y-2">
                   <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/5">
                     <p className="text-xs font-bold text-red-300">IMMEDIATELY (by phone)</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Deaths and specified injuries — call 0345 300 9923
                     </p>
                   </div>
                   <div className="p-3 rounded-lg border border-orange-500/20 bg-orange-500/5">
                     <p className="text-xs font-bold text-orange-300">Within 15 days</p>
-                    <p className="text-xs text-white/60 mt-1">Over-7-day incapacitation injuries</p>
+                    <p className="text-xs text-white mt-1">Over-7-day incapacitation injuries</p>
                   </div>
                   <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5">
                     <p className="text-xs font-bold text-amber-300">Within 10 days</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Dangerous occurrences and occupational diseases
                     </p>
                   </div>
@@ -1173,7 +1204,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   {RIDDOR_SPECIFIED_INJURIES.map((injury, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-white/70">{injury}</span>
+                      <span className="text-xs text-white">{injury}</span>
                     </div>
                   ))}
                 </div>
@@ -1188,7 +1219,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   {RIDDOR_DANGEROUS_OCCURRENCES.map((occurrence, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <AlertTriangle className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-white/70">{occurrence}</span>
+                      <span className="text-xs text-white">{occurrence}</span>
                     </div>
                   ))}
                 </div>
@@ -1197,7 +1228,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               {/* How to report */}
               <div className="p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
                 <h4 className="text-sm font-bold text-blue-300 mb-2">How to Report</h4>
-                <div className="space-y-1 text-xs text-white/70">
+                <div className="space-y-1 text-xs text-white">
                   <p>
                     <strong>Online:</strong> www.hse.gov.uk/riddor
                   </p>

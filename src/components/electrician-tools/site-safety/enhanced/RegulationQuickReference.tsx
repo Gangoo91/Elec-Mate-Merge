@@ -59,7 +59,7 @@ export const RegulationQuickReference = ({ hazards, onRegulationClick }: Regulat
                     <div className="font-mono text-xs text-elec-yellow mb-1">
                       {regulation}
                     </div>
-                        <div className="text-xs text-muted-foreground truncate">
+                        <div className="text-xs text-white truncate">
                           {Array.isArray(regHazards) ? regHazards.length : 0} hazard{Array.isArray(regHazards) && regHazards.length !== 1 ? 's' : ''} reference this regulation
                         </div>
                       </div>

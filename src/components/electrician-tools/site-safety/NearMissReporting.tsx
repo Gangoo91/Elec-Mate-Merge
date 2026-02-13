@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,6 +52,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { NearMissReportDetail } from './NearMissReportDetail';
+import { SwipeableListItem } from './common/SwipeableListItem';
 import { NearMissReport, Witness } from './types';
 
 interface FormData {
@@ -285,6 +290,24 @@ export const NearMissReporting: React.FC = () => {
     setInvestigationOpen(false);
   };
 
+  // Draft persistence
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'near-miss-report',
+    data: formData,
+    enabled: showForm,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    setFormData((prev) => ({ ...prev, ...recoveredDraft }));
+    dismissDraft();
+  };
+
   const applyTemplate = (template: (typeof QUICK_TEMPLATES)[0]) => {
     setSelectedTemplate(template.id);
     setFormData((prev) => ({
@@ -402,6 +425,7 @@ export const NearMissReporting: React.FC = () => {
       if (error) throw error;
       setLastSubmittedReport(data as unknown as NearMissReport);
       setReports((prev) => [data as unknown as NearMissReport, ...prev]);
+      clearDraft();
       resetForm();
       setShowForm(false);
       setShowSuccessDialog(true);
@@ -430,6 +454,21 @@ export const NearMissReporting: React.FC = () => {
   const getCategoryLabel = (value: string) =>
     CATEGORIES.find((c) => c.value === value)?.label || value;
 
+  const handleDeleteReport = async (reportId: string) => {
+    try {
+      const { error } = await supabase
+        .from('near_miss_reports')
+        .delete()
+        .eq('id', reportId);
+      if (error) throw error;
+      setReports((prev) => prev.filter((r) => r.id !== reportId));
+      toast({ title: 'Report deleted', description: 'Near miss report has been removed' });
+    } catch (err) {
+      console.error('Delete error:', err);
+      toast({ title: 'Error', description: 'Could not delete report', variant: 'destructive' });
+    }
+  };
+
   // Show detail view if a report is selected
   if (selectedReport) {
     return <NearMissReportDetail report={selectedReport} onBack={() => setSelectedReport(null)} />;
@@ -446,11 +485,11 @@ export const NearMissReporting: React.FC = () => {
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-white">Near Miss Reports</h2>
-                <p className="text-sm text-white/50">Record and track safety incidents</p>
+                <p className="text-sm text-white">Record and track safety incidents</p>
               </div>
             </div>
             {reports.length > 0 && (
-              <Badge className="bg-white/5 border border-white/10 text-white/70">
+              <Badge className="bg-white/5 border border-white/10 text-white">
                 {reports.length} report{reports.length !== 1 ? 's' : ''}
               </Badge>
             )}
@@ -471,7 +510,7 @@ export const NearMissReporting: React.FC = () => {
                 <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
                   <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
                 </div>
-                <p className="text-sm text-white/50">Loading reports...</p>
+                <p className="text-sm text-white">Loading reports...</p>
               </div>
             </CardContent>
           </Card>
@@ -482,7 +521,7 @@ export const NearMissReporting: React.FC = () => {
                 <AlertTriangle className="h-10 w-10 text-red-400" />
               </div>
               <h3 className="text-lg font-medium text-white mb-2">No reports yet</h3>
-              <p className="text-sm text-white/50 mb-6 max-w-[280px]">
+              <p className="text-sm text-white mb-6 max-w-[280px]">
                 Recording near misses helps prevent future accidents and keeps everyone safe.
               </p>
               <Button
@@ -497,39 +536,50 @@ export const NearMissReporting: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {reports.map((report) => (
-              <Card
+              <SwipeableListItem
                 key={report.id}
-                className={`bg-[#1e1e1e] border border-white/10 rounded-2xl border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:border-white/20 active:scale-[0.98] transition-all touch-manipulation`}
-                onClick={() => setSelectedReport(report)}
+                rightActions={[
+                  {
+                    icon: Trash2,
+                    label: 'Delete',
+                    color: 'bg-red-500',
+                    onAction: () => handleDeleteReport(report.id),
+                  },
+                ]}
               >
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        {getSeverityBadge(report.severity)}
-                        <Badge
-                          variant="outline"
-                          className="text-xs bg-white/5 border-white/10 text-white/70"
-                        >
-                          {getCategoryLabel(report.category)}
-                        </Badge>
+                <Card
+                  className={`bg-[#1e1e1e] border border-white/10 rounded-2xl border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:border-white/20 active:scale-[0.98] transition-all touch-manipulation`}
+                  onClick={() => setSelectedReport(report)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          {getSeverityBadge(report.severity)}
+                          <Badge
+                            variant="outline"
+                            className="text-xs bg-white/5 border-white/10 text-white"
+                          >
+                            {getCategoryLabel(report.category)}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-white line-clamp-2 mb-3">{report.description}</p>
+                        <div className="flex items-center gap-4 text-xs text-white">
+                          <span className="flex items-center gap-1.5">
+                            <MapPin className="h-3 w-3" />
+                            <span className="truncate max-w-[120px]">{report.location}</span>
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="h-3 w-3" />
+                            {new Date(report.incident_date).toLocaleDateString('en-GB')}
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-sm text-white line-clamp-2 mb-3">{report.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-white/40">
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="h-3 w-3" />
-                          <span className="truncate max-w-[120px]">{report.location}</span>
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="h-3 w-3" />
-                          {new Date(report.incident_date).toLocaleDateString('en-GB')}
-                        </span>
-                      </div>
+                      <ChevronRight className="h-5 w-5 text-white shrink-0 mt-1" />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-white/30 shrink-0 mt-1" />
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </SwipeableListItem>
             ))}
           </div>
         )}
@@ -568,14 +618,26 @@ export const NearMissReporting: React.FC = () => {
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
-        <div>
-          <h2 className="text-xl font-semibold text-white">Report Near Miss</h2>
-          <p className="text-sm text-white/50">Fields with * are required</p>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-semibold text-white">Report Near Miss</h2>
+            <DraftSaveIndicator status={draftStatus} />
+          </div>
+          <p className="text-sm text-white">Fields with * are required</p>
         </div>
       </div>
 
+      <AnimatePresence>
+        {recoveredDraft && (
+          <DraftRecoveryBanner
+            onRestore={restoreDraft}
+            onDismiss={dismissDraft}
+          />
+        )}
+      </AnimatePresence>
+
       <div className="space-y-3">
-        <Label className="text-sm text-white/70">Quick templates</Label>
+        <Label className="text-sm text-white">Quick templates</Label>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_TEMPLATES.map((t) => (
             <button
@@ -606,7 +668,7 @@ export const NearMissReporting: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div id="field-incident_date" className="space-y-2">
-                <Label className="text-white/70">
+                <Label className="text-white">
                   Date <span className="text-red-400">*</span>
                 </Label>
                 <Input
@@ -622,7 +684,7 @@ export const NearMissReporting: React.FC = () => {
                 )}
               </div>
               <div id="field-incident_time" className="space-y-2">
-                <Label className="text-white/70">
+                <Label className="text-white">
                   Time <span className="text-red-400">*</span>
                 </Label>
                 <Input
@@ -639,14 +701,14 @@ export const NearMissReporting: React.FC = () => {
               </div>
             </div>
             <div id="field-location" className="space-y-2">
-              <Label className="text-white/70">
+              <Label className="text-white">
                 Location <span className="text-red-400">*</span>
               </Label>
               <Input
                 placeholder="e.g. 123 High Street, London"
                 value={formData.location}
                 onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30 ${errors.location ? 'border-red-500' : ''}`}
+                className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white ${errors.location ? 'border-red-500' : ''}`}
               />
               {errors.location && <p className="text-xs text-red-400">{errors.location}</p>}
             </div>
@@ -659,7 +721,7 @@ export const NearMissReporting: React.FC = () => {
               What Happened
             </h3>
             <div id="field-category" className="space-y-2">
-              <Label className="text-white/70">
+              <Label className="text-white">
                 Category <span className="text-red-400">*</span>
               </Label>
               <Select
@@ -682,7 +744,7 @@ export const NearMissReporting: React.FC = () => {
               {errors.category && <p className="text-xs text-red-400">{errors.category}</p>}
             </div>
             <div id="field-severity" className="space-y-2">
-              <Label className="text-white/70">
+              <Label className="text-white">
                 Severity <span className="text-red-400">*</span>
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -694,21 +756,21 @@ export const NearMissReporting: React.FC = () => {
                     className={`p-3 rounded-xl border text-left transition-all active:scale-[0.98] ${formData.severity === s.value ? `${s.colour} border-2` : 'border-white/10 bg-[#1a1a1a] hover:border-white/20'}`}
                   >
                     <span className="font-medium text-sm text-white">{s.label}</span>
-                    <p className="text-xs text-white/50 mt-0.5">{s.description}</p>
+                    <p className="text-xs text-white mt-0.5">{s.description}</p>
                   </button>
                 ))}
               </div>
               {errors.severity && <p className="text-xs text-red-400">{errors.severity}</p>}
             </div>
             <div id="field-description" className="space-y-2">
-              <Label className="text-white/70">
+              <Label className="text-white">
                 Description <span className="text-red-400">*</span>
               </Label>
               <Textarea
                 placeholder="Describe what happened..."
                 value={formData.description}
                 onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                className={`min-h-[120px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30 ${errors.description ? 'border-red-500' : ''}`}
+                className={`min-h-[120px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white ${errors.description ? 'border-red-500' : ''}`}
               />
               <div className="flex justify-between">
                 {errors.description ? (
@@ -716,7 +778,7 @@ export const NearMissReporting: React.FC = () => {
                 ) : (
                   <span />
                 )}
-                <span className="text-xs text-white/40">{formData.description.length} chars</span>
+                <span className="text-xs text-white">{formData.description.length} chars</span>
               </div>
             </div>
           </div>
@@ -728,36 +790,36 @@ export const NearMissReporting: React.FC = () => {
               Actions (Optional)
             </h3>
             <div className="space-y-2">
-              <Label className="text-white/70">Potential Consequences</Label>
+              <Label className="text-white">Potential Consequences</Label>
               <Textarea
                 placeholder="What could have happened?"
                 value={formData.potential_consequences}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, potential_consequences: e.target.value }))
                 }
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-white/70">Immediate Actions</Label>
+              <Label className="text-white">Immediate Actions</Label>
               <Textarea
                 placeholder="What did you do?"
                 value={formData.immediate_actions}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, immediate_actions: e.target.value }))
                 }
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-white/70">Preventive Measures</Label>
+              <Label className="text-white">Preventive Measures</Label>
               <Textarea
                 placeholder="How to prevent this?"
                 value={formData.preventive_measures}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, preventive_measures: e.target.value }))
                 }
-                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
           </div>
@@ -774,15 +836,15 @@ export const NearMissReporting: React.FC = () => {
                 People Involved (Optional)
               </h3>
               {peopleOpen ? (
-                <ChevronUp className="h-5 w-5 text-white/50" />
+                <ChevronUp className="h-5 w-5 text-white" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-white/50" />
+                <ChevronDown className="h-5 w-5 text-white" />
               )}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               {/* Witnesses */}
               <div className="space-y-3">
-                <Label className="text-white/70">Witnesses</Label>
+                <Label className="text-white">Witnesses</Label>
                 {formData.witnesses.map((witness, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 space-y-2">
@@ -790,13 +852,13 @@ export const NearMissReporting: React.FC = () => {
                         placeholder="Name"
                         value={witness.name}
                         onChange={(e) => updateWitness(index, 'name', e.target.value)}
-                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                       />
                       <Input
                         placeholder="Contact (optional)"
                         value={witness.contact}
                         onChange={(e) => updateWitness(index, 'contact', e.target.value)}
-                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                        className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                       />
                     </div>
                     <Button
@@ -805,7 +867,7 @@ export const NearMissReporting: React.FC = () => {
                       onClick={() => removeWitness(index)}
                       className="h-14 w-14 shrink-0 hover:bg-white/5"
                     >
-                      <Trash2 className="h-5 w-5 text-white/40" />
+                      <Trash2 className="h-5 w-5 text-white" />
                     </Button>
                   </div>
                 ))}
@@ -823,7 +885,7 @@ export const NearMissReporting: React.FC = () => {
               {/* Third Party */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-white/70">Third party involved?</Label>
+                  <Label className="text-white">Third party involved?</Label>
                   <Switch
                     checked={formData.third_party_involved}
                     onCheckedChange={(checked) =>
@@ -838,7 +900,7 @@ export const NearMissReporting: React.FC = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, third_party_details: e.target.value }))
                     }
-                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                   />
                 )}
               </div>
@@ -857,15 +919,15 @@ export const NearMissReporting: React.FC = () => {
                 Environment & Equipment (Optional)
               </h3>
               {environmentOpen ? (
-                <ChevronUp className="h-5 w-5 text-white/50" />
+                <ChevronUp className="h-5 w-5 text-white" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-white/50" />
+                <ChevronDown className="h-5 w-5 text-white" />
               )}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label className="text-white/70">Weather Conditions</Label>
+                  <Label className="text-white">Weather Conditions</Label>
                   <Select
                     value={formData.weather_conditions}
                     onValueChange={(v) =>
@@ -885,7 +947,7 @@ export const NearMissReporting: React.FC = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-white/70">Lighting Conditions</Label>
+                  <Label className="text-white">Lighting Conditions</Label>
                   <Select
                     value={formData.lighting_conditions}
                     onValueChange={(v) =>
@@ -907,20 +969,20 @@ export const NearMissReporting: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-white/70">Equipment Involved</Label>
+                <Label className="text-white">Equipment Involved</Label>
                 <Input
                   placeholder="e.g. Power drill, scaffold, cable"
                   value={formData.equipment_involved}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, equipment_involved: e.target.value }))
                   }
-                  className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                  className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                 />
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-white/70">Equipment faulty?</Label>
+                  <Label className="text-white">Equipment faulty?</Label>
                   <Switch
                     checked={formData.equipment_faulty}
                     onCheckedChange={(checked) =>
@@ -935,7 +997,7 @@ export const NearMissReporting: React.FC = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, equipment_fault_details: e.target.value }))
                     }
-                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                    className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                   />
                 )}
               </div>
@@ -954,15 +1016,15 @@ export const NearMissReporting: React.FC = () => {
                 Investigation (Optional)
               </h3>
               {investigationOpen ? (
-                <ChevronUp className="h-5 w-5 text-white/50" />
+                <ChevronUp className="h-5 w-5 text-white" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-white/50" />
+                <ChevronDown className="h-5 w-5 text-white" />
               )}
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 pt-4">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label className="text-white/70">Supervisor notified?</Label>
+                  <Label className="text-white">Supervisor notified?</Label>
                   <Switch
                     checked={formData.supervisor_notified}
                     onCheckedChange={(checked) =>
@@ -977,13 +1039,13 @@ export const NearMissReporting: React.FC = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, supervisor_name: e.target.value }))
                     }
-                    className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+                    className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                   />
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label className="text-white/70">Previous similar incidents?</Label>
+                <Label className="text-white">Previous similar incidents?</Label>
                 <Select
                   value={formData.previous_similar_incidents}
                   onValueChange={(v) =>
@@ -1056,12 +1118,12 @@ export const NearMissReporting: React.FC = () => {
 
           {/* Reporter Name */}
           <div className="space-y-2 pt-4 border-t border-white/10">
-            <Label className="text-white/70">Your Name</Label>
+            <Label className="text-white">Your Name</Label>
             <Input
               placeholder="Optional"
               value={formData.reporter_name}
               onChange={(e) => setFormData((prev) => ({ ...prev, reporter_name: e.target.value }))}
-              className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white/30"
+              className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
             />
           </div>
         </CardContent>

@@ -264,12 +264,12 @@ const ApprenticeToolbox = () => {
               <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
                 Apprentice Guidance Area
               </h1>
-              <p className="text-sm text-white/70 mt-0.5 hidden sm:block">
+              <p className="text-sm text-white mt-0.5 hidden sm:block">
                 Everything you need to succeed in your apprenticeship
               </p>
             </div>
           </div>
-          <p className="hidden sm:block text-base text-white/70 sm:ml-[72px]">
+          <p className="hidden sm:block text-base text-white sm:ml-[72px]">
             Essential resources, skills development, and support for UK electrical apprentices
           </p>
         </div>
@@ -286,7 +286,7 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-elec-yellow truncate">11</div>
-                <div className="text-[10px] sm:text-xs text-white/70 truncate">Guidance Topics</div>
+                <div className="text-[10px] sm:text-xs text-white truncate">Guidance Topics</div>
               </div>
             </div>
           </CardContent>
@@ -299,7 +299,7 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-green-400 truncate">3-4 yrs</div>
-                <div className="text-[10px] sm:text-xs text-white/70 truncate">Typical Duration</div>
+                <div className="text-[10px] sm:text-xs text-white truncate">Typical Duration</div>
               </div>
             </div>
           </CardContent>
@@ -312,7 +312,7 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-blue-400 truncate">20%</div>
-                <div className="text-[10px] sm:text-xs text-white/70 truncate">Off-Job Training</div>
+                <div className="text-[10px] sm:text-xs text-white truncate">Off-Job Training</div>
               </div>
             </div>
           </CardContent>
@@ -325,7 +325,7 @@ const ApprenticeToolbox = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-lg sm:text-xl font-bold text-purple-400 truncate">Level 3</div>
-                <div className="text-[10px] sm:text-xs text-white/70 truncate">NVQ Qualification</div>
+                <div className="text-[10px] sm:text-xs text-white truncate">NVQ Qualification</div>
               </div>
             </div>
           </CardContent>
@@ -349,7 +349,7 @@ const ApprenticeToolbox = () => {
                 {categoryItems.length} {categoryItems.length === 1 ? 'Topic' : 'Topics'}
               </Badge>
             </div>
-            <p className="text-sm text-white/60 -mt-2">{category.description}</p>
+            <p className="text-sm text-white -mt-2">{category.description}</p>
 
             {/* Cards Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -385,7 +385,7 @@ const ApprenticeToolbox = () => {
                       </CardHeader>
 
                       <CardContent className="pt-0 pb-4 px-4">
-                        <p className="text-xs sm:text-sm text-white/70 mb-3 line-clamp-2">
+                        <p className="text-xs sm:text-sm text-white mb-3 line-clamp-2">
                           {item.description}
                         </p>
 
@@ -394,7 +394,7 @@ const ApprenticeToolbox = () => {
                             {item.stats.map((stat, index) => (
                               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
                                 <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
-                                <div className="text-xs text-white/60">{stat.label}</div>
+                                <div className="text-xs text-white">{stat.label}</div>
                               </div>
                             ))}
                           </div>
@@ -428,7 +428,7 @@ const ApprenticeToolbox = () => {
               <Sparkles className="h-8 w-8 text-elec-yellow flex-shrink-0" />
               <div>
                 <h4 className="font-medium text-white">Need more help?</h4>
-                <p className="text-xs text-white/70">Check out mental health resources or explore career progression options</p>
+                <p className="text-xs text-white">Check out mental health resources or explore career progression options</p>
               </div>
             </div>
             <div className="flex gap-2 w-full sm:w-auto">

@@ -575,7 +575,7 @@ const SwimmingPoolGuide = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
+      <Card className="border-cyan-500/30 bg-cyan-500/10">
         <CardHeader>
           <div className="flex items-center gap-3">
             <Waves className="h-8 w-8 text-cyan-400" />
@@ -589,22 +589,22 @@ const SwimmingPoolGuide = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
               <Shield className="h-5 w-5 text-cyan-400 mb-2" />
-              <p className="text-xs text-white/80">Key Protection</p>
+              <p className="text-xs text-white">Key Protection</p>
               <p className="text-sm font-medium text-white">SELV + Bonding</p>
             </div>
             <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
               <Droplets className="h-5 w-5 text-cyan-400 mb-2" />
-              <p className="text-xs text-white/80">Zone 0 IP Rating</p>
+              <p className="text-xs text-white">Zone 0 IP Rating</p>
               <p className="text-sm font-medium text-white">IPX8</p>
             </div>
             <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
               <Zap className="h-5 w-5 text-cyan-400 mb-2" />
-              <p className="text-xs text-white/80">Zone 0 Voltage</p>
+              <p className="text-xs text-white">Zone 0 Voltage</p>
               <p className="text-sm font-medium text-white">12V SELV Max</p>
             </div>
             <div className="bg-cyan-500/20 p-3 rounded-lg border border-cyan-500/30">
               <FileCheck className="h-5 w-5 text-cyan-400 mb-2" />
-              <p className="text-xs text-white/80">RCD Protection</p>
+              <p className="text-xs text-white">RCD Protection</p>
               <p className="text-sm font-medium text-white">30mA Required</p>
             </div>
           </div>
@@ -685,7 +685,7 @@ const SwimmingPoolGuide = () => {
                     <span className="text-xs text-green-400">Permitted Equipment:</span>
                     <ul className="space-y-0.5 mt-1">
                       {zone.equipmentAllowed.map((item, itemIdx) => (
-                        <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-1">
+                        <li key={itemIdx} className="text-xs text-white flex items-start gap-1">
                           <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
@@ -697,7 +697,7 @@ const SwimmingPoolGuide = () => {
                     <span className="text-xs text-red-400">Prohibited:</span>
                     <ul className="space-y-0.5 mt-1">
                       {zone.equipmentProhibited.map((item, itemIdx) => (
-                        <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-1">
+                        <li key={itemIdx} className="text-xs text-white flex items-start gap-1">
                           <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
@@ -734,8 +734,8 @@ const SwimmingPoolGuide = () => {
                 {ipRatingRequirements.ratings.map((rating, idx) => (
                   <tr key={idx} className={`border-b border-cyan-500/20 ${idx % 2 === 0 ? 'bg-cyan-500/5' : ''}`}>
                     <td className="p-3 text-cyan-300 font-mono font-bold">{rating.rating}</td>
-                    <td className="p-3 text-white/80">{rating.meaning}</td>
-                    <td className="p-3 text-white/80">{rating.zones.join(', ')}</td>
+                    <td className="p-3 text-white">{rating.meaning}</td>
+                    <td className="p-3 text-white">{rating.zones.join(', ')}</td>
                     <td className="p-3 text-white text-xs">{rating.examples.join(', ')}</td>
                   </tr>
                 ))}
@@ -745,8 +745,8 @@ const SwimmingPoolGuide = () => {
 
           <div className="bg-cyan-500/10 p-4 rounded-lg border border-cyan-500/30">
             <h4 className="font-medium text-cyan-200 mb-2">Understanding IP Codes</h4>
-            <p className="text-sm text-white/80 mb-2"><strong>First digit:</strong> {ipRatingRequirements.firstDigit}</p>
-            <p className="text-sm text-white/80"><strong>Second digit:</strong> {ipRatingRequirements.secondDigit}</p>
+            <p className="text-sm text-white mb-2"><strong>First digit:</strong> {ipRatingRequirements.firstDigit}</p>
+            <p className="text-sm text-white"><strong>Second digit:</strong> {ipRatingRequirements.secondDigit}</p>
           </div>
         </CardContent>
       </Card>
@@ -769,18 +769,18 @@ const SwimmingPoolGuide = () => {
 
           <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/30">
             <h4 className="font-medium text-yellow-200 mb-2">Voltage Limits</h4>
-            <p className="text-sm text-white/80 mb-1"><strong>AC:</strong> {selvRequirements.voltageLimits.ac}</p>
-            <p className="text-sm text-white/80"><strong>DC:</strong> {selvRequirements.voltageLimits.dc}</p>
+            <p className="text-sm text-white mb-1"><strong>AC:</strong> {selvRequirements.voltageLimits.ac}</p>
+            <p className="text-sm text-white"><strong>DC:</strong> {selvRequirements.voltageLimits.dc}</p>
           </div>
 
           <div className="space-y-4">
             {selvRequirements.requirements.map((req, idx) => (
               <div key={idx} className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/30">
                 <h4 className="font-medium text-yellow-200 mb-2">{req.requirement}</h4>
-                <p className="text-sm text-white/80 mb-3">{req.description}</p>
+                <p className="text-sm text-white mb-3">{req.description}</p>
                 <ul className="space-y-1">
                   {req.details.map((detail, detailIdx) => (
-                    <li key={detailIdx} className="text-xs text-white/80 flex items-start gap-2">
+                    <li key={detailIdx} className="text-xs text-white flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
                       {detail}
                     </li>
@@ -794,7 +794,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-yellow-200 mb-3">Common SELV Applications</h4>
             <ul className="grid grid-cols-2 gap-2">
               {selvRequirements.applications.map((app, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <Lightbulb className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                   {app}
                 </li>
@@ -826,7 +826,7 @@ const SwimmingPoolGuide = () => {
               {supplementaryBonding.partsToBeconnected.map((part, idx) => (
                 <div key={idx} className="bg-purple-600/10 p-3 rounded border border-purple-500/30">
                   <h5 className="font-medium text-purple-200 text-sm">{part.part}</h5>
-                  <p className="text-xs text-white/80">{part.description}</p>
+                  <p className="text-xs text-white">{part.description}</p>
                 </div>
               ))}
             </div>
@@ -837,7 +837,7 @@ const SwimmingPoolGuide = () => {
             <div className="space-y-2">
               {supplementaryBonding.conductorSizing.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">{item.connection}</span>
+                  <span className="text-white">{item.connection}</span>
                   <Badge variant="outline" className="border-purple-400 text-purple-300">{item.size}</Badge>
                 </div>
               ))}
@@ -848,7 +848,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-amber-200 mb-3">Conditions for Omitting Supplementary Bonding</h4>
             <ul className="space-y-1">
               {supplementaryBonding.omissionConditions.map((condition, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   {idx === 0 ? (
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                   ) : (
@@ -864,7 +864,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-purple-200 mb-3">Important Notes</h4>
             <ul className="space-y-1">
               {supplementaryBonding.notes.map((note, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <Lightbulb className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   {note}
                 </li>
@@ -908,7 +908,7 @@ const SwimmingPoolGuide = () => {
                       <h5 className="text-sm font-medium text-white mb-2">Circuit Design</h5>
                       <ul className="space-y-1">
                         {component.circuitDesign.map((item, itemIdx) => (
-                          <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                          <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                             <Cable className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                             {item}
                           </li>
@@ -919,7 +919,7 @@ const SwimmingPoolGuide = () => {
                       <h5 className="text-sm font-medium text-white mb-2">Protection</h5>
                       <ul className="space-y-1">
                         {component.protection.map((item, itemIdx) => (
-                          <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                          <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                             <Shield className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                             {item}
                           </li>
@@ -936,7 +936,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-green-200 mb-3">Plant Room Requirements</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {poolPumpCircuits.plantRoomRequirements.map((req, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
@@ -959,7 +959,7 @@ const SwimmingPoolGuide = () => {
             {underwaterLighting.requirements.map((req, idx) => (
               <div key={idx} className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/30">
                 <h4 className="font-medium text-yellow-200 mb-2">{req.requirement}</h4>
-                <p className="text-sm text-white/80 mb-1">{req.description}</p>
+                <p className="text-sm text-white mb-1">{req.description}</p>
                 <p className="text-xs text-white">{req.details}</p>
               </div>
             ))}
@@ -969,7 +969,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-yellow-200 mb-3">Installation Steps</h4>
             <ol className="space-y-2">
               {underwaterLighting.installationSteps.map((step, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <span className="text-yellow-400 font-bold">{idx + 1}.</span>
                   {step}
                 </li>
@@ -982,7 +982,7 @@ const SwimmingPoolGuide = () => {
               <h4 className="font-medium text-yellow-200 mb-3">Maintenance Considerations</h4>
               <ul className="space-y-1">
                 {underwaterLighting.maintenanceConsiderations.map((item, idx) => (
-                  <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <Wrench className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -994,7 +994,7 @@ const SwimmingPoolGuide = () => {
               <h4 className="font-medium text-green-200 mb-3">LED Benefits</h4>
               <ul className="space-y-1">
                 {underwaterLighting.ledBenefits.map((benefit, idx) => (
-                  <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                     {benefit}
                   </li>
@@ -1029,7 +1029,7 @@ const SwimmingPoolGuide = () => {
                     <h5 className="text-sm font-medium text-white mb-2">Electrical Requirements</h5>
                     <ul className="space-y-1">
                       {type.electricalRequirements.map((req, reqIdx) => (
-                        <li key={reqIdx} className="text-xs text-white/80 flex items-start gap-2">
+                        <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
                           <Zap className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
                           {req}
                         </li>
@@ -1041,7 +1041,7 @@ const SwimmingPoolGuide = () => {
                     <h5 className="text-sm font-medium text-white mb-2">Circuit Design</h5>
                     <ul className="space-y-1">
                       {type.circuitDesign.map((item, itemIdx) => (
-                        <li key={itemIdx} className="text-xs text-white/80 flex items-start gap-2">
+                        <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
                           <CircuitBoard className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
                           {item}
                         </li>
@@ -1057,7 +1057,7 @@ const SwimmingPoolGuide = () => {
             <h4 className="font-medium text-orange-200 mb-3">Installation Considerations</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {heatPumpConnections.installationConsiderations.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
@@ -1076,13 +1076,13 @@ const SwimmingPoolGuide = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-white/80">{hotTubsSpas.description}</p>
+          <p className="text-white">{hotTubsSpas.description}</p>
 
           <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
             <h4 className="font-medium text-purple-200 mb-3">Zone Application</h4>
             <ul className="space-y-1">
               {hotTubsSpas.zones.map((zone, idx) => (
-                <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <Building2 className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   {zone}
                 </li>
@@ -1094,8 +1094,8 @@ const SwimmingPoolGuide = () => {
             {hotTubsSpas.types.map((type, idx) => (
               <div key={idx} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/30">
                 <h4 className="font-medium text-purple-200 mb-2">{type.type}</h4>
-                <p className="text-xs text-white/80 mb-1"><strong>Connection:</strong> {type.connection}</p>
-                <p className="text-xs text-white/80 mb-1"><strong>Circuit:</strong> {type.circuit}</p>
+                <p className="text-xs text-white mb-1"><strong>Connection:</strong> {type.connection}</p>
+                <p className="text-xs text-white mb-1"><strong>Circuit:</strong> {type.circuit}</p>
                 <p className="text-xs text-white">{type.notes}</p>
               </div>
             ))}
@@ -1106,7 +1106,7 @@ const SwimmingPoolGuide = () => {
               <h4 className="font-medium text-purple-200 mb-3">General Requirements</h4>
               <ul className="space-y-1">
                 {hotTubsSpas.requirements.map((req, idx) => (
-                  <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <CheckCircle className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
                     {req}
                   </li>
@@ -1118,7 +1118,7 @@ const SwimmingPoolGuide = () => {
               <h4 className="font-medium text-amber-200 mb-3">Outdoor Considerations</h4>
               <ul className="space-y-1">
                 {hotTubsSpas.outdoorConsiderations.map((item, idx) => (
-                  <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <Sun className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -1154,7 +1154,7 @@ const SwimmingPoolGuide = () => {
                       {test.acceptable}
                     </Badge>
                   </div>
-                  <p className="text-xs text-white/80">{test.description}</p>
+                  <p className="text-xs text-white">{test.description}</p>
                   <p className="text-xs text-white mt-1">{test.notes}</p>
                 </div>
               ))}
@@ -1164,7 +1164,7 @@ const SwimmingPoolGuide = () => {
               {testingRequirements.periodicInspection.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20">
                   <Timer className="h-4 w-4 text-cyan-400" />
-                  <span className="text-sm text-white/90">{item}</span>
+                  <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
             </TabsContent>
@@ -1173,7 +1173,7 @@ const SwimmingPoolGuide = () => {
               {testingRequirements.documentation.map((doc, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-cyan-500/10 rounded border border-cyan-500/20">
                   <FileCheck className="h-4 w-4 text-cyan-400" />
-                  <span className="text-sm text-white/90">{doc}</span>
+                  <span className="text-sm text-white">{doc}</span>
                 </div>
               ))}
             </TabsContent>
@@ -1198,13 +1198,13 @@ const SwimmingPoolGuide = () => {
                   <span className="text-xs text-red-400">Causes:</span>
                   <ul className="space-y-0.5 mt-1">
                     {issue.causes.map((cause, causeIdx) => (
-                      <li key={causeIdx} className="text-xs text-white/80">- {cause}</li>
+                      <li key={causeIdx} className="text-xs text-white">- {cause}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
                   <span className="text-xs text-green-400">Solution:</span>
-                  <p className="text-xs text-white/80 mt-1">{issue.solution}</p>
+                  <p className="text-xs text-white mt-1">{issue.solution}</p>
                 </div>
               </div>
             </div>

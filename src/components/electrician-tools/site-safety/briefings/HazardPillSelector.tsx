@@ -141,7 +141,7 @@ const colorMap: Record<
     bg: 'bg-gray-500/10',
     bgSolid: 'bg-gray-500/20',
     border: 'border-gray-500/40',
-    text: 'text-gray-400',
+    text: 'text-white',
     ring: 'ring-gray-500/30',
     iconBg: 'bg-gray-500/20',
   },
@@ -149,7 +149,7 @@ const colorMap: Record<
     bg: 'bg-slate-500/10',
     bgSolid: 'bg-slate-500/20',
     border: 'border-slate-500/40',
-    text: 'text-slate-400',
+    text: 'text-white',
     ring: 'ring-slate-500/30',
     iconBg: 'bg-slate-500/20',
   },
@@ -214,7 +214,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
           animate={{ scale: 1, opacity: 1 }}
           className={cn(
             'text-xs font-medium px-2.5 py-1 rounded-full',
-            value.length > 0 ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-white/10 text-white/50'
+            value.length > 0 ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-white/10 text-white'
           )}
         >
           {value.length} selected
@@ -270,7 +270,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
               <div
                 className={cn(
                   'flex items-center justify-center w-9 h-9 rounded-lg transition-colors duration-200',
-                  isSelected ? cn(colors.iconBg, colors.text) : 'bg-white/[0.06] text-white/40'
+                  isSelected ? cn(colors.iconBg, colors.text) : 'bg-white/[0.06] text-white'
                 )}
               >
                 {icon}
@@ -280,7 +280,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
               <span
                 className={cn(
                   'text-xs font-medium text-center leading-tight transition-colors duration-200',
-                  isSelected ? colors.text : 'text-white/60'
+                  isSelected ? colors.text : 'text-white'
                 )}
               >
                 {hazard.label}
@@ -298,7 +298,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
             className={cn(
               'flex flex-col items-center justify-center gap-2 p-3.5 rounded-xl',
               'border border-dashed border-white/15 min-h-[80px]',
-              'text-white/40 hover:text-white/60 hover:bg-white/[0.04] hover:border-white/25',
+              'text-white hover:text-white hover:bg-white/[0.04] hover:border-white/25',
               'touch-manipulation transition-all duration-200'
             )}
           >
@@ -348,7 +348,7 @@ export function HazardPillSelector({ value, onChange, error }: HazardPillSelecto
                   setShowCustomInput(false);
                   setCustomHazard('');
                 }}
-                className="h-[50px] px-3 text-white/50 hover:text-white hover:bg-white/10"
+                className="h-[50px] px-3 text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-4 w-4" />
               </Button>

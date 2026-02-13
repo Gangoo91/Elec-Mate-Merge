@@ -66,7 +66,7 @@ const briefingTypes: BriefingTypeOption[] = [
     label: "Custom",
     description: "Create your own",
     icon: Settings,
-    color: "from-white/10 to-white/5 border-white/20 text-white/70",
+    color: "from-white/10 to-white/5 border-white/20 text-white",
   },
 ];
 
@@ -83,7 +83,7 @@ export function BriefingTypePicker({
 }: BriefingTypePickerProps) {
   return (
     <div className="space-y-3">
-      <label className="block text-sm font-medium text-white/80">
+      <label className="block text-sm font-medium text-white">
         Select Briefing Type
       </label>
 
@@ -120,13 +120,13 @@ export function BriefingTypePicker({
               <Icon
                 className={cn(
                   "h-6 w-6 mb-1.5",
-                  isSelected ? "" : "text-white/50"
+                  isSelected ? "" : "text-white"
                 )}
               />
               <span
                 className={cn(
                   "text-sm font-medium",
-                  isSelected ? "text-white" : "text-white/70"
+                  isSelected ? "text-white" : "text-white"
                 )}
               >
                 {type.label}

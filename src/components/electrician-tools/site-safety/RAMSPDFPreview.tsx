@@ -220,19 +220,19 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   onClick={() => handleZoom('out')}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
                   disabled={zoom <= 0.5}
                 >
                   <ZoomOut className="h-3 w-3" />
                 </Button>
-                <span className="text-xs text-muted-foreground min-w-[3rem] text-center">
+                <span className="text-xs text-white min-w-[3rem] text-center">
                   {Math.round(zoom * 100)}%
                 </span>
                 <Button
                   onClick={() => handleZoom('in')}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
                   disabled={zoom >= 3}
                 >
                   <ZoomIn className="h-3 w-3" />
@@ -241,7 +241,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   onClick={handlePrint}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
                 >
                   <Printer className="h-3 w-3" />
                 </Button>
@@ -252,7 +252,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                 onClick={handleRefresh}
                 size="sm"
                 variant="outline"
-                className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
+                className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
               >
                 <RefreshCw className="h-3 w-3" />
               </Button>
@@ -261,7 +261,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               onClick={onClose}
               size="sm"
               variant="outline"
-              className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
+              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-8 w-8 p-0"
             >
               <X className="h-3 w-3" />
             </Button>
@@ -278,12 +278,12 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                     Generating PDF Preview
                     {retryCount > 0 && ` (Attempt ${retryCount + 1})`}
                   </p>
-                  <p className="text-muted-foreground text-xs sm:text-sm">
+                  <p className="text-white text-xs sm:text-sm">
                     Creating professional RAMS document...
                   </p>
                   <div className="w-full">
                     <Progress value={progress} className="h-2 bg-elec-gray" />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       {Math.round(progress)}% complete
                     </p>
                   </div>
@@ -298,7 +298,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                 <div className="text-red-400 text-xl sm:text-2xl">⚠️</div>
                 <div>
                   <h3 className="text-red-400 font-bold text-base sm:text-lg mb-2">Preview Error</h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">{error}</p>
+                  <p className="text-white text-xs sm:text-sm mb-4 leading-relaxed">{error}</p>
                   {retryCount > 0 && (
                     <p className="text-yellow-400 text-xs mb-2">
                       Attempted {retryCount} time{retryCount > 1 ? 's' : ''}
@@ -358,7 +358,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                     <FileText className="h-16 w-16 text-elec-yellow mx-auto" />
                     <div>
                       <h3 className="text-elec-yellow font-bold text-lg mb-2">PDF Ready</h3>
-                      <p className="text-muted-foreground text-sm mb-4">
+                      <p className="text-white text-sm mb-4">
                         Your RAMS document has been generated successfully. 
                         {isMobile ? ' Tap' : ' Click'} below to view or download.
                       </p>
@@ -401,7 +401,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 p-3 sm:p-4 border-t border-elec-yellow/20 bg-elec-dark/50">
-          <p className="text-xs text-muted-foreground text-center sm:text-left leading-relaxed">
+          <p className="text-xs text-white text-center sm:text-left leading-relaxed">
             Professional BS7671-compliant PDF with comprehensive risk management
           </p>
           <div className="flex gap-2 w-full sm:w-auto">
@@ -418,7 +418,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   <Button
                     onClick={handlePrint}
                     variant="outline"
-                    className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
+                    className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
                   >
                     <Printer className="h-4 w-4 mr-2" />
                     Print
@@ -429,7 +429,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
             <Button
               onClick={onClose}
               variant="outline"
-              className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 flex-1 sm:flex-none"
+              className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 flex-1 sm:flex-none"
             >
               Close
             </Button>
