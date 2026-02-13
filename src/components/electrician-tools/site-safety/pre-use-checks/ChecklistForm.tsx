@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
-import {
-  CheckCircle2,
-  XCircle,
-  MinusCircle,
-  Sparkles,
-  ArrowLeft,
-  Loader2,
-} from "lucide-react";
-import {
-  useCreatePreUseCheck,
-  type CheckItem,
-} from "@/hooks/usePreUseChecks";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Input } from '@/components/ui/input';
+import { LocationAutoFill } from '../common/LocationAutoFill';
+import { SignaturePad } from '../common/SignaturePad';
+import { CheckCircle2, XCircle, MinusCircle, Sparkles, ArrowLeft, Loader2 } from 'lucide-react';
+import { useCreatePreUseCheck, type CheckItem } from '@/hooks/usePreUseChecks';
+import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 
 interface ChecklistFormProps {
   equipmentType: string;
@@ -21,7 +14,7 @@ interface ChecklistFormProps {
   onCancel: () => void;
 }
 
-type CheckResult = "pass" | "fail" | "na";
+type CheckResult = 'pass' | 'fail' | 'na';
 
 export function ChecklistForm({
   equipmentType,
@@ -30,29 +23,32 @@ export function ChecklistForm({
   onCancel,
 }: ChecklistFormProps) {
   const [items, setItems] = useState<CheckItem[]>(initialItems);
-  const [equipmentDescription, setEquipmentDescription] = useState("");
-  const [siteAddress, setSiteAddress] = useState("");
+  const [equipmentDescription, setEquipmentDescription] = useState('');
+  const [siteAddress, setSiteAddress] = useState('');
+  const [inspectorSigName, setInspectorSigName] = useState('');
+  const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
+  const [inspectorSigData, setInspectorSigData] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const createCheck = useCreatePreUseCheck();
 
   const updateItemResult = (id: string, result: CheckResult) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, result } : item))
-    );
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, result } : item)));
   };
 
   const handleAllPass = () => {
-    setItems((prev) => prev.map((item) => ({ ...item, result: "pass" as const })));
+    setItems((prev) => prev.map((item) => ({ ...item, result: 'pass' as const })));
   };
 
   const computeOverallResult = (): CheckResult => {
-    if (items.some((i) => i.result === "fail")) return "fail";
-    if (items.every((i) => i.result === "pass" || i.result === "na"))
-      return "pass";
-    return "na";
+    if (items.some((i) => i.result === 'fail')) return 'fail';
+    if (items.every((i) => i.result === 'pass' || i.result === 'na')) return 'pass';
+    return 'na';
   };
 
-  const allAnswered = items.every((i) => i.result !== "na" || items.every((j) => j.result === "na") === false);
-  const hasAtLeastOneResult = items.some((i) => i.result === "pass" || i.result === "fail");
+  const allAnswered = items.every(
+    (i) => i.result !== 'na' || items.every((j) => j.result === 'na') === false
+  );
+  const hasAtLeastOneResult = items.some((i) => i.result === 'pass' || i.result === 'fail');
 
   const handleSubmit = async () => {
     await createCheck.mutateAsync({
@@ -61,7 +57,9 @@ export function ChecklistForm({
       site_address: siteAddress || undefined,
       items,
       overall_result: computeOverallResult(),
+      photos: photoUrls,
     });
+    setPhotoUrls([]);
     onSubmit();
   };
 
@@ -76,7 +74,7 @@ export function ChecklistForm({
           <ArrowLeft className="w-5 h-5 text-white" />
         </button>
         <h2 className="text-lg font-semibold text-white capitalize">
-          {equipmentType.replace(/_/g, " ")} Check
+          {equipmentType.replace(/_/g, ' ')} Check
         </h2>
       </div>
 
@@ -104,24 +102,17 @@ export function ChecklistForm({
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-white mb-1">
-              Site Address (optional)
-            </label>
-            <Input
-              value={siteAddress}
-              onChange={(e) => setSiteAddress(e.target.value)}
-              placeholder="e.g. 14 King Street, London"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-            />
-          </div>
+          <LocationAutoFill
+            value={siteAddress}
+            onChange={setSiteAddress}
+            placeholder="e.g. 14 King Street, London"
+            label="Site Address (optional)"
+          />
         </div>
 
         {/* Checklist Items */}
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white">
-            Inspection Items
-          </h3>
+          <h3 className="text-sm font-semibold text-white">Inspection Items</h3>
           {items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -134,62 +125,70 @@ export function ChecklistForm({
               <div className="flex items-center gap-1">
                 {/* Pass */}
                 <button
-                  onClick={() => updateItemResult(item.id, "pass")}
+                  onClick={() => updateItemResult(item.id, 'pass')}
                   className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === "pass"
-                      ? "bg-green-500/20 border border-green-500/50"
-                      : "bg-white/5 border border-white/10"
+                    item.result === 'pass'
+                      ? 'bg-green-500/20 border border-green-500/50'
+                      : 'bg-white/5 border border-white/10'
                   }`}
                   aria-label={`Mark ${item.label} as pass`}
                 >
                   <CheckCircle2
                     className={`w-5 h-5 ${
-                      item.result === "pass"
-                        ? "text-green-400"
-                        : "text-white"
+                      item.result === 'pass' ? 'text-green-400' : 'text-white'
                     }`}
                   />
                 </button>
                 {/* Fail */}
                 <button
-                  onClick={() => updateItemResult(item.id, "fail")}
+                  onClick={() => updateItemResult(item.id, 'fail')}
                   className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === "fail"
-                      ? "bg-red-500/20 border border-red-500/50"
-                      : "bg-white/5 border border-white/10"
+                    item.result === 'fail'
+                      ? 'bg-red-500/20 border border-red-500/50'
+                      : 'bg-white/5 border border-white/10'
                   }`}
                   aria-label={`Mark ${item.label} as fail`}
                 >
                   <XCircle
-                    className={`w-5 h-5 ${
-                      item.result === "fail"
-                        ? "text-red-400"
-                        : "text-white"
-                    }`}
+                    className={`w-5 h-5 ${item.result === 'fail' ? 'text-red-400' : 'text-white'}`}
                   />
                 </button>
                 {/* N/A */}
                 <button
-                  onClick={() => updateItemResult(item.id, "na")}
+                  onClick={() => updateItemResult(item.id, 'na')}
                   className={`h-11 w-11 flex items-center justify-center rounded-lg touch-manipulation active:scale-90 transition-all ${
-                    item.result === "na"
-                      ? "bg-white/15 border border-white/30"
-                      : "bg-white/5 border border-white/10"
+                    item.result === 'na'
+                      ? 'bg-white/15 border border-white/30'
+                      : 'bg-white/5 border border-white/10'
                   }`}
                   aria-label={`Mark ${item.label} as not applicable`}
                 >
                   <MinusCircle
-                    className={`w-5 h-5 ${
-                      item.result === "na"
-                        ? "text-white"
-                        : "text-white"
-                    }`}
+                    className={`w-5 h-5 ${item.result === 'na' ? 'text-white' : 'text-white'}`}
                   />
                 </button>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Evidence Photos */}
+        <SafetyPhotoCapture
+          photos={photoUrls}
+          onPhotosChange={setPhotoUrls}
+          label="Evidence Photos"
+        />
+
+        {/* Inspector Signature */}
+        <SignaturePad
+          label="Inspector Signature"
+          name={inspectorSigName}
+          date={inspectorSigDate}
+          signatureDataUrl={inspectorSigData}
+          onSignatureChange={setInspectorSigData}
+          onNameChange={setInspectorSigName}
+          onDateChange={setInspectorSigDate}
+        />
 
         {/* Spacer for fixed footer */}
         <div className="pb-20" />
@@ -208,7 +207,7 @@ export function ChecklistForm({
               Saving...
             </>
           ) : (
-            "Submit Check"
+            'Submit Check'
           )}
         </button>
       </div>

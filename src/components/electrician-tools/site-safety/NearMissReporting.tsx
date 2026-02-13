@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
@@ -24,8 +24,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import {
   AlertTriangle,
   Plus,
-  Camera,
   X,
+  Search,
   Zap,
   Flame,
   Users,
@@ -51,8 +51,10 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { LocationAutoFill } from './common/LocationAutoFill';
 import { NearMissReportDetail } from './NearMissReportDetail';
 import { SwipeableListItem } from './common/SwipeableListItem';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { NearMissReport, Witness } from './types';
 
 interface FormData {
@@ -183,19 +185,18 @@ const LIGHTING_CONDITIONS = [
 export const NearMissReporting: React.FC = () => {
   const { user } = useAuth();
   const { toast } = useToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [showForm, setShowForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reports, setReports] = useState<NearMissReport[]>([]);
   const [loadingReports, setLoadingReports] = useState(true);
-  const [photos, setPhotos] = useState<File[]>([]);
-  const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
   const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [severityFilter, setSeverityFilter] = useState('all');
 
   // Collapsible section states
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -281,8 +282,7 @@ export const NearMissReporting: React.FC = () => {
       supervisor_name: '',
       previous_similar_incidents: '',
     });
-    setPhotos([]);
-    setPhotoPreviewUrls([]);
+    setPhotoUrls([]);
     setErrors({});
     setSelectedTemplate(null);
     setPeopleOpen(false);
@@ -317,28 +317,6 @@ export const NearMissReporting: React.FC = () => {
       description: template.description,
     }));
     setErrors({});
-  };
-
-  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (photos.length + files.length > 5) {
-      toast({ title: 'Maximum 5 photos', variant: 'destructive' });
-      return;
-    }
-    const validFiles = files.filter(
-      (f) => f.type.startsWith('image/') && f.size <= 10 * 1024 * 1024
-    );
-    setPhotos((prev) => [...prev, ...validFiles]);
-    validFiles.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => setPhotoPreviewUrls((prev) => [...prev, e.target?.result as string]);
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const removePhoto = (index: number) => {
-    setPhotos((prev) => prev.filter((_, i) => i !== index));
-    setPhotoPreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
   const addWitness = () => {
@@ -416,10 +394,11 @@ export const NearMissReporting: React.FC = () => {
         supervisor_notified: formData.supervisor_notified,
         supervisor_name: formData.supervisor_name || null,
         previous_similar_incidents: formData.previous_similar_incidents || null,
+        photos_attached: photoUrls.length > 0 ? photoUrls : null,
       };
       const { data, error } = await supabase
         .from('near_miss_reports')
-        .insert(insertData as any)
+        .insert(insertData as Record<string, unknown>)
         .select()
         .single();
       if (error) throw error;
@@ -454,12 +433,39 @@ export const NearMissReporting: React.FC = () => {
   const getCategoryLabel = (value: string) =>
     CATEGORIES.find((c) => c.value === value)?.label || value;
 
+  const filteredReports = useMemo(() => {
+    return reports.filter((report) => {
+      const matchesSearch =
+        !searchQuery ||
+        report.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        report.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        report.category?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSeverity = severityFilter === 'all' || report.severity === severityFilter;
+      return matchesSearch && matchesSeverity;
+    });
+  }, [reports, searchQuery, severityFilter]);
+
+  const severityFilterTabs = useMemo(() => {
+    return [
+      { key: 'all', label: 'All', count: reports.length },
+      { key: 'low', label: 'Minor', count: reports.filter((r) => r.severity === 'low').length },
+      {
+        key: 'medium',
+        label: 'Moderate',
+        count: reports.filter((r) => r.severity === 'medium').length,
+      },
+      { key: 'high', label: 'Major', count: reports.filter((r) => r.severity === 'high').length },
+      {
+        key: 'critical',
+        label: 'Critical',
+        count: reports.filter((r) => r.severity === 'critical').length,
+      },
+    ];
+  }, [reports]);
+
   const handleDeleteReport = async (reportId: string) => {
     try {
-      const { error } = await supabase
-        .from('near_miss_reports')
-        .delete()
-        .eq('id', reportId);
+      const { error } = await supabase.from('near_miss_reports').delete().eq('id', reportId);
       if (error) throw error;
       setReports((prev) => prev.filter((r) => r.id !== reportId));
       toast({ title: 'Report deleted', description: 'Near miss report has been removed' });
@@ -490,7 +496,15 @@ export const NearMissReporting: React.FC = () => {
             </div>
             {reports.length > 0 && (
               <Badge className="bg-white/5 border border-white/10 text-white">
-                {reports.length} report{reports.length !== 1 ? 's' : ''}
+                {searchQuery || severityFilter !== 'all'
+                  ? `${filteredReports.length}/${reports.length}`
+                  : reports.length}{' '}
+                report
+                {(searchQuery || severityFilter !== 'all'
+                  ? filteredReports.length
+                  : reports.length) !== 1
+                  ? 's'
+                  : ''}
               </Badge>
             )}
           </div>
@@ -502,6 +516,43 @@ export const NearMissReporting: React.FC = () => {
             Report Near Miss
           </Button>
         </div>
+
+        {reports.length > 0 && (
+          <div className="space-y-3">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+              <Input
+                placeholder="Search reports..."
+                className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full touch-manipulation"
+                  onClick={() => setSearchQuery('')}
+                >
+                  <X className="h-3.5 w-3.5 text-white" />
+                </button>
+              )}
+            </div>
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
+              {severityFilterTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setSeverityFilter(tab.key)}
+                  className={`h-9 px-3 rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-all ${
+                    severityFilter === tab.key
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/5 text-white border border-white/10'
+                  }`}
+                >
+                  {tab.label} ({tab.count})
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {loadingReports ? (
           <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
@@ -533,9 +584,15 @@ export const NearMissReporting: React.FC = () => {
               </Button>
             </CardContent>
           </Card>
+        ) : filteredReports.length === 0 ? (
+          <div className="py-12 text-center">
+            <Search className="h-8 w-8 text-white mx-auto mb-3" />
+            <p className="text-sm font-medium text-white">No matching reports</p>
+            <p className="text-xs text-white mt-1">Try adjusting your search or filters</p>
+          </div>
         ) : (
           <div className="space-y-3">
-            {reports.map((report) => (
+            {filteredReports.map((report) => (
               <SwipeableListItem
                 key={report.id}
                 rightActions={[
@@ -629,10 +686,7 @@ export const NearMissReporting: React.FC = () => {
 
       <AnimatePresence>
         {recoveredDraft && (
-          <DraftRecoveryBanner
-            onRestore={restoreDraft}
-            onDismiss={dismissDraft}
-          />
+          <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
         )}
       </AnimatePresence>
 
@@ -701,14 +755,11 @@ export const NearMissReporting: React.FC = () => {
               </div>
             </div>
             <div id="field-location" className="space-y-2">
-              <Label className="text-white">
-                Location <span className="text-red-400">*</span>
-              </Label>
-              <Input
-                placeholder="e.g. 123 High Street, London"
+              <LocationAutoFill
                 value={formData.location}
-                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white ${errors.location ? 'border-red-500' : ''}`}
+                onChange={(v) => setFormData((prev) => ({ ...prev, location: v }))}
+                label="Location"
+                placeholder="Where did it happen?"
               />
               {errors.location && <p className="text-xs text-red-400">{errors.location}</p>}
             </div>
@@ -1072,48 +1123,13 @@ export const NearMissReporting: React.FC = () => {
           </Collapsible>
 
           {/* Photos Section */}
-          <div className="space-y-4 pt-4 border-t border-white/10">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
-              <Camera className="h-4 w-4 text-elec-yellow" />
-              Photos (Optional)
-            </h3>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handlePhotoSelect}
-              className="hidden"
+          <div className="pt-4 border-t border-white/10">
+            <SafetyPhotoCapture
+              photos={photoUrls}
+              onPhotosChange={setPhotoUrls}
+              maxPhotos={5}
+              label="Evidence Photos (Optional)"
             />
-            {photoPreviewUrls.length > 0 && (
-              <div className="grid grid-cols-3 gap-2">
-                {photoPreviewUrls.map((url, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-square rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/10"
-                  >
-                    <img src={url} alt="" className="w-full h-full object-cover" loading="lazy" />
-                    <button
-                      onClick={() => removePhoto(i)}
-                      className="absolute top-1.5 right-1.5 p-1.5 rounded-full bg-black/70 hover:bg-black/90 transition-colors"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-            {photos.length < 5 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full h-12 border-white/10 bg-[#1a1a1a] text-white hover:bg-white/5 hover:border-white/20"
-              >
-                <Camera className="h-4 w-4 mr-2" />
-                Add Photo ({photos.length}/5)
-              </Button>
-            )}
           </div>
 
           {/* Reporter Name */}

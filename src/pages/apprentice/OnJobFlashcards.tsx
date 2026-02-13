@@ -1,31 +1,98 @@
-
-import { useState } from "react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState, useMemo } from 'react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 import {
-  BookOpen, Brain, Target, Flame, Zap, Shield, Sparkles,
-  TrendingUp, Award, CheckCircle, Clock, Lightbulb,
-  Cable, ShieldCheck, Wrench, Atom, Hammer, Leaf
-} from "lucide-react";
-import FlashcardSetCard from "@/components/apprentice/flashcards/FlashcardSetCard";
-import StudyModeSelector from "@/components/apprentice/flashcards/StudyModeSelector";
-import FlashcardStudySession from "@/components/apprentice/flashcards/FlashcardStudySession";
-import StudyTipsCard from "@/components/apprentice/flashcards/StudyTipsCard";
-import { useStudyStreak } from "@/hooks/useStudyStreak";
-import { useFlashcardProgress } from "@/hooks/useFlashcardProgress";
+  BookOpen,
+  Brain,
+  Target,
+  Flame,
+  Zap,
+  Shield,
+  Lightbulb,
+  TrendingUp,
+  CheckCircle,
+  Clock,
+  Cable,
+  ShieldCheck,
+  Wrench,
+  Atom,
+  Hammer,
+  Leaf,
+  type LucideIcon,
+} from 'lucide-react';
+import FlashcardSetCard from '@/components/apprentice/flashcards/FlashcardSetCard';
+import DueTodayCard from '@/components/apprentice/flashcards/DueTodayCard';
+import StudyModeSelector from '@/components/apprentice/flashcards/StudyModeSelector';
+import FlashcardStudySession from '@/components/apprentice/flashcards/FlashcardStudySession';
+import FlashcardAchievements from '@/components/apprentice/flashcards/FlashcardAchievements';
+import WeeklyProgressCard from '@/components/apprentice/flashcards/WeeklyProgressCard';
+import { useStudyStreak } from '@/hooks/useStudyStreak';
+import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
+import { useFlashcardAchievements } from '@/hooks/useFlashcardAchievements';
+import { useAuth } from '@/contexts/AuthContext';
+import { flashcardSetDefinitions, type FlashcardLevel } from '@/data/flashcards';
+
+/** Resolve icon name strings to Lucide components */
+const ICON_MAP: Record<string, LucideIcon> = {
+  Target,
+  BookOpen,
+  Brain,
+  Shield,
+  Zap,
+  Cable,
+  ShieldCheck,
+  Wrench,
+  Atom,
+  Hammer,
+  Leaf,
+  Lightbulb,
+  Flame,
+  Clock,
+  TrendingUp,
+  CheckCircle,
+};
+
+const LEVEL_TABS: { id: string; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'Level 2', label: 'Level 2' },
+  { id: 'Level 3', label: 'Level 3' },
+];
+
+const CATEGORIES = [
+  { id: 'all', label: 'All' },
+  { id: 'Regulations', label: 'Regs' },
+  { id: 'Testing & Inspection', label: 'Testing' },
+  { id: 'Installation', label: 'Install' },
+  { id: 'Basic Theory', label: 'Theory' },
+  { id: 'Safety', label: 'Safety' },
+  { id: 'Green Technology', label: 'Green' },
+] as const;
 
 const OnJobFlashcards = () => {
+  const { profile } = useAuth();
+
+  // Auto-default level tab from profile
+  const defaultLevel = (() => {
+    const lvl = profile?.apprentice_level;
+    if (lvl === 'Level 2' || lvl === 'Level 3') return lvl;
+    return 'all';
+  })();
+
   const [selectedSet, setSelectedSet] = useState<string | null>(null);
   const [showModeSelector, setShowModeSelector] = useState(false);
-  const [studySession, setStudySession] = useState<{ setId: string; mode: string } | null>(null);
+  const [studySession, setStudySession] = useState<{
+    setId: string;
+    mode: string;
+    dueCardIds?: string[];
+  } | null>(null);
+  const [activeLevel, setActiveLevel] = useState(defaultLevel);
+  const [activeCategory, setActiveCategory] = useState('all');
 
-  // Use hooks for persistence
   const { streak, loading: streakLoading, getStreakDisplay } = useStudyStreak();
-  const { getSetProgress, loading: progressLoading } = useFlashcardProgress();
+  const { getSetProgress, getDueCards, loading: progressLoading } = useFlashcardProgress();
+  const { achievements: fcAchievements, stats: achievementStats } = useFlashcardAchievements();
 
   const streakInfo = getStreakDisplay();
 
-  // Format an ISO date string to a relative "X days ago" label
   const formatLastStudied = (isoDate: string | null): string | undefined => {
     if (!isoDate) return undefined;
     const diffMs = Date.now() - new Date(isoDate).getTime();
@@ -35,170 +102,17 @@ const OnJobFlashcards = () => {
     return `${diffDays} days ago`;
   };
 
-  const flashcardSets = [
-    {
-      id: "cable-colors",
-      title: "Cable Colours & Identification",
-      icon: Target,
-      description: "Learn UK cable colour codes and identification standards",
-      count: 25,
-      difficulty: "beginner" as const,
-      estimatedTime: "15 mins",
-      category: "Basic Theory",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "bs7671-regulations",
-      title: "BS 7671 Key Regulations",
-      icon: BookOpen,
-      description: "Essential BS 7671 regulations every apprentice should know",
-      count: 25,
-      difficulty: "intermediate" as const,
-      estimatedTime: "15 mins",
-      category: "Regulations",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "eicr-codes",
-      title: "EICR Observation Codes",
-      icon: Brain,
-      description: "C1, C2, C3, FI codes and their meanings",
-      count: 30,
-      difficulty: "advanced" as const,
-      estimatedTime: "18 mins",
-      category: "Testing & Inspection",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "safe-isolation",
-      title: "Safe Isolation Procedures",
-      icon: Shield,
-      description: "Step-by-step safe isolation and proving dead procedures",
-      count: 25,
-      difficulty: "intermediate" as const,
-      estimatedTime: "15 mins",
-      category: "Safety",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "test-instruments",
-      title: "Test Instruments & Equipment",
-      icon: Zap,
-      description: "Common electrical testing equipment and their uses",
-      count: 30,
-      difficulty: "beginner" as const,
-      estimatedTime: "18 mins",
-      category: "Testing & Inspection",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "fault-finding",
-      title: "Common Electrical Faults",
-      icon: Target,
-      description: "Identifying and understanding common electrical faults",
-      count: 35,
-      difficulty: "advanced" as const,
-      estimatedTime: "20 mins",
-      category: "Troubleshooting",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "earthing-bonding",
-      title: "Earthing & Bonding",
-      icon: Cable,
-      description:
-        "TN-S, TN-C-S, TT systems, MET, main and supplementary bonding",
-      count: 25,
-      difficulty: "intermediate" as const,
-      estimatedTime: "15 mins",
-      category: "Installation",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "circuit-protection",
-      title: "Circuit Protection",
-      icon: ShieldCheck,
-      description:
-        "MCBs, RCDs, RCBOs, fuses, discrimination and fault current",
-      count: 25,
-      difficulty: "intermediate" as const,
-      estimatedTime: "15 mins",
-      category: "Protection",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "wiring-systems",
-      title: "Wiring Systems & Enclosures",
-      icon: Wrench,
-      description:
-        "Trunking, conduit, SWA, MICC, cable tray, IP ratings and fixings",
-      count: 25,
-      difficulty: "intermediate" as const,
-      estimatedTime: "15 mins",
-      category: "Installation",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "electrical-science",
-      title: "Electrical Science",
-      icon: Atom,
-      description:
-        "Ohm's law, power, energy, magnetism, AC theory and transformers",
-      count: 25,
-      difficulty: "beginner" as const,
-      estimatedTime: "15 mins",
-      category: "Basic Theory",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "first-second-fix",
-      title: "First Fix & Second Fix",
-      icon: Hammer,
-      description:
-        "Back boxes, cable routes, consumer unit install, termination and testing",
-      count: 25,
-      difficulty: "beginner" as const,
-      estimatedTime: "15 mins",
-      category: "Practical Skills",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-    {
-      id: "environmental-tech",
-      title: "Environmental Technology",
-      icon: Leaf,
-      description:
-        "Solar PV, EV charging, heat pumps, battery storage and smart meters",
-      count: 25,
-      difficulty: "advanced" as const,
-      estimatedTime: "15 mins",
-      category: "Green Technology",
-      completed: false,
-      progressPercentage: 0,
-      masteredCards: 0,
-    },
-  ];
+  /** Build UI-ready set objects from the data-layer definitions */
+  const flashcardSetsUI = flashcardSetDefinitions.map((def) => ({
+    ...def,
+    icon: ICON_MAP[def.iconName] || Target,
+  }));
+
+  /** Check if a set matches the selected level filter */
+  const matchesLevel = (setLevel: FlashcardLevel, filter: string) => {
+    if (filter === 'all') return true;
+    return setLevel === filter || setLevel === 'Both';
+  };
 
   const handleStartFlashcards = (setId: string) => {
     setSelectedSet(setId);
@@ -212,198 +126,221 @@ const OnJobFlashcards = () => {
     }
   };
 
-  const handleBackFromMode = () => {
-    setShowModeSelector(false);
-    setSelectedSet(null);
-  };
-
   const handleExitStudySession = () => {
     setStudySession(null);
     setSelectedSet(null);
   };
 
-  // Show study session if active
-  if (studySession) {
-    return (
-      <div className="space-y-8 animate-fade-in">
-        <FlashcardStudySession 
-          setId={studySession.setId}
-          studyMode={studySession.mode}
-          onExit={handleExitStudySession}
-        />
-      </div>
-    );
-  }
+  /** Start a "Due Today" review session across all level-filtered sets */
+  const handleStartDueToday = () => {
+    // Gather all due cards across visible sets, start with the first set that has due cards
+    const levelSets = flashcardSetsUI.filter((s) => matchesLevel(s.level, activeLevel));
+    for (const set of levelSets) {
+      const due = getDueCards(set.id);
+      if (due.length > 0) {
+        setStudySession({
+          setId: set.id,
+          mode: 'spaced',
+          dueCardIds: due,
+        });
+        return;
+      }
+    }
+  };
 
-  // Show mode selector if set is selected
-  if (showModeSelector) {
-    return (
-      <div className="space-y-8 animate-fade-in">
-        <StudyModeSelector 
-          onSelectMode={handleSelectMode}
-          onBack={handleBackFromMode}
-        />
-      </div>
-    );
-  }
+  // Level-filtered sets
+  const levelFilteredSets = flashcardSetsUI.filter((s) => matchesLevel(s.level, activeLevel));
 
-  // Calculate overall progress stats from real Supabase data
-  const totalSets = flashcardSets.length;
-  const totalCards = flashcardSets.reduce((sum, set) => sum + set.count, 0);
-  const setsWithProgress = flashcardSets.map(set => {
+  // Calculate stats for filtered level
+  const totalSets = levelFilteredSets.length;
+  const totalCards = levelFilteredSets.reduce((sum, set) => sum + set.count, 0);
+  const setsWithProgress = levelFilteredSets.map((set) => {
     const progress = getSetProgress(set.id, set.count);
     return {
       ...set,
-      ...progress,
-      completed: progress.progressPercentage === 100
+      progressPercentage: progress.progressPercentage,
+      masteredCards: progress.masteredCards,
+      completed: progress.progressPercentage === 100,
+      lastStudied: formatLastStudied(progress.lastStudied),
     };
   });
-  const completedSets = setsWithProgress.filter(set => set.completed).length;
-  const masteredCards = setsWithProgress.reduce((sum, set) => sum + set.masteredCards, 0);
+  const completedSets = setsWithProgress.filter((s) => s.completed).length;
+  const masteredCards = setsWithProgress.reduce((sum, s) => sum + (s.masteredCards || 0), 0);
   const overallProgress = totalCards > 0 ? Math.round((masteredCards / totalCards) * 100) : 0;
 
-  return (
-    <div className="bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-fade-in">
+  // Count due-today cards across level-filtered sets
+  const dueTodayCount = levelFilteredSets.reduce((sum, set) => sum + getDueCards(set.id).length, 0);
 
-        {/* Hero Header */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/5 to-white/3 border border-elec-yellow/20 p-6 sm:p-8">
-          {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+  // Filter by category (composes with level filter)
+  const filteredSets = useMemo(() => {
+    if (activeCategory === 'all') return setsWithProgress;
+    return setsWithProgress.filter((s) => s.category === activeCategory);
+  }, [activeCategory, setsWithProgress]);
 
-          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Lightbulb className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                  Flashcards & <span className="text-elec-yellow">Microlearning</span>
-                </h1>
-              </div>
-              <p className="text-white max-w-xl text-sm sm:text-base">
-                Quick-fire revision for regulations, codes, and essential knowledge.
-                Master key concepts with spaced repetition.
-              </p>
-            </div>
-            <SmartBackButton className="flex-shrink-0" />
-          </div>
-        </div>
-
-        {/* Progress Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
-                  <CheckCircle className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold text-elec-yellow">{completedSets}/{totalSets}</div>
-                  <div className="text-xs sm:text-sm text-white">Sets Completed</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-green-500/20 hover:border-green-500/40 transition-colors">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-green-500/10">
-                  <Brain className="h-5 w-5 text-green-400" />
-                </div>
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold text-green-400">{masteredCards}/{totalCards}</div>
-                  <div className="text-xs sm:text-sm text-white">Cards Mastered</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-blue-500/20 hover:border-blue-500/40 transition-colors">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-blue-500/10">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
-                </div>
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold text-blue-400">{overallProgress}%</div>
-                  <div className="text-xs sm:text-sm text-white">Overall Progress</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-white/5 to-white/3 border-orange-500/20 hover:border-orange-500/40 transition-colors">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-orange-500/10">
-                  <Flame className={`h-5 w-5 ${streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`} />
-                </div>
-                <div>
-                  <div className="text-xl sm:text-2xl font-bold text-orange-400">
-                    {streakLoading ? '-' : streakInfo.currentStreak}
-                  </div>
-                  <div className="text-xs sm:text-sm text-white">
-                    {streakInfo.studiedToday ? 'Day Streak 🔥' : 'Study to continue!'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Study Reminder Banner */}
-        {!streakInfo.studiedToday && (
-          <Card className="border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent overflow-hidden">
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-amber-500/20 flex-shrink-0">
-                  <Clock className="h-5 w-5 text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-amber-300 mb-1">Keep Your Streak Alive!</h3>
-                  <p className="text-sm text-white">
-                    Complete at least one flashcard session today to maintain your study streak.
-                    Even 5 minutes of revision helps with retention.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Flashcard Sets Grid */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-            Choose a Flashcard Set
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-            {flashcardSets.map((set) => {
-              const realProgress = getSetProgress(set.id, set.count);
-              return (
-                <FlashcardSetCard
-                  key={set.id}
-                  set={{
-                    ...set,
-                    progressPercentage: realProgress.progressPercentage,
-                    masteredCards: realProgress.masteredCards,
-                    completed: realProgress.progressPercentage === 100,
-                    lastStudied: formatLastStudied(realProgress.lastStudied)
-                  }}
-                  onStart={handleStartFlashcards}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Study Tips */}
-        <StudyTipsCard />
-
+  // Show study session if active
+  if (studySession) {
+    return (
+      <div className="animate-fade-in">
+        <FlashcardStudySession
+          setId={studySession.setId}
+          studyMode={studySession.mode}
+          onExit={handleExitStudySession}
+          dueCardIds={studySession.dueCardIds}
+        />
       </div>
+    );
+  }
+
+  const statPills = [
+    {
+      label: 'Sets',
+      value: `${completedSets}/${totalSets}`,
+      icon: CheckCircle,
+      colour: 'text-elec-yellow',
+    },
+    {
+      label: 'Mastered',
+      value: `${masteredCards}`,
+      icon: Brain,
+      colour: 'text-green-400',
+    },
+    {
+      label: 'Progress',
+      value: `${overallProgress}%`,
+      icon: TrendingUp,
+      colour: 'text-blue-400',
+    },
+    {
+      label: 'Streak',
+      value: streakLoading ? '-' : `${streakInfo.currentStreak}`,
+      icon: Flame,
+      colour: streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white',
+    },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
+      {/* Header */}
+      <div className="flex items-center justify-between pt-4">
+        <SmartBackButton />
+        <div className="flex items-center gap-2">
+          <Lightbulb className="h-5 w-5 text-elec-yellow" />
+          <h1 className="text-lg font-bold text-white">Flashcards & Microlearning</h1>
+        </div>
+      </div>
+
+      {/* Level tabs */}
+      <div className="flex gap-2">
+        {LEVEL_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveLevel(tab.id)}
+            className={`
+              flex-1 py-2 rounded-lg text-sm font-medium
+              border touch-manipulation active:scale-[0.96] transition-all
+              ${
+                activeLevel === tab.id
+                  ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/5 border-white/10 text-white'
+              }
+            `}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Stats row */}
+      <div className="grid grid-cols-4 gap-2">
+        {statPills.map((pill) => {
+          const PillIcon = pill.icon;
+          return (
+            <div
+              key={pill.label}
+              className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center"
+            >
+              <PillIcon className={`h-4 w-4 mx-auto mb-1 ${pill.colour}`} />
+              <div className={`text-sm font-bold ${pill.colour}`}>{pill.value}</div>
+              <div className="text-[10px] text-white">{pill.label}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Due Today card */}
+      <DueTodayCard dueCount={dueTodayCount} onStart={handleStartDueToday} />
+
+      {/* Streak reminder */}
+      {!streakInfo.studiedToday && (
+        <div className="flex items-center gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+          <Clock className="h-5 w-5 text-amber-400 flex-shrink-0" />
+          <p className="text-sm text-white">Complete a session today to keep your streak alive.</p>
+        </div>
+      )}
+
+      {/* Category toggle grid */}
+      <div className="flex flex-wrap gap-2">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            type="button"
+            onClick={() => setActiveCategory(activeCategory === cat.id ? 'all' : cat.id)}
+            className={`
+              px-3 py-1.5 rounded-lg text-xs font-medium
+              border touch-manipulation active:scale-[0.96] transition-all
+              ${
+                activeCategory === cat.id
+                  ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/5 border-white/10 text-white'
+              }
+            `}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Flashcard set list */}
+      <div className="space-y-2">
+        {filteredSets.map((set) => (
+          <FlashcardSetCard key={set.id} set={set} onStart={handleStartFlashcards} />
+        ))}
+        {filteredSets.length === 0 && (
+          <p className="text-center text-white py-8">No sets in this category.</p>
+        )}
+      </div>
+
+      {/* Weekly progress card */}
+      <WeeklyProgressCard
+        totalCardsReviewed={streak.totalCardsReviewed}
+        currentStreak={streak.currentStreak}
+        masteredSetsCount={completedSets}
+        totalSets={totalSets}
+        overallProgress={overallProgress}
+      />
+
+      {/* Achievements */}
+      <FlashcardAchievements achievements={fcAchievements} stats={achievementStats} />
+
+      {/* Tip banner */}
+      <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
+        <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+        <p className="text-xs text-white">
+          <span className="font-medium text-elec-yellow">Tip:</span> Study 10-15 minutes daily with
+          spaced repetition for best results.
+        </p>
+      </div>
+
+      {/* Bottom sheet mode selector */}
+      <StudyModeSelector
+        open={showModeSelector}
+        onOpenChange={(open) => {
+          setShowModeSelector(open);
+          if (!open) setSelectedSet(null);
+        }}
+        onSelectMode={handleSelectMode}
+      />
     </div>
   );
 };

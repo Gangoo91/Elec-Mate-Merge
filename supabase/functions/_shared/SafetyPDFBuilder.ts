@@ -15,11 +15,28 @@ import {
   PDFDocument,
   PDFPage,
   PDFFont,
+  PDFImage,
   rgb,
   RGB,
   StandardFonts,
   PageSizes,
-} from "https://esm.sh/pdf-lib@1.17.1";
+} from 'https://esm.sh/pdf-lib@1.17.1';
+
+// ── Company branding interface ───────────────────────────────────────────
+export interface CompanyBranding {
+  company_name?: string;
+  company_address?: string;
+  company_postcode?: string;
+  company_phone?: string;
+  company_email?: string;
+  company_website?: string;
+  company_registration?: string;
+  vat_number?: string;
+  logo_data_url?: string;
+  logo_url?: string;
+  primary_color?: string;
+  secondary_color?: string;
+}
 
 // ── Brand colours ──────────────────────────────────────────────────────────
 export const C = {
@@ -47,7 +64,7 @@ export const C = {
   grey: rgb(0.63, 0.68, 0.73),
 } as const;
 
-export type StatusColour = "success" | "warning" | "danger" | "info" | "grey";
+export type StatusColour = 'success' | 'warning' | 'danger' | 'info' | 'grey';
 
 const STATUS_RGB: Record<StatusColour, RGB> = {
   success: C.success,
@@ -68,6 +85,22 @@ const FOOTER_H = 40;
 const CONTENT_TOP = PH - HEADER_H - 8;
 const CONTENT_BOT = FOOTER_H + 18;
 
+/** Convert hex colour string to pdf-lib RGB */
+function hexToRgb(hex: string): RGB | null {
+  const m = hex.replace('#', '').match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  if (!m) return null;
+  return rgb(parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255);
+}
+
+/** Decode base64 data URL to Uint8Array */
+function base64ToUint8Array(dataUrl: string): Uint8Array {
+  const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+  const bin = atob(base64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
 export class SafetyPDFBuilder {
   private doc!: PDFDocument;
   private page!: PDFPage;
@@ -80,12 +113,15 @@ export class SafetyPDFBuilder {
   private status: string;
   private statusRgb: RGB;
 
-  private constructor(
-    title: string,
-    refId: string,
-    status: string,
-    statusColour: StatusColour
-  ) {
+  // Branding
+  private branding?: CompanyBranding;
+  private logo?: PDFImage;
+  private accentColor: RGB = C.amber;
+  private accentDark: RGB = C.amberDark;
+  private accentBg: RGB = C.amberBg;
+  private headerDark: RGB = C.dark;
+
+  private constructor(title: string, refId: string, status: string, statusColour: StatusColour) {
     this.title = title;
     this.refId = refId;
     this.status = status;
@@ -97,15 +133,60 @@ export class SafetyPDFBuilder {
     title: string,
     refId: string,
     status: string,
-    statusColour: StatusColour = "info"
+    statusColour: StatusColour = 'info',
+    branding?: CompanyBranding
   ): Promise<SafetyPDFBuilder> {
     const b = new SafetyPDFBuilder(title, refId, status, statusColour);
+    b.branding = branding;
     b.doc = await PDFDocument.create();
     b.doc.setTitle(`${title} — ${refId}`);
-    b.doc.setProducer("Elec-Mate Safety Module");
-    b.doc.setCreator("Elec-Mate");
+    b.doc.setProducer('Elec-Mate Safety Module');
+    b.doc.setCreator(branding?.company_name || 'Elec-Mate');
     b.font = await b.doc.embedFont(StandardFonts.Helvetica);
     b.bold = await b.doc.embedFont(StandardFonts.HelveticaBold);
+
+    // Apply brand colours
+    if (branding?.primary_color) {
+      const pc = hexToRgb(branding.primary_color);
+      if (pc) {
+        b.accentColor = pc;
+        // Derive darker variant (60% brightness)
+        const m = branding.primary_color
+          .replace('#', '')
+          .match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+        if (m) {
+          b.accentDark = rgb(
+            (parseInt(m[1], 16) * 0.6) / 255,
+            (parseInt(m[2], 16) * 0.6) / 255,
+            (parseInt(m[3], 16) * 0.6) / 255
+          );
+        }
+        // Derive light bg variant (10% tint)
+        if (m) {
+          b.accentBg = rgb(
+            (255 - (255 - parseInt(m[1], 16)) * 0.1) / 255,
+            (255 - (255 - parseInt(m[2], 16)) * 0.1) / 255,
+            (255 - (255 - parseInt(m[3], 16)) * 0.1) / 255
+          );
+        }
+      }
+    }
+    if (branding?.secondary_color) {
+      const sc = hexToRgb(branding.secondary_color);
+      if (sc) b.headerDark = sc;
+    }
+
+    // Embed logo
+    if (branding?.logo_data_url) {
+      try {
+        const logoBytes = base64ToUint8Array(branding.logo_data_url);
+        const isPng = branding.logo_data_url.includes('image/png');
+        b.logo = isPng ? await b.doc.embedPng(logoBytes) : await b.doc.embedJpg(logoBytes);
+      } catch (e) {
+        console.error('Logo embed failed:', e);
+      }
+    }
+
     b.newPage();
     return b;
   }
@@ -134,6 +215,7 @@ export class SafetyPDFBuilder {
 
   private drawHeader() {
     const p = this.page;
+    const hasBranding = this.branding?.company_name;
 
     // Dark header band
     p.drawRectangle({
@@ -144,32 +226,77 @@ export class SafetyPDFBuilder {
       color: C.dark,
     });
 
-    // Amber accent line (3pt)
+    // Accent line (3pt)
     p.drawRectangle({
       x: 0,
       y: PH - HEADER_H,
       width: PW,
       height: 3,
-      color: C.amber,
+      color: this.accentColor,
     });
 
-    // Brand name
-    p.drawText("ELEC-MATE", {
-      x: ML,
-      y: PH - 26,
-      size: 15,
-      font: this.bold,
-      color: C.amber,
-    });
+    if (hasBranding) {
+      // ── Branded header ───────────────────────────────────────────
+      let brandX = ML;
 
-    // Tagline
-    p.drawText("Professional Electrical Safety", {
-      x: ML,
-      y: PH - 38,
-      size: 7,
-      font: this.font,
-      color: C.textLight,
-    });
+      // Logo (max 120x40pt)
+      if (this.logo) {
+        const aspect = this.logo.width / this.logo.height;
+        let lw = Math.min(120, this.logo.width);
+        let lh = lw / aspect;
+        if (lh > 40) {
+          lh = 40;
+          lw = lh * aspect;
+        }
+        p.drawImage(this.logo, {
+          x: ML,
+          y: PH - 20 - lh / 2,
+          width: lw,
+          height: lh,
+        });
+        brandX = ML + lw + 8;
+      }
+
+      // Company name
+      p.drawText(this.branding!.company_name!, {
+        x: brandX,
+        y: PH - 26,
+        size: 13,
+        font: this.bold,
+        color: this.accentColor,
+      });
+
+      // Address line
+      const addrParts = [this.branding!.company_address, this.branding!.company_postcode].filter(
+        Boolean
+      );
+      if (addrParts.length > 0) {
+        p.drawText(addrParts.join(', '), {
+          x: brandX,
+          y: PH - 38,
+          size: 7,
+          font: this.font,
+          color: C.textLight,
+        });
+      }
+    } else {
+      // ── Default ELEC-MATE header ─────────────────────────────────
+      p.drawText('ELEC-MATE', {
+        x: ML,
+        y: PH - 26,
+        size: 15,
+        font: this.bold,
+        color: this.accentColor,
+      });
+
+      p.drawText('Professional Electrical Safety', {
+        x: ML,
+        y: PH - 38,
+        size: 7,
+        font: this.font,
+        color: C.textLight,
+      });
+    }
 
     // Document title (right-aligned)
     const titleUpper = this.title.toUpperCase();
@@ -195,7 +322,7 @@ export class SafetyPDFBuilder {
     });
 
     // Status dot + text
-    const statusText = this.status.toUpperCase().replace(/_/g, " ");
+    const statusText = this.status.toUpperCase().replace(/_/g, ' ');
     const stw = this.bold.widthOfTextAtSize(statusText, 7.5);
     const sx = PW / 2 - stw / 2;
     p.drawCircle({ x: sx - 6, y: infoY + 2.5, size: 3, color: this.statusRgb });
@@ -208,10 +335,10 @@ export class SafetyPDFBuilder {
     });
 
     // Date (right-aligned)
-    const dateStr = new Date().toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+    const dateStr = new Date().toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     });
     const dw = this.font.widthOfTextAtSize(dateStr, 7.5);
     p.drawText(dateStr, {
@@ -226,6 +353,7 @@ export class SafetyPDFBuilder {
   private drawFooter() {
     const p = this.page;
     const fy = FOOTER_H;
+    const hasBranding = this.branding?.company_name;
 
     // Divider
     p.drawLine({
@@ -235,60 +363,121 @@ export class SafetyPDFBuilder {
       color: C.border,
     });
 
-    // Left
-    p.drawText("Generated by Elec-Mate", {
-      x: ML,
-      y: fy - 14,
-      size: 7,
-      font: this.font,
-      color: C.textLight,
-    });
+    if (hasBranding) {
+      // ── Branded footer ───────────────────────────────────────────
+      // Left: Company name + contact
+      const contactParts = [
+        this.branding!.company_name,
+        this.branding!.company_phone,
+        this.branding!.company_email,
+      ].filter(Boolean);
+      p.drawText(contactParts.join(' | '), {
+        x: ML,
+        y: fy - 10,
+        size: 6.5,
+        font: this.font,
+        color: C.textLight,
+      });
 
-    // Centre — timestamp
-    const now = new Date().toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    const nw = this.font.widthOfTextAtSize(now, 7);
-    p.drawText(now, {
-      x: PW / 2 - nw / 2,
-      y: fy - 14,
-      size: 7,
-      font: this.font,
-      color: C.textLight,
-    });
+      // Centre: Registration / VAT
+      const regParts = [
+        this.branding!.company_registration ? `Reg: ${this.branding!.company_registration}` : null,
+        this.branding!.vat_number ? `VAT: ${this.branding!.vat_number}` : null,
+      ].filter(Boolean);
+      if (regParts.length > 0) {
+        const regText = regParts.join(' | ');
+        const rw = this.font.widthOfTextAtSize(regText, 6.5);
+        p.drawText(regText, {
+          x: PW / 2 - rw / 2,
+          y: fy - 10,
+          size: 6.5,
+          font: this.font,
+          color: C.textLight,
+        });
+      }
 
-    // Right — page number
-    const pt = `Page ${this.pageNum}`;
-    const pw2 = this.font.widthOfTextAtSize(pt, 7);
-    p.drawText(pt, {
-      x: PW - MR - pw2,
-      y: fy - 14,
-      size: 7,
-      font: this.font,
-      color: C.textLight,
-    });
+      // Right: Page number
+      const pt = `Page ${this.pageNum}`;
+      const pw2 = this.font.widthOfTextAtSize(pt, 7);
+      p.drawText(pt, {
+        x: PW - MR - pw2,
+        y: fy - 10,
+        size: 7,
+        font: this.font,
+        color: C.textLight,
+      });
+
+      // Below divider: "Generated with Elec-Mate | timestamp"
+      const now = new Date().toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      const genText = `Generated with Elec-Mate | ${now}`;
+      const gw = this.font.widthOfTextAtSize(genText, 6);
+      p.drawText(genText, {
+        x: PW / 2 - gw / 2,
+        y: fy - 22,
+        size: 6,
+        font: this.font,
+        color: C.textLight,
+      });
+    } else {
+      // ── Default footer ───────────────────────────────────────────
+      p.drawText('Generated by Elec-Mate', {
+        x: ML,
+        y: fy - 14,
+        size: 7,
+        font: this.font,
+        color: C.textLight,
+      });
+
+      const now = new Date().toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      const nw = this.font.widthOfTextAtSize(now, 7);
+      p.drawText(now, {
+        x: PW / 2 - nw / 2,
+        y: fy - 14,
+        size: 7,
+        font: this.font,
+        color: C.textLight,
+      });
+
+      const pt = `Page ${this.pageNum}`;
+      const pw2 = this.font.widthOfTextAtSize(pt, 7);
+      p.drawText(pt, {
+        x: PW - MR - pw2,
+        y: fy - 14,
+        size: 7,
+        font: this.font,
+        color: C.textLight,
+      });
+    }
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // CONTENT METHODS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  /** Section title with amber accent bar */
+  /** Section title with accent bar */
   section(title: string) {
     this.ensureSpace(24);
     this.y -= 8;
 
-    // Amber accent bar
+    // Accent bar
     this.page.drawRectangle({
       x: ML,
       y: this.y - 11,
       width: 3,
       height: 13,
-      color: C.amber,
+      color: this.accentColor,
     });
 
     // Title
@@ -312,10 +501,7 @@ export class SafetyPDFBuilder {
   }
 
   /** Key-value grid (2 or 3 columns) */
-  keyValueGrid(
-    items: Array<{ label: string; value: string }>,
-    cols: number = 2
-  ) {
+  keyValueGrid(items: Array<{ label: string; value: string }>, cols: number = 2) {
     const colW = CW / cols;
     const rowH = 26;
     let col = 0;
@@ -335,12 +521,9 @@ export class SafetyPDFBuilder {
 
       // Value (truncate if needed)
       const maxW = colW - 8;
-      let val = item.value || "N/A";
-      while (
-        this.bold.widthOfTextAtSize(val, 9.5) > maxW &&
-        val.length > 4
-      ) {
-        val = val.slice(0, -4) + "...";
+      let val = item.value || 'N/A';
+      while (this.bold.widthOfTextAtSize(val, 9.5) > maxW && val.length > 4) {
+        val = val.slice(0, -4) + '...';
       }
 
       this.page.drawText(val, {
@@ -362,10 +545,7 @@ export class SafetyPDFBuilder {
   }
 
   /** Wrapped paragraph text */
-  paragraph(
-    text: string,
-    opts?: { size?: number; color?: RGB; indent?: number; bold?: boolean }
-  ) {
+  paragraph(text: string, opts?: { size?: number; color?: RGB; indent?: number; bold?: boolean }) {
     const sz = opts?.size ?? 9.5;
     const color = opts?.color ?? C.text;
     const indent = opts?.indent ?? 0;
@@ -451,7 +631,7 @@ export class SafetyPDFBuilder {
       borderWidth: 1.5,
     });
 
-    const full = "WARNING: " + text;
+    const full = 'WARNING: ' + text;
     const fw = this.bold.widthOfTextAtSize(full, 8.5);
     this.page.drawText(full, {
       x: PW / 2 - fw / 2,
@@ -465,11 +645,7 @@ export class SafetyPDFBuilder {
   }
 
   /** Data table with header row + data rows */
-  table(
-    headers: string[],
-    rows: string[][],
-    opts?: { colWidths?: number[] }
-  ) {
+  table(headers: string[], rows: string[][], opts?: { colWidths?: number[] }) {
     const rowH = 20;
     const headerH = 22;
     const sz = 8;
@@ -485,7 +661,7 @@ export class SafetyPDFBuilder {
       y: this.y - headerH,
       width: CW,
       height: headerH,
-      color: C.dark,
+      color: this.headerDark,
     });
 
     let hx = ML;
@@ -527,12 +703,9 @@ export class SafetyPDFBuilder {
       let rx = ML;
       for (let c = 0; c < rows[r].length && c < headers.length; c++) {
         const maxCellW = colWidths[c] - pad * 2;
-        let cellText = rows[r][c] || "";
-        while (
-          this.font.widthOfTextAtSize(cellText, sz) > maxCellW &&
-          cellText.length > 4
-        ) {
-          cellText = cellText.slice(0, -4) + "...";
+        let cellText = rows[r][c] || '';
+        while (this.font.widthOfTextAtSize(cellText, sz) > maxCellW && cellText.length > 4) {
+          cellText = cellText.slice(0, -4) + '...';
         }
 
         this.page.drawText(cellText, {
@@ -556,7 +729,7 @@ export class SafetyPDFBuilder {
         height: rowH,
         color: C.rowAlt,
       });
-      this.page.drawText("No records", {
+      this.page.drawText('No records', {
         x: ML + pad,
         y: this.y - rowH / 2 - 3,
         size: sz,
@@ -585,7 +758,7 @@ export class SafetyPDFBuilder {
       this.ensureSpace(rowH + (item.notes ? 12 : 0));
 
       const circleCol = item.passed ? C.success : C.danger;
-      const statusText = item.passed ? "PASS" : "FAIL";
+      const statusText = item.passed ? 'PASS' : 'FAIL';
 
       // Status circle
       this.page.drawCircle({
@@ -596,7 +769,7 @@ export class SafetyPDFBuilder {
       });
 
       // Tick/cross inside circle
-      this.page.drawText(item.passed ? "P" : "F", {
+      this.page.drawText(item.passed ? 'P' : 'F', {
         x: ML + 3.5,
         y: this.y - rowH / 2 - 2,
         size: 5,
@@ -673,8 +846,8 @@ export class SafetyPDFBuilder {
         y: this.y - badgeH,
         width: badgeW,
         height: badgeH,
-        color: C.amberBg,
-        borderColor: C.amber,
+        color: this.accentBg,
+        borderColor: this.accentColor,
         borderWidth: 0.5,
       });
 
@@ -684,7 +857,7 @@ export class SafetyPDFBuilder {
         y: this.y - badgeH / 2 - 2.5,
         size: sz,
         font: this.bold,
-        color: C.amberDark,
+        color: this.accentDark,
       });
 
       bx += badgeW + 4;
@@ -709,7 +882,7 @@ export class SafetyPDFBuilder {
             x: ML + 4,
             y: this.y - 3,
             size: 1.5,
-            color: C.amber,
+            color: this.accentColor,
           });
         }
 
@@ -738,8 +911,7 @@ export class SafetyPDFBuilder {
     this.ensureSpace(blockH + 12);
     this.y -= 4;
 
-    const partyW =
-      parties.length === 1 ? CW : (CW - 10) / 2;
+    const partyW = parties.length === 1 ? CW : (CW - 10) / 2;
 
     for (let i = 0; i < parties.length; i++) {
       const party = parties[i];
@@ -766,7 +938,7 @@ export class SafetyPDFBuilder {
       });
 
       // Name
-      this.page.drawText(party.name || "________________________", {
+      this.page.drawText(party.name || '________________________', {
         x: bx + 8,
         y: this.y - 30,
         size: 10,
@@ -775,7 +947,7 @@ export class SafetyPDFBuilder {
       });
 
       // Signature label + line
-      this.page.drawText("Signature:", {
+      this.page.drawText('Signature:', {
         x: bx + 8,
         y: this.y - 46,
         size: 7,
@@ -790,16 +962,13 @@ export class SafetyPDFBuilder {
       });
 
       // Date
-      this.page.drawText(
-        `Date: ${party.date || "_______________"}`,
-        {
-          x: bx + 8,
-          y: this.y - 62,
-          size: 8,
-          font: this.font,
-          color: C.textSec,
-        }
-      );
+      this.page.drawText(`Date: ${party.date || '_______________'}`, {
+        x: bx + 8,
+        y: this.y - 62,
+        size: 8,
+        font: this.font,
+        color: C.textSec,
+      });
     }
 
     this.y -= blockH + 10;
@@ -809,7 +978,7 @@ export class SafetyPDFBuilder {
   labelledValue(label: string, value: string) {
     this.ensureSpace(18);
 
-    this.page.drawText(label + ":", {
+    this.page.drawText(label + ':', {
       x: ML,
       y: this.y,
       size: 8,
@@ -817,8 +986,8 @@ export class SafetyPDFBuilder {
       color: C.textSec,
     });
 
-    const lw = this.bold.widthOfTextAtSize(label + ":", 8);
-    this.page.drawText(value || "N/A", {
+    const lw = this.bold.widthOfTextAtSize(label + ':', 8);
+    this.page.drawText(value || 'N/A', {
       x: ML + lw + 6,
       y: this.y,
       size: 9,
@@ -862,25 +1031,20 @@ export class SafetyPDFBuilder {
   // INTERNAL HELPERS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  private wrapText(
-    text: string,
-    maxWidth: number,
-    fontSize: number,
-    font: PDFFont
-  ): string[] {
-    if (!text) return [""];
+  private wrapText(text: string, maxWidth: number, fontSize: number, font: PDFFont): string[] {
+    if (!text) return [''];
 
-    const paragraphs = text.split("\n");
+    const paragraphs = text.split('\n');
     const allLines: string[] = [];
 
     for (const para of paragraphs) {
       if (!para.trim()) {
-        allLines.push("");
+        allLines.push('');
         continue;
       }
 
       const words = para.split(/\s+/);
-      let currentLine = "";
+      let currentLine = '';
 
       for (const word of words) {
         const testLine = currentLine ? `${currentLine} ${word}` : word;
@@ -896,7 +1060,7 @@ export class SafetyPDFBuilder {
       if (currentLine) allLines.push(currentLine);
     }
 
-    return allLines.length ? allLines : [""];
+    return allLines.length ? allLines : [''];
   }
 
   private autoColWidths(headers: string[], rows: string[][]): number[] {
@@ -909,7 +1073,7 @@ export class SafetyPDFBuilder {
 
     for (const row of rows) {
       for (let i = 0; i < Math.min(row.length, n); i++) {
-        const w = this.font.widthOfTextAtSize(row[i] || "", 8) + 16;
+        const w = this.font.widthOfTextAtSize(row[i] || '', 8) + 16;
         widths[i] = Math.max(widths[i], Math.min(w, CW * 0.6));
       }
     }

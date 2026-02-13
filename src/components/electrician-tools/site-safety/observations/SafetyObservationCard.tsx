@@ -1,54 +1,50 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Input } from '@/components/ui/input';
+import { LocationAutoFill } from '../common/LocationAutoFill';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  ArrowLeft,
-  Eye,
-  ThumbsUp,
-  AlertTriangle,
-  Loader2,
-} from "lucide-react";
+} from '@/components/ui/select';
+import { ArrowLeft, Eye, ThumbsUp, AlertTriangle, Loader2 } from 'lucide-react';
 import {
   useSafetyObservations,
   useCreateObservation,
   OBSERVATION_CATEGORIES,
   type SafetyObservation,
-} from "@/hooks/useSafetyObservations";
-import { ObservationFeed } from "./ObservationFeed";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
-import { SafetySkeletonLoader } from "../common/SafetySkeletonLoader";
+} from '@/hooks/useSafetyObservations';
+import { ObservationFeed } from './ObservationFeed';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
+import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
+import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { useHaptic } from '@/hooks/useHaptic';
 
 interface SafetyObservationCardProps {
   onBack: () => void;
 }
 
-type TabKey = "log" | "feed";
+type TabKey = 'log' | 'feed';
 
 export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const haptic = useHaptic();
-  const [activeTab, setActiveTab] = useState<TabKey>("log");
-  const [observationType, setObservationType] = useState<
-    "positive" | "improvement_needed"
-  >("positive");
-  const [category, setCategory] = useState("");
-  const [personObserved, setPersonObserved] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  const [activeTab, setActiveTab] = useState<TabKey>('log');
+  const [observationType, setObservationType] = useState<'positive' | 'improvement_needed'>(
+    'positive'
+  );
+  const [category, setCategory] = useState('');
+  const [personObserved, setPersonObserved] = useState('');
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const { data: observations = [], isLoading } = useSafetyObservations();
   const createObservation = useCreateObservation();
 
-  const canSubmit =
-    category.length > 0 && description.trim().length > 0;
+  const canSubmit = category.length > 0 && description.trim().length > 0;
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
@@ -59,21 +55,23 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       description: description.trim(),
       person_observed: personObserved.trim() || undefined,
       location: location.trim() || undefined,
+      photos: photoUrls,
     });
 
     haptic.success();
 
     // Reset form
-    setCategory("");
-    setPersonObserved("");
-    setDescription("");
-    setLocation("");
-    setObservationType("positive");
+    setCategory('');
+    setPersonObserved('');
+    setDescription('');
+    setLocation('');
+    setObservationType('positive');
+    setPhotoUrls([]);
   };
 
   const tabs: { key: TabKey; label: string }[] = [
-    { key: "log", label: "Log" },
-    { key: "feed", label: "Feed" },
+    { key: 'log', label: 'Log' },
+    { key: 'feed', label: 'Feed' },
   ];
 
   return (
@@ -87,12 +85,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
           <ArrowLeft className="w-5 h-5 text-white" />
         </button>
         <div className="flex-1">
-          <h1 className="text-lg font-semibold text-white">
-            Safety Observations
-          </h1>
-          <p className="text-sm text-white">
-            Log and review site observations
-          </p>
+          <h1 className="text-lg font-semibold text-white">Safety Observations</h1>
+          <p className="text-sm text-white">Log and review site observations</p>
         </div>
         <Eye className="w-5 h-5 text-elec-yellow" />
       </div>
@@ -105,8 +99,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
             onClick={() => setActiveTab(tab.key)}
             className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
               activeTab === tab.key
-                ? "bg-elec-yellow text-black"
-                : "bg-white/5 text-white border border-white/10"
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/5 text-white border border-white/10'
             }`}
           >
             {tab.label}
@@ -116,7 +110,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
       <div className="flex-1 overflow-y-auto pb-20">
         <AnimatePresence mode="wait">
-          {activeTab === "log" ? (
+          {activeTab === 'log' ? (
             <motion.div
               key="log"
               initial={{ opacity: 0, x: -20 }}
@@ -132,22 +126,22 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                 </label>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setObservationType("positive")}
+                    onClick={() => setObservationType('positive')}
                     className={`h-11 flex-1 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
-                      observationType === "positive"
-                        ? "bg-green-500/20 border-green-500/50 text-green-400"
-                        : "bg-white/5 border-white/10 text-white"
+                      observationType === 'positive'
+                        ? 'bg-green-500/20 border-green-500/50 text-green-400'
+                        : 'bg-white/5 border-white/10 text-white'
                     }`}
                   >
                     <ThumbsUp className="w-4 h-4" />
                     Positive
                   </button>
                   <button
-                    onClick={() => setObservationType("improvement_needed")}
+                    onClick={() => setObservationType('improvement_needed')}
                     className={`h-11 flex-1 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
-                      observationType === "improvement_needed"
-                        ? "bg-amber-500/20 border-amber-500/50 text-amber-400"
-                        : "bg-white/5 border-white/10 text-white"
+                      observationType === 'improvement_needed'
+                        ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
+                        : 'bg-white/5 border-white/10 text-white'
                     }`}
                   >
                     <AlertTriangle className="w-4 h-4" />
@@ -158,9 +152,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Category
-                </label>
+                <label className="block text-sm font-medium text-white mb-1">Category</label>
                 <Select value={category} onValueChange={setCategory}>
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select category" />
@@ -190,9 +182,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Description
-                </label>
+                <label className="block text-sm font-medium text-white mb-1">Description</label>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -202,17 +192,15 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               </div>
 
               {/* Location */}
-              <div>
-                <label className="block text-sm font-medium text-white mb-1">
-                  Location (optional)
-                </label>
-                <Input
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="e.g. Ground floor, Distribution board area"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
+              <LocationAutoFill
+                value={location}
+                onChange={setLocation}
+                placeholder="e.g. Ground floor, Distribution board area"
+                label="Location (optional)"
+              />
+
+              {/* Photos */}
+              <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} />
 
               {/* Submit */}
               <div className="pb-8 pt-2">
@@ -227,7 +215,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                       Saving...
                     </>
                   ) : (
-                    "Log Observation"
+                    'Log Observation'
                   )}
                 </button>
               </div>
@@ -249,7 +237,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   heading="No Observations Yet"
                   description="Log your first safety observation using the Log tab. Track both positive behaviours and areas for improvement."
                   ctaLabel="Log an Observation"
-                  onCta={() => setActiveTab("log")}
+                  onCta={() => setActiveTab('log')}
                   tip="Regular observations build a strong safety culture"
                 />
               ) : (

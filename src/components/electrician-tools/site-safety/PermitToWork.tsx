@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { LocationAutoFill } from './common/LocationAutoFill';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Button } from '@/components/ui/button';
@@ -49,6 +52,9 @@ import {
   Trash2,
   Search,
   Filter,
+  FileDown,
+  Loader2,
+  Copy,
 } from 'lucide-react';
 
 // ─── Types ───
@@ -86,6 +92,7 @@ interface Permit {
   status: PermitStatus;
   emergency_procedures: string;
   additional_notes: string;
+  photos: string[];
   created_at: string;
   closed_at?: string;
   closed_by?: string;
@@ -355,7 +362,7 @@ function SignaturePadInline({ onSave, label }: { onSave: (data: string) => void;
           variant="ghost"
           size="sm"
           onClick={clear}
-          className="text-white text-xs h-9 touch-manipulation"
+          className="text-white text-xs h-11 touch-manipulation"
         >
           Clear signature
         </Button>
@@ -426,6 +433,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [hazards, setHazards] = useState<PermitHazard[]>([]);
   const [precautions, setPrecautions] = useState<string[]>([]);
   const [ppeRequired, setPpeRequired] = useState<string[]>([]);
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   // ─── Draft persistence ───
   const permitDraftData = useMemo(
@@ -497,6 +505,29 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setHazards([]);
     setPrecautions([]);
     setPpeRequired([]);
+    setPhotoUrls([]);
+  };
+
+  const handleDuplicate = (permit: Permit) => {
+    setSelectedType(permit.type);
+    setFormData({
+      title: permit.title,
+      location: permit.location,
+      description: permit.description,
+      issuer_name: '',
+      issuer_signature: '',
+      receiver_name: '',
+      receiver_signature: '',
+      duration_hours: permit.duration_hours,
+      emergency_procedures: permit.emergency_procedures,
+      additional_notes: permit.additional_notes,
+    });
+    setHazards(permit.hazards.map((h) => ({ ...h })));
+    setPrecautions([...permit.precautions]);
+    setPpeRequired([...permit.ppe_required]);
+    setWizardStep(1);
+    setShowWizard(true);
+    toast.success('Permit duplicated — complete the details to issue');
   };
 
   const selectPermitType = (type: PermitType) => {
@@ -544,6 +575,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       status: 'active',
       emergency_procedures: formData.emergency_procedures,
       additional_notes: formData.additional_notes,
+      photos: photoUrls,
       created_at: now.toISOString(),
     };
 
@@ -571,6 +603,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       // error toast handled by hook
     }
   };
+
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
 
   const filteredPermits = permits.filter((p) => {
     if (filterStatus !== 'all' && p.status !== filterStatus) return false;
@@ -634,15 +668,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   placeholder="e.g. Hot Work — DB Board Replacement"
                 />
               </div>
-              <div>
-                <Label className="text-white text-sm">Location</Label>
-                <Input
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Plant Room, Building A, Level 2"
-                />
-              </div>
+              <LocationAutoFill
+                value={formData.location}
+                onChange={(val) => setFormData({ ...formData, location: val })}
+                placeholder="e.g. Plant Room, Building A, Level 2"
+                label="Location"
+              />
               <div>
                 <Label className="text-white text-sm">Description of Work</Label>
                 <Textarea
@@ -734,6 +765,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 onChange={(e) => setFormData({ ...formData, emergency_procedures: e.target.value })}
                 className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Emergency procedures specific to this permit..."
+              />
+            </div>
+
+            {/* Site Photos */}
+            <div className="mt-4">
+              <SafetyPhotoCapture
+                photos={photoUrls}
+                onPhotosChange={setPhotoUrls}
+                label="Site Photos"
               />
             </div>
           </div>
@@ -957,7 +997,21 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         {permit.status === 'active' && <TimeRemaining endTime={permit.end_time} />}
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDuplicate(permit);
+                        }}
+                        className="h-11 px-3 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
+                      >
+                        <Copy className="h-3.5 w-3.5 mr-1" />
+                        Duplicate
+                      </Button>
+                      <ChevronRight className="h-4 w-4 text-white" />
+                    </div>
                   </div>
                 </motion.button>
               );
@@ -1173,24 +1227,38 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   </div>
 
                   {/* Actions */}
-                  {viewingPermit.status === 'active' && (
-                    <div className="px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-                      <Button
-                        onClick={() => closePermit(viewingPermit.id)}
-                        className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
-                      >
-                        <CheckCircle2 className="h-4 w-4 mr-2" />
-                        Close Permit
-                      </Button>
-                      <Button
-                        onClick={() => cancelPermit(viewingPermit.id)}
-                        variant="outline"
-                        className="h-11 border-red-500/30 text-red-400 rounded-xl touch-manipulation"
-                      >
-                        <XCircle className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  )}
+                  <div className="px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                    <Button
+                      onClick={() => exportPDF('permit', viewingPermit.id)}
+                      disabled={isExporting && exportingId === viewingPermit.id}
+                      className="flex-1 h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                    >
+                      {isExporting && exportingId === viewingPermit.id ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <FileDown className="h-4 w-4 mr-2" />
+                      )}
+                      Export PDF
+                    </Button>
+                    {viewingPermit.status === 'active' && (
+                      <>
+                        <Button
+                          onClick={() => closePermit(viewingPermit.id)}
+                          className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
+                        >
+                          <CheckCircle2 className="h-4 w-4 mr-2" />
+                          Close Permit
+                        </Button>
+                        <Button
+                          onClick={() => cancelPermit(viewingPermit.id)}
+                          variant="outline"
+                          className="h-11 border-red-500/30 text-red-400 rounded-xl touch-manipulation"
+                        >
+                          <XCircle className="h-4 w-4" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
               );
             })()}

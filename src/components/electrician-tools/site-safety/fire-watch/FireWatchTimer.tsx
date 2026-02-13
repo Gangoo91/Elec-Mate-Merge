@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowLeft,
-  Flame,
-  Play,
-  CheckCircle2,
-  Clock,
-  AlertTriangle,
-  Shield,
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Flame, Play, CheckCircle2, Clock, AlertTriangle, Shield } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
+import { SignaturePad } from '../common/SignaturePad';
+import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { useHaptic } from '@/hooks/useHaptic';
-import { useFireWatchRecords } from "@/hooks/useFireWatchRecords";
-import { FireWatchHistory } from "./FireWatchHistory";
+import { useFireWatchRecords } from '@/hooks/useFireWatchRecords';
+import { FireWatchHistory } from './FireWatchHistory';
 
 interface FireWatchTimerProps {
   onBack: () => void;
@@ -28,33 +22,33 @@ interface ChecklistItem {
 
 const DEFAULT_CHECKLIST: ChecklistItem[] = [
   {
-    id: "fw1",
-    label: "Area clear of combustible materials",
+    id: 'fw1',
+    label: 'Area clear of combustible materials',
     checked: false,
   },
   {
-    id: "fw2",
-    label: "Fire extinguisher present and accessible",
+    id: 'fw2',
+    label: 'Fire extinguisher present and accessible',
     checked: false,
   },
   {
-    id: "fw3",
-    label: "Combustible materials removed or protected",
+    id: 'fw3',
+    label: 'Combustible materials removed or protected',
     checked: false,
   },
   {
-    id: "fw4",
-    label: "Smoke detector not isolated",
+    id: 'fw4',
+    label: 'Smoke detector not isolated',
     checked: false,
   },
   {
-    id: "fw5",
-    label: "Fire exit routes clear and unobstructed",
+    id: 'fw5',
+    label: 'Fire exit routes clear and unobstructed',
     checked: false,
   },
 ];
 
-type TabKey = "timer" | "history";
+type TabKey = 'timer' | 'history';
 
 const FIRE_WATCH_DURATION_MINS = 60;
 const FIRE_WATCH_DURATION_SECS = FIRE_WATCH_DURATION_MINS * 60;
@@ -62,25 +56,32 @@ const FIRE_WATCH_DURATION_SECS = FIRE_WATCH_DURATION_MINS * 60;
 function formatTime(totalSeconds: number): string {
   const mins = Math.floor(totalSeconds / 60);
   const secs = totalSeconds % 60;
-  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
 export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
   const haptic = useHaptic();
-  const [activeTab, setActiveTab] = useState<TabKey>("timer");
-  const { data: historyRecords = [], isLoading: historyLoading, refetch: refetchHistory } = useFireWatchRecords();
+  const [activeTab, setActiveTab] = useState<TabKey>('timer');
+  const {
+    data: historyRecords = [],
+    isLoading: historyLoading,
+    refetch: refetchHistory,
+  } = useFireWatchRecords();
   const [isActive, setIsActive] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [checklist, setChecklist] = useState<ChecklistItem[]>(DEFAULT_CHECKLIST);
   const [isSaving, setIsSaving] = useState(false);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+
+  // Signature state (UI only — not persisted to DB yet)
+  const [completerSigName, setCompleterSigName] = useState('');
+  const [completerSigDate, setCompleterSigDate] = useState(new Date().toISOString().split('T')[0]);
+  const [completerSigData, setCompleterSigData] = useState('');
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { toast } = useToast();
 
-  const remainingSeconds = Math.max(
-    FIRE_WATCH_DURATION_SECS - elapsedSeconds,
-    0
-  );
+  const remainingSeconds = Math.max(FIRE_WATCH_DURATION_SECS - elapsedSeconds, 0);
   const progress = Math.min(elapsedSeconds / FIRE_WATCH_DURATION_SECS, 1);
   const allChecked = checklist.every((item) => item.checked);
   const timerComplete = elapsedSeconds >= FIRE_WATCH_DURATION_SECS;
@@ -108,9 +109,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
   const toggleChecklistItem = (id: string) => {
     setChecklist((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      )
+      prev.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item))
     );
   };
 
@@ -122,29 +121,28 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from("fire_watch_records")
-        .insert({
-          user_id: user.id,
-          start_time: startedAt.toISOString(),
-          end_time: new Date().toISOString(),
-          duration_minutes: FIRE_WATCH_DURATION_MINS,
-          checklist: checklist.map((c) => ({
-            id: c.id,
-            label: c.label,
-            checked: c.checked,
-          })),
-          status: "completed",
-        });
+      const { error } = await supabase.from('fire_watch_records').insert({
+        user_id: user.id,
+        start_time: startedAt.toISOString(),
+        end_time: new Date().toISOString(),
+        duration_minutes: FIRE_WATCH_DURATION_MINS,
+        checklist: checklist.map((c) => ({
+          id: c.id,
+          label: c.label,
+          checked: c.checked,
+        })),
+        status: 'completed',
+        photos: photoUrls,
+      });
 
       if (error) throw error;
 
       haptic.success();
       toast({
-        title: "Fire Watch Complete",
-        description: "Fire watch record has been saved successfully.",
+        title: 'Fire Watch Complete',
+        description: 'Fire watch record has been saved successfully.',
       });
 
       refetchHistory();
@@ -152,17 +150,18 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
       setElapsedSeconds(0);
       setStartedAt(null);
       setChecklist(DEFAULT_CHECKLIST);
+      setPhotoUrls([]);
     } catch {
       haptic.error();
       toast({
-        title: "Error",
-        description: "Could not save fire watch record.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Could not save fire watch record.',
+        variant: 'destructive',
       });
     } finally {
       setIsSaving(false);
     }
-  }, [canComplete, startedAt, checklist, toast, haptic, refetchHistory]);
+  }, [canComplete, startedAt, checklist, photoUrls, toast, haptic, refetchHistory]);
 
   // Circular progress calculations
   const circumference = 2 * Math.PI * 90;
@@ -180,26 +179,24 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         </button>
         <div className="flex-1">
           <h1 className="text-lg font-semibold text-white">Fire Watch</h1>
-          <p className="text-sm text-white">
-            Post hot-works fire watch timer
-          </p>
+          <p className="text-sm text-white">Post hot-works fire watch timer</p>
         </div>
         <Flame className="w-5 h-5 text-orange-400" />
       </div>
 
       {/* Tab Bar */}
       <div className="flex px-4 pt-3 gap-2">
-        {([
-          { key: "timer" as TabKey, label: "Timer" },
-          { key: "history" as TabKey, label: "History" },
-        ]).map((tab) => (
+        {[
+          { key: 'timer' as TabKey, label: 'Timer' },
+          { key: 'history' as TabKey, label: 'History' },
+        ].map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
               activeTab === tab.key
-                ? "bg-elec-yellow text-black"
-                : "bg-white/5 text-white border border-white/10"
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/5 text-white border border-white/10'
             }`}
           >
             {tab.label}
@@ -209,7 +206,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
       <div className="flex-1 overflow-y-auto pb-20">
         <AnimatePresence mode="wait">
-          {activeTab === "timer" ? (
+          {activeTab === 'timer' ? (
             <motion.div
               key="timer-tab"
               initial={{ opacity: 0, x: -20 }}
@@ -236,11 +233,10 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                             When is a fire watch required?
                           </h3>
                           <p className="text-sm text-white leading-relaxed">
-                            A fire watch must be maintained for a minimum of 60
-                            minutes after completion of hot works such as soldering,
-                            brazing, welding, grinding, or using blow torches. The
-                            watch person must remain in the area and check for signs
-                            of smouldering or fire.
+                            A fire watch must be maintained for a minimum of 60 minutes after
+                            completion of hot works such as soldering, brazing, welding, grinding,
+                            or using blow torches. The watch person must remain in the area and
+                            check for signs of smouldering or fire.
                           </p>
                         </div>
                       </div>
@@ -267,10 +263,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                     {/* Circular Timer */}
                     <div className="flex justify-center mb-6">
                       <div className="relative w-52 h-52">
-                        <svg
-                          className="w-full h-full -rotate-90"
-                          viewBox="0 0 200 200"
-                        >
+                        <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
                           {/* Background circle */}
                           <circle
                             cx="100"
@@ -286,7 +279,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                             cy="100"
                             r="90"
                             fill="none"
-                            stroke={timerComplete ? "#22c55e" : "#f59e0b"}
+                            stroke={timerComplete ? '#22c55e' : '#f59e0b'}
                             strokeWidth="8"
                             strokeLinecap="round"
                             strokeDasharray={circumference}
@@ -307,9 +300,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                               <span className="text-3xl font-bold text-white font-mono">
                                 {formatTime(remainingSeconds)}
                               </span>
-                              <span className="text-sm text-white mt-1">
-                                remaining
-                              </span>
+                              <span className="text-sm text-white mt-1">remaining</span>
                             </>
                           )}
                         </div>
@@ -340,31 +331,48 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                           onClick={() => toggleChecklistItem(item.id)}
                           className={`w-full flex items-center gap-3 p-4 rounded-xl border touch-manipulation active:scale-[0.99] transition-all ${
                             item.checked
-                              ? "bg-green-500/10 border-green-500/30"
-                              : "bg-white/5 border-white/10"
+                              ? 'bg-green-500/10 border-green-500/30'
+                              : 'bg-white/5 border-white/10'
                           }`}
                         >
                           <div
                             className={`w-6 h-6 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
                               item.checked
-                                ? "bg-green-500 border-green-500"
-                                : "border-white/30 bg-transparent"
+                                ? 'bg-green-500 border-green-500'
+                                : 'border-white/30 bg-transparent'
                             }`}
                           >
                             {item.checked && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                              >
+                              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
                                 <CheckCircle2 className="w-4 h-4 text-white" />
                               </motion.div>
                             )}
                           </div>
-                          <span className="text-sm text-white text-left flex-1">
-                            {item.label}
-                          </span>
+                          <span className="text-sm text-white text-left flex-1">{item.label}</span>
                         </button>
                       ))}
+                    </div>
+
+                    {/* Area Condition Photos */}
+                    <div className="mb-6">
+                      <SafetyPhotoCapture
+                        photos={photoUrls}
+                        onPhotosChange={setPhotoUrls}
+                        label="Area Condition Photos"
+                      />
+                    </div>
+
+                    {/* Completer Signature */}
+                    <div className="mb-6">
+                      <SignaturePad
+                        label="Completer Signature"
+                        name={completerSigName}
+                        date={completerSigDate}
+                        signatureDataUrl={completerSigData}
+                        onSignatureChange={setCompleterSigData}
+                        onNameChange={setCompleterSigName}
+                        onDateChange={setCompleterSigDate}
+                      />
                     </div>
 
                     {/* Complete Button */}
@@ -410,7 +418,14 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
               transition={{ duration: 0.2 }}
               className="px-4 pt-4"
             >
-              <FireWatchHistory records={historyRecords} isLoading={historyLoading} />
+              <FireWatchHistory
+                records={historyRecords}
+                isLoading={historyLoading}
+                onStartNewWatch={() => {
+                  setActiveTab('timer');
+                  handleStart();
+                }}
+              />
             </motion.div>
           )}
         </AnimatePresence>

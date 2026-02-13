@@ -1,8 +1,3 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   MessageCircle,
   FileText,
@@ -15,445 +10,441 @@ import {
   Calendar,
   Award,
   Banknote,
-  Sparkles,
   ChevronRight,
   Wrench,
   GraduationCap,
   Target,
-  Lightbulb
-} from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import ActiveToolContent from "@/components/apprentice/toolbox/ActiveToolContent";
+  ArrowLeft,
+  Heart,
+  TrendingUp,
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Link, useSearchParams } from 'react-router-dom';
+import ActiveToolContent from '@/components/apprentice/toolbox/ActiveToolContent';
+import useSEO from '@/hooks/useSEO';
 
 interface ToolboxItem {
   id: string;
   title: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   link: string;
   description: string;
-  category: "essential" | "skills" | "career" | "wellbeing";
+  category: 'essential' | 'skills' | 'wellbeing';
   badge?: string;
-  accentColor: "yellow" | "green" | "blue" | "purple" | "orange";
-  stats?: { label: string; value: string }[];
 }
+
+const toolboxItems: ToolboxItem[] = [
+  {
+    id: 'apprenticeship-expectations',
+    title: 'Apprenticeship Expectations',
+    icon: CheckCircle,
+    link: '/apprentice/toolbox/apprenticeship-expectations',
+    description:
+      'What to expect during your electrical apprenticeship journey - roles, responsibilities and milestones',
+    category: 'essential',
+    badge: 'Start Here',
+  },
+  {
+    id: 'off-job-training',
+    title: 'Off-the-Job Training',
+    icon: Clock,
+    link: '/apprentice/toolbox/off-job-training-guide',
+    description: 'Understanding your 20% off-the-job training requirements and what counts',
+    category: 'essential',
+  },
+  {
+    id: 'apprenticeship-funding',
+    title: 'Apprenticeship Funding',
+    icon: Banknote,
+    link: '/apprentice/toolbox/apprenticeship-funding',
+    description: 'How apprenticeship funding works - levy, co-investment and CITB grants explained',
+    category: 'essential',
+    badge: '2026 Updated',
+  },
+  {
+    id: 'end-point-assessment',
+    title: 'End Point Assessment (EPA)',
+    icon: Award,
+    link: '/apprentice/toolbox/end-point-assessment',
+    description: 'Everything about your final EPA - components, grades and preparation tips',
+    category: 'essential',
+  },
+  {
+    id: 'rights-and-pay',
+    title: 'Apprentice Rights & Pay',
+    icon: PoundSterling,
+    link: '/apprentice/rights-and-pay',
+    description: 'National wage tiers, your rights on site, and support when things go wrong',
+    category: 'essential',
+    badge: 'April 2026',
+  },
+  {
+    id: 'site-jargon',
+    title: 'Site Jargon & Terminology',
+    icon: MessageCircle,
+    link: '/apprentice/toolbox/site-jargon',
+    description:
+      "Common electrical and construction terms you'll hear on site - don't get caught out!",
+    category: 'skills',
+  },
+  {
+    id: 'portfolio-building',
+    title: 'Portfolio Building',
+    icon: FileText,
+    link: '/apprentice/toolbox/portfolio-building',
+    description: 'How to document your work and build a professional portfolio for EPA',
+    category: 'skills',
+  },
+  {
+    id: 'communication-skills',
+    title: 'Communication Skills',
+    icon: Users,
+    link: '/apprentice/toolbox/communication-skills',
+    description: 'How to speak with supervisors, report problems, and take feedback professionally',
+    category: 'skills',
+  },
+  {
+    id: 'study-tips',
+    title: 'Study Tips & Techniques',
+    icon: BookOpen,
+    link: '/apprentice/toolbox/study-tips',
+    description: 'Effective learning strategies for electrical theory and practical skills',
+    category: 'skills',
+  },
+  {
+    id: 'learning-from-mistakes',
+    title: 'Learning from Mistakes',
+    icon: AlertTriangle,
+    link: '/apprentice/toolbox/learning-from-mistakes',
+    description: 'How to handle errors professionally and turn them into learning opportunities',
+    category: 'wellbeing',
+  },
+  {
+    id: 'time-management',
+    title: 'Time Management & Balance',
+    icon: Calendar,
+    link: '/apprentice/toolbox/time-management',
+    description:
+      'Manage your apprenticeship workload whilst maintaining a healthy work-life balance',
+    category: 'wellbeing',
+  },
+];
+
+const categories = [
+  { id: 'essential', label: 'Essential Knowledge', count: 5 },
+  { id: 'skills', label: 'Skills Development', count: 4 },
+  { id: 'wellbeing', label: 'Wellbeing & Growth', count: 2 },
+];
 
 const ApprenticeToolbox = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTool = searchParams.get("tool") || null;
+  const activeTool = searchParams.get('tool') || null;
   const setActiveTool = (tool: string | null) => {
     if (tool) {
       setSearchParams({ tool }, { replace: false });
     } else {
-      searchParams.delete("tool");
+      searchParams.delete('tool');
       setSearchParams(searchParams, { replace: false });
     }
   };
 
-  const toolboxItems: ToolboxItem[] = [
-    {
-      id: "apprenticeship-expectations",
-      title: "Apprenticeship Expectations",
-      icon: CheckCircle,
-      link: "/apprentice/toolbox/apprenticeship-expectations",
-      description: "What to expect during your electrical apprenticeship journey - roles, responsibilities and milestones",
-      category: "essential",
-      badge: "Start Here",
-      accentColor: "yellow",
-      stats: [
-        { label: "Duration", value: "3-4 yrs" },
-        { label: "Key Stages", value: "5" }
-      ]
-    },
-    {
-      id: "off-job-training",
-      title: "Off-the-Job Training",
-      icon: Clock,
-      link: "/apprentice/toolbox/off-job-training-guide",
-      description: "Understanding your 20% off-the-job training requirements and what counts",
-      category: "essential",
-      accentColor: "blue",
-      stats: [
-        { label: "Requirement", value: "20%" },
-        { label: "Weekly", value: "~6 hrs" }
-      ]
-    },
-    {
-      id: "apprenticeship-funding",
-      title: "Apprenticeship Funding",
-      icon: Banknote,
-      link: "/apprentice/toolbox/apprenticeship-funding",
-      description: "How apprenticeship funding works - levy, co-investment and CITB grants explained",
-      category: "essential",
-      badge: "2026 Updated",
-      accentColor: "green",
-      stats: [
-        { label: "Max Funding", value: "£27k" },
-        { label: "CITB Grant", value: "£2.5k/yr" }
-      ]
-    },
-    {
-      id: "end-point-assessment",
-      title: "End Point Assessment (EPA)",
-      icon: Award,
-      link: "/apprentice/toolbox/end-point-assessment",
-      description: "Everything about your final EPA - components, grades and preparation tips",
-      category: "essential",
-      accentColor: "purple",
-      stats: [
-        { label: "Components", value: "3" },
-        { label: "Grades", value: "P/M/D" }
-      ]
-    },
-    {
-      id: "rights-and-pay",
-      title: "Apprentice Rights & Pay",
-      icon: PoundSterling,
-      link: "/apprentice/rights-and-pay",
-      description: "National wage tiers, your rights on site, and support when things go wrong",
-      category: "essential",
-      badge: "April 2026",
-      accentColor: "green",
-      stats: [
-        { label: "Min Wage", value: "£8.00/hr" },
-        { label: "21+ Rate", value: "£12.71/hr" }
-      ]
-    },
-    {
-      id: "site-jargon",
-      title: "Site Jargon & Terminology",
-      icon: MessageCircle,
-      link: "/apprentice/toolbox/site-jargon",
-      description: "Common electrical and construction terms you'll hear on site - don't get caught out!",
-      category: "skills",
-      accentColor: "yellow",
-      stats: [
-        { label: "Terms", value: "200+" },
-        { label: "Categories", value: "8" }
-      ]
-    },
-    {
-      id: "portfolio-building",
-      title: "Portfolio Building",
-      icon: FileText,
-      link: "/apprentice/toolbox/portfolio-building",
-      description: "How to document your work and build a professional portfolio for EPA",
-      category: "skills",
-      accentColor: "blue",
-      stats: [
-        { label: "Evidence Types", value: "12" },
-        { label: "Tips", value: "25+" }
-      ]
-    },
-    {
-      id: "communication-skills",
-      title: "Communication Skills",
-      icon: Users,
-      link: "/apprentice/toolbox/communication-skills",
-      description: "How to speak with supervisors, report problems, and take feedback professionally",
-      category: "skills",
-      accentColor: "purple",
-      stats: [
-        { label: "Scenarios", value: "10" },
-        { label: "Templates", value: "5" }
-      ]
-    },
-    {
-      id: "study-tips",
-      title: "Study Tips & Techniques",
-      icon: BookOpen,
-      link: "/apprentice/toolbox/study-tips",
-      description: "Effective learning strategies for electrical theory and practical skills",
-      category: "skills",
-      accentColor: "blue",
-      stats: [
-        { label: "Techniques", value: "15+" },
-        { label: "Resources", value: "10+" }
-      ]
-    },
-    {
-      id: "learning-from-mistakes",
-      title: "Learning from Mistakes",
-      icon: AlertTriangle,
-      link: "/apprentice/toolbox/learning-from-mistakes",
-      description: "How to handle errors professionally and turn them into learning opportunities",
-      category: "wellbeing",
-      accentColor: "orange",
-      stats: [
-        { label: "Case Studies", value: "8" },
-        { label: "Tips", value: "12" }
-      ]
-    },
-    {
-      id: "time-management",
-      title: "Time Management & Balance",
-      icon: Calendar,
-      link: "/apprentice/toolbox/time-management",
-      description: "Manage your apprenticeship workload whilst maintaining a healthy work-life balance",
-      category: "wellbeing",
-      accentColor: "green",
-      stats: [
-        { label: "Strategies", value: "10" },
-        { label: "Tools", value: "6" }
-      ]
-    }
-  ];
-
-  const categories = [
-    { id: "essential", label: "Essential Knowledge", icon: Target, description: "Core information every apprentice needs" },
-    { id: "skills", label: "Skills Development", icon: Lightbulb, description: "Build professional capabilities" },
-    { id: "wellbeing", label: "Wellbeing & Growth", icon: Sparkles, description: "Personal development and support" }
-  ];
-
-  const colorMap = {
-    yellow: {
-      border: "border-elec-yellow/30 hover:border-elec-yellow/60",
-      bg: "bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5",
-      badge: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
-      icon: "text-elec-yellow",
-      iconBg: "bg-elec-yellow/10",
-      glow: "group-hover:shadow-elec-yellow/20"
-    },
-    green: {
-      border: "border-green-500/30 hover:border-green-500/60",
-      bg: "bg-gradient-to-br from-green-500/10 to-green-500/5",
-      badge: "bg-green-500/20 text-green-400 border-green-500/30",
-      icon: "text-green-400",
-      iconBg: "bg-green-500/10",
-      glow: "group-hover:shadow-green-500/20"
-    },
-    blue: {
-      border: "border-blue-500/30 hover:border-blue-500/60",
-      bg: "bg-gradient-to-br from-blue-500/10 to-blue-500/5",
-      badge: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      icon: "text-blue-400",
-      iconBg: "bg-blue-500/10",
-      glow: "group-hover:shadow-blue-500/20"
-    },
-    purple: {
-      border: "border-purple-500/30 hover:border-purple-500/60",
-      bg: "bg-gradient-to-br from-purple-500/10 to-purple-500/5",
-      badge: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-      icon: "text-purple-400",
-      iconBg: "bg-purple-500/10",
-      glow: "group-hover:shadow-purple-500/20"
-    },
-    orange: {
-      border: "border-orange-500/30 hover:border-orange-500/60",
-      bg: "bg-gradient-to-br from-orange-500/10 to-orange-500/5",
-      badge: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-      icon: "text-orange-400",
-      iconBg: "bg-orange-500/10",
-      glow: "group-hover:shadow-orange-500/20"
-    }
-  };
+  useSEO({
+    title: 'Apprentice Guidance Area | Elec-Mate',
+    description:
+      'Essential resources, skills development, and support for UK electrical apprentices. 11 guidance topics covering funding, EPA, rights, and more.',
+  });
 
   if (activeTool) {
     return <ActiveToolContent activeTool={activeTool} onClose={() => setActiveTool(null)} />;
   }
 
+  let globalIndex = 0;
+
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fade-in px-2 sm:px-0">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 sm:p-3 bg-elec-yellow/10 rounded-xl border border-elec-yellow/20">
-              <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-            </div>
-            <div>
-              <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
-                Apprentice Guidance Area
-              </h1>
-              <p className="text-sm text-white mt-0.5 hidden sm:block">
-                Everything you need to succeed in your apprenticeship
-              </p>
+    <div className="overflow-x-hidden bg-[#1a1a1a] min-h-screen">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-3">
+          <Link to="/apprentice">
+            <Button
+              variant="ghost"
+              className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Apprentice Hub
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      <main className="px-4 sm:px-8 lg:px-12 pb-16">
+        <div className="max-w-7xl mx-auto">
+          {/* Hero Section */}
+          <div className="py-8 sm:py-12 lg:py-16">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 border border-elec-yellow/20">
+                    <Wrench className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-elec-yellow/30 to-transparent" />
+                </div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-3">
+                  Apprentice Guidance Area
+                </h1>
+                <p className="text-base sm:text-lg text-white leading-relaxed">
+                  Essential resources, skills development, and support for UK electrical apprentices
+                </p>
+              </div>
+
+              {/* Stats pills - desktop only */}
+              <div className="hidden lg:flex items-center gap-3 pb-1">
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                  <BookOpen className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm text-white">
+                    <span className="font-semibold text-white">11</span> topics
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                  <span className="text-sm text-white">
+                    <span className="font-semibold text-white">3</span> categories
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <p className="hidden sm:block text-base text-white sm:ml-[72px]">
-            Essential resources, skills development, and support for UK electrical apprentices
-          </p>
-        </div>
-        <SmartBackButton className="flex-shrink-0 w-full sm:w-auto" />
-      </div>
 
-      {/* Quick Stats Banner - Hidden on mobile */}
-      <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-start gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 bg-elec-yellow/10 rounded-lg flex-shrink-0">
+          {/* Stats Grid - Visible on ALL devices */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-10">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center gap-1.5 sm:gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] py-3 px-2 sm:p-4">
+              <div className="p-2 rounded-lg bg-elec-yellow/10">
                 <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
               </div>
-              <div className="min-w-0">
-                <div className="text-lg sm:text-xl font-bold text-elec-yellow truncate">11</div>
-                <div className="text-[10px] sm:text-xs text-white truncate">Guidance Topics</div>
+              <div className="text-center sm:text-left">
+                <p className="text-lg sm:text-xl font-bold text-foreground leading-tight">11</p>
+                <p className="text-[10px] sm:text-xs text-white">Guidance Topics</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-start gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 bg-green-500/10 rounded-lg flex-shrink-0">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center gap-1.5 sm:gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] py-3 px-2 sm:p-4">
+              <div className="p-2 rounded-lg bg-green-500/10">
                 <Target className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
               </div>
-              <div className="min-w-0">
-                <div className="text-lg sm:text-xl font-bold text-green-400 truncate">3-4 yrs</div>
-                <div className="text-[10px] sm:text-xs text-white truncate">Typical Duration</div>
+              <div className="text-center sm:text-left">
+                <p className="text-lg sm:text-xl font-bold text-foreground leading-tight">
+                  3-4 yrs
+                </p>
+                <p className="text-[10px] sm:text-xs text-white">Duration</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-start gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 bg-blue-500/10 rounded-lg flex-shrink-0">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center gap-1.5 sm:gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] py-3 px-2 sm:p-4">
+              <div className="p-2 rounded-lg bg-blue-500/10">
                 <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
               </div>
-              <div className="min-w-0">
-                <div className="text-lg sm:text-xl font-bold text-blue-400 truncate">20%</div>
-                <div className="text-[10px] sm:text-xs text-white truncate">Off-Job Training</div>
+              <div className="text-center sm:text-left">
+                <p className="text-lg sm:text-xl font-bold text-foreground leading-tight">20%</p>
+                <p className="text-[10px] sm:text-xs text-white">Off-Job Training</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-start gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 bg-purple-500/10 rounded-lg flex-shrink-0">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center gap-1.5 sm:gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] py-3 px-2 sm:p-4">
+              <div className="p-2 rounded-lg bg-purple-500/10">
                 <Award className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
               </div>
-              <div className="min-w-0">
-                <div className="text-lg sm:text-xl font-bold text-purple-400 truncate">Level 3</div>
-                <div className="text-[10px] sm:text-xs text-white truncate">NVQ Qualification</div>
+              <div className="text-center sm:text-left">
+                <p className="text-lg sm:text-xl font-bold text-foreground leading-tight">
+                  Level 3
+                </p>
+                <p className="text-[10px] sm:text-xs text-white">NVQ Qualification</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
 
-      {/* Categories with Cards */}
-      {categories.map((category) => {
-        const categoryItems = toolboxItems.filter(item => item.category === category.id);
-        if (categoryItems.length === 0) return null;
+          {/* Category Sections */}
+          {categories.map((category) => {
+            const categoryItems = toolboxItems.filter((item) => item.category === category.id);
+            if (categoryItems.length === 0) return null;
 
-        return (
-          <div key={category.id} className="space-y-4">
-            {/* Category Header */}
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                <category.icon className="h-5 w-5 text-elec-yellow" />
-                {category.label}
-              </h3>
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-                {categoryItems.length} {categoryItems.length === 1 ? 'Topic' : 'Topics'}
-              </Badge>
-            </div>
-            <p className="text-sm text-white -mt-2">{category.description}</p>
+            return (
+              <section key={category.id} className="mb-12">
+                {/* Dot + Line Divider */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-white">{category.label}</h2>
+                  <div className="h-px flex-1 bg-white/[0.06]" />
+                  <span className="text-xs text-white uppercase tracking-wider font-medium hidden sm:block">
+                    {category.count} topics
+                  </span>
+                </div>
 
-            {/* Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {categoryItems.map((item) => {
-                const colors = colorMap[item.accentColor];
-                const IconComponent = item.icon;
+                {/* Cards Grid — matches CourseCard pattern */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {categoryItems.map((item) => {
+                    const IconComponent = item.icon;
+                    const cardIndex = globalIndex++;
 
-                return (
-                  <Link to={item.link} key={item.id} className="focus:outline-none">
-                    <Card
-                      className={`group relative ${colors.border} ${colors.bg} h-full transition-all duration-300 cursor-pointer overflow-hidden hover:shadow-lg ${colors.glow} hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] touch-manipulation`}
-                    >
-                      {/* Badge */}
-                      {item.badge && (
-                        <div className="absolute top-3 right-3 z-10">
-                          <Badge variant="outline" className={`${colors.badge} text-xs font-medium`}>
-                            {item.badge}
-                          </Badge>
-                        </div>
-                      )}
+                    return (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: cardIndex * 0.05, duration: 0.3 }}
+                      >
+                        <Link
+                          to={item.link}
+                          className="block h-full"
+                          aria-label={`View ${item.title}`}
+                        >
+                          <div
+                            className="
+                              group relative overflow-hidden h-full min-h-[140px] sm:min-h-[180px]
+                              bg-gradient-to-br from-white/[0.08] to-white/[0.02]
+                              backdrop-blur-xl
+                              border border-white/10
+                              rounded-xl sm:rounded-2xl
+                              p-3 sm:p-5
+                              transition-all duration-300 ease-out
+                              touch-manipulation
+                              hover:border-elec-yellow/40
+                              hover:shadow-[0_8px_32px_rgba(250,204,21,0.15)]
+                              hover:translate-y-[-2px]
+                              active:scale-[0.98] active:translate-y-0
+                            "
+                          >
+                            {/* Top accent line */}
+                            <div className="absolute inset-x-0 top-0 h-[2px] bg-elec-yellow sm:bg-gradient-to-r sm:from-transparent sm:via-elec-yellow/60 sm:to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
 
-                      <CardHeader className="flex flex-row items-start gap-3 pb-2">
-                        {/* Icon Container */}
-                        <div className={`relative p-3 rounded-xl ${colors.iconBg} border border-white/5 group-hover:scale-110 group-active:scale-100 transition-transform duration-300 flex-shrink-0`}>
-                          <IconComponent className={`h-6 w-6 ${colors.icon}`} />
-                        </div>
+                            {/* Content */}
+                            <div className="relative flex flex-col h-full">
+                              {/* Top row: Icon + Badge */}
+                              <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
+                                <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br from-elec-yellow/20 via-amber-500/15 to-orange-500/10 border border-white/10 flex-shrink-0">
+                                  <IconComponent
+                                    className="h-4 w-4 sm:h-6 sm:w-6 text-elec-yellow"
+                                    strokeWidth={1.8}
+                                  />
+                                </div>
 
-                        <div className="flex-1 min-w-0">
-                          <CardTitle className="text-base sm:text-lg font-semibold leading-tight text-white group-hover:text-elec-yellow transition-colors duration-300 pr-16">
-                            {item.title}
-                          </CardTitle>
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="pt-0 pb-4 px-4">
-                        <p className="text-xs sm:text-sm text-white mb-3 line-clamp-2">
-                          {item.description}
-                        </p>
-
-                        {item.stats && item.stats.length > 0 && (
-                          <div className="grid grid-cols-2 gap-2">
-                            {item.stats.map((stat, index) => (
-                              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
-                                <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
-                                <div className="text-xs text-white">{stat.label}</div>
+                                {item.badge && (
+                                  <div className="inline-flex px-2 py-0.5 rounded-full flex-shrink-0 bg-elec-yellow/15 border border-elec-yellow/25">
+                                    <span className="text-[10px] sm:text-xs font-bold text-elec-yellow uppercase tracking-wide whitespace-nowrap">
+                                      {item.badge}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
-                            ))}
+
+                              {/* Title */}
+                              <h3 className="text-[13px] sm:text-[15px] font-semibold text-white leading-tight sm:leading-snug mb-1 sm:mb-1.5 line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200">
+                                {item.title}
+                              </h3>
+
+                              {/* Description - hidden on mobile */}
+                              <p className="text-xs text-white line-clamp-2 mb-auto leading-relaxed hidden sm:block">
+                                {item.description}
+                              </p>
+
+                              {/* Bottom row: spacer + Arrow */}
+                              <div className="flex items-center justify-end mt-auto pt-2 sm:pt-3">
+                                <ChevronRight className="w-4 h-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200" />
+                              </div>
+                            </div>
                           </div>
-                        )}
-                      </CardContent>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
 
-                      {/* Explore indicator - visible on mobile, enhanced on hover */}
-                      <div className="absolute bottom-3 right-3 opacity-70 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300">
-                        <div className={`flex items-center gap-1 text-xs ${colors.icon}`}>
-                          <span>Open</span>
-                          <ChevronRight className="h-3 w-3" />
-                        </div>
-                      </div>
-
-                      {/* Bottom accent line - visible on mobile */}
-                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${colors.icon} opacity-30 group-hover:opacity-50 group-active:opacity-50 transition-opacity duration-300`} />
-                    </Card>
-                  </Link>
-                );
-              })}
+          {/* Need More Help */}
+          <section>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Need More Help?</h2>
+              <div className="h-px flex-1 bg-white/[0.06]" />
             </div>
-          </div>
-        );
-      })}
 
-      {/* Help Banner */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-center sm:text-left">
-              <Sparkles className="h-8 w-8 text-elec-yellow flex-shrink-0" />
-              <div>
-                <h4 className="font-medium text-white">Need more help?</h4>
-                <p className="text-xs text-white">Check out mental health resources or explore career progression options</p>
-              </div>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <Link to="/apprentice/mental-health" className="flex-1 sm:flex-initial">
-                <Button
-                  variant="outline"
-                  className="w-full h-11 border-elec-yellow/30 hover:border-elec-yellow/50 active:border-elec-yellow/70 touch-manipulation"
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {/* Mental Health CTA */}
+              <Link to="/apprentice/mental-health" className="block h-full">
+                <div
+                  className="
+                    group relative overflow-hidden h-full min-h-[140px] sm:min-h-[180px]
+                    bg-gradient-to-br from-white/[0.08] to-white/[0.02]
+                    backdrop-blur-xl
+                    border border-white/10
+                    rounded-xl sm:rounded-2xl
+                    p-3 sm:p-5
+                    transition-all duration-300 ease-out
+                    touch-manipulation
+                    hover:border-elec-yellow/40
+                    hover:shadow-[0_8px_32px_rgba(250,204,21,0.15)]
+                    hover:translate-y-[-2px]
+                    active:scale-[0.98] active:translate-y-0
+                  "
                 >
-                  Mental Health
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-elec-yellow sm:bg-gradient-to-r sm:from-transparent sm:via-elec-yellow/60 sm:to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative flex flex-col h-full">
+                    <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br from-elec-yellow/20 via-amber-500/15 to-orange-500/10 border border-white/10 flex-shrink-0 w-fit mb-2 sm:mb-3">
+                      <Heart className="h-4 w-4 sm:h-6 sm:w-6 text-elec-yellow" strokeWidth={1.8} />
+                    </div>
+                    <h3 className="text-[13px] sm:text-[15px] font-semibold text-white leading-tight sm:leading-snug mb-1 sm:mb-1.5 group-hover:text-elec-yellow transition-colors duration-200">
+                      Mental Health Support
+                    </h3>
+                    <p className="text-xs text-white line-clamp-2 mb-auto leading-relaxed hidden sm:block">
+                      Resources, crisis support, and wellbeing tools for apprentices
+                    </p>
+                    <div className="flex items-center justify-end mt-auto pt-2 sm:pt-3">
+                      <ChevronRight className="w-4 h-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200" />
+                    </div>
+                  </div>
+                </div>
               </Link>
-              <Link to="/apprentice/career-progression" className="flex-1 sm:flex-initial">
-                <Button
-                  variant="accent"
-                  className="w-full h-11 touch-manipulation"
+
+              {/* Career Paths CTA */}
+              <Link to="/apprentice/professional-development" className="block h-full">
+                <div
+                  className="
+                    group relative overflow-hidden h-full min-h-[140px] sm:min-h-[180px]
+                    bg-gradient-to-br from-white/[0.08] to-white/[0.02]
+                    backdrop-blur-xl
+                    border border-white/10
+                    rounded-xl sm:rounded-2xl
+                    p-3 sm:p-5
+                    transition-all duration-300 ease-out
+                    touch-manipulation
+                    hover:border-elec-yellow/40
+                    hover:shadow-[0_8px_32px_rgba(250,204,21,0.15)]
+                    hover:translate-y-[-2px]
+                    active:scale-[0.98] active:translate-y-0
+                  "
                 >
-                  Career Paths
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
+                  <div className="absolute inset-x-0 top-0 h-[2px] bg-elec-yellow sm:bg-gradient-to-r sm:from-transparent sm:via-elec-yellow/60 sm:to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative flex flex-col h-full">
+                    <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br from-elec-yellow/20 via-amber-500/15 to-orange-500/10 border border-white/10 flex-shrink-0 w-fit mb-2 sm:mb-3">
+                      <TrendingUp
+                        className="h-4 w-4 sm:h-6 sm:w-6 text-elec-yellow"
+                        strokeWidth={1.8}
+                      />
+                    </div>
+                    <h3 className="text-[13px] sm:text-[15px] font-semibold text-white leading-tight sm:leading-snug mb-1 sm:mb-1.5 group-hover:text-elec-yellow transition-colors duration-200">
+                      Career Paths
+                    </h3>
+                    <p className="text-xs text-white line-clamp-2 mb-auto leading-relaxed hidden sm:block">
+                      Explore career pathways, certifications, and professional development
+                    </p>
+                    <div className="flex items-center justify-end mt-auto pt-2 sm:pt-3">
+                      <ChevronRight className="w-4 h-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200" />
+                    </div>
+                  </div>
+                </div>
               </Link>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </section>
+        </div>
+      </main>
     </div>
   );
 };

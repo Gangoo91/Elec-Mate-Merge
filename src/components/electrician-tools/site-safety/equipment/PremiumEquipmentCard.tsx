@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
   MapPin,
@@ -21,12 +21,12 @@ import {
   Gauge,
   Download,
   Loader2,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useSafetyPDFExport } from "@/hooks/useSafetyPDFExport";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 
-type EquipmentStatus = "good" | "needs_attention" | "out_of_service" | "overdue";
+type EquipmentStatus = 'good' | 'needs_attention' | 'out_of_service' | 'overdue';
 
 interface Equipment {
   id: string;
@@ -43,49 +43,52 @@ interface Equipment {
 
 // Category icons mapping
 const categoryIcons: Record<string, typeof Plug> = {
-  "pat-tester": Plug,
-  "test-equipment": Zap,
-  "ladders": ArrowUpDown,
-  "power-tools": Wrench,
-  "ppe": Shield,
-  "other": Settings,
+  'pat-tester': Plug,
+  'test-equipment': Zap,
+  ladders: ArrowUpDown,
+  'power-tools': Wrench,
+  ppe: Shield,
+  other: Settings,
 };
 
 // Status config
-const statusConfig: Record<EquipmentStatus, {
-  bg: string;
-  text: string;
-  border: string;
-  icon: typeof CheckCircle;
-  label: string;
-}> = {
+const statusConfig: Record<
+  EquipmentStatus,
+  {
+    bg: string;
+    text: string;
+    border: string;
+    icon: typeof CheckCircle;
+    label: string;
+  }
+> = {
   good: {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
-    border: "border-emerald-500/20",
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
     icon: CheckCircle,
-    label: "Good"
+    label: 'Good',
   },
   needs_attention: {
-    bg: "bg-amber-500/10",
-    text: "text-amber-400",
-    border: "border-amber-500/20",
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
     icon: AlertTriangle,
-    label: "Attention"
+    label: 'Attention',
   },
   overdue: {
-    bg: "bg-red-500/10",
-    text: "text-red-400",
-    border: "border-red-500/20",
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
     icon: AlertCircle,
-    label: "Overdue"
+    label: 'Overdue',
   },
   out_of_service: {
-    bg: "bg-gray-500/10",
-    text: "text-white",
-    border: "border-gray-500/20",
+    bg: 'bg-gray-500/10',
+    text: 'text-white',
+    border: 'border-gray-500/20',
     icon: XCircle,
-    label: "Out of Service"
+    label: 'Out of Service',
   },
 };
 
@@ -114,18 +117,18 @@ export function PremiumEquipmentCard({
   const CategoryIcon = categoryIcons[equipment.category] || Settings;
 
   const formatDate = (dateString: string | null) => {
-    if (!dateString) return "Not set";
-    return new Date(dateString).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+    if (!dateString) return 'Not set';
+    return new Date(dateString).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
     });
   };
 
   const formatFrequency = (days: number) => {
     if (days <= 30) return `${days} days`;
     if (days <= 90) return `${Math.round(days / 30)} months`;
-    if (days === 365) return "12 months";
+    if (days === 365) return '12 months';
     return `${Math.round(days / 30)} months`;
   };
 
@@ -133,38 +136,35 @@ export function PremiumEquipmentCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.03, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.03, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-xl",
-        "bg-white/5 border",
+        'relative overflow-hidden rounded-xl',
+        'bg-white/5 border',
         status.border,
-        "transition-all duration-300",
-        "active:scale-[0.99]"
+        'transition-all duration-300',
+        'active:scale-[0.99]'
       )}
     >
       {/* Main Content - Clickable */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full text-left p-3"
-      >
+      <button onClick={() => setIsExpanded(!isExpanded)} className="w-full text-left p-3">
         {/* Header */}
         <div className="flex items-start gap-2.5">
           {/* Category Icon */}
-          <div className={cn(
-            "p-2 rounded-lg border flex-shrink-0",
-            status.bg, status.border
-          )}>
-            <CategoryIcon className={cn("h-4 w-4", status.text)} />
+          <div className={cn('p-2 rounded-lg border flex-shrink-0', status.bg, status.border)}>
+            <CategoryIcon className={cn('h-4 w-4', status.text)} />
           </div>
 
           {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5">
               <h3 className="text-sm font-semibold text-white truncate">{equipment.name}</h3>
-              <div className={cn(
-                "flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-medium",
-                status.bg, status.text
-              )}>
+              <div
+                className={cn(
+                  'flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-medium',
+                  status.bg,
+                  status.text
+                )}
+              >
                 <StatusIcon className="h-2.5 w-2.5" />
                 {status.label}
               </div>
@@ -205,7 +205,7 @@ export function PremiumEquipmentCard({
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -218,9 +218,7 @@ export function PremiumEquipmentCard({
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <div className="space-y-0.5">
                   <p className="text-[10px] text-white">Last Tested</p>
-                  <p className="text-xs text-white">
-                    {formatDate(equipment.last_inspection)}
-                  </p>
+                  <p className="text-xs text-white">{formatDate(equipment.last_inspection)}</p>
                 </div>
                 <div className="space-y-0.5">
                   <p className="text-[10px] text-white">Test Frequency</p>
@@ -244,8 +242,11 @@ export function PremiumEquipmentCard({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); onEdit(); }}
-                    className="flex-1 h-10 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit();
+                    }}
+                    className="flex-1 h-11 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
                   >
                     <Pencil className="h-3.5 w-3.5 mr-1" />
                     Edit
@@ -254,8 +255,11 @@ export function PremiumEquipmentCard({
                 {onMarkInspected && (
                   <Button
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); onMarkInspected(); }}
-                    className="flex-1 h-10 text-xs bg-emerald-500 text-white hover:bg-emerald-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onMarkInspected();
+                    }}
+                    className="flex-1 h-11 text-xs bg-emerald-500 text-white hover:bg-emerald-600 touch-manipulation"
                   >
                     <Check className="h-3.5 w-3.5 mr-1" />
                     Tested
@@ -264,8 +268,11 @@ export function PremiumEquipmentCard({
                 {onMarkCalibrated && (
                   <Button
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); onMarkCalibrated(); }}
-                    className="flex-1 h-10 text-xs bg-blue-500 text-white hover:bg-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onMarkCalibrated();
+                    }}
+                    className="flex-1 h-11 text-xs bg-blue-500 text-white hover:bg-blue-600 touch-manipulation"
                   >
                     <Gauge className="h-3.5 w-3.5 mr-1" />
                     Calibrated
@@ -274,9 +281,12 @@ export function PremiumEquipmentCard({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={(e) => { e.stopPropagation(); exportPDF("equipment", equipment.id); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    exportPDF('equipment', equipment.id);
+                  }}
                   disabled={isExporting && exportingId === equipment.id}
-                  className="h-10 w-10 p-0 text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
+                  className="h-11 w-11 p-0 text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
                 >
                   {isExporting && exportingId === equipment.id ? (
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -288,8 +298,11 @@ export function PremiumEquipmentCard({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                    className="h-10 w-10 p-0 text-white hover:text-red-400 hover:bg-red-500/10 border border-white/[0.08]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete();
+                    }}
+                    className="h-11 w-11 p-0 text-white hover:text-red-400 hover:bg-red-500/10 border border-white/[0.08] touch-manipulation"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>

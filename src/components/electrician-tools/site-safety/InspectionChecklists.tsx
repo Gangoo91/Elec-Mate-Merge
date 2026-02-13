@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,10 +8,9 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from 'sonner';
-import {
-  useInspectionRecords,
-  useCreateInspectionRecord,
-} from '@/hooks/useInspectionRecords';
+import { SignaturePad } from './common/SignaturePad';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+import { useInspectionRecords, useCreateInspectionRecord } from '@/hooks/useInspectionRecords';
 import {
   ArrowLeft,
   Plus,
@@ -34,6 +34,8 @@ import {
   HardHat,
   Wrench,
   Eye,
+  FileDown,
+  Loader2,
 } from 'lucide-react';
 
 // ─── Types ───
@@ -399,6 +401,7 @@ const RESULT_CONFIG = {
 export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading: isLoadingRecords } = useInspectionRecords();
   const createInspectionRecord = useCreateInspectionRecord();
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
 
   const completedInspections: CompletedInspection[] = (dbRecords ?? []).map((r) => ({
     id: r.id,
@@ -424,6 +427,10 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [viewingInspection, setViewingInspection] = useState<CompletedInspection | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [inspectorSigName, setInspectorSigName] = useState('');
+  const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
+  const [inspectorSigData, setInspectorSigData] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const startInspection = (template: ChecklistTemplate) => {
     setActiveTemplate(template);
@@ -500,6 +507,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         na_count: naCount,
         total_items: totalItems,
         additional_notes: additionalNotes || null,
+        photos: photoUrls,
       });
 
       setActiveTemplate(null);
@@ -507,6 +515,10 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
       setInspectorName('');
       setLocation('');
       setAdditionalNotes('');
+      setInspectorSigName('');
+      setInspectorSigDate(new Date().toISOString().split('T')[0]);
+      setInspectorSigData('');
+      setPhotoUrls([]);
     } catch {
       // error toast handled by hook
     }
@@ -577,11 +589,11 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
             <div className="flex gap-2">
               <div className="flex-1 p-2 rounded-lg bg-green-500/10 text-center">
                 <p className="text-lg font-bold text-green-400">{passCount}</p>
-                <p className="text-[10px] text-green-300/70">Pass</p>
+                <p className="text-[10px] text-green-300">Pass</p>
               </div>
               <div className="flex-1 p-2 rounded-lg bg-red-500/10 text-center">
                 <p className="text-lg font-bold text-red-400">{failCount}</p>
-                <p className="text-[10px] text-red-300/70">Fail</p>
+                <p className="text-[10px] text-red-300">Fail</p>
               </div>
               <div className="flex-1 p-2 rounded-lg bg-gray-500/10 text-center">
                 <p className="text-lg font-bold text-white">{naCount}</p>
@@ -690,6 +702,24 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 placeholder="Any additional observations..."
               />
             </div>
+
+            {/* Defect Evidence Photos */}
+            <SafetyPhotoCapture
+              photos={photoUrls}
+              onPhotosChange={setPhotoUrls}
+              label="Defect Evidence Photos"
+            />
+
+            {/* Inspector Signature */}
+            <SignaturePad
+              label="Inspector Signature"
+              name={inspectorSigName}
+              date={inspectorSigDate}
+              signatureDataUrl={inspectorSigData}
+              onSignatureChange={setInspectorSigData}
+              onNameChange={setInspectorSigName}
+              onDateChange={setInspectorSigDate}
+            />
           </div>
         </div>
 
@@ -908,13 +938,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     <p className="text-2xl font-bold text-green-400">
                       {viewingInspection.pass_count}
                     </p>
-                    <p className="text-xs text-green-300/70">Pass</p>
+                    <p className="text-xs text-green-300">Pass</p>
                   </div>
                   <div className="p-3 rounded-xl bg-red-500/10 text-center">
                     <p className="text-2xl font-bold text-red-400">
                       {viewingInspection.fail_count}
                     </p>
-                    <p className="text-xs text-red-300/70">Fail</p>
+                    <p className="text-xs text-red-300">Fail</p>
                   </div>
                   <div className="p-3 rounded-xl bg-gray-500/10 text-center">
                     <p className="text-2xl font-bold text-white">{viewingInspection.na_count}</p>
@@ -940,7 +970,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                             >
                               <p className="text-sm text-white">{item.text}</p>
                               {item.notes && (
-                                <p className="text-xs text-red-300/70 mt-1">{item.notes}</p>
+                                <p className="text-xs text-red-300 mt-1">{item.notes}</p>
                               )}
                             </div>
                           ))
@@ -976,6 +1006,20 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     <p className="text-sm text-white">{viewingInspection.additional_notes}</p>
                   </div>
                 )}
+              </div>
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                <Button
+                  onClick={() => exportPDF('inspection', viewingInspection.id)}
+                  disabled={isExporting && exportingId === viewingInspection.id}
+                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                >
+                  {isExporting && exportingId === viewingInspection.id ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <FileDown className="h-4 w-4 mr-2" />
+                  )}
+                  Export PDF
+                </Button>
               </div>
             </div>
           )}

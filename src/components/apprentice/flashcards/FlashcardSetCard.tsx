@@ -1,9 +1,8 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Play, Clock, Target, CheckCircle, Trophy, Zap, Star, Flame, ArrowRight } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
+import MiniProgressRing from './MiniProgressRing';
+import type { FlashcardLevel } from '@/data/flashcards';
 
 interface FlashcardSet {
   id: string;
@@ -14,6 +13,7 @@ interface FlashcardSet {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   estimatedTime: string;
   category: string;
+  level?: FlashcardLevel;
   completed?: boolean;
   progressPercentage?: number;
   lastStudied?: string;
@@ -26,172 +26,102 @@ interface FlashcardSetCardProps {
 }
 
 const FlashcardSetCard = ({ set, onStart }: FlashcardSetCardProps) => {
-  const getDifficultyConfig = (difficulty: string) => {
+  const progress = set.progressPercentage || 0;
+  const SetIcon = set.icon;
+
+  const getDifficultyLabel = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
         return {
-          bg: 'bg-green-500/10',
-          text: 'text-green-400',
-          border: 'border-green-500/30',
-          icon: Star,
-          label: 'Beginner'
+          label: 'Beginner',
+          className: 'bg-green-500/10 text-green-400 border-green-500/30',
         };
       case 'intermediate':
         return {
-          bg: 'bg-elec-yellow/10',
-          text: 'text-elec-yellow',
-          border: 'border-elec-yellow/30',
-          icon: Zap,
-          label: 'Intermediate'
+          label: 'Intermediate',
+          className: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30',
         };
       case 'advanced':
         return {
-          bg: 'bg-red-500/10',
-          text: 'text-red-400',
-          border: 'border-red-500/30',
-          icon: Trophy,
-          label: 'Advanced'
+          label: 'Advanced',
+          className: 'bg-red-500/10 text-red-400 border-red-500/30',
         };
       default:
         return {
-          bg: 'bg-white/20',
-          text: 'text-white',
-          border: 'border-white/20',
-          icon: Star,
-          label: 'Unknown'
+          label: 'Standard',
+          className: 'bg-white/10 text-white border-white/20',
         };
     }
   };
 
-  const progress = set.progressPercentage || 0;
-  const mastered = set.masteredCards || 0;
-  const difficultyConfig = getDifficultyConfig(set.difficulty);
-  const DifficultyIcon = difficultyConfig.icon;
-  const SetIcon = set.icon;
-
-  const getProgressColor = (progress: number) => {
-    if (progress >= 80) return 'from-green-500 to-green-400';
-    if (progress >= 50) return 'from-elec-yellow to-yellow-400';
-    if (progress > 0) return 'from-blue-500 to-blue-400';
-    return 'from-white/20 to-white/10';
+  const getLevelBadge = (level?: FlashcardLevel) => {
+    if (!level || level === 'Both') return null;
+    if (level === 'Level 2') {
+      return {
+        label: 'L2',
+        className: 'bg-green-500/10 text-green-400 border-green-500/30',
+      };
+    }
+    return {
+      label: 'L3',
+      className: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+    };
   };
 
+  const diffConfig = getDifficultyLabel(set.difficulty);
+  const levelBadge = getLevelBadge(set.level);
+
   return (
-    <Card
-      className={`
-        bg-gradient-to-br from-elec-gray to-elec-card
-        border-white/10 hover:border-elec-yellow/40
-        transition-all duration-300 hover:scale-[1.02]
-        h-full cursor-pointer group
-        touch-manipulation active:scale-[0.98]
-      `}
+    <button
+      type="button"
       onClick={() => onStart(set.id)}
+      className="
+        w-full flex items-center gap-3 p-3
+        bg-white/5 border border-white/10 rounded-xl
+        min-h-[72px] touch-manipulation
+        active:scale-[0.98] transition-transform
+        text-left
+      "
     >
-      <CardContent className="p-5 sm:p-6 h-full flex flex-col">
-        {/* Header Section */}
-        <div className="flex items-start gap-4 mb-4">
-          <div className={`
-            p-3 rounded-xl flex-shrink-0 transition-all duration-300
-            bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5
-            border border-elec-yellow/30
-            group-hover:border-elec-yellow/50 group-hover:shadow-lg group-hover:shadow-elec-yellow/10
-          `}>
-            <SetIcon className="h-6 w-6 text-elec-yellow" />
-          </div>
+      {/* Icon */}
+      <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+        <SetIcon className="h-5 w-5 text-elec-yellow" />
+      </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-white truncate text-lg group-hover:text-elec-yellow transition-colors">
-                {set.title}
-              </h3>
-              {set.completed && (
-                <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-              )}
-            </div>
-            <Badge
-              variant="outline"
-              className="text-xs bg-white/5 border-white/20 text-white/70 mb-2"
-            >
-              {set.category}
-            </Badge>
-            <p className="text-sm text-white/70 line-clamp-2">{set.description}</p>
-          </div>
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          <h3 className="font-semibold text-white text-sm truncate">{set.title}</h3>
+          {set.completed && <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />}
         </div>
-
-        {/* Progress Section */}
-        <div className="flex-1">
-          {progress > 0 && (
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-white/60">Progress</span>
-                <span className="text-xs font-semibold text-elec-yellow">{progress}%</span>
-              </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className={`h-full bg-gradient-to-r ${getProgressColor(progress)} transition-all duration-500 rounded-full`}
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              <div className="flex items-center gap-1 text-xs text-white/60">
-                <Flame className="h-3 w-3 text-orange-400" />
-                <span>{mastered} of {set.count} cards mastered</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Stats Row */}
-        <div className="flex items-center justify-between text-xs text-white/60 mb-4 pb-4 border-b border-white/10">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <Target className="h-3.5 w-3.5 text-blue-400" />
-              <span>{set.count} cards</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5 text-purple-400" />
-              <span>{set.estimatedTime}</span>
-            </div>
-          </div>
+        <div className="flex items-center gap-2 text-xs text-white">
+          <span>{set.count} cards</span>
+          <span className="text-white">|</span>
+          <span>{set.estimatedTime}</span>
           {set.lastStudied && (
-            <div className="text-xs text-elec-yellow/70 flex items-center gap-1">
-              <span>{set.lastStudied}</span>
-            </div>
+            <>
+              <span className="text-white">|</span>
+              <span className="text-elec-yellow">{set.lastStudied}</span>
+            </>
           )}
         </div>
-
-        {/* Bottom Section */}
-        <div className="flex items-center justify-between gap-3">
-          <Badge
-            className={`
-              ${difficultyConfig.bg} ${difficultyConfig.text} ${difficultyConfig.border}
-              flex items-center gap-1.5 text-xs px-3 py-1
-            `}
-            variant="outline"
-          >
-            <DifficultyIcon className="h-3 w-3" />
-            {difficultyConfig.label}
+        <div className="mt-1 flex items-center gap-1.5">
+          <Badge variant="outline" className={`text-[10px] px-2 py-0 ${diffConfig.className}`}>
+            {diffConfig.label}
           </Badge>
-
-          <Button
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              onStart(set.id);
-            }}
-            className="
-              bg-elec-yellow text-black hover:bg-elec-yellow/90
-              font-semibold transition-all duration-200
-              h-10 px-4 touch-manipulation active:scale-95
-              group-hover:shadow-lg group-hover:shadow-elec-yellow/20
-            "
-          >
-            <Play className="mr-2 h-4 w-4" />
-            {progress > 0 ? 'Continue' : 'Start'}
-            <ArrowRight className="ml-1 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </Button>
+          {levelBadge && (
+            <Badge variant="outline" className={`text-[10px] px-2 py-0 ${levelBadge.className}`}>
+              {levelBadge.label}
+            </Badge>
+          )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Progress Ring */}
+      <div className="flex-shrink-0">
+        <MiniProgressRing score={progress} size={36} strokeWidth={3} />
+      </div>
+    </button>
   );
 };
 

@@ -1,17 +1,17 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Package, Loader2, Search, X } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useSafetyEquipment, SafetyEquipment } from "@/hooks/useSafetyEquipment";
+import React, { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Package, Loader2, Search, X } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useSafetyEquipment, SafetyEquipment } from '@/hooks/useSafetyEquipment';
 import {
   EquipmentHeroCard,
   PremiumEquipmentCard,
   EquipmentFilterTabs,
   EquipmentFormWizard,
   type EquipmentFilterId,
-} from "./equipment";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+} from './equipment';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 
 export const SafetyEquipmentTracker: React.FC = () => {
   const navigate = useNavigate();
@@ -27,10 +27,10 @@ export const SafetyEquipmentTracker: React.FC = () => {
     markCalibrated,
   } = useSafetyEquipment();
 
-  const [activeFilter, setActiveFilter] = useState<EquipmentFilterId>("all");
+  const [activeFilter, setActiveFilter] = useState<EquipmentFilterId>('all');
   const [showForm, setShowForm] = useState(false);
   const [editingEquipment, setEditingEquipment] = useState<SafetyEquipment | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Filter equipment based on active tab and search query
   const filteredEquipment = useMemo(() => {
@@ -38,13 +38,13 @@ export const SafetyEquipmentTracker: React.FC = () => {
 
     // Filter by status tab
     switch (activeFilter) {
-      case "good":
-        result = result.filter((e) => e.status === "good");
+      case 'good':
+        result = result.filter((e) => e.status === 'good');
         break;
-      case "attention":
-        result = result.filter((e) => e.status === "needs_attention");
+      case 'attention':
+        result = result.filter((e) => e.status === 'needs_attention');
         break;
-      case "overdue":
+      case 'overdue':
         result = result.filter((e) => {
           if (e.next_inspection) {
             return new Date(e.next_inspection) < new Date();
@@ -52,7 +52,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
           if (e.calibration_due) {
             return new Date(e.calibration_due) < new Date();
           }
-          return e.status === "overdue";
+          return e.status === 'overdue';
         });
         break;
     }
@@ -73,19 +73,24 @@ export const SafetyEquipmentTracker: React.FC = () => {
 
   // Tab configuration with counts
   const tabs = [
-    { id: "all" as const, label: "All", count: stats.total, color: "default" as const },
-    { id: "good" as const, label: "Good", count: stats.good, color: "green" as const },
-    { id: "attention" as const, label: "Attention", count: stats.needsAttention, color: "amber" as const },
-    { id: "overdue" as const, label: "Overdue", count: stats.overdue, color: "red" as const },
+    { id: 'all' as const, label: 'All', count: stats.total, color: 'default' as const },
+    { id: 'good' as const, label: 'Good', count: stats.good, color: 'green' as const },
+    {
+      id: 'attention' as const,
+      label: 'Attention',
+      count: stats.needsAttention,
+      color: 'amber' as const,
+    },
+    { id: 'overdue' as const, label: 'Overdue', count: stats.overdue, color: 'red' as const },
   ];
 
-  const handleAddEquipment = async (data: any) => {
+  const handleAddEquipment = async (data: Record<string, unknown>) => {
     // Calculate next_inspection based on last_inspection and interval
     let next_inspection: string | null = null;
     if (data.last_inspection && data.inspection_interval_days) {
       const lastDate = new Date(data.last_inspection);
       lastDate.setDate(lastDate.getDate() + data.inspection_interval_days);
-      next_inspection = lastDate.toISOString().split("T")[0];
+      next_inspection = lastDate.toISOString().split('T')[0];
     }
 
     await addEquipment.mutateAsync({
@@ -97,7 +102,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
       next_inspection,
       inspection_interval_days: data.inspection_interval_days || 180,
       condition_notes: data.condition_notes || null,
-      status: "good",
+      status: 'good',
       requires_calibration: false,
       photos: [],
     });
@@ -105,7 +110,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
     setEditingEquipment(null);
   };
 
-  const handleUpdateEquipment = async (data: any) => {
+  const handleUpdateEquipment = async (data: Record<string, unknown>) => {
     if (!editingEquipment) return;
 
     // Calculate next_inspection based on last_inspection and interval
@@ -113,7 +118,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
     if (data.last_inspection && data.inspection_interval_days) {
       const lastDate = new Date(data.last_inspection);
       lastDate.setDate(lastDate.getDate() + data.inspection_interval_days);
-      next_inspection = lastDate.toISOString().split("T")[0];
+      next_inspection = lastDate.toISOString().split('T')[0];
     }
 
     await updateEquipment.mutateAsync({
@@ -177,7 +182,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
       <div className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
         <div className="px-2 py-2">
           <button
-            onClick={() => navigate("/electrician-tools/site-safety")}
+            onClick={() => navigate('/electrician-tools/site-safety')}
             className="flex items-center gap-2 text-white hover:text-white transition-colors min-h-[44px] touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -189,95 +194,93 @@ export const SafetyEquipmentTracker: React.FC = () => {
       <PullToRefresh onRefresh={handleRefresh}>
         <div className="px-2 py-2 space-y-3">
           {/* Hero Card with Stats */}
-        <EquipmentHeroCard
-          totalEquipment={stats.total}
-          goodCount={stats.good}
-          attentionCount={stats.needsAttention}
-          overdueCount={stats.overdue}
-          onAddEquipment={() => setShowForm(true)}
-        />
-
-        {/* Compact Search */}
-        <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-          <Input
-            placeholder="Search equipment..."
-            className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <EquipmentHeroCard
+            totalEquipment={stats.total}
+            goodCount={stats.good}
+            attentionCount={stats.needsAttention}
+            overdueCount={stats.overdue}
+            onAddEquipment={() => setShowForm(true)}
           />
-          {searchQuery && (
-            <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
-              onClick={() => setSearchQuery("")}
-            >
-              <X className="h-3.5 w-3.5 text-white" />
-            </button>
-          )}
-        </div>
 
-        {/* Filter Tabs */}
-        <EquipmentFilterTabs
-          tabs={tabs}
-          activeTab={activeFilter}
-          onChange={setActiveFilter}
-        />
+          {/* Compact Search */}
+          <div className="relative">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <Input
+              placeholder="Search equipment..."
+              className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
+                onClick={() => setSearchQuery('')}
+              >
+                <X className="h-3.5 w-3.5 text-white" />
+              </button>
+            )}
+          </div>
 
-        {/* Equipment List */}
-        <div className="space-y-2">
-          {isLoading ? (
-            <Card className="bg-white/5 border border-white/[0.08] rounded-xl">
-              <CardContent className="py-12">
-                <div className="flex flex-col items-center justify-center gap-3">
-                  <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                    <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+          {/* Filter Tabs */}
+          <EquipmentFilterTabs tabs={tabs} activeTab={activeFilter} onChange={setActiveFilter} />
+
+          {/* Equipment List */}
+          <div className="space-y-2">
+            {isLoading ? (
+              <Card className="bg-white/5 border border-white/[0.08] rounded-xl">
+                <CardContent className="py-12">
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                      <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-white">Loading Equipment</p>
+                      <p className="text-xs text-white mt-0.5">Fetching your safety equipment...</p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-medium text-white">Loading Equipment</p>
-                    <p className="text-xs text-white mt-0.5">
-                      Fetching your safety equipment...
-                    </p>
+                </CardContent>
+              </Card>
+            ) : filteredEquipment.length === 0 ? (
+              <Card className="bg-white/5 border border-white/[0.08] border-dashed rounded-xl">
+                <CardContent className="py-8 text-center">
+                  <div className="p-3 mx-auto w-fit rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+                    <Package className="h-6 w-6 text-elec-yellow" />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ) : filteredEquipment.length === 0 ? (
-            <Card className="bg-white/5 border border-white/[0.08] border-dashed rounded-xl">
-              <CardContent className="py-8 text-center">
-                <div className="p-3 mx-auto w-fit rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-                  <Package className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <h3 className="text-base font-semibold text-white mb-1">
-                  {activeFilter === "all" ? "No Equipment" : `No ${tabs.find(t => t.id === activeFilter)?.label} Equipment`}
-                </h3>
-                <p className="text-xs text-white mb-4 max-w-[200px] mx-auto">
-                  {activeFilter === "all"
-                    ? "Add your first piece of equipment to start tracking"
-                    : `No equipment in ${activeFilter} status`}
-                </p>
-                {activeFilter === "all" && (
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="h-10 px-5 flex items-center justify-center gap-2 mx-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    Add Equipment
-                  </button>
-                )}
-              </CardContent>
-            </Card>
-          ) : (
-            filteredEquipment.map((item, index) => (
-              <PremiumEquipmentCard
-                key={item.id}
-                equipment={item}
-                onEdit={() => handleEdit(item)}
-                onDelete={() => handleDelete(item.id)}
-                onMarkInspected={() => handleMarkInspected(item.id)}
-                onMarkCalibrated={item.requires_calibration ? () => handleMarkCalibrated(item.id) : undefined}
-                index={index}
-              />
-            ))
-          )}
+                  <h3 className="text-base font-semibold text-white mb-1">
+                    {activeFilter === 'all'
+                      ? 'No Equipment'
+                      : `No ${tabs.find((t) => t.id === activeFilter)?.label} Equipment`}
+                  </h3>
+                  <p className="text-xs text-white mb-4 max-w-[200px] mx-auto">
+                    {activeFilter === 'all'
+                      ? 'Add your first piece of equipment to start tracking'
+                      : `No equipment in ${activeFilter} status`}
+                  </p>
+                  {activeFilter === 'all' && (
+                    <button
+                      onClick={() => setShowForm(true)}
+                      className="h-11 px-5 flex items-center justify-center gap-2 mx-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all"
+                    >
+                      Add Equipment
+                    </button>
+                  )}
+                </CardContent>
+              </Card>
+            ) : (
+              filteredEquipment.map((item, index) => (
+                <PremiumEquipmentCard
+                  key={item.id}
+                  equipment={item}
+                  onEdit={() => handleEdit(item)}
+                  onDelete={() => handleDelete(item.id)}
+                  onMarkInspected={() => handleMarkInspected(item.id)}
+                  onMarkCalibrated={
+                    item.requires_calibration ? () => handleMarkCalibrated(item.id) : undefined
+                  }
+                  index={index}
+                />
+              ))
+            )}
           </div>
         </div>
       </PullToRefresh>

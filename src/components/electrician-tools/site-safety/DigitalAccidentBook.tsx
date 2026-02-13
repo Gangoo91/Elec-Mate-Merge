@@ -1,12 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import {
-  useAccidentRecords,
-  useCreateAccidentRecord,
-} from '@/hooks/useAccidentRecords';
+import { useAccidentRecords, useCreateAccidentRecord } from '@/hooks/useAccidentRecords';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -21,6 +19,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { LocationAutoFill } from './common/LocationAutoFill';
+import { SignaturePad } from './common/SignaturePad';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { toast } from 'sonner';
 import {
   ArrowLeft,
@@ -41,6 +42,8 @@ import {
   CheckCircle2,
   XCircle,
   Info,
+  FileDown,
+  Loader2,
 } from 'lucide-react';
 
 // ─── Types ───
@@ -124,6 +127,7 @@ interface AccidentRecord {
   recorded_by: string;
   additional_notes: string;
   corrective_actions: string;
+  photos?: string[];
   created_at: string;
 }
 
@@ -235,6 +239,7 @@ function checkRIDDOR(record: Partial<AccidentRecord>): { reportable: boolean; re
 export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading } = useAccidentRecords();
   const createRecord = useCreateAccidentRecord();
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
     id: r.id,
     injured_name: r.injured_name,
@@ -277,6 +282,12 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const [formStep, setFormStep] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
+
+  // Signature state (UI only — not persisted to DB yet)
+  const [reporterSigName, setReporterSigName] = useState('');
+  const [reporterSigDate, setReporterSigDate] = useState(new Date().toISOString().split('T')[0]);
+  const [reporterSigData, setReporterSigData] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   // ─── Draft persistence ───
   const {
@@ -340,6 +351,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   const resetForm = () => {
     setFormStep(0);
+    setPhotoUrls([]);
     setForm({
       injured_name: '',
       injured_role: '',
@@ -415,6 +427,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       recorded_by: form.recorded_by || '',
       additional_notes: form.additional_notes || '',
       corrective_actions: form.corrective_actions || '',
+      photos: photoUrls,
       created_at: new Date().toISOString(),
     };
 
@@ -515,15 +528,12 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   />
                 </div>
               </div>
-              <div>
-                <Label className="text-white text-sm">Location *</Label>
-                <Input
-                  value={form.location}
-                  onChange={(e) => updateForm({ location: e.target.value })}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="Site name / address"
-                />
-              </div>
+              <LocationAutoFill
+                value={form.location || ''}
+                onChange={(v) => updateForm({ location: v })}
+                label="Location"
+                placeholder="Site name / address"
+              />
               <div>
                 <Label className="text-white text-sm">Specific Location</Label>
                 <Input
@@ -647,6 +657,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   placeholder="Describe the injury in detail..."
                 />
               </div>
+
+              {/* Incident Scene Photos */}
+              <SafetyPhotoCapture
+                photos={photoUrls}
+                onPhotosChange={setPhotoUrls}
+                label="Incident Scene Photos"
+              />
             </div>
           </div>
         );
@@ -750,22 +767,22 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-bold text-red-300">RIDDOR Reportable</p>
-                      <p className="text-xs text-red-200/70 mt-1">
+                      <p className="text-xs text-red-200 mt-1">
                         This incident may need to be reported to the HSE under RIDDOR:
                       </p>
                       <ul className="mt-1.5 space-y-1">
                         {riddorCheck.reasons.map((reason, i) => (
-                          <li key={i} className="text-xs text-red-200/70 flex items-start gap-1.5">
+                          <li key={i} className="text-xs text-red-200 flex items-start gap-1.5">
                             <span className="text-red-400 mt-0.5">•</span>
                             {reason}
                           </li>
                         ))}
                       </ul>
                       <div className="mt-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20">
-                        <p className="text-xs text-red-200/70">
+                        <p className="text-xs text-red-200">
                           <strong>Report online:</strong> www.hse.gov.uk/riddor
                         </p>
-                        <p className="text-xs text-red-200/70">
+                        <p className="text-xs text-red-200">
                           <strong>Fatal/major:</strong> Call 0345 300 9923 immediately
                         </p>
                       </div>
@@ -813,6 +830,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   placeholder="Any additional notes..."
                 />
               </div>
+
+              {/* Reporter Signature */}
+              <SignaturePad
+                label="Reporter Signature"
+                name={reporterSigName}
+                date={reporterSigDate}
+                signatureDataUrl={reporterSigData}
+                onSignatureChange={setReporterSigData}
+                onNameChange={setReporterSigName}
+                onDateChange={setReporterSigDate}
+              />
             </div>
           </div>
         );
@@ -1102,8 +1130,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       {viewingRecord.location_detail && `— ${viewingRecord.location_detail}`}
                     </p>
                     <p>
-                      <span className="text-white">Date/Time:</span>{' '}
-                      {viewingRecord.incident_date} {viewingRecord.incident_time}
+                      <span className="text-white">Date/Time:</span> {viewingRecord.incident_date}{' '}
+                      {viewingRecord.incident_time}
                     </p>
                     {viewingRecord.activity_at_time && (
                       <p>
@@ -1151,9 +1179,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                             <p className="ml-5">{viewingRecord.first_aid_details}</p>
                           )}
                           {viewingRecord.first_aider_name && (
-                            <p className="ml-5 text-white">
-                              By: {viewingRecord.first_aider_name}
-                            </p>
+                            <p className="ml-5 text-white">By: {viewingRecord.first_aider_name}</p>
                           )}
                         </>
                       )}
@@ -1182,7 +1208,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 {viewingRecord.is_riddor_reportable && (
                   <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
                     <h4 className="text-sm font-bold text-red-300 mb-1">RIDDOR Status</h4>
-                    <p className="text-xs text-red-200/70">{viewingRecord.riddor_category}</p>
+                    <p className="text-xs text-red-200">{viewingRecord.riddor_category}</p>
                     {viewingRecord.riddor_reference && (
                       <p className="text-xs text-white mt-1">
                         Reference: {viewingRecord.riddor_reference}
@@ -1205,6 +1231,20 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <span>Reported to: {viewingRecord.reported_to}</span>
                   </div>
                 </div>
+              </div>
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                <Button
+                  onClick={() => exportPDF('accident', viewingRecord.id)}
+                  disabled={isExporting && exportingId === viewingRecord.id}
+                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                >
+                  {isExporting && exportingId === viewingRecord.id ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <FileDown className="h-4 w-4 mr-2" />
+                  )}
+                  Export PDF
+                </Button>
               </div>
             </div>
           )}

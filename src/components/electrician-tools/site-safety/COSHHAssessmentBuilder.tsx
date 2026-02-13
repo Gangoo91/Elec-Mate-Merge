@@ -1,13 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import {
-  useCOSHHAssessments,
-  useCreateCOSHH,
-  useDeleteCOSHH,
-} from '@/hooks/useCOSHH';
+import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,6 +19,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { LocationAutoFill } from './common/LocationAutoFill';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { toast } from 'sonner';
 import {
   ArrowLeft,
@@ -43,7 +42,10 @@ import {
   Trash2,
   FileText,
   Download,
+  FileDown,
+  Loader2,
   Clock,
+  Copy,
 } from 'lucide-react';
 
 // ─── Types ───
@@ -85,6 +87,7 @@ interface COSHHAssessment {
   monitoring_details: string;
   risk_rating: 'low' | 'medium' | 'high' | 'very-high';
   assessed_by: string;
+  photos: string[];
   assessment_date: string;
   review_date: string;
   created_at: string;
@@ -255,6 +258,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const { data: dbAssessments, isLoading, error } = useCOSHHAssessments();
   const createCOSHH = useCreateCOSHH();
   const deleteCOSHH = useDeleteCOSHH();
+  const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const assessments: COSHHAssessment[] = (dbAssessments || []).map((a) => ({
     id: a.id,
     substance_name: a.substance_name,
@@ -278,6 +282,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     monitoring_details: a.monitoring_details || '',
     risk_rating: a.risk_rating as COSHHAssessment['risk_rating'],
     assessed_by: a.assessed_by,
+    photos: ((a as Record<string, unknown>).photos as string[]) || [],
     assessment_date: a.assessment_date,
     review_date: a.review_date,
     created_at: a.created_at,
@@ -314,6 +319,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [monitoringDetails, setMonitoringDetails] = useState('');
   const [riskRating, setRiskRating] = useState<'low' | 'medium' | 'high' | 'very-high'>('medium');
   const [assessedBy, setAssessedBy] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   // ─── Draft persistence ───
   const coshhDraftData = useMemo(
@@ -439,6 +445,40 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setMonitoringDetails('');
     setRiskRating('medium');
     setAssessedBy('');
+    setPhotoUrls([]);
+  };
+
+  const handleDuplicate = (assessment: COSHHAssessment) => {
+    setSubstanceName(assessment.substance_name);
+    setManufacturer(assessment.manufacturer);
+    setProductCode(assessment.product_code);
+    setLocationOfUse(assessment.location_of_use);
+    setTaskDescription(assessment.task_description);
+    setQuantityUsed(assessment.quantity_used);
+    setFrequencyOfUse(assessment.frequency_of_use);
+    setSelectedGHS([...assessment.ghs_hazards]);
+    setExposureRoutes(
+      EXPOSURE_ROUTES_DEFAULT.map((r) => ({
+        ...r,
+        selected: assessment.exposure_routes.includes(r.id),
+      }))
+    );
+    setHealthEffects(assessment.health_effects);
+    setOelValue(assessment.oel_value);
+    setControlMeasures([...assessment.control_measures]);
+    setPpeRequired([...assessment.ppe_required]);
+    setStorageRequirements(assessment.storage_requirements);
+    setSpillProcedure(assessment.spill_procedure);
+    setFirstAid(assessment.first_aid);
+    setDisposalMethod(assessment.disposal_method);
+    setMonitoringRequired(assessment.monitoring_required);
+    setMonitoringDetails(assessment.monitoring_details);
+    setRiskRating(assessment.risk_rating);
+    // Clear assessed_by and dates — fresh draft
+    setAssessedBy('');
+    setWizardStep(0);
+    setShowWizard(true);
+    toast.success('Assessment duplicated — review and save as new');
   };
 
   const loadSubstance = (substance: (typeof COMMON_SUBSTANCES)[0]) => {
@@ -489,6 +529,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       monitoring_details: monitoringDetails,
       risk_rating: riskRating,
       assessed_by: assessedBy,
+      photos: photoUrls,
       assessment_date: now.toISOString().split('T')[0],
       review_date: reviewDate.toISOString().split('T')[0],
       created_at: now.toISOString(),
@@ -573,15 +614,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   />
                 </div>
               </div>
-              <div>
-                <Label className="text-white text-sm">Location of Use</Label>
-                <Input
-                  value={locationOfUse}
-                  onChange={(e) => setLocationOfUse(e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
-                  placeholder="e.g. Plant room, riser, site-wide"
-                />
-              </div>
+              <LocationAutoFill
+                value={locationOfUse}
+                onChange={(v) => setLocationOfUse(v)}
+                label="Location of Use"
+                placeholder="e.g. Plant room, riser, site-wide"
+              />
               <div>
                 <Label className="text-white text-sm">Task / How Used</Label>
                 <Textarea
@@ -821,6 +859,15 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 })}
               </div>
             </div>
+
+            {/* Substance/Storage Photos */}
+            <div className="mt-4">
+              <SafetyPhotoCapture
+                photos={photoUrls}
+                onPhotosChange={setPhotoUrls}
+                label="Substance/Storage Photos"
+              />
+            </div>
           </div>
         );
 
@@ -1030,7 +1077,21 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDuplicate(assessment);
+                        }}
+                        className="h-11 px-3 text-xs text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
+                      >
+                        <Copy className="h-3.5 w-3.5 mr-1" />
+                        Duplicate
+                      </Button>
+                      <ChevronRight className="h-4 w-4 text-white" />
+                    </div>
                   </div>
                 </motion.button>
               );
@@ -1254,9 +1315,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.storage_requirements && (
                   <div>
                     <h4 className="text-sm font-bold text-white mb-1">Storage</h4>
-                    <p className="text-sm text-white">
-                      {viewingAssessment.storage_requirements}
-                    </p>
+                    <p className="text-sm text-white">{viewingAssessment.storage_requirements}</p>
                   </div>
                 )}
 
@@ -1273,6 +1332,20 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     <span>Review by: {viewingAssessment.review_date}</span>
                   </div>
                 </div>
+              </div>
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                <Button
+                  onClick={() => exportPDF('coshh', viewingAssessment.id)}
+                  disabled={isExporting && exportingId === viewingAssessment.id}
+                  className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                >
+                  {isExporting && exportingId === viewingAssessment.id ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <FileDown className="h-4 w-4 mr-2" />
+                  )}
+                  Export PDF
+                </Button>
               </div>
             </div>
           )}

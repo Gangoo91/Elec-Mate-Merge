@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   Zap,
   MapPin,
@@ -11,17 +12,17 @@ import {
   Clock,
   AlertTriangle,
   Building2,
-} from "lucide-react";
-import {
-  useSafeIsolationRecords,
-} from "@/hooks/useSafeIsolationRecords";
-import type { SafeIsolationRecord } from "@/hooks/useSafeIsolationRecords";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
+  Search,
+  X,
+} from 'lucide-react';
+import { useSafeIsolationRecords } from '@/hooks/useSafeIsolationRecords';
+import type { SafeIsolationRecord } from '@/hooks/useSafeIsolationRecords';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
 
 // ─── Status Config ───
 
 const STATUS_CONFIG: Record<
-  SafeIsolationRecord["status"],
+  SafeIsolationRecord['status'],
   {
     label: string;
     colour: string;
@@ -32,35 +33,35 @@ const STATUS_CONFIG: Record<
   }
 > = {
   in_progress: {
-    label: "In Progress",
-    colour: "text-amber-400",
-    bg: "bg-amber-500/15",
-    borderColour: "border-amber-500/20",
-    dotColour: "bg-amber-400",
+    label: 'In Progress',
+    colour: 'text-amber-400',
+    bg: 'bg-amber-500/15',
+    borderColour: 'border-amber-500/20',
+    dotColour: 'bg-amber-400',
     icon: Clock,
   },
   isolated: {
-    label: "Isolated",
-    colour: "text-red-400",
-    bg: "bg-red-500/15",
-    borderColour: "border-red-500/20",
-    dotColour: "bg-red-400",
+    label: 'Isolated',
+    colour: 'text-red-400',
+    bg: 'bg-red-500/15',
+    borderColour: 'border-red-500/20',
+    dotColour: 'bg-red-400',
     icon: Shield,
   },
   re_energised: {
-    label: "Re-energised",
-    colour: "text-green-400",
-    bg: "bg-green-500/15",
-    borderColour: "border-green-500/20",
-    dotColour: "bg-green-400",
+    label: 'Re-energised',
+    colour: 'text-green-400',
+    bg: 'bg-green-500/15',
+    borderColour: 'border-green-500/20',
+    dotColour: 'bg-green-400',
     icon: CheckCircle2,
   },
   cancelled: {
-    label: "Cancelled",
-    colour: "text-white",
-    bg: "bg-white/10",
-    borderColour: "border-white/10",
-    dotColour: "bg-white",
+    label: 'Cancelled',
+    colour: 'text-white',
+    bg: 'bg-white/10',
+    borderColour: 'border-white/10',
+    dotColour: 'bg-white',
     icon: AlertTriangle,
   },
 };
@@ -80,7 +81,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2, ease: "easeOut" },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 
@@ -92,11 +93,11 @@ function formatRelativeDate(dateStr: string): string {
   const diffMs = now.getTime() - date.getTime();
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays}d ago`;
   if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-  return date.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 // ─── Site Group ───
@@ -112,26 +113,20 @@ function SiteGroup({
 }) {
   const [expanded, setExpanded] = useState(true);
 
-  const isolatedCount = records.filter((r) => r.status === "isolated").length;
-  const inProgressCount = records.filter(
-    (r) => r.status === "in_progress"
-  ).length;
+  const isolatedCount = records.filter((r) => r.status === 'isolated').length;
+  const inProgressCount = records.filter((r) => r.status === 'in_progress').length;
   const activeCount = isolatedCount + inProgressCount;
 
   // Determine site-level indicator colour
   const siteColour =
     isolatedCount > 0
-      ? "border-red-500/30 bg-red-500/[0.04]"
+      ? 'border-red-500/30 bg-red-500/[0.04]'
       : inProgressCount > 0
-        ? "border-amber-500/30 bg-amber-500/[0.04]"
-        : "border-green-500/30 bg-green-500/[0.04]";
+        ? 'border-amber-500/30 bg-amber-500/[0.04]'
+        : 'border-green-500/30 bg-green-500/[0.04]';
 
   const siteDotColour =
-    isolatedCount > 0
-      ? "bg-red-400"
-      : inProgressCount > 0
-        ? "bg-amber-400"
-        : "bg-green-400";
+    isolatedCount > 0 ? 'bg-red-400' : inProgressCount > 0 ? 'bg-amber-400' : 'bg-green-400';
 
   return (
     <motion.div variants={itemVariants} className={`rounded-xl border ${siteColour}`}>
@@ -146,24 +141,16 @@ function SiteGroup({
         <div className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${siteDotColour}`} />
-            <h3 className="text-sm font-bold text-white truncate">
-              {siteAddress}
-            </h3>
+            <h3 className="text-sm font-bold text-white truncate">{siteAddress}</h3>
           </div>
           <p className="text-xs text-white mt-0.5">
-            {records.length} record{records.length !== 1 ? "s" : ""}
+            {records.length} record{records.length !== 1 ? 's' : ''}
             {activeCount > 0 && (
-              <span className="text-red-400 font-semibold">
-                {" "}
-                ({activeCount} active)
-              </span>
+              <span className="text-red-400 font-semibold"> ({activeCount} active)</span>
             )}
           </p>
         </div>
-        <motion.div
-          animate={{ rotate: expanded ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <motion.div animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
           <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         </motion.div>
       </button>
@@ -173,7 +160,7 @@ function SiteGroup({
         {expanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -227,15 +214,30 @@ function SiteGroup({
 
 export function IsolationRegister() {
   const { data: records, isLoading } = useSafeIsolationRecords();
-  const [selectedRecord, setSelectedRecord] =
-    useState<SafeIsolationRecord | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<SafeIsolationRecord | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  // Filter records before grouping
+  const filteredRecords = useMemo(() => {
+    if (!records) return [];
+    return records.filter((record) => {
+      const matchesSearch =
+        !searchQuery ||
+        record.circuit_description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        record.site_address?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || record.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [records, searchQuery, statusFilter]);
 
   // Group records by site address
   const groupedRecords = useMemo(() => {
-    if (!records) return new Map<string, SafeIsolationRecord[]>();
+    if (!filteredRecords || filteredRecords.length === 0)
+      return new Map<string, SafeIsolationRecord[]>();
 
     const map = new Map<string, SafeIsolationRecord[]>();
-    for (const record of records) {
+    for (const record of filteredRecords) {
       const key = record.site_address;
       const existing = map.get(key) ?? [];
       existing.push(record);
@@ -245,13 +247,13 @@ export function IsolationRegister() {
     // Sort sites: those with isolated records first, then in_progress, then others
     const sorted = new Map(
       [...map.entries()].sort(([, a], [, b]) => {
-        const aIsolated = a.some((r) => r.status === "isolated");
-        const bIsolated = b.some((r) => r.status === "isolated");
+        const aIsolated = a.some((r) => r.status === 'isolated');
+        const bIsolated = b.some((r) => r.status === 'isolated');
         if (aIsolated && !bIsolated) return -1;
         if (!aIsolated && bIsolated) return 1;
 
-        const aActive = a.some((r) => r.status === "in_progress");
-        const bActive = b.some((r) => r.status === "in_progress");
+        const aActive = a.some((r) => r.status === 'in_progress');
+        const bActive = b.some((r) => r.status === 'in_progress');
         if (aActive && !bActive) return -1;
         if (!aActive && bActive) return 1;
 
@@ -260,24 +262,46 @@ export function IsolationRegister() {
     );
 
     return sorted;
-  }, [records]);
+  }, [filteredRecords]);
 
-  // Summary stats
-  const totalIsolated =
-    records?.filter((r) => r.status === "isolated").length ?? 0;
-  const totalInProgress =
-    records?.filter((r) => r.status === "in_progress").length ?? 0;
-  const totalReEnergised =
-    records?.filter((r) => r.status === "re_energised").length ?? 0;
+  // Summary stats (reflect filtered results)
+  const totalIsolated = filteredRecords.filter((r) => r.status === 'isolated').length;
+  const totalInProgress = filteredRecords.filter((r) => r.status === 'in_progress').length;
+  const totalReEnergised = filteredRecords.filter((r) => r.status === 're_energised').length;
+
+  // Filter chip definitions
+  const filterTabs = useMemo(
+    () => [
+      { key: 'all', label: 'All', count: records?.length ?? 0 },
+      {
+        key: 'in_progress',
+        label: 'In Progress',
+        count: records?.filter((r) => r.status === 'in_progress').length ?? 0,
+      },
+      {
+        key: 'isolated',
+        label: 'Isolated',
+        count: records?.filter((r) => r.status === 'isolated').length ?? 0,
+      },
+      {
+        key: 're_energised',
+        label: 'Re-energised',
+        count: records?.filter((r) => r.status === 're_energised').length ?? 0,
+      },
+      {
+        key: 'cancelled',
+        label: 'Cancelled',
+        count: records?.filter((r) => r.status === 'cancelled').length ?? 0,
+      },
+    ],
+    [records]
+  );
 
   if (isLoading) {
     return (
       <div className="space-y-3">
         {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="h-24 rounded-xl bg-white/[0.05] animate-pulse"
-          />
+          <div key={i} className="h-24 rounded-xl bg-white/[0.05] animate-pulse" />
         ))}
       </div>
     );
@@ -301,45 +325,87 @@ export function IsolationRegister() {
       className="space-y-4"
     >
       {/* Summary stats */}
-      <motion.div
-        variants={itemVariants}
-        className="grid grid-cols-3 gap-2"
-      >
+      <motion.div variants={itemVariants} className="grid grid-cols-3 gap-2">
         <div className="p-3 rounded-xl border border-red-500/15 bg-gradient-to-br from-red-500/10 to-red-600/10 text-center">
-          <span className="text-lg font-bold text-red-400 block">
-            {totalIsolated}
-          </span>
+          <span className="text-lg font-bold text-red-400 block">{totalIsolated}</span>
           <span className="text-[10px] text-white font-medium">Isolated</span>
         </div>
         <div className="p-3 rounded-xl border border-amber-500/15 bg-gradient-to-br from-amber-500/10 to-amber-600/10 text-center">
-          <span className="text-lg font-bold text-amber-400 block">
-            {totalInProgress}
-          </span>
-          <span className="text-[10px] text-white font-medium">
-            In Progress
-          </span>
+          <span className="text-lg font-bold text-amber-400 block">{totalInProgress}</span>
+          <span className="text-[10px] text-white font-medium">In Progress</span>
         </div>
         <div className="p-3 rounded-xl border border-green-500/15 bg-gradient-to-br from-green-500/10 to-green-600/10 text-center">
-          <span className="text-lg font-bold text-green-400 block">
-            {totalReEnergised}
-          </span>
-          <span className="text-[10px] text-white font-medium">
-            Re-energised
-          </span>
+          <span className="text-lg font-bold text-green-400 block">{totalReEnergised}</span>
+          <span className="text-[10px] text-white font-medium">Re-energised</span>
+        </div>
+      </motion.div>
+
+      {/* Search bar */}
+      <motion.div variants={itemVariants} className="space-y-2">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+          <Input
+            placeholder="Search circuits or sites..."
+            className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full touch-manipulation"
+              onClick={() => setSearchQuery('')}
+            >
+              <X className="h-3.5 w-3.5 text-white" />
+            </button>
+          )}
+        </div>
+
+        {/* Filter chips */}
+        <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
+          {filterTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setStatusFilter(tab.key)}
+              className={`h-9 px-3 rounded-full text-xs font-medium whitespace-nowrap touch-manipulation transition-all ${
+                statusFilter === tab.key
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-white/5 text-white border border-white/10'
+              }`}
+            >
+              {tab.label} ({tab.count})
+            </button>
+          ))}
         </div>
       </motion.div>
 
       {/* Site groups */}
-      <div className="space-y-3 pb-20">
-        {[...groupedRecords.entries()].map(([siteAddress, siteRecords]) => (
-          <SiteGroup
-            key={siteAddress}
-            siteAddress={siteAddress}
-            records={siteRecords}
-            onSelectRecord={setSelectedRecord}
-          />
-        ))}
-      </div>
+      {filteredRecords.length === 0 && (records?.length ?? 0) > 0 ? (
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <Search className="h-8 w-8 text-white mb-3" />
+          <p className="text-sm font-medium text-white">No matching records</p>
+          <p className="text-xs text-white mt-1">Try a different search term or filter</p>
+          <button
+            onClick={() => {
+              setSearchQuery('');
+              setStatusFilter('all');
+            }}
+            className="mt-3 h-9 px-4 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white touch-manipulation"
+          >
+            Clear filters
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-3 pb-20">
+          {[...groupedRecords.entries()].map(([siteAddress, siteRecords]) => (
+            <SiteGroup
+              key={siteAddress}
+              siteAddress={siteAddress}
+              records={siteRecords}
+              onSelectRecord={setSelectedRecord}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }
