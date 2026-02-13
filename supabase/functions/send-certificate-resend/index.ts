@@ -5,21 +5,22 @@
  * No Gmail/Outlook connection required - uses company's Resend account.
  */
 
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
-import { captureException } from "../_shared/sentry.ts";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface CertificateEmailRequest {
   reportId: string;
   recipientEmail?: string;
   customMessage?: string;
-  testMode?: boolean;  // For sending test emails without full auth
+  testMode?: boolean; // For sending test emails without full auth
 }
 
 // ============================================================================
@@ -32,7 +33,7 @@ function isValidEmail(email: string | null | undefined): boolean {
   return emailRegex.test(email.trim());
 }
 
-function formatDate(dateInput: any): string {
+function formatDate(dateInput: string | number | Date | null | undefined): string {
   if (!dateInput) return 'N/A';
   try {
     const date = new Date(dateInput);
@@ -40,7 +41,7 @@ function formatDate(dateInput: any): string {
     return date.toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   } catch (e) {
     return 'N/A';
@@ -67,13 +68,13 @@ function buildCertificateEmailHtml(data: {
 }): string {
   const isPass = data.overallAssessment === 'satisfactory';
   const assessmentColor = isPass ? '#10b981' : '#ef4444';
-  const assessmentText = isPass ? 'SATISFACTORY' : (data.overallAssessment?.toUpperCase() || '');
+  const assessmentText = isPass ? 'SATISFACTORY' : data.overallAssessment?.toUpperCase() || '';
 
   const formattedDate = data.inspectionDate ? formatDate(data.inspectionDate) : '';
 
   const certificateTitles: Record<string, string> = {
-    'EICR': 'Electrical Installation Condition Report',
-    'EIC': 'Electrical Installation Certificate',
+    EICR: 'Electrical Installation Condition Report',
+    EIC: 'Electrical Installation Certificate',
     'Minor Works': 'Minor Electrical Installation Works Certificate',
   };
   const certificateTitle = certificateTitles[data.certificateType] || 'Electrical Certificate';
@@ -103,19 +104,27 @@ function buildCertificateEmailHtml(data: {
           <!-- Company Header -->
           <tr>
             <td style="padding-bottom: 32px; text-align: center;">
-              ${data.companyLogo ? `
+              ${
+                data.companyLogo
+                  ? `
                 <img src="${data.companyLogo}" alt="${data.companyName}" style="max-height: 56px; max-width: 180px; margin-bottom: 12px;" />
-              ` : `
+              `
+                  : `
                 <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
-              `}
+              `
+              }
               <h1 style="margin: 0 0 4px 0; font-size: 22px; font-weight: 700; color: #0f172a;">
                 ${data.companyName || 'Your Electrician'}
               </h1>
-              ${data.companyPhone || data.companyEmail ? `
+              ${
+                data.companyPhone || data.companyEmail
+                  ? `
                 <p style="margin: 0; font-size: 14px; color: #64748b;">
                   ${data.companyPhone ? data.companyPhone : ''}${data.companyPhone && data.companyEmail ? ' · ' : ''}${data.companyEmail ? data.companyEmail : ''}
                 </p>
-              ` : ''}
+              `
+                  : ''
+              }
             </td>
           </tr>
 
@@ -150,7 +159,9 @@ function buildCertificateEmailHtml(data: {
                           </p>
                         </td>
                       </tr>
-                      ${data.certificateNumber ? `
+                      ${
+                        data.certificateNumber
+                          ? `
                       <tr>
                         <td style="padding-top: 8px;">
                           <p style="margin: 0; font-size: 13px; color: #64748b; font-family: 'SF Mono', Monaco, 'Courier New', monospace;">
@@ -158,7 +169,9 @@ function buildCertificateEmailHtml(data: {
                           </p>
                         </td>
                       </tr>
-                      ` : ''}
+                      `
+                          : ''
+                      }
                     </table>
                   </td>
                 </tr>
@@ -166,23 +179,33 @@ function buildCertificateEmailHtml(data: {
 
               <!-- Details Grid -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
-                ${data.installationAddress ? `
+                ${
+                  data.installationAddress
+                    ? `
                 <tr>
                   <td style="padding-bottom: 16px;">
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Property</p>
                     <p style="margin: 0; font-size: 15px; color: #334155; line-height: 1.5;">${data.installationAddress}</p>
                   </td>
                 </tr>
-                ` : ''}
-                ${formattedDate ? `
+                `
+                    : ''
+                }
+                ${
+                  formattedDate
+                    ? `
                 <tr>
                   <td style="padding-bottom: 16px;">
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Inspection Date</p>
                     <p style="margin: 0; font-size: 15px; color: #334155;">${formattedDate}</p>
                   </td>
                 </tr>
-                ` : ''}
-                ${data.overallAssessment ? `
+                `
+                    : ''
+                }
+                ${
+                  data.overallAssessment
+                    ? `
                 <tr>
                   <td>
                     <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Result</p>
@@ -191,10 +214,14 @@ function buildCertificateEmailHtml(data: {
                     </p>
                   </td>
                 </tr>
-                ` : ''}
+                `
+                    : ''
+                }
               </table>
 
-              ${data.customMessage ? `
+              ${
+                data.customMessage
+                  ? `
               <!-- Custom Message -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
                 <tr>
@@ -205,7 +232,9 @@ function buildCertificateEmailHtml(data: {
                   </td>
                 </tr>
               </table>
-              ` : ''}
+              `
+                  : ''
+              }
 
               <!-- PDF Attachment Notice -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 32px;">
@@ -286,7 +315,7 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 1: Validate environment
     // ========================================================================
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
@@ -306,7 +335,7 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 1.5: Check for test mode
     // ========================================================================
-    let body: any;
+    let body: Record<string, unknown>;
     try {
       body = await req.json();
     } catch (e) {
@@ -332,7 +361,7 @@ const handler = async (req: Request): Promise<Response> => {
       const { data: testEmailData, error: testEmailError } = await resend.emails.send({
         from: 'Spark & Sons Electrical <founder@elec-mate.com>',
         reply_to: 'info@elec-mate.com',
-        to: [body.recipientEmail],
+        to: [String(body.recipientEmail)],
         subject: 'Your EICR Certificate - 47 Riverside Gardens',
         html: testEmailHtml,
       });
@@ -368,7 +397,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const jwt = authHeader.replace('Bearer ', '').trim();
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
@@ -394,7 +426,7 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 4: Fetch report from database
     // Try by 'id' first (UUID primary key), then by 'report_id' (certificate number)
     // ========================================================================
-    let report: any = null;
+    let report: Record<string, unknown> | null = null;
 
     // First try: Query by 'id' (UUID)
     const { data: reportById, error: errorById } = await supabaseClient
@@ -422,11 +454,14 @@ const handler = async (req: Request): Promise<Response> => {
         console.log('✅ Found report by report_id');
       } else {
         console.error('❌ Report not found by either id or report_id:', errorById, errorByReportId);
-        throw new Error('Could not find this report. It may have been deleted or you may need to save it first.');
+        throw new Error(
+          'Could not find this report. It may have been deleted or you may need to save it first.'
+        );
       }
     }
 
-    const certificateNumber = report.certificate_number || report.report_id || `CERT-${reportId.substring(0, 8)}`;
+    const certificateNumber =
+      report.certificate_number || report.report_id || `CERT-${reportId.substring(0, 8)}`;
     console.log(`✅ Report fetched: ${certificateNumber}`);
 
     // ========================================================================
@@ -437,7 +472,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
-      throw new Error(`Invalid client email address: "${clientEmail || 'missing'}". Please update the report with a valid email.`);
+      throw new Error(
+        `Invalid client email address: "${clientEmail || 'missing'}". Please update the report with a valid email.`
+      );
     }
 
     console.log(`✅ Recipient: ${report.client_name || 'Client'} <${clientEmail}>`);
@@ -485,20 +522,17 @@ const handler = async (req: Request): Promise<Response> => {
     if (!pdfUrl || isPdfStale) {
       console.log('🔄 Generating fresh PDF...');
       try {
-        const pdfResponse = await fetch(
-          `${supabaseUrl}/functions/v1/${edgeFunctionName}`,
-          {
-            method: 'POST',
-            headers: {
-              'Authorization': authHeader,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              formData: report.data,
-              reportId: report.report_id,
-            }),
-          }
-        );
+        const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/${edgeFunctionName}`, {
+          method: 'POST',
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            formData: report.data,
+            reportId: report.report_id,
+          }),
+        });
 
         if (pdfResponse.ok) {
           const pdfData = await pdfResponse.json();
@@ -553,7 +587,8 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 8: Build email HTML
     // ========================================================================
-    const certificateTypeDisplay = reportType === 'minor-works' ? 'Minor Works' : reportType.toUpperCase();
+    const certificateTypeDisplay =
+      reportType === 'minor-works' ? 'Minor Works' : reportType.toUpperCase();
 
     const emailHtml = buildCertificateEmailHtml({
       certificateType: certificateTypeDisplay,
@@ -573,7 +608,10 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 9: Send email via Resend
     // ========================================================================
     const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
-    const subject = `Your ${certificateTypeDisplay} Certificate - ${report.installation_address || report.certificate_number}`;
+    const subject =
+      `Your ${certificateTypeDisplay} Certificate - ${report.installation_address || report.certificate_number}`
+        .replace(/[\r\n]+/g, ' ')
+        .trim();
 
     console.log(`📧 Sending to: ${clientEmail}`);
     console.log(`📧 Reply-to: ${replyToEmail}`);
@@ -595,10 +633,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (pdfAttachmentSuccess && pdfBase64) {
       const filename = `${certificateTypeDisplay.replace(/\s+/g, '-')}_${certificateNumber}.pdf`;
-      emailOptions.attachments = [{
-        filename: filename,
-        content: pdfBase64,
-      }];
+      emailOptions.attachments = [
+        {
+          filename: filename,
+          content: pdfBase64,
+        },
+      ];
       console.log('📎 PDF attached:', filename);
     }
 
@@ -617,15 +657,16 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: pdfAttachmentSuccess ? 'Certificate sent with PDF attachment' : 'Certificate sent (link only)',
+        message: pdfAttachmentSuccess
+          ? 'Certificate sent with PDF attachment'
+          : 'Certificate sent (link only)',
         emailId: emailData?.id,
         pdfAttached: pdfAttachmentSuccess,
         duration: `${duration}ms`,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
-  } catch (error: any) {
+  } catch (error: unknown) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
 
@@ -634,12 +675,12 @@ const handler = async (req: Request): Promise<Response> => {
       functionName: 'send-certificate-resend',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { duration, hasResendKey: !!Deno.env.get("RESEND_API_KEY") }
+      extra: { duration, hasResendKey: !!Deno.env.get('RESEND_API_KEY') },
     });
 
     return new Response(
       JSON.stringify({
-        error: error.message || 'Failed to send certificate',
+        error: (error as Error).message || 'Failed to send certificate',
         hint: 'Check that the report has a valid client email address.',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
