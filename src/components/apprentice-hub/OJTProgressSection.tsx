@@ -47,12 +47,10 @@ import {
   User,
   Share2,
   Zap,
-  ShieldCheck,
   FileText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
@@ -124,10 +122,10 @@ const weeklyChartConfig: ChartConfig = {
 
 export function OJTProgressSection() {
   const { toast } = useToast();
-  const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
+  const { entries, totalTime, addTimeEntry } = useTimeEntries();
   const { otjGoal, getComplianceStatus } = useComplianceTracking();
-  const { getVerificationForTimeEntry, verifications } =
-    useTimeEntryVerification();
+  const { getVerificationForTimeEntry } = useTimeEntryVerification();
+  const { getVerificationForTimeEntry } = useTimeEntryVerification();
   const { goals } = useOJTGoals();
   const { assessments } = useOJTAssessments();
 
@@ -683,7 +681,7 @@ export function OJTProgressSection() {
       {/* ── 5. Active timer ── */}
       {(timerActive || timerSeconds > 0) && (
         <Card className="bg-elec-yellow/10 border-elec-yellow/30">
-          <CardContent className="p-4">
+          <CardContent className="p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-full bg-elec-yellow/20 animate-pulse">
@@ -708,6 +706,35 @@ export function OJTProgressSection() {
                 Stop
               </Button>
             </div>
+            {/* Activity picker for timer */}
+            <Select
+              value={
+                ACTIVITY_TYPES.find((t) => t.label === timerActivity)?.value ||
+                ''
+              }
+              onValueChange={(value) => {
+                const type = ACTIVITY_TYPES.find((t) => t.value === value);
+                if (type) setTimerActivity(type.label);
+              }}
+            >
+              <SelectTrigger className="h-11 touch-manipulation text-sm bg-background/50 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectValue placeholder="Select activity type" />
+              </SelectTrigger>
+              <SelectContent className="z-[100] bg-background border-border">
+                {ACTIVITY_TYPES.map((type) => (
+                  <SelectItem
+                    key={type.value}
+                    value={type.value}
+                    className="py-3"
+                  >
+                    <span className="flex items-center gap-2">
+                      <span>{type.icon}</span>
+                      <span className="text-sm">{type.label}</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </CardContent>
         </Card>
       )}
@@ -729,7 +756,7 @@ export function OJTProgressSection() {
             <Button
               size="sm"
               onClick={useSuggestionAndLog}
-              className="h-9 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation shrink-0"
+              className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation shrink-0"
             >
               Log
             </Button>
@@ -813,13 +840,15 @@ export function OJTProgressSection() {
             <p className="text-[10px] text-muted-foreground">Verified</p>
             {verificationStats.total > 0 &&
               verificationStats.rate < 100 && (
-                <button
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={handleRemindSupervisor}
-                  className="text-[10px] text-elec-yellow font-medium flex items-center gap-0.5 mx-auto mt-1 touch-manipulation"
+                  className="h-11 px-2 text-xs text-elec-yellow font-medium flex items-center gap-1 mx-auto mt-1 touch-manipulation active:scale-95"
                 >
-                  <Share2 className="h-2.5 w-2.5" />
+                  <Share2 className="h-3.5 w-3.5" />
                   Remind
-                </button>
+                </Button>
               )}
           </CardContent>
         </Card>
@@ -1009,7 +1038,7 @@ export function OJTProgressSection() {
             <button
               type="button"
               onClick={() => setShowMonthly(!showMonthly)}
-              className="w-full flex items-center justify-between touch-manipulation"
+              className="w-full flex items-center justify-between touch-manipulation min-h-[44px]"
             >
               <CardTitle className="text-base font-semibold">
                 Monthly History
@@ -1196,7 +1225,6 @@ export function OJTProgressSection() {
                       </span>
                     </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                 </div>
               );
             })}
@@ -1227,8 +1255,8 @@ export function OJTProgressSection() {
         </CardContent>
       </Card>
 
-      {/* Bottom safe area */}
-      <div className="h-6" />
+      {/* Bottom safe area for home indicator */}
+      <div className="h-20" />
 
       {/* ── 16. Enhanced quick log sheet ── */}
       <Sheet open={showQuickLog} onOpenChange={setShowQuickLog}>

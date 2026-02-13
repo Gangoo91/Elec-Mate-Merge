@@ -592,3 +592,75 @@ export const screwCategories: ScrewCategory[] = [
 
 export const screwCategoriesTip =
   "Keep a mixed box of red rawl plugs, #8 x 40mm woodscrews, M4 x 25mm machine screws, and PZ2 screws in your van — they cover 80% of day-to-day fixings work.";
+
+// ─── Van Stock Essentials ────────────────────────────────────────────────
+
+export interface VanStockItem {
+  item: string;
+  quantity: string;
+  approxCost: string;
+  notes: string;
+}
+
+export const vanStockEssentials: VanStockItem[] = [
+  {
+    item: "Red rawl plugs (6mm)",
+    quantity: "Box of 100",
+    approxCost: "£3-5",
+    notes: "Your most-used plug. Go through these fast.",
+  },
+  {
+    item: "Brown rawl plugs (7mm)",
+    quantity: "Box of 100",
+    approxCost: "£4-6",
+    notes: "For heavier fixings — back boxes, cable tray brackets.",
+  },
+  {
+    item: "#8 x 40mm woodscrews (PZ2)",
+    quantity: "Box of 200",
+    approxCost: "£5-8",
+    notes: "Goes with red rawl plugs. The most common screw on domestic jobs.",
+  },
+  {
+    item: "M4 x 25mm machine screws",
+    quantity: "Box of 100",
+    approxCost: "£3-5",
+    notes: "For CU covers and back boxes. Always carry spares.",
+  },
+  {
+    item: "M3.5 x 25mm machine screws",
+    quantity: "Box of 100",
+    approxCost: "£3-5",
+    notes: "Socket and switch faceplates. The screws that come with accessories are often poor quality.",
+  },
+  {
+    item: "Cable clips (assorted)",
+    quantity: "Mixed box",
+    approxCost: "£8-15",
+    notes: "Flat clips for T&E in various sizes — 1.0mm, 1.5mm, 2.5mm, 4mm, 6mm.",
+  },
+  {
+    item: "Cable ties (assorted)",
+    quantity: "Pack of 500",
+    approxCost: "£5-10",
+    notes: "Mixed sizes. Black for outdoor, natural for indoor.",
+  },
+  {
+    item: "Self-tapping screws (mixed)",
+    quantity: "Box of 100",
+    approxCost: "£4-8",
+    notes: "#8 and #10 in 13mm and 19mm lengths. For metal enclosures and junction boxes.",
+  },
+  {
+    item: "Spring toggles",
+    quantity: "Pack of 20",
+    approxCost: "£5-10",
+    notes: "For plasterboard fixings. Carry M4 and M5 sizes.",
+  },
+  {
+    item: "Insulation tape (mixed colours)",
+    quantity: "10 pack",
+    approxCost: "£5-8",
+    notes: "Brown, black, grey, blue (BS 7671 colours), green/yellow (earth), red, white.",
+  },
+];

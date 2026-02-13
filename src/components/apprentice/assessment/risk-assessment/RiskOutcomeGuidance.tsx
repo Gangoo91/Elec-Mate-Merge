@@ -143,7 +143,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
               </div>
               <div>
                 <h4 className={`font-bold ${guidance.text}`}>{guidance.action}</h4>
-                <p className="text-xs text-white/80">Risk Score: {riskScore}</p>
+                <p className="text-xs text-white">Risk Score: {riskScore}</p>
               </div>
             </div>
             <Badge className={`${guidance.badgeBg} ${riskLevel === "Medium" || riskLevel === "Very Low" ? 'text-black' : 'text-white'} px-3 py-1`}>
@@ -157,7 +157,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <Clock className="h-4 w-4 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs text-white/80">Timeframe</p>
+                <p className="text-xs text-white">Timeframe</p>
                 <p className="text-sm font-medium text-white">{guidance.timeframe}</p>
               </div>
             </div>
@@ -166,7 +166,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <Users className="h-4 w-4 text-purple-400" />
               </div>
               <div>
-                <p className="text-xs text-white/80">Authority Level</p>
+                <p className="text-xs text-white">Authority Level</p>
                 <p className="text-sm font-medium text-white">{guidance.authority}</p>
               </div>
             </div>
@@ -175,7 +175,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <AlertTriangle className="h-4 w-4 text-orange-400" />
               </div>
               <div>
-                <p className="text-xs text-white/80">Monitoring</p>
+                <p className="text-xs text-white">Monitoring</p>
                 <p className="text-sm font-medium text-white">{guidance.monitoring}</p>
               </div>
             </div>
@@ -184,7 +184,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <FileText className="h-4 w-4 text-green-400" />
               </div>
               <div>
-                <p className="text-xs text-white/80">Documentation</p>
+                <p className="text-xs text-white">Documentation</p>
                 <p className="text-sm font-medium text-white">{guidance.documentation}</p>
               </div>
             </div>
@@ -208,7 +208,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                 <div className={`w-5 h-5 rounded-lg ${guidance.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
                   <CheckCircle className={`h-3 w-3 ${guidance.text}`} />
                 </div>
-                <span className="text-sm text-white/80">{recommendation}</span>
+                <span className="text-sm text-white">{recommendation}</span>
               </div>
             ))}
           </div>
@@ -226,11 +226,11 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
             <table className="w-full text-xs min-w-[500px]">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left py-2 px-2 text-white/70 font-medium">Risk Level</th>
-                  <th className="text-left py-2 px-2 text-white/70 font-medium">Score</th>
-                  <th className="text-left py-2 px-2 text-white/70 font-medium">Action</th>
-                  <th className="text-left py-2 px-2 text-white/70 font-medium">Authority</th>
-                  <th className="text-left py-2 px-2 text-white/70 font-medium">Monitor</th>
+                  <th className="text-left py-2 px-2 text-white font-medium">Risk Level</th>
+                  <th className="text-left py-2 px-2 text-white font-medium">Score</th>
+                  <th className="text-left py-2 px-2 text-white font-medium">Action</th>
+                  <th className="text-left py-2 px-2 text-white font-medium">Authority</th>
+                  <th className="text-left py-2 px-2 text-white font-medium">Monitor</th>
                 </tr>
               </thead>
               <tbody>
@@ -238,46 +238,46 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                   <td className="py-2 px-2">
                     <Badge className="bg-red-500 text-white text-[10px]">Very High</Badge>
                   </td>
-                  <td className="py-2 px-2 text-white/70">15-25</td>
-                  <td className="py-2 px-2 text-white/70">Stop Work</td>
-                  <td className="py-2 px-2 text-white/70">Senior Mgmt</td>
-                  <td className="py-2 px-2 text-white/70">Continuous</td>
+                  <td className="py-2 px-2 text-white">15-25</td>
+                  <td className="py-2 px-2 text-white">Stop Work</td>
+                  <td className="py-2 px-2 text-white">Senior Mgmt</td>
+                  <td className="py-2 px-2 text-white">Continuous</td>
                 </tr>
                 <tr className={`border-b border-white/5 ${riskLevel === "High" ? 'bg-red-500/10' : ''}`}>
                   <td className="py-2 px-2">
                     <Badge className="bg-red-500/80 text-white text-[10px]">High</Badge>
                   </td>
-                  <td className="py-2 px-2 text-white/70">10-14</td>
-                  <td className="py-2 px-2 text-white/70">Enhanced</td>
-                  <td className="py-2 px-2 text-white/70">Supervisor</td>
-                  <td className="py-2 px-2 text-white/70">Regular</td>
+                  <td className="py-2 px-2 text-white">10-14</td>
+                  <td className="py-2 px-2 text-white">Enhanced</td>
+                  <td className="py-2 px-2 text-white">Supervisor</td>
+                  <td className="py-2 px-2 text-white">Regular</td>
                 </tr>
                 <tr className={`border-b border-white/5 ${riskLevel === "Medium" ? 'bg-elec-yellow/10' : ''}`}>
                   <td className="py-2 px-2">
                     <Badge className="bg-elec-yellow text-black text-[10px]">Medium</Badge>
                   </td>
-                  <td className="py-2 px-2 text-white/70">6-9</td>
-                  <td className="py-2 px-2 text-white/70">Standard</td>
-                  <td className="py-2 px-2 text-white/70">Team Lead</td>
-                  <td className="py-2 px-2 text-white/70">Periodic</td>
+                  <td className="py-2 px-2 text-white">6-9</td>
+                  <td className="py-2 px-2 text-white">Standard</td>
+                  <td className="py-2 px-2 text-white">Team Lead</td>
+                  <td className="py-2 px-2 text-white">Periodic</td>
                 </tr>
                 <tr className={`border-b border-white/5 ${riskLevel === "Low" ? 'bg-green-500/10' : ''}`}>
                   <td className="py-2 px-2">
                     <Badge className="bg-green-500 text-white text-[10px]">Low</Badge>
                   </td>
-                  <td className="py-2 px-2 text-white/70">3-5</td>
-                  <td className="py-2 px-2 text-white/70">Basic</td>
-                  <td className="py-2 px-2 text-white/70">Self-managed</td>
-                  <td className="py-2 px-2 text-white/70">Routine</td>
+                  <td className="py-2 px-2 text-white">3-5</td>
+                  <td className="py-2 px-2 text-white">Basic</td>
+                  <td className="py-2 px-2 text-white">Self-managed</td>
+                  <td className="py-2 px-2 text-white">Routine</td>
                 </tr>
                 <tr className={`${riskLevel === "Very Low" ? 'bg-green-500/10' : ''}`}>
                   <td className="py-2 px-2">
                     <Badge className="bg-green-400 text-black text-[10px]">Very Low</Badge>
                   </td>
-                  <td className="py-2 px-2 text-white/70">1-2</td>
-                  <td className="py-2 px-2 text-white/70">Minimal</td>
-                  <td className="py-2 px-2 text-white/70">Self-managed</td>
-                  <td className="py-2 px-2 text-white/70">As needed</td>
+                  <td className="py-2 px-2 text-white">1-2</td>
+                  <td className="py-2 px-2 text-white">Minimal</td>
+                  <td className="py-2 px-2 text-white">Self-managed</td>
+                  <td className="py-2 px-2 text-white">As needed</td>
                 </tr>
               </tbody>
             </table>

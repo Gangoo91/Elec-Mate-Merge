@@ -54,7 +54,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
             {/* Search Input */}
             <div className="relative">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <MobileInput
                 label=""
@@ -87,7 +87,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
                         onClick={() => handleHazardSelect(hazard)}
                         className="w-full text-left p-3 rounded-xl bg-white/10 border border-white/10 hover:border-red-500/30 hover:bg-red-500/5 transition-all touch-manipulation active:scale-[0.98]"
                       >
-                        <span className="text-xs text-white/70">{hazard}</span>
+                        <span className="text-xs text-white">{hazard}</span>
                       </button>
                     ))}
                   </CardContent>

@@ -169,16 +169,16 @@ export function QualificationProgress({
 
   if (!qualificationCode) {
     return (
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-6 text-center">
-        <BookOpen className="h-8 w-8 text-white/20 mx-auto mb-3" />
-        <p className="text-sm text-white/50">Select a qualification to track your progress</p>
+      <div className="rounded-xl border border-border bg-card p-6 text-center">
+        <BookOpen className="h-8 w-8 text-white mx-auto mb-3" />
+        <p className="text-sm text-white">Select a qualification to track your progress</p>
       </div>
     );
   }
 
   if (isLoading) {
     return (
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
         <div className="flex items-center justify-center py-8">
           <div className="animate-spin h-6 w-6 border-2 border-elec-yellow border-t-transparent rounded-full" />
         </div>
@@ -189,7 +189,7 @@ export function QualificationProgress({
   return (
     <div className="space-y-3">
       {/* Overall progress card */}
-      <div className="rounded-xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-4">
+      <div className="rounded-xl border border-border bg-gradient-to-br from-card to-transparent p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Target className="h-4 w-4 text-elec-yellow" />
@@ -200,17 +200,17 @@ export function QualificationProgress({
           </span>
         </div>
 
-        {qualificationName && <p className="text-[11px] text-white/50 mb-3">{qualificationName}</p>}
+        {qualificationName && <p className="text-[11px] text-white mb-3">{qualificationName}</p>}
 
         {/* Overall progress bar */}
-        <div className="h-3 rounded-full bg-white/[0.06] overflow-hidden mb-2">
+        <div className="h-3 rounded-full bg-muted overflow-hidden mb-2">
           <div
             className={`h-full rounded-full transition-all duration-500 ${progressBarColour(overall.percentage)}`}
             style={{ width: `${overall.percentage}%` }}
           />
         </div>
 
-        <div className="flex justify-between text-[11px] text-white/50">
+        <div className="flex justify-between text-[11px] text-white">
           <span>
             {overall.evidenced} of {overall.total} ACs evidenced
           </span>
@@ -219,17 +219,17 @@ export function QualificationProgress({
       </div>
 
       {/* Per-unit progress */}
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <button
           onClick={() => setShowBreakdown(!showBreakdown)}
-          className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-white/[0.03] transition-colors"
+          className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-muted transition-colors"
         >
           <div className="flex items-center gap-2">
             <TrendingUp className="h-3.5 w-3.5 text-elec-yellow" />
             <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
               Unit Breakdown
             </h4>
-            <span className="text-[10px] text-white/60 font-medium px-1.5 py-0.5 rounded-full bg-white/[0.06]">
+            <span className="text-[10px] text-white font-medium px-1.5 py-0.5 rounded-full bg-muted">
               {unitProgress.length} units
             </span>
           </div>
@@ -240,7 +240,7 @@ export function QualificationProgress({
           )}
         </button>
 
-        {showBreakdown && <div className="divide-y divide-white/[0.04] max-h-[60vh] overflow-y-auto overscroll-contain border-t border-white/[0.06]">
+        {showBreakdown && <div className="divide-y divide-border max-h-[60vh] overflow-y-auto overscroll-contain border-t border-border">
           {unitProgress.map((unit) => {
             const isExpanded = expandedUnits.has(unit.unitCode);
             const loGroups = unitLOGroups.get(unit.unitCode) || [];
@@ -260,7 +260,7 @@ export function QualificationProgress({
                       return next;
                     });
                   }}
-                  className="w-full px-4 py-3 touch-manipulation active:bg-white/[0.04] transition-colors"
+                  className="w-full px-4 py-3 touch-manipulation active:bg-card transition-colors"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2 flex-1 min-w-0 mr-3">
@@ -283,7 +283,7 @@ export function QualificationProgress({
                     </span>
                   </div>
 
-                  <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden" style={{ marginLeft: '22px' }}>
+                  <div className="h-1.5 rounded-full bg-muted overflow-hidden" style={{ marginLeft: '22px' }}>
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${progressBarColour(unit.percentage)}`}
                       style={{ width: `${unit.percentage}%` }}
@@ -293,13 +293,13 @@ export function QualificationProgress({
 
                 {/* Expanded: LO accordion */}
                 {isExpanded && loGroups.length > 0 && (
-                  <div className="border-t border-white/[0.04]">
+                  <div className="border-t border-border">
                     {loGroups.map((lo) => {
                       const loKey = `${unit.unitCode}-${lo.loNumber}`;
                       const loExpanded = expandedLOs.has(loKey);
 
                       return (
-                        <div key={loKey} className="border-b border-white/[0.03] last:border-b-0">
+                        <div key={loKey} className="border-b border-border last:border-b-0">
                           {/* LO header — clickable */}
                           <button
                             onClick={() => {
@@ -313,17 +313,17 @@ export function QualificationProgress({
                                 return next;
                               });
                             }}
-                            className="w-full flex items-start gap-2 px-4 py-2.5 touch-manipulation active:bg-white/[0.03] transition-colors min-h-[44px]"
+                            className="w-full flex items-start gap-2 px-4 py-2.5 touch-manipulation active:bg-muted transition-colors min-h-[44px]"
                             style={{ paddingLeft: '36px' }}
                           >
                             {loExpanded ? (
-                              <ChevronDown className="h-3 w-3 text-white/80 mt-1 flex-shrink-0" />
+                              <ChevronDown className="h-3 w-3 text-white mt-1 flex-shrink-0" />
                             ) : (
-                              <ChevronRight className="h-3 w-3 text-white/80 mt-1 flex-shrink-0" />
+                              <ChevronRight className="h-3 w-3 text-white mt-1 flex-shrink-0" />
                             )}
                             <div className="flex-1 text-left">
                               {lo.loNumber != null && (
-                                <span className="text-[10px] font-semibold text-elec-yellow/80 uppercase tracking-wider">
+                                <span className="text-[10px] font-semibold text-elec-yellow uppercase tracking-wider">
                                   LO{lo.loNumber}
                                 </span>
                               )}
@@ -345,7 +345,7 @@ export function QualificationProgress({
                                     {isEvidenced ? (
                                       <CheckCircle2 className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                                     ) : (
-                                      <Circle className="h-3.5 w-3.5 text-white/30 mt-0.5 flex-shrink-0" />
+                                      <Circle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                     )}
                                     <p
                                       className={`text-[11px] leading-relaxed ${
@@ -373,24 +373,24 @@ export function QualificationProgress({
 
       {/* Gap analysis */}
       {allGaps.length > 0 && (
-        <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] overflow-hidden">
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
           <button
             onClick={() => setShowGaps(!showGaps)}
-            className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-white/[0.03] transition-colors"
+            className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-muted transition-colors"
           >
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
               <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
                 Gaps to Fill
               </h4>
-              <span className="text-[10px] text-amber-400/70 font-medium px-1.5 py-0.5 rounded-full bg-amber-400/10">
+              <span className="text-[10px] text-amber-400 font-medium px-1.5 py-0.5 rounded-full bg-amber-400/10">
                 {allGaps.length}
               </span>
             </div>
             {showGaps ? (
-              <ChevronUp className="h-4 w-4 text-white/40" />
+              <ChevronUp className="h-4 w-4 text-white" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-white/40" />
+              <ChevronDown className="h-4 w-4 text-white" />
             )}
           </button>
 
@@ -402,7 +402,7 @@ export function QualificationProgress({
                 </p>
               ))}
               {allGaps.length > 30 && (
-                <p className="text-[11px] text-white/60 italic text-left">
+                <p className="text-[11px] text-white italic text-left">
                   ...and {allGaps.length - 30} more
                 </p>
               )}

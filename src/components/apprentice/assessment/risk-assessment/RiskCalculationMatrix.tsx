@@ -92,7 +92,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
                 >
                   <div className={`text-lg font-bold ${config.text} mb-1`}>{level.value}</div>
                   <div className="text-xs font-medium text-white">{level.label}</div>
-                  <div className="text-[10px] text-white/80 mt-1">{level.description}</div>
+                  <div className="text-[10px] text-white mt-1">{level.description}</div>
                 </button>
               );
             })}
@@ -117,7 +117,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
                 >
                   <div className={`text-lg font-bold ${config.text} mb-1`}>{level.value}</div>
                   <div className="text-xs font-medium text-white">{level.label}</div>
-                  <div className="text-[10px] text-white/80 mt-1">{level.description}</div>
+                  <div className="text-[10px] text-white mt-1">{level.description}</div>
                 </button>
               );
             })}
@@ -140,15 +140,15 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
             </div>
             <div className="grid grid-cols-3 gap-3 mb-4">
               <div className="p-3 rounded-lg bg-white/5 text-center">
-                <div className="text-xs text-white/60 mb-1">Likelihood</div>
+                <div className="text-xs text-white mb-1">Likelihood</div>
                 <div className="text-xl font-bold text-elec-yellow">{selectedLikelihood}</div>
               </div>
               <div className="p-3 rounded-lg bg-white/5 text-center">
-                <div className="text-xs text-white/60 mb-1">Severity</div>
+                <div className="text-xs text-white mb-1">Severity</div>
                 <div className="text-xl font-bold text-red-400">{selectedSeverity}</div>
               </div>
               <div className="p-3 rounded-lg bg-white/5 text-center">
-                <div className="text-xs text-white/60 mb-1">Risk Score</div>
+                <div className="text-xs text-white mb-1">Risk Score</div>
                 <div className={`text-xl font-bold ${currentRisk.text}`}>{getRiskScore()}</div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -34,10 +34,13 @@ import {
   User,
   FileText,
   ChevronRight,
+  ChevronDown,
 } from 'lucide-react';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { useTimeEntryVerification } from '@/hooks/time-tracking/useTimeEntryVerification';
 import { useToast } from '@/hooks/use-toast';
 import TimeEntryCard from '@/components/apprentice/time-tracking/TimeEntryCard';
+import type { TimeEntry } from '@/types/time-tracking';
 
 const ACTIVITY_TYPES = [
   { value: 'workshop', label: 'Workshop Training', icon: '🔧' },
@@ -72,6 +75,7 @@ const DURATION_PRESETS = [
  */
 export function TimeSection() {
   const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
+  const { getVerificationForTimeEntry } = useTimeEntryVerification();
   const { toast } = useToast();
 
   const [showAddEntry, setShowAddEntry] = useState(false);
@@ -79,6 +83,7 @@ export function TimeSection() {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerActivity, setTimerActivity] = useState('');
   const [showAllSessions, setShowAllSessions] = useState(false);
+  const [expandedDays, setExpandedDays] = useState<Set<string>>(new Set());
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Form state
@@ -212,6 +217,40 @@ export function TimeSection() {
 
   // How many to show in compact view
   const visibleEntries = showAllSessions ? entries : entries.slice(0, 5);
+
+  // Group visible entries by day
+  const dayGroups = useMemo(
+    () => groupEntriesByDay(visibleEntries),
+    [visibleEntries]
+  );
+
+  const toggleDay = (dateKey: string) => {
+    setExpandedDays((prev) => {
+      const next = new Set(prev);
+      if (next.has(dateKey)) {
+        next.delete(dateKey);
+      } else {
+        next.add(dateKey);
+      }
+      return next;
+    });
+  };
+
+  // Get verification status for a day group
+  const getDayVerificationStatus = (
+    dayEntries: TimeEntry[]
+  ): 'all' | 'some' | 'none' => {
+    let verified = 0;
+    for (const entry of dayEntries) {
+      const v = getVerificationForTimeEntry(entry.id);
+      if (entry.is_supervisor_verified || v?.verified_at) {
+        verified++;
+      }
+    }
+    if (verified === dayEntries.length) return 'all';
+    if (verified > 0) return 'some';
+    return 'none';
+  };
 
   return (
     <>
@@ -417,10 +456,64 @@ export function TimeSection() {
               </CardContent>
             </Card>
           ) : (
-            <div className="space-y-3">
-              {visibleEntries.map((entry) => (
-                <TimeEntryCard key={entry.id} entry={entry} />
-              ))}
+            <div className="space-y-2">
+              {dayGroups.map((group) => {
+                const isExpanded = expandedDays.has(group.dateKey);
+                const vStatus = getDayVerificationStatus(group.entries);
+                const totalHours = (group.totalMinutes / 60).toFixed(1);
+
+                return (
+                  <div key={group.dateKey}>
+                    {/* Day header — tappable */}
+                    <button
+                      onClick={() => toggleDay(group.dateKey)}
+                      className="w-full flex items-center gap-3 px-3 py-3 rounded-lg bg-muted/40 hover:bg-muted/60 transition-colors touch-manipulation active:scale-[0.98]"
+                      style={{ minHeight: 44 }}
+                    >
+                      {/* Verification dot */}
+                      <div
+                        className={cn(
+                          'h-2.5 w-2.5 rounded-full flex-shrink-0',
+                          vStatus === 'all'
+                            ? 'bg-green-500'
+                            : vStatus === 'some'
+                              ? 'bg-amber-500'
+                              : 'bg-muted-foreground/30'
+                        )}
+                      />
+
+                      {/* Date label + count */}
+                      <div className="flex-1 text-left">
+                        <span className="text-sm font-medium text-foreground">
+                          {group.label}
+                        </span>
+                        <span className="text-sm text-muted-foreground ml-2">
+                          {group.entries.length}{' '}
+                          {group.entries.length === 1 ? 'session' : 'sessions'}
+                          {' · '}
+                          {totalHours}h
+                        </span>
+                      </div>
+
+                      {/* Chevron */}
+                      {isExpanded ? (
+                        <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      ) : (
+                        <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      )}
+                    </button>
+
+                    {/* Expanded entries */}
+                    {isExpanded && (
+                      <div className="mt-2 mb-1 space-y-3 pl-1">
+                        {group.entries.map((entry) => (
+                          <TimeEntryCard key={entry.id} entry={entry} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
@@ -642,6 +735,63 @@ export function TimeSection() {
       </Sheet>
     </>
   );
+}
+
+// Helper: Group entries by day (newest day first, newest entry first within each day)
+interface DayGroup {
+  dateKey: string;
+  label: string;
+  entries: TimeEntry[];
+  totalMinutes: number;
+}
+
+function groupEntriesByDay(entries: TimeEntry[]): DayGroup[] {
+  const groups = new Map<string, TimeEntry[]>();
+
+  for (const entry of entries) {
+    const dateKey = entry.date.slice(0, 10); // "YYYY-MM-DD"
+    const existing = groups.get(dateKey);
+    if (existing) {
+      existing.push(entry);
+    } else {
+      groups.set(dateKey, [entry]);
+    }
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const todayKey = today.toISOString().slice(0, 10);
+  const yesterdayKey = yesterday.toISOString().slice(0, 10);
+
+  const result: DayGroup[] = [];
+
+  for (const [dateKey, dayEntries] of groups) {
+    let label: string;
+    if (dateKey === todayKey) {
+      label = 'Today';
+    } else if (dateKey === yesterdayKey) {
+      label = 'Yesterday';
+    } else {
+      const d = new Date(dateKey + 'T00:00:00');
+      label = d.toLocaleDateString('en-GB', {
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short',
+      });
+    }
+
+    const totalMinutes = dayEntries.reduce((sum, e) => sum + (e.duration || 0), 0);
+
+    result.push({ dateKey, label, entries: dayEntries, totalMinutes });
+  }
+
+  // Sort newest day first
+  result.sort((a, b) => b.dateKey.localeCompare(a.dateKey));
+
+  return result;
 }
 
 // Helper: Get hours logged this week

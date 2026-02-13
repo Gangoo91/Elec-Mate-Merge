@@ -9,12 +9,10 @@
  * On save → write to both Supabase and localStorage simultaneously.
  *
  * Scoring breakdown:
- *   Testing Sequence   25%
- *   Installation Design 20%
- *   Practical Understanding 20%
- *   Fault Diagnosis    20%
- *   Safe Isolation     10%
- *   Knowledge          5%
+ *   Testing Sequence      35%
+ *   Fault Diagnosis       30%
+ *   Safe Isolation        20%
+ *   Knowledge Assessment  15%
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -71,12 +69,10 @@ function getRiskLevel(score: number): 'high' | 'moderate' | 'low' {
 }
 
 const COMPONENT_WEIGHTS: Record<string, { weight: number; label: string }> = {
-  testingSequence: { weight: 0.25, label: 'Testing Sequence' },
-  installationDesign: { weight: 0.2, label: 'Installation Design' },
-  practicalUnderstanding: { weight: 0.2, label: 'Practical Understanding' },
-  faultDiagnosis: { weight: 0.2, label: 'Fault Diagnosis' },
-  safeIsolation: { weight: 0.1, label: 'Safe Isolation' },
-  knowledgeAssessment: { weight: 0.05, label: 'Knowledge' },
+  testingSequence: { weight: 0.35, label: 'Testing Sequence' },
+  faultDiagnosis: { weight: 0.3, label: 'Fault Diagnosis' },
+  safeIsolation: { weight: 0.2, label: 'Safe Isolation' },
+  knowledgeAssessment: { weight: 0.15, label: 'Knowledge' },
 };
 
 const STORAGE_KEY = (userId: string) => `am2-scores-${userId}`;
@@ -212,11 +208,9 @@ export function useAM2Readiness() {
 
           const actions: Record<string, string> = {
             safeIsolation: 'Practise the 8-step safe isolation sequence until 100% correct',
-            installationDesign: 'Run through cable selection and protective device scenarios',
             testingSequence: 'Complete testing sequence simulations in the correct order',
             faultDiagnosis: 'Work through fault-finding scenarios on each circuit type',
-            practicalUnderstanding: 'Review installation task walkthroughs and containment rules',
-            knowledgeAssessment: 'Take the 30-question knowledge quiz and review weak topics',
+            knowledgeAssessment: 'Take the knowledge quiz and review weak topics',
           };
 
           gaps.push({

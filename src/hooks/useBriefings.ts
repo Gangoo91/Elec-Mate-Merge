@@ -90,7 +90,7 @@ export function useBriefings() {
         .from("briefings")
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .eq("user_id", user.id)
         .order("date", { ascending: false });
@@ -141,7 +141,7 @@ export function useUpcomingBriefings() {
         .from("briefings")
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .eq("user_id", user.id)
         .eq("status", "Scheduled")
@@ -165,7 +165,7 @@ export function useBriefingWithAttendees(briefingId: string | undefined) {
         .from("briefings")
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .eq("id", briefingId)
         .single();
@@ -268,7 +268,7 @@ export function useCreateBriefing() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -305,7 +305,7 @@ export function useUpdateBriefing() {
         .eq("id", id)
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -345,7 +345,7 @@ export function useCompleteBriefing() {
         .eq("id", id)
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -599,7 +599,7 @@ export function useCreateBriefingFromTemplate() {
         })
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -647,7 +647,7 @@ export function useAddPresenterSignature() {
         .eq("id", id)
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -687,7 +687,7 @@ export function useUpdateBriefingContent() {
         .eq("id", id)
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 
@@ -739,7 +739,7 @@ export function useAddBriefingPhoto() {
         .eq("id", id)
         .select(`
           *,
-          job:employer_jobs(id, title)
+          job:jobs(id, title)
         `)
         .single();
 

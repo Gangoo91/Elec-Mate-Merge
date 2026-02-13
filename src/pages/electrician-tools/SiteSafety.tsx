@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -17,13 +17,25 @@ import {
   ClipboardCheck,
   BookOpen,
   Lock,
+  Library,
+  Zap,
+  Eye,
+  CalendarDays,
+  Flame,
+  ArrowUpDown,
+  Bell,
+  FolderArchive,
 } from 'lucide-react';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { motion } from 'framer-motion';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { SafetyDashboard } from '@/components/electrician-tools/site-safety/SafetyDashboard';
-import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
-import { useBriefings, useUpcomingBriefings } from '@/hooks/useBriefings';
+import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
+import { SafetyStreakCard } from '@/components/electrician-tools/site-safety/SafetyStreakCard';
+import { SafetyTrendsCard } from '@/components/electrician-tools/site-safety/charts/SafetyTrendsCard';
+import { WeeklySummaryCard } from '@/components/electrician-tools/site-safety/WeeklySummaryCard';
+import { useSafetyStreak } from '@/hooks/useSafetyStreak';
+import { useSafetyTrends } from '@/hooks/useSafetyTrends';
 
 // Lazy-loaded tool components for code splitting
 const RAMSGenerator = lazy(
@@ -87,6 +99,46 @@ const DigitalAccidentBook = lazy(() =>
     default: m.DigitalAccidentBook,
   }))
 );
+const SafetyTemplateLibrary = lazy(() =>
+  import('@/components/electrician-tools/site-safety/templates/SafetyTemplateLibrary').then((m) => ({
+    default: m.SafetyTemplateLibrary,
+  }))
+);
+const SafeIsolationRecord = lazy(() =>
+  import('@/components/electrician-tools/site-safety/safe-isolation/SafeIsolationRecord').then((m) => ({
+    default: m.SafeIsolationRecord,
+  }))
+);
+const PreUseCheckTool = lazy(() =>
+  import('@/components/electrician-tools/site-safety/pre-use-checks/PreUseCheckTool').then((m) => ({
+    default: m.PreUseCheckTool,
+  }))
+);
+const SafetyObservationCard = lazy(() =>
+  import('@/components/electrician-tools/site-safety/observations/SafetyObservationCard').then((m) => ({
+    default: m.SafetyObservationCard,
+  }))
+);
+const ElectricianSiteDiary = lazy(() =>
+  import('@/components/electrician-tools/site-safety/site-diary/ElectricianSiteDiary').then((m) => ({
+    default: m.ElectricianSiteDiary,
+  }))
+);
+const FireWatchTimer = lazy(() =>
+  import('@/components/electrician-tools/site-safety/fire-watch/FireWatchTimer').then((m) => ({
+    default: m.FireWatchTimer,
+  }))
+);
+const SafetyAlertsFeed = lazy(() =>
+  import('@/components/electrician-tools/site-safety/alerts/SafetyAlertsFeed').then((m) => ({
+    default: m.SafetyAlertsFeed,
+  }))
+);
+const SafetyResourceLibrary = lazy(() =>
+  import('@/components/electrician-tools/site-safety/resources/SafetyResourceLibrary').then((m) => ({
+    default: m.SafetyResourceLibrary,
+  }))
+);
 
 // Animation variants
 const containerVariants = {
@@ -123,6 +175,14 @@ const toolColors: Record<string, string> = {
   coshh: 'from-green-400 to-emerald-500',
   'inspection-checklists': 'from-indigo-400 to-indigo-600',
   'accident-book': 'from-red-500 to-rose-600',
+  'safety-templates': 'from-teal-400 to-cyan-500',
+  'safe-isolation': 'from-red-500 to-orange-500',
+  'pre-use-checks': 'from-sky-400 to-blue-500',
+  'safety-observations': 'from-lime-400 to-green-500',
+  'site-diary': 'from-violet-400 to-purple-500',
+  'fire-watch': 'from-orange-500 to-amber-500',
+  'safety-alerts': 'from-rose-400 to-red-500',
+  'safety-resources': 'from-slate-400 to-gray-500',
 };
 
 const SiteSafety = () => {
@@ -131,9 +191,10 @@ const SiteSafety = () => {
   const [activeView, setActiveView] = useState<string | null>(null);
 
   // Data for dashboard
-  const { stats: equipmentStats, isLoading: equipmentLoading } = useSafetyEquipment();
-  const { data: briefings, isLoading: briefingsLoading } = useBriefings();
-  const { data: upcomingBriefings } = useUpcomingBriefings();
+  const { stats: dashboardStats, isLoading: dashboardLoading } = useSafetyDashboardStats();
+  const { data: recentDocuments, isLoading: isLoadingDocuments } = useRecentDocuments();
+  const { data: streakData } = useSafetyStreak();
+  const { data: trendsData } = useSafetyTrends();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -141,31 +202,6 @@ const SiteSafety = () => {
       setActiveView('team-briefing');
     }
   }, [searchParams]);
-
-  // Calculate dashboard stats
-  const dashboardStats = useMemo(() => {
-    const now = new Date();
-    const thisMonth = now.getMonth();
-    const thisYear = now.getFullYear();
-
-    const completedBriefingsThisMonth = (briefings || []).filter((b) => {
-      if (b.status !== 'Completed') return false;
-      const d = new Date(b.date);
-      return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
-    }).length;
-
-    return {
-      activeRams: 0, // Will be populated from saved RAMS when available
-      daysSinceLastNearMiss: null, // Will be populated from near miss data
-      equipmentDue: equipmentStats?.needsAttention || 0,
-      equipmentOverdue: equipmentStats?.overdue || 0,
-      upcomingBriefings: (upcomingBriefings || []).length,
-      completedBriefingsThisMonth,
-      totalPhotosThisWeek: 0, // Will be populated from photo data
-      totalNearMisses: 0,
-      equipmentTotal: equipmentStats?.total || 0,
-    };
-  }, [equipmentStats, briefings, upcomingBriefings]);
 
   const primaryTools = [
     {
@@ -182,7 +218,16 @@ const SiteSafety = () => {
       icon: FolderOpen,
       badge: 'Library',
     },
+    {
+      id: 'safety-templates',
+      title: 'Safety Templates',
+      description: 'UK electrical safety document templates',
+      icon: Library,
+      badge: 'New',
+    },
   ];
+
+  const equipmentBadge = dashboardStats.equipmentDue + dashboardStats.equipmentOverdue;
 
   const safetyTools = [
     {
@@ -190,36 +235,64 @@ const SiteSafety = () => {
       title: 'Hazard Database',
       description: 'Comprehensive electrical hazard information',
       icon: Shield,
+      badgeCount: 0,
+      badgeUrgent: false,
     },
     {
       id: 'photo-docs',
       title: 'Photo Documentation',
       description: 'Document safety conditions on site',
       icon: Camera,
+      badgeCount: 0,
+      badgeUrgent: false,
     },
     {
       id: 'team-briefing',
       title: 'Team Briefing',
       description: 'Pre-work safety briefings & toolbox talks',
       icon: Users,
+      badgeCount: dashboardStats.upcomingBriefings,
+      badgeUrgent: false,
     },
     {
       id: 'near-miss',
       title: 'Near Miss Reports',
       description: 'Report and track safety incidents',
       icon: AlertTriangle,
+      badgeCount: 0,
+      badgeUrgent: false,
     },
     {
       id: 'equipment',
       title: 'Equipment Tracker',
       description: 'Track PPE and safety equipment',
       icon: Wrench,
+      badgeCount: equipmentBadge,
+      badgeUrgent: dashboardStats.equipmentOverdue > 0,
     },
     {
       id: 'emergency',
       title: 'Emergency Procedures',
       description: 'Quick access to emergency protocols',
       icon: Phone,
+      badgeCount: 0,
+      badgeUrgent: false,
+    },
+    {
+      id: 'safety-observations',
+      title: 'Safety Observations',
+      description: 'Log positive behaviours and improvements',
+      icon: Eye,
+      badgeCount: 0,
+      badgeUrgent: false,
+    },
+    {
+      id: 'site-diary',
+      title: 'Site Diary',
+      description: 'Professional daily log for CDM compliance',
+      icon: CalendarDays,
+      badgeCount: 0,
+      badgeUrgent: false,
     },
   ];
 
@@ -230,6 +303,8 @@ const SiteSafety = () => {
       description: 'Issue and manage work permits with signatures',
       icon: Lock,
       badge: 'New',
+      badgeCount: dashboardStats.activePermits,
+      badgeUrgent: false,
     },
     {
       id: 'coshh',
@@ -237,6 +312,8 @@ const SiteSafety = () => {
       description: 'Chemical substance hazard assessments',
       icon: FlaskConical,
       badge: 'New',
+      badgeCount: dashboardStats.coshhOverdueReviews,
+      badgeUrgent: dashboardStats.coshhOverdueReviews > 0,
     },
     {
       id: 'inspection-checklists',
@@ -244,6 +321,8 @@ const SiteSafety = () => {
       description: 'Standardised safety inspection forms',
       icon: ClipboardCheck,
       badge: 'New',
+      badgeCount: 0,
+      badgeUrgent: false,
     },
     {
       id: 'accident-book',
@@ -251,6 +330,50 @@ const SiteSafety = () => {
       description: 'RIDDOR-compliant incident records',
       icon: BookOpen,
       badge: 'New',
+      badgeCount: dashboardStats.accidentCount30Days,
+      badgeUrgent: dashboardStats.accidentCount30Days > 0,
+    },
+    {
+      id: 'safe-isolation',
+      title: 'Safe Isolation (GS38)',
+      description: 'Step-by-step GS38 isolation records',
+      icon: Zap,
+      badge: 'New',
+      badgeCount: 0,
+      badgeUrgent: false,
+    },
+    {
+      id: 'pre-use-checks',
+      title: 'Pre-Use Checks',
+      description: 'PUWER 1998 equipment inspection checklists',
+      icon: ClipboardCheck,
+      badge: 'New',
+      badgeCount: 0,
+      badgeUrgent: false,
+    },
+    {
+      id: 'fire-watch',
+      title: 'Fire Watch',
+      description: 'Hot work fire watch timer and checklist',
+      icon: Flame,
+      badge: 'New',
+      badgeCount: 0,
+      badgeUrgent: false,
+    },
+  ];
+
+  const additionalTools = [
+    {
+      id: 'safety-alerts',
+      title: 'Safety Alerts',
+      description: 'Latest safety alerts and industry notices',
+      icon: Bell,
+    },
+    {
+      id: 'safety-resources',
+      title: 'Safety Resources',
+      description: 'Guidance notes, posters, and HSE publications',
+      icon: FolderArchive,
     },
   ];
 
@@ -276,7 +399,7 @@ const SiteSafety = () => {
             <div className="px-4 space-y-6">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">Saved RAMS Documents</h2>
-                <p className="text-white/70">
+                <p className="text-white">
                   View and download your previously generated RAMS documentation
                 </p>
               </div>
@@ -310,6 +433,22 @@ const SiteSafety = () => {
         return <InspectionChecklists onBack={() => setActiveView(null)} />;
       case 'accident-book':
         return <DigitalAccidentBook onBack={() => setActiveView(null)} />;
+      case 'safety-templates':
+        return <SafetyTemplateLibrary onBack={() => setActiveView(null)} />;
+      case 'safe-isolation':
+        return <SafeIsolationRecord onBack={() => setActiveView(null)} />;
+      case 'pre-use-checks':
+        return <PreUseCheckTool onBack={() => setActiveView(null)} />;
+      case 'safety-observations':
+        return <SafetyObservationCard onBack={() => setActiveView(null)} />;
+      case 'site-diary':
+        return <ElectricianSiteDiary onBack={() => setActiveView(null)} />;
+      case 'fire-watch':
+        return <FireWatchTimer onBack={() => setActiveView(null)} />;
+      case 'safety-alerts':
+        return <SafetyAlertsFeed onBack={() => setActiveView(null)} />;
+      case 'safety-resources':
+        return <SafetyResourceLibrary onBack={() => setActiveView(null)} />;
       default:
         return null;
     }
@@ -325,7 +464,15 @@ const SiteSafety = () => {
       activeView === 'permit-to-work' ||
       activeView === 'coshh' ||
       activeView === 'inspection-checklists' ||
-      activeView === 'accident-book';
+      activeView === 'accident-book' ||
+      activeView === 'safety-templates' ||
+      activeView === 'safe-isolation' ||
+      activeView === 'pre-use-checks' ||
+      activeView === 'safety-observations' ||
+      activeView === 'site-diary' ||
+      activeView === 'fire-watch' ||
+      activeView === 'safety-alerts' ||
+      activeView === 'safety-resources';
 
     return (
       <RAMSProvider>
@@ -382,7 +529,7 @@ const SiteSafety = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-white">Site Safety & RAMS</h1>
-              <p className="text-sm text-white/70">Risk assessments & safety compliance</p>
+              <p className="text-sm text-white">Risk assessments & safety compliance</p>
             </div>
           </motion.div>
 
@@ -390,9 +537,58 @@ const SiteSafety = () => {
           <motion.section variants={itemVariants}>
             <SafetyDashboard
               stats={dashboardStats}
-              isLoading={equipmentLoading || briefingsLoading}
+              isLoading={dashboardLoading}
               onCardTap={(section) => setActiveView(section)}
+              recentDocuments={recentDocuments}
+              isLoadingDocuments={isLoadingDocuments}
             />
+          </motion.section>
+
+          {/* Safety Streak */}
+          {streakData && (
+            <motion.section variants={itemVariants}>
+              <SafetyStreakCard streak={streakData} />
+            </motion.section>
+          )}
+
+          {/* Weekly Summary */}
+          <motion.section variants={itemVariants}>
+            <WeeklySummaryCard
+              stats={dashboardStats}
+              weekOverWeekChange={trendsData?.weekOverWeekChange}
+            />
+          </motion.section>
+
+          {/* Trends & Charts */}
+          {trendsData && (
+            <motion.section variants={itemVariants}>
+              <SafetyTrendsCard trends={trendsData} />
+            </motion.section>
+          )}
+
+          {/* Quick Actions */}
+          <motion.section variants={itemVariants}>
+            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+              {[
+                { id: 'ai-rams', label: 'New RAMS', icon: FileText },
+                { id: 'team-briefing', label: 'New Briefing', icon: Users },
+                { id: 'near-miss', label: 'Report Near Miss', icon: AlertTriangle },
+                { id: 'photo-docs', label: 'Take Photo', icon: Camera },
+                { id: 'permit-to-work', label: 'New Permit', icon: Lock },
+              ].map((action) => {
+                const Icon = action.icon;
+                return (
+                  <button
+                    key={action.id}
+                    onClick={() => setActiveView(action.id)}
+                    className="flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-full bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold whitespace-nowrap touch-manipulation active:scale-[0.97] active:bg-elec-yellow/20 transition-all flex-shrink-0"
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {action.label}
+                  </button>
+                );
+              })}
+            </div>
           </motion.section>
 
           {/* Essential Tools Section */}
@@ -443,14 +639,14 @@ const SiteSafety = () => {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-[13px] text-white/70 line-clamp-1">
+                            <p className="text-[13px] text-white line-clamp-1">
                               {tool.description}
                             </p>
                           </div>
 
                           {/* Arrow indicator */}
                           <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white/70" />
+                            <ArrowRight className="h-4 w-4 text-white" />
                           </div>
                         </div>
                       </div>
@@ -490,10 +686,24 @@ const SiteSafety = () => {
                     <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
                       <div className="p-4">
                         <div className="flex items-center gap-3">
-                          <div
-                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                          >
-                            <IconComponent className="h-6 w-6 text-white" />
+                          {/* Icon with badge */}
+                          <div className="relative flex-shrink-0">
+                            <div
+                              className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
+                            >
+                              <IconComponent className="h-6 w-6 text-white" />
+                            </div>
+                            {tool.badgeCount > 0 && (
+                              <span
+                                className={`absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                                  tool.badgeUrgent
+                                    ? 'bg-red-500 text-white'
+                                    : 'bg-elec-yellow text-black'
+                                }`}
+                              >
+                                {tool.badgeCount}
+                              </span>
+                            )}
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -508,13 +718,13 @@ const SiteSafety = () => {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-[13px] text-white/70 line-clamp-1">
+                            <p className="text-[13px] text-white line-clamp-1">
                               {tool.description}
                             </p>
                           </div>
 
                           <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white/70" />
+                            <ArrowRight className="h-4 w-4 text-white" />
                           </div>
                         </div>
                       </div>
@@ -532,7 +742,7 @@ const SiteSafety = () => {
               <h2 className="text-base font-bold text-white">Safety Tools</h2>
               <Badge
                 variant="secondary"
-                className="bg-white/10 text-white/70 border-white/10 text-xs"
+                className="bg-white/10 text-white border-white/10 text-xs"
               >
                 {safetyTools.length} Tools
               </Badge>
@@ -554,23 +764,36 @@ const SiteSafety = () => {
                     <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
                       <div className="p-4">
                         <div className="flex items-center gap-3">
-                          {/* Icon with gradient background */}
-                          <div
-                            className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                          >
-                            <IconComponent className="h-6 w-6 text-white" />
+                          {/* Icon with gradient background + badge */}
+                          <div className="relative flex-shrink-0">
+                            <div
+                              className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}
+                            >
+                              <IconComponent className="h-6 w-6 text-white" />
+                            </div>
+                            {tool.badgeCount > 0 && (
+                              <span
+                                className={`absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                                  tool.badgeUrgent
+                                    ? 'bg-red-500 text-white'
+                                    : 'bg-elec-yellow text-black'
+                                }`}
+                              >
+                                {tool.badgeCount}
+                              </span>
+                            )}
                           </div>
 
                           <div className="flex-1 min-w-0">
                             <h3 className="text-[15px] font-bold text-white">{tool.title}</h3>
-                            <p className="text-[13px] text-white/70 line-clamp-1">
+                            <p className="text-[13px] text-white line-clamp-1">
                               {tool.description}
                             </p>
                           </div>
 
                           {/* Arrow indicator */}
                           <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white/70" />
+                            <ArrowRight className="h-4 w-4 text-white" />
                           </div>
                         </div>
                       </div>

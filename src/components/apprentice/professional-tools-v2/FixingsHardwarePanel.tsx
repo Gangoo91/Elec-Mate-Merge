@@ -25,6 +25,7 @@ import {
   screwHeadTip,
   screwCategories,
   screwCategoriesTip,
+  vanStockEssentials,
 } from "@/data/professional-tools/fixingsData";
 
 interface SectionConfig {
@@ -43,6 +44,7 @@ const sections: SectionConfig[] = [
   { id: "surface-fixings", title: "Fixings by Surface Type", count: "5 surfaces" },
   { id: "screw-heads", title: "Screw Head Types", count: "6 types" },
   { id: "screw-categories", title: "Screw Categories", count: "7 types" },
+  { id: "van-stock", title: "Van Stock Essentials", count: "10 items" },
 ];
 
 const TipBox = ({ tip }: { tip: string }) => (
@@ -310,6 +312,38 @@ const FixingsHardwarePanel = () => {
               </div>
             ))}
             <TipBox tip={screwCategoriesTip} />
+          </div>
+        );
+
+      case "van-stock":
+        return (
+          <div className="space-y-3">
+            <p className="text-xs text-white leading-relaxed">
+              Keep these items stocked in your van at all times. Running out on
+              site means a trip to the wholesaler and wasted time.
+            </p>
+            {vanStockEssentials.map((item) => (
+              <div
+                key={item.item}
+                className="p-3 rounded-lg bg-white/[0.02] border border-white/5 flex items-start gap-3"
+              >
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold text-white">
+                      {item.item}
+                    </span>
+                    <span className="text-xs text-white px-2 py-0.5 rounded-full bg-white/10 whitespace-nowrap">
+                      {item.approxCost}
+                    </span>
+                  </div>
+                  <div className="text-xs text-white">
+                    <span className="font-medium">Qty:</span> {item.quantity}
+                  </div>
+                  <p className="text-xs text-white">{item.notes}</p>
+                </div>
+              </div>
+            ))}
+            <TipBox tip="Do a van stock check every Friday. Reorder anything running low over the weekend so it arrives Monday. A well-stocked van means fewer trips to the wholesaler and more billable hours." />
           </div>
         );
 

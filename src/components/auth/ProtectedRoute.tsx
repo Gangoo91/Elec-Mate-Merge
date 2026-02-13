@@ -38,11 +38,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Show loading indicator during initial authentication and first subscription check
-  if (isLoading || (user && !profile) || (profile && !hasCompletedInitialCheck)) {
+  if (isLoading || (user && !profile) || (profile && !hasCompletedInitialCheck && !hasProfileAccess)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />
-        <p className="mt-4 text-yellow-400">Loading...</p>
+
       </div>
     );
   }

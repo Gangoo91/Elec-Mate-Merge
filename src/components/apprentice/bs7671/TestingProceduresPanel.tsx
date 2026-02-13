@@ -55,7 +55,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-left">
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
@@ -128,15 +128,15 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                 <ChevronDown className="h-4 w-4 text-white flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180" />
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="px-4 pb-4 pt-2 space-y-3 text-sm">
+                <div className="px-4 pb-4 pt-3 mt-1 space-y-3 text-sm rounded-b-xl bg-white/[0.02]">
                   <p className="text-white">{test.purpose}</p>
 
                   {test.testLimits.length > 0 && (
                     <div className="space-y-1">
                       <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wide">Test Limits</h4>
                       {test.testLimits.map((limit, idx) => (
-                        <div key={idx} className="flex justify-between text-xs p-2 rounded bg-white/5">
-                          <span className="text-white">{limit.parameter}</span>
+                        <div key={idx} className="text-xs p-2 rounded bg-white/[0.03] text-left">
+                          <span className="text-white">{limit.parameter}: </span>
                           <span className="font-mono text-cyan-400">
                             {limit.limit} {limit.unit}
                           </span>

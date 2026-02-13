@@ -150,7 +150,7 @@ export function ProgressRingsGroup({
         size="lg"
         color="#22c55e" // green-500
         label="Portfolio"
-        sublabel={`${portfolio.current}/${portfolio.target}`}
+        sublabel={`${portfolio.current} of ${portfolio.target} ACs`}
       />
 
       {/* OTJ Hours */}

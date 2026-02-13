@@ -60,7 +60,7 @@ const OnJobBS7671RunThrough = () => {
 
   return (
     <div className="bg-gradient-to-br from-background via-background/98 to-background/95">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 animate-fade-in">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 animate-fade-in text-left">
         {/* Header — SmartBackButton on LEFT */}
         <div className="flex items-center justify-between gap-4">
           <SmartBackButton className="flex-shrink-0" />
@@ -155,7 +155,7 @@ const OnJobBS7671RunThrough = () => {
               </div>
               <p className="text-sm text-white">
                 All electrical installation work must comply with BS
-                7671:2018+A2:2022 (18th Edition) and Amendment 3:2024. Follow
+                7671:2018+A3:2024 (18th Edition including Amendment 3). Follow
                 the correct testing sequence, document all results accurately,
                 and ensure{" "}
                 <span className="font-medium text-cyan-300">

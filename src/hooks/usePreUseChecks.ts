@@ -83,7 +83,7 @@ export function usePreUseChecks() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("pre_use_checks" as any)
+        .from("pre_use_checks")
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -116,7 +116,7 @@ export function useCreatePreUseCheck() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("pre_use_checks" as any)
+        .from("pre_use_checks")
         .insert({
           user_id: user.id,
           ...check,

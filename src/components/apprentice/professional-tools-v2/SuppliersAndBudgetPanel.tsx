@@ -10,6 +10,7 @@ import {
   suppliers,
   buyingGuides,
   suppliersTip,
+  apprenticeBudgetGuide,
 } from "@/data/professional-tools/suppliersData";
 
 const SuppliersAndBudgetPanel = () => {
@@ -39,6 +40,11 @@ const SuppliersAndBudgetPanel = () => {
       id: "buying-guide",
       title: "Where to Buy What",
       count: `${buyingGuides.length} categories`,
+    },
+    {
+      id: "budget-guide",
+      title: "Apprentice Budget Planner",
+      count: `${apprenticeBudgetGuide.length} phases`,
     },
   ];
 
@@ -114,6 +120,38 @@ const SuppliersAndBudgetPanel = () => {
                       <p className="text-xs text-white leading-relaxed">
                         {guide.tip}
                       </p>
+                    </div>
+                  ))}
+
+                {section.id === "budget-guide" &&
+                  apprenticeBudgetGuide.map((phase) => (
+                    <div
+                      key={phase.phase}
+                      className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-sm font-semibold text-white">
+                          {phase.phase}
+                        </h4>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 whitespace-nowrap">
+                          {phase.budget}
+                        </span>
+                      </div>
+                      <ul className="text-xs text-white space-y-1 pl-3">
+                        {phase.items.map((item) => (
+                          <li key={item} className="list-disc list-outside">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                        <p className="text-xs text-white">
+                          <span className="font-semibold text-amber-300">
+                            Tip:{" "}
+                          </span>
+                          {phase.tip}
+                        </p>
+                      </div>
                     </div>
                   ))}
               </div>

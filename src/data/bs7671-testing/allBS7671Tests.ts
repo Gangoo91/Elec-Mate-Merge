@@ -462,9 +462,9 @@ export const allBS7671Tests: BS7671Test[] = [
     difficulty: "Intermediate",
     purpose: "To verify that the earth fault loop impedance is low enough to ensure automatic disconnection in the event of an earth fault",
     testLimits: [
-      { parameter: "Ring circuits (32A Type B MCB)", limit: "≤ 1.44", unit: "Ω" },
-      { parameter: "Radial circuits (20A Type B MCB)", limit: "≤ 2.3", unit: "Ω" },
-      { parameter: "Lighting circuits (6A Type B MCB)", limit: "≤ 7.67", unit: "Ω" }
+      { parameter: "Ring circuits (32A Type B MCB)", limit: "≤ 1.37", unit: "Ω" },
+      { parameter: "Radial circuits (20A Type B MCB)", limit: "≤ 2.19", unit: "Ω" },
+      { parameter: "Lighting circuits (6A Type B MCB)", limit: "≤ 7.28", unit: "Ω" }
     ],
     commonIssues: [
       "High external earth fault loop impedance",
@@ -504,7 +504,7 @@ export const allBS7671Tests: BS7671Test[] = [
         id: "measure-zs",
         title: "Measure Zs at Each Circuit",
         instruction: "Reconnect the main earth. At the furthest point of each circuit, measure Zs between line and earth. For socket circuits, test at the furthest socket. For lighting, test at the furthest luminaire point.",
-        expectedResult: "Zs reading at each circuit within the maximum permitted value for the protective device. Example: 32A Type B MCB → measured Zs must be ≤ 1.15Ω (after applying 0.8 correction factor to tabulated 1.44Ω).",
+        expectedResult: "Zs reading at each circuit within the maximum permitted value for the protective device. Example: 32A Type B MCB → measured Zs must be ≤ 1.37Ω (tabulated value with Cmin = 0.95 already applied per BS 7671 Table 41.3).",
         tips: [
           "Always test at the furthest point — this gives the highest (worst-case) impedance",
           "For ring circuits, the furthest point is the midpoint of the ring"
@@ -516,13 +516,13 @@ export const allBS7671Tests: BS7671Test[] = [
         id: "temperature-correction",
         title: "Apply Temperature Correction",
         instruction: "The tabulated Zs values in BS 7671 assume conductors are at their maximum operating temperature. Since you test at ambient temperature (lower resistance), you must apply a correction factor. Rule of thumb: multiply the tabulated maximum Zs by 0.8 to get the maximum allowable measured value at ambient.",
-        expectedResult: "All measured Zs values are below 80% of the tabulated maximum. Example: 32A Type B MCB has tabulated Zs of 1.44Ω × 0.8 = 1.15Ω maximum measured at ambient.",
+        expectedResult: "All measured Zs values are below 80% of the tabulated maximum. Example: 32A Type B MCB has tabulated Zs of 1.37Ω (Cmin = 0.95) × 0.8 = 1.10Ω maximum measured at ambient.",
         tips: [
           "The 0.8 factor is conservative and works for most domestic situations",
           "For precise work, use the formula: measured max = tabulated Zs × (1 / (1 + temperature coefficient × temperature rise))"
         ],
         equipment: ["BS 7671 regulations", "Calculator"],
-        apprenticeTip: "Hot copper has higher resistance than cold copper. You test at room temperature, but under fault conditions the cable heats up rapidly. The 0.8 rule accounts for this: tabulated Zs × 0.8 = your maximum measured value. Example: 32A Type B = 1.44 × 0.8 = 1.15Ω."
+        apprenticeTip: "Hot copper has higher resistance than cold copper. You test at room temperature, but under fault conditions the cable heats up rapidly. The 0.8 rule accounts for this: tabulated Zs × 0.8 = your maximum measured value. Example: 32A Type B = 1.37 × 0.8 = 1.10Ω (tabulated values already include Cmin = 0.95)."
       },
       {
         id: "verify-device",

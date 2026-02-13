@@ -4,6 +4,10 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Rate limiting: 500ms between sends to stay within Resend limits (2/sec)
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const SEND_DELAY_MS = 500;
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -132,10 +136,19 @@ function signOff(): string {
           </tr>`;
 }
 
+function utmUrl(
+  path: string,
+  campaignType: string
+): string {
+  return `https://elec-mate.com${path}?utm_source=email&utm_medium=campaign&utm_campaign=apprentice_${campaignType}`;
+}
+
 function ctaBlock(
   text: string,
-  url: string = "https://elec-mate.com/auth/signup"
+  campaignType: string,
+  path: string = "/subscriptions"
 ): string {
+  const url = utmUrl(path, campaignType);
   return `
           <tr>
             <td style="padding: 0 20px 24px;">
@@ -196,7 +209,7 @@ function generateFeatureSpotlightEmail(
             </td>
           </tr>
 
-          ${ctaBlock("Check it out before prices go up")}
+          ${ctaBlock("Check it out before prices go up", "feature_spotlight")}
           ${signOff()}
   `);
 }
@@ -242,7 +255,7 @@ function generateNewContentEmail(
             </td>
           </tr>
 
-          ${ctaBlock("Jump in now &mdash; prices rise at app store launch")}
+          ${ctaBlock("Jump in now &mdash; prices rise at app store launch", "new_content")}
           ${signOff()}
   `);
 }
@@ -352,7 +365,7 @@ function generateEngagementNudgeEmail(firstName: string): string {
             </td>
           </tr>
 
-          ${ctaBlock("Get back into Elec-Mate")}
+          ${ctaBlock("Get back into Elec-Mate", "engagement_nudge")}
           ${signOff()}
   `);
 }
@@ -444,7 +457,7 @@ function generateTrialWinbackEmail(firstName: string): string {
                 <p style="margin: 6px 0 16px; font-size: 14px; color: #94a3b8;">
                   or &pound;49.99/year (&pound;4.17/mo)
                 </p>
-                <a href="https://elec-mate.com/subscriptions" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                <a href="https://elec-mate.com/subscriptions?utm_source=email&utm_medium=campaign&utm_campaign=apprentice_trial_winback" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
                   Lock in &pound;4.99/mo now &rarr;
                 </a>
                 <p style="margin: 10px 0 0; font-size: 12px; color: #64748b;">
@@ -581,18 +594,30 @@ Deno.serve(async (req) => {
         const { data: profiles, error: pErr } = await supabaseAdmin
           .from("profiles")
           .select(
-            "id, full_name, username, created_at, subscribed, free_access_granted, apprentice_campaign_sent_at, apprentice_campaign_type, last_sign_in"
+            "id, full_name, username, created_at, subscribed, free_access_granted, apprentice_campaign_sent_at, apprentice_campaign_type"
           )
           .eq("role", "apprentice")
           .order("created_at", { ascending: false });
 
         if (pErr) throw pErr;
 
+        // Get auth users for emails + last_sign_in_at
+        const { data: authUsers, error: authErr } =
+          await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+        if (authErr) throw authErr;
+
+        const emailMap = new Map<string, string>();
+        const lastSignInMap = new Map<string, string | null>();
+        authUsers.users.forEach((u: any) => {
+          if (u.email) emailMap.set(u.id, u.email);
+          lastSignInMap.set(u.id, u.last_sign_in_at || null);
+        });
+
         const now = Date.now();
         const filtered =
           profiles?.filter((p: any) => {
             if (ct === "trial_winback") {
-              // Unsubscribed, trial expired 8+ days ago, never sent winback
+              // Unsubscribed, trial expired, never sent winback
               if (p.subscribed === true || p.free_access_granted === true)
                 return false;
               if (
@@ -600,9 +625,10 @@ Deno.serve(async (req) => {
                 p.apprentice_campaign_type === "trial_winback"
               )
                 return false;
+              // Trial = 7 days from signup. Eligible once trial has expired.
               const trialEnd =
                 new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000;
-              return now - trialEnd >= 8 * 24 * 60 * 60 * 1000;
+              return now >= trialEnd;
             }
 
             // All other types require subscribed or free access
@@ -610,9 +636,10 @@ Deno.serve(async (req) => {
               return false;
 
             if (ct === "engagement_nudge") {
-              // Inactive 14+ days
-              const lastActive = p.last_sign_in
-                ? new Date(p.last_sign_in).getTime()
+              // Inactive 14+ days — use last_sign_in_at from auth.users
+              const lastSignIn = lastSignInMap.get(p.id);
+              const lastActive = lastSignIn
+                ? new Date(lastSignIn).getTime()
                 : 0;
               if (now - lastActive < 14 * 24 * 60 * 60 * 1000) return false;
             }
@@ -632,16 +659,6 @@ Deno.serve(async (req) => {
             return true;
           }) || [];
 
-        // Get emails
-        const { data: authUsers, error: authErr } =
-          await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
-        if (authErr) throw authErr;
-
-        const emailMap = new Map<string, string>();
-        authUsers.users.forEach((u: any) => {
-          if (u.email) emailMap.set(u.id, u.email);
-        });
-
         const usersWithEmails = filtered
           .map((p: any) => ({
             id: p.id,
@@ -649,7 +666,7 @@ Deno.serve(async (req) => {
             username: p.username,
             email: emailMap.get(p.id) || null,
             created_at: p.created_at,
-            last_sign_in: p.last_sign_in,
+            last_sign_in: lastSignInMap.get(p.id) || null,
             apprentice_campaign_sent_at: p.apprentice_campaign_sent_at,
           }))
           .filter((u: any) => u.email);
@@ -668,11 +685,21 @@ Deno.serve(async (req) => {
         const { data: profiles, error: pErr } = await supabaseAdmin
           .from("profiles")
           .select(
-            "id, subscribed, free_access_granted, created_at, apprentice_campaign_sent_at, apprentice_campaign_type, last_sign_in"
+            "id, subscribed, free_access_granted, created_at, apprentice_campaign_sent_at, apprentice_campaign_type"
           )
           .eq("role", "apprentice");
 
         if (pErr) throw pErr;
+
+        // Fetch auth users for last_sign_in_at (needed for engagement_nudge)
+        let lastSignInMap = new Map<string, string | null>();
+        if (ct === "engagement_nudge") {
+          const { data: authUsers } =
+            await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+          authUsers?.users?.forEach((u: any) => {
+            lastSignInMap.set(u.id, u.last_sign_in_at || null);
+          });
+        }
 
         const now = Date.now();
 
@@ -689,13 +716,14 @@ Deno.serve(async (req) => {
                 return false;
               const trialEnd =
                 new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000;
-              return now - trialEnd >= 8 * 24 * 60 * 60 * 1000;
+              return now >= trialEnd;
             }
             if (p.subscribed !== true && p.free_access_granted !== true)
               return false;
             if (ct === "engagement_nudge") {
-              const lastActive = p.last_sign_in
-                ? new Date(p.last_sign_in).getTime()
+              const lastSignIn = lastSignInMap.get(p.id);
+              const lastActive = lastSignIn
+                ? new Date(lastSignIn).getTime()
                 : 0;
               if (now - lastActive < 14 * 24 * 60 * 60 * 1000) return false;
             }
@@ -865,6 +893,11 @@ Deno.serve(async (req) => {
             });
 
             sentCount++;
+
+            // Rate limit: wait between sends to avoid hitting Resend limits
+            if (sentCount < userIds.length) {
+              await sleep(SEND_DELAY_MS);
+            }
           } catch (err: any) {
             errors.push(`${uid}: ${err.message}`);
           }

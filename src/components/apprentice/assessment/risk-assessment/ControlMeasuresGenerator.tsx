@@ -132,7 +132,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
             <div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
               <Lightbulb className="h-4 w-4 text-blue-400" />
             </div>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Select control measures following the hierarchy of controls. Higher-level controls (elimination, substitution) are more effective.
             </p>
           </div>
@@ -149,7 +149,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
                 </Badge>
                 <div>
                   <h4 className="font-semibold text-white">{category.category}</h4>
-                  <p className="text-xs text-white/80">{category.description}</p>
+                  <p className="text-xs text-white">{category.description}</p>
                 </div>
               </div>
 
@@ -178,7 +178,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
                       `}>
                         {isSelected && <CheckCircle className={`h-3.5 w-3.5 ${colorConfig.text}`} />}
                       </div>
-                      <span className={`text-sm text-left ${isSelected ? colorConfig.text : 'text-white/70'}`}>
+                      <span className={`text-sm text-left ${isSelected ? colorConfig.text : 'text-white'}`}>
                         {measure}
                       </span>
                     </button>
@@ -225,7 +225,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
             </div>
             <div className="space-y-1 mb-4 max-h-32 overflow-y-auto">
               {selectedMeasures.map((measure, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm text-white/70">
+                <div key={index} className="flex items-center gap-2 text-sm text-white">
                   <span className="w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0" />
                   {measure}
                 </div>

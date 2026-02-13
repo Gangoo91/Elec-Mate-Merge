@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft, Shield } from "lucide-react";
+import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft, Shield, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -101,7 +101,7 @@ export default function StudyCentreIndex() {
             className="mt-6 grid grid-cols-4 gap-2 touch-grid"
           >
             {[
-              { value: "36", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
+              { value: "46", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
               { value: totalQuizzesTaken || "0", label: "Quizzes", icon: Target, color: "from-purple-500 to-pink-400" },
               { value: averageScore > 0 ? `${averageScore}%` : "—", label: "Score", icon: Award, color: "from-emerald-500 to-teal-400" },
               { value: currentStreak || "0", label: "Streak", icon: Flame, color: "from-orange-500 to-red-400" },
@@ -361,6 +361,83 @@ export default function StudyCentreIndex() {
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/20 flex items-center justify-center group-hover:from-emerald-500 group-hover:to-green-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
                 <ChevronRight className="h-5 w-5 text-emerald-400/60 group-hover:text-white transition-colors" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Personal Development & Leadership Card - Rose/Pink Theme */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+          onClick={() => navigate("/study-centre/personal-development")}
+          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
+        >
+          {/* Multi-layer background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-rose-500/15 via-transparent to-pink-500/10" />
+
+          {/* Animated mesh gradient */}
+          <div className="absolute inset-0 opacity-40">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-rose-500/30 to-transparent rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-500" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-pink-500/20 to-transparent rounded-full blur-2xl transform -translate-x-5 translate-y-5 group-hover:scale-110 transition-transform duration-500" />
+          </div>
+
+          {/* Accent border glow */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-400/60 to-transparent" />
+
+          <div className="relative p-5">
+            {/* Header Row */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-rose-500/20 to-pink-500/20 border border-rose-500/20 backdrop-blur-sm">
+                <Compass className="h-6 w-6 text-rose-400" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 backdrop-blur-sm">
+                  10 Courses
+                </span>
+              </div>
+            </div>
+
+            {/* Title & Description */}
+            <h3 className="text-xl font-bold text-white mb-1.5 group-hover:text-rose-300 transition-colors">
+              Personal Development
+            </h3>
+            <p className="text-sm text-white mb-4 leading-relaxed">
+              Leadership, emotional intelligence, resilience, and becoming the best version of yourself
+            </p>
+
+            {/* Feature Tags */}
+            <div className="flex flex-wrap gap-1.5 mb-5">
+              {[
+                { label: "Leadership", color: "from-rose-500/20 to-pink-500/20 border-rose-500/30 text-rose-400" },
+                { label: "Mental Health", color: "from-purple-500/20 to-violet-500/20 border-purple-500/30 text-purple-400" },
+                { label: "Communication", color: "from-sky-500/20 to-blue-500/20 border-sky-500/30 text-sky-400" },
+                { label: "Resilience", color: "from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400" },
+              ].map((tag) => (
+                <span
+                  key={tag.label}
+                  className={cn(
+                    "px-2.5 py-1 text-[10px] font-semibold rounded-full bg-gradient-to-r border",
+                    tag.color
+                  )}
+                >
+                  {tag.label}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-lg bg-rose-500/20">
+                  <Play className="h-3.5 w-3.5 text-rose-400 fill-rose-400" />
+                </div>
+                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500/20 to-pink-500/20 border border-rose-500/20 flex items-center justify-center group-hover:from-rose-500 group-hover:to-pink-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
+                <ChevronRight className="h-5 w-5 text-rose-400/60 group-hover:text-white transition-colors" />
               </div>
             </div>
           </div>

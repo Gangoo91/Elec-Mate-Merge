@@ -63,7 +63,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
                 </div>
                 Safety Cases Error
                 {this.props.pageName && (
-                  <span className="text-sm font-normal text-white/80">({this.props.pageName})</span>
+                  <span className="text-sm font-normal text-white">({this.props.pageName})</span>
                 )}
               </CardTitle>
             </CardHeader>
@@ -74,7 +74,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
                   <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
                     <FileWarning className="h-4 w-4 text-red-400" />
                   </div>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     An error occurred while loading the safety cases content. This helps us debug the issue.
                   </p>
                 </div>
@@ -90,7 +90,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
                       <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80 active:text-elec-yellow transition-all touch-manipulation">
                         Show Stack Trace
                       </summary>
-                      <pre className="mt-3 p-3 rounded-lg bg-white/10 whitespace-pre-wrap text-white/80 overflow-x-auto">
+                      <pre className="mt-3 p-3 rounded-lg bg-white/10 whitespace-pre-wrap text-white overflow-x-auto">
                         {this.state.error.stack}
                       </pre>
                     </details>

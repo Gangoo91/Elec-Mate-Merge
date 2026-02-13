@@ -308,33 +308,41 @@ export function useEPAProfessionalDiscussion() {
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
-        await supabase.from('epa_mock_sessions').insert({
-          user_id: user.id,
-          qualification_code: qualificationCodeRef.current || 'unknown',
-          session_type: 'professional_discussion',
-          status: 'completed',
-          questions: questions as unknown as Record<string, unknown>,
-          responses: responses.map((r) => ({
-            questionId: r.questionId,
-            responseText: r.responseText,
-            score: r.score,
-          })) as unknown as Record<string, unknown>,
-          overall_score: avgScore,
-          predicted_grade: predictedGrade,
-          component_scores: result.componentScores as unknown as Record<
-            string,
-            unknown
-          >,
-          ai_feedback: result.aiFeedback,
-          improvement_suggestions:
-            uniqueImprovements as unknown as Record<string, unknown>,
-          started_at: sessionStartRef.current?.toISOString(),
-          completed_at: new Date().toISOString(),
-          time_spent_seconds: timeSpentSeconds,
-        });
+        const { error: saveError } = await supabase
+          .from('epa_mock_sessions')
+          .insert({
+            user_id: user.id,
+            qualification_code: qualificationCodeRef.current || 'unknown',
+            session_type: 'professional_discussion',
+            status: 'completed',
+            questions: questions as unknown as Record<string, unknown>,
+            responses: responses.map((r) => ({
+              questionId: r.questionId,
+              responseText: r.responseText,
+              score: r.score,
+            })) as unknown as Record<string, unknown>,
+            overall_score: avgScore,
+            predicted_grade: predictedGrade,
+            component_scores: result.componentScores as unknown as Record<
+              string,
+              unknown
+            >,
+            ai_feedback: result.aiFeedback,
+            improvement_suggestions:
+              uniqueImprovements as unknown as Record<string, unknown>,
+            started_at: sessionStartRef.current?.toISOString(),
+            completed_at: new Date().toISOString(),
+            time_spent_seconds: timeSpentSeconds,
+          });
+
+        if (saveError) {
+          console.error('Failed to save discussion session:', saveError);
+          toast.error('Failed to save session results');
+        }
       }
-    } catch {
-      /* non-critical — table may not exist yet */
+    } catch (err) {
+      console.error('Error saving discussion session:', err);
+      toast.error('Failed to save session results');
     }
 
     toast.success('Discussion session complete');

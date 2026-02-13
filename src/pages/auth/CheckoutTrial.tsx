@@ -28,6 +28,18 @@ const CheckoutTrial = () => {
   const role = profile?.role || localStorage.getItem('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
 
+  // Backfill role to profile if missing (handles race condition from signup)
+  useEffect(() => {
+    if (user?.id && profile && !profile.role) {
+      supabase.from('profiles').update({
+        role,
+        updated_at: new Date().toISOString(),
+      }).eq('id', user.id).then(({ error }) => {
+        if (error) console.warn('Failed to backfill role:', error);
+      });
+    }
+  }, [user?.id, profile, role]);
+
   const startCheckout = useCallback(async () => {
     if (isRedirecting) return;
 
@@ -74,7 +86,7 @@ const CheckoutTrial = () => {
     const success = await purchasePackage(pkg);
 
     if (success) {
-      navigate('/dashboard');
+      navigate('/payment-success?plan=electrician-monthly&trial=true');
     }
   }, [availablePackages, purchasePackage, navigate]);
 
@@ -84,6 +96,9 @@ const CheckoutTrial = () => {
       navigate('/auth/signin');
       return;
     }
+
+    // Wait for profile to load before making any decisions
+    if (!profile) return;
 
     // If user already has an active subscription, skip checkout
     if (profile?.subscribed || profile?.free_access_granted) {
@@ -95,7 +110,9 @@ const CheckoutTrial = () => {
     if (!hasAttempted) {
       setHasAttempted(true);
       // On native, don't auto-trigger — let user tap the button
-      if (!isNative) {
+      // Only auto-redirect on FIRST visit (no stripe_customer_id yet)
+      // Returning users see the manual UI so they're not trapped in a loop
+      if (!isNative && !profile?.stripe_customer_id) {
         startCheckout();
       }
     }

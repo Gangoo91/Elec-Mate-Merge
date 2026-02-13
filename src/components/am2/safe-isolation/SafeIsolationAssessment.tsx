@@ -33,6 +33,8 @@ import {
 import { cn } from '@/lib/utils';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
+import { useAuth } from '@/contexts/AuthContext';
+import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
 
 // --- Constants ---
 
@@ -117,7 +119,11 @@ type Phase = 'intro' | 'sequencer' | 'results';
 
 // --- Main Component ---
 
-export function SafeIsolationAssessment() {
+interface SafeIsolationAssessmentProps {
+  onSessionComplete?: () => void;
+}
+
+export function SafeIsolationAssessment({ onSessionComplete }: SafeIsolationAssessmentProps) {
   const [phase, setPhase] = useState<Phase>('intro');
   const [steps, setSteps] = useState(() => shuffleArray(CORRECT_SEQUENCE));
   const [submitted, setSubmitted] = useState(false);
@@ -125,6 +131,7 @@ export function SafeIsolationAssessment() {
   const [startTime, setStartTime] = useState<number>(0);
   const [timeTaken, setTimeTaken] = useState(0);
   const { saveScore } = useAM2Readiness();
+  const { user } = useAuth();
 
   const triggerHaptic = useCallback(async (style: ImpactStyle = ImpactStyle.Light) => {
     try {
@@ -167,6 +174,19 @@ export function SafeIsolationAssessment() {
 
     saveScore('safeIsolation', score);
 
+    if (user) {
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      saveAM2Session(user.id, {
+        sessionType: 'safe_isolation',
+        overallScore: score,
+        componentScores: { correct, total: CORRECT_SEQUENCE.length },
+        timeSpentSeconds: elapsed,
+        startedAt: new Date(startTime).toISOString(),
+      });
+    }
+
+    onSessionComplete?.();
+
     if (isPerfect) {
       triggerHaptic(ImpactStyle.Heavy);
     } else {
@@ -174,7 +194,7 @@ export function SafeIsolationAssessment() {
     }
 
     setTimeout(() => setPhase('results'), 600);
-  }, [steps, startTime, saveScore, triggerHaptic]);
+  }, [steps, startTime, saveScore, user, onSessionComplete, triggerHaptic]);
 
   const handleRetry = useCallback(() => {
     handleStart();

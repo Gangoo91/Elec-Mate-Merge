@@ -137,6 +137,13 @@ export interface BuyingGuide {
   tip: string;
 }
 
+export interface VanStockItem {
+  item: string;
+  quantity: string;
+  approxCost: string;
+  notes: string;
+}
+
 export type ActiveCategory =
   | "fixings"
   | "hand-tools"

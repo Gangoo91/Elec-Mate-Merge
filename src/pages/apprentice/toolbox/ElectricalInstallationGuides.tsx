@@ -5,7 +5,6 @@ import {
   Home,
   Building,
   Factory,
-  TreePine,
   Sparkles,
   ChevronRight,
   Shield,
@@ -56,15 +55,6 @@ const installationTypes: InstallationType[] = [
     textColour: "text-orange-400",
   },
   {
-    title: "Outdoor",
-    icon: TreePine,
-    path: "/apprentice/on-job-tools/electrical-installation-guides/outdoor",
-    colour: "purple",
-    borderColour: "border-purple-500/30",
-    bgColour: "bg-purple-500/10",
-    textColour: "text-purple-400",
-  },
-  {
     title: "Specialist",
     icon: Sparkles,
     path: "/apprentice/on-job-tools/electrical-installation-guides/specialist",
@@ -105,7 +95,7 @@ const ElectricalInstallationGuides = () => {
           7 references
         </span>
         <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
-          5 installation types
+          4 installation types
         </span>
         <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
           BS 7671:2018+A3:2024

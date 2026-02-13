@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   ArrowLeft, ArrowRight, CheckCircle, AlertTriangle,
 } from "lucide-react";
@@ -10,7 +9,7 @@ import RiskCalculationMatrix from "./risk-assessment/RiskCalculationMatrix";
 import ControlMeasuresGenerator from "./risk-assessment/ControlMeasuresGenerator";
 import RiskOutcomeGuidance from "./risk-assessment/RiskOutcomeGuidance";
 import RiskDocumentation from "./risk-assessment/RiskDocumentation";
-import type { useAssessmentProgress, SavedRiskAssessment } from "./hooks/useAssessmentProgress";
+import type { useAssessmentProgress } from "./hooks/useAssessmentProgress";
 
 interface RiskAssessment {
   id: string;

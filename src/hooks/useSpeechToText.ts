@@ -100,7 +100,7 @@ export function useSpeechToText(
       let finalText = '';
       let interim = '';
 
-      for (let i = 0; i < event.results.length; i++) {
+      for (let i = event.resultIndex; i < event.results.length; i++) {
         const result = event.results[i];
         if (result.isFinal) {
           finalText += result[0].transcript;

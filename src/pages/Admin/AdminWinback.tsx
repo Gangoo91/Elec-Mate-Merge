@@ -83,6 +83,12 @@ export default function AdminWinback() {
 
   // Auto-batch state
   const [batchSending, setBatchSending] = useState(false);
+  const [batchProgress, setBatchProgress] = useState({ sent: 0, failed: 0, total: 0, batch: 0, totalBatches: 0 });
+  const [confirmResend, setConfirmResend] = useState(false);
+  const [resetting, setResetting] = useState(false);
+
+  // Auto-batch state
+  const [batchSending, setBatchSending] = useState(false);
   const [batchProgress, setBatchProgress] = useState({
     sent: 0,
     failed: 0,
@@ -403,6 +409,53 @@ export default function AdminWinback() {
                 <p className="text-xs text-muted-foreground text-center">
                   Resets previously sent users (24h+ ago) and sends them the new rewritten email in
                   batches
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Main Action Card — Reset & Send All */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-600/10">
+          <CardContent className="p-4 space-y-3">
+            {batchSending ? (
+              <>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="flex items-center gap-2 text-amber-400 font-semibold">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
+                  </span>
+                  <span className="text-muted-foreground">
+                    {batchProgress.sent}/{batchProgress.total}
+                  </span>
+                </div>
+                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
+                    style={{ width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%` }}
+                  />
+                </div>
+                {batchProgress.failed > 0 && (
+                  <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
+                )}
+              </>
+            ) : resetting ? (
+              <div className="flex items-center justify-center gap-2 py-4 text-amber-400">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span className="text-sm font-semibold">Resetting users...</span>
+              </div>
+            ) : (
+              <>
+                <Button
+                  onClick={() => setConfirmResend(true)}
+                  disabled={resetting || batchSending}
+                  className="w-full h-14 touch-manipulation text-base font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-3"
+                >
+                  <Send className="h-5 w-5" />
+                  Resend New Email to All ({stats?.offersSent || 0} users)
+                </Button>
+                <p className="text-xs text-muted-foreground text-center">
+                  Resets previously sent users (24h+ ago) and sends them the new rewritten email in batches
                 </p>
               </>
             )}
@@ -1008,6 +1061,63 @@ export default function AdminWinback() {
                   }
                 }}
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reset &amp; Resend All
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Confirm Resend Dialog */}
+        <AlertDialog open={confirmResend} onOpenChange={setConfirmResend}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Resend new email to all previously sent?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will reset all users who were sent the old winback email 24+ hours ago (and
+                haven't subscribed), then send them the new rewritten email in batches. Each person
+                gets one fresh email with the updated content.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={async () => {
+                  setConfirmResend(false);
+                  setResetting(true);
+                  try {
+                    // Step 1: Reset sent status
+                    const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+                      body: { action: 'reset_sent' },
+                    });
+                    if (error) throw error;
+                    if (data?.error) throw new Error(data.error);
+
+                    haptic.success();
+                    toast.success(`${data.reset} users reset — now sending new email...`);
+
+                    // Step 2: Refresh eligible list
+                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+                    const freshData = await refetch();
+                    const freshUsers = freshData.data || [];
+
+                    setResetting(false);
+
+                    if (freshUsers.length > 0) {
+                      // Step 3: Auto-batch send to all newly eligible users
+                      sendBatchedEmails(freshUsers.map((u: EligibleUser) => u.id));
+                    } else {
+                      toast.info('No users to resend to (all subscribed or sent < 24h ago)');
+                    }
+                  } catch (err: any) {
+                    setResetting(false);
+                    haptic.error();
+                    toast.error(`Reset failed: ${err.message}`);
+                  }
+                }}
+                className="h-11 touch-manipulation bg-amber-500 hover:bg-amber-600 text-black"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Reset &amp; Resend All

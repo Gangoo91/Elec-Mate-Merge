@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { NativePageWrapper } from '@/components/native/NativePageWrapper';
 import { useToast } from '@/hooks/use-toast';
+import useSEO from '@/hooks/useSEO';
 import {
   Home,
   Users,
@@ -634,6 +635,7 @@ const sectionMetadata: Record<Section, SectionMeta> = {
 };
 
 const EmployerDashboard = () => {
+  useSEO({ title: 'Employer Dashboard', description: 'Manage your electrical team, track apprentice progress, and view compliance analytics.', noindex: true });
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

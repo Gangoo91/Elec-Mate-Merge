@@ -1,19 +1,17 @@
 /**
  * EPAReadinessDashboard
  *
- * Hero progress ring, 5 component cards, gate banner, gap list, and CTAs.
+ * Hero progress ring, 4 component cards, gate banner, gap list, and CTAs.
  */
 
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
   Target,
-  BookOpen,
   Sparkles,
   MessageSquare,
   FileText,
   AlertTriangle,
-  CheckCircle2,
   Loader2,
   RefreshCw,
   ChevronRight,
@@ -49,7 +47,6 @@ const STATUS_LABELS: Record<ReadinessStatus, string> = {
 
 const COMPONENT_ICONS: Record<string, typeof Target> = {
   portfolio: FileText,
-  ksb: BookOpen,
   evidenceQuality: Sparkles,
   mockDiscussion: MessageSquare,
   mockKnowledge: FileText,
@@ -57,7 +54,6 @@ const COMPONENT_ICONS: Record<string, typeof Target> = {
 
 const COMPONENT_ACCENT: Record<string, string> = {
   portfolio: 'border-l-blue-500 bg-blue-500/10 text-blue-400',
-  ksb: 'border-l-purple-500 bg-purple-500/10 text-purple-400',
   evidenceQuality: 'border-l-amber-500 bg-amber-500/10 text-amber-400',
   mockDiscussion: 'border-l-pink-500 bg-pink-500/10 text-pink-400',
   mockKnowledge: 'border-l-cyan-500 bg-cyan-500/10 text-cyan-400',
@@ -133,7 +129,7 @@ export function EPAReadinessDashboard({
             Calculating readiness...
           </p>
           <p className="text-xs text-white mt-1">
-            Analysing portfolio, KSBs, and mock results
+            Analysing portfolio, evidence quality, and mock results
           </p>
         </div>
       </div>
@@ -175,7 +171,7 @@ export function EPAReadinessDashboard({
   return (
     <div className="space-y-5 px-4 py-5">
       {/* Score Hero — Radial Ring */}
-      <div className="p-5 rounded-xl bg-white/[0.04] border border-white/10">
+      <div className="p-5 rounded-xl bg-elec-gray border border-white/10">
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm font-medium text-white">EPA Readiness Score</p>
           <button
@@ -371,7 +367,7 @@ function ComponentCard({
   return (
     <div
       className={cn(
-        'flex items-center gap-3 p-3.5 rounded-xl border border-white/10 border-l-4',
+        'flex items-center gap-3 p-3.5 rounded-xl bg-elec-gray border border-white/10 border-l-4',
         borderColour
       )}
     >

@@ -135,7 +135,7 @@ const ConfirmEmail = () => {
                 role: parsed.role,
                 ecs_card_type: parsed.ecsCardType || null,
                 elec_id_enabled: parsed.createElecId || false,
-                onboarding_completed: true,
+                onboarding_completed: false,
                 updated_at: new Date().toISOString(),
               })
               .eq('id', userId);

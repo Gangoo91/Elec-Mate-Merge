@@ -29,7 +29,7 @@ const SafetyCasesLoading = ({ message = "Loading safety cases..." }: SafetyCases
                 <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
               </div>
             </div>
-            <p className="text-white/70 text-sm">{message}</p>
+            <p className="text-white text-sm">{message}</p>
 
             {/* Skeleton loading indicators */}
             <div className="space-y-3 pt-4">

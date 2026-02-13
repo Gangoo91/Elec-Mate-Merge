@@ -162,7 +162,7 @@ export function PortfolioOverview({
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-purple-300">EPA Readiness</p>
-          <p className="text-xs text-white/50 mt-0.5">
+          <p className="text-xs text-white mt-0.5">
             Mock discussions, knowledge tests &amp; readiness score
           </p>
         </div>

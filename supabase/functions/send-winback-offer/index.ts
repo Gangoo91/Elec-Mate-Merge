@@ -4,6 +4,10 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Rate limiting: 500ms between sends to stay within Resend limits (2/sec)
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const SEND_DELAY_MS = 500;
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
@@ -651,6 +655,11 @@ Deno.serve(async (req) => {
             });
 
             sentCount++;
+
+            // Rate limit: wait between sends to avoid hitting Resend limits
+            if (sentCount < userIds.length) {
+              await sleep(SEND_DELAY_MS);
+            }
           } catch (err: any) {
             errors.push(`${uid}: ${err.message}`);
           }
@@ -757,6 +766,40 @@ Deno.serve(async (req) => {
 
         console.log(`Win-back offer manually sent to ${manualEmail} by admin ${user.id}`);
         result = { success: true, email: manualEmail };
+        break;
+      }
+
+      case "reset_sent": {
+        // Reset winback_offer_sent_at for users who were sent 24+ hours ago
+        // and still haven't subscribed — allows resending the new email
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+        const { data: resetUsers, error: resetErr } = await supabaseAdmin
+          .from("profiles")
+          .select("id")
+          .eq("role", "electrician")
+          .eq("subscribed", false)
+          .not("winback_offer_sent_at", "is", null)
+          .lt("winback_offer_sent_at", cutoff);
+
+        if (resetErr) throw resetErr;
+
+        const resetIds = resetUsers?.map((u: any) => u.id) || [];
+
+        if (resetIds.length === 0) {
+          result = { reset: 0, message: "No users eligible for reset (all sent < 24h ago or already subscribed)" };
+          break;
+        }
+
+        const { error: updateErr } = await supabaseAdmin
+          .from("profiles")
+          .update({ winback_offer_sent_at: null })
+          .in("id", resetIds);
+
+        if (updateErr) throw updateErr;
+
+        console.log(`Admin ${user.id} reset winback_offer_sent_at for ${resetIds.length} users`);
+        result = { reset: resetIds.length, message: `${resetIds.length} users reset and eligible for resend` };
         break;
       }
 

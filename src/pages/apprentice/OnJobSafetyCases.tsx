@@ -1,6 +1,5 @@
 import React from "react";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { HardHat, AlertTriangle, Flame, Target } from "lucide-react";
 import ScenarioCard from "@/components/apprentice/safety-cases/ScenarioCard";

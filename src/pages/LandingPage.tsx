@@ -35,7 +35,9 @@ const LandingPage = () => {
   const prefersReducedMotion = useReducedMotion();
 
   // Redirect first-time visitors to walkthrough (before they've signed in)
-  if (!user && !localStorage.getItem('walkthrough_completed')) {
+  // Skip redirect for search engine bots so Google can index the landing page
+  const isBot = /bot|crawl|spider|googlebot|bingbot|yandex|baidu/i.test(navigator.userAgent);
+  if (!user && !isBot && !localStorage.getItem('walkthrough_completed')) {
     return <Navigate to="/walkthrough" replace />;
   }
 
@@ -153,7 +155,26 @@ const LandingPage = () => {
               '@type': 'PostalAddress',
               addressCountry: 'GB',
             },
-            sameAs: [],
+            sameAs: [
+              'https://www.facebook.com/elecmate',
+              'https://www.instagram.com/elec_mate',
+              'https://www.tiktok.com/@elecmate',
+              'https://www.linkedin.com/company/elec-mate',
+              'https://t.me/Elec_MateOfficialGroup',
+            ],
+          })}
+        </script>
+
+        {/* FAQPage schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+            })),
           })}
         </script>
       </Helmet>
@@ -929,6 +950,41 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Explore Our Tools */}
+      <section className="py-10 sm:py-16 px-5">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">Explore our tools</h2>
+            <p className="text-white max-w-lg mx-auto">
+              Free guides and calculators for UK electricians — no sign-up required
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { to: '/tools/eicr-certificate', label: 'EICR Certificate App', desc: 'Digital condition reports' },
+              { to: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator', desc: 'BS 7671 compliant' },
+              { to: '/tools/voltage-drop-calculator', label: 'Voltage Drop Calculator', desc: 'Check maximum runs' },
+              { to: '/tools/minor-works-certificate', label: 'Minor Works Certificate', desc: 'Digital EWC forms' },
+              { to: '/tools/electrical-testing-calculators', label: 'Testing Calculators', desc: 'Zs, fault current, RCD' },
+              { to: '/tools/ai-electrician', label: 'AI Electrician Tools', desc: '5 BS 7671 specialists' },
+              { to: '/training/18th-edition-course', label: '18th Edition Course', desc: 'BS 7671 + Amendment 3' },
+              { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
+            ].map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-yellow-500/30 transition-all touch-manipulation group"
+              >
+                <p className="font-semibold text-white text-sm group-hover:text-yellow-400 transition-colors">
+                  {link.label}
+                </p>
+                <p className="text-xs text-white mt-1">{link.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA + Mental Health Mates */}
       <section className="py-12 sm:py-20 px-5">
         <div className="max-w-2xl mx-auto space-y-6">
@@ -980,25 +1036,46 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-5 border-t border-white/5 pb-20 sm:pb-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2.5">
-            <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" loading="lazy" />
-            <span className="text-sm text-white/50">Elec-Mate © 2026</span>
+      <footer className="py-10 px-5 border-t border-white/5 pb-20 sm:pb-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2.5 mb-4">
+                <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" loading="lazy" />
+                <span className="font-bold text-white">
+                  Elec-<span className="text-yellow-400">Mate</span>
+                </span>
+              </div>
+              <p className="text-sm text-white leading-relaxed">
+                The complete platform for UK electricians. Training, AI tools, certificates, and business management.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-3">Tools</h4>
+              <ul className="space-y-2">
+                <li><Link to="/tools/eicr-certificate" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">EICR Certificate</Link></li>
+                <li><Link to="/tools/cable-sizing-calculator" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Cable Sizing Calculator</Link></li>
+                <li><Link to="/tools/voltage-drop-calculator" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Voltage Drop Calculator</Link></li>
+                <li><Link to="/tools/minor-works-certificate" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Minor Works Certificate</Link></li>
+                <li><Link to="/tools/electrical-testing-calculators" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Testing Calculators</Link></li>
+                <li><Link to="/tools/ai-electrician" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">AI Electrician Tools</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-3">Training</h4>
+              <ul className="space-y-2">
+                <li><Link to="/training/18th-edition-course" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">18th Edition Course</Link></li>
+                <li><Link to="/training/electrical-apprentice" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Apprentice Training</Link></li>
+              </ul>
+              <h4 className="font-semibold text-white mb-3 mt-6">Legal</h4>
+              <ul className="space-y-2">
+                <li><Link to="/privacy" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Terms of Service</Link></li>
+              </ul>
+            </div>
           </div>
-          <div className="flex gap-1 text-sm text-white/40">
-            <Link
-              to="/privacy"
-              className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg"
-            >
-              Privacy
-            </Link>
-            <Link
-              to="/terms"
-              className="px-3 py-2 min-h-[44px] flex items-center hover:text-white/60 active:text-white/70 transition-colors touch-manipulation rounded-lg"
-            >
-              Terms
-            </Link>
+          <div className="border-t border-white/5 pt-6 text-center">
+            <p className="text-sm text-white">Elec-Mate &copy; 2026</p>
           </div>
         </div>
       </footer>

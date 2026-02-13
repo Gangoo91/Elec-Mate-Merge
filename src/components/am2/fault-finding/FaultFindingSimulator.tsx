@@ -52,6 +52,8 @@ import {
   type TestReading,
 } from '@/data/am2-fault-scenarios';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
+import { useAuth } from '@/contexts/AuthContext';
+import { saveAM2Session } from '@/hooks/am2/saveAM2Session';
 import { useMultimeterSounds } from '@/hooks/am2/useMultimeterSounds';
 
 // ── Types ────────────────────────────────────────────────────
@@ -182,7 +184,11 @@ function getGuidedTip(
 
 // ── Main Component ───────────────────────────────────────────
 
-export function FaultFindingSimulator() {
+interface FaultFindingSimulatorProps {
+  onSessionComplete?: () => void;
+}
+
+export function FaultFindingSimulator({ onSessionComplete }: FaultFindingSimulatorProps) {
   const [phase, setPhase] = useState<Phase>('intro');
   const [sessionMode, setSessionMode] = useState<SessionMode>('practice');
   const [faults, setFaults] = useState<FaultScenario[]>([]);
@@ -204,6 +210,7 @@ export function FaultFindingSimulator() {
   const [probeFlash, setProbeFlash] = useState(false);
 
   const { saveScore } = useAM2Readiness();
+  const { user } = useAuth();
   const sounds = useMultimeterSounds();
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -254,6 +261,17 @@ export function FaultFindingSimulator() {
       const score = Math.round((correct / faults.length) * 100);
       saveScore('faultDiagnosis', score);
 
+      if (user) {
+        saveAM2Session(user.id, {
+          sessionType: 'fault_diagnosis',
+          overallScore: score,
+          componentScores: { correct, total: faults.length },
+          sessionData: { mode: sessionMode, timedOut: true },
+          timeSpentSeconds: 7200,
+        });
+      }
+      onSessionComplete?.();
+
       // Save analytics
       saveSessionRecord({
         date: new Date().toISOString(),
@@ -281,6 +299,8 @@ export function FaultFindingSimulator() {
     faultStates,
     faults.length,
     saveScore,
+    user,
+    onSessionComplete,
     sounds,
     triggerNotification,
   ]);
@@ -462,8 +482,21 @@ export function FaultFindingSimulator() {
       const score = Math.round((correct / faults.length) * 100);
       saveScore('faultDiagnosis', score);
 
-      // Save analytics
       const timeUsed = Math.round((Date.now() - sessionStartTime) / 1000);
+
+      if (user) {
+        saveAM2Session(user.id, {
+          sessionType: 'fault_diagnosis',
+          overallScore: score,
+          componentScores: { correct, total: faults.length },
+          sessionData: { mode: sessionMode },
+          timeSpentSeconds: timeUsed,
+          startedAt: new Date(sessionStartTime).toISOString(),
+        });
+      }
+      onSessionComplete?.();
+
+      // Save analytics
       saveSessionRecord({
         date: new Date().toISOString(),
         mode: sessionMode,
@@ -495,6 +528,8 @@ export function FaultFindingSimulator() {
     faults.length,
     faultStates,
     saveScore,
+    user,
+    onSessionComplete,
     sessionMode,
     sessionStartTime,
     sounds,

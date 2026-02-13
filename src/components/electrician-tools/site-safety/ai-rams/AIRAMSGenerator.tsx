@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sparkles, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Sparkles, Clock, AlertCircle, Cloud, CloudOff, Check, Loader2, RotateCcw } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
@@ -13,6 +13,8 @@ import { useRAMSNotifications } from '@/hooks/useRAMSNotifications';
 import { toast } from '@/hooks/use-toast';
 
 const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
+const RAMS_LOCAL_DRAFT_KEY = 'rams-local-draft';
+const SAVE_RETRY_DELAYS = [5000, 15000, 30000]; // Exponential backoff: 5s, 15s, 30s
 
 interface AIRAMSGeneratorProps {
   onBack?: () => void;
@@ -32,8 +34,18 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const [resumedJob, setResumedJob] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
-  
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle');
+  const [showDraftRecovery, setShowDraftRecovery] = useState(false);
+  const [recoveredDraft, setRecoveredDraft] = useState<{
+    ramsData: any;
+    methodData: any;
+    jobId: string;
+    timestamp: number;
+    projectName: string;
+  } | null>(null);
+
   const lastErrorNotifiedJobRef = useRef<string | null>(null);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   
   const { 
     job, 
@@ -206,6 +218,109 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     }
   }, [ramsData, methodData, status, currentStep, showResults, celebrationShown]);
 
+  // === Improvement 1: Write to localStorage on every data change ===
+  useEffect(() => {
+    if (!ramsData || !currentJobId) return;
+    try {
+      const draft = {
+        ramsData,
+        methodData,
+        jobId: currentJobId,
+        timestamp: Date.now(),
+        projectName: ramsData.projectName || 'Untitled',
+      };
+      localStorage.setItem(RAMS_LOCAL_DRAFT_KEY, JSON.stringify(draft));
+    } catch (e) {
+      console.warn('Failed to save RAMS draft to localStorage:', e);
+    }
+  }, [ramsData, methodData, currentJobId]);
+
+  // === Improvement 2: Draft recovery on mount ===
+  useEffect(() => {
+    try {
+      const savedDraft = localStorage.getItem(RAMS_LOCAL_DRAFT_KEY);
+      if (!savedDraft) return;
+      const draft = JSON.parse(savedDraft);
+      const ageHours = (Date.now() - draft.timestamp) / (1000 * 60 * 60);
+      // Offer recovery if draft is <24h old and we're not already viewing results
+      if (ageHours < 24 && !showResults && !currentJobId && draft.ramsData) {
+        setRecoveredDraft(draft);
+        setShowDraftRecovery(true);
+      } else if (ageHours >= 24) {
+        localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+      }
+    } catch (e) {
+      console.warn('Failed to read RAMS draft from localStorage:', e);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // === Improvement 5a: beforeunload writes to localStorage (sync, reliable) ===
+  useEffect(() => {
+    if (!ramsData || !currentJobId) return;
+    const handleBeforeUnload = () => {
+      try {
+        localStorage.setItem(RAMS_LOCAL_DRAFT_KEY, JSON.stringify({
+          ramsData,
+          methodData,
+          jobId: currentJobId,
+          timestamp: Date.now(),
+          projectName: ramsData.projectName || 'Untitled',
+        }));
+      } catch {
+        // localStorage is synchronous — best effort
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [ramsData, methodData, currentJobId]);
+
+  // === Improvement 3: Auto-save to cloud every 30s when generation is complete ===
+  useEffect(() => {
+    if (!ramsData || !currentJobId || status !== 'complete') {
+      if (autoSaveTimerRef.current) {
+        clearInterval(autoSaveTimerRef.current);
+        autoSaveTimerRef.current = null;
+      }
+      return;
+    }
+    // Initial save after 10s, then every 30s
+    const initialTimeout = setTimeout(() => {
+      saveToDatabaseSilent();
+      autoSaveTimerRef.current = setInterval(() => {
+        saveToDatabaseSilent();
+      }, 30000);
+    }, 10000);
+    return () => {
+      clearTimeout(initialTimeout);
+      if (autoSaveTimerRef.current) {
+        clearInterval(autoSaveTimerRef.current);
+        autoSaveTimerRef.current = null;
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ramsData, methodData, currentJobId, status]);
+
+  // Restore a recovered draft
+  const handleRestoreDraft = () => {
+    if (!recoveredDraft) return;
+    setCurrentJobId(recoveredDraft.jobId);
+    setShowResults(true);
+    setShowDraftRecovery(false);
+    startPolling();
+    toast({
+      title: "Draft restored",
+      description: `Recovered "${recoveredDraft.projectName}" from local backup`,
+      variant: 'success'
+    });
+  };
+
+  const handleDismissDraft = () => {
+    setShowDraftRecovery(false);
+    setRecoveredDraft(null);
+    localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+  };
+
   const handleGenerate = async (
     jobDescription: string,
     projectInfo: {
@@ -320,9 +435,10 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   };
 
   const handleStartOver = () => {
-    // Clear session flag
+    // Clear session flag and localStorage draft
     sessionStorage.removeItem('rams-generation-active');
-    
+    localStorage.removeItem(RAMS_LOCAL_DRAFT_KEY);
+
     setCurrentJobId(null);
     setShowResults(false);
     setShowCelebration(false);
@@ -331,56 +447,112 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     setGenerationEndTime(0);
     setResumedJob(false);
     setCurrentJobDescription('');
+    setSaveStatus('idle');
   };
   
-  const saveToDatabase = async () => {
-    if (!currentJobId || !ramsData || !methodData) {
-      toast({
-        title: "Cannot Save",
-        description: "No data to save",
-        variant: 'destructive'
-      });
-      return;
+  // === Improvement 4: Cloud save with retry and exponential backoff ===
+  const saveToCloudWithRetry = useCallback(async (
+    silent: boolean = false,
+    maxRetries: number = 3
+  ): Promise<boolean> => {
+    if (!currentJobId || !ramsData) {
+      if (!silent) {
+        toast({
+          title: "Cannot Save",
+          description: "No data to save",
+          variant: 'destructive'
+        });
+      }
+      return false;
     }
 
     setIsSaving(true);
-    
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('User not authenticated');
+    setSaveStatus('saving');
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('User not authenticated');
+
+        const { error: updateError } = await supabase
+          .from('rams_generation_jobs')
+          .update({
+            rams_data: ramsData,
+            method_data: methodData
+          })
+          .eq('id', currentJobId)
+          .eq('user_id', user.id);
+
+        if (updateError) throw updateError;
+
+        setLastSaved(new Date());
+        setSaveStatus('saved');
+        setIsSaving(false);
+
+        if (!silent) {
+          toast({
+            title: "Saved Successfully",
+            description: "Your changes have been saved",
+            variant: 'success'
+          });
+        }
+        return true;
+      } catch (err) {
+        console.error(`Save attempt ${attempt + 1}/${maxRetries} failed:`, err);
+
+        if (attempt < maxRetries - 1) {
+          // Wait before retrying (exponential backoff)
+          await new Promise(r => setTimeout(r, SAVE_RETRY_DELAYS[attempt] || 5000));
+        }
       }
+    }
 
-    // Update the job with latest edits
-    const { error: updateError } = await supabase
-      .from('rams_generation_jobs')
-      .update({
-        rams_data: ramsData,
-        method_data: methodData
-      })
-      .eq('id', currentJobId)
-      .eq('user_id', user.id);
+    // All retries exhausted
+    setSaveStatus('failed');
+    setIsSaving(false);
 
-      if (updateError) throw updateError;
-
-      setLastSaved(new Date());
-      
-      toast({
-        title: "Saved Successfully",
-        description: "Your changes have been saved",
-        variant: 'success'
-      });
-    } catch (error) {
-      console.error('Save error:', error);
+    if (!silent) {
       toast({
         title: "Save Failed",
-        description: error instanceof Error ? error.message : "Could not save changes",
+        description: "Could not save after multiple attempts. Tap the save indicator to retry.",
         variant: 'destructive'
       });
-    } finally {
-      setIsSaving(false);
     }
+    return false;
+  }, [currentJobId, ramsData, methodData]);
+
+  // Explicit save (user-triggered, shows toast)
+  const saveToDatabase = async () => {
+    await saveToCloudWithRetry(false, 3);
   };
+
+  // Silent save (auto-save, no toast)
+  const saveToDatabaseSilent = async () => {
+    await saveToCloudWithRetry(true, 2);
+  };
+
+  // === Improvement 5b: Save before navigating away ===
+  const handleBack = useCallback(async () => {
+    // Save to localStorage immediately
+    if (ramsData && currentJobId) {
+      try {
+        localStorage.setItem(RAMS_LOCAL_DRAFT_KEY, JSON.stringify({
+          ramsData,
+          methodData,
+          jobId: currentJobId,
+          timestamp: Date.now(),
+          projectName: ramsData.projectName || 'Untitled',
+        }));
+      } catch {
+        // Best effort
+      }
+      // Quick cloud save (1 retry, shorter timeout)
+      if (saveStatus !== 'saved') {
+        await saveToCloudWithRetry(true, 1);
+      }
+    }
+    onBack ? onBack() : navigate('/electrician/site-safety');
+  }, [ramsData, methodData, currentJobId, saveStatus, saveToCloudWithRetry, onBack, navigate]);
 
   // Calculate stats for celebration
   const hazardCount = ramsData?.risks?.length || 0;
@@ -425,6 +597,43 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
       {/* Content */}
       <main>
+        {/* Draft recovery banner */}
+        {showDraftRecovery && recoveredDraft && !showResults && (
+          <div className="mx-4 mt-3 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+            <div className="flex items-start gap-3">
+              <RotateCcw className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-white">
+                  Unsaved RAMS found
+                </p>
+                <p className="text-xs text-white mt-1">
+                  "{recoveredDraft.projectName}" was saved locally{' '}
+                  {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))} minutes ago.
+                  Would you like to restore it?
+                </p>
+                <div className="flex gap-2 mt-3">
+                  <Button
+                    size="sm"
+                    onClick={handleRestoreDraft}
+                    className="h-9 bg-blue-500 hover:bg-blue-600 text-white touch-manipulation"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+                    Restore
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={handleDismissDraft}
+                    className="h-9 text-white hover:bg-white/10 touch-manipulation"
+                  >
+                    Dismiss
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {!showResults ? (
           <AIRAMSInput
             onGenerate={handleGenerate}

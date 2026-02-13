@@ -127,16 +127,16 @@ const InteractiveTestingGuide = ({
   const difficultyConfig = getDifficultyConfig(guide.difficulty);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-cyan-500/20 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
-          <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex flex-col gap-3">
             <Button
               variant="ghost"
               onClick={onBack}
-              className="text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 h-11 touch-manipulation"
+              className="text-cyan-400 hover:bg-cyan-500/10 border border-cyan-500/30 h-11 touch-manipulation self-start"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Tests
@@ -167,9 +167,9 @@ const InteractiveTestingGuide = ({
           </div>
         </CardHeader>
         <CardContent className="relative space-y-4">
-          <div className="p-4 rounded-xl bg-white/10 border border-white/10">
-            <div className="flex justify-between text-sm mb-3">
-              <span className="text-white">Progress</span>
+          <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-left">
+            <div className="text-sm mb-1">
+              <span className="text-white">Progress — </span>
               <span className="text-cyan-400 font-medium">
                 {completedCount} of {guide.steps.length} steps
               </span>
@@ -180,12 +180,12 @@ const InteractiveTestingGuide = ({
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-sm mt-3">
+            <div className="text-sm mt-2">
               <span className="text-white">
                 Step {currentStep + 1} of {guide.steps.length}
               </span>
-              <span className="text-green-400 font-medium">
-                {Math.round(progressPercent)}% Complete
+              <span className="text-green-400 font-medium ml-2">
+                ({Math.round(progressPercent)}%)
               </span>
             </div>
           </div>
@@ -376,7 +376,7 @@ const InteractiveTestingGuide = ({
           )}
 
           {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-4 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-white/10">
             <Button
               variant="outline"
               onClick={handlePrevious}
@@ -447,9 +447,9 @@ const InteractiveTestingGuide = ({
                 {guide.testLimits.map((limit, index) => (
                   <div
                     key={index}
-                    className="text-sm text-white flex justify-between items-center p-2 rounded-lg bg-white/10"
+                    className="text-sm text-white p-2 rounded-lg bg-white/10 text-left"
                   >
-                    <span>{limit.parameter}:</span>
+                    <span>{limit.parameter}: </span>
                     <span className="font-mono text-green-300">
                       {limit.limit} {limit.unit}
                     </span>

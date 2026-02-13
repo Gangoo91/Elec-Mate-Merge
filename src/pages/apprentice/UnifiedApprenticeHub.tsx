@@ -12,6 +12,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ApprenticeHubShell } from '@/components/apprentice-hub/ApprenticeHubShell';
 import { ApprenticeHubTab } from '@/components/apprentice-hub/ApprenticeHubNav';
@@ -23,6 +24,7 @@ import { UnifiedCaptureSheet } from '@/components/apprentice-hub/UnifiedCaptureS
 import { ProgressDashboard } from '@/components/apprentice/progress/ProgressDashboard';
 
 export default function UnifiedApprenticeHub() {
+  useSEO({ title: 'Apprentice Hub', description: 'Track your electrical apprenticeship. Portfolio evidence, OJT hours, and progress tracking.', noindex: true });
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Get tab from URL or default to 'home'

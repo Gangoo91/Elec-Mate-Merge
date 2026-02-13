@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { formatDistanceToNow, parseISO, format } from "date-fns";
-import PullToRefresh from "@/components/PullToRefresh";
+import PullToRefresh from "@/components/admin/PullToRefresh";
 import AdminSearchInput from "@/components/admin/AdminSearchInput";
 import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import { useHaptic } from "@/hooks/useHaptic";
@@ -87,7 +87,7 @@ const CAMPAIGN_TYPES = {
   trial_winback: {
     label: "Trial Win-Back",
     description:
-      "Win back apprentices whose trial expired 8+ days ago (once only)",
+      "Win back apprentices whose trial expired without subscribing",
     icon: Gift,
     colour: "from-amber-500 to-orange-500",
     badgeColour: "bg-amber-500/20 text-amber-400",
@@ -136,7 +136,7 @@ export default function AdminApprenticeCampaigns() {
 
   // State
   const [campaignType, setCampaignType] =
-    useState<CampaignType>("feature_spotlight");
+    useState<CampaignType>("trial_winback");
   const [search, setSearch] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);

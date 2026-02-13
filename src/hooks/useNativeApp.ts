@@ -57,8 +57,9 @@ export function useNativeApp() {
         // Handle app state changes (background/foreground)
         App.addListener('appStateChange', ({ isActive }) => {
           if (isActive) {
-            // App came to foreground - refresh data if needed
-            console.log('App resumed');
+            supabase.auth.refreshSession().catch(() => {
+              // Non-critical — session may already be valid
+            });
           }
         });
 

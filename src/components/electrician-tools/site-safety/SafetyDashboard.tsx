@@ -15,10 +15,10 @@ import {
   ClipboardCheck,
   BookOpen,
   ChevronRight,
-  Zap,
   FolderOpen,
 } from 'lucide-react';
 import type { RecentDocument } from '@/hooks/useSafetyDashboardStats';
+import { GettingStartedCard } from './GettingStartedCard';
 
 interface DashboardStats {
   activeRams: number;
@@ -178,6 +178,23 @@ export function SafetyDashboard({
         </div>
       </div>
     );
+  }
+
+  // Show getting started card when all stats are zero
+  const totalActivity =
+    stats.activeRams +
+    stats.totalNearMisses +
+    stats.equipmentTotal +
+    stats.completedBriefingsThisMonth +
+    stats.upcomingBriefings +
+    stats.totalPhotosThisWeek +
+    stats.activePermits +
+    stats.recentInspectionsPassed +
+    stats.recentInspectionsFailed +
+    stats.accidentCount30Days;
+
+  if (totalActivity === 0) {
+    return <GettingStartedCard onAction={(section) => onCardTap?.(section)} />;
   }
 
   // Build alerts for status pills

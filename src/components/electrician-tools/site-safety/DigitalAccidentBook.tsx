@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import {
+  useAccidentRecords,
+  useCreateAccidentRecord,
+} from '@/hooks/useAccidentRecords';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -229,7 +233,45 @@ function checkRIDDOR(record: Partial<AccidentRecord>): { reportable: boolean; re
 // ─── Main Component ───
 
 export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
-  const [records, setRecords] = useState<AccidentRecord[]>([]);
+  const { data: dbRecords, isLoading } = useAccidentRecords();
+  const createRecord = useCreateAccidentRecord();
+  const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
+    id: r.id,
+    injured_name: r.injured_name,
+    injured_role: r.injured_role || '',
+    injured_employer: r.injured_employer || '',
+    injured_address: r.injured_address || '',
+    incident_date: r.incident_date,
+    incident_time: r.incident_time || '',
+    location: r.location,
+    location_detail: r.location_detail || '',
+    injury_type: r.injury_type as InjuryType,
+    body_part: r.body_part as BodyPart,
+    severity: r.severity as Severity,
+    injury_description: r.injury_description || '',
+    incident_description: r.incident_description,
+    activity_at_time: r.activity_at_time || '',
+    cause: r.cause || '',
+    witnesses: r.witnesses || '',
+    first_aid_given: r.first_aid_given,
+    first_aid_details: r.first_aid_details || '',
+    first_aider_name: r.first_aider_name || '',
+    hospital_visit: r.hospital_visit,
+    hospital_name: r.hospital_name || '',
+    time_off_work: r.time_off_work,
+    days_off: r.days_off,
+    return_date: r.return_date || '',
+    reported_to: r.reported_to || '',
+    reported_date: r.reported_date || '',
+    is_riddor_reportable: r.is_riddor_reportable,
+    riddor_category: r.riddor_category || '',
+    riddor_reference: r.riddor_reference || '',
+    riddor_reported: r.riddor_reported,
+    recorded_by: r.recorded_by,
+    additional_notes: r.additional_notes || '',
+    corrective_actions: r.corrective_actions || '',
+    created_at: r.created_at,
+  }));
   const [showForm, setShowForm] = useState(false);
   const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
   const [formStep, setFormStep] = useState(0);
@@ -881,7 +923,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         )}
 
         {/* Records List */}
-        {filteredRecords.length === 0 && records.length === 0 ? (
+        {isLoading ? (
+          <div className="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-[88px] rounded-xl bg-white/[0.03] animate-pulse" />
+            ))}
+          </div>
+        ) : filteredRecords.length === 0 && records.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
               <BookOpen className="h-8 w-8 text-white" />
@@ -951,7 +999,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               {formStep > 0 && (
                 <button
                   onClick={() => setFormStep((s) => s - 1)}
-                  className="h-9 w-9 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
+                  className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 text-white" />
                 </button>

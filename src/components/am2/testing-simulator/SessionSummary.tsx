@@ -50,7 +50,7 @@ function ScoreRing({ score, size = 96 }: { score: number; size?: number }) {
         <span className="text-2xl font-bold" style={{ color: colour }}>
           {score}%
         </span>
-        <span className="text-[10px] text-white/40">Overall</span>
+        <span className="text-[10px] text-white">Overall</span>
       </div>
     </div>
   );
@@ -79,10 +79,10 @@ function MetricCard({
     <div className={cn('rounded-xl border p-3', bgColour)}>
       <div className="flex items-center gap-2 mb-1">
         <Icon className={cn('w-4 h-4', colour)} />
-        <span className="text-xs font-semibold text-white/70">{label}</span>
+        <span className="text-xs font-semibold text-white">{label}</span>
       </div>
       <p className={cn('text-lg font-bold', colour)}>{score}%</p>
-      <p className="text-[10px] text-white/40 mt-0.5">{detail}</p>
+      <p className="text-[10px] text-white mt-0.5">{detail}</p>
     </div>
   );
 }
@@ -100,10 +100,10 @@ export function SessionSummary({ score, onTryAgain, onBackToRig }: SessionSummar
       {/* Header */}
       <div className="flex flex-col items-center gap-3">
         <Trophy
-          className={cn('w-10 h-10', score.overall >= 70 ? 'text-yellow-400' : 'text-white/20')}
+          className={cn('w-10 h-10', score.overall >= 70 ? 'text-yellow-400' : 'text-white')}
         />
         <h2 className="text-xl font-bold text-white">Session Complete</h2>
-        <p className="text-sm text-white/50">{overallLabel}</p>
+        <p className="text-sm text-white">{overallLabel}</p>
       </div>
 
       {/* Overall score ring */}
@@ -152,7 +152,7 @@ export function SessionSummary({ score, onTryAgain, onBackToRig }: SessionSummar
         </button>
         <button
           onClick={onBackToRig}
-          className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.04] text-white/60 text-sm font-semibold border border-white/10 touch-manipulation"
+          className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.04] text-white text-sm font-semibold border border-white/10 touch-manipulation"
         >
           <ArrowLeft className="w-4 h-4" />
           Back

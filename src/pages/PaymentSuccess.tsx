@@ -119,6 +119,7 @@ const PaymentSuccess = () => {
   );
 
   const handleGoToDashboard = useCallback(() => {
+    if (autoNavRef.current) clearTimeout(autoNavRef.current);
     navigate('/dashboard');
   }, [navigate]);
 
@@ -127,7 +128,7 @@ const PaymentSuccess = () => {
     if (!user?.id) return;
 
     let attempts = 0;
-    const MAX_ATTEMPTS = 15;
+    const MAX_ATTEMPTS = 30;
 
     const poll = () => {
       pollRef.current = setInterval(async () => {
@@ -160,8 +161,13 @@ const PaymentSuccess = () => {
       }, 2000);
     };
 
-    // Start polling after a short delay to give webhook time
-    const startTimer = setTimeout(poll, 1000);
+    // Start polling immediately (no delay — webhook may already be done)
+    poll();
+
+    // Enable button after 10s regardless of polling state
+    const earlyReadyTimer = setTimeout(() => {
+      setIsReady(true);
+    }, 10000);
 
     // Delay content reveal for animation
     const contentTimer = setTimeout(() => {
@@ -169,7 +175,7 @@ const PaymentSuccess = () => {
     }, 300);
 
     return () => {
-      clearTimeout(startTimer);
+      clearTimeout(earlyReadyTimer);
       clearTimeout(contentTimer);
       if (pollRef.current) clearInterval(pollRef.current);
       if (autoNavRef.current) clearTimeout(autoNavRef.current);

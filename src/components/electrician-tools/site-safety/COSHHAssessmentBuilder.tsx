@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import {
+  useCOSHHAssessments,
+  useCreateCOSHH,
+  useDeleteCOSHH,
+} from '@/hooks/useCOSHH';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -247,7 +252,36 @@ const RISK_COLOURS: Record<string, { bg: string; text: string; border: string }>
 // ─── Main Component ───
 
 export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
-  const [assessments, setAssessments] = useState<COSHHAssessment[]>([]);
+  const { data: dbAssessments, isLoading, error } = useCOSHHAssessments();
+  const createCOSHH = useCreateCOSHH();
+  const deleteCOSHH = useDeleteCOSHH();
+  const assessments: COSHHAssessment[] = (dbAssessments || []).map((a) => ({
+    id: a.id,
+    substance_name: a.substance_name,
+    manufacturer: a.manufacturer || '',
+    product_code: a.product_code || '',
+    location_of_use: a.location_of_use || '',
+    task_description: a.task_description || '',
+    quantity_used: a.quantity_used || '',
+    frequency_of_use: a.frequency_of_use || '',
+    ghs_hazards: a.ghs_hazards || [],
+    exposure_routes: a.exposure_routes || [],
+    health_effects: a.health_effects || '',
+    oel_value: a.oel_value || '',
+    control_measures: a.control_measures || [],
+    ppe_required: a.ppe_required || [],
+    storage_requirements: a.storage_requirements || '',
+    spill_procedure: a.spill_procedure || '',
+    first_aid: a.first_aid || '',
+    disposal_method: a.disposal_method || '',
+    monitoring_required: a.monitoring_required,
+    monitoring_details: a.monitoring_details || '',
+    risk_rating: a.risk_rating as COSHHAssessment['risk_rating'],
+    assessed_by: a.assessed_by,
+    assessment_date: a.assessment_date,
+    review_date: a.review_date,
+    created_at: a.created_at,
+  }));
   const [showWizard, setShowWizard] = useState(false);
   const [showSubstanceSheet, setShowSubstanceSheet] = useState(false);
   const [viewingAssessment, setViewingAssessment] = useState<COSHHAssessment | null>(null);
@@ -703,7 +737,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       onClick={() =>
                         setControlMeasures((prev) => prev.filter((_, idx) => idx !== i))
                       }
-                      className="h-9 w-9 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
+                      className="h-11 w-11 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
                     >
                       <Trash2 className="h-3.5 w-3.5 text-white" />
                     </button>
@@ -947,7 +981,13 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         </div>
 
         {/* Assessments List */}
-        {assessments.length === 0 ? (
+        {isLoading ? (
+          <div className="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-[72px] rounded-xl bg-white/[0.03] animate-pulse" />
+            ))}
+          </div>
+        ) : assessments.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
               <FlaskConical className="h-8 w-8 text-white" />
@@ -1007,7 +1047,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               {wizardStep > 0 && (
                 <button
                   onClick={() => setWizardStep((s) => s - 1)}
-                  className="h-9 w-9 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
+                  className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4 text-white" />
                 </button>

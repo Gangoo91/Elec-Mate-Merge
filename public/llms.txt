@@ -9,12 +9,12 @@ Elec-Mate is a mobile-first web application built for UK electrical professional
 ## Key Features
 
 - **8 Certificate Types**: EICR, EIC, Minor Works, Emergency Lighting, Fire Alarm, PAT Testing, EV Charger, Solar PV — all with digital signatures, observation coding, and PDF export
-- **50+ Electrical Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, trunking fill, maximum demand, power factor, and more
-- **5 AI Specialists**: Circuit Designer, Cost Engineer, Installation Guide, Maintenance Agent, Health & Safety — all trained on BS 7671:2018 + Amendment 3:2024
-- **Training Platform**: 18th Edition (BS 7671) course, Level 2 & 3 apprentice courses, AM2 exam preparation, EPA simulator with AI grading
-- **Business Management**: Job scheduling, customer management, quoting, invoicing, Stripe payments, Xero integration
-- **Employer Dashboard**: Team management, apprentice progress tracking, compliance monitoring
-- **Mental Health Support**: Wellbeing check-ins, resources, and support for the electrical trade
+- **70 Electrical & Business Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, maximum demand, power factor, solar PV, EV charging, arc flash, plus 14 business calculators (quoting, cash flow, tax, VAT)
+- **8 Elec-AI Specialists + 12 AI Tools**: Circuit Designer, Cost Engineer, Voice Quotes, Inspector, Maintenance Advisor, Regulations Guide, Study Coach, Assistant — plus Fault Diagnosis, Diagram Builder, Visual Analysis, Report Writer, and more. All trained on BS 7671:2018 + Amendment 3:2024
+- **36+ Training Courses**: 18th Edition (BS 7671), Level 2 & 3 Diplomas, AM2 simulator, EPA simulator with AI grading, HNC, plus 24 upskilling courses (IPAF, first aid, fire safety, COSHH, working at height, CDM, confined spaces, and more)
+- **Business Management**: Smart quote builder, invoice builder, expenses, project management, scheduling, staff management, Stripe payments, Xero & QuickBooks integrations
+- **Employer Dashboard**: Team management, apprentice progress tracking, compliance monitoring, timesheets, leave management
+- **Wellbeing & Community**: Mental health support, community chat, Elec-ID digital card, portfolio evidence tracking, OJT hours management
 
 ## Who is it for?
 

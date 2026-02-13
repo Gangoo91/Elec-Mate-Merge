@@ -19,6 +19,14 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import {
+  usePermits,
+  useCreatePermit,
+  useClosePermit,
+  useCancelPermit,
+  usePermitExpiryCheck,
+} from '@/hooks/usePermitsToWork';
+import type { Json } from '@/integrations/supabase/types';
+import {
   ArrowLeft,
   Plus,
   Flame,
@@ -546,24 +554,22 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     toast.success('Permit to work issued successfully');
   };
 
-  const closePermit = (id: string) => {
-    setPermits((prev) =>
-      prev.map((p) =>
-        p.id === id
-          ? { ...p, status: 'closed' as PermitStatus, closed_at: new Date().toISOString() }
-          : p
-      )
-    );
-    setViewingPermit(null);
-    toast.success('Permit closed');
+  const closePermit = async (id: string) => {
+    try {
+      await closePermitMutation.mutateAsync({ id });
+      setViewingPermit(null);
+    } catch {
+      // error toast handled by hook
+    }
   };
 
-  const cancelPermit = (id: string) => {
-    setPermits((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, status: 'cancelled' as PermitStatus } : p))
-    );
-    setViewingPermit(null);
-    toast.success('Permit cancelled');
+  const cancelPermit = async (id: string) => {
+    try {
+      await cancelPermitMutation.mutateAsync(id);
+      setViewingPermit(null);
+    } catch {
+      // error toast handled by hook
+    }
   };
 
   const filteredPermits = permits.filter((p) => {
@@ -970,7 +976,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 {wizardStep > 0 && (
                   <button
                     onClick={() => setWizardStep((s) => s - 1)}
-                    className="h-9 w-9 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
+                    className="h-11 w-11 rounded-full bg-white/[0.08] flex items-center justify-center touch-manipulation"
                   >
                     <ArrowLeft className="h-4 w-4 text-white" />
                   </button>

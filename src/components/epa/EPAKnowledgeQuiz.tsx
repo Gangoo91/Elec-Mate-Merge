@@ -21,6 +21,7 @@ import {
   BookOpen,
   Zap,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useEPAKnowledgeQuiz } from '@/hooks/epa/useEPAKnowledgeQuiz';
 import { useQuizSession } from '@/hooks/useQuizSession';
 import { supabase } from '@/integrations/supabase/client';
@@ -28,6 +29,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface EPAKnowledgeQuizProps {
   qualificationCode: string;
   targetUnitCodes?: string[];
+  onSessionComplete?: () => void;
 }
 
 /** Radial SVG progress ring */
@@ -84,6 +86,7 @@ function RadialRing({
 export function EPAKnowledgeQuiz({
   qualificationCode,
   targetUnitCodes,
+  onSessionComplete,
 }: EPAKnowledgeQuizProps) {
   const { generateQuiz, isGenerating, error: genError } = useEPAKnowledgeQuiz();
   const quiz = useQuizSession();
@@ -115,28 +118,70 @@ export function EPAKnowledgeQuiz({
 
   const handleFinish = useCallback(async () => {
     const result = quiz.finishQuiz();
-    if (result) {
-      // Save to quiz_results
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (user) {
-          await supabase.from('quiz_results').insert({
-            user_id: user.id,
-            assessment_id: 'epa-knowledge-mock',
-            score: result.percentage,
-            total_questions: result.totalQuestions,
-            correct_answers: result.correctAnswers,
-            time_spent: result.timeSpent,
-            category_breakdown: result.categoryBreakdown,
-          });
-        }
-      } catch {
-        /* non-critical */
+    if (!result) return;
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const sessionId = `epa-kq-${Date.now()}`;
+
+      // Save to quiz_results (feeds into readiness knowledge score)
+      const { error: quizError } = await supabase.from('quiz_results').insert({
+        user_id: user.id,
+        assessment_id: 'epa-knowledge-mock',
+        session_id: sessionId,
+        score: result.percentage,
+        percentage: result.percentage,
+        total_questions: result.totalQuestions,
+        correct_answers: result.correctAnswers,
+        incorrect_answers: result.incorrectAnswers,
+        time_spent: result.timeSpent,
+        category_breakdown: result.categoryBreakdown,
+      });
+
+      if (quizError) {
+        console.error('Failed to save quiz result:', quizError);
+        toast.error('Failed to save quiz results');
       }
+
+      // Also save to epa_mock_sessions so it appears in history
+      const { error: sessionError } = await supabase
+        .from('epa_mock_sessions')
+        .insert({
+          user_id: user.id,
+          qualification_code: qualificationCode || 'unknown',
+          session_type: 'knowledge_test',
+          status: 'completed',
+          quiz_questions: (quiz.currentSession?.questions || []) as unknown as Record<string, unknown>,
+          quiz_answers: (quiz.currentSession?.answers || []) as unknown as Record<string, unknown>,
+          overall_score: result.percentage,
+          predicted_grade:
+            result.percentage >= 80
+              ? 'distinction'
+              : result.percentage >= 60
+                ? 'pass'
+                : 'fail',
+          component_scores: result.categoryBreakdown as unknown as Record<string, unknown>,
+          ai_feedback: `${result.correctAnswers}/${result.totalQuestions} correct (${result.percentage}%)`,
+          improvement_suggestions: [] as unknown as Record<string, unknown>,
+          completed_at: new Date().toISOString(),
+          time_spent_seconds: result.timeSpent,
+        });
+
+      if (sessionError) {
+        console.error('Failed to save mock session:', sessionError);
+      }
+
+      // Notify parent so readiness can recalculate
+      onSessionComplete?.();
+    } catch (err) {
+      console.error('Error saving quiz results:', err);
+      toast.error('Failed to save quiz results');
     }
-  }, [quiz]);
+  }, [quiz, qualificationCode, onSessionComplete]);
 
   const handleReset = () => {
     quiz.resetQuiz();

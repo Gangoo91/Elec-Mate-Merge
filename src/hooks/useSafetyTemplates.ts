@@ -39,7 +39,7 @@ export function useSafetyTemplates(category?: string) {
     queryKey: ["safety-templates", category],
     queryFn: async (): Promise<SafetyTemplate[]> => {
       let query = supabase
-        .from("safety_document_templates" as any)
+        .from("safety_document_templates")
         .select("*")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
@@ -66,7 +66,7 @@ export function useUserSafetyDocuments() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("user_safety_documents" as any)
+        .from("user_safety_documents")
         .select("*")
         .eq("user_id", user.id)
         .order("updated_at", { ascending: false });
@@ -102,7 +102,7 @@ export function useAdoptTemplate() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("user_safety_documents" as any)
+        .from("user_safety_documents")
         .insert({
           user_id: user.id,
           template_id: templateId,
@@ -150,7 +150,7 @@ export function useUpdateUserDocument() {
       ...updates
     }: Partial<UserSafetyDocument> & { id: string }) => {
       const { data, error } = await supabase
-        .from("user_safety_documents" as any)
+        .from("user_safety_documents")
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq("id", id)
         .select()

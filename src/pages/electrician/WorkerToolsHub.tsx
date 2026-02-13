@@ -18,6 +18,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -155,6 +156,7 @@ function WorkerToolCard({
 }
 
 export default function WorkerToolsHub() {
+  useSEO({ title: 'Worker Tools', description: 'Self-service hub for employed electricians. Timesheets, leave, team comms, and expenses.', noindex: true });
   const [statusSheetOpen, setStatusSheetOpen] = useState(false);
   const [timesheetSheetOpen, setTimesheetSheetOpen] = useState(false);
   const [leaveSheetOpen, setLeaveSheetOpen] = useState(false);

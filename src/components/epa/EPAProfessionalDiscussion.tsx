@@ -37,6 +37,7 @@ import type { PortfolioEntry } from '@/types/portfolio';
 interface EPAProfessionalDiscussionProps {
   portfolioEntries: PortfolioEntry[];
   qualificationCode: string;
+  onSessionComplete?: () => void;
 }
 
 const GRADE_COLOURS: Record<string, { bg: string; text: string; border: string; ring: string }> = {
@@ -105,6 +106,7 @@ function RadialRing({
 export function EPAProfessionalDiscussion({
   portfolioEntries,
   qualificationCode,
+  onSessionComplete,
 }: EPAProfessionalDiscussionProps) {
   const {
     questions,
@@ -187,6 +189,7 @@ export function EPAProfessionalDiscussion({
     setIsFinishing(true);
     await finishSession();
     setIsFinishing(false);
+    onSessionComplete?.();
   };
 
   const handleReset = () => {
@@ -203,46 +206,81 @@ export function EPAProfessionalDiscussion({
 
   // --- SETUP STATE ---
   if (!isSessionActive && !sessionResult) {
+    const STEPS = [
+      { title: 'Portfolio Scan', desc: 'AI reads your portfolio evidence to personalise the session' },
+      { title: 'Question Generation', desc: 'Creates 5-8 EPA-style discussion questions tailored to your work' },
+      { title: 'Your Response', desc: 'Type or speak your answer to each question' },
+      { title: 'AI Scoring', desc: 'Scores your response against real grade descriptors' },
+      { title: 'Results', desc: 'Get a predicted grade with targeted improvement tips' },
+    ];
+
     return (
-      <div className="py-8 px-4 space-y-6">
-        {/* Header */}
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center shrink-0">
-            <MessageSquare className="h-6 w-6 text-purple-400" />
+      <div className="py-5 px-4 space-y-5">
+        {/* Hero Header — gradient background */}
+        <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-600/10 to-transparent border border-purple-500/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="h-12 w-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center shrink-0">
+              <MessageSquare className="h-6 w-6 text-purple-400" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">
+                Mock Professional Discussion
+              </h2>
+              <p className="text-xs text-white mt-0.5">
+                AI-powered EPA preparation
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-white">
-              Mock Professional Discussion
-            </h2>
-            <p className="text-sm text-white mt-0.5">
-              AI will generate 5-8 EPA-style questions based on your actual
-              portfolio evidence. Type your responses and receive instant
-              feedback and scoring.
-            </p>
+          <p className="text-sm text-white leading-relaxed">
+            Practise answering EPA-style questions based on your actual
+            portfolio evidence. Get instant feedback and scoring against
+            real grade descriptors.
+          </p>
+        </div>
+
+        {/* What you'll practise */}
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-white uppercase tracking-wider">
+            Skills Assessed
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {['Technical Knowledge', 'Practical Application', 'Communication', 'Reflection', 'Problem Solving'].map((skill) => (
+              <span
+                key={skill}
+                className="px-3 py-1.5 rounded-lg bg-elec-gray border border-white/10 text-xs text-white font-medium"
+              >
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* How it works — Vertical stepper */}
-        <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
+        {/* How it works — Connected stepper */}
+        <div className="p-4 rounded-xl bg-elec-gray border border-white/10">
           <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
             How it works
           </p>
-          <div className="relative pl-8">
-            {/* Vertical connector line */}
-            <div className="absolute left-[11px] top-1 bottom-1 w-px bg-purple-500/30" />
-
-            {[
-              'AI reads your portfolio evidence',
-              'Generates personalised discussion questions',
-              'You type your response to each question',
-              'AI scores your answer against grade descriptors',
-              'Get a predicted grade and improvement tips',
-            ].map((step, i) => (
-              <div key={i} className="relative flex items-start gap-3 pb-4 last:pb-0">
-                <span className="absolute -left-8 h-6 w-6 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-xs font-bold shrink-0 z-10">
-                  {i + 1}
-                </span>
-                <span className="text-sm text-white leading-6">{step}</span>
+          <div className="space-y-0">
+            {STEPS.map((step, i) => (
+              <div key={i} className="flex gap-3">
+                {/* Number + connecting line */}
+                <div className="flex flex-col items-center">
+                  <span className="h-7 w-7 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-xs font-bold shrink-0">
+                    {i + 1}
+                  </span>
+                  {i < STEPS.length - 1 && (
+                    <div className="w-px h-full min-h-[24px] bg-purple-500/20" />
+                  )}
+                </div>
+                {/* Content */}
+                <div className={cn('pb-4', i === STEPS.length - 1 && 'pb-0')}>
+                  <p className="text-sm font-medium text-white leading-7">
+                    {step.title}
+                  </p>
+                  <p className="text-xs text-white">
+                    {step.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -266,11 +304,11 @@ export function EPAProfessionalDiscussion({
             </div>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <button
               onClick={handleStart}
               disabled={isGenerating}
-              className="w-full h-14 rounded-xl bg-purple-500 text-white font-semibold text-base touch-manipulation active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/20"
+              className="w-full h-14 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold text-base touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25"
             >
               {isGenerating ? (
                 <>
@@ -284,9 +322,14 @@ export function EPAProfessionalDiscussion({
                 </>
               )}
             </button>
-            <Badge variant="outline" className="text-xs text-white">
-              {portfolioEntries.length} portfolio entries available
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-xs text-white">
+                {portfolioEntries.length} portfolio entries
+              </Badge>
+              <Badge variant="outline" className="text-xs text-white">
+                ~15 min session
+              </Badge>
+            </div>
           </div>
         )}
       </div>
@@ -301,7 +344,7 @@ export function EPAProfessionalDiscussion({
     return (
       <div className="space-y-5 px-4 py-5">
         {/* Grade Hero — Radial Ring */}
-        <div className="p-5 rounded-xl bg-white/[0.04] border border-white/10">
+        <div className="p-5 rounded-xl bg-elec-gray border border-white/10">
           <div className="flex items-center gap-5">
             <RadialRing
               score={sessionResult.overallScore}
@@ -360,7 +403,7 @@ export function EPAProfessionalDiscussion({
             return (
               <div
                 key={comp.label}
-                className="p-3 rounded-xl bg-white/[0.03] border border-white/10"
+                className="p-3 rounded-xl bg-elec-gray border border-white/10"
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
@@ -577,7 +620,7 @@ export function EPAProfessionalDiscussion({
             {existingResponse?.score ? (
               // Show scored feedback
               <div className="space-y-3">
-                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+                <div className="p-3 rounded-xl bg-elec-gray border border-white/10">
                   <p className="text-xs text-white mb-1">Your response:</p>
                   <p className="text-sm text-white">
                     {existingResponse.responseText}
@@ -594,7 +637,7 @@ export function EPAProfessionalDiscussion({
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Type or speak your response. Aim for 3-5 paragraphs covering your experience, reasoning, and reflection..."
-                  className="w-full min-h-[200px] p-4 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/90 focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 touch-manipulation resize-none"
+                  className="w-full min-h-[200px] p-4 rounded-xl bg-elec-gray border border-white/10 text-sm text-white placeholder:text-white/90 focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 touch-manipulation resize-none"
                   disabled={isScoring}
                 />
 

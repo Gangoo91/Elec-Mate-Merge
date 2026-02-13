@@ -99,7 +99,7 @@ export function useSafeIsolationRecords() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("safe_isolation_records" as any)
+        .from("safe_isolation_records")
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -136,7 +136,7 @@ export function useCreateIsolationRecord() {
       }));
 
       const { data, error } = await supabase
-        .from("safe_isolation_records" as any)
+        .from("safe_isolation_records")
         .insert({
           user_id: user.id,
           ...record,
@@ -177,7 +177,7 @@ export function useUpdateIsolationRecord() {
       ...updates
     }: Partial<SafeIsolationRecord> & { id: string }) => {
       const { data, error } = await supabase
-        .from("safe_isolation_records" as any)
+        .from("safe_isolation_records")
         .update({ ...updates, updated_at: new Date().toISOString() })
         .eq("id", id)
         .select()

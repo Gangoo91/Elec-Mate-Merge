@@ -6,7 +6,7 @@ export const testInstruments: TestInstrument[] = [
     name: "Proving Unit",
     description:
       "Generates a known voltage to confirm your voltage tester is working correctly before and after each test. This is a legal requirement under GS38 — you must prove your tester BEFORE and AFTER each test.",
-    price: "£30-60",
+    price: "£35-70",
     tier: "basic",
     brands: ["Martindale", "Fluke", "Kewtech", "Di-Log"],
     calibration: "No calibration required — replace battery as needed",
@@ -17,7 +17,7 @@ export const testInstruments: TestInstrument[] = [
     name: "Voltage Indicator (Two-Pole Tester)",
     description:
       "Two-pole voltage tester for confirming dead before work. Must comply with GS38 guidance — LED indication with a clear display. This is NOT a multimeter — it is purpose-built for proving dead.",
-    price: "£50-120",
+    price: "£65-200",
     tier: "basic",
     brands: ["Fluke T6", "Martindale VT28", "Kewtech KT1780", "Di-Log DL6780"],
     calibration: "Recalibrate annually or after a drop/impact",
@@ -46,6 +46,16 @@ export const testInstruments: TestInstrument[] = [
       "Good for a quick visual check after installing sockets. Cannot replace proper dead testing and circuit verification with a multifunction tester.",
   },
   {
+    name: "Continuity Tester / Buzzer",
+    description:
+      "Simple go/no-go continuity tester that beeps when a circuit is complete. Faster than an MFT for quick checks during wiring. Battery powered with test leads.",
+    price: "£10-25",
+    tier: "basic",
+    brands: ["Martindale", "Fluke", "C.K"],
+    apprenticeTip:
+      "Brilliant for checking you have the right cable at the other end of a long run. Not a substitute for proper continuity testing with an MFT for certification.",
+  },
+  {
     name: "Basic Clamp Meter",
     description:
       "Measures current by clamping around a conductor — no need to break the circuit. Useful for measuring load current, checking for balanced phases, and fault finding.",
@@ -62,7 +72,7 @@ export const testInstruments: TestInstrument[] = [
     name: "Multifunction Tester (MFT)",
     description:
       "The essential professional test instrument. Performs all BS 7671 required tests: continuity, insulation resistance, loop impedance, RCD testing, and more. Required for issuing any electrical certificate.",
-    price: "£400-900",
+    price: "£450-1100",
     tier: "professional",
     functions: [
       "Continuity (R1+R2, r1, r2)",
@@ -83,7 +93,7 @@ export const testInstruments: TestInstrument[] = [
     name: "PAT Tester",
     description:
       "Portable Appliance Tester for testing the safety of electrical appliances. Tests earth continuity, insulation resistance, earth leakage, and lead polarity.",
-    price: "£200-600",
+    price: "£250-700",
     tier: "professional",
     brands: ["Megger", "Seaward", "Kewtech", "Metrel"],
     calibration: "Calibrate annually",
@@ -94,7 +104,7 @@ export const testInstruments: TestInstrument[] = [
     name: "Thermal Imaging Camera",
     description:
       "Infrared camera that shows heat patterns in electrical installations. Identifies hot spots from loose connections, overloaded circuits, and failing components before they cause fires.",
-    price: "£200-800",
+    price: "£250-900",
     tier: "professional",
     brands: ["FLIR", "Fluke", "Milwaukee"],
     apprenticeTip:

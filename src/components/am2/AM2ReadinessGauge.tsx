@@ -157,7 +157,7 @@ export function AM2ReadinessGauge({
         <span className="text-5xl font-bold tabular-nums" style={{ color: config.colour }}>
           {displayScore}
         </span>
-        <span className="text-[11px] text-white/50 mt-0.5 font-medium tracking-wide">/ 100</span>
+        <span className="text-[11px] text-white mt-0.5 font-medium tracking-wide">/ 100</span>
         <span
           className="text-xs font-semibold mt-2 tracking-tight"
           style={{ color: config.colour }}

@@ -88,6 +88,10 @@ serve(async (req) => {
         subscription_end: subscriptionEnd,
       };
 
+      if (subscribed) {
+        updateData.onboarding_completed = true;
+      }
+
       if (subscriptionTier) {
         updateData.subscription_tier = subscriptionTier;
       }

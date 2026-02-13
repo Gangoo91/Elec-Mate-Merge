@@ -8,6 +8,10 @@ import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from 'sonner';
 import {
+  useInspectionRecords,
+  useCreateInspectionRecord,
+} from '@/hooks/useInspectionRecords';
+import {
   ArrowLeft,
   Plus,
   ClipboardCheck,
@@ -393,7 +397,26 @@ const RESULT_CONFIG = {
 // ─── Main Component ───
 
 export function InspectionChecklists({ onBack }: { onBack: () => void }) {
-  const [completedInspections, setCompletedInspections] = useState<CompletedInspection[]>([]);
+  const { data: dbRecords, isLoading: isLoadingRecords } = useInspectionRecords();
+  const createInspectionRecord = useCreateInspectionRecord();
+
+  const completedInspections: CompletedInspection[] = (dbRecords ?? []).map((r) => ({
+    id: r.id,
+    template_id: r.template_id,
+    template_title: r.template_title,
+    location: r.location ?? '',
+    inspector_name: r.inspector_name,
+    date: r.date,
+    sections: r.sections as unknown as ChecklistSection[],
+    overall_result: r.overall_result,
+    pass_count: r.pass_count,
+    fail_count: r.fail_count,
+    na_count: r.na_count,
+    total_items: r.total_items,
+    additional_notes: r.additional_notes ?? '',
+    created_at: r.created_at,
+  }));
+
   const [activeTemplate, setActiveTemplate] = useState<ChecklistTemplate | null>(null);
   const [sections, setSections] = useState<ChecklistSection[]>([]);
   const [inspectorName, setInspectorName] = useState('');
@@ -457,38 +480,36 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const totalItems = allItems.length;
   const progress = totalItems > 0 ? Math.round((answeredCount / totalItems) * 100) : 0;
 
-  const submitInspection = () => {
+  const submitInspection = async () => {
     if (!activeTemplate) return;
 
     const overallResult: 'pass' | 'fail' | 'advisory' =
       failCount > 0 ? 'fail' : passCount < totalItems - naCount ? 'advisory' : 'pass';
 
-    const inspection: CompletedInspection = {
-      id: `insp-${Date.now()}`,
-      template_id: activeTemplate.id,
-      template_title: activeTemplate.title,
-      location,
-      inspector_name: inspectorName,
-      date: new Date().toISOString().split('T')[0],
-      sections,
-      overall_result: overallResult,
-      pass_count: passCount,
-      fail_count: failCount,
-      na_count: naCount,
-      total_items: totalItems,
-      additional_notes: additionalNotes,
-      created_at: new Date().toISOString(),
-    };
+    try {
+      await createInspectionRecord.mutateAsync({
+        template_id: activeTemplate.id,
+        template_title: activeTemplate.title,
+        location: location || null,
+        inspector_name: inspectorName,
+        date: new Date().toISOString().split('T')[0],
+        sections: sections as unknown as import('@/integrations/supabase/types').Json,
+        overall_result: overallResult,
+        pass_count: passCount,
+        fail_count: failCount,
+        na_count: naCount,
+        total_items: totalItems,
+        additional_notes: additionalNotes || null,
+      });
 
-    setCompletedInspections((prev) => [inspection, ...prev]);
-    setActiveTemplate(null);
-    setSections([]);
-    setInspectorName('');
-    setLocation('');
-    setAdditionalNotes('');
-    toast.success(
-      `Inspection completed — ${overallResult === 'pass' ? 'PASS' : overallResult === 'fail' ? 'FAIL' : 'ADVISORY'}`
-    );
+      setActiveTemplate(null);
+      setSections([]);
+      setInspectorName('');
+      setLocation('');
+      setAdditionalNotes('');
+    } catch {
+      // error toast handled by hook
+    }
   };
 
   // ─── Active Inspection View ───
@@ -629,7 +650,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                   onClick={() =>
                                     setItemResult(sectionIdx, itemIdx, isActive ? null : result)
                                   }
-                                  className={`flex-1 flex items-center justify-center gap-1.5 h-10 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
+                                  className={`flex-1 flex items-center justify-center gap-1.5 h-11 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
                                     isActive
                                       ? `${config.bg} ${config.colour} border-current`
                                       : 'border-white/10 bg-white/[0.03] text-white'
@@ -730,7 +751,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         </Button>
 
         {/* Completed Inspections */}
-        {completedInspections.length === 0 ? (
+        {isLoadingRecords ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-20 rounded-xl bg-white/[0.05] animate-pulse" />
+            ))}
+          </div>
+        ) : completedInspections.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-16 h-16 rounded-full bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
               <ClipboardCheck className="h-8 w-8 text-white" />

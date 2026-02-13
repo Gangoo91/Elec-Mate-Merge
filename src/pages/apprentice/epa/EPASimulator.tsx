@@ -5,7 +5,7 @@
  * Main entry page for the EPA Readiness Simulator feature.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import {
@@ -44,6 +44,11 @@ const EPASimulator = () => {
   const [portfolioEntries, setPortfolioEntries] = useState<PortfolioEntry[]>([]);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  // Increment to force readiness dashboard to re-mount and recalculate
+  const [readinessKey, setReadinessKey] = useState(0);
+  const invalidateReadiness = useCallback(() => {
+    setReadinessKey((k) => k + 1);
+  }, []);
 
   // Fetch portfolio entries for discussion
   useEffect(() => {
@@ -165,6 +170,7 @@ const EPASimulator = () => {
       <div className="min-h-[60vh]">
         {activeTab === 'readiness' && qualificationCode && (
           <EPAReadinessDashboard
+            key={readinessKey}
             qualificationCode={qualificationCode}
             qualificationId={qualificationId}
             onStartDiscussion={() => setActiveTab('discussion')}
@@ -184,12 +190,14 @@ const EPASimulator = () => {
           <EPAProfessionalDiscussion
             portfolioEntries={portfolioEntries}
             qualificationCode={qualificationCode || ''}
+            onSessionComplete={invalidateReadiness}
           />
         )}
 
         {activeTab === 'knowledge' && (
           <EPAKnowledgeQuiz
             qualificationCode={qualificationCode || ''}
+            onSessionComplete={invalidateReadiness}
           />
         )}
 
@@ -280,7 +288,7 @@ function HistoryTab({
             <p
               className={cn(
                 'text-[10px] capitalize',
-                GRADE_COLOURS[item.grade] || 'text-white/50'
+                GRADE_COLOURS[item.grade] || 'text-white'
               )}
             >
               {item.grade === 'not_yet_ready'

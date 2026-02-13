@@ -24,7 +24,7 @@ export const certificateTypes: CertificateType[] = [
     keyRequirements: [
       'Three signatures required: designer, installer, and inspector/tester (can be the same person if qualified for all three roles)',
       'Must include a Schedule of Inspections and a Schedule of Test Results',
-      'Designer must confirm the installation has been designed in accordance with BS 7671:2018+A2:2022',
+      'Designer must confirm the installation has been designed in accordance with BS 7671:2018+A3:2024',
       'Installer must confirm construction complies with the design',
       'Inspector must confirm the installation has been inspected and tested per Chapter 64',
       'Part P notification required for notifiable work in domestic premises (Building Regulations)',
@@ -53,7 +53,7 @@ export const certificateTypes: CertificateType[] = [
       'ECA — Available to ECA members',
       'Certsure/ELECSA — Digital certificate platforms',
     ],
-    regulationReference: 'BS 7671:2018+A2:2022 Part 6, Regulation 631.1 and Appendix 6',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.1 and Appendix 6',
   },
   {
     id: 'eicr',
@@ -94,7 +94,7 @@ export const certificateTypes: CertificateType[] = [
       'NAPIT — Member portal',
       'ECA — Member resources',
     ],
-    regulationReference: 'BS 7671:2018+A2:2022 Part 6, Regulation 631.2 and Chapter 65',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.2 and Chapter 65',
   },
   {
     id: 'meiwc',
@@ -129,7 +129,7 @@ export const certificateTypes: CertificateType[] = [
       'NICEIC — Available to registered contractors',
       'NAPIT — Available to registered members',
     ],
-    regulationReference: 'BS 7671:2018+A2:2022 Part 6, Regulation 631.3 and Appendix 6',
+    regulationReference: 'BS 7671:2018+A3:2024 Part 6, Regulation 631.3 and Appendix 6',
   },
   {
     id: 'schedule-inspections',
@@ -163,7 +163,7 @@ export const certificateTypes: CertificateType[] = [
       'IET (theiet.org) — Part of the model forms in Appendix 6',
       'Included with most digital certification platforms',
     ],
-    regulationReference: 'BS 7671:2018+A2:2022 Appendix 6 (Model Form 1 — Schedule of Inspections)',
+    regulationReference: 'BS 7671:2018+A3:2024 Appendix 6 (Model Form 1 — Schedule of Inspections)',
   },
   {
     id: 'schedule-test-results',
@@ -201,7 +201,7 @@ export const certificateTypes: CertificateType[] = [
       'IET (theiet.org) — Part of the model forms in Appendix 6',
       'Included with most digital certification platforms',
     ],
-    regulationReference: 'BS 7671:2018+A2:2022 Appendix 6 (Model Form 2 — Schedule of Test Results)',
+    regulationReference: 'BS 7671:2018+A3:2024 Appendix 6 (Model Form 2 — Schedule of Test Results)',
   },
 ];
 
@@ -276,7 +276,7 @@ export const legalRequirements: { title: string; points: string[] }[] = [
       'Introduces Regulation 530.3.201 for bidirectional and unidirectional protective devices',
       'Relevant where battery storage or solar PV is installed with an additional source of power',
       'Two new definitions added: bidirectional protective device and unidirectional protective device',
-      'Must be read alongside BS 7671:2018+A2:2022 (the brown book)',
+      'A3:2024 is a free PDF bolt-on — you need the brown book (A2:2022) plus the A3 PDF to be fully up to date',
     ],
   },
 ];

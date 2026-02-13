@@ -1,14 +1,13 @@
 /**
  * useEPAReadiness
  *
- * Aggregates five data sources to produce an EPA readiness score:
+ * Aggregates four data sources to produce an EPA readiness score:
  * 1. Portfolio AC coverage vs total ACs
- * 2. KSB completion %
- * 3. Evidence quality average (from evidence_quality_validations)
- * 4. Mock discussion scores (from epa_mock_sessions)
- * 5. Mock knowledge scores (from quiz_results where assessment_id = 'epa-knowledge-mock')
+ * 2. Evidence quality average (from evidence_quality_validations)
+ * 3. Mock discussion scores (from epa_mock_sessions)
+ * 4. Mock knowledge scores (from quiz_results where assessment_id = 'epa-knowledge-mock')
  *
- * Formula: overall = (portfolio * 0.30) + (ksb * 0.20) + (quality * 0.20) + (discussion * 0.15) + (knowledge * 0.15)
+ * Formula: overall = (portfolio * 0.35) + (quality * 0.25) + (discussion * 0.20) + (knowledge * 0.20)
  */
 
 import { useState, useCallback, useEffect } from 'react';
@@ -37,7 +36,6 @@ export interface EPAReadinessData {
   overallStatus: ReadinessStatus;
   components: {
     portfolio: ReadinessComponent;
-    ksb: ReadinessComponent;
     evidenceQuality: ReadinessComponent;
     mockDiscussion: ReadinessComponent;
     mockKnowledge: ReadinessComponent;
@@ -94,39 +92,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
         /* non-critical */
       }
 
-      // 2. KSB completion
-      let ksbScore = 0;
-      let ksbDetail = 'No progress data';
-      try {
-        if (qualificationId) {
-          const { data: ksbSummary } = await supabase
-            .from('apprentice_ksb_summary')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('qualification_id', qualificationId);
-
-          if (ksbSummary?.length) {
-            const totalKSBs = ksbSummary.reduce(
-              (sum: number, s: { total_ksbs?: number }) =>
-                sum + (s.total_ksbs || 0),
-              0
-            );
-            const completedKSBs = ksbSummary.reduce(
-              (sum: number, s: { completed_ksbs?: number }) =>
-                sum + (s.completed_ksbs || 0),
-              0
-            );
-            if (totalKSBs > 0) {
-              ksbScore = Math.round((completedKSBs / totalKSBs) * 100);
-              ksbDetail = `${completedKSBs}/${totalKSBs} KSBs complete`;
-            }
-          }
-        }
-      } catch {
-        /* non-critical */
-      }
-
-      // 3. Evidence quality average
+      // 2. Evidence quality average
       let qualityScore = 0;
       let qualityDetail = 'No validations yet';
       try {
@@ -152,13 +118,15 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
         /* non-critical — table may not exist yet */
       }
 
-      // 4. Mock discussion scores
+      // 3. Mock discussion scores
       let discussionScore = 0;
       let discussionDetail = 'No mock discussions';
+      let discussionCount = 0;
+      let weakestSubscore = '';
       try {
         const { data: sessions } = await supabase
           .from('epa_mock_sessions')
-          .select('overall_score')
+          .select('overall_score, component_scores')
           .eq('user_id', user.id)
           .eq('session_type', 'professional_discussion')
           .eq('status', 'completed')
@@ -166,6 +134,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
           .limit(5);
 
         if (sessions?.length) {
+          discussionCount = sessions.length;
           discussionScore = Math.round(
             sessions.reduce(
               (sum: number, s: { overall_score: number }) =>
@@ -174,24 +143,58 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
             ) / sessions.length
           );
           discussionDetail = `Avg ${discussionScore}/100 from ${sessions.length} sessions`;
+
+          // Find weakest subscore across sessions for targeted advice
+          const subscoreLabels: Record<string, string> = {
+            technicalKnowledge: 'technical knowledge',
+            practicalApplication: 'practical application',
+            communication: 'communication',
+            reflection: 'reflection',
+            problemSolving: 'problem solving',
+          };
+          const subscoreAvgs: Record<string, number> = {};
+          sessions.forEach((s: { component_scores: Record<string, number> | null }) => {
+            if (s.component_scores && typeof s.component_scores === 'object') {
+              Object.entries(s.component_scores).forEach(([key, val]) => {
+                if (typeof val === 'number') {
+                  subscoreAvgs[key] = (subscoreAvgs[key] || 0) + val;
+                }
+              });
+            }
+          });
+          let lowestKey = '';
+          let lowestVal = 101;
+          Object.entries(subscoreAvgs).forEach(([key, total]) => {
+            const avg = total / sessions.length;
+            if (avg < lowestVal) {
+              lowestVal = avg;
+              lowestKey = key;
+            }
+          });
+          if (lowestKey && subscoreLabels[lowestKey]) {
+            weakestSubscore = subscoreLabels[lowestKey];
+          }
         }
       } catch {
-        /* non-critical — table may not exist yet */
+        /* non-critical */
       }
 
-      // 5. Mock knowledge quiz scores
+      // 4. Mock knowledge quiz scores
       let knowledgeScore = 0;
       let knowledgeDetail = 'No mock tests';
+      let knowledgeCount = 0;
+      let weakestCategory = '';
       try {
         const { data: quizResults } = await supabase
           .from('quiz_results')
-          .select('score')
+          .select('score, category_breakdown')
           .eq('user_id', user.id)
           .eq('assessment_id', 'epa-knowledge-mock')
           .order('created_at', { ascending: false })
           .limit(5);
 
         if (quizResults?.length) {
+          knowledgeCount = quizResults.length;
           knowledgeScore = Math.round(
             quizResults.reduce(
               (sum: number, r: { score: number }) => sum + r.score,
@@ -199,6 +202,23 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
             ) / quizResults.length
           );
           knowledgeDetail = `Avg ${knowledgeScore}% from ${quizResults.length} tests`;
+
+          // Find weakest category from most recent test for targeted advice
+          const latest = quizResults[0] as {
+            category_breakdown: Record<string, { correct: number; total: number }> | null;
+          };
+          if (latest.category_breakdown && typeof latest.category_breakdown === 'object') {
+            let worstPct = 101;
+            Object.entries(latest.category_breakdown).forEach(([cat, data]) => {
+              if (data && typeof data === 'object' && 'total' in data && (data as { total: number }).total > 0) {
+                const pct = ((data as { correct: number; total: number }).correct / (data as { total: number }).total) * 100;
+                if (pct < worstPct) {
+                  worstPct = pct;
+                  weakestCategory = cat;
+                }
+              }
+            });
+          }
         }
       } catch {
         /* non-critical */
@@ -206,78 +226,84 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
 
       // Calculate overall
       const overallScore = Math.round(
-        portfolioScore * 0.3 +
-          ksbScore * 0.2 +
-          qualityScore * 0.2 +
-          discussionScore * 0.15 +
-          knowledgeScore * 0.15
+        portfolioScore * 0.35 +
+          qualityScore * 0.25 +
+          discussionScore * 0.2 +
+          knowledgeScore * 0.2
       );
 
       // Build gaps
       const gaps: ReadinessGap[] = [];
 
       if (portfolioScore < 70) {
+        const needed = portfolioScore < 40
+          ? 'You need significant evidence — try adding 2-3 portfolio entries per week covering different assessment criteria'
+          : 'You\'re getting close — review which ACs are missing and target those with your next evidence uploads';
         gaps.push({
           area: 'Portfolio Coverage',
-          description: `Only ${portfolioDetail}`,
+          description: `${portfolioDetail} — your portfolio needs to evidence at least 70% of assessment criteria to pass the gateway`,
           priority: portfolioScore < 40 ? 'high' : 'medium',
-          action: 'Add more evidence to cover missing assessment criteria',
-        });
-      }
-      if (ksbScore < 70) {
-        gaps.push({
-          area: 'KSB Progress',
-          description: `${ksbDetail}`,
-          priority: ksbScore < 40 ? 'high' : 'medium',
-          action: 'Update your KSB tracker with evidence and completion status',
+          action: needed,
         });
       }
       if (qualityScore < 70 && qualityScore > 0) {
         gaps.push({
           area: 'Evidence Quality',
-          description: `${qualityDetail}`,
+          description: `${qualityDetail} — assessors expect clear, specific evidence that directly maps to criteria`,
           priority: qualityScore < 40 ? 'high' : 'medium',
-          action: 'Improve evidence quality based on AI validation feedback',
+          action: qualityScore < 40
+            ? 'Your evidence needs more detail — include specific examples, measurements, and outcomes for each entry'
+            : 'Focus on adding reflection and technical reasoning to your evidence to push quality above 70%',
         });
       }
       if (qualityScore === 0) {
         gaps.push({
           area: 'Evidence Quality',
-          description: 'No evidence has been validated yet',
+          description: 'No evidence has been validated yet — you won\'t know if your evidence meets the standard until it\'s checked',
           priority: 'medium',
-          action: 'Run the AI Evidence Validator on your portfolio entries',
+          action: 'Run the AI Evidence Validator on your portfolio entries to get feedback before your assessor sees them',
         });
       }
       if (discussionScore < 60 && discussionScore > 0) {
+        const subscoreAdvice = weakestSubscore
+          ? ` — focus on improving your ${weakestSubscore} as that\'s your weakest area`
+          : '';
         gaps.push({
           area: 'Professional Discussion',
-          description: `${discussionDetail}`,
+          description: `${discussionCount} session${discussionCount !== 1 ? 's' : ''} averaging ${discussionScore}/100${subscoreAdvice}`,
           priority: 'medium',
-          action: 'Practise more mock professional discussions',
+          action: weakestSubscore
+            ? `Practise structuring your answers around ${weakestSubscore} — use the STAR method (Situation, Task, Action, Result) and include specific technical details`
+            : 'Take another mock discussion and focus on giving longer, more detailed answers with real examples from your work',
         });
       }
       if (discussionScore === 0) {
         gaps.push({
           area: 'Professional Discussion',
-          description: 'No mock discussions attempted',
+          description: 'No mock discussions attempted — the professional discussion is a major EPA component worth practising',
           priority: 'low',
-          action: 'Start a mock professional discussion to practise',
+          action: 'Start a mock discussion to see the kind of questions you\'ll face — the AI will score you against real grade descriptors',
         });
       }
       if (knowledgeScore < 60 && knowledgeScore > 0) {
+        const catAdvice = weakestCategory
+          ? ` — your weakest area is "${weakestCategory}"`
+          : '';
         gaps.push({
           area: 'Knowledge Test',
-          description: `${knowledgeDetail}`,
+          description: `${knowledgeCount} test${knowledgeCount !== 1 ? 's' : ''} averaging ${knowledgeScore}%${catAdvice}`,
           priority: 'medium',
-          action: 'Take more mock knowledge tests to improve your score',
+          action: weakestCategory
+            ? `Revise "${weakestCategory}" using your study materials, then take another mock test to check your improvement`
+            : 'Take another mock knowledge test and review the explanations for any questions you get wrong',
         });
       }
       if (knowledgeScore === 0) {
         gaps.push({
           area: 'Knowledge Test',
-          description: 'No mock tests attempted',
+          description: 'No mock tests attempted — the knowledge test covers technical theory you\'ll need for your EPA',
           priority: 'low',
-          action: 'Take an EPA mock knowledge test',
+          action: 'Take a mock knowledge test to identify which technical areas need revision before your real assessment',
         });
       }
 
@@ -293,35 +319,28 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
           portfolio: {
             label: 'Portfolio Coverage',
             score: portfolioScore,
-            weight: 0.3,
+            weight: 0.35,
             status: getStatus(portfolioScore),
             detail: portfolioDetail,
-          },
-          ksb: {
-            label: 'Learning Progress',
-            score: ksbScore,
-            weight: 0.2,
-            status: getStatus(ksbScore),
-            detail: ksbDetail,
           },
           evidenceQuality: {
             label: 'Evidence Quality',
             score: qualityScore,
-            weight: 0.2,
+            weight: 0.25,
             status: getStatus(qualityScore),
             detail: qualityDetail,
           },
           mockDiscussion: {
             label: 'Mock Discussion',
             score: discussionScore,
-            weight: 0.15,
+            weight: 0.2,
             status: getStatus(discussionScore),
             detail: discussionDetail,
           },
           mockKnowledge: {
             label: 'Mock Knowledge',
             score: knowledgeScore,
-            weight: 0.15,
+            weight: 0.2,
             status: getStatus(knowledgeScore),
             detail: knowledgeDetail,
           },
@@ -332,27 +351,32 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
 
       setData(result);
 
-      // Save snapshot (non-critical)
+      // Save snapshot
       try {
-        await supabase.from('epa_readiness_snapshots').insert({
-          user_id: user.id,
-          qualification_code: qualificationCode,
-          overall_score: overallScore,
-          overall_status: result.overallStatus,
-          portfolio_coverage_pct: portfolioScore,
-          ksb_completion_pct: ksbScore,
-          evidence_quality_avg: qualityScore,
-          mock_discussion_avg: discussionScore,
-          mock_knowledge_avg: knowledgeScore,
-          component_details: result.components as unknown as Record<
-            string,
-            unknown
-          >,
-          gaps: gaps as unknown as Record<string, unknown>[],
-          calculated_at: new Date().toISOString(),
-        });
-      } catch {
-        /* table may not exist yet */
+        const { error: snapError } = await supabase
+          .from('epa_readiness_snapshots')
+          .insert({
+            user_id: user.id,
+            qualification_code: qualificationCode,
+            overall_score: overallScore,
+            overall_status: result.overallStatus,
+            portfolio_coverage_pct: portfolioScore,
+            ksb_completion_pct: 0,
+            evidence_quality_avg: qualityScore,
+            mock_discussion_avg: discussionScore,
+            mock_knowledge_avg: knowledgeScore,
+            component_details: result.components as unknown as Record<
+              string,
+              unknown
+            >,
+            gaps: gaps as unknown as Record<string, unknown>[],
+            calculated_at: new Date().toISOString(),
+          });
+        if (snapError) {
+          console.error('Failed to save readiness snapshot:', snapError);
+        }
+      } catch (err) {
+        console.error('Error saving readiness snapshot:', err);
       }
 
       return result;
@@ -365,14 +389,14 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
     } finally {
       setIsLoading(false);
     }
-  }, [user, qualificationCode, qualificationId]);
+  }, [user, qualificationCode]);
 
   // Auto-calculate on mount
   useEffect(() => {
     if (user && qualificationCode) {
       calculate();
     }
-  }, [user, qualificationCode, qualificationId, calculate]);
+  }, [user, qualificationCode, calculate]);
 
   return {
     data,

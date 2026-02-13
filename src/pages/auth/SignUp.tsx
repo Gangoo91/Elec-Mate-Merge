@@ -243,18 +243,29 @@ const SignUp = () => {
 
       // Save role to database with onboarding_completed = false (they haven't paid yet)
       if (data?.user?.id) {
-        const { error: profileError } = await supabase.from('profiles').update({
-          role: profile.role,
-          onboarding_completed: false,
-          updated_at: new Date().toISOString(),
-        }).eq('id', data.user.id);
+        // Always save role to localStorage as fallback (belt-and-braces)
+        localStorage.setItem('elec-mate-profile-role', profile.role);
 
-        if (profileError) {
-          console.error('Error saving profile during signup:', profileError);
-          localStorage.setItem('elec-mate-profile-role', profile.role);
-        } else {
-          console.log('Profile role saved immediately during signup');
-        }
+        // Retry the profile update to handle trigger timing race condition
+        const saveRole = async (retries = 3): Promise<boolean> => {
+          const { error: profileError } = await supabase.from('profiles').update({
+            role: profile.role,
+            onboarding_completed: false,
+            updated_at: new Date().toISOString(),
+          }).eq('id', data.user!.id);
+
+          if (profileError) {
+            console.error('Error saving profile role:', profileError);
+            if (retries > 0) {
+              await new Promise(r => setTimeout(r, 500));
+              return saveRole(retries - 1);
+            }
+            return false;
+          }
+          return true;
+        };
+
+        await saveRole();
       }
 
       // Store consent (GDPR compliance) - non-blocking
@@ -291,9 +302,9 @@ const SignUp = () => {
       }
 
       // Clean up localStorage items used during onboarding
+      // NOTE: Do NOT remove elec-mate-profile-role here — CheckoutTrial needs it as fallback
       localStorage.removeItem('elec-mate-offer-code');
       localStorage.removeItem('elec-mate-onboarding-data');
-      localStorage.removeItem('elec-mate-profile-role');
 
       // Redirect to checkout trial page to collect card details
       navigate('/checkout-trial');

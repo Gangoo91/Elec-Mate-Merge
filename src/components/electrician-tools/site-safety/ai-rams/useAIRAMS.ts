@@ -95,7 +95,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
   }, [overallProgress]);
 
   const saveToDatabase = useCallback(async (isAutosave = false) => {
-    if (!ramsData || !methodData) {
+    if (!ramsData) {
       if (!isAutosave) {
         toast({
           title: "Nothing to save",
@@ -182,13 +182,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
         location: ramsData.location,
         date: ramsData.date,
         assessor: ramsData.assessor,
-        contractor: ramsData.contractor || methodData.contractor || '',
-        supervisor: ramsData.supervisor || methodData.supervisor || '',
+        contractor: ramsData.contractor || methodData?.contractor || '',
+        supervisor: ramsData.supervisor || methodData?.supervisor || '',
         activities: ramsData.activities,
         risks: ramsData.risks as unknown as any, // JSONB type - ALL risks preserved
         required_ppe: ramsData.requiredPPE || [],
         ppe_details: (ramsData.ppeDetails || []) as unknown as any, // JSONB type - ALL PPE preserved
-        status: 'draft' as const,
+        status: isAutosave ? 'draft' : 'generated',
         last_autosave_at: new Date().toISOString(),
         ai_generation_metadata: {
           generatedAt: new Date().toISOString(),
@@ -276,7 +276,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
       }
 
       // Save method statement
-      if (savedDocId && methodData.steps) {
+      if (savedDocId && methodData?.steps) {
         const methodPayload = {
           user_id: user.id,
           rams_document_id: savedDocId,
@@ -346,14 +346,34 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
   // Issue 5: Autosave every 30 seconds when data exists
   useEffect(() => {
-    if (!ramsData || !methodData || isProcessing) return;
+    if (!ramsData || isProcessing) return;
+
+    // Initial save after 10 seconds, then every 30 seconds
+    const initialTimeout = setTimeout(() => {
+      saveToDatabase(true);
+    }, 10000);
 
     const autosaveInterval = setInterval(() => {
       saveToDatabase(true); // Silent autosave
     }, 30000);
 
-    return () => clearInterval(autosaveInterval);
-  }, [ramsData, methodData, isProcessing, saveToDatabase]);
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(autosaveInterval);
+    };
+  }, [ramsData, isProcessing, saveToDatabase]);
+
+  // Emergency save on tab close / navigation
+  useEffect(() => {
+    if (!ramsData) return;
+
+    const handleBeforeUnload = () => {
+      saveToDatabase(true);
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [ramsData, saveToDatabase]);
 
   // Issue 6: Optimized progress simulation (2s intervals, 45s duration)
   const simulateSubStepProgress = useCallback((

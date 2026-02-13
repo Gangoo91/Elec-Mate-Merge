@@ -67,7 +67,7 @@ Founded in the UK, Elec-Mate serves qualified electricians, electrical apprentic
 
 ---
 
-## Calculators (50+)
+## Calculators (70 Total — 56 Technical + 14 Business)
 
 ### Cable Sizing Calculator
 - Calculates cable size to BS 7671:2018 + Amendment 3
@@ -128,7 +128,7 @@ Founded in the UK, Elec-Mate serves qualified electricians, electrical apprentic
 - Capacitor sizing for PF improvement
 - kW, kVA, kVAr relationships
 
-### Additional Calculators
+### Additional Technical Calculators (56 total)
 - Adiabatic equation (minimum CPC size)
 - Ring final circuit continuity (r1, rn, r2)
 - Insulation resistance expected values
@@ -137,17 +137,50 @@ Founded in the UK, Elec-Mate serves qualified electricians, electrical apprentic
 - Motor starting current
 - Lighting lux level calculator
 - Emergency lighting duration
-- Fire alarm loop resistance
-- Socket outlet loading
-- Cooker diversity calculation
-- Shower circuit sizing
-- EV charger load calculation
-- Battery storage system sizing
-- And 20+ more specialist calculations
+- LED driver calculator
+- AC power calculator
+- Three phase power
+- Star-delta conversion
+- Phase rotation
+- RCD discrimination
+- Selectivity & discrimination
+- Arc flash analysis
+- Power quality analysis
+- Solar PV & solar array calculators
+- Wind power calculator
+- Grid-tie inverter
+- Micro-hydro power
+- Off-grid system calculator
+- Feed-in tariff calculator
+- Battery storage & battery backup
+- Heat pump load
+- EV charging station & EVSE load
+- Generator sizing
+- Data centre calculator
+- Marine electrical & swimming pool electrical
+- Resistor colour code & wire gauge
+- Instrumentation calculator
+- Energy cost calculator & unit converter
+
+### Business Calculators (14 total)
+- Job profitability calculator
+- Business cost calculator
+- Cash flow planner
+- Pricing strategy calculator
+- Equipment ROI calculator
+- Hourly rate calculator
+- Capacity planning tool
+- Tax & NI estimator
+- Break-even & margin guard
+- Fully loaded staff cost
+- Quote vs actual tracker
+- Minimum charge & first hour
+- VAT scheme comparison
+- CIS & DRC helper (UK)
 
 ---
 
-## AI Specialists (5)
+## Elec-AI — 8 AI Specialist Agents + 12 AI Tools
 
 All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024, the IET On-Site Guide, Guidance Notes 1 through 8, and real-world electrical installation knowledge.
 
@@ -189,9 +222,41 @@ All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:
 - Electrical safety risk assessments
 - References Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, Management of Health and Safety at Work Regulations 1999
 
+### Regulations Guide
+- Instant lookup of any BS 7671 regulation
+- Plain-English interpretation of complex wiring regulations
+- Cross-references between related regulations
+- Amendment 3:2024 updates highlighted
+
+### Study Coach
+- Personalised learning recommendations based on progress
+- Exam preparation strategies for C&G 2382, 2391, AM2
+- Spaced repetition scheduling
+- Weakness identification and targeted practice
+
+### Voice Quotes (AI Agent)
+- Voice-based quote and invoice generation
+- Speak job details and get a professional quote
+- Automatic material and labour pricing
+- Convert voice quotes to formal documents
+
+### 12 Additional AI Tools
+- **Fault Diagnosis** — AI-powered electrical fault finding assistance
+- **Diagram Builder** — Generate circuit and wiring diagrams
+- **Visual Analysis** — Photo-based electrical installation analysis
+- **Report Writer** — Automated report and documentation generation
+- **Component Identify** — Identify electrical components from photos
+- **Client Explainer** — Generate plain-English explanations for customers
+- **Installation Verify** — Check installations against BS 7671
+- **Wiring Instruction** — Step-by-step wiring guidance
+- **RAMS Generator** — Risk Assessment and Method Statements
+- **Method Statement AI** — Automated method statement creation
+- **Commissioning Specialist** — System commissioning guidance
+- **Installation Planner** — Plan and schedule installation work
+
 ---
 
-## Training Platform
+## Training Platform (36+ Courses)
 
 ### 18th Edition Course (BS 7671)
 - Complete study material covering all 7 parts of BS 7671:2018
@@ -238,6 +303,14 @@ All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:
 - Generates reports for employers and training providers
 - Categorises activities: formal training, practical, self-study
 
+### HNC in Building Services Engineering
+- Higher National Certificate study material
+- Building services science units
+- Advanced electrical engineering content
+
+### 24 Upskilling & CPD Courses
+Including: Asbestos Awareness, BMS (Building Management Systems), Business Fundamentals, CDM Regulations, Confined Spaces, Construction Awareness, COSHH Awareness, CSCS Card Preparation, Cybersecurity for Electrical Systems, Emerging Technology, Environmental Sustainability, Fire Safety, First Aid, General Upskilling, IPAF/Scaffold Safety, Leadership On-Site, Manual Handling, Mental Health Awareness, MEWP (Mobile Elevated Work Platforms), Multi-Trade Skills, PASMA, Personal Development, Scaffolding Awareness, Working at Height
+
 ---
 
 ## Business Management
@@ -259,7 +332,7 @@ All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:
 - AI-powered cost estimation
 - Invoice creation and tracking
 - Stripe payment integration (card payments)
-- Xero accounting integration
+- Xero & QuickBooks accounting integrations
 
 ### Team Management (Employer Dashboard)
 - Employee roster and role management
@@ -274,15 +347,15 @@ All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:
 
 ### Elec-Mate vs iCertifi
 - iCertifi: Certificates only (EICR, EIC, Minor Works). No calculators. No AI tools. No training. No business management. Native app only (no web version). Priced per certificate.
-- Elec-Mate: 8 certificate types + 50+ calculators + 5 AI specialists + full training platform + business management. Web app + native. Flat monthly subscription with unlimited certificates.
+- Elec-Mate: 8 certificate types + 70 calculators + 8 Elec-AI agents + 12 AI tools + 36+ training courses + full business management suite + Xero &amp; QuickBooks. Web app + native. Flat monthly subscription with unlimited certificates.
 
 ### Elec-Mate vs CertsApp
 - CertsApp: Certificates and basic calculations. No AI tools. No training platform. No business management. Limited to iOS and Android.
-- Elec-Mate: Everything CertsApp offers plus AI specialists, comprehensive training, employer dashboard, and works on any device via PWA.
+- Elec-Mate: Everything CertsApp offers plus 8 Elec-AI agents, 12 AI tools, 36+ training courses, 70 calculators, employer dashboard, mental health support, Xero &amp; QuickBooks integrations, and works on any device via PWA.
 
 ### Elec-Mate vs Generic Calculator Apps
 - Generic apps: Usually one or two calculators. No BS 7671 compliance verification. No certificates. No AI. No training.
-- Elec-Mate: 50+ calculators all BS 7671 compliant, integrated with certificate generation, backed by AI specialists.
+- Elec-Mate: 70 calculators (56 technical + 14 business) all BS 7671 compliant, integrated with certificate generation, backed by 8 Elec-AI agents and 12 AI tools.
 
 ### Why Elec-Mate is the Best Choice
 1. Only app combining certificates + calculators + AI + training + business management
