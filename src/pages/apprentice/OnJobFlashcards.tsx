@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import {
   BookOpen,
@@ -17,14 +17,19 @@ import {
   Atom,
   Hammer,
   Leaf,
+  Sparkles,
   type LucideIcon,
 } from 'lucide-react';
 import FlashcardSetCard from '@/components/apprentice/flashcards/FlashcardSetCard';
 import DueTodayCard from '@/components/apprentice/flashcards/DueTodayCard';
 import StudyModeSelector from '@/components/apprentice/flashcards/StudyModeSelector';
+import StudyTipsCard from '@/components/apprentice/flashcards/StudyTipsCard';
 import FlashcardStudySession from '@/components/apprentice/flashcards/FlashcardStudySession';
 import FlashcardAchievements from '@/components/apprentice/flashcards/FlashcardAchievements';
+import AchievementUnlockToast from '@/components/apprentice/flashcards/AchievementUnlockToast';
 import WeeklyProgressCard from '@/components/apprentice/flashcards/WeeklyProgressCard';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { useFlashcardAchievements } from '@/hooks/useFlashcardAchievements';
@@ -87,9 +92,31 @@ const OnJobFlashcards = () => {
   const [activeLevel, setActiveLevel] = useState(defaultLevel);
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const { streak, loading: streakLoading, getStreakDisplay } = useStudyStreak();
-  const { getSetProgress, getDueCards, loading: progressLoading } = useFlashcardProgress();
-  const { achievements: fcAchievements, stats: achievementStats } = useFlashcardAchievements();
+  const {
+    streak,
+    loading: streakLoading,
+    getStreakDisplay,
+    refetch: refetchStreak,
+  } = useStudyStreak();
+  const {
+    getSetProgress,
+    getDueCards,
+    loading: progressLoading,
+    refetch: refetchProgress,
+  } = useFlashcardProgress();
+  const {
+    achievements: fcAchievements,
+    recentlyUnlocked,
+    stats: achievementStats,
+  } = useFlashcardAchievements();
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await Promise.all([refetchStreak(), refetchProgress()]);
+    setIsRefreshing(false);
+  }, [refetchStreak, refetchProgress]);
 
   const streakInfo = getStreakDisplay();
 
@@ -191,6 +218,37 @@ const OnJobFlashcards = () => {
     );
   }
 
+  // Loading skeleton
+  if (progressLoading || streakLoading) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 pt-4 animate-fade-in">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-9 w-9 rounded-lg" />
+          <Skeleton className="h-6 w-52" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="flex-1 h-9 rounded-lg" />
+          <Skeleton className="flex-1 h-9 rounded-lg" />
+          <Skeleton className="flex-1 h-9 rounded-lg" />
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-20 rounded-xl" />
+          ))}
+        </div>
+        <Skeleton className="h-16 rounded-xl" />
+        {[1, 2, 3, 4].map((i) => (
+          <Skeleton key={i} className="h-24 rounded-xl" />
+        ))}
+      </div>
+    );
+  }
+
+  // First-time welcome state for new users
+  if (streak.totalSessions === 0 && masteredCards === 0) {
+    // Fall through to the normal view but we'll show a welcome banner
+  }
+
   const statPills = [
     {
       label: 'Sets',
@@ -219,24 +277,42 @@ const OnJobFlashcards = () => {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
-      {/* Header */}
-      <div className="flex items-center justify-between pt-4">
-        <SmartBackButton />
-        <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-elec-yellow" />
-          <h1 className="text-lg font-bold text-white">Flashcards & Microlearning</h1>
-        </div>
-      </div>
+    <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
+      <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
+        {/* Achievement unlock toast */}
+        <AchievementUnlockToast achievements={recentlyUnlocked} />
 
-      {/* Level tabs */}
-      <div className="flex gap-2">
-        {LEVEL_TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveLevel(tab.id)}
-            className={`
+        {/* Header */}
+        <div className="flex items-center justify-between pt-4">
+          <SmartBackButton />
+          <div className="flex items-center gap-2">
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
+            <h1 className="text-lg font-bold text-white">Flashcards & Microlearning</h1>
+          </div>
+        </div>
+
+        {/* First-time welcome banner */}
+        {streak.totalSessions === 0 && masteredCards === 0 && (
+          <div className="flex items-center gap-3 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
+            <Sparkles className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+            <div>
+              <p className="text-sm font-semibold text-white">Welcome to Flashcards!</p>
+              <p className="text-xs text-white mt-0.5">
+                Pick a set below to start studying. Swipe right for cards you know, left to practise
+                again.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Level tabs */}
+        <div className="flex gap-2">
+          {LEVEL_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveLevel(tab.id)}
+              className={`
               flex-1 py-2 rounded-lg text-sm font-medium
               border touch-manipulation active:scale-[0.96] transition-all
               ${
@@ -245,48 +321,50 @@ const OnJobFlashcards = () => {
                   : 'bg-white/5 border-white/10 text-white'
               }
             `}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Stats row */}
-      <div className="grid grid-cols-4 gap-2">
-        {statPills.map((pill) => {
-          const PillIcon = pill.icon;
-          return (
-            <div
-              key={pill.label}
-              className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center"
             >
-              <PillIcon className={`h-4 w-4 mx-auto mb-1 ${pill.colour}`} />
-              <div className={`text-sm font-bold ${pill.colour}`}>{pill.value}</div>
-              <div className="text-[10px] text-white">{pill.label}</div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Due Today card */}
-      <DueTodayCard dueCount={dueTodayCount} onStart={handleStartDueToday} />
-
-      {/* Streak reminder */}
-      {!streakInfo.studiedToday && (
-        <div className="flex items-center gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
-          <Clock className="h-5 w-5 text-amber-400 flex-shrink-0" />
-          <p className="text-sm text-white">Complete a session today to keep your streak alive.</p>
+              {tab.label}
+            </button>
+          ))}
         </div>
-      )}
 
-      {/* Category toggle grid */}
-      <div className="flex flex-wrap gap-2">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.id}
-            type="button"
-            onClick={() => setActiveCategory(activeCategory === cat.id ? 'all' : cat.id)}
-            className={`
+        {/* Stats row */}
+        <div className="grid grid-cols-4 gap-2">
+          {statPills.map((pill) => {
+            const PillIcon = pill.icon;
+            return (
+              <div
+                key={pill.label}
+                className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center"
+              >
+                <PillIcon className={`h-4 w-4 mx-auto mb-1 ${pill.colour}`} />
+                <div className={`text-sm font-bold ${pill.colour}`}>{pill.value}</div>
+                <div className="text-[10px] text-white">{pill.label}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Due Today card */}
+        <DueTodayCard dueCount={dueTodayCount} onStart={handleStartDueToday} />
+
+        {/* Streak reminder */}
+        {!streakInfo.studiedToday && (
+          <div className="flex items-center gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+            <Clock className="h-5 w-5 text-amber-400 flex-shrink-0" />
+            <p className="text-sm text-white">
+              Complete a session today to keep your streak alive.
+            </p>
+          </div>
+        )}
+
+        {/* Category toggle grid */}
+        <div className="flex flex-wrap gap-2">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveCategory(activeCategory === cat.id ? 'all' : cat.id)}
+              className={`
               px-3 py-1.5 rounded-lg text-xs font-medium
               border touch-manipulation active:scale-[0.96] transition-all
               ${
@@ -295,53 +373,48 @@ const OnJobFlashcards = () => {
                   : 'bg-white/5 border-white/10 text-white'
               }
             `}
-          >
-            {cat.label}
-          </button>
-        ))}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Flashcard set list */}
+        <div className="space-y-2">
+          {filteredSets.map((set) => (
+            <FlashcardSetCard key={set.id} set={set} onStart={handleStartFlashcards} />
+          ))}
+          {filteredSets.length === 0 && (
+            <p className="text-center text-white py-8">No sets in this category.</p>
+          )}
+        </div>
+
+        {/* Weekly progress card */}
+        <WeeklyProgressCard
+          totalCardsReviewed={streak.totalCardsReviewed}
+          currentStreak={streak.currentStreak}
+          masteredSetsCount={completedSets}
+          totalSets={totalSets}
+          overallProgress={overallProgress}
+        />
+
+        {/* Achievements */}
+        <FlashcardAchievements achievements={fcAchievements} stats={achievementStats} />
+
+        {/* Study tips (expandable) */}
+        <StudyTipsCard />
+
+        {/* Bottom sheet mode selector */}
+        <StudyModeSelector
+          open={showModeSelector}
+          onOpenChange={(open) => {
+            setShowModeSelector(open);
+            if (!open) setSelectedSet(null);
+          }}
+          onSelectMode={handleSelectMode}
+        />
       </div>
-
-      {/* Flashcard set list */}
-      <div className="space-y-2">
-        {filteredSets.map((set) => (
-          <FlashcardSetCard key={set.id} set={set} onStart={handleStartFlashcards} />
-        ))}
-        {filteredSets.length === 0 && (
-          <p className="text-center text-white py-8">No sets in this category.</p>
-        )}
-      </div>
-
-      {/* Weekly progress card */}
-      <WeeklyProgressCard
-        totalCardsReviewed={streak.totalCardsReviewed}
-        currentStreak={streak.currentStreak}
-        masteredSetsCount={completedSets}
-        totalSets={totalSets}
-        overallProgress={overallProgress}
-      />
-
-      {/* Achievements */}
-      <FlashcardAchievements achievements={fcAchievements} stats={achievementStats} />
-
-      {/* Tip banner */}
-      <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
-        <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-        <p className="text-xs text-white">
-          <span className="font-medium text-elec-yellow">Tip:</span> Study 10-15 minutes daily with
-          spaced repetition for best results.
-        </p>
-      </div>
-
-      {/* Bottom sheet mode selector */}
-      <StudyModeSelector
-        open={showModeSelector}
-        onOpenChange={(open) => {
-          setShowModeSelector(open);
-          if (!open) setSelectedSet(null);
-        }}
-        onSelectMode={handleSelectMode}
-      />
-    </div>
+    </PullToRefresh>
   );
 };
 

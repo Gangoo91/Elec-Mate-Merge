@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Clock, Target } from 'lucide-react';
+import {
+  ArrowLeft,
+  RotateCcw,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Target,
+  Trophy,
+  Star,
+} from 'lucide-react';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { useFlashcardAchievements } from '@/hooks/useFlashcardAchievements';
@@ -17,6 +26,15 @@ interface FlashcardStudySessionProps {
   /** When provided, filter the set to only these card IDs (for "Due Today" mode) */
   dueCardIds?: string[];
 }
+
+/** Trigger a short haptic vibration (safe no-op on unsupported devices) */
+const haptic = (pattern: number | number[]) => {
+  try {
+    navigator?.vibrate?.(pattern);
+  } catch {
+    /* unsupported */
+  }
+};
 
 const FlashcardStudySession = ({
   setId,
@@ -106,6 +124,7 @@ const FlashcardStudySession = ({
   }, [currentIndex, flashcards.length]);
 
   const handleMarkCorrect = useCallback(() => {
+    haptic(15);
     if (currentCard) {
       updateCardProgress(setId, currentCard.id, true);
       setMasteredCards((prev) => new Set([...prev, currentCard.id]));
@@ -120,6 +139,7 @@ const FlashcardStudySession = ({
   }, [currentCard, setId, updateCardProgress, handleNextCard]);
 
   const handleMarkIncorrect = useCallback(() => {
+    haptic([10, 30, 10]);
     if (currentCard) {
       updateCardProgress(setId, currentCard.id, false);
     }
@@ -195,10 +215,32 @@ const FlashcardStudySession = ({
     return (
       <div className="max-w-2xl mx-auto px-4 pb-20 space-y-6 animate-fade-in">
         {achievementToast}
+
+        {/* Mastery celebration for high scores */}
+        {successRate >= 80 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.2 }}
+            className="flex justify-center pt-4"
+          >
+            <div className="flex items-center gap-2">
+              {successRate === 100 && <Star className="h-5 w-5 text-elec-yellow animate-pulse" />}
+              <Trophy
+                className={`h-8 w-8 ${successRate === 100 ? 'text-elec-yellow' : 'text-green-400'}`}
+              />
+              {successRate === 100 && <Star className="h-5 w-5 text-elec-yellow animate-pulse" />}
+            </div>
+          </motion.div>
+        )}
+
         {/* Large progress ring */}
         <div className="flex flex-col items-center pt-8">
           <MiniProgressRing score={successRate} size={120} strokeWidth={8} />
           <h2 className="text-2xl font-bold text-white mt-4">{performanceLabel}</h2>
+          {successRate === 100 && (
+            <p className="text-sm text-elec-yellow mt-1 font-medium">Perfect score!</p>
+          )}
         </div>
 
         {/* Stat pills */}
