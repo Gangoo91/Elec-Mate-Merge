@@ -373,7 +373,7 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 - Platform: Progressive Web App (React, TypeScript, Vite)
 - Native apps: iOS and Android via Capacitor
 - Backend: Supabase (PostgreSQL, Edge Functions, Auth)
-- AI: OpenAI GPT models with BS 7671 training data and RAG (Retrieval Augmented Generation)
+- AI: OpenAI GPT models trained on BS 7671 regulations, IET Guidance Notes, and UK electrical trade knowledge
 - Offline support: Service worker with local caching
 - Security: Row-level security, encrypted data, GDPR compliant
 
@@ -383,6 +383,83 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 |------|-------|----------|
 | Free Trial | GBP 0 for 7 days | All features |
 | Monthly | From GBP 4.99/month | All features, unlimited certificates |
+
+---
+
+## How It Works — Detailed Feature Workflows
+
+### Certificate Creation Workflow
+1. User selects certificate type (EICR, EIC, Minor Works, etc.)
+2. Pre-populated form with BS 7671 compliant fields appears
+3. User fills in property details, supply characteristics, earthing arrangement
+4. For EICR: schedule of inspections with tick boxes, observation codes (C1, C2, C3, FI) with drop-down descriptions
+5. Test results entered with automatic validation against BS 7671 maximum values
+6. Digital signatures captured on screen (inspector, reviewer, client)
+7. Auto-save works offline — data stored locally on device, syncs when online
+8. Professional PDF generated matching official IET format
+9. PDF can be shared via email, link, or customer portal
+10. All certificates stored in cloud archive linked to customer and property
+
+### AI Tool Workflow
+1. User opens any AI specialist (Circuit Designer, Cost Engineer, etc.)
+2. Describes the job in plain English (e.g., "Design a consumer unit for a 3-bed semi with electric shower, cooker, and EV charger")
+3. AI processes the request using BS 7671 knowledge and UK electrical trade data
+4. Returns detailed, regulation-compliant output (circuit schedule, cost breakdown, risk assessment, etc.)
+5. User can ask follow-up questions for clarification
+6. Results can be exported or used directly in certificates and quotes
+
+### Calculator Workflow
+1. User selects calculator from the tools menu
+2. Enters circuit parameters (cable type, length, load, installation method, etc.)
+3. Calculator applies BS 7671 formulas and correction factors automatically
+4. Results displayed with pass/fail indication against regulation limits
+5. Can be used offline on job sites without internet connection
+
+### Apprentice Training Workflow
+1. Apprentice or college tutor assigns courses
+2. Self-paced study through structured module content
+3. Flashcards with spaced repetition for exam revision
+4. Mock exams simulating real exam conditions with timed questions
+5. AI tutor available to explain any concept in plain English
+6. Progress tracked against qualification requirements
+7. Off-the-job training hours logged automatically
+8. Portfolio evidence captured (photos, documents, descriptions) and mapped to apprenticeship criteria
+9. EPA and AM2 simulators with AI grading and feedback
+
+### Board Scanner Workflow
+1. User takes a photo of a consumer unit / distribution board
+2. AI analyses the image identifying devices, brands, and configurations
+3. Returns device identification, circuit details, and condition observations
+4. Results can be imported directly into EICR or EIC certificates
+
+### Quoting and Invoicing Workflow
+1. User creates a new quote for a customer
+2. AI Cost Engineer can auto-generate material lists and labour estimates
+3. Professional quote PDF generated and sent to customer
+4. Customer can view and accept quote via shareable link
+5. Accepted quotes convert to jobs and invoices
+6. Invoices support Stripe card payments
+7. Integrates with Xero and QuickBooks for accounting
+
+### Customer Portal
+1. Electrician sends certificate or quote to customer via unique link
+2. Customer views professional document without needing an account
+3. Customer can digitally sign certificates
+4. All documents stored and accessible via the portal link
+5. Customers can request follow-up work through the portal
+
+### Offline Capability
+1. All certificates, calculators, and core tools work without internet
+2. Data auto-saves to device storage every 10 seconds
+3. When connection returns, data syncs to cloud automatically
+4. Emergency save on app close ensures no data loss
+5. Ideal for electricians working in basements, lofts, and areas with poor signal
+
+### Mental Health Support
+1. Confidential mental health resources accessible within the app
+2. Stress management tools and wellbeing tips specific to the construction trade
+3. Links to professional support services (Samaritans, Mind, Mates in Mind)
+4. Community features for peer support
 
 ---
 
