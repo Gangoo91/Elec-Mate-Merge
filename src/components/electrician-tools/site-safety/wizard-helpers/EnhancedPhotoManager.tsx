@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Camera, Trash2, GripVertical, Edit2, Check, X } from "lucide-react";
-import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Camera, Trash2, GripVertical, Edit2, Check, X } from 'lucide-react';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 
 interface Photo {
   url: string;
@@ -28,7 +28,7 @@ export const EnhancedPhotoManager = ({
   uploadingPhotos,
 }: EnhancedPhotoManagerProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [editCaption, setEditCaption] = useState("");
+  const [editCaption, setEditCaption] = useState('');
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -42,7 +42,7 @@ export const EnhancedPhotoManager = ({
 
   const startEditing = (index: number) => {
     setEditingIndex(index);
-    setEditCaption(photos[index].caption || "");
+    setEditCaption(photos[index].caption || '');
   };
 
   const saveCaption = (index: number) => {
@@ -54,7 +54,7 @@ export const EnhancedPhotoManager = ({
 
   const cancelEditing = () => {
     setEditingIndex(null);
-    setEditCaption("");
+    setEditCaption('');
   };
 
   // Check if device has camera
@@ -71,7 +71,7 @@ export const EnhancedPhotoManager = ({
           >
             <Camera className="h-4 w-4 text-elec-yellow" />
             <span className="text-sm font-medium">
-              {uploadingPhotos ? "Uploading..." : "Upload Photos"}
+              {uploadingPhotos ? 'Uploading...' : 'Upload Photos'}
             </span>
           </Label>
           <Input
@@ -112,11 +112,7 @@ export const EnhancedPhotoManager = ({
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="photos">
             {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="space-y-3"
-              >
+              <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-3">
                 {photos.map((photo, index) => (
                   <Draggable
                     key={`${photo.url}-${index}`}

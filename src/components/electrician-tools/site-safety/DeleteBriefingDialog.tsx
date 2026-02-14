@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Trash2 } from "lucide-react";
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface DeleteBriefingDialogProps {
   open: boolean;
@@ -23,26 +23,23 @@ export const DeleteBriefingDialog = ({
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('team_briefings')
-        .delete()
-        .eq('id', briefing.id);
+      const { error } = await supabase.from('team_briefings').delete().eq('id', briefing.id);
 
       if (error) throw error;
 
       toast({
-        title: "Briefing Deleted",
-        description: "The briefing has been permanently deleted.",
+        title: 'Briefing Deleted',
+        description: 'The briefing has been permanently deleted.',
       });
-      
+
       onSuccess();
       onOpenChange(false);
     } catch (error: any) {
       console.error('Error deleting briefing:', error);
       toast({
-        title: "Error",
-        description: "Failed to delete briefing",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete briefing',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);

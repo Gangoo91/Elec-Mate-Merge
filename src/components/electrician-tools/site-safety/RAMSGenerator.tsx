@@ -5,22 +5,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { 
-  FileText, 
-  Plus, 
-  X, 
-  Download, 
-  Eye, 
-  AlertTriangle, 
-  Building, 
+import {
+  FileText,
+  Plus,
+  X,
+  Download,
+  Eye,
+  AlertTriangle,
+  Building,
   Shield,
   Edit3,
   Loader2,
-  Grid3x3
+  Grid3x3,
 } from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
 import { generateRAMSPDF } from '@/utils/rams-pdf';
@@ -48,7 +59,7 @@ const RAMSGenerator: React.FC = () => {
     setBranding,
     setSignatures,
     validate,
-    reset
+    reset,
   } = useRAMS();
 
   const [showPreview, setShowPreview] = useState(false);
@@ -59,7 +70,7 @@ const RAMSGenerator: React.FC = () => {
     risk: '',
     likelihood: 1,
     severity: 1,
-    controls: ''
+    controls: '',
   });
   const [showAddRisk, setShowAddRisk] = useState(false);
   const [editingRisk, setEditingRisk] = useState<string | null>(null);
@@ -68,7 +79,7 @@ const RAMSGenerator: React.FC = () => {
     risk: '',
     likelihood: 1,
     severity: 1,
-    controls: ''
+    controls: '',
   });
   const [selectedHazard, setSelectedHazard] = useState('');
   const [selectedRisk, setSelectedRisk] = useState('');
@@ -85,7 +96,7 @@ const RAMSGenerator: React.FC = () => {
       toast({
         title: 'Activity Added',
         description: 'Work activity has been added to the RAMS.',
-        variant: 'success'
+        variant: 'success',
       });
     } else {
       console.log('Activity is empty, not adding');
@@ -96,47 +107,47 @@ const RAMSGenerator: React.FC = () => {
     if (newRisk.hazard && newRisk.risk) {
       const riskRating = newRisk.likelihood * newRisk.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
-      
+
       addRisk({
         ...newRisk,
         riskRating,
-        residualRisk
+        residualRisk,
       });
-      
+
       setNewRisk({
         hazard: '',
         risk: '',
         likelihood: 1,
         severity: 1,
-        controls: ''
+        controls: '',
       });
       setSelectedHazard('');
       setSelectedRisk('');
       setShowAddRisk(false);
-      
+
       toast({
         title: 'Risk Added',
         description: 'Risk assessment has been added to the RAMS.',
-        variant: 'success'
+        variant: 'success',
       });
     }
   };
 
   const handleHazardChange = (hazard: string) => {
     setSelectedHazard(hazard);
-    setNewRisk(prev => ({ ...prev, hazard }));
+    setNewRisk((prev) => ({ ...prev, hazard }));
     // Reset risk when hazard changes
     setSelectedRisk('');
-    setNewRisk(prev => ({ ...prev, risk: '' }));
+    setNewRisk((prev) => ({ ...prev, risk: '' }));
   };
 
   const handleRiskChange = (risk: string) => {
     setSelectedRisk(risk);
-    setNewRisk(prev => ({ ...prev, risk }));
+    setNewRisk((prev) => ({ ...prev, risk }));
   };
 
   const handleControlMeasuresChange = (measures: string[]) => {
-    setNewRisk(prev => ({ ...prev, controls: measures.join('\n• ') }));
+    setNewRisk((prev) => ({ ...prev, controls: measures.join('\n• ') }));
   };
 
   const handleEditRisk = (risk: any) => {
@@ -146,7 +157,7 @@ const RAMSGenerator: React.FC = () => {
       risk: risk.risk,
       likelihood: risk.likelihood,
       severity: risk.severity,
-      controls: risk.controls || ''
+      controls: risk.controls || '',
     });
   };
 
@@ -154,26 +165,26 @@ const RAMSGenerator: React.FC = () => {
     if (editingRisk && editRiskData.hazard && editRiskData.risk) {
       const riskRating = editRiskData.likelihood * editRiskData.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
-      
+
       updateRisk(editingRisk, {
         ...editRiskData,
         riskRating,
-        residualRisk
+        residualRisk,
       });
-      
+
       setEditingRisk(null);
       setEditRiskData({
         hazard: '',
         risk: '',
         likelihood: 1,
         severity: 1,
-        controls: ''
+        controls: '',
       });
-      
+
       toast({
         title: 'Risk Updated',
         description: 'Risk assessment has been updated successfully.',
-        variant: 'success'
+        variant: 'success',
       });
     }
   };
@@ -185,7 +196,7 @@ const RAMSGenerator: React.FC = () => {
       risk: '',
       likelihood: 1,
       severity: 1,
-      controls: ''
+      controls: '',
     });
   };
 
@@ -195,7 +206,7 @@ const RAMSGenerator: React.FC = () => {
       toast({
         title: 'Validation Error',
         description: validation.errors.join('. ') + '. Please complete these sections first.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
@@ -205,29 +216,32 @@ const RAMSGenerator: React.FC = () => {
       toast({
         title: 'No Risks Identified',
         description: 'Please add at least one risk assessment before generating the PDF.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
     try {
-      await generateRAMSPDF(ramsData, { 
-        ...reportOptions, 
+      await generateRAMSPDF(ramsData, {
+        ...reportOptions,
         signOff,
-        includeSignatures: true 
+        includeSignatures: true,
       });
       toast({
         title: 'PDF Generated Successfully',
         description: 'Professional RAMS document has been downloaded.',
-        variant: 'success'
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast({
         title: 'Generation Failed',
-        description: error instanceof Error ? error.message : 'Failed to generate PDF. Please check your data and try again.',
-        variant: 'destructive'
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Failed to generate PDF. Please check your data and try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -250,10 +264,10 @@ const RAMSGenerator: React.FC = () => {
 
   const riskStats = {
     total: ramsData.risks.length,
-    low: ramsData.risks.filter(r => r.riskRating <= 4).length,
-    medium: ramsData.risks.filter(r => r.riskRating > 4 && r.riskRating <= 9).length,
-    high: ramsData.risks.filter(r => r.riskRating > 9 && r.riskRating <= 16).length,
-    veryHigh: ramsData.risks.filter(r => r.riskRating > 16).length
+    low: ramsData.risks.filter((r) => r.riskRating <= 4).length,
+    medium: ramsData.risks.filter((r) => r.riskRating > 4 && r.riskRating <= 9).length,
+    high: ramsData.risks.filter((r) => r.riskRating > 9 && r.riskRating <= 16).length,
+    veryHigh: ramsData.risks.filter((r) => r.riskRating > 16).length,
   };
 
   return (
@@ -266,7 +280,8 @@ const RAMSGenerator: React.FC = () => {
             Risk Assessment
           </CardTitle>
           <p className="text-sm text-white">
-            Create comprehensive Risk Assessment & Method Statement documents for safe electrical work
+            Create comprehensive Risk Assessment & Method Statement documents for safe electrical
+            work
           </p>
         </CardHeader>
       </Card>
@@ -292,7 +307,9 @@ const RAMSGenerator: React.FC = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <Label htmlFor="projectName" className="text-foreground">Project Name *</Label>
+              <Label htmlFor="projectName" className="text-foreground">
+                Project Name *
+              </Label>
               <Input
                 id="projectName"
                 value={ramsData.projectName}
@@ -302,7 +319,9 @@ const RAMSGenerator: React.FC = () => {
               />
             </div>
             <div>
-              <Label htmlFor="location" className="text-foreground">Location *</Label>
+              <Label htmlFor="location" className="text-foreground">
+                Location *
+              </Label>
               <Input
                 id="location"
                 value={ramsData.location}
@@ -312,7 +331,9 @@ const RAMSGenerator: React.FC = () => {
               />
             </div>
             <div>
-              <Label htmlFor="assessor" className="text-foreground">Assessor *</Label>
+              <Label htmlFor="assessor" className="text-foreground">
+                Assessor *
+              </Label>
               <Input
                 id="assessor"
                 value={ramsData.assessor}
@@ -322,7 +343,9 @@ const RAMSGenerator: React.FC = () => {
               />
             </div>
             <div>
-              <Label htmlFor="date" className="text-foreground">Assessment Date *</Label>
+              <Label htmlFor="date" className="text-foreground">
+                Assessment Date *
+              </Label>
               <Input
                 id="date"
                 type="date"
@@ -336,7 +359,7 @@ const RAMSGenerator: React.FC = () => {
       </Card>
 
       {/* Task Management */}
-      <TaskManager 
+      <TaskManager
         onLinkHazard={(taskId) => {
           setSelectedTaskId(taskId);
           setShowHazardSelector(true);
@@ -347,7 +370,9 @@ const RAMSGenerator: React.FC = () => {
       {ramsData.activities.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/60">
           <CardHeader>
-            <CardTitle className="text-foreground">Legacy Activities ({ramsData.activities.length})</CardTitle>
+            <CardTitle className="text-foreground">
+              Legacy Activities ({ramsData.activities.length})
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
@@ -366,11 +391,14 @@ const RAMSGenerator: React.FC = () => {
                 Add Activity
               </Button>
             </div>
-            
+
             {ramsData.activities.length > 0 && (
               <div className="space-y-2">
                 {ramsData.activities.map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg"
+                  >
                     <span className="text-foreground text-sm leading-relaxed flex-1 break-words">
                       {index + 1}. {activity}
                     </span>
@@ -402,7 +430,9 @@ const RAMSGenerator: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-4">
             <Card className="border-blue-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
-                <div className="text-base sm:text-lg font-bold text-blue-400">{riskStats.total}</div>
+                <div className="text-base sm:text-lg font-bold text-blue-400">
+                  {riskStats.total}
+                </div>
                 <div className="text-xs text-white">Total</div>
               </CardContent>
             </Card>
@@ -414,55 +444,63 @@ const RAMSGenerator: React.FC = () => {
             </Card>
             <Card className="border-yellow-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
-                <div className="text-base sm:text-lg font-bold text-yellow-400">{riskStats.medium}</div>
+                <div className="text-base sm:text-lg font-bold text-yellow-400">
+                  {riskStats.medium}
+                </div>
                 <div className="text-xs text-white">Medium</div>
               </CardContent>
             </Card>
             <Card className="border-orange-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
-                <div className="text-base sm:text-lg font-bold text-orange-400">{riskStats.high}</div>
+                <div className="text-base sm:text-lg font-bold text-orange-400">
+                  {riskStats.high}
+                </div>
                 <div className="text-xs text-white">High</div>
               </CardContent>
             </Card>
             <Card className="border-red-500/30 bg-elec-gray/50 col-span-2 sm:col-span-1">
               <CardContent className="p-2 sm:p-3 text-center">
-                <div className="text-base sm:text-lg font-bold text-red-400">{riskStats.veryHigh}</div>
+                <div className="text-base sm:text-lg font-bold text-red-400">
+                  {riskStats.veryHigh}
+                </div>
                 <div className="text-xs text-white">Very High</div>
               </CardContent>
             </Card>
           </div>
 
           {/* Risk List */}
-            {/* Risk Matrix */}
-            <div className="mb-4">
-              <RiskMatrix />
-            </div>
+          {/* Risk Matrix */}
+          <div className="mb-4">
+            <RiskMatrix />
+          </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-              <h4 className="font-medium text-foreground">Risk Assessment</h4>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Button
-                  onClick={() => setShowHazardSelector(true)}
-                  size="sm"
-                  className="bg-orange-500 text-foreground hover:bg-orange-600"
-                >
-                  <Shield className="h-4 w-4 mr-2" />
-                  Add from Database
-                </Button>
-                <Button
-                  onClick={() => setShowAddRisk(true)}
-                  size="sm"
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Manual Risk
-                </Button>
-              </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <h4 className="font-medium text-foreground">Risk Assessment</h4>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button
+                onClick={() => setShowHazardSelector(true)}
+                size="sm"
+                className="bg-orange-500 text-foreground hover:bg-orange-600"
+              >
+                <Shield className="h-4 w-4 mr-2" />
+                Add from Database
+              </Button>
+              <Button
+                onClick={() => setShowAddRisk(true)}
+                size="sm"
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Manual Risk
+              </Button>
             </div>
+          </div>
 
-            {ramsData.risks.length > 0 && (
+          {ramsData.risks.length > 0 && (
             <div className="space-y-3">
-              <h4 className="font-medium text-foreground">Identified Risks ({ramsData.risks.length})</h4>
+              <h4 className="font-medium text-foreground">
+                Identified Risks ({ramsData.risks.length})
+              </h4>
               {ramsData.risks.map((risk) => (
                 <Card key={risk.id} className="border-elec-yellow/30 bg-elec-dark/20">
                   <CardContent className="p-3 sm:p-4">
@@ -490,32 +528,41 @@ const RAMSGenerator: React.FC = () => {
                             </Button>
                           </div>
                         </div>
-                        
+
                         <div className="space-y-3">
                           <div>
                             <Label className="text-foreground text-sm">Hazard</Label>
                             <Input
                               value={editRiskData.hazard}
-                              onChange={(e) => setEditRiskData(prev => ({ ...prev, hazard: e.target.value }))}
+                              onChange={(e) =>
+                                setEditRiskData((prev) => ({ ...prev, hazard: e.target.value }))
+                              }
                               className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                             />
                           </div>
-                          
+
                           <div>
                             <Label className="text-foreground text-sm">Risk/Consequence</Label>
                             <Input
                               value={editRiskData.risk}
-                              onChange={(e) => setEditRiskData(prev => ({ ...prev, risk: e.target.value }))}
+                              onChange={(e) =>
+                                setEditRiskData((prev) => ({ ...prev, risk: e.target.value }))
+                              }
                               className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                             />
                           </div>
-                          
+
                           <div className="grid grid-cols-1 gap-3">
                             <div>
                               <Label className="text-foreground text-sm">Likelihood (1-5)</Label>
                               <Select
                                 value={editRiskData.likelihood.toString()}
-                                onValueChange={(value) => setEditRiskData(prev => ({ ...prev, likelihood: parseInt(value) }))}
+                                onValueChange={(value) =>
+                                  setEditRiskData((prev) => ({
+                                    ...prev,
+                                    likelihood: parseInt(value),
+                                  }))
+                                }
                               >
                                 <SelectTrigger className="mt-1 bg-elec-dark/50 border-elec-yellow/20">
                                   <SelectValue />
@@ -529,12 +576,17 @@ const RAMSGenerator: React.FC = () => {
                                 </SelectContent>
                               </Select>
                             </div>
-                            
+
                             <div>
                               <Label className="text-foreground text-sm">Severity (1-5)</Label>
                               <Select
                                 value={editRiskData.severity.toString()}
-                                onValueChange={(value) => setEditRiskData(prev => ({ ...prev, severity: parseInt(value) }))}
+                                onValueChange={(value) =>
+                                  setEditRiskData((prev) => ({
+                                    ...prev,
+                                    severity: parseInt(value),
+                                  }))
+                                }
                               >
                                 <SelectTrigger className="mt-1 bg-elec-dark/50 border-elec-yellow/20">
                                   <SelectValue />
@@ -549,23 +601,30 @@ const RAMSGenerator: React.FC = () => {
                               </Select>
                             </div>
                           </div>
-                          
+
                           <div>
                             <Label className="text-foreground text-sm">Control Measures</Label>
                             <Textarea
                               value={editRiskData.controls}
-                              onChange={(e) => setEditRiskData(prev => ({ ...prev, controls: e.target.value }))}
+                              onChange={(e) =>
+                                setEditRiskData((prev) => ({ ...prev, controls: e.target.value }))
+                              }
                               className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
                               rows={2}
                             />
                           </div>
-                          
+
                           {editRiskData.likelihood > 0 && editRiskData.severity > 0 && (
                             <div className="p-3 bg-elec-gray/30 rounded-lg">
                               <div className="flex items-center gap-2">
                                 <span className="text-sm text-white">Risk Level:</span>
-                                <Badge className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-foreground`}>
-                                  {getRiskLevelText(editRiskData.likelihood * editRiskData.severity)} ({editRiskData.likelihood * editRiskData.severity})
+                                <Badge
+                                  className={`${getRiskLevelColor(editRiskData.likelihood * editRiskData.severity)} text-foreground`}
+                                >
+                                  {getRiskLevelText(
+                                    editRiskData.likelihood * editRiskData.severity
+                                  )}{' '}
+                                  ({editRiskData.likelihood * editRiskData.severity})
                                 </Badge>
                               </div>
                             </div>
@@ -578,7 +637,9 @@ const RAMSGenerator: React.FC = () => {
                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                           <div className="flex-1 space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
-                              <Badge className={`${getRiskLevelColor(risk.riskRating)} text-foreground text-xs`}>
+                              <Badge
+                                className={`${getRiskLevelColor(risk.riskRating)} text-foreground text-xs`}
+                              >
                                 {getRiskLevelText(risk.riskRating)} ({risk.riskRating})
                               </Badge>
                             </div>
@@ -591,7 +652,7 @@ const RAMSGenerator: React.FC = () => {
                               </p>
                             </div>
                           </div>
-                          
+
                           <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
                             <Button
                               onClick={() => handleEditRisk(risk)}
@@ -613,7 +674,7 @@ const RAMSGenerator: React.FC = () => {
                             </Button>
                           </div>
                         </div>
-                        
+
                         <div className="text-xs text-white bg-elec-dark/30 p-2 rounded">
                           <div className="flex flex-wrap gap-4">
                             <span>Likelihood: {risk.likelihood}/5</span>
@@ -640,7 +701,10 @@ const RAMSGenerator: React.FC = () => {
       {/* Optional Sections */}
       <Accordion type="single" collapsible className="space-y-4">
         {/* Branding Section */}
-        <AccordionItem value="branding" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
+        <AccordionItem
+          value="branding"
+          className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4"
+        >
           <AccordionTrigger className="text-foreground hover:text-elec-yellow">
             Company Branding (Optional)
           </AccordionTrigger>
@@ -669,7 +733,10 @@ const RAMSGenerator: React.FC = () => {
         </AccordionItem>
 
         {/* Electronic Signatures */}
-        <AccordionItem value="signatures" className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4">
+        <AccordionItem
+          value="signatures"
+          className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4"
+        >
           <AccordionTrigger className="text-foreground hover:text-elec-yellow">
             Electronic Signatures (Optional)
           </AccordionTrigger>
@@ -680,47 +747,65 @@ const RAMSGenerator: React.FC = () => {
                 name={signOff.preparedBy?.name || ''}
                 date={signOff.preparedBy?.date || ''}
                 signatureDataUrl={signOff.preparedBy?.signatureDataUrl}
-                onNameChange={(name) => setSignatures({ 
-                  preparedBy: { ...signOff.preparedBy, name } 
-                })}
-                onDateChange={(date) => setSignatures({ 
-                  preparedBy: { ...signOff.preparedBy, date } 
-                })}
-                onSignatureChange={(signatureDataUrl) => setSignatures({ 
-                  preparedBy: { ...signOff.preparedBy, signatureDataUrl } 
-                })}
+                onNameChange={(name) =>
+                  setSignatures({
+                    preparedBy: { ...signOff.preparedBy, name },
+                  })
+                }
+                onDateChange={(date) =>
+                  setSignatures({
+                    preparedBy: { ...signOff.preparedBy, date },
+                  })
+                }
+                onSignatureChange={(signatureDataUrl) =>
+                  setSignatures({
+                    preparedBy: { ...signOff.preparedBy, signatureDataUrl },
+                  })
+                }
               />
-              
+
               <SignaturePad
                 label="Reviewed By"
                 name={signOff.reviewedBy?.name || ''}
                 date={signOff.reviewedBy?.date || ''}
                 signatureDataUrl={signOff.reviewedBy?.signatureDataUrl}
-                onNameChange={(name) => setSignatures({ 
-                  reviewedBy: { ...signOff.reviewedBy, name } 
-                })}
-                onDateChange={(date) => setSignatures({ 
-                  reviewedBy: { ...signOff.reviewedBy, date } 
-                })}
-                onSignatureChange={(signatureDataUrl) => setSignatures({ 
-                  reviewedBy: { ...signOff.reviewedBy, signatureDataUrl } 
-                })}
+                onNameChange={(name) =>
+                  setSignatures({
+                    reviewedBy: { ...signOff.reviewedBy, name },
+                  })
+                }
+                onDateChange={(date) =>
+                  setSignatures({
+                    reviewedBy: { ...signOff.reviewedBy, date },
+                  })
+                }
+                onSignatureChange={(signatureDataUrl) =>
+                  setSignatures({
+                    reviewedBy: { ...signOff.reviewedBy, signatureDataUrl },
+                  })
+                }
               />
-              
+
               <SignaturePad
                 label="Approved By"
                 name={signOff.approvedBy?.name || ''}
                 date={signOff.approvedBy?.date || ''}
                 signatureDataUrl={signOff.approvedBy?.signatureDataUrl}
-                onNameChange={(name) => setSignatures({ 
-                  approvedBy: { ...signOff.approvedBy, name } 
-                })}
-                onDateChange={(date) => setSignatures({ 
-                  approvedBy: { ...signOff.approvedBy, date } 
-                })}
-                onSignatureChange={(signatureDataUrl) => setSignatures({ 
-                  approvedBy: { ...signOff.approvedBy, signatureDataUrl } 
-                })}
+                onNameChange={(name) =>
+                  setSignatures({
+                    approvedBy: { ...signOff.approvedBy, name },
+                  })
+                }
+                onDateChange={(date) =>
+                  setSignatures({
+                    approvedBy: { ...signOff.approvedBy, date },
+                  })
+                }
+                onSignatureChange={(signatureDataUrl) =>
+                  setSignatures({
+                    approvedBy: { ...signOff.approvedBy, signatureDataUrl },
+                  })
+                }
               />
             </div>
           </AccordionContent>
@@ -729,47 +814,47 @@ const RAMSGenerator: React.FC = () => {
 
       {/* Action Bar */}
       <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
-              <Button
-                onClick={() => setShowPreview(true)}
-                variant="outline"
-                className="flex-1 h-12 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-base"
-                disabled={!validation.isValid}
-              >
-                <Eye className="h-5 w-5 mr-2" />
-                Preview PDF
-              </Button>
-              
-              <Button
-                onClick={handleGeneratePDF}
-                className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-base font-medium"
-                disabled={!validation.isValid || isGenerating}
-              >
-                {isGenerating ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <Download className="h-5 w-5 mr-2" />
-                )}
-                {isGenerating ? 'Generating...' : 'Download PDF'}
-              </Button>
-            </div>
-            
+        <CardContent className="p-3 sm:p-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
             <Button
-              onClick={reset}
+              onClick={() => setShowPreview(true)}
               variant="outline"
-              className="w-full mt-2 h-10 border-red-500/30 text-red-400 hover:bg-red-500/10 text-sm"
+              className="flex-1 h-12 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-base"
+              disabled={!validation.isValid}
             >
-              Reset All Data
+              <Eye className="h-5 w-5 mr-2" />
+              Preview PDF
             </Button>
-            
-            {!validation.isValid && (
-              <p className="text-xs text-red-400 mt-2 text-center">
-                Complete all required fields to generate PDF
-              </p>
-            )}
-          </CardContent>
-        </Card>
+
+            <Button
+              onClick={handleGeneratePDF}
+              className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-base font-medium"
+              disabled={!validation.isValid || isGenerating}
+            >
+              {isGenerating ? (
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              ) : (
+                <Download className="h-5 w-5 mr-2" />
+              )}
+              {isGenerating ? 'Generating...' : 'Download PDF'}
+            </Button>
+          </div>
+
+          <Button
+            onClick={reset}
+            variant="outline"
+            className="w-full mt-2 h-10 border-red-500/30 text-red-400 hover:bg-red-500/10 text-sm"
+          >
+            Reset All Data
+          </Button>
+
+          {!validation.isValid && (
+            <p className="text-xs text-red-400 mt-2 text-center">
+              Complete all required fields to generate PDF
+            </p>
+          )}
+        </CardContent>
+      </Card>
 
       {/* PDF Preview Modal */}
       <RAMSPDFPreview
@@ -807,42 +892,68 @@ const RAMSGenerator: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1">Likelihood (1-5)</label>
-                <Select value={newRisk.likelihood.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, likelihood: parseInt(value) })}>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Likelihood (1-5)
+                </label>
+                <Select
+                  value={newRisk.likelihood.toString()}
+                  onValueChange={(value) => setNewRisk({ ...newRisk, likelihood: parseInt(value) })}
+                >
                   <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-foreground">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
                     {[1, 2, 3, 4, 5].map((value) => (
-                      <SelectItem key={value} value={value.toString()} className="text-foreground hover:bg-elec-yellow/10">
-                        {value} - {['Very Unlikely', 'Unlikely', 'Possible', 'Likely', 'Very Likely'][value - 1]}
+                      <SelectItem
+                        key={value}
+                        value={value.toString()}
+                        className="text-foreground hover:bg-elec-yellow/10"
+                      >
+                        {value} -{' '}
+                        {
+                          ['Very Unlikely', 'Unlikely', 'Possible', 'Likely', 'Very Likely'][
+                            value - 1
+                          ]
+                        }
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1">Severity (1-5)</label>
-                <Select value={newRisk.severity.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, severity: parseInt(value) })}>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Severity (1-5)
+                </label>
+                <Select
+                  value={newRisk.severity.toString()}
+                  onValueChange={(value) => setNewRisk({ ...newRisk, severity: parseInt(value) })}
+                >
                   <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-foreground">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-dark border-elec-yellow/20">
                     {[1, 2, 3, 4, 5].map((value) => (
-                      <SelectItem key={value} value={value.toString()} className="text-foreground hover:bg-elec-yellow/10">
-                        {value} - {['Negligible', 'Minor', 'Moderate', 'Major', 'Catastrophic'][value - 1]}
+                      <SelectItem
+                        key={value}
+                        value={value.toString()}
+                        className="text-foreground hover:bg-elec-yellow/10"
+                      >
+                        {value} -{' '}
+                        {['Negligible', 'Minor', 'Moderate', 'Major', 'Catastrophic'][value - 1]}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">Control Measures</label>
+              <label className="block text-sm font-medium text-foreground mb-1">
+                Control Measures
+              </label>
               <textarea
                 value={newRisk.controls}
                 onChange={(e) => setNewRisk({ ...newRisk, controls: e.target.value })}
@@ -851,28 +962,28 @@ const RAMSGenerator: React.FC = () => {
                 rows={3}
               />
             </div>
-            
+
             <div className="flex justify-end gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowAddRisk(false)}
                 className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   addRisk({
                     ...newRisk,
                     riskRating: newRisk.likelihood * newRisk.severity,
-                    residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2) // Assume controls reduce risk by 2 points
+                    residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2), // Assume controls reduce risk by 2 points
                   });
                   setNewRisk({
                     hazard: '',
                     risk: '',
                     likelihood: 1,
                     severity: 1,
-                    controls: ''
+                    controls: '',
                   });
                   setShowAddRisk(false);
                 }}

@@ -24,7 +24,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
   open,
   onOpenChange,
   onSave,
-  onDelete
+  onDelete,
 }) => {
   const [editedRisk, setEditedRisk] = useState<RAMSRisk>(risk);
   const [hasChanges, setHasChanges] = useState(false);
@@ -37,12 +37,12 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
   useEffect(() => {
     const riskRating = editedRisk.likelihood * editedRisk.severity;
     if (riskRating !== editedRisk.riskRating) {
-      setEditedRisk(prev => ({ ...prev, riskRating }));
+      setEditedRisk((prev) => ({ ...prev, riskRating }));
     }
   }, [editedRisk.likelihood, editedRisk.severity]);
 
   const handleChange = (updates: Partial<RAMSRisk>) => {
-    setEditedRisk(prev => ({ ...prev, ...updates }));
+    setEditedRisk((prev) => ({ ...prev, ...updates }));
     setHasChanges(true);
   };
 
@@ -80,19 +80,16 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent side="bottom" className="h-[95vh] overflow-y-auto">
         <SheetHeader className="sticky top-0 bg-background z-10 pb-4 border-b border-primary/10">
-          <SheetTitle className="text-lg font-bold text-elec-light">
-            Edit Hazard
-          </SheetTitle>
+          <SheetTitle className="text-lg font-bold text-elec-light">Edit Hazard</SheetTitle>
         </SheetHeader>
 
         <div className="space-y-4 py-4 pb-24">
           {/* Risk Score Display */}
-          <div className={cn(
-            "flex items-center justify-center gap-3 p-4 rounded-lg",
-            riskColors.bg
-          )}>
-            <AlertTriangle className={cn("h-6 w-6", riskColors.text)} />
-            <span className={cn("text-xl font-bold", riskColors.text)}>
+          <div
+            className={cn('flex items-center justify-center gap-3 p-4 rounded-lg', riskColors.bg)}
+          >
+            <AlertTriangle className={cn('h-6 w-6', riskColors.text)} />
+            <span className={cn('text-xl font-bold', riskColors.text)}>
               Risk Score: {riskRating}
             </span>
           </div>
@@ -145,9 +142,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
           {/* Likelihood Slider */}
           <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-elec-light">
-                Likelihood
-              </label>
+              <label className="text-sm font-semibold text-elec-light">Likelihood</label>
               <Badge className="bg-elec-yellow/20 text-elec-yellow">
                 {editedRisk.likelihood}/5
               </Badge>
@@ -172,12 +167,8 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
           {/* Severity Slider */}
           <div className="space-y-3 bg-card/50 rounded-lg p-4 border border-primary/20">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold text-elec-light">
-                Severity
-              </label>
-              <Badge className="bg-red-500/20 text-red-400">
-                {editedRisk.severity}/5
-              </Badge>
+              <label className="text-sm font-semibold text-elec-light">Severity</label>
+              <Badge className="bg-red-500/20 text-red-400">{editedRisk.severity}/5</Badge>
             </div>
             <Slider
               value={[editedRisk.severity]}
@@ -226,9 +217,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
 
           {/* Responsible Person */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">
-              Person Responsible
-            </label>
+            <label className="text-sm font-semibold text-elec-light">Person Responsible</label>
             <Input
               value={editedRisk.responsible || ''}
               onChange={(e) => handleChange({ responsible: e.target.value })}
@@ -250,11 +239,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
               Delete
             </Button>
           )}
-          <Button
-            variant="outline"
-            className="flex-1 min-h-[48px]"
-            onClick={handleClose}
-          >
+          <Button variant="outline" className="flex-1 min-h-[48px]" onClick={handleClose}>
             <X className="h-5 w-5 mr-2" />
             Cancel
           </Button>

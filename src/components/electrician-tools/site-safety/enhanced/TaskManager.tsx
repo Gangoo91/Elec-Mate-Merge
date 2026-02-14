@@ -18,7 +18,7 @@ import {
   Link,
   MoreVertical,
   Trash2,
-  Edit3
+  Edit3,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -42,7 +42,7 @@ const TaskManager: React.FC = () => {
     deleteTask,
     linkHazardToTask,
     validateTask,
-    getHazardSuggestions
+    getHazardSuggestions,
   } = useEnhancedRAMS();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -62,19 +62,20 @@ const TaskManager: React.FC = () => {
 
   // Filter tasks based on search and filters
   const filteredTasks = useMemo(() => {
-    return tasks.filter(task => {
-      const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           task.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    return tasks.filter((task) => {
+      const matchesSearch =
+        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.description?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || task.category === selectedCategory;
       const matchesStatus = selectedStatus === 'all' || task.status === selectedStatus;
-      
+
       return matchesSearch && matchesCategory && matchesStatus;
     });
   }, [tasks, searchTerm, selectedCategory, selectedStatus]);
 
   // Get unique categories and statuses for filters
   const categories = useMemo(() => {
-    return Array.from(new Set(tasks.map(task => task.category)));
+    return Array.from(new Set(tasks.map((task) => task.category)));
   }, [tasks]);
 
   const statuses = ['pending', 'in-progress', 'completed'] as const;
@@ -82,20 +83,28 @@ const TaskManager: React.FC = () => {
   // Get risk level color
   const getRiskLevelColor = (riskLevel: string) => {
     switch (riskLevel) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-white border-gray-200';
+      case 'high':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low':
+        return 'bg-green-100 text-green-800 border-green-200';
+      default:
+        return 'bg-gray-100 text-white border-gray-200';
     }
   };
 
   // Get status icon
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed': return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'in-progress': return <Clock className="w-4 h-4 text-blue-600" />;
-      case 'pending': return <AlertTriangle className="w-4 h-4 text-white" />;
-      default: return <Clock className="w-4 h-4 text-white" />;
+      case 'completed':
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
+      case 'in-progress':
+        return <Clock className="w-4 h-4 text-blue-600" />;
+      case 'pending':
+        return <AlertTriangle className="w-4 h-4 text-white" />;
+      default:
+        return <Clock className="w-4 h-4 text-white" />;
     }
   };
 
@@ -122,13 +131,16 @@ const TaskManager: React.FC = () => {
   // Group tasks by status for Kanban view
   const tasksByStatus = useMemo(() => {
     return {
-      pending: filteredTasks.filter(task => task.status === 'pending'),
-      'in-progress': filteredTasks.filter(task => task.status === 'in-progress'),
-      completed: filteredTasks.filter(task => task.status === 'completed')
+      pending: filteredTasks.filter((task) => task.status === 'pending'),
+      'in-progress': filteredTasks.filter((task) => task.status === 'in-progress'),
+      completed: filteredTasks.filter((task) => task.status === 'completed'),
     };
   }, [filteredTasks]);
 
-  const TaskCard: React.FC<{ task: Task; showActions?: boolean }> = ({ task, showActions = true }) => {
+  const TaskCard: React.FC<{ task: Task; showActions?: boolean }> = ({
+    task,
+    showActions = true,
+  }) => {
     const validation = validateTask(task);
     const suggestions = getHazardSuggestions(task);
 
@@ -140,13 +152,11 @@ const TaskManager: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 {getStatusIcon(task.status)}
                 <CardTitle className="text-lg">{task.title}</CardTitle>
-                <Badge className={getRiskLevelColor(task.risk_level)}>
-                  {task.risk_level}
-                </Badge>
+                <Badge className={getRiskLevelColor(task.risk_level)}>{task.risk_level}</Badge>
               </div>
               <p className="text-sm text-white">{task.description}</p>
             </div>
-            
+
             {showActions && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -164,7 +174,7 @@ const TaskManager: React.FC = () => {
                     Link Hazards
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onClick={() => handleDeleteTask(task.id)}
                     className="text-red-600"
                   >
@@ -176,18 +186,14 @@ const TaskManager: React.FC = () => {
             )}
           </div>
         </CardHeader>
-        
+
         <CardContent className="pt-0">
           <div className="space-y-3">
             {/* Task metadata */}
             <div className="flex flex-wrap gap-2 text-sm text-white">
               <span>Category: {task.category}</span>
-              {task.estimated_duration && (
-                <span>• Duration: {task.estimated_duration}</span>
-              )}
-              {task.responsible_person && (
-                <span>• Responsible: {task.responsible_person}</span>
-              )}
+              {task.estimated_duration && <span>• Duration: {task.estimated_duration}</span>}
+              {task.responsible_person && <span>• Responsible: {task.responsible_person}</span>}
             </div>
 
             {/* Linked hazards */}
@@ -195,8 +201,8 @@ const TaskManager: React.FC = () => {
               <div>
                 <p className="text-sm font-medium mb-1">Linked Hazards:</p>
                 <div className="flex flex-wrap gap-1">
-                  {task.linked_hazards.map(hazardId => {
-                    const hazard = hazards.find(h => h.hazard_id === hazardId);
+                  {task.linked_hazards.map((hazardId) => {
+                    const hazard = hazards.find((h) => h.hazard_id === hazardId);
                     return (
                       <Badge key={hazardId} variant="outline" className="text-xs">
                         {hazard?.hazard_name || hazardId}
@@ -220,7 +226,7 @@ const TaskManager: React.FC = () => {
               <div className="text-sm">
                 <p className="font-medium text-blue-600 mb-1">Suggested Hazards:</p>
                 <div className="flex flex-wrap gap-1">
-                  {suggestions.slice(0, 2).map(suggestion => (
+                  {suggestions.slice(0, 2).map((suggestion) => (
                     <Button
                       key={suggestion.id}
                       variant="ghost"
@@ -281,9 +287,7 @@ const TaskManager: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Task Management</h2>
-          <p className="text-white">
-            Manage your work tasks with integrated hazard assessment
-          </p>
+          <p className="text-white">Manage your work tasks with integrated hazard assessment</p>
         </div>
         <Button onClick={() => setShowCreateDialog(true)}>
           <Plus className="w-4 h-4 mr-2" />
@@ -308,12 +312,12 @@ const TaskManager: React.FC = () => {
                   onChange={handleSearchChange}
                   onBlur={(e) => e.preventDefault()}
                   onFocus={(e) => e.stopPropagation()}
-                  className={cn(!searchTerm && "pl-10")}
+                  className={cn(!searchTerm && 'pl-10')}
                   autoComplete="off"
                 />
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <select
                 value={selectedCategory}
@@ -321,18 +325,20 @@ const TaskManager: React.FC = () => {
                 className="px-3 py-2 border border-input rounded-md bg-background text-sm"
               >
                 <option value="all">All Categories</option>
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
                 ))}
               </select>
-              
+
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
                 className="px-3 py-2 border border-input rounded-md bg-background text-sm"
               >
                 <option value="all">All Statuses</option>
-                {statuses.map(status => (
+                {statuses.map((status) => (
                   <option key={status} value={status}>
                     {status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' ')}
                   </option>
@@ -349,7 +355,7 @@ const TaskManager: React.FC = () => {
           <TabsTrigger value="list">List View</TabsTrigger>
           <TabsTrigger value="kanban">Kanban Board</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="list" className="mt-6">
           <div className="space-y-4">
             {filteredTasks.length === 0 ? (
@@ -358,21 +364,18 @@ const TaskManager: React.FC = () => {
                   <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No tasks found</h3>
                   <p className="text-white">
-                    {tasks.length === 0 
-                      ? "Create your first task to get started"
-                      : "Try adjusting your filters or search term"
-                    }
+                    {tasks.length === 0
+                      ? 'Create your first task to get started'
+                      : 'Try adjusting your filters or search term'}
                   </p>
                 </CardContent>
               </Card>
             ) : (
-              filteredTasks.map(task => (
-                <TaskCard key={task.id} task={task} />
-              ))
+              filteredTasks.map((task) => <TaskCard key={task.id} task={task} />)
             )}
           </div>
         </TabsContent>
-        
+
         <TabsContent value="kanban" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pending Tasks */}
@@ -382,7 +385,7 @@ const TaskManager: React.FC = () => {
                 Pending ({tasksByStatus.pending.length})
               </h3>
               <div className="space-y-4">
-                {tasksByStatus.pending.map(task => (
+                {tasksByStatus.pending.map((task) => (
                   <TaskCard key={task.id} task={task} />
                 ))}
               </div>
@@ -395,7 +398,7 @@ const TaskManager: React.FC = () => {
                 In Progress ({tasksByStatus['in-progress'].length})
               </h3>
               <div className="space-y-4">
-                {tasksByStatus['in-progress'].map(task => (
+                {tasksByStatus['in-progress'].map((task) => (
                   <TaskCard key={task.id} task={task} />
                 ))}
               </div>
@@ -408,7 +411,7 @@ const TaskManager: React.FC = () => {
                 Completed ({tasksByStatus.completed.length})
               </h3>
               <div className="space-y-4">
-                {tasksByStatus.completed.map(task => (
+                {tasksByStatus.completed.map((task) => (
                   <TaskCard key={task.id} task={task} />
                 ))}
               </div>
@@ -418,11 +421,8 @@ const TaskManager: React.FC = () => {
       </Tabs>
 
       {/* Dialogs */}
-      <TaskCreateDialog
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
-      />
-      
+      <TaskCreateDialog open={showCreateDialog} onOpenChange={setShowCreateDialog} />
+
       {editingTask && (
         <TaskEditDialog
           task={editingTask}
@@ -430,7 +430,7 @@ const TaskManager: React.FC = () => {
           onOpenChange={(open) => !open && setEditingTask(null)}
         />
       )}
-      
+
       {linkingTask && (
         <HazardLinkingPanel
           task={linkingTask}

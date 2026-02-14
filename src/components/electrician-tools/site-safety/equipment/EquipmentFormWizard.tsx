@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +16,9 @@ import { TestFrequencySelector } from './TestFrequencySelector';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { LocationAutoFill } from '../common/LocationAutoFill';
 import type { SafetyEquipment } from '@/hooks/useSafetyEquipment';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 
 // Form schema
 const formSchema = z.object({
@@ -73,6 +76,43 @@ export function EquipmentFormWizard({
 
   const watchedValues = watch();
 
+  // ─── Draft Auto-save (only for new equipment) ───
+  const isEditing = !!initialData;
+  const equipmentDraftData = useMemo(
+    () => ({
+      ...watchedValues,
+      photos,
+      currentStep,
+    }),
+    [watchedValues, photos, currentStep]
+  );
+
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'equipment-form',
+    data: equipmentDraftData,
+    enabled: !isEditing,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.category) setValue('category', recoveredDraft.category);
+    if (recoveredDraft.name) setValue('name', recoveredDraft.name);
+    if (recoveredDraft.serial_number) setValue('serial_number', recoveredDraft.serial_number);
+    if (recoveredDraft.location) setValue('location', recoveredDraft.location);
+    if (recoveredDraft.last_inspection) setValue('last_inspection', recoveredDraft.last_inspection);
+    if (recoveredDraft.inspection_interval_days)
+      setValue('inspection_interval_days', recoveredDraft.inspection_interval_days);
+    if (recoveredDraft.condition_notes) setValue('condition_notes', recoveredDraft.condition_notes);
+    if (recoveredDraft.photos) setPhotos(recoveredDraft.photos);
+    if (recoveredDraft.currentStep) setCurrentStep(recoveredDraft.currentStep);
+    dismissDraft();
+  };
+
   // Calculate next inspection date
   const calculateNextInspection = () => {
     if (!watchedValues.last_inspection) return null;
@@ -123,6 +163,7 @@ export function EquipmentFormWizard({
       ...data,
       photos: photos.length > 0 ? photos : null,
     });
+    clearDraft();
   });
 
   // Get category display info
@@ -159,7 +200,9 @@ export function EquipmentFormWizard({
           <h1 className="text-base font-semibold text-white">
             {initialData?.id ? 'Edit Equipment' : 'Add Equipment'}
           </h1>
-          <div className="w-16" /> {/* Spacer for centering */}
+          <div className="w-16 flex justify-end">
+            <DraftSaveIndicator status={draftStatus} />
+          </div>
         </div>
 
         {/* Progress indicator */}
@@ -182,6 +225,15 @@ export function EquipmentFormWizard({
           </p>
         </div>
       </div>
+
+      {/* Draft Recovery Banner */}
+      <AnimatePresence>
+        {recoveredDraft && !isEditing && (
+          <div className="px-3 pt-3">
+            <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Step Content */}
       <form onSubmit={onFormSubmit} className="p-3 pb-28">

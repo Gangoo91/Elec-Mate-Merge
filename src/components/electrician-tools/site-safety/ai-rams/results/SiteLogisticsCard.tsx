@@ -9,14 +9,18 @@ interface SiteLogisticsCardProps {
 
 export function SiteLogisticsCard({ methodData }: SiteLogisticsCardProps) {
   const logistics = methodData.siteLogistics;
-  
+
   if (!logistics) {
     return null;
   }
 
-  const hasAnyLogistics = logistics.vehicleAccess || logistics.parking || 
-                          logistics.materialStorage || logistics.wasteManagement ||
-                          logistics.welfareFacilities || logistics.siteRestrictions;
+  const hasAnyLogistics =
+    logistics.vehicleAccess ||
+    logistics.parking ||
+    logistics.materialStorage ||
+    logistics.wasteManagement ||
+    logistics.welfareFacilities ||
+    logistics.siteRestrictions;
 
   if (!hasAnyLogistics) {
     return null;

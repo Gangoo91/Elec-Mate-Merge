@@ -1,13 +1,28 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Flame, Play, CheckCircle2, Clock, AlertTriangle, Shield } from 'lucide-react';
+import {
+  ArrowLeft,
+  Flame,
+  Play,
+  Pause,
+  CheckCircle2,
+  Clock,
+  AlertTriangle,
+  Shield,
+  X,
+  MapPin,
+  FileText,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
+import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { SignaturePad } from '../common/SignaturePad';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useFireWatchRecords } from '@/hooks/useFireWatchRecords';
+import { PermitSelector } from '../common/PermitSelector';
 import { FireWatchHistory } from './FireWatchHistory';
 
 interface FireWatchTimerProps {
@@ -50,8 +65,7 @@ const DEFAULT_CHECKLIST: ChecklistItem[] = [
 
 type TabKey = 'timer' | 'history';
 
-const FIRE_WATCH_DURATION_MINS = 60;
-const FIRE_WATCH_DURATION_SECS = FIRE_WATCH_DURATION_MINS * 60;
+const DURATION_OPTIONS = [30, 45, 60, 90, 120] as const;
 
 function formatTime(totalSeconds: number): string {
   const mins = Math.floor(totalSeconds / 60);
@@ -68,28 +82,35 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     refetch: refetchHistory,
   } = useFireWatchRecords();
   const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [durationMins, setDurationMins] = useState(60);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [checklist, setChecklist] = useState<ChecklistItem[]>(DEFAULT_CHECKLIST);
   const [isSaving, setIsSaving] = useState(false);
   const [startedAt, setStartedAt] = useState<Date | null>(null);
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [selectedPermitId, setSelectedPermitId] = useState<string | null>(null);
+  const [location, setLocation] = useState('');
 
-  // Signature state (UI only — not persisted to DB yet)
   const [completerSigName, setCompleterSigName] = useState('');
   const [completerSigDate, setCompleterSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [completerSigData, setCompleterSigData] = useState('');
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { toast } = useToast();
 
-  const remainingSeconds = Math.max(FIRE_WATCH_DURATION_SECS - elapsedSeconds, 0);
-  const progress = Math.min(elapsedSeconds / FIRE_WATCH_DURATION_SECS, 1);
+  const [selectedPermitTitle, setSelectedPermitTitle] = useState('');
+
+  const durationSecs = durationMins * 60;
+  const remainingSeconds = Math.max(durationSecs - elapsedSeconds, 0);
+  const progress = Math.min(elapsedSeconds / durationSecs, 1);
   const allChecked = checklist.every((item) => item.checked);
-  const timerComplete = elapsedSeconds >= FIRE_WATCH_DURATION_SECS;
+  const timerComplete = elapsedSeconds >= durationSecs;
   const canComplete = allChecked && timerComplete;
 
   // Timer tick
   useEffect(() => {
-    if (isActive && !timerComplete) {
+    if (isActive && !isPaused && !timerComplete) {
       intervalRef.current = setInterval(() => {
         setElapsedSeconds((prev) => prev + 1);
       }, 1000);
@@ -97,14 +118,34 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isActive, timerComplete]);
+  }, [isActive, isPaused, timerComplete]);
 
   const handleStart = () => {
     haptic.medium();
     setIsActive(true);
+    setIsPaused(false);
     setStartedAt(new Date());
     setElapsedSeconds(0);
     setChecklist(DEFAULT_CHECKLIST);
+  };
+
+  const handleTogglePause = () => {
+    haptic.light();
+    setIsPaused((prev) => !prev);
+  };
+
+  const handleCancel = () => {
+    haptic.medium();
+    setIsActive(false);
+    setIsPaused(false);
+    setElapsedSeconds(0);
+    setStartedAt(null);
+    setChecklist(DEFAULT_CHECKLIST);
+    setPhotoUrls([]);
+    setSelectedPermitId(null);
+    setSelectedPermitTitle('');
+    setLocation('');
+    setShowCancelConfirm(false);
   };
 
   const toggleChecklistItem = (id: string) => {
@@ -127,7 +168,9 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         user_id: user.id,
         start_time: startedAt.toISOString(),
         end_time: new Date().toISOString(),
-        duration_minutes: FIRE_WATCH_DURATION_MINS,
+        duration_minutes: durationMins,
+        permit_id: selectedPermitId || null,
+        location: location.trim() || null,
         checklist: checklist.map((c) => ({
           id: c.id,
           label: c.label,
@@ -135,6 +178,8 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
         })),
         status: 'completed',
         photos: photoUrls,
+        completed_by: completerSigName.trim() || null,
+        completed_signature: completerSigData || null,
       });
 
       if (error) throw error;
@@ -147,10 +192,14 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
 
       refetchHistory();
       setIsActive(false);
+      setIsPaused(false);
       setElapsedSeconds(0);
       setStartedAt(null);
       setChecklist(DEFAULT_CHECKLIST);
       setPhotoUrls([]);
+      setSelectedPermitId(null);
+      setSelectedPermitTitle('');
+      setLocation('');
     } catch {
       haptic.error();
       toast({
@@ -161,7 +210,20 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
     } finally {
       setIsSaving(false);
     }
-  }, [canComplete, startedAt, checklist, photoUrls, toast, haptic, refetchHistory]);
+  }, [
+    canComplete,
+    startedAt,
+    checklist,
+    photoUrls,
+    durationMins,
+    selectedPermitId,
+    location,
+    completerSigName,
+    completerSigData,
+    toast,
+    haptic,
+    refetchHistory,
+  ]);
 
   // Circular progress calculations
   const circumference = 2 * Math.PI * 90;
@@ -234,18 +296,66 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                           </h3>
                           <p className="text-sm text-white leading-relaxed">
                             A fire watch must be maintained for a minimum of 60 minutes after
-                            completion of hot works such as soldering, brazing, welding, grinding,
-                            or using blow torches. The watch person must remain in the area and
-                            check for signs of smouldering or fire.
+                            completion of hot works such as soldering, brazing, welding, grinding, or
+                            using blow torches. The watch person must remain in the area and check for
+                            signs of smouldering or fire.
                           </p>
                         </div>
+                      </div>
+                    </div>
+
+                    {/* Link to Hot-Work Permit */}
+                    <PermitSelector
+                      permitTypes={['hot-work']}
+                      selectedPermitId={selectedPermitId}
+                      onSelect={(id, permit) => {
+                        setSelectedPermitId(id);
+                        setSelectedPermitTitle(permit?.title ?? '');
+                        setLocation(permit?.location ?? '');
+                      }}
+                    />
+
+                    {/* Location / Area */}
+                    <div className="mb-6">
+                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-elec-yellow" />
+                        Location / Area
+                      </h3>
+                      <Input
+                        placeholder="e.g. Plant Room 2, 3rd Floor"
+                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Duration Selector */}
+                    <div className="mb-6">
+                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-elec-yellow" />
+                        Watch Duration
+                      </h3>
+                      <div className="flex gap-2">
+                        {DURATION_OPTIONS.map((mins) => (
+                          <button
+                            key={mins}
+                            onClick={() => setDurationMins(mins)}
+                            className={`flex-1 h-11 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all ${
+                              durationMins === mins
+                                ? 'bg-elec-yellow text-black'
+                                : 'bg-white/5 text-white border border-white/10'
+                            }`}
+                          >
+                            {mins}m
+                          </button>
+                        ))}
                       </div>
                     </div>
 
                     <SafetyEmptyState
                       icon={Flame}
                       heading="No Active Fire Watch"
-                      description="Start a fire watch after completing hot works. The timer will run for 60 minutes whilst you monitor the area."
+                      description={`Start a fire watch after completing hot works. The timer will run for ${durationMins} minutes whilst you monitor the area.`}
                       ctaLabel="Start Fire Watch"
                       onCta={handleStart}
                       tip="Required by most site safety policies"
@@ -260,6 +370,26 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                     transition={{ duration: 0.3 }}
                     className="px-4 pt-6"
                   >
+                    {/* Linked Permit + Location Banner */}
+                    {(selectedPermitId || location) && (
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/10 mb-4 space-y-1">
+                        {selectedPermitId && (
+                          <div className="flex items-center gap-2 text-sm text-white">
+                            <FileText className="w-4 h-4 text-elec-yellow flex-shrink-0" />
+                            <span className="font-medium">
+                              {selectedPermitTitle || 'Linked Permit'}
+                            </span>
+                          </div>
+                        )}
+                        {location && (
+                          <div className="flex items-center gap-2 text-sm text-white">
+                            <MapPin className="w-4 h-4 text-elec-yellow flex-shrink-0" />
+                            <span>{location}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     {/* Circular Timer */}
                     <div className="flex justify-center mb-6">
                       <div className="relative w-52 h-52">
@@ -307,17 +437,56 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                       </div>
                     </div>
 
+                    {/* Paused indicator */}
+                    {isPaused && (
+                      <div className="text-center mb-3">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-sm font-semibold text-amber-400">
+                          <Pause className="w-3.5 h-3.5" /> Paused
+                        </span>
+                      </div>
+                    )}
+
                     {/* Time Info */}
-                    <div className="flex justify-center gap-6 mb-6">
+                    <div className="flex justify-center gap-6 mb-4">
                       <div className="flex items-center gap-2 text-sm text-white">
                         <Clock className="w-4 h-4 text-elec-yellow" />
                         Elapsed: {formatTime(elapsedSeconds)}
                       </div>
                       <div className="flex items-center gap-2 text-sm text-white">
                         <Shield className="w-4 h-4 text-elec-yellow" />
-                        {FIRE_WATCH_DURATION_MINS} min watch
+                        {durationMins} min watch
                       </div>
                     </div>
+
+                    {/* Pause/Resume + Cancel */}
+                    {!timerComplete && (
+                      <div className="flex gap-2 mb-6">
+                        <button
+                          onClick={handleTogglePause}
+                          className={`flex-1 h-11 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all ${
+                            isPaused
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-white/5 border border-white/10 text-white'
+                          }`}
+                        >
+                          {isPaused ? (
+                            <>
+                              <Play className="w-4 h-4" /> Resume
+                            </>
+                          ) : (
+                            <>
+                              <Pause className="w-4 h-4" /> Pause
+                            </>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => setShowCancelConfirm(true)}
+                          className="h-11 px-4 rounded-xl bg-red-500/10 border border-red-500/20 text-sm font-semibold text-red-400 flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+                        >
+                          <X className="w-4 h-4" /> Cancel
+                        </button>
+                      </div>
+                    )}
 
                     {/* Checklist */}
                     <div className="space-y-2 mb-6">
@@ -430,6 +599,14 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
           )}
         </AnimatePresence>
       </div>
+
+      <DeleteConfirmSheet
+        open={showCancelConfirm}
+        onOpenChange={setShowCancelConfirm}
+        onConfirm={handleCancel}
+        title="Cancel Fire Watch?"
+        description="All progress will be lost and the timer will reset"
+      />
     </div>
   );
 }

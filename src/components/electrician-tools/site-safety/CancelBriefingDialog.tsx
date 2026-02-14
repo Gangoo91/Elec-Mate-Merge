@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { Badge } from "@/components/ui/badge";
-import { CloudRain, UserX, Briefcase, Calendar, AlertTriangle } from "lucide-react";
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { CloudRain, UserX, Briefcase, Calendar, AlertTriangle } from 'lucide-react';
 
 interface CancelBriefingDialogProps {
   open: boolean;
@@ -36,18 +36,18 @@ export const CancelBriefingDialog = ({
   onSuccess,
   onReschedule,
 }: CancelBriefingDialogProps) => {
-  const [reason, setReason] = useState("");
+  const [reason, setReason] = useState('');
   const [selectedQuickReason, setSelectedQuickReason] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleQuickReasonSelect = (reasonId: string) => {
     setSelectedQuickReason(reasonId);
-    const selectedReason = quickReasons.find(r => r.id === reasonId);
+    const selectedReason = quickReasons.find((r) => r.id === reasonId);
     if (selectedReason && reasonId !== 'other') {
       setReason(selectedReason.label);
     } else {
-      setReason("");
+      setReason('');
     }
   };
 
@@ -60,30 +60,30 @@ export const CancelBriefingDialog = ({
     setLoading(true);
     try {
       const { error } = await supabase
-        .from("team_briefings")
+        .from('team_briefings')
         .update({
-          status: "cancelled",
+          status: 'cancelled',
           cancelled_reason: reason,
           cancelled_at: new Date().toISOString(),
         })
-        .eq("id", briefing.id);
+        .eq('id', briefing.id);
 
       if (error) throw error;
 
       toast({
-        title: "Briefing Cancelled",
-        description: "The briefing has been cancelled successfully.",
+        title: 'Briefing Cancelled',
+        description: 'The briefing has been cancelled successfully.',
       });
 
       onOpenChange(false);
       onSuccess();
-      setReason("");
+      setReason('');
     } catch (error) {
-      console.error("Error cancelling briefing:", error);
+      console.error('Error cancelling briefing:', error);
       toast({
-        title: "Error",
-        description: "Failed to cancel briefing. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to cancel briefing. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -102,7 +102,8 @@ export const CancelBriefingDialog = ({
                   Cancel Briefing
                 </SheetTitle>
                 <SheetDescription>
-                  Cancelling "{briefing?.briefing_name || briefing?.title}". Consider rescheduling instead?
+                  Cancelling "{briefing?.briefing_name || briefing?.title}". Consider rescheduling
+                  instead?
                 </SheetDescription>
               </SheetHeader>
 
@@ -116,7 +117,7 @@ export const CancelBriefingDialog = ({
                       return (
                         <Badge
                           key={quickReason.id}
-                          variant={selectedQuickReason === quickReason.id ? "default" : "outline"}
+                          variant={selectedQuickReason === quickReason.id ? 'default' : 'outline'}
                           className="cursor-pointer justify-start gap-2 min-h-[44px] px-3 hover:bg-accent touch-manipulation"
                           onClick={() => handleQuickReasonSelect(quickReason.id)}
                         >
@@ -155,7 +156,12 @@ export const CancelBriefingDialog = ({
                   Reschedule Instead
                 </Button>
                 <div className="flex gap-2 w-full">
-                  <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading} className="flex-1 h-11 touch-manipulation">
+                  <Button
+                    variant="outline"
+                    onClick={() => onOpenChange(false)}
+                    disabled={loading}
+                    className="flex-1 h-11 touch-manipulation"
+                  >
                     Keep Briefing
                   </Button>
                   <Button
@@ -174,7 +180,8 @@ export const CancelBriefingDialog = ({
               <SheetHeader className="text-left">
                 <SheetTitle className="text-destructive">Confirm Cancellation</SheetTitle>
                 <SheetDescription>
-                  This will permanently cancel the briefing. Team members will need to be notified separately.
+                  This will permanently cancel the briefing. Team members will need to be notified
+                  separately.
                 </SheetDescription>
               </SheetHeader>
 
@@ -190,11 +197,21 @@ export const CancelBriefingDialog = ({
               </div>
 
               <div className="flex gap-2 pt-2">
-                <Button variant="outline" onClick={() => setShowConfirmation(false)} disabled={loading} className="flex-1 h-11 touch-manipulation">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowConfirmation(false)}
+                  disabled={loading}
+                  className="flex-1 h-11 touch-manipulation"
+                >
                   Go Back
                 </Button>
-                <Button variant="destructive" onClick={handleCancel} disabled={loading} className="flex-1 h-11 touch-manipulation">
-                  {loading ? "Cancelling..." : "Confirm Cancellation"}
+                <Button
+                  variant="destructive"
+                  onClick={handleCancel}
+                  disabled={loading}
+                  className="flex-1 h-11 touch-manipulation"
+                >
+                  {loading ? 'Cancelling...' : 'Confirm Cancellation'}
                 </Button>
               </div>
             </>

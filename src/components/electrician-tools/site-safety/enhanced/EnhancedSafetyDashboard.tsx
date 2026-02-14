@@ -5,16 +5,16 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  FileText, 
-  ClipboardList, 
-  Database, 
-  Workflow, 
+import {
+  FileText,
+  ClipboardList,
+  Database,
+  Workflow,
   BarChart3,
   Plus,
   AlertTriangle,
   CheckCircle,
-  Clock
+  Clock,
 } from 'lucide-react';
 import TaskManager from './TaskManager';
 import HazardDatabase from './HazardDatabase';
@@ -22,24 +22,18 @@ import IntegratedWorkflow from './IntegratedWorkflow';
 import { useEnhancedRAMS } from '@/hooks/useEnhancedRAMS';
 
 const EnhancedSafetyDashboard: React.FC = () => {
-  const { 
-    tasks, 
-    hazards, 
-    customHazards, 
-    ramsMethodLinks,
-    loading 
-  } = useEnhancedRAMS();
+  const { tasks, hazards, customHazards, ramsMethodLinks, loading } = useEnhancedRAMS();
 
   // Calculate dashboard statistics
   const stats = {
     totalTasks: tasks.length,
-    completedTasks: tasks.filter(t => t.status === 'completed').length,
-    inProgressTasks: tasks.filter(t => t.status === 'in-progress').length,
-    pendingTasks: tasks.filter(t => t.status === 'pending').length,
+    completedTasks: tasks.filter((t) => t.status === 'completed').length,
+    inProgressTasks: tasks.filter((t) => t.status === 'in-progress').length,
+    pendingTasks: tasks.filter((t) => t.status === 'pending').length,
     totalHazards: hazards.length + customHazards.length,
     customHazards: customHazards.length,
     linkedDocuments: ramsMethodLinks.length,
-    highRiskTasks: tasks.filter(t => t.risk_level === 'high').length
+    highRiskTasks: tasks.filter((t) => t.risk_level === 'high').length,
   };
 
   const StatCard: React.FC<{
@@ -55,9 +49,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
           <div>
             <p className="text-sm font-medium text-white">{title}</p>
             <p className="text-2xl font-bold">{value}</p>
-            {description && (
-              <p className="text-xs text-white mt-1">{description}</p>
-            )}
+            {description && <p className="text-xs text-white mt-1">{description}</p>}
           </div>
           <Icon className={`w-8 h-8 ${color}`} />
         </div>
@@ -95,7 +87,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
           color="text-blue-600"
           description={`${stats.completedTasks} completed`}
         />
-        
+
         <StatCard
           title="Active Tasks"
           value={stats.inProgressTasks}
@@ -103,7 +95,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
           color="text-orange-600"
           description={`${stats.pendingTasks} pending`}
         />
-        
+
         <StatCard
           title="Hazards Database"
           value={stats.totalHazards}
@@ -111,7 +103,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
           color="text-purple-600"
           description={`${stats.customHazards} custom`}
         />
-        
+
         <StatCard
           title="High Risk Tasks"
           value={stats.highRiskTasks}
@@ -132,12 +124,12 @@ const EnhancedSafetyDashboard: React.FC = () => {
               <Plus className="w-6 h-6" />
               <span>Create New Task</span>
             </Button>
-            
+
             <Button className="h-24 flex flex-col gap-2" variant="outline">
               <FileText className="w-6 h-6" />
               <span>Start RAMS Assessment</span>
             </Button>
-            
+
             <Button className="h-24 flex flex-col gap-2" variant="outline">
               <Workflow className="w-6 h-6" />
               <span>Integrated Workflow</span>
@@ -153,8 +145,11 @@ const EnhancedSafetyDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {tasks.slice(0, 5).map(task => (
-              <div key={task.id} className="flex items-center justify-between p-3 border rounded-lg">
+            {tasks.slice(0, 5).map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center justify-between p-3 border rounded-lg"
+              >
                 <div className="flex items-center gap-3">
                   {task.status === 'completed' ? (
                     <CheckCircle className="w-5 h-5 text-green-600" />
@@ -172,17 +167,21 @@ const EnhancedSafetyDashboard: React.FC = () => {
                   <p className="text-sm text-white">
                     {new Date(task.created_at).toLocaleDateString()}
                   </p>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    task.risk_level === 'high' ? 'bg-red-100 text-red-800' :
-                    task.risk_level === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-green-100 text-green-800'
-                  }`}>
+                  <span
+                    className={`text-xs px-2 py-1 rounded ${
+                      task.risk_level === 'high'
+                        ? 'bg-red-100 text-red-800'
+                        : task.risk_level === 'medium'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-green-100 text-green-800'
+                    }`}
+                  >
                     {task.risk_level} risk
                   </span>
                 </div>
               </div>
             ))}
-            
+
             {tasks.length === 0 && (
               <div className="text-center py-8">
                 <ClipboardList className="w-12 h-12 mx-auto mb-4 text-white" />
@@ -229,9 +228,7 @@ const EnhancedSafetyDashboard: React.FC = () => {
               <div className="text-center py-8">
                 <BarChart3 className="w-12 h-12 mx-auto mb-4 text-white" />
                 <h3 className="text-lg font-semibold mb-2">Analytics Dashboard</h3>
-                <p className="text-white">
-                  Detailed analytics and insights coming soon...
-                </p>
+                <p className="text-white">Detailed analytics and insights coming soon...</p>
               </div>
             </CardContent>
           </Card>

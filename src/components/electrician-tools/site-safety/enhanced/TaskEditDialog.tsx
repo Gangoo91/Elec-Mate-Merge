@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -28,19 +23,19 @@ interface TaskEditDialogProps {
 
 const taskCategories = [
   'Installation',
-  'Maintenance', 
+  'Maintenance',
   'Testing & Inspection',
   'Repair',
   'Commissioning',
   'Design',
   'Safety Assessment',
-  'Documentation'
+  'Documentation',
 ];
 
 const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, onOpenChange }) => {
   const { updateTask } = useEnhancedRAMS();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -48,7 +43,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
     estimated_duration: '',
     risk_level: 'medium' as Task['risk_level'],
     responsible_person: '',
-    status: 'pending' as Task['status']
+    status: 'pending' as Task['status'],
   });
 
   // Update form data when task prop changes
@@ -61,32 +56,41 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
         estimated_duration: task.estimated_duration || '',
         risk_level: task.risk_level,
         responsible_person: task.responsible_person || '',
-        status: task.status
+        status: task.status,
       });
     }
   }, [task, open]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
 
-    try {
-      await updateTask(task.id, formData);
-      onOpenChange(false);
-    } catch (error) {
-      console.error('Failed to update task:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [task.id, formData, updateTask, onOpenChange]);
+      try {
+        await updateTask(task.id, formData);
+        onOpenChange(false);
+      } catch (error) {
+        console.error('Failed to update task:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [task.id, formData, updateTask, onOpenChange]
+  );
 
-  const handleInputChange = useCallback((field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
-  }, []);
+  const handleInputChange = useCallback(
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    },
+    []
+  );
 
-  const handleSelectChange = useCallback((field: string) => (value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  }, []);
+  const handleSelectChange = useCallback(
+    (field: string) => (value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
   const handleCancel = useCallback(() => {
     onOpenChange(false);
@@ -123,15 +127,12 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Select
-                value={formData.category}
-                onValueChange={handleSelectChange('category')}
-              >
+              <Select value={formData.category} onValueChange={handleSelectChange('category')}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {taskCategories.map(category => (
+                  {taskCategories.map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}
                     </SelectItem>
@@ -142,10 +143,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
 
             <div className="space-y-2">
               <Label htmlFor="risk_level">Risk Level</Label>
-              <Select
-                value={formData.risk_level}
-                onValueChange={handleSelectChange('risk_level')}
-              >
+              <Select value={formData.risk_level} onValueChange={handleSelectChange('risk_level')}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -182,10 +180,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
 
           <div className="space-y-2">
             <Label htmlFor="status">Status</Label>
-            <Select
-              value={formData.status}
-              onValueChange={handleSelectChange('status')}
-            >
+            <Select value={formData.status} onValueChange={handleSelectChange('status')}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -198,12 +193,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, 
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleCancel}
-              disabled={isSubmitting}
-            >
+            <Button type="button" variant="outline" onClick={handleCancel} disabled={isSubmitting}>
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>

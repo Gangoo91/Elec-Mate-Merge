@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface FireWatchChecklistItem {
   id: string;
@@ -14,27 +14,28 @@ export interface FireWatchRecord {
   start_time: string;
   end_time: string | null;
   duration_minutes: number;
+  location: string | null;
   checklist: FireWatchChecklistItem[];
   completed_by: string | null;
   completed_signature: string | null;
-  status: "active" | "completed" | "extended";
+  status: 'active' | 'completed' | 'extended';
   created_at: string;
 }
 
 export function useFireWatchRecords() {
   return useQuery({
-    queryKey: ["fire-watch-records"],
+    queryKey: ['fire-watch-records'],
     queryFn: async (): Promise<FireWatchRecord[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("fire_watch_records")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        .from('fire_watch_records')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as FireWatchRecord[];

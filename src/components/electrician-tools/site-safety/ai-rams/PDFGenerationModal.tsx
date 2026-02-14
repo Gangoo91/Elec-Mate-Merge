@@ -13,7 +13,7 @@ const GENERATION_STEPS = [
   { label: 'Preparing document data', duration: 2000 },
   { label: 'Generating PDF layout', duration: 3000 },
   { label: 'Rendering content', duration: 5000 },
-  { label: 'Finalising document', duration: 2000 }
+  { label: 'Finalising document', duration: 2000 },
 ];
 
 const TOTAL_DURATION = GENERATION_STEPS.reduce((sum, step) => sum + step.duration, 0);
@@ -21,7 +21,7 @@ const TOTAL_DURATION = GENERATION_STEPS.reduce((sum, step) => sum + step.duratio
 export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
   open,
   onOpenChange,
-  pdfType
+  pdfType,
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -63,10 +63,14 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
 
   const getPDFTypeName = () => {
     switch (pdfType) {
-      case 'combined': return 'Combined RAMS';
-      case 'rams': return 'RAMS Only';
-      case 'method': return 'Method Statement';
-      default: return 'PDF';
+      case 'combined':
+        return 'Combined RAMS';
+      case 'rams':
+        return 'RAMS Only';
+      case 'method':
+        return 'Method Statement';
+      default:
+        return 'PDF';
     }
   };
 
@@ -92,7 +96,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
 
           <div className="w-full space-y-4">
             <Progress value={progress} className="h-2" />
-            
+
             <div className="flex justify-between text-xs text-white">
               <span>{Math.round(progress)}% complete</span>
               <span>~{estimatedTimeRemaining}s remaining</span>
@@ -107,8 +111,8 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
                   index === currentStepIndex
                     ? 'bg-primary/10 border border-primary/20'
                     : index < currentStepIndex
-                    ? 'bg-muted/50'
-                    : 'bg-background'
+                      ? 'bg-muted/50'
+                      : 'bg-background'
                 }`}
               >
                 {index < currentStepIndex ? (
@@ -120,9 +124,7 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
                 )}
                 <span
                   className={`text-sm ${
-                    index <= currentStepIndex
-                      ? 'text-foreground font-medium'
-                      : 'text-white'
+                    index <= currentStepIndex ? 'text-foreground font-medium' : 'text-white'
                   }`}
                 >
                   {step.label}

@@ -22,7 +22,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
   onOpenChange,
   pdfUrl,
   onDownload,
-  pdfType
+  pdfType,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -31,9 +31,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
           <div className="flex items-center justify-between">
             <div>
               <DialogTitle>PDF Preview - {pdfType}</DialogTitle>
-              <DialogDescription>
-                Review your document before downloading
-              </DialogDescription>
+              <DialogDescription>Review your document before downloading</DialogDescription>
             </div>
             <Button
               variant="ghost"
@@ -48,11 +46,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
 
         <div className="flex-1 overflow-hidden px-6">
           {pdfUrl ? (
-            <iframe
-              src={pdfUrl}
-              className="w-full h-full border rounded-lg"
-              title="PDF Preview"
-            />
+            <iframe src={pdfUrl} className="w-full h-full border rounded-lg" title="PDF Preview" />
           ) : (
             <div className="flex items-center justify-center h-full text-white">
               No preview available
@@ -62,9 +56,7 @@ export const PDFPreviewModal: React.FC<PDFPreviewModalProps> = ({
 
         <div className="px-6 py-4 border-t bg-muted/30">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-sm text-white">
-              Ready to download your professional PDF document
-            </p>
+            <p className="text-sm text-white">Ready to download your professional PDF document</p>
             <Button onClick={onDownload} className="gap-2">
               <Download className="w-4 h-4" />
               Download PDF

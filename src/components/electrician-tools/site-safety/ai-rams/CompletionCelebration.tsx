@@ -28,7 +28,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
   controlMeasuresCount,
   methodStepsCount,
   generationTimeSeconds,
-  onClose
+  onClose,
 }) => {
   const [phase, setPhase] = useState<'enter' | 'stats' | 'complete'>('enter');
   const [confettiPieces, setConfettiPieces] = useState<ConfettiPiece[]>([]);
@@ -49,26 +49,26 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       duration: 2.5 + Math.random() * 1.5,
       size: 6 + Math.random() * 8,
       shape: shapes[Math.floor(Math.random() * shapes.length)],
-      rotation: Math.random() * 360
+      rotation: Math.random() * 360,
     }));
     setConfettiPieces(pieces);
 
     // Phase 2: Show stats sequentially
     const statsTimers = [
       setTimeout(() => {
-        setStatsVisible(prev => [true, prev[1], prev[2], prev[3]]);
+        setStatsVisible((prev) => [true, prev[1], prev[2], prev[3]]);
         triggerHaptic([30]);
       }, 400),
       setTimeout(() => {
-        setStatsVisible(prev => [prev[0], true, prev[2], prev[3]]);
+        setStatsVisible((prev) => [prev[0], true, prev[2], prev[3]]);
         triggerHaptic([30]);
       }, 550),
       setTimeout(() => {
-        setStatsVisible(prev => [prev[0], prev[1], true, prev[3]]);
+        setStatsVisible((prev) => [prev[0], prev[1], true, prev[3]]);
         triggerHaptic([30]);
       }, 700),
       setTimeout(() => {
-        setStatsVisible(prev => [prev[0], prev[1], prev[2], true]);
+        setStatsVisible((prev) => [prev[0], prev[1], prev[2], true]);
         triggerHaptic([30]);
         setPhase('stats');
       }, 850),
@@ -110,45 +110,47 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
   const stats = [
     {
       icon: <Shield className="h-3.5 w-3.5" />,
-      label: "Hazards",
+      label: 'Hazards',
       value: hazardCount,
-      bgColor: "bg-red-500/10",
-      borderColor: "border-red-500/20",
-      textColor: "text-red-400",
+      bgColor: 'bg-red-500/10',
+      borderColor: 'border-red-500/20',
+      textColor: 'text-red-400',
     },
     {
       icon: <FileText className="h-3.5 w-3.5" />,
-      label: "Controls",
+      label: 'Controls',
       value: controlMeasuresCount,
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/20",
-      textColor: "text-blue-400",
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/20',
+      textColor: 'text-blue-400',
     },
     {
       icon: <FileText className="h-3.5 w-3.5" />,
-      label: "Steps",
+      label: 'Steps',
       value: methodStepsCount,
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20",
-      textColor: "text-purple-400",
+      bgColor: 'bg-purple-500/10',
+      borderColor: 'border-purple-500/20',
+      textColor: 'text-purple-400',
     },
     {
       icon: <Clock className="h-3.5 w-3.5" />,
-      label: "Time",
+      label: 'Time',
       value: formatGenerationTime(generationTimeSeconds),
-      bgColor: "bg-green-500/10",
-      borderColor: "border-green-500/20",
-      textColor: "text-green-400",
+      bgColor: 'bg-green-500/10',
+      borderColor: 'border-green-500/20',
+      textColor: 'text-green-400',
       isTime: true,
     },
   ];
 
   return (
-    <div className={cn(
-      "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md",
-      "transition-all duration-300 ease-out",
-      phase !== 'enter' ? 'opacity-100' : 'opacity-0'
-    )}>
+    <div
+      className={cn(
+        'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md',
+        'transition-all duration-300 ease-out',
+        phase !== 'enter' ? 'opacity-100' : 'opacity-0'
+      )}
+    >
       {/* Confetti layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {confettiPieces.map((piece) => (
@@ -161,7 +163,8 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               width: piece.shape === 'rect' ? piece.size * 1.5 : piece.size,
               height: piece.shape === 'rect' ? piece.size * 0.6 : piece.size,
               backgroundColor: piece.color,
-              borderRadius: piece.shape === 'circle' ? '50%' : piece.shape === 'square' ? '2px' : '1px',
+              borderRadius:
+                piece.shape === 'circle' ? '50%' : piece.shape === 'square' ? '2px' : '1px',
               transform: `rotate(${piece.rotation}deg)`,
               animationDelay: `${piece.delay}s`,
               animationDuration: `${piece.duration}s`,
@@ -171,14 +174,16 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       </div>
 
       {/* Celebration card - Compact */}
-      <div className={cn(
-        "relative w-full mx-2 bg-elec-dark",
-        "rounded-xl border border-green-500/20 shadow-2xl shadow-green-500/20",
-        "transform transition-all duration-500 ease-out overflow-hidden",
-        phase !== 'enter'
-          ? 'scale-100 translate-y-0 opacity-100'
-          : 'scale-90 translate-y-8 opacity-0'
-      )}>
+      <div
+        className={cn(
+          'relative w-full mx-2 bg-elec-dark',
+          'rounded-xl border border-green-500/20 shadow-2xl shadow-green-500/20',
+          'transform transition-all duration-500 ease-out overflow-hidden',
+          phase !== 'enter'
+            ? 'scale-100 translate-y-0 opacity-100'
+            : 'scale-90 translate-y-8 opacity-0'
+        )}
+      >
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-elec-yellow/5 pointer-events-none" />
 
@@ -204,11 +209,13 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               <div className="absolute inset-0 scale-150 bg-green-500/15 rounded-full blur-xl animate-pulse-slower" />
 
               {/* Main icon container with spring - Smaller */}
-              <div className={cn(
-                "relative w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-green-600",
-                "flex items-center justify-center shadow-xl shadow-green-500/40",
-                "icon-spring"
-              )}>
+              <div
+                className={cn(
+                  'relative w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-green-600',
+                  'flex items-center justify-center shadow-xl shadow-green-500/40',
+                  'icon-spring'
+                )}
+              >
                 <CheckCircle2 className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
 
@@ -220,18 +227,17 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           </div>
 
           {/* Title with fade-up - Compact */}
-          <div className={cn(
-            "text-center space-y-1 transition-all duration-500",
-            phase !== 'enter' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          )} style={{ transitionDelay: '200ms' }}>
-            <h2 className="text-lg font-bold text-white">
-              RAMS Generated!
-            </h2>
+          <div
+            className={cn(
+              'text-center space-y-1 transition-all duration-500',
+              phase !== 'enter' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            )}
+            style={{ transitionDelay: '200ms' }}
+          >
+            <h2 className="text-lg font-bold text-white">RAMS Generated!</h2>
             <div className="flex items-center justify-center gap-1.5">
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
-              <p className="text-white text-xs">
-                Professional safety documentation ready
-              </p>
+              <p className="text-white text-xs">Professional safety documentation ready</p>
               <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
             </div>
           </div>
@@ -241,10 +247,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
-                className={cn(
-                  "stat-card",
-                  statsVisible[index] ? 'stat-visible' : 'stat-hidden'
-                )}
+                className={cn('stat-card', statsVisible[index] ? 'stat-visible' : 'stat-hidden')}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <StatCard {...stat} />
@@ -253,11 +256,14 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           </div>
 
           {/* Time saved highlight - Compact */}
-          <div className={cn(
-            "relative p-2.5 rounded-xl bg-white/5 border border-elec-yellow/20 overflow-hidden",
-            "transition-all duration-500",
-            phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          )} style={{ transitionDelay: '400ms' }}>
+          <div
+            className={cn(
+              'relative p-2.5 rounded-xl bg-white/5 border border-elec-yellow/20 overflow-hidden',
+              'transition-all duration-500',
+              phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            )}
+            style={{ transitionDelay: '400ms' }}
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 via-transparent to-green-500/5" />
             <div className="relative flex items-center justify-center gap-3">
               <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
@@ -265,9 +271,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               </div>
               <div className="text-center sm:text-left">
                 <p className="text-[9px] text-white uppercase tracking-wider">Time Saved</p>
-                <p className="text-base font-bold text-elec-yellow">
-                  ~{timeSavedHours} hours
-                </p>
+                <p className="text-base font-bold text-elec-yellow">~{timeSavedHours} hours</p>
               </div>
             </div>
           </div>
@@ -276,11 +280,11 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           <Button
             onClick={handleClose}
             className={cn(
-              "w-full h-11 bg-gradient-to-r from-elec-yellow to-amber-500",
-              "hover:from-elec-yellow/90 hover:to-amber-500/90",
-              "text-black font-semibold text-sm rounded-xl",
-              "shadow-lg shadow-elec-yellow/25 group touch-manipulation active:scale-[0.98]",
-              "transition-all duration-500 transform",
+              'w-full h-11 bg-gradient-to-r from-elec-yellow to-amber-500',
+              'hover:from-elec-yellow/90 hover:to-amber-500/90',
+              'text-black font-semibold text-sm rounded-xl',
+              'shadow-lg shadow-elec-yellow/25 group touch-manipulation active:scale-[0.98]',
+              'transition-all duration-500 transform',
               phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             )}
             style={{ transitionDelay: '500ms' }}
@@ -395,24 +399,28 @@ interface StatCardProps {
   isTime?: boolean;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ icon, label, value, bgColor, borderColor, textColor, isTime = false }) => {
+const StatCard: React.FC<StatCardProps> = ({
+  icon,
+  label,
+  value,
+  bgColor,
+  borderColor,
+  textColor,
+  isTime = false,
+}) => {
   return (
-    <div className={cn(
-      "p-2 rounded-lg border transition-all duration-300",
-      bgColor,
-      borderColor,
-      "active:scale-[0.98]"
-    )}>
+    <div
+      className={cn(
+        'p-2 rounded-lg border transition-all duration-300',
+        bgColor,
+        borderColor,
+        'active:scale-[0.98]'
+      )}
+    >
       <div className="flex flex-col items-center text-center gap-1">
-        <div className={cn("p-1.5 rounded-md", bgColor, textColor)}>
-          {icon}
-        </div>
+        <div className={cn('p-1.5 rounded-md', bgColor, textColor)}>{icon}</div>
         <p className="text-[8px] text-white uppercase tracking-wider">{label}</p>
-        <p className={cn(
-          "font-bold tabular-nums",
-          textColor,
-          isTime ? "text-xs" : "text-base"
-        )}>
+        <p className={cn('font-bold tabular-nums', textColor, isTime ? 'text-xs' : 'text-base')}>
           {value}
         </p>
       </div>

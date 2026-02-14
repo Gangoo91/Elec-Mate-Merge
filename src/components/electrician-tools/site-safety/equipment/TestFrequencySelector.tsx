@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
-export type FrequencyOption = 90 | 180 | 365 | 730 | "custom";
+export type FrequencyOption = 90 | 180 | 365 | 730 | 'custom';
 
 interface FrequencyChoice {
   value: FrequencyOption;
@@ -10,10 +10,10 @@ interface FrequencyChoice {
 }
 
 const frequencies: FrequencyChoice[] = [
-  { value: 90, label: "3 months", shortLabel: "3mo" },
-  { value: 180, label: "6 months", shortLabel: "6mo" },
-  { value: 365, label: "12 months", shortLabel: "12mo" },
-  { value: 730, label: "24 months", shortLabel: "24mo" },
+  { value: 90, label: '3 months', shortLabel: '3mo' },
+  { value: 180, label: '6 months', shortLabel: '6mo' },
+  { value: 365, label: '12 months', shortLabel: '12mo' },
+  { value: 730, label: '24 months', shortLabel: '24mo' },
 ];
 
 interface TestFrequencySelectorProps {
@@ -22,19 +22,13 @@ interface TestFrequencySelectorProps {
   error?: string;
 }
 
-export function TestFrequencySelector({
-  value,
-  onChange,
-  error,
-}: TestFrequencySelectorProps) {
+export function TestFrequencySelector({ value, onChange, error }: TestFrequencySelectorProps) {
   // Find if current value matches a preset
-  const currentPreset = frequencies.find(f => f.value === value);
+  const currentPreset = frequencies.find((f) => f.value === value);
 
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-white">
-        Test Frequency
-      </label>
+      <label className="block text-xs font-medium text-white">Test Frequency</label>
 
       <div className="flex p-0.5 bg-white/5 rounded-lg border border-white/[0.08]">
         {frequencies.map((freq) => {
@@ -45,18 +39,18 @@ export function TestFrequencySelector({
               type="button"
               onClick={() => onChange(freq.value as number)}
               className={cn(
-                "relative flex-1 px-2 py-2 rounded-md",
-                "text-xs font-medium text-center",
-                "transition-colors duration-200",
-                "touch-manipulation min-h-[40px]",
-                isSelected ? "text-white" : "text-white"
+                'relative flex-1 px-2 py-2 rounded-md',
+                'text-xs font-medium text-center',
+                'transition-colors duration-200',
+                'touch-manipulation min-h-[40px]',
+                isSelected ? 'text-white' : 'text-white'
               )}
             >
               {isSelected && (
                 <motion.div
                   layoutId="activeFrequencyBg"
                   className="absolute inset-0 bg-elec-yellow/20 border border-elec-yellow/30 rounded-md"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
               <span className="relative z-10">{freq.shortLabel}</span>
@@ -72,9 +66,7 @@ export function TestFrequencySelector({
         </p>
       )}
 
-      {error && (
-        <p className="text-xs text-red-400">{error}</p>
-      )}
+      {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );
 }

@@ -4,23 +4,26 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { 
-  FileText, 
-  MapPin, 
-  Users, 
-  Clock, 
-  Shield, 
-  Wrench, 
+import {
+  FileText,
+  MapPin,
+  Users,
+  Clock,
+  Shield,
+  Wrench,
   GraduationCap,
   Download,
   Send,
   Eye,
   AlertTriangle,
   CheckCircle,
-  Edit
+  Edit,
 } from 'lucide-react';
 import { MethodStatementData } from '@/types/method-statement';
-import { downloadMethodStatementPDF, generateMethodStatementPDFPreview } from '@/utils/method-statement-pdf';
+import {
+  downloadMethodStatementPDF,
+  generateMethodStatementPDFPreview,
+} from '@/utils/method-statement-pdf';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 
@@ -36,19 +39,26 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'low': return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-      case 'high': return 'bg-red-500/20 text-red-300 border-red-500/30';
-      default: return 'bg-gray-500/20 text-white border-gray-500/30';
+      case 'low':
+        return 'bg-green-500/20 text-green-300 border-green-500/30';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+      case 'high':
+        return 'bg-red-500/20 text-red-300 border-red-500/30';
+      default:
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
   const getCompletionStats = () => {
     const totalSteps = data.steps.length;
-    const completedSteps = data.steps.filter(step => step.isCompleted).length;
-    const highRiskSteps = data.steps.filter(step => step.riskLevel === 'high').length;
-    const totalSafetyReqs = data.steps.reduce((acc, step) => acc + step.safetyRequirements.length, 0);
-    
+    const completedSteps = data.steps.filter((step) => step.isCompleted).length;
+    const highRiskSteps = data.steps.filter((step) => step.riskLevel === 'high').length;
+    const totalSafetyReqs = data.steps.reduce(
+      (acc, step) => acc + step.safetyRequirements.length,
+      0
+    );
+
     return { totalSteps, completedSteps, highRiskSteps, totalSafetyReqs };
   };
 
@@ -57,9 +67,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   const exportToPDF = async () => {
     if (!data.jobTitle.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide a job title before exporting.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please provide a job title before exporting.',
+        variant: 'destructive',
       });
       return;
     }
@@ -67,21 +77,21 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
     setIsExporting(true);
     try {
       downloadMethodStatementPDF(data, {
-        companyName: "Your Company", // This could come from user settings
-        includeSignatures: true
+        companyName: 'Your Company', // This could come from user settings
+        includeSignatures: true,
       });
-      
+
       toast({
-        title: "PDF Downloaded",
-        description: "Method statement PDF has been downloaded successfully.",
-        variant: "success"
+        title: 'PDF Downloaded',
+        description: 'Method statement PDF has been downloaded successfully.',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast({
-        title: "Export Failed",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive"
+        title: 'Export Failed',
+        description: 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsExporting(false);
@@ -91,9 +101,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   const generateDocument = async () => {
     if (!data.jobTitle.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide a job title before generating document.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please provide a job title before generating document.',
+        variant: 'destructive',
       });
       return;
     }
@@ -102,24 +112,24 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
     try {
       // Generate preview URL
       const previewUrl = generateMethodStatementPDFPreview(data, {
-        companyName: "Your Company",
-        includeSignatures: true
+        companyName: 'Your Company',
+        includeSignatures: true,
       });
-      
+
       // Open in new tab for preview/printing
       window.open(previewUrl, '_blank');
-      
+
       toast({
-        title: "Document Generated",
-        description: "Method statement document has been generated and opened in a new tab.",
-        variant: "success"
+        title: 'Document Generated',
+        description: 'Method statement document has been generated and opened in a new tab.',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error generating document:', error);
       toast({
-        title: "Generation Failed",
-        description: "Failed to generate document. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: 'Failed to generate document. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -240,7 +250,10 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
         </CardHeader>
         <CardContent className="space-y-3 sm:space-y-4 px-2 sm:px-4">
           {data.steps.map((step, index) => (
-            <Card key={step.id} className="border-0 sm:border sm:border-elec-yellow/30 rounded-none sm:rounded-lg">
+            <Card
+              key={step.id}
+              className="border-0 sm:border sm:border-elec-yellow/30 rounded-none sm:rounded-lg"
+            >
               <CardContent className="p-2 sm:p-4">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
@@ -253,7 +266,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                       <h4 className="font-semibold text-elec-yellow text-base sm:text-lg leading-tight break-words">
                         {step.title}
                       </h4>
-                      
+
                       {/* Metadata row below title */}
                       <div className="flex flex-wrap items-center gap-2">
                         {step.estimatedDuration && (
@@ -264,7 +277,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                         )}
                       </div>
                     </div>
-                    
+
                     {step.description && (
                       <p className="text-sm text-white text-left">{step.description}</p>
                     )}
@@ -278,7 +291,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.safetyRequirements.slice(0, 3).map((req, idx) => (
-                              <div key={idx} className="text-white">• {req}</div>
+                              <div key={idx} className="text-white">
+                                • {req}
+                              </div>
                             ))}
                             {step.safetyRequirements.length > 3 && (
                               <div className="text-white">
@@ -297,7 +312,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.equipmentNeeded.slice(0, 3).map((eq, idx) => (
-                              <div key={idx} className="text-white">• {eq}</div>
+                              <div key={idx} className="text-white">
+                                • {eq}
+                              </div>
                             ))}
                             {step.equipmentNeeded.length > 3 && (
                               <div className="text-white">
@@ -316,7 +333,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                           </div>
                           <div className="space-y-1">
                             {step.qualifications.slice(0, 3).map((qual, idx) => (
-                              <div key={idx} className="text-white">• {qual}</div>
+                              <div key={idx} className="text-white">
+                                • {qual}
+                              </div>
                             ))}
                             {step.qualifications.length > 3 && (
                               <div className="text-white">
@@ -350,7 +369,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
               placeholder="Name of approving authority"
             />
           </div>
-          
+
           <div className="flex items-center gap-2 p-3 bg-green-500/10 rounded-lg">
             <CheckCircle className="h-5 w-5 text-green-300" />
             <div>
@@ -372,8 +391,8 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
               <div>
                 <div className="font-medium text-red-300">High Risk Activities Identified</div>
                 <div className="text-sm text-white">
-                  This method statement contains {stats.highRiskSteps} high-risk step(s). 
-                  Ensure additional supervision and safety measures are in place.
+                  This method statement contains {stats.highRiskSteps} high-risk step(s). Ensure
+                  additional supervision and safety measures are in place.
                 </div>
               </div>
             </div>

@@ -25,7 +25,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
   index,
   editable = false,
   onUpdate,
-  onRemove
+  onRemove,
 }) => {
   const { isMobile } = useMobileEnhanced();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -47,7 +47,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
 
   useEffect(() => {
     if (isEditing) {
-      setEditedRisk(prev => ({ ...prev, riskRating: prev.likelihood * prev.severity }));
+      setEditedRisk((prev) => ({ ...prev, riskRating: prev.likelihood * prev.severity }));
     }
   }, [editedRisk.likelihood, editedRisk.severity, isEditing]);
 
@@ -87,7 +87,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
         risk={risk}
         open={showEditSheet}
         onOpenChange={setShowEditSheet}
-        onSave={(riskId, updates) => { if (onUpdate) onUpdate(riskId, updates); }}
+        onSave={(riskId, updates) => {
+          if (onUpdate) onUpdate(riskId, updates);
+        }}
         onDelete={onRemove}
       />
 
@@ -107,15 +109,31 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
               {/* Risk Number Badge */}
-              <div className={cn(
-                'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
-                riskColors.bg, riskColors.text
-              )}>
+              <div
+                className={cn(
+                  'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
+                  riskColors.bg,
+                  riskColors.text
+                )}
+              >
                 H{index + 1}
               </div>
               {/* Risk Level Badge */}
-              <Badge className={cn(riskColors.bg, riskColors.text, 'border-0 text-xs font-semibold px-3 py-1')}>
-                {riskRating <= 4 ? 'Low' : riskRating <= 9 ? 'Medium' : riskRating <= 16 ? 'High' : 'Very High'} ({isEditing ? riskRating : risk.riskRating})
+              <Badge
+                className={cn(
+                  riskColors.bg,
+                  riskColors.text,
+                  'border-0 text-xs font-semibold px-3 py-1'
+                )}
+              >
+                {riskRating <= 4
+                  ? 'Low'
+                  : riskRating <= 9
+                    ? 'Medium'
+                    : riskRating <= 16
+                      ? 'High'
+                      : 'Very High'}{' '}
+                ({isEditing ? riskRating : risk.riskRating})
               </Badge>
             </div>
 
@@ -133,7 +151,12 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               )}
               {!isEditing && (
                 <div className="h-11 w-11 flex items-center justify-center">
-                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform duration-200', isExpanded && 'rotate-180')} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 text-white transition-transform duration-200',
+                      isExpanded && 'rotate-180'
+                    )}
+                  />
                 </div>
               )}
             </div>
@@ -151,7 +174,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               />
             ) : (
               <>
-                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">{risk.hazard || 'Untitled Hazard'}</h4>
+                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">
+                  {risk.hazard || 'Untitled Hazard'}
+                </h4>
                 <p className="text-sm text-white line-clamp-2 mt-1.5 leading-relaxed">
                   {risk.controls || 'No control measures specified'}
                 </p>
@@ -165,7 +190,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
             {/* Risk Description */}
             <div className="pt-4">
-              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">Risk Description</label>
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">
+                Risk Description
+              </label>
               {isEditing ? (
                 <Textarea
                   value={editedRisk.risk}
@@ -194,12 +221,15 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               ) : (
                 <div className="text-sm text-white leading-relaxed space-y-3 text-left">
                   {(risk.controls || 'No control measures specified')
-                    .split(/(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi)
-                    .filter(section => section.trim())
+                    .split(
+                      /(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi
+                    )
+                    .filter((section) => section.trim())
                     .map((section, idx) => (
-                      <p key={idx} className="leading-relaxed text-left">{section.trim()}</p>
-                    ))
-                  }
+                      <p key={idx} className="leading-relaxed text-left">
+                        {section.trim()}
+                      </p>
+                    ))}
                 </div>
               )}
             </div>
@@ -213,14 +243,24 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                     <Slider
                       value={[editedRisk.likelihood]}
                       onValueChange={(v) => setEditedRisk({ ...editedRisk, likelihood: v[0] })}
-                      min={1} max={5} step={1}
+                      min={1}
+                      max={5}
+                      step={1}
                     />
-                    <div className="text-center text-sm font-bold text-white">{editedRisk.likelihood}/5</div>
+                    <div className="text-center text-sm font-bold text-white">
+                      {editedRisk.likelihood}/5
+                    </div>
                   </div>
                 ) : (
                   <div className="mt-2 flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <div key={i} className={cn('w-2 h-2 rounded-full', i < risk.likelihood ? 'bg-elec-yellow' : 'bg-white/20')} />
+                      <div
+                        key={i}
+                        className={cn(
+                          'w-2 h-2 rounded-full',
+                          i < risk.likelihood ? 'bg-elec-yellow' : 'bg-white/20'
+                        )}
+                      />
                     ))}
                     <span className="ml-2 text-sm font-bold text-white">{risk.likelihood}/5</span>
                   </div>
@@ -233,14 +273,24 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                     <Slider
                       value={[editedRisk.severity]}
                       onValueChange={(v) => setEditedRisk({ ...editedRisk, severity: v[0] })}
-                      min={1} max={5} step={1}
+                      min={1}
+                      max={5}
+                      step={1}
                     />
-                    <div className="text-center text-sm font-bold text-white">{editedRisk.severity}/5</div>
+                    <div className="text-center text-sm font-bold text-white">
+                      {editedRisk.severity}/5
+                    </div>
                   </div>
                 ) : (
                   <div className="mt-2 flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <div key={i} className={cn('w-2 h-2 rounded-full', i < risk.severity ? 'bg-red-500' : 'bg-white/20')} />
+                      <div
+                        key={i}
+                        className={cn(
+                          'w-2 h-2 rounded-full',
+                          i < risk.severity ? 'bg-red-500' : 'bg-white/20'
+                        )}
+                      />
                     ))}
                     <span className="ml-2 text-sm font-bold text-white">{risk.severity}/5</span>
                   </div>
@@ -250,30 +300,44 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
 
             {/* Residual Risk */}
             <div className="p-3 rounded-xl bg-green-500/5 border border-green-500/20 flex items-center justify-between">
-              <span className="text-sm font-medium text-green-400">Residual Risk After Controls</span>
+              <span className="text-sm font-medium text-green-400">
+                Residual Risk After Controls
+              </span>
               {isEditing ? (
                 <Input
                   type="number"
                   value={editedRisk.residualRisk}
-                  onChange={(e) => setEditedRisk({ ...editedRisk, residualRisk: parseInt(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setEditedRisk({ ...editedRisk, residualRisk: parseInt(e.target.value) || 0 })
+                  }
                   className="w-20 h-8 text-center"
-                  min={0} max={25}
+                  min={0}
+                  max={25}
                 />
               ) : (
-                <Badge className="bg-green-500/10 text-green-400 border-green-500/20">{risk.residualRisk}</Badge>
+                <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
+                  {risk.residualRisk}
+                </Badge>
               )}
             </div>
 
             {/* Edit Actions */}
             {editable && isEditing && (
               <div className="flex gap-2 pt-4 border-t border-white/5">
-                <Button variant="outline" className="flex-1 border-red-500/40 text-red-400 hover:bg-red-500/10" onClick={handleDelete}>
+                <Button
+                  variant="outline"
+                  className="flex-1 border-red-500/40 text-red-400 hover:bg-red-500/10"
+                  onClick={handleDelete}
+                >
                   <Trash2 className="h-4 w-4 mr-2" /> Delete
                 </Button>
                 <Button variant="outline" className="flex-1" onClick={handleCancel}>
                   <X className="h-4 w-4 mr-2" /> Cancel
                 </Button>
-                <Button className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90" onClick={handleSave}>
+                <Button
+                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  onClick={handleSave}
+                >
                   <Save className="h-4 w-4 mr-2" /> Save
                 </Button>
               </div>

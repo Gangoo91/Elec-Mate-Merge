@@ -19,26 +19,31 @@ export const RiskBar = ({ riskRating, size = 'md' }: RiskBarProps) => {
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <div className={cn("flex flex-col gap-0.5", size === 'sm' && 'gap-[2px]')}>
-        {[4, 3, 2, 1].map(i => (
+      <div className={cn('flex flex-col gap-0.5', size === 'sm' && 'gap-[2px]')}>
+        {[4, 3, 2, 1].map((i) => (
           <div
             key={i}
             className={cn(
-              "rounded-full transition-all duration-300",
+              'rounded-full transition-all duration-300',
               dotSize,
-              i <= level ? color : "bg-white/10"
+              i <= level ? color : 'bg-white/10'
             )}
           />
         ))}
       </div>
-      <span className={cn(
-        "uppercase tracking-wider font-medium",
-        size === 'sm' ? "text-[8px]" : "text-[10px]",
-        level === 4 ? "text-red-400" :
-        level === 3 ? "text-orange-400" :
-        level === 2 ? "text-yellow-400" :
-        "text-green-400"
-      )}>
+      <span
+        className={cn(
+          'uppercase tracking-wider font-medium',
+          size === 'sm' ? 'text-[8px]' : 'text-[10px]',
+          level === 4
+            ? 'text-red-400'
+            : level === 3
+              ? 'text-orange-400'
+              : level === 2
+                ? 'text-yellow-400'
+                : 'text-green-400'
+        )}
+      >
         {label}
       </span>
     </div>
@@ -50,11 +55,7 @@ export const RiskBadge = ({ riskRating }: { riskRating: number }) => {
   const { label, color } = getRiskLevel(riskRating);
 
   return (
-    <div className={cn(
-      "px-2.5 py-1 rounded-full text-xs font-semibold",
-      color,
-      "text-white"
-    )}>
+    <div className={cn('px-2.5 py-1 rounded-full text-xs font-semibold', color, 'text-white')}>
       {label} Risk
     </div>
   );

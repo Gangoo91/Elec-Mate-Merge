@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
-import { Clock, User, FileText } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { supabase } from '@/integrations/supabase/client';
+import { Clock, User, FileText } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface StatusHistory {
   id: string;
@@ -44,12 +44,12 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
-      'draft': 'bg-gray-500/20 text-white',
-      'scheduled': 'bg-blue-500/20 text-blue-400',
-      'in_progress': 'bg-yellow-500/20 text-yellow-400',
-      'completed': 'bg-green-500/20 text-green-400',
-      'cancelled': 'bg-red-500/20 text-red-400',
-      'postponed': 'bg-orange-500/20 text-orange-400',
+      draft: 'bg-gray-500/20 text-white',
+      scheduled: 'bg-blue-500/20 text-blue-400',
+      in_progress: 'bg-yellow-500/20 text-yellow-400',
+      completed: 'bg-green-500/20 text-green-400',
+      cancelled: 'bg-red-500/20 text-red-400',
+      postponed: 'bg-orange-500/20 text-orange-400',
     };
     return colors[status] || 'bg-gray-500/20 text-white';
   };
@@ -69,7 +69,7 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
       <Card className="bg-card/50 border-primary/20">
         <CardContent className="p-6">
           <div className="animate-pulse space-y-3">
-            {[1, 2, 3].map(i => (
+            {[1, 2, 3].map((i) => (
               <div key={i} className="h-16 bg-primary/10 rounded" />
             ))}
           </div>
@@ -88,9 +88,7 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-white text-center py-6">
-            No status changes yet
-          </p>
+          <p className="text-white text-center py-6">No status changes yet</p>
         </CardContent>
       </Card>
     );
@@ -112,16 +110,14 @@ export const BriefingStatusTimeline = ({ briefingId }: BriefingStatusTimelinePro
               className="relative pl-6 pb-4 border-l-2 border-primary/20 last:border-0 last:pb-0"
             >
               <div className="absolute left-0 top-0 w-3 h-3 bg-elec-yellow rounded-full -translate-x-[7px]" />
-              
+
               <div className="space-y-2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <Badge className={getStatusColor(item.old_status || 'draft')}>
                     {item.old_status || 'draft'}
                   </Badge>
                   <span className="text-white">→</span>
-                  <Badge className={getStatusColor(item.new_status)}>
-                    {item.new_status}
-                  </Badge>
+                  <Badge className={getStatusColor(item.new_status)}>{item.new_status}</Badge>
                 </div>
 
                 <div className="text-sm text-white flex items-center gap-2">

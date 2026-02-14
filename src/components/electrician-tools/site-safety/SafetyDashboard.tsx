@@ -87,17 +87,49 @@ function calculateSafetyScore(stats: DashboardStats): {
   score = Math.max(0, Math.min(100, score));
 
   if (score >= 90) {
-    return { score, label: 'Excellent', colour: 'text-green-400', strokeColour: '#4ade80', glowColour: 'rgba(74,222,128,0.15)' };
+    return {
+      score,
+      label: 'Excellent',
+      colour: 'text-green-400',
+      strokeColour: '#4ade80',
+      glowColour: 'rgba(74,222,128,0.15)',
+    };
   } else if (score >= 70) {
-    return { score, label: 'Good', colour: 'text-emerald-400', strokeColour: '#34d399', glowColour: 'rgba(52,211,153,0.15)' };
+    return {
+      score,
+      label: 'Good',
+      colour: 'text-emerald-400',
+      strokeColour: '#34d399',
+      glowColour: 'rgba(52,211,153,0.15)',
+    };
   } else if (score >= 50) {
-    return { score, label: 'Needs Attention', colour: 'text-amber-400', strokeColour: '#fbbf24', glowColour: 'rgba(251,191,36,0.15)' };
+    return {
+      score,
+      label: 'Needs Attention',
+      colour: 'text-amber-400',
+      strokeColour: '#fbbf24',
+      glowColour: 'rgba(251,191,36,0.15)',
+    };
   } else {
-    return { score, label: 'Action Required', colour: 'text-red-400', strokeColour: '#f87171', glowColour: 'rgba(248,113,113,0.15)' };
+    return {
+      score,
+      label: 'Action Required',
+      colour: 'text-red-400',
+      strokeColour: '#f87171',
+      glowColour: 'rgba(248,113,113,0.15)',
+    };
   }
 }
 
-function ScoreRing({ score, strokeColour, glowColour }: { score: number; strokeColour: string; glowColour: string }) {
+function ScoreRing({
+  score,
+  strokeColour,
+  glowColour,
+}: {
+  score: number;
+  strokeColour: string;
+  glowColour: string;
+}) {
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
@@ -105,7 +137,14 @@ function ScoreRing({ score, strokeColour, glowColour }: { score: number; strokeC
   return (
     <div className="relative w-[100px] h-[100px] flex-shrink-0">
       <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="6" />
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="rgba(255,255,255,0.04)"
+          strokeWidth="6"
+        />
         <motion.circle
           cx="50"
           cy="50"
@@ -136,13 +175,46 @@ function ScoreRing({ score, strokeColour, glowColour }: { score: number; strokeC
   );
 }
 
-const DOC_CONFIG: Record<string, { icon: React.ElementType; colour: string; gradient: string; navTarget: string }> = {
-  rams: { icon: FileText, colour: 'text-orange-400', gradient: 'from-orange-500/20 to-red-500/20', navTarget: 'saved-rams' },
-  permit: { icon: Lock, colour: 'text-amber-400', gradient: 'from-amber-500/20 to-amber-600/20', navTarget: 'permit-to-work' },
-  inspection: { icon: ClipboardCheck, colour: 'text-indigo-400', gradient: 'from-indigo-500/20 to-indigo-600/20', navTarget: 'inspection-checklists' },
-  coshh: { icon: FlaskConical, colour: 'text-green-400', gradient: 'from-green-500/20 to-emerald-500/20', navTarget: 'coshh' },
-  accident: { icon: BookOpen, colour: 'text-red-400', gradient: 'from-red-500/20 to-rose-500/20', navTarget: 'accident-book' },
-  briefing: { icon: Users, colour: 'text-purple-400', gradient: 'from-purple-500/20 to-purple-600/20', navTarget: 'team-briefing' },
+const DOC_CONFIG: Record<
+  string,
+  { icon: React.ElementType; colour: string; gradient: string; navTarget: string }
+> = {
+  rams: {
+    icon: FileText,
+    colour: 'text-orange-400',
+    gradient: 'from-orange-500/20 to-red-500/20',
+    navTarget: 'saved-rams',
+  },
+  permit: {
+    icon: Lock,
+    colour: 'text-amber-400',
+    gradient: 'from-amber-500/20 to-amber-600/20',
+    navTarget: 'permit-to-work',
+  },
+  inspection: {
+    icon: ClipboardCheck,
+    colour: 'text-indigo-400',
+    gradient: 'from-indigo-500/20 to-indigo-600/20',
+    navTarget: 'inspection-checklists',
+  },
+  coshh: {
+    icon: FlaskConical,
+    colour: 'text-green-400',
+    gradient: 'from-green-500/20 to-emerald-500/20',
+    navTarget: 'coshh',
+  },
+  accident: {
+    icon: BookOpen,
+    colour: 'text-red-400',
+    gradient: 'from-red-500/20 to-rose-500/20',
+    navTarget: 'accident-book',
+  },
+  briefing: {
+    icon: Users,
+    colour: 'text-purple-400',
+    gradient: 'from-purple-500/20 to-purple-600/20',
+    navTarget: 'team-briefing',
+  },
 };
 
 function formatRelativeDate(dateStr: string): string {
@@ -199,11 +271,36 @@ export function SafetyDashboard({
 
   // Build alerts for status pills
   const alerts: { text: string; icon: React.ElementType; colour: string }[] = [];
-  if (stats.equipmentOverdue > 0) alerts.push({ text: `${stats.equipmentOverdue} overdue`, icon: Clock, colour: 'bg-red-500/15 text-red-300' });
-  if (stats.activePermits > 0) alerts.push({ text: `${stats.activePermits} active permit${stats.activePermits > 1 ? 's' : ''}`, icon: Lock, colour: 'bg-green-500/15 text-green-300' });
-  if (stats.coshhOverdueReviews > 0) alerts.push({ text: `${stats.coshhOverdueReviews} COSHH due`, icon: FlaskConical, colour: 'bg-amber-500/15 text-amber-300' });
-  if (stats.completedBriefingsThisMonth > 0) alerts.push({ text: `${stats.completedBriefingsThisMonth} briefing${stats.completedBriefingsThisMonth > 1 ? 's' : ''} done`, icon: CheckCircle2, colour: 'bg-green-500/15 text-green-300' });
-  if (stats.accidentCount30Days > 0) alerts.push({ text: `${stats.accidentCount30Days} accident${stats.accidentCount30Days > 1 ? 's' : ''} (30d)`, icon: AlertTriangle, colour: 'bg-red-500/15 text-red-300' });
+  if (stats.equipmentOverdue > 0)
+    alerts.push({
+      text: `${stats.equipmentOverdue} overdue`,
+      icon: Clock,
+      colour: 'bg-red-500/15 text-red-300',
+    });
+  if (stats.activePermits > 0)
+    alerts.push({
+      text: `${stats.activePermits} active permit${stats.activePermits > 1 ? 's' : ''}`,
+      icon: Lock,
+      colour: 'bg-green-500/15 text-green-300',
+    });
+  if (stats.coshhOverdueReviews > 0)
+    alerts.push({
+      text: `${stats.coshhOverdueReviews} COSHH due`,
+      icon: FlaskConical,
+      colour: 'bg-amber-500/15 text-amber-300',
+    });
+  if (stats.completedBriefingsThisMonth > 0)
+    alerts.push({
+      text: `${stats.completedBriefingsThisMonth} briefing${stats.completedBriefingsThisMonth > 1 ? 's' : ''} done`,
+      icon: CheckCircle2,
+      colour: 'bg-green-500/15 text-green-300',
+    });
+  if (stats.accidentCount30Days > 0)
+    alerts.push({
+      text: `${stats.accidentCount30Days} accident${stats.accidentCount30Days > 1 ? 's' : ''} (30d)`,
+      icon: AlertTriangle,
+      colour: 'bg-red-500/15 text-red-300',
+    });
 
   const statCards = [
     {
@@ -218,10 +315,22 @@ export function SafetyDashboard({
     {
       label: 'Days Safe',
       value: stats.daysSinceLastNearMiss !== null ? stats.daysSinceLastNearMiss : '–',
-      icon: stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30 ? TrendingUp : AlertTriangle,
-      iconColour: stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30 ? 'text-green-400' : 'text-amber-400',
-      bg: stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30 ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/10' : 'bg-gradient-to-br from-amber-500/10 to-yellow-500/10',
-      border: stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30 ? 'border-green-500/15' : 'border-amber-500/15',
+      icon:
+        stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30
+          ? TrendingUp
+          : AlertTriangle,
+      iconColour:
+        stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30
+          ? 'text-green-400'
+          : 'text-amber-400',
+      bg:
+        stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30
+          ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/10'
+          : 'bg-gradient-to-br from-amber-500/10 to-yellow-500/10',
+      border:
+        stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss > 30
+          ? 'border-green-500/15'
+          : 'border-amber-500/15',
       section: 'near-miss',
     },
     {
@@ -229,7 +338,10 @@ export function SafetyDashboard({
       value: stats.equipmentDue + stats.equipmentOverdue,
       icon: Wrench,
       iconColour: stats.equipmentOverdue > 0 ? 'text-red-400' : 'text-cyan-400',
-      bg: stats.equipmentOverdue > 0 ? 'bg-gradient-to-br from-red-500/10 to-rose-500/10' : 'bg-gradient-to-br from-cyan-500/10 to-teal-500/10',
+      bg:
+        stats.equipmentOverdue > 0
+          ? 'bg-gradient-to-br from-red-500/10 to-rose-500/10'
+          : 'bg-gradient-to-br from-cyan-500/10 to-teal-500/10',
       border: stats.equipmentOverdue > 0 ? 'border-red-500/15' : 'border-cyan-500/15',
       section: 'equipment',
     },
@@ -256,14 +368,22 @@ export function SafetyDashboard({
       value: stats.recentInspectionsPassed + stats.recentInspectionsFailed,
       icon: ClipboardCheck,
       iconColour: stats.recentInspectionsFailed > 0 ? 'text-red-400' : 'text-indigo-400',
-      bg: stats.recentInspectionsFailed > 0 ? 'bg-gradient-to-br from-red-500/10 to-rose-500/10' : 'bg-gradient-to-br from-indigo-500/10 to-indigo-600/10',
+      bg:
+        stats.recentInspectionsFailed > 0
+          ? 'bg-gradient-to-br from-red-500/10 to-rose-500/10'
+          : 'bg-gradient-to-br from-indigo-500/10 to-indigo-600/10',
       border: stats.recentInspectionsFailed > 0 ? 'border-red-500/15' : 'border-indigo-500/15',
       section: 'inspection-checklists',
     },
   ];
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
       {/* Score Card */}
       <motion.div
         variants={itemVariants}
@@ -369,7 +489,9 @@ export function SafetyDashboard({
                   onClick={() => onCardTap?.(config.navTarget)}
                   className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] active:bg-white/[0.05] transition-colors touch-manipulation"
                 >
-                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br ${config.gradient} flex-shrink-0`}>
+                  <div
+                    className={`w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br ${config.gradient} flex-shrink-0`}
+                  >
                     <DocIcon className={`h-4 w-4 ${config.colour}`} />
                   </div>
                   <div className="flex-1 min-w-0 text-left">

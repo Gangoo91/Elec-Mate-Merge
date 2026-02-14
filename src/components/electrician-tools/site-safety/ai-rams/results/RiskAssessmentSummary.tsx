@@ -10,18 +10,18 @@ interface RiskAssessmentSummaryProps {
 
 export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) {
   const risks = ramsData.risks || [];
-  
+
   if (risks.length === 0) {
     return null;
   }
 
   const hazardsCount = risks.length;
   const controlsCount = risks.reduce((sum, r) => {
-    const controls = r.controls?.split('\n').filter(c => c.trim());
+    const controls = r.controls?.split('\n').filter((c) => c.trim());
     return sum + (controls?.length || 0);
   }, 0);
-  const highRiskHazards = risks.filter(r => r.riskRating >= 15); // High risk = score 15+
-  const mediumRiskHazards = risks.filter(r => r.riskRating >= 9 && r.riskRating < 15);
+  const highRiskHazards = risks.filter((r) => r.riskRating >= 15); // High risk = score 15+
+  const mediumRiskHazards = risks.filter((r) => r.riskRating >= 9 && r.riskRating < 15);
 
   if (hazardsCount === 0) {
     return null;
@@ -77,7 +77,9 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
                     {risk.linkedToStep && risk.linkedToStep > 0 && (
                       <div className="flex items-center gap-1 mt-1">
                         <Link2 className="h-3 w-3 text-blue-400" />
-                        <span className="text-xs text-blue-400">Linked to Step {risk.linkedToStep}</span>
+                        <span className="text-xs text-blue-400">
+                          Linked to Step {risk.linkedToStep}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -97,8 +99,8 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
               </span>
             </div>
             <p className="text-xs text-white">
-              All identified hazards have control measures in place to reduce risk to acceptable levels. 
-              Review the full Risk Assessment tab for detailed controls.
+              All identified hazards have control measures in place to reduce risk to acceptable
+              levels. Review the full Risk Assessment tab for detailed controls.
             </p>
           </div>
         )}
@@ -106,8 +108,8 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
         {/* Link to Full Risk Assessment */}
         <div className="pt-2 border-t border-border/40">
           <p className="text-xs text-white text-center">
-            View the <strong className="text-red-400">Risk Assessment</strong> tab for complete hazard analysis, 
-            control measures, and residual risk ratings
+            View the <strong className="text-red-400">Risk Assessment</strong> tab for complete
+            hazard analysis, control measures, and residual risk ratings
           </p>
         </div>
       </CardContent>

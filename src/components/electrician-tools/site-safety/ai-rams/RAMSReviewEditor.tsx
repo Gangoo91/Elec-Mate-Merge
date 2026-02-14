@@ -5,8 +5,27 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Download, FileText, Edit3, AlertTriangle, CheckCircle, Shield, Save, Sparkles, Plus, X, AlertCircle, FolderOpen, Loader2 } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import {
+  Download,
+  FileText,
+  Edit3,
+  AlertTriangle,
+  CheckCircle,
+  Shield,
+  Save,
+  Sparkles,
+  Plus,
+  X,
+  AlertCircle,
+  FolderOpen,
+  Loader2,
+} from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
@@ -64,7 +83,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   mode = 'embedded',
   onRegenerate,
   isPartial = false,
-  onRetry
+  onRetry,
 }) => {
   // PHASE 4: Handle missing data gracefully
   if (!initialRamsData && !initialMethodData) {
@@ -89,50 +108,66 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       </div>
     );
   }
-  
-  // Normalize data on load to handle old/incomplete structures
-  const normalizedRamsData: RAMSData | undefined = initialRamsData ? {
-    ...initialRamsData,
-    risks: (initialRamsData.risks || []).map(risk => ({
-      ...risk,
-      id: risk.id || `risk-${Math.random()}`,
-      controls: risk.controls || '',
-      riskRating: risk.riskRating || (risk.likelihood || 3) * (risk.severity || 3),
-    }))
-  } : undefined;
 
-  const normalizedMethodData: Partial<MethodStatementData> = initialMethodData ? {
-    ...initialMethodData,
-    steps: (initialMethodData.steps || []).map((step, idx) => ({
-      ...step,
-      id: step.id || `step-${idx + 1}`,
-      equipmentNeeded: Array.isArray(step.equipmentNeeded) ? step.equipmentNeeded : 
-                      (typeof step.equipmentNeeded === 'string' ? [step.equipmentNeeded] : []),
-      qualifications: Array.isArray(step.qualifications) ? step.qualifications : 
-                     (typeof step.qualifications === 'string' ? [step.qualifications] : []),
-      estimatedDuration: step.estimatedDuration || '15 minutes',
-      safetyRequirements: Array.isArray(step.safetyRequirements) ? step.safetyRequirements : 
-                         (typeof step.safetyRequirements === 'string' ? [step.safetyRequirements] : []),
-      assignedPersonnel: Array.isArray(step.assignedPersonnel) ? step.assignedPersonnel :
-                        (typeof step.assignedPersonnel === 'string' ? [step.assignedPersonnel] : [])
-    })),
-    // Normalize document-level array fields to ensure they're always arrays
-    toolsRequired: Array.isArray(initialMethodData.toolsRequired) 
-      ? initialMethodData.toolsRequired 
-      : [],
-    materialsRequired: Array.isArray(initialMethodData.materialsRequired)
-      ? initialMethodData.materialsRequired
-      : [],
-    practicalTips: Array.isArray(initialMethodData.practicalTips)
-      ? initialMethodData.practicalTips
-      : [],
-    commonMistakes: Array.isArray(initialMethodData.commonMistakes)
-      ? initialMethodData.commonMistakes
-      : [],
-    requiredQualifications: Array.isArray(initialMethodData.requiredQualifications)
-      ? initialMethodData.requiredQualifications
-      : []
-  } : {};
+  // Normalize data on load to handle old/incomplete structures
+  const normalizedRamsData: RAMSData | undefined = initialRamsData
+    ? {
+        ...initialRamsData,
+        risks: (initialRamsData.risks || []).map((risk) => ({
+          ...risk,
+          id: risk.id || `risk-${Math.random()}`,
+          controls: risk.controls || '',
+          riskRating: risk.riskRating || (risk.likelihood || 3) * (risk.severity || 3),
+        })),
+      }
+    : undefined;
+
+  const normalizedMethodData: Partial<MethodStatementData> = initialMethodData
+    ? {
+        ...initialMethodData,
+        steps: (initialMethodData.steps || []).map((step, idx) => ({
+          ...step,
+          id: step.id || `step-${idx + 1}`,
+          equipmentNeeded: Array.isArray(step.equipmentNeeded)
+            ? step.equipmentNeeded
+            : typeof step.equipmentNeeded === 'string'
+              ? [step.equipmentNeeded]
+              : [],
+          qualifications: Array.isArray(step.qualifications)
+            ? step.qualifications
+            : typeof step.qualifications === 'string'
+              ? [step.qualifications]
+              : [],
+          estimatedDuration: step.estimatedDuration || '15 minutes',
+          safetyRequirements: Array.isArray(step.safetyRequirements)
+            ? step.safetyRequirements
+            : typeof step.safetyRequirements === 'string'
+              ? [step.safetyRequirements]
+              : [],
+          assignedPersonnel: Array.isArray(step.assignedPersonnel)
+            ? step.assignedPersonnel
+            : typeof step.assignedPersonnel === 'string'
+              ? [step.assignedPersonnel]
+              : [],
+        })),
+        // Normalize document-level array fields to ensure they're always arrays
+        toolsRequired: Array.isArray(initialMethodData.toolsRequired)
+          ? initialMethodData.toolsRequired
+          : [],
+        materialsRequired: Array.isArray(initialMethodData.materialsRequired)
+          ? initialMethodData.materialsRequired
+          : [],
+        practicalTips: Array.isArray(initialMethodData.practicalTips)
+          ? initialMethodData.practicalTips
+          : [],
+        commonMistakes: Array.isArray(initialMethodData.commonMistakes)
+          ? initialMethodData.commonMistakes
+          : [],
+        requiredQualifications: Array.isArray(initialMethodData.requiredQualifications)
+          ? initialMethodData.requiredQualifications
+          : [],
+      }
+    : {};
 
   const [ramsData, setRamsData] = useState<RAMSData | undefined>(normalizedRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(normalizedMethodData);
@@ -145,7 +180,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [localIsSaving, setLocalIsSaving] = useState(false);
   const [localLastSaved, setLocalLastSaved] = useState<Date | null>(null);
-  
+
   const { isVisible: keyboardVisible } = useMobileKeyboard();
 
   // Notify parent of updates and track unsaved changes
@@ -159,13 +194,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   // Auto-save after 30 seconds of inactivity
   useEffect(() => {
     if (!hasUnsavedChanges || !onSave) return;
-    
+
     const autoSaveTimer = setTimeout(() => {
       console.log('🔄 Auto-saving changes...');
       onSave();
       setHasUnsavedChanges(false);
     }, 30000); // Auto-save after 30s of inactivity
-    
+
     return () => clearTimeout(autoSaveTimer);
   }, [hasUnsavedChanges, onSave]);
 
@@ -180,20 +215,28 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   const updateRisk = (riskId: string, updates: Partial<RAMSRisk>) => {
     if (!ramsData) return;
-    setRamsData(prev => prev ? ({
-      ...prev,
-      risks: (prev.risks || []).map(risk =>
-        risk.id === riskId ? { ...risk, ...updates } : risk
-      )
-    }) : prev);
+    setRamsData((prev) =>
+      prev
+        ? {
+            ...prev,
+            risks: (prev.risks || []).map((risk) =>
+              risk.id === riskId ? { ...risk, ...updates } : risk
+            ),
+          }
+        : prev
+    );
   };
 
   const removeRisk = (riskId: string) => {
     if (!ramsData) return;
-    setRamsData(prev => prev ? ({
-      ...prev,
-      risks: (prev.risks || []).filter(risk => risk.id !== riskId)
-    }) : prev);
+    setRamsData((prev) =>
+      prev
+        ? {
+            ...prev,
+            risks: (prev.risks || []).filter((risk) => risk.id !== riskId),
+          }
+        : prev
+    );
   };
 
   const addRisk = () => {
@@ -206,28 +249,30 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       severity: 3,
       riskRating: 9,
       controls: '',
-      residualRisk: 6
+      residualRisk: 6,
     };
-    
-    setRamsData(prev => prev ? ({
-      ...prev,
-      risks: [...(prev.risks || []), newRisk]
-    }) : prev);
+
+    setRamsData((prev) =>
+      prev
+        ? {
+            ...prev,
+            risks: [...(prev.risks || []), newRisk],
+          }
+        : prev
+    );
   };
 
   const updateStep = (stepId: string, updates: Partial<MethodStep>) => {
-    setMethodData(prev => ({
+    setMethodData((prev) => ({
       ...prev,
-      steps: prev.steps?.map(step =>
-        step.id === stepId ? { ...step, ...updates } : step
-      )
+      steps: prev.steps?.map((step) => (step.id === stepId ? { ...step, ...updates } : step)),
     }));
   };
 
   const removeStep = (stepId: string) => {
-    setMethodData(prev => ({
+    setMethodData((prev) => ({
       ...prev,
-      steps: prev.steps?.filter(step => step.id !== stepId)
+      steps: prev.steps?.filter((step) => step.id !== stepId),
     }));
   };
 
@@ -242,39 +287,42 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       equipmentNeeded: [],
       qualifications: [],
       estimatedDuration: '15 minutes',
-      riskLevel: 'low'
+      riskLevel: 'low',
     };
 
-    setMethodData(prev => ({
+    setMethodData((prev) => ({
       ...prev,
-      steps: [...(prev.steps || []), newStep]
+      steps: [...(prev.steps || []), newStep],
     }));
   };
 
   const updatePPE = (ppeDetails: import('@/types/rams').PPEItem[]) => {
-    setRamsData(prev => prev ? ({
-      ...prev,
-      ppeDetails
-    }) : prev);
+    setRamsData((prev) =>
+      prev
+        ? {
+            ...prev,
+            ppeDetails,
+          }
+        : prev
+    );
   };
 
   // Method Statement Summary update handlers
   const updateTools = (tools: string[]) => {
-    setMethodData(prev => ({ ...prev, toolsRequired: tools }));
+    setMethodData((prev) => ({ ...prev, toolsRequired: tools }));
   };
 
   const updateMaterials = (materials: string[]) => {
-    setMethodData(prev => ({ ...prev, materialsRequired: materials }));
+    setMethodData((prev) => ({ ...prev, materialsRequired: materials }));
   };
 
   const updateTips = (tips: string[]) => {
-    setMethodData(prev => ({ ...prev, practicalTips: tips }));
+    setMethodData((prev) => ({ ...prev, practicalTips: tips }));
   };
 
   const updateMistakes = (mistakes: string[]) => {
-    setMethodData(prev => ({ ...prev, commonMistakes: mistakes }));
+    setMethodData((prev) => ({ ...prev, commonMistakes: mistakes }));
   };
-
 
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
@@ -282,13 +330,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const { data, error } = await supabase.functions.invoke('generate-rams-pdf', {
-        body: { 
-          ramsData, 
-          userId: user?.id
-        }
+        body: {
+          ramsData,
+          userId: user?.id,
+        },
       });
 
       if (data?.success && data?.downloadUrl) {
@@ -296,12 +346,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.href = data.downloadUrl;
         link.download = `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
-        
+
         setShowPDFModal(false);
         toast({
           title: 'PDF Downloaded',
           description: 'Your RAMS PDF has been downloaded successfully',
-          variant: 'success'
+          variant: 'success',
         });
       } else {
         console.log('Falling back to client-side PDF generation', { data, error });
@@ -310,7 +360,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           includeSignatures: true,
           companyName: methodData.contractor || 'Professional Electrical Services',
           documentReference: `RAMS-${Date.now()}`,
-          reviewDate: methodData.reviewDate
+          reviewDate: methodData.reviewDate,
         });
 
         const link = document.createElement('a');
@@ -321,7 +371,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         toast({
           title: 'PDF Downloaded',
           description: 'Your RAMS PDF has been downloaded',
-          variant: 'success'
+          variant: 'success',
         });
       }
     } catch (error) {
@@ -331,7 +381,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         includeSignatures: true,
         companyName: methodData.contractor || 'Professional Electrical Services',
         documentReference: `RAMS-${Date.now()}`,
-        reviewDate: methodData.reviewDate
+        reviewDate: methodData.reviewDate,
       });
 
       const link = document.createElement('a');
@@ -342,7 +392,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       toast({
         title: 'PDF Generation Error',
         description: 'Failed to generate PDF through server, using backup method',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -355,14 +405,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
-      
+
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
-        body: { 
+        body: {
           methodData: {
             ...methodData,
-            projectName: ramsData.projectName
-          }
-        }
+            projectName: ramsData.projectName,
+          },
+        },
       });
 
       if (data?.success && data?.downloadUrl) {
@@ -370,18 +420,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.href = data.downloadUrl;
         link.download = `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
-        
+
         setShowPDFModal(false);
         toast({
           title: 'PDF Downloaded',
           description: 'Your Method Statement PDF has been downloaded successfully',
-          variant: 'success'
+          variant: 'success',
         });
       } else {
         console.log('Falling back to client-side PDF generation', { data, error });
         setShowPDFModal(false);
         const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
-          companyName: methodData.contractor || 'Professional Electrical Services'
+          companyName: methodData.contractor || 'Professional Electrical Services',
         });
 
         const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
@@ -395,14 +445,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         toast({
           title: 'PDF Downloaded',
           description: 'Your Method Statement PDF has been downloaded',
-          variant: 'success'
+          variant: 'success',
         });
       }
     } catch (error) {
       console.error('Error generating Method Statement PDF:', error);
       setShowPDFModal(false);
       const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
-        companyName: methodData.contractor || 'Professional Electrical Services'
+        companyName: methodData.contractor || 'Professional Electrical Services',
       });
 
       const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
@@ -416,7 +466,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       toast({
         title: 'PDF Generation Error',
         description: 'Failed to generate PDF, using backup method',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -427,13 +477,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     if (!ramsData) return;
     // Prevent multiple clicks
     if (isGenerating) return;
-    
+
     setIsGenerating(true);
     setCurrentPDFType('combined');
     setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
-      
+
       // 🔍 FRONTEND DATA DIAGNOSTICS - Log what we're sending
       console.log('📤 Sending to PDF generation:', {
         ramsData: {
@@ -442,7 +492,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           ppeDetailsCount: ramsData.ppeDetails?.length || 0,
           requiredPPECount: ramsData.requiredPPE?.length || 0,
           hasPpeDetails: !!ramsData.ppeDetails,
-          hasRequiredPPE: !!ramsData.requiredPPE
+          hasRequiredPPE: !!ramsData.requiredPPE,
         },
         methodData: {
           jobTitle: methodData.jobTitle,
@@ -451,23 +501,25 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           tipsCount: methodData.practicalTips?.length || 0,
           mistakesCount: methodData.commonMistakes?.length || 0,
           hasToolsRequired: !!methodData.toolsRequired,
-          hasPracticalTips: !!methodData.practicalTips
-        }
+          hasPracticalTips: !!methodData.practicalTips,
+        },
       });
       console.log('🔍 Full ramsData.ppeDetails:', ramsData.ppeDetails);
       console.log('🔍 Full ramsData.requiredPPE:', ramsData.requiredPPE);
       console.log('🔍 Full methodData.toolsRequired:', methodData.toolsRequired);
       console.log('🔍 Full methodData.practicalTips:', methodData.practicalTips);
       console.log('🔍 Full methodData.commonMistakes:', methodData.commonMistakes);
-      
+
       const { data, error } = await supabase.functions.invoke('generate-combined-rams-pdf', {
-        body: { 
+        body: {
           ramsData: {
             ...ramsData,
-            risks: [...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
-          }, 
-          methodData
-        }
+            risks: [...(ramsData.risks || [])].sort(
+              (a, b) => (b.riskRating || 0) - (a.riskRating || 0)
+            ),
+          },
+          methodData,
+        },
       });
 
       if (data?.success && data?.downloadUrl) {
@@ -475,49 +527,48 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.href = data.downloadUrl;
         link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
-        
+
         setShowPDFModal(false);
         toast({
           title: 'PDF Downloaded',
           description: 'Your Combined RAMS PDF has been downloaded successfully',
-          variant: 'success'
+          variant: 'success',
         });
       } else {
-        console.log('PDF Monkey unavailable, using fallback', { 
+        console.log('PDF Monkey unavailable, using fallback', {
           status: data?.status,
           message: data?.message,
           hint: data?.hint,
           templateId: data?.templateId,
-          error: data?.error 
+          error: data?.error,
         });
-        
+
         setShowPDFModal(false);
-        
+
         if (data?.message || data?.hint) {
           toast({
             title: 'Using Alternative PDF Generator',
             description: data?.hint || data?.message || 'PDF Monkey unavailable',
-            variant: 'default'
+            variant: 'default',
           });
         }
-        
+
         // Generate PDF and save to storage
         const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
         const { saveRAMSPDFToStorage } = await import('@/utils/rams-pdf-storage');
-        
-        const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
-          companyName: methodData.contractor || 'Professional Electrical Services',
-          documentReference: `RAMS-${Date.now()}`
-        });
-        
-        // Save to storage
-        const saveResult = await saveRAMSPDFToStorage(
-          pdfBlob,
+
+        const pdfBlob = await generateCombinedRAMSPDFBlob(
           ramsData,
-          methodData,
-          'draft'
+          methodData as MethodStatementData,
+          {
+            companyName: methodData.contractor || 'Professional Electrical Services',
+            documentReference: `RAMS-${Date.now()}`,
+          }
         );
-        
+
+        // Save to storage
+        const saveResult = await saveRAMSPDFToStorage(pdfBlob, ramsData, methodData, 'draft');
+
         if (saveResult.success) {
           // Also trigger download
           const url = URL.createObjectURL(pdfBlob);
@@ -528,47 +579,46 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
-          
+
           toast({
             title: 'PDF Downloaded & Saved',
             description: 'Your Combined RAMS PDF has been downloaded and saved to your library',
-            variant: 'success'
+            variant: 'success',
           });
         } else {
           toast({
             title: 'PDF Downloaded',
             description: 'Your Combined RAMS PDF has been downloaded (could not save to library)',
-            variant: 'default'
+            variant: 'default',
           });
         }
       }
     } catch (error) {
       console.error('Error generating combined RAMS:', error);
       setShowPDFModal(false);
-      
+
       toast({
         title: 'Switching to Alternative Method',
         description: 'Professional PDF generation unavailable, using built-in generator',
-        variant: 'default'
+        variant: 'default',
       });
-      
+
       try {
         const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
         const { saveRAMSPDFToStorage } = await import('@/utils/rams-pdf-storage');
-        
-        const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
-          companyName: methodData.contractor || 'Professional Electrical Services',
-          documentReference: `RAMS-${Date.now()}`
-        });
-        
-        // Save to storage
-        await saveRAMSPDFToStorage(
-          pdfBlob,
+
+        const pdfBlob = await generateCombinedRAMSPDFBlob(
           ramsData,
-          methodData,
-          'draft'
+          methodData as MethodStatementData,
+          {
+            companyName: methodData.contractor || 'Professional Electrical Services',
+            documentReference: `RAMS-${Date.now()}`,
+          }
         );
-        
+
+        // Save to storage
+        await saveRAMSPDFToStorage(pdfBlob, ramsData, methodData, 'draft');
+
         // Download
         const url = URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
@@ -578,18 +628,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-        
+
         toast({
           title: 'PDF Downloaded & Saved',
           description: 'Your Combined RAMS PDF has been downloaded and saved',
-          variant: 'success'
+          variant: 'success',
         });
       } catch (fallbackError) {
         console.error('Fallback PDF generation failed:', fallbackError);
         toast({
           title: 'PDF Generation Failed',
           description: 'Could not generate PDF. Please try again.',
-          variant: 'destructive'
+          variant: 'destructive',
         });
       }
     } finally {
@@ -611,35 +661,37 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         safetyOfficerName: ramsData.safetyOfficerName || '',
         safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
         assemblyPoint: ramsData.assemblyPoint || '',
-        risks: (ramsData.risks || []).map(risk => ({
+        risks: (ramsData.risks || []).map((risk) => ({
           ...risk,
           furtherAction: risk.furtherAction || '',
           responsible: risk.responsible || '',
           actionBy: risk.actionBy || '',
-          done: risk.done || false
-        }))
+          done: risk.done || false,
+        })),
       },
-      methodStatementData: methodData ? {
-        ...methodData,
-        id: methodData.id || '',
-        approvedBy: methodData.approvedBy || '',
-        createdAt: methodData.createdAt || '',
-        updatedAt: methodData.updatedAt || '',
-        steps: (methodData.steps || []).map(step => ({
-          ...step,
-          dependencies: step.dependencies || [],
-          isCompleted: step.isCompleted || false,
-          notes: step.notes || '',
-          linkedHazards: step.linkedHazards || []
-        }))
-      } : null
+      methodStatementData: methodData
+        ? {
+            ...methodData,
+            id: methodData.id || '',
+            approvedBy: methodData.approvedBy || '',
+            createdAt: methodData.createdAt || '',
+            updatedAt: methodData.updatedAt || '',
+            steps: (methodData.steps || []).map((step) => ({
+              ...step,
+              dependencies: step.dependencies || [],
+              isCompleted: step.isCompleted || false,
+              notes: step.notes || '',
+              linkedHazards: step.linkedHazards || [],
+            })),
+          }
+        : null,
     };
-    
+
     navigator.clipboard.writeText(JSON.stringify(combinedData, null, 2));
     toast({
       title: 'JSON Copied',
       description: 'Combined RAMS data with all fields copied to clipboard',
-      variant: 'success'
+      variant: 'success',
     });
   };
 
@@ -649,27 +701,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       toast({
         title: 'Cannot Save',
         description: 'No RAMS data available to save',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
 
     setLocalIsSaving(true);
-    
+
     try {
       // Generate combined PDF blob
       const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
       const { saveRAMSPDFToStorage, updateRAMSDocument } = await import('@/utils/rams-pdf-storage');
-      
-      const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
-        companyName: methodData.contractor || 'Professional Electrical Services',
-        documentReference: `RAMS-${Date.now()}`
-      });
-      
+
+      const pdfBlob = await generateCombinedRAMSPDFBlob(
+        ramsData,
+        methodData as MethodStatementData,
+        {
+          companyName: methodData.contractor || 'Professional Electrical Services',
+          documentReference: `RAMS-${Date.now()}`,
+        }
+      );
+
       // Check if document already exists
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
-      
+
       const currentDate = new Date().toISOString().split('T')[0];
       const { data: existingDoc } = await supabase
         .from('rams_documents')
@@ -679,13 +737,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         .eq('location', ramsData.location)
         .eq('date', currentDate)
         .maybeSingle();
-      
+
       let saveResult;
-      
+
       if (existingDoc) {
         // Update existing document
         saveResult = await updateRAMSDocument(existingDoc.id, ramsData, methodData);
-        
+
         if (saveResult.success) {
           setLocalLastSaved(new Date());
           toast({
@@ -695,46 +753,40 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         }
       } else {
         // Create new document
-        saveResult = await saveRAMSPDFToStorage(
-          pdfBlob,
-          ramsData,
-          methodData,
-          'draft'
-        );
-        
+        saveResult = await saveRAMSPDFToStorage(pdfBlob, ramsData, methodData, 'draft');
+
         if (saveResult.success) {
           setLocalLastSaved(new Date());
           toast({
             title: 'Saved to Library',
-            description: 'Your RAMS document is now available in Saved RAMS Documents. Tap to view.',
+            description:
+              'Your RAMS document is now available in Saved RAMS Documents. Tap to view.',
           });
         }
       }
-      
+
       if (!saveResult.success) {
         throw new Error(saveResult.error || 'Failed to save document');
       }
-      
+
       // Also update the job record if onSave callback exists
       if (onSave) {
         await onSave();
       }
-      
     } catch (error) {
       console.error('Error saving to library:', error);
       toast({
         title: 'Save Failed',
         description: error instanceof Error ? error.message : 'Could not save to library',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setLocalIsSaving(false);
     }
   };
 
-
   const toggleStepExpansion = (stepId: string) => {
-    setExpandedSteps(prev => {
+    setExpandedSteps((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(stepId)) {
         newSet.delete(stepId);
@@ -746,17 +798,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   return (
-    <div className={cn(
-      "px-2 py-3 space-y-3 bg-elec-dark min-h-screen",
-      isMobile && "pb-20"
-    )}>
+    <div className={cn('px-2 py-3 space-y-3 bg-elec-dark min-h-screen', isMobile && 'pb-20')}>
       <div className="bg-white/5 rounded-xl overflow-hidden border border-white/[0.08]">
         <div className="p-3 border-b border-white/[0.08]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold text-white">
-                Review & Edit
-              </h2>
+              <h2 className="text-base font-semibold text-white">Review & Edit</h2>
               <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-medium px-1.5 py-0.5">
                 AI Generated
               </Badge>
@@ -788,21 +835,28 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </span>
           )}
         </div>
-        
+
         {/* PHASE 4: Partial Completion Warning Banner */}
         {isPartial && (
           <div className="p-3 bg-yellow-500/10 border-b border-yellow-500/20">
             <Alert className="border-yellow-500/30 bg-yellow-500/5">
               <AlertCircle className="h-4 w-4 text-yellow-500" />
-              <AlertTitle className="text-yellow-500 font-semibold text-sm">Partial Generation</AlertTitle>
+              <AlertTitle className="text-yellow-500 font-semibold text-sm">
+                Partial Generation
+              </AlertTitle>
               <AlertDescription className="text-xs text-white mt-1.5 space-y-1.5">
                 <p>
-                  {!ramsData && "⚠️ Risk assessment generation failed. "}
-                  {!methodData && "⚠️ Method statement generation failed. "}
+                  {!ramsData && '⚠️ Risk assessment generation failed. '}
+                  {!methodData && '⚠️ Method statement generation failed. '}
                   You can proceed with what's available or retry the failed section below.
                 </p>
                 {onRetry && (
-                  <Button onClick={onRetry} variant="outline" size="sm" className="mt-1.5 h-9 text-xs border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10 touch-manipulation">
+                  <Button
+                    onClick={onRetry}
+                    variant="outline"
+                    size="sm"
+                    className="mt-1.5 h-9 text-xs border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10 touch-manipulation"
+                  >
                     <Sparkles className="h-3 w-3 mr-1.5" />
                     Retry Failed Section
                   </Button>
@@ -818,13 +872,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <TabsTrigger
                 value="rams"
                 className={cn(
-                  "h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]",
-                  "bg-white/[0.03] border border-transparent",
-                  "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
-                  "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
-                  "data-[state=inactive]:text-white data-[state=inactive]:hover:text-white",
-                  "data-[state=inactive]:hover:bg-white/[0.05]"
+                  'h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200',
+                  'flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]',
+                  'bg-white/[0.03] border border-transparent',
+                  'data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow',
+                  'data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm',
+                  'data-[state=inactive]:text-white data-[state=inactive]:hover:text-white',
+                  'data-[state=inactive]:hover:bg-white/[0.05]'
                 )}
               >
                 <Shield className="h-3.5 w-3.5" />
@@ -833,13 +887,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <TabsTrigger
                 value="method"
                 className={cn(
-                  "h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]",
-                  "bg-white/[0.03] border border-transparent",
-                  "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
-                  "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
-                  "data-[state=inactive]:text-white data-[state=inactive]:hover:text-white",
-                  "data-[state=inactive]:hover:bg-white/[0.05]"
+                  'h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200',
+                  'flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]',
+                  'bg-white/[0.03] border border-transparent',
+                  'data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow',
+                  'data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm',
+                  'data-[state=inactive]:text-white data-[state=inactive]:hover:text-white',
+                  'data-[state=inactive]:hover:bg-white/[0.05]'
                 )}
               >
                 <FileText className="h-3.5 w-3.5" />
@@ -853,69 +907,79 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   {/* Summary Stats Card */}
                   <SummaryStatsCard risks={ramsData.risks || []} />
 
-              {/* Enhanced Risks Section */}
-              <div className="space-y-3">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-bold text-elec-light flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-                    <span>Identified Hazards</span>
-                  </h4>
-                  <Button
-                    onClick={addRisk}
-                    size="sm"
-                    className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[40px] px-3 py-1.5 text-xs touch-manipulation"
-                  >
-                    <Plus className="h-3.5 w-3.5 mr-1.5" />
-                    Add Hazard
-                  </Button>
-                </div>
-                
-                {/* Empty state when no risks */}
-                {(!ramsData.risks || ramsData.risks.length === 0) && (
-                  <Card className="border-dashed border-elec-yellow/30">
-                    <CardContent className="p-8 text-center">
-                      <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-elec-light mb-2">No Hazards Identified Yet</h3>
-                      <p className="text-sm text-white mb-4">
-                        Add hazards manually using the button above or regenerate to identify potential risks for this installation.
-                      </p>
-                      {onRegenerate && (
-                        <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Try Again
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-                
-                {/* Risk Cards - Sorted by Risk Rating */}
-                {ramsData.risks && ramsData.risks.length > 0 && (
+                  {/* Enhanced Risks Section */}
                   <div className="space-y-3">
-                    {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => (
-                      <EnhancedRiskCard 
-                        key={risk.id}
-                        risk={risk}
-                        index={sortedIndex}
-                        editable={true}
-                        onUpdate={updateRisk}
-                        onRemove={removeRisk}
-                      />
-                    ))}
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-bold text-elec-light flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+                        <span>Identified Hazards</span>
+                      </h4>
+                      <Button
+                        onClick={addRisk}
+                        size="sm"
+                        className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[40px] px-3 py-1.5 text-xs touch-manipulation"
+                      >
+                        <Plus className="h-3.5 w-3.5 mr-1.5" />
+                        Add Hazard
+                      </Button>
+                    </div>
+
+                    {/* Empty state when no risks */}
+                    {(!ramsData.risks || ramsData.risks.length === 0) && (
+                      <Card className="border-dashed border-elec-yellow/30">
+                        <CardContent className="p-8 text-center">
+                          <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
+                          <h3 className="text-lg font-semibold text-elec-light mb-2">
+                            No Hazards Identified Yet
+                          </h3>
+                          <p className="text-sm text-white mb-4">
+                            Add hazards manually using the button above or regenerate to identify
+                            potential risks for this installation.
+                          </p>
+                          {onRegenerate && (
+                            <Button
+                              onClick={onRegenerate}
+                              variant="outline"
+                              size="sm"
+                              className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10"
+                            >
+                              <Sparkles className="h-4 w-4 mr-2" />
+                              Try Again
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    )}
+
+                    {/* Risk Cards - Sorted by Risk Rating */}
+                    {ramsData.risks && ramsData.risks.length > 0 && (
+                      <div className="space-y-3">
+                        {[...(ramsData.risks || [])]
+                          .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+                          .map((risk, sortedIndex) => (
+                            <EnhancedRiskCard
+                              key={risk.id}
+                              risk={risk}
+                              index={sortedIndex}
+                              editable={true}
+                              onUpdate={updateRisk}
+                              onRemove={removeRisk}
+                            />
+                          ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
 
-              {/* PPE Section */}
-              <PPEGridView
-                ppeDetails={ramsData.ppeDetails}
-                requiredPPE={ramsData.requiredPPE}
-                editable={true}
-                onUpdate={updatePPE}
-              />
+                  {/* PPE Section */}
+                  <PPEGridView
+                    ppeDetails={ramsData.ppeDetails}
+                    requiredPPE={ramsData.requiredPPE}
+                    editable={true}
+                    onUpdate={updatePPE}
+                  />
 
-              {/* Emergency Procedures */}
-              <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
+                  {/* Emergency Procedures */}
+                  <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
                 </>
               ) : (
                 <div className="p-8 text-center">
@@ -924,10 +988,16 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <AlertCircle className="h-16 w-16 text-yellow-500/40 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-2">Risk Assessment Not Available</h3>
                       <p className="text-sm text-white mb-4">
-                        The risk assessment generation failed. Please retry to generate this section.
+                        The risk assessment generation failed. Please retry to generate this
+                        section.
                       </p>
                       {onRetry && (
-                        <Button onClick={onRetry} variant="outline" size="sm" className="border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10">
+                        <Button
+                          onClick={onRetry}
+                          variant="outline"
+                          size="sm"
+                          className="border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10"
+                        >
                           <Sparkles className="h-4 w-4 mr-2" />
                           Retry Generation
                         </Button>
@@ -942,8 +1012,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               {methodData && Object.keys(methodData).length > 0 ? (
                 <div className="p-3 space-y-3">
                   {/* Project Info Header */}
-                  <ProjectInfoHeader 
-                    methodData={methodData} 
+                  <ProjectInfoHeader
+                    methodData={methodData}
                     projectName={ramsData?.projectName}
                     location={ramsData?.location}
                   />
@@ -989,9 +1059,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-center">
                           {methodData.steps?.length || 0} Steps
                         </Badge>
-                        <Button 
-                          onClick={addStep} 
-                          size="sm" 
+                        <Button
+                          onClick={addStep}
+                          size="sm"
                           className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-3 py-2 text-sm touch-manipulation"
                         >
                           <Plus className="h-4 w-4 mr-1" />
@@ -999,7 +1069,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         </Button>
                       </div>
                     </div>
-                    
+
                     {methodData.steps && methodData.steps.length > 0 ? (
                       <>
                         {methodData.steps.map((step, index) => (
@@ -1017,12 +1087,20 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <Card className="border-dashed border-elec-yellow/30">
                         <CardContent className="p-8 text-center">
                           <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                          <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
+                          <h3 className="text-lg font-semibold text-elec-light mb-2">
+                            No Installation Steps Yet
+                          </h3>
                           <p className="text-sm text-white mb-4">
-                            Add installation steps manually using the button above or regenerate to create method statement.
+                            Add installation steps manually using the button above or regenerate to
+                            create method statement.
                           </p>
                           {onRegenerate && (
-                            <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
+                            <Button
+                              onClick={onRegenerate}
+                              variant="outline"
+                              size="sm"
+                              className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10"
+                            >
                               <Sparkles className="h-4 w-4 mr-2" />
                               Try Again
                             </Button>
@@ -1043,9 +1121,13 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <div className="flex items-start gap-4">
                     <AlertCircle className="h-8 w-8 text-orange-400 shrink-0 mt-1" />
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-orange-400 mb-2">Method Statement Not Available</h3>
+                      <h3 className="text-lg font-semibold text-orange-400 mb-2">
+                        Method Statement Not Available
+                      </h3>
                       <p className="text-sm text-white mb-4">
-                        The method statement generation timed out or failed. You can still use the risk assessment data, or retry to generate the full document with the method statement included.
+                        The method statement generation timed out or failed. You can still use the
+                        risk assessment data, or retry to generate the full document with the method
+                        statement included.
                       </p>
                       {onRegenerate && (
                         <Button
@@ -1107,8 +1189,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           </div>
         </div>
       </div>
-
-
 
       {/* Modals and Sheets */}
       <PDFGenerationModal

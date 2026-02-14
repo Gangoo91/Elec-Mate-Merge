@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useCallback, type ReactNode } from "react";
-import { useSwipeable } from "react-swipeable";
-import { motion, useMotionValue, animate } from "framer-motion";
-import { useHaptic } from "@/hooks/useHaptic";
+import { useState, useRef, useEffect, useCallback, type ReactNode } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { motion, useMotionValue, animate } from 'framer-motion';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // ──────────────────────────────────────────────
 // SwipeableListItem — swipe-to-reveal actions
@@ -48,7 +48,7 @@ export function SwipeableListItem({
   children,
   leftActions = [],
   rightActions = [],
-  className = "",
+  className = '',
   disabled = false,
 }: SwipeableListItemProps) {
   const haptic = useHaptic();
@@ -57,7 +57,7 @@ export function SwipeableListItem({
   const x = useMotionValue(0);
 
   // Track open state: "closed" | "left" | "right"
-  const [openSide, setOpenSide] = useState<"closed" | "left" | "right">("closed");
+  const [openSide, setOpenSide] = useState<'closed' | 'left' | 'right'>('closed');
 
   // Whether a swipe gesture is currently in progress — used to suppress
   // accidental onClick events on children while the user is dragging
@@ -77,37 +77,33 @@ export function SwipeableListItem({
   const springTo = useCallback(
     (target: number) => {
       animate(x, target, {
-        type: "spring",
+        type: 'spring',
         stiffness: 350,
         damping: 30,
         mass: 0.8,
       });
     },
-    [x],
+    [x]
   );
 
   // ── Close helper ──────────────────────────────────────────
   const close = useCallback(() => {
     springTo(0);
-    setOpenSide("closed");
+    setOpenSide('closed');
   }, [springTo]);
 
   // ── Close when user taps outside this component ───────────
   useEffect(() => {
-    if (openSide === "closed") return;
+    if (openSide === 'closed') return;
 
     function handlePointerDown(e: PointerEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         close();
       }
     }
 
-    document.addEventListener("pointerdown", handlePointerDown, true);
-    return () =>
-      document.removeEventListener("pointerdown", handlePointerDown, true);
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true);
   }, [openSide, close]);
 
   // ── react-swipeable handlers ──────────────────────────────
@@ -123,7 +119,7 @@ export function SwipeableListItem({
         if (rightActions.length === 0) return;
 
         // If the left tray is currently open, close it first
-        if (openSide === "left") {
+        if (openSide === 'left') {
           close();
           return;
         }
@@ -131,9 +127,7 @@ export function SwipeableListItem({
         // Rubber-band beyond max
         const absDelta = Math.abs(delta);
         const clamped =
-          absDelta <= rightMax
-            ? -absDelta
-            : -(rightMax + (absDelta - rightMax) * 0.2);
+          absDelta <= rightMax ? -absDelta : -(rightMax + (absDelta - rightMax) * 0.2);
         x.set(clamped);
 
         // Haptic at threshold
@@ -145,7 +139,7 @@ export function SwipeableListItem({
         // Swiping right → reveal left actions
         if (leftActions.length === 0) {
           // If right tray is open, allow closing gesture
-          if (openSide === "right") {
+          if (openSide === 'right') {
             const current = x.get();
             const next = Math.min(0, current + delta * 0.8);
             x.set(next);
@@ -154,16 +148,13 @@ export function SwipeableListItem({
         }
 
         // If the right tray is currently open, close it first
-        if (openSide === "right") {
+        if (openSide === 'right') {
           close();
           return;
         }
 
         const absDelta = Math.abs(delta);
-        const clamped =
-          absDelta <= leftMax
-            ? absDelta
-            : leftMax + (absDelta - leftMax) * 0.2;
+        const clamped = absDelta <= leftMax ? absDelta : leftMax + (absDelta - leftMax) * 0.2;
         x.set(clamped);
 
         // Haptic at threshold
@@ -186,7 +177,7 @@ export function SwipeableListItem({
       const current = Math.abs(x.get());
       if (current >= SWIPE_THRESHOLD) {
         springTo(-rightMax);
-        setOpenSide("right");
+        setOpenSide('right');
       } else {
         close();
       }
@@ -202,7 +193,7 @@ export function SwipeableListItem({
       hapticFired.current = false;
 
       // If right tray is open and there are no left actions, just close
-      if (openSide === "right" && leftActions.length === 0) {
+      if (openSide === 'right' && leftActions.length === 0) {
         close();
         requestAnimationFrame(() => {
           isSwiping.current = false;
@@ -218,7 +209,7 @@ export function SwipeableListItem({
       const current = x.get();
       if (current >= SWIPE_THRESHOLD) {
         springTo(leftMax);
-        setOpenSide("left");
+        setOpenSide('left');
       } else {
         close();
       }
@@ -230,7 +221,7 @@ export function SwipeableListItem({
 
     onTap: () => {
       // Close the tray if it's open — the tap consumes the event
-      if (openSide !== "closed") {
+      if (openSide !== 'closed') {
         close();
       }
     },
@@ -248,7 +239,7 @@ export function SwipeableListItem({
       // react-swipeable attaches via a ref callback
       (handlers as any).ref(node);
     },
-    [handlers],
+    [handlers]
   );
 
   // ── Action button handler (auto-close after tap) ──────────
@@ -258,7 +249,7 @@ export function SwipeableListItem({
       action.onAction();
       close();
     },
-    [haptic, close],
+    [haptic, close]
   );
 
   // ── Render ────────────────────────────────────────────────
@@ -266,28 +257,23 @@ export function SwipeableListItem({
     <div
       ref={mergedRef}
       className={`relative overflow-hidden touch-manipulation ${className}`}
-      style={{ touchAction: "pan-y" }}
+      style={{ touchAction: 'pan-y' }}
     >
       {/* Left action tray — revealed on swipe right */}
       {leftActions.length > 0 && (
-        <div
-          className="absolute inset-y-0 left-0 flex items-stretch"
-          style={{ width: leftMax }}
-        >
+        <div className="absolute inset-y-0 left-0 flex items-stretch" style={{ width: leftMax }}>
           {leftActions.map((action, i) => {
             const Icon = action.icon;
             return (
               <button
                 key={i}
-                className={`flex flex-col items-center justify-center gap-1 touch-manipulation h-full ${action.color} ${action.textColor ?? "text-white"}`}
+                className={`flex flex-col items-center justify-center gap-1 touch-manipulation h-full ${action.color} ${action.textColor ?? 'text-white'}`}
                 style={{ width: ACTION_WIDTH, minHeight: 44 }}
                 onClick={() => handleAction(action)}
                 aria-label={action.label}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-[10px] font-medium text-white">
-                  {action.label}
-                </span>
+                <span className="text-[10px] font-medium text-white">{action.label}</span>
               </button>
             );
           })}
@@ -296,24 +282,19 @@ export function SwipeableListItem({
 
       {/* Right action tray — revealed on swipe left */}
       {rightActions.length > 0 && (
-        <div
-          className="absolute inset-y-0 right-0 flex items-stretch"
-          style={{ width: rightMax }}
-        >
+        <div className="absolute inset-y-0 right-0 flex items-stretch" style={{ width: rightMax }}>
           {rightActions.map((action, i) => {
             const Icon = action.icon;
             return (
               <button
                 key={i}
-                className={`flex flex-col items-center justify-center gap-1 touch-manipulation h-full ${action.color} ${action.textColor ?? "text-white"}`}
+                className={`flex flex-col items-center justify-center gap-1 touch-manipulation h-full ${action.color} ${action.textColor ?? 'text-white'}`}
                 style={{ width: ACTION_WIDTH, minHeight: 44 }}
                 onClick={() => handleAction(action)}
                 aria-label={action.label}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-[10px] font-medium text-white">
-                  {action.label}
-                </span>
+                <span className="text-[10px] font-medium text-white">{action.label}</span>
               </button>
             );
           })}

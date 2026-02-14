@@ -25,7 +25,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
   documentId,
   isOpen,
   onClose,
-  onQuickEdit
+  onQuickEdit,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [documentData, setDocumentData] = useState<any>(null);
@@ -53,7 +53,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
       toast({
         title: 'Error',
         description: 'Failed to load document data',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       onClose();
     } finally {
@@ -80,7 +80,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
       firstAiderPhone: documentData.first_aider_phone || '',
       safetyOfficerName: documentData.safety_officer_name || '',
       safetyOfficerPhone: documentData.safety_officer_phone || '',
-      assemblyPoint: documentData.assembly_point || ''
+      assemblyPoint: documentData.assembly_point || '',
     };
 
     const methodData: Partial<MethodStatementData> = {
@@ -88,7 +88,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
       location: documentData.location,
       contractor: documentData.contractor || '',
       supervisor: documentData.supervisor || '',
-      steps: []
+      steps: [],
     };
 
     if (onQuickEdit) {
@@ -119,10 +119,10 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             firstAiderPhone: documentData.first_aider_phone || '',
             safetyOfficerName: documentData.safety_officer_name || '',
             safetyOfficerPhone: documentData.safety_officer_phone || '',
-            assemblyPoint: documentData.assembly_point || ''
-          }
-        }
-      }
+            assemblyPoint: documentData.assembly_point || '',
+          },
+        },
+      },
     });
     onClose();
   };
@@ -152,7 +152,9 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
                 <User className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs sm:text-sm font-medium text-white">Project</p>
-                  <p className="text-sm sm:text-base font-semibold break-words">{documentData.project_name}</p>
+                  <p className="text-sm sm:text-base font-semibold break-words">
+                    {documentData.project_name}
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-2 sm:gap-2.5">
@@ -166,7 +168,9 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
                 <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs sm:text-sm font-medium text-white">Created</p>
-                  <p className="text-sm sm:text-base">{new Date(documentData.created_at).toLocaleDateString('en-GB')}</p>
+                  <p className="text-sm sm:text-base">
+                    {new Date(documentData.created_at).toLocaleDateString('en-GB')}
+                  </p>
                 </div>
               </div>
             </div>

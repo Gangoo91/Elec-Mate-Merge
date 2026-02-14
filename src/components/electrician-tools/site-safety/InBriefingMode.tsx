@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Play,
   Pause,
@@ -18,8 +18,8 @@ import {
   AlertCircle,
   X,
   PenTool,
-  FileText
-} from "lucide-react";
+  FileText,
+} from 'lucide-react';
 
 interface InBriefingModeProps {
   briefing: any;
@@ -34,9 +34,11 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
   const [isPaused, setIsPaused] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
-  const [attendees, setAttendees] = useState<Array<{ name: string; signed: boolean; timestamp?: string }>>([]);
-  const [newAttendeeName, setNewAttendeeName] = useState("");
-  const [notes, setNotes] = useState("");
+  const [attendees, setAttendees] = useState<
+    Array<{ name: string; signed: boolean; timestamp?: string }>
+  >([]);
+  const [newAttendeeName, setNewAttendeeName] = useState('');
+  const [notes, setNotes] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
 
   const sections = [
@@ -52,7 +54,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
     let interval: NodeJS.Timeout;
     if (isRunning && !isPaused) {
       interval = setInterval(() => {
-        setElapsedTime(prev => prev + 1);
+        setElapsedTime((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -71,7 +73,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
         .from('team_briefings')
         .update({
           status: 'in_progress',
-          presentation_started_at: new Date().toISOString()
+          presentation_started_at: new Date().toISOString(),
         })
         .eq('id', briefing.id);
     } catch (error) {
@@ -82,33 +84,36 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
   const handlePause = () => {
     setIsPaused(!isPaused);
     toast({
-      title: isPaused ? "Resumed" : "Paused",
-      description: isPaused ? "Briefing timer resumed" : "Briefing timer paused",
+      title: isPaused ? 'Resumed' : 'Paused',
+      description: isPaused ? 'Briefing timer resumed' : 'Briefing timer paused',
     });
   };
 
   const handleAddAttendee = () => {
     if (!newAttendeeName.trim()) return;
-    
-    setAttendees(prev => [...prev, {
-      name: newAttendeeName.trim(),
-      signed: false,
-    }]);
-    setNewAttendeeName("");
-    
+
+    setAttendees((prev) => [
+      ...prev,
+      {
+        name: newAttendeeName.trim(),
+        signed: false,
+      },
+    ]);
+    setNewAttendeeName('');
+
     toast({
-      title: "Attendee Added",
+      title: 'Attendee Added',
       description: `${newAttendeeName} added to briefing`,
     });
   };
 
   const handleSignAttendee = (index: number) => {
-    setAttendees(prev => prev.map((att, i) => 
-      i === index 
-        ? { ...att, signed: true, timestamp: new Date().toISOString() }
-        : att
-    ));
-    
+    setAttendees((prev) =>
+      prev.map((att, i) =>
+        i === index ? { ...att, signed: true, timestamp: new Date().toISOString() } : att
+      )
+    );
+
     // Haptic feedback
     if ('vibrate' in navigator) {
       navigator.vibrate(10);
@@ -116,11 +121,11 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
   };
 
   const handleComplete = async () => {
-    if (attendees.filter(a => a.signed).length === 0) {
+    if (attendees.filter((a) => a.signed).length === 0) {
       toast({
-        title: "Cannot Complete",
-        description: "At least one attendee must sign off",
-        variant: "destructive",
+        title: 'Cannot Complete',
+        description: 'At least one attendee must sign off',
+        variant: 'destructive',
       });
       return;
     }
@@ -134,7 +139,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
           presentation_ended_at: new Date().toISOString(),
           duration_minutes: Math.ceil(elapsedTime / 60),
           attendees: attendees,
-          attendee_signatures: attendees.map(a => ({
+          attendee_signatures: attendees.map((a) => ({
             name: a.name,
             timestamp: a.timestamp || new Date().toISOString(),
           })),
@@ -143,17 +148,17 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
         .eq('id', briefing.id);
 
       toast({
-        title: "Briefing Completed",
-        description: "Team briefing completed successfully",
+        title: 'Briefing Completed',
+        description: 'Team briefing completed successfully',
       });
 
       onComplete();
     } catch (error: any) {
       console.error('Error completing briefing:', error);
       toast({
-        title: "Error",
-        description: "Failed to complete briefing",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to complete briefing',
+        variant: 'destructive',
       });
     }
   };
@@ -201,9 +206,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
                 {formatTime(elapsedTime)}
               </span>
               {isPaused && (
-                <Badge className="bg-orange-500/20 text-orange-400 border-0">
-                  Paused
-                </Badge>
+                <Badge className="bg-orange-500/20 text-orange-400 border-0">Paused</Badge>
               )}
             </div>
 
@@ -241,7 +244,9 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
           {/* Progress */}
           <div className="mt-3">
             <div className="flex justify-between text-xs text-white mb-1">
-              <span>Section {currentSection + 1} of {sections.length}</span>
+              <span>
+                Section {currentSection + 1} of {sections.length}
+              </span>
               <span>{Math.round(progressPercent)}%</span>
             </div>
             <Progress value={progressPercent} className="h-2" />
@@ -270,15 +275,15 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
                     : 'bg-card border border-transparent hover:border-elec-yellow/20'
                 }`}
               >
-                <span className={`font-medium ${
-                  currentSection === index ? 'text-elec-yellow' : 'text-elec-light'
-                }`}>
+                <span
+                  className={`font-medium ${
+                    currentSection === index ? 'text-elec-yellow' : 'text-elec-light'
+                  }`}
+                >
                   {section.title}
                 </span>
                 {section.required && (
-                  <Badge className="bg-red-500/20 text-red-400 border-0 text-xs">
-                    Required
-                  </Badge>
+                  <Badge className="bg-red-500/20 text-red-400 border-0 text-xs">Required</Badge>
                 )}
               </button>
             ))}
@@ -290,7 +295,7 @@ export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBrie
           <CardHeader>
             <CardTitle className="text-elec-light flex items-center gap-2">
               <Users className="h-5 w-5 text-elec-yellow" />
-              Attendees ({attendees.filter(a => a.signed).length}/{attendees.length} signed)
+              Attendees ({attendees.filter((a) => a.signed).length}/{attendees.length} signed)
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

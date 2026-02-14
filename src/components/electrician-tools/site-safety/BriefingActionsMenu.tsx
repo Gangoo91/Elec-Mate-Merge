@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   MoreVertical,
   Edit,
@@ -9,25 +9,22 @@ import {
   CheckCircle,
   Eye,
   Trash2,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-} from "@/components/ui/sheet";
-import { RescheduleBriefingDialog } from "./RescheduleBriefingDialog";
-import { CancelBriefingDialog } from "./CancelBriefingDialog";
-import { DeleteBriefingDialog } from "./DeleteBriefingDialog";
-import { InBriefingMode } from "./InBriefingMode";
-import { BriefingStatusTimeline } from "./BriefingStatusTimeline";
-import { QuickActionsPanel } from "./QuickActionsPanel";
+} from '@/components/ui/dropdown-menu';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { RescheduleBriefingDialog } from './RescheduleBriefingDialog';
+import { CancelBriefingDialog } from './CancelBriefingDialog';
+import { DeleteBriefingDialog } from './DeleteBriefingDialog';
+import { InBriefingMode } from './InBriefingMode';
+import { BriefingStatusTimeline } from './BriefingStatusTimeline';
+import { QuickActionsPanel } from './QuickActionsPanel';
 
 interface BriefingActionsMenuProps {
   briefing: any;
@@ -50,15 +47,13 @@ export const BriefingActionsMenu = ({
   const [showInBriefingMode, setShowInBriefingMode] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
-  const canStart = briefing.status === "scheduled";
-  const canComplete = briefing.status === "in_progress";
-  const canEdit =
-    briefing.status !== "cancelled" && briefing.status !== "completed";
-  const canDelete =
-    briefing.status === "cancelled" || briefing.status === "draft";
+  const canStart = briefing.status === 'scheduled';
+  const canComplete = briefing.status === 'in_progress';
+  const canEdit = briefing.status !== 'cancelled' && briefing.status !== 'completed';
+  const canDelete = briefing.status === 'cancelled' || briefing.status === 'draft';
 
   const handleStartBriefing = () => {
-    onStatusChange("in_progress");
+    onStatusChange('in_progress');
     setShowInBriefingMode(true);
   };
 
@@ -66,11 +61,7 @@ export const BriefingActionsMenu = ({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-11 w-11 touch-manipulation"
-          >
+          <Button variant="ghost" size="icon" className="h-11 w-11 touch-manipulation">
             <MoreVertical className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -114,7 +105,7 @@ export const BriefingActionsMenu = ({
           {canComplete && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => onStatusChange("completed")}>
+              <DropdownMenuItem onClick={() => onStatusChange('completed')}>
                 <CheckCircle className="mr-2 h-4 w-4" />
                 Mark Complete
               </DropdownMenuItem>
@@ -176,15 +167,12 @@ export const BriefingActionsMenu = ({
 
       {/* In-Briefing Mode — bottom sheet */}
       <Sheet open={showInBriefingMode} onOpenChange={setShowInBriefingMode}>
-        <SheetContent
-          side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden"
-        >
+        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
           <div className="flex flex-col h-full overflow-y-auto">
             <InBriefingMode
               briefing={briefing}
               onComplete={() => {
-                onStatusChange("completed");
+                onStatusChange('completed');
                 setShowInBriefingMode(false);
                 onRefresh();
               }}
@@ -196,15 +184,10 @@ export const BriefingActionsMenu = ({
 
       {/* View Details — bottom sheet */}
       <Sheet open={showDetails} onOpenChange={setShowDetails}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-        >
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <div className="flex flex-col h-full bg-background overflow-y-auto">
             <div className="px-5 pt-6 pb-4 border-b border-white/10">
-              <h2 className="text-lg font-bold text-white">
-                {briefing.briefing_name}
-              </h2>
+              <h2 className="text-lg font-bold text-white">{briefing.briefing_name}</h2>
             </div>
             <div className="p-5 space-y-6">
               <QuickActionsPanel briefing={briefing} onRefresh={onRefresh} />

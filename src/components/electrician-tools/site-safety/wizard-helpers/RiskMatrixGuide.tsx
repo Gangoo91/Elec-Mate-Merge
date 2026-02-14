@@ -1,7 +1,7 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { AlertTriangle, Shield, AlertCircle, Info } from "lucide-react";
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { AlertTriangle, Shield, AlertCircle, Info } from 'lucide-react';
 
 interface RiskMatrixGuideProps {
   selectedRiskLevel?: string;
@@ -22,7 +22,11 @@ const RISK_LEVELS = [
       'Installation work in new, unoccupied buildings',
     ],
     ppe: ['Safety boots', 'Hi-vis vest', 'Safety glasses'],
-    controls: ['Standard safe working practices', 'Basic toolbox talk', 'Permit to work (if required)'],
+    controls: [
+      'Standard safe working practices',
+      'Basic toolbox talk',
+      'Permit to work (if required)',
+    ],
   },
   {
     value: 'medium',
@@ -37,7 +41,12 @@ const RISK_LEVELS = [
       'Manual handling of heavy equipment',
     ],
     ppe: ['All low-risk PPE', 'Insulated gloves', 'Hard hat', 'Arc-rated clothing (if applicable)'],
-    controls: ['Detailed risk assessment', 'Toolbox talk & briefing', 'Supervision required', 'Isolation procedures'],
+    controls: [
+      'Detailed risk assessment',
+      'Toolbox talk & briefing',
+      'Supervision required',
+      'Isolation procedures',
+    ],
   },
   {
     value: 'high',
@@ -52,25 +61,37 @@ const RISK_LEVELS = [
       'Working at height (> 2m) with live circuits',
       'Emergency response work',
     ],
-    ppe: ['Full arc-rated suit', 'Arc-rated face shield', 'Insulated gloves (tested)', 'Dielectric footwear', 'Flame-resistant undergarments'],
-    controls: ['Comprehensive risk assessment', 'Method statement', 'Competent person supervision', 'Emergency procedures in place', 'Arc flash boundary calculated', 'Rescue plan established'],
+    ppe: [
+      'Full arc-rated suit',
+      'Arc-rated face shield',
+      'Insulated gloves (tested)',
+      'Dielectric footwear',
+      'Flame-resistant undergarments',
+    ],
+    controls: [
+      'Comprehensive risk assessment',
+      'Method statement',
+      'Competent person supervision',
+      'Emergency procedures in place',
+      'Arc flash boundary calculated',
+      'Rescue plan established',
+    ],
   },
 ];
 
-export const RiskMatrixGuide = ({ 
-  selectedRiskLevel, 
+export const RiskMatrixGuide = ({
+  selectedRiskLevel,
   identifiedHazards,
-  onRiskLevelChange 
+  onRiskLevelChange,
 }: RiskMatrixGuideProps) => {
-  
   // Auto-suggest risk level based on hazards
   const getSuggestedRiskLevel = (): string => {
     const highRiskHazards = ['high-voltage', 'arc-flash', 'confined-spaces'];
     const mediumRiskHazards = ['live-circuits', 'working-at-height', 'manual-handling'];
-    
-    const hasHighRisk = identifiedHazards.some(h => highRiskHazards.includes(h));
-    const hasMediumRisk = identifiedHazards.some(h => mediumRiskHazards.includes(h));
-    
+
+    const hasHighRisk = identifiedHazards.some((h) => highRiskHazards.includes(h));
+    const hasMediumRisk = identifiedHazards.some((h) => mediumRiskHazards.includes(h));
+
     if (hasHighRisk) return 'high';
     if (hasMediumRisk || identifiedHazards.length >= 3) return 'medium';
     return 'low';
@@ -87,15 +108,16 @@ export const RiskMatrixGuide = ({
           const Icon = level.icon;
           const isSelected = selectedRiskLevel === level.value;
           const isSuggested = suggestedLevel === level.value;
-          
+
           return (
             <Card
               key={level.value}
               className={`
                 relative cursor-pointer transition-all duration-200 p-4
-                ${isSelected 
-                  ? `${level.color} border-2 scale-105 shadow-lg` 
-                  : 'bg-card border border-primary/30 hover:border-elec-yellow/40'
+                ${
+                  isSelected
+                    ? `${level.color} border-2 scale-105 shadow-lg`
+                    : 'bg-card border border-primary/30 hover:border-elec-yellow/40'
                 }
               `}
               onClick={() => onRiskLevelChange?.(level.value)}
@@ -105,7 +127,7 @@ export const RiskMatrixGuide = ({
                   Suggested
                 </Badge>
               )}
-              
+
               <div className="flex flex-col items-start text-left sm:items-center sm:text-center space-y-2">
                 <Icon className={`h-6 w-6 ${isSelected ? '' : 'text-elec-yellow/70'}`} />
                 <h4 className={`font-semibold text-sm ${isSelected ? '' : 'text-elec-light'}`}>
@@ -122,7 +144,10 @@ export const RiskMatrixGuide = ({
         <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
           <Info className="h-4 w-4 text-elec-yellow" />
           <AlertDescription className="text-sm text-elec-light">
-            Based on the hazards you've selected, we recommend <strong className="text-elec-yellow">{RISK_LEVELS.find(l => l.value === suggestedLevel)?.label}</strong>
+            Based on the hazards you've selected, we recommend{' '}
+            <strong className="text-elec-yellow">
+              {RISK_LEVELS.find((l) => l.value === suggestedLevel)?.label}
+            </strong>
           </AlertDescription>
         </Alert>
       )}
@@ -131,9 +156,9 @@ export const RiskMatrixGuide = ({
       {selectedRiskLevel && (
         <Card className="p-4 bg-card/50 border-primary/30">
           {(() => {
-            const level = RISK_LEVELS.find(l => l.value === selectedRiskLevel);
+            const level = RISK_LEVELS.find((l) => l.value === selectedRiskLevel);
             if (!level) return null;
-            
+
             return (
               <div className="space-y-4 text-left">
                 <div>
@@ -164,9 +189,9 @@ export const RiskMatrixGuide = ({
                   </h5>
                   <div className="flex flex-wrap gap-1.5">
                     {level.ppe.map((item, idx) => (
-                      <Badge 
-                        key={idx} 
-                        variant="outline" 
+                      <Badge
+                        key={idx}
+                        variant="outline"
                         className="bg-elec-yellow/10 text-elec-light border-elec-yellow/30 text-xs"
                       >
                         {item}

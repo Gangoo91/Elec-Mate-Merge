@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { FileText, Sparkles, Zap, AlertTriangle, Info } from "lucide-react";
-import { MobileButton } from "@/components/ui/mobile-button";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
+import { FileText, Sparkles, Zap, AlertTriangle, Info } from 'lucide-react';
+import { MobileButton } from '@/components/ui/mobile-button';
 
 interface Template {
   id: string;
@@ -52,7 +52,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
   const getTemplateIcon = (type: string) => {
     const icons: Record<string, any> = {
       'site-work': FileText,
-      'lfe': AlertTriangle,
+      lfe: AlertTriangle,
       'toolbox-talk': Info,
       'hse-update': Info,
       'safety-alert': Zap,
@@ -64,7 +64,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
   const getTemplateColor = (type: string) => {
     const colors: Record<string, string> = {
       'site-work': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      'lfe': 'bg-red-500/20 text-red-400 border-red-500/30',
+      lfe: 'bg-red-500/20 text-red-400 border-red-500/30',
       'toolbox-talk': 'bg-green-500/20 text-green-400 border-green-500/30',
       'hse-update': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
       'safety-alert': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
@@ -75,7 +75,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
   if (loading) {
     return (
       <div className="space-y-4 animate-pulse">
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3].map((i) => (
           <div key={i} className="h-32 bg-card/50 rounded-xl border border-primary/10" />
         ))}
       </div>
@@ -105,15 +105,11 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
                   <h4 className="font-semibold text-elec-light group-hover:text-elec-yellow transition-colors">
                     {template.name}
                   </h4>
-                  <p className="text-sm text-white mt-1 line-clamp-2">
-                    {template.description}
-                  </p>
+                  <p className="text-sm text-white mt-1 line-clamp-2">{template.description}</p>
                 </div>
               </div>
               {template.is_default && (
-                <Badge className="bg-elec-yellow/20 text-elec-yellow border-0">
-                  Popular
-                </Badge>
+                <Badge className="bg-elec-yellow/20 text-elec-yellow border-0">Popular</Badge>
               )}
             </div>
 
@@ -131,9 +127,7 @@ export const TemplateSelector = ({ onSelectTemplate, selectedType }: TemplateSel
           <CardContent className="p-8 text-center">
             <FileText className="h-12 w-12 text-white mx-auto mb-3" />
             <p className="text-white">No templates available for this type</p>
-            <p className="text-sm text-white mt-2">
-              Try selecting a different briefing type
-            </p>
+            <p className="text-sm text-white mt-2">Try selecting a different briefing type</p>
           </CardContent>
         </Card>
       )}

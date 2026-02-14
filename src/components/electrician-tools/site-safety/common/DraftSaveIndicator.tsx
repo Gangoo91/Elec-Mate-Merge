@@ -1,16 +1,16 @@
-import { Cloud, Check } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Cloud, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DraftSaveIndicatorProps {
-  status: "idle" | "saved" | "recovered";
+  status: 'idle' | 'saved' | 'recovered';
 }
 
 export function DraftSaveIndicator({ status }: DraftSaveIndicatorProps) {
-  if (status === "idle") return null;
+  if (status === 'idle') return null;
 
   return (
     <AnimatePresence>
-      {status === "saved" && (
+      {status === 'saved' && (
         <motion.span
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -21,7 +21,7 @@ export function DraftSaveIndicator({ status }: DraftSaveIndicatorProps) {
           Draft saved
         </motion.span>
       )}
-      {status === "recovered" && (
+      {status === 'recovered' && (
         <motion.span
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

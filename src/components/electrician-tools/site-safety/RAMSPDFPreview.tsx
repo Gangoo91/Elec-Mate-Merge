@@ -6,7 +6,17 @@ import { generateRAMSPDFPreview } from '@/utils/rams-pdf-professional';
 import { RAMSData, RAMSReportOptions } from '@/types/rams';
 import { safeFileName } from '@/utils/rams-pdf-helpers';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, Download, X, ZoomIn, ZoomOut, Printer, ExternalLink, RefreshCw, FileText } from 'lucide-react';
+import {
+  Loader2,
+  Download,
+  X,
+  ZoomIn,
+  ZoomOut,
+  Printer,
+  ExternalLink,
+  RefreshCw,
+  FileText,
+} from 'lucide-react';
 
 interface RAMSPDFPreviewProps {
   isOpen: boolean;
@@ -21,7 +31,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
   onClose,
   ramsData,
   reportOptions = {},
-  signOff = {}
+  signOff = {},
 }) => {
   const [pdfUrl, setPdfUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +43,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
   const [pdfSupported, setPdfSupported] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const progressInterval = useRef<NodeJS.Timeout>();
-  
+
   // Cache key for PDF caching
   const cacheKey = JSON.stringify({ ramsData, reportOptions, signOff });
   const pdfCache = useRef<Map<string, string>>(new Map());
@@ -90,59 +100,62 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
     setIsLoading(true);
     setError('');
     setProgress(0);
-    
+
     // Start progress animation
     progressInterval.current = setInterval(() => {
-      setProgress(prev => Math.min(prev + Math.random() * 15, 85));
+      setProgress((prev) => Math.min(prev + Math.random() * 15, 85));
     }, 200);
-    
+
     try {
-      const dataUri = await generateRAMSPDFPreview(ramsData, { 
-        ...reportOptions, 
-        signOff 
+      const dataUri = await generateRAMSPDFPreview(ramsData, {
+        ...reportOptions,
+        signOff,
       });
-      
+
       setProgress(90);
-      
+
       // Convert data URI to blob URL for preview
       const byteCharacters = atob(dataUri.split(',')[1]);
       const byteNumbers = new Array(byteCharacters.length);
-      
+
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-      
+
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
-      
+
       // Cache the URL
       pdfCache.current.set(cacheKey, blobUrl);
-      
+
       setPdfUrl(blobUrl);
       setProgress(100);
       setRetryCount(0);
-      
+
       toast({
-        title: "PDF Generated",
-        description: "Your RAMS document is ready for preview and download.",
+        title: 'PDF Generated',
+        description: 'Your RAMS document is ready for preview and download.',
       });
     } catch (err) {
       console.error('Error generating PDF preview:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(`Failed to generate PDF: ${errorMessage}`);
-      
+
       // Exponential backoff for retries
       if (retryCount < 3) {
-        setTimeout(() => {
-          setRetryCount(prev => prev + 1);
-          generatePreview();
-        }, Math.pow(2, retryCount) * 1000);
+        setTimeout(
+          () => {
+            setRetryCount((prev) => prev + 1);
+            generatePreview();
+          },
+          Math.pow(2, retryCount) * 1000
+        );
       } else {
         toast({
-          title: "PDF Generation Failed",
-          description: "Please check your data and try again.",
-          variant: "destructive",
+          title: 'PDF Generation Failed',
+          description: 'Please check your data and try again.',
+          variant: 'destructive',
         });
       }
     } finally {
@@ -155,18 +168,21 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
 
   const handleDownload = useCallback(() => {
     if (pdfUrl) {
-      const fileName = safeFileName(ramsData.projectName) + '_' + 
-        new Date().toISOString().split('T')[0].replace(/-/g, '') + '.pdf';
-      
+      const fileName =
+        safeFileName(ramsData.projectName) +
+        '_' +
+        new Date().toISOString().split('T')[0].replace(/-/g, '') +
+        '.pdf';
+
       const link = document.createElement('a');
       link.href = pdfUrl;
       link.download = fileName;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       toast({
-        title: "Download Started",
+        title: 'Download Started',
         description: `Downloading ${fileName}`,
       });
     }
@@ -184,7 +200,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
   }, [pdfUrl]);
 
   const handleZoom = useCallback((direction: 'in' | 'out') => {
-    setZoom(prev => {
+    setZoom((prev) => {
       const newZoom = direction === 'in' ? Math.min(prev + 0.25, 3) : Math.max(prev - 0.25, 0.5);
       if (iframeRef.current) {
         iframeRef.current.style.transform = `scale(${newZoom})`;
@@ -207,7 +223,9 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${isMobile ? 'max-w-[95vw] w-[95vw] h-[95vh]' : 'max-w-6xl w-[95vw] h-[90vh]'} bg-elec-gray border-elec-yellow/20 p-0 gap-0`}>
+      <DialogContent
+        className={`${isMobile ? 'max-w-[95vw] w-[95vw] h-[95vh]' : 'max-w-6xl w-[95vw] h-[90vh]'} bg-elec-gray border-elec-yellow/20 p-0 gap-0`}
+      >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:p-4 border-b border-elec-yellow/20">
           <DialogTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg font-bold">
             <FileText className="h-5 w-5" />
@@ -283,9 +301,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   </p>
                   <div className="w-full">
                     <Progress value={progress} className="h-2 bg-elec-gray" />
-                    <p className="text-xs text-white mt-1">
-                      {Math.round(progress)}% complete
-                    </p>
+                    <p className="text-xs text-white mt-1">{Math.round(progress)}% complete</p>
                   </div>
                 </div>
               </div>
@@ -297,7 +313,9 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               <div className="text-center space-y-4 max-w-md mx-4 p-4 sm:p-6 bg-elec-dark/95 rounded-lg border border-red-500/20">
                 <div className="text-red-400 text-xl sm:text-2xl">⚠️</div>
                 <div>
-                  <h3 className="text-red-400 font-bold text-base sm:text-lg mb-2">Preview Error</h3>
+                  <h3 className="text-red-400 font-bold text-base sm:text-lg mb-2">
+                    Preview Error
+                  </h3>
                   <p className="text-white text-xs sm:text-sm mb-4 leading-relaxed">{error}</p>
                   {retryCount > 0 && (
                     <p className="text-yellow-400 text-xs mb-2">
@@ -335,19 +353,19 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   src={pdfUrl}
                   className="w-full h-full border-0 bg-white"
                   title="RAMS PDF Preview"
-                  style={{ 
+                  style={{
                     minHeight: isMobile ? '400px' : '500px',
                     transform: `scale(${zoom})`,
                     transformOrigin: 'top left',
                     width: `${100 / zoom}%`,
-                    height: `${100 / zoom}%`
+                    height: `${100 / zoom}%`,
                   }}
                   onError={() => {
                     setPdfSupported(false);
                     toast({
-                      title: "PDF Preview Error",
-                      description: "Opening PDF in new tab instead.",
-                      variant: "destructive",
+                      title: 'PDF Preview Error',
+                      description: 'Opening PDF in new tab instead.',
+                      variant: 'destructive',
                     });
                     window.open(pdfUrl, '_blank');
                   }}
@@ -359,7 +377,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                     <div>
                       <h3 className="text-elec-yellow font-bold text-lg mb-2">PDF Ready</h3>
                       <p className="text-white text-sm mb-4">
-                        Your RAMS document has been generated successfully. 
+                        Your RAMS document has been generated successfully.
                         {isMobile ? ' Tap' : ' Click'} below to view or download.
                       </p>
                     </div>
@@ -383,7 +401,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   </div>
                 </div>
               )}
-              
+
               {/* Floating action buttons for mobile */}
               {isMobile && pdfSupported && (
                 <div className="absolute bottom-4 right-4 flex flex-col gap-2">

@@ -1,11 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
-import {
-  Sheet,
-  SheetContent,
-} from "@/components/ui/sheet";
+import { useState, useEffect, useCallback } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Bold,
   Italic,
@@ -20,14 +17,11 @@ import {
   Eye,
   Edit3,
   Loader2,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  useUpdateUserDocument,
-  type UserSafetyDocument,
-} from "@/hooks/useSafetyTemplates";
-import { sanitizeHtmlSafe } from "@/utils/inputSanitization";
-import { useToast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useUpdateUserDocument, type UserSafetyDocument } from '@/hooks/useSafetyTemplates';
+import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
+import { useToast } from '@/hooks/use-toast';
 
 interface SafetyTemplateEditorProps {
   open: boolean;
@@ -36,7 +30,7 @@ interface SafetyTemplateEditorProps {
   onSaved?: () => void;
 }
 
-const DRAFT_KEY_PREFIX = "safety-doc-editor-draft-";
+const DRAFT_KEY_PREFIX = 'safety-doc-editor-draft-';
 
 export function SafetyTemplateEditor({
   open,
@@ -58,8 +52,8 @@ export function SafetyTemplateEditor({
         heading: { levels: [2, 3] },
       }),
       Placeholder.configure({
-        placeholder: "Start editing your safety document...",
-        emptyEditorClass: "is-editor-empty",
+        placeholder: 'Start editing your safety document...',
+        emptyEditorClass: 'is-editor-empty',
       }),
     ],
     content: doc.content,
@@ -70,13 +64,13 @@ export function SafetyTemplateEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-invert prose-sm max-w-none",
-          "min-h-[300px] p-4 focus:outline-none",
-          "prose-headings:text-white prose-headings:font-semibold",
-          "prose-p:text-white prose-p:leading-relaxed",
-          "prose-li:text-white",
-          "prose-strong:text-white prose-strong:font-semibold",
-          "prose-em:text-white"
+          'prose prose-invert prose-sm max-w-none',
+          'min-h-[300px] p-4 focus:outline-none',
+          'prose-headings:text-white prose-headings:font-semibold',
+          'prose-p:text-white prose-p:leading-relaxed',
+          'prose-li:text-white',
+          'prose-strong:text-white prose-strong:font-semibold',
+          'prose-em:text-white'
         ),
       },
     },
@@ -87,7 +81,7 @@ export function SafetyTemplateEditor({
       const draft = localStorage.getItem(draftKey);
       if (draft && draft !== doc.content) {
         const useDraft = window.confirm(
-          "You have unsaved changes from a previous session. Would you like to restore them?"
+          'You have unsaved changes from a previous session. Would you like to restore them?'
         );
         if (useDraft) {
           editor.commands.setContent(draft);
@@ -105,7 +99,7 @@ export function SafetyTemplateEditor({
   const handleClose = useCallback(() => {
     if (hasChanges) {
       const confirmClose = window.confirm(
-        "You have unsaved changes. Are you sure you want to close?"
+        'You have unsaved changes. Are you sure you want to close?'
       );
       if (!confirmClose) return;
     }
@@ -128,8 +122,8 @@ export function SafetyTemplateEditor({
       setHasChanges(false);
 
       toast({
-        title: "Document Saved",
-        description: "Your changes have been saved successfully.",
+        title: 'Document Saved',
+        description: 'Your changes have been saved successfully.',
       });
 
       onSaved?.();
@@ -158,11 +152,9 @@ export function SafetyTemplateEditor({
       title={title}
       disabled={disabled}
       className={cn(
-        "h-9 w-9 rounded-lg flex items-center justify-center touch-manipulation transition-colors",
-        isActive
-          ? "bg-elec-yellow/20 text-elec-yellow"
-          : "text-white active:bg-white/10",
-        disabled && "opacity-30 pointer-events-none"
+        'h-9 w-9 rounded-lg flex items-center justify-center touch-manipulation transition-colors',
+        isActive ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/10',
+        disabled && 'opacity-30 pointer-events-none'
       )}
     >
       {children}
@@ -171,10 +163,7 @@ export function SafetyTemplateEditor({
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent
-        side="bottom"
-        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -183,13 +172,9 @@ export function SafetyTemplateEditor({
                 <Edit3 className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-white truncate">
-                  {doc.name}
-                </h3>
+                <h3 className="text-sm font-semibold text-white truncate">{doc.name}</h3>
                 {hasChanges && (
-                  <span className="text-[10px] font-semibold text-amber-400">
-                    Unsaved changes
-                  </span>
+                  <span className="text-[10px] font-semibold text-amber-400">Unsaved changes</span>
                 )}
               </div>
             </div>
@@ -205,7 +190,7 @@ export function SafetyTemplateEditor({
           <div className="flex items-center gap-1 px-3 py-2 border-b border-white/10 bg-white/[0.02] overflow-x-auto scrollbar-hide">
             <ToolbarButton
               onClick={() => editor?.chain().focus().toggleBold().run()}
-              isActive={editor?.isActive("bold")}
+              isActive={editor?.isActive('bold')}
               title="Bold"
               disabled={isPreview}
             >
@@ -213,7 +198,7 @@ export function SafetyTemplateEditor({
             </ToolbarButton>
             <ToolbarButton
               onClick={() => editor?.chain().focus().toggleItalic().run()}
-              isActive={editor?.isActive("italic")}
+              isActive={editor?.isActive('italic')}
               title="Italic"
               disabled={isPreview}
             >
@@ -223,20 +208,16 @@ export function SafetyTemplateEditor({
             <div className="w-px h-5 bg-white/10 mx-0.5" />
 
             <ToolbarButton
-              onClick={() =>
-                editor?.chain().focus().toggleHeading({ level: 2 }).run()
-              }
-              isActive={editor?.isActive("heading", { level: 2 })}
+              onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+              isActive={editor?.isActive('heading', { level: 2 })}
               title="Heading 2"
               disabled={isPreview}
             >
               <Heading2 className="h-4 w-4" />
             </ToolbarButton>
             <ToolbarButton
-              onClick={() =>
-                editor?.chain().focus().toggleHeading({ level: 3 }).run()
-              }
-              isActive={editor?.isActive("heading", { level: 3 })}
+              onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+              isActive={editor?.isActive('heading', { level: 3 })}
               title="Heading 3"
               disabled={isPreview}
             >
@@ -247,17 +228,15 @@ export function SafetyTemplateEditor({
 
             <ToolbarButton
               onClick={() => editor?.chain().focus().toggleBulletList().run()}
-              isActive={editor?.isActive("bulletList")}
+              isActive={editor?.isActive('bulletList')}
               title="Bullet List"
               disabled={isPreview}
             >
               <List className="h-4 w-4" />
             </ToolbarButton>
             <ToolbarButton
-              onClick={() =>
-                editor?.chain().focus().toggleOrderedList().run()
-              }
-              isActive={editor?.isActive("orderedList")}
+              onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+              isActive={editor?.isActive('orderedList')}
               title="Numbered List"
               disabled={isPreview}
             >
@@ -287,10 +266,8 @@ export function SafetyTemplateEditor({
               type="button"
               onClick={() => setIsPreview(!isPreview)}
               className={cn(
-                "h-9 px-3 rounded-lg text-xs font-semibold flex items-center gap-1.5 touch-manipulation transition-colors whitespace-nowrap",
-                isPreview
-                  ? "bg-elec-yellow/20 text-elec-yellow"
-                  : "text-white active:bg-white/10"
+                'h-9 px-3 rounded-lg text-xs font-semibold flex items-center gap-1.5 touch-manipulation transition-colors whitespace-nowrap',
+                isPreview ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white active:bg-white/10'
               )}
             >
               {isPreview ? (
@@ -313,7 +290,7 @@ export function SafetyTemplateEditor({
               <div
                 className="prose prose-sm prose-invert max-w-none p-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h3]:text-base [&_h3]:font-semibold [&_ul]:list-disc [&_ol]:list-decimal [&_li]:text-white [&_p]:text-white"
                 dangerouslySetInnerHTML={{
-                  __html: editor?.getHTML() || "",
+                  __html: editor?.getHTML() || '',
                 }}
               />
             ) : (

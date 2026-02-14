@@ -24,7 +24,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
   onSignatureChange,
   onNameChange,
   onDateChange,
-  className = ''
+  className = '',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -72,12 +72,12 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
     if ('touches' in event) {
       return {
         x: (event.touches[0].clientX - rect.left) * scaleX,
-        y: (event.touches[0].clientY - rect.top) * scaleY
+        y: (event.touches[0].clientY - rect.top) * scaleY,
       };
     } else {
       return {
         x: (event.clientX - rect.left) * scaleX,
-        y: (event.clientY - rect.top) * scaleY
+        y: (event.clientY - rect.top) * scaleY,
       };
     }
   };
@@ -110,7 +110,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
   const stopDrawing = () => {
     if (!isDrawing) return;
     setIsDrawing(false);
-    
+
     // Save signature as data URL
     const canvas = canvasRef.current;
     if (canvas) {
@@ -184,9 +184,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
 
         {/* Signature Canvas */}
         <div>
-          <Label className="text-sm text-white mb-2 block">
-            Signature
-          </Label>
+          <Label className="text-sm text-white mb-2 block">Signature</Label>
           <div className="relative">
             <canvas
               ref={canvasRef}
@@ -210,9 +208,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
               <Trash2 className="h-3 w-3" />
             </Button>
           </div>
-          <p className="text-xs text-white mt-1">
-            Sign above using mouse or touch
-          </p>
+          <p className="text-xs text-white mt-1">Sign above using mouse or touch</p>
         </div>
       </CardContent>
     </Card>

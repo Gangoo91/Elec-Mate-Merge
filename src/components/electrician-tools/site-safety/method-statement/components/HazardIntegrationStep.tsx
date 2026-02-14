@@ -21,7 +21,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
   onDataChange,
   linkedHazards,
   onHazardLink,
-  onHazardUnlink
+  onHazardUnlink,
 }) => {
   const {
     filteredHazards,
@@ -31,10 +31,10 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
     selectedCategory,
     setSelectedCategory,
     getHazardById,
-    getRiskColor
+    getRiskColor,
   } = useHazardDatabase();
 
-  const linkedHazardObjects = linkedHazards.map(id => getHazardById(id)).filter(Boolean);
+  const linkedHazardObjects = linkedHazards.map((id) => getHazardById(id)).filter(Boolean);
 
   return (
     <div className="space-y-6">
@@ -54,7 +54,9 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
       {linkedHazardObjects.length > 0 && (
         <Card className="border-green-500/20 bg-elec-gray/60">
           <CardHeader>
-            <CardTitle className="text-foreground text-lg">Linked Hazards ({linkedHazardObjects.length})</CardTitle>
+            <CardTitle className="text-foreground text-lg">
+              Linked Hazards ({linkedHazardObjects.length})
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {linkedHazardObjects.map((hazard) => {
@@ -73,10 +75,15 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                           <h4 className="font-medium text-foreground mb-1">{hazard?.name}</h4>
                           <p className="text-sm text-white mb-2">{hazard?.description}</p>
                           <div className="flex flex-wrap gap-2">
-                            <Badge variant="outline" className="border-elec-yellow/30 text-white text-xs">
+                            <Badge
+                              variant="outline"
+                              className="border-elec-yellow/30 text-white text-xs"
+                            >
                               {hazard?.category}
                             </Badge>
-                            <Badge className={`${getRiskColor(hazard?.riskLevel || '')} text-foreground text-xs`}>
+                            <Badge
+                              className={`${getRiskColor(hazard?.riskLevel || '')} text-foreground text-xs`}
+                            >
                               {hazard?.riskLevel} Risk
                             </Badge>
                           </div>
@@ -115,20 +122,24 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("bg-elec-dark/50 border-elec-yellow/20 text-foreground", !searchTerm && "pl-10")}
+                className={cn(
+                  'bg-elec-dark/50 border-elec-yellow/20 text-foreground',
+                  !searchTerm && 'pl-10'
+                )}
               />
             </div>
-            
+
             <div className="flex flex-wrap gap-2">
-              {categories.map(category => (
+              {categories.map((category) => (
                 <Button
                   key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
+                  variant={selectedCategory === category ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className={selectedCategory === category 
-                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                    : "border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow"
+                  className={
+                    selectedCategory === category
+                      ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                      : 'border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow'
                   }
                 >
                   {category}
@@ -142,13 +153,15 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
             {filteredHazards.map((hazard) => {
               const IconComponent = hazard.icon;
               const isLinked = linkedHazards.includes(hazard.id);
-              
+
               return (
-                <Card key={hazard.id} 
-                      className={`border-border/50 hover:bg-muted/20 transition-colors cursor-pointer ${
-                        isLinked ? 'bg-green-500/10 border-green-500/30' : ''
-                      }`}
-                      onClick={() => isLinked ? onHazardUnlink(hazard.id) : onHazardLink(hazard.id)}>
+                <Card
+                  key={hazard.id}
+                  className={`border-border/50 hover:bg-muted/20 transition-colors cursor-pointer ${
+                    isLinked ? 'bg-green-500/10 border-green-500/30' : ''
+                  }`}
+                  onClick={() => (isLinked ? onHazardUnlink(hazard.id) : onHazardLink(hazard.id))}
+                >
                   <CardContent className="p-4">
                     <div className="space-y-3">
                       {/* Header Section */}
@@ -158,37 +171,51 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                             <IconComponent className="h-5 w-5 text-primary" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-foreground text-base mb-2">{hazard.name}</h4>
+                            <h4 className="font-medium text-foreground text-base mb-2">
+                              {hazard.name}
+                            </h4>
                             <div className="flex flex-wrap gap-2">
-                              <Badge variant="outline" className="text-xs border-primary/30 text-white">
+                              <Badge
+                                variant="outline"
+                                className="text-xs border-primary/30 text-white"
+                              >
                                 {hazard.category}
                               </Badge>
-                              <Badge className={`${getRiskColor(hazard.riskLevel)} text-foreground text-xs`}>
+                              <Badge
+                                className={`${getRiskColor(hazard.riskLevel)} text-foreground text-xs`}
+                              >
                                 {hazard.riskLevel}
                               </Badge>
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex flex-col items-center gap-2 flex-shrink-0">
-                          <AlertTriangle className={`h-5 w-5 ${
-                            hazard.riskLevel === "Very High" ? "text-red-500" :
-                            hazard.riskLevel === "High" ? "text-orange-500" :
-                            hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
-                          }`} />
-                          <Button size="sm" variant={isLinked ? "destructive" : "default"}>
+                          <AlertTriangle
+                            className={`h-5 w-5 ${
+                              hazard.riskLevel === 'Very High'
+                                ? 'text-red-500'
+                                : hazard.riskLevel === 'High'
+                                  ? 'text-orange-500'
+                                  : hazard.riskLevel === 'Medium'
+                                    ? 'text-yellow-500'
+                                    : 'text-green-500'
+                            }`}
+                          />
+                          <Button size="sm" variant={isLinked ? 'destructive' : 'default'}>
                             {isLinked ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                           </Button>
                         </div>
                       </div>
-                      
+
                       {/* Description */}
                       <p className="text-sm text-white leading-relaxed">{hazard.description}</p>
-                      
+
                       {/* Control Measures */}
                       <div className="pt-2 border-t border-border/20">
                         <p className="text-xs text-white">
-                          <span className="font-medium text-foreground">Control measures:</span> {hazard.commonControls.slice(0, 2).join(', ')}
+                          <span className="font-medium text-foreground">Control measures:</span>{' '}
+                          {hazard.commonControls.slice(0, 2).join(', ')}
                           {hazard.commonControls.length > 2 && '...'}
                         </p>
                       </div>

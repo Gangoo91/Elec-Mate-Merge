@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Save, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,7 +18,7 @@ interface RAMSQuickEditDialogProps {
 export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
   documentId,
   isOpen,
-  onClose
+  onClose,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -52,10 +47,10 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
         location: data.location,
         date: data.date,
         assessor: data.assessor,
-        activities: data.activities as string[] || [],
-        risks: data.risks as any[] || [],
+        activities: (data.activities as string[]) || [],
+        risks: (data.risks as any[]) || [],
         contractor: data.contractor || '',
-        supervisor: data.supervisor || ''
+        supervisor: data.supervisor || '',
       };
 
       const loadedMethodData: Partial<MethodStatementData> = {
@@ -63,7 +58,7 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
         location: data.location,
         contractor: data.contractor || '',
         supervisor: data.supervisor || '',
-        steps: []
+        steps: [],
       };
 
       setRamsData(loadedRamsData);
@@ -73,7 +68,7 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
       toast({
         title: 'Error',
         description: 'Failed to load document data',
-        variant: 'destructive'
+        variant: 'destructive',
       });
       onClose();
     } finally {
@@ -92,7 +87,7 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
         toast({
           title: 'Document Updated',
           description: 'Your RAMS document has been updated successfully',
-          variant: 'success'
+          variant: 'success',
         });
         onClose();
       } else {
@@ -103,7 +98,7 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
       toast({
         title: 'Update Failed',
         description: 'Failed to update document. Please try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsSaving(false);

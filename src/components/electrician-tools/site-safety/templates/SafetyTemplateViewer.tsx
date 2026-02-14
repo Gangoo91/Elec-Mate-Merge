@@ -1,17 +1,8 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  Download,
-  CheckCircle2,
-  FileText,
-  Loader2,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import {
-  useAdoptTemplate,
-  type SafetyTemplate,
-} from "@/hooks/useSafetyTemplates";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Download, CheckCircle2, FileText, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { useAdoptTemplate, type SafetyTemplate } from '@/hooks/useSafetyTemplates';
 
 interface SafetyTemplateViewerProps {
   template: SafetyTemplate;
@@ -19,28 +10,18 @@ interface SafetyTemplateViewerProps {
   isAdopted: boolean;
 }
 
-export function SafetyTemplateViewer({
-  template,
-  onBack,
-  isAdopted,
-}: SafetyTemplateViewerProps) {
-  const [companyName, setCompanyName] = useState("");
-  const [siteAddress, setSiteAddress] = useState("");
+export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemplateViewerProps) {
+  const [companyName, setCompanyName] = useState('');
+  const [siteAddress, setSiteAddress] = useState('');
   const adoptMutation = useAdoptTemplate();
 
   const handleAdopt = () => {
     // Replace placeholders in content
     let content = template.content;
-    content = content.replace(/\{\{company_name\}\}/g, companyName || "___");
-    content = content.replace(/\{\{site_address\}\}/g, siteAddress || "___");
-    content = content.replace(
-      /\{\{date\}\}/g,
-      new Date().toLocaleDateString("en-GB")
-    );
-    content = content.replace(
-      /\{\{[a-z_]+\}\}/g,
-      "___"
-    );
+    content = content.replace(/\{\{company_name\}\}/g, companyName || '___');
+    content = content.replace(/\{\{site_address\}\}/g, siteAddress || '___');
+    content = content.replace(/\{\{date\}\}/g, new Date().toLocaleDateString('en-GB'));
+    content = content.replace(/\{\{[a-z_]+\}\}/g, '___');
 
     adoptMutation.mutate(
       {
@@ -80,14 +61,10 @@ export function SafetyTemplateViewer({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <FileText className="h-5 w-5 text-elec-yellow" />
-            <span className="text-xs text-white font-medium">
-              {template.category}
-            </span>
+            <span className="text-xs text-white font-medium">{template.category}</span>
           </div>
           <h2 className="text-xl font-bold text-white">{template.name}</h2>
-          {template.summary && (
-            <p className="text-sm text-white mt-1">{template.summary}</p>
-          )}
+          {template.summary && <p className="text-sm text-white mt-1">{template.summary}</p>}
         </div>
 
         {/* Regulatory references */}
@@ -119,9 +96,7 @@ export function SafetyTemplateViewer({
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3 p-4 rounded-xl border border-elec-yellow/20 bg-elec-yellow/5"
           >
-            <h3 className="text-sm font-bold text-white">
-              Adopt This Template
-            </h3>
+            <h3 className="text-sm font-bold text-white">Adopt This Template</h3>
             <p className="text-xs text-white">
               Fill in your details and the template will be personalised for you.
             </p>

@@ -54,10 +54,12 @@ const StatusDot = ({ status }: { status: string }) => {
   };
 
   return (
-    <div className={cn(
-      "absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-elec-dark",
-      colorMap[status] || 'bg-gray-500'
-    )} />
+    <div
+      className={cn(
+        'absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-elec-dark',
+        colorMap[status] || 'bg-gray-500'
+      )}
+    />
   );
 };
 
@@ -134,8 +136,8 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
         {/* Left action (download) - revealed on swipe right */}
         <div
           className={cn(
-            "absolute left-0 inset-y-0 w-24 bg-elec-yellow flex items-center justify-center transition-opacity",
-            swipeX > 20 ? "opacity-100" : "opacity-0"
+            'absolute left-0 inset-y-0 w-24 bg-elec-yellow flex items-center justify-center transition-opacity',
+            swipeX > 20 ? 'opacity-100' : 'opacity-0'
           )}
         >
           {isDownloading ? (
@@ -148,8 +150,8 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
         {/* Right action (delete) - revealed on swipe left */}
         <div
           className={cn(
-            "absolute right-0 inset-y-0 w-24 bg-red-500 flex items-center justify-center transition-opacity",
-            swipeX < -20 ? "opacity-100" : "opacity-0"
+            'absolute right-0 inset-y-0 w-24 bg-red-500 flex items-center justify-center transition-opacity',
+            swipeX < -20 ? 'opacity-100' : 'opacity-0'
           )}
         >
           {isDeleting ? (
@@ -163,12 +165,12 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
         <div
           ref={cardRef}
           className={cn(
-            "relative bg-white/[0.03] border p-4 transition-all duration-200 cursor-pointer",
-            "active:scale-[0.98]",
+            'relative bg-white/[0.03] border p-4 transition-all duration-200 cursor-pointer',
+            'active:scale-[0.98]',
             selected
-              ? "border-elec-yellow/50 bg-elec-yellow/5"
-              : "border-white/[0.06] hover:border-white/[0.1]",
-            isDragging ? "transition-none" : "transition-transform"
+              ? 'border-elec-yellow/50 bg-elec-yellow/5'
+              : 'border-white/[0.06] hover:border-white/[0.1]',
+            isDragging ? 'transition-none' : 'transition-transform'
           )}
           style={{ transform: `translateX(${swipeX}px)` }}
           onTouchStart={handleTouchStart}
@@ -179,10 +181,7 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
           <div className="flex items-center gap-3">
             {/* Edit mode checkbox */}
             {editMode && (
-              <div
-                className="animate-fade-in"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className="animate-fade-in" onClick={(e) => e.stopPropagation()}>
                 <Checkbox
                   checked={selected}
                   onCheckedChange={onToggleSelect}
@@ -218,19 +217,13 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
                   </Badge>
                 )}
               </div>
-              <p className="text-sm text-white truncate mt-0.5">
-                {doc.location}
-              </p>
+              <p className="text-sm text-white truncate mt-0.5">{doc.location}</p>
             </div>
 
             {/* Date + chevron */}
             <div className="text-right shrink-0">
-              <span className="text-xs text-white block">
-                {formatRelativeDate(doc.created_at)}
-              </span>
-              {!editMode && (
-                <ChevronRight className="h-5 w-5 text-white mt-1 ml-auto" />
-              )}
+              <span className="text-xs text-white block">{formatRelativeDate(doc.created_at)}</span>
+              {!editMode && <ChevronRight className="h-5 w-5 text-white mt-1 ml-auto" />}
             </div>
           </div>
         </div>

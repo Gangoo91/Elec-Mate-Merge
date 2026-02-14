@@ -3,8 +3,27 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Shield, Wrench, Award, Clock, AlertTriangle, Edit3, Save, X, Trash2, Users, Plus, ChevronDown } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Shield,
+  Wrench,
+  Award,
+  Clock,
+  AlertTriangle,
+  Edit3,
+  Save,
+  X,
+  Trash2,
+  Users,
+  Plus,
+  ChevronDown,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
@@ -24,7 +43,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   index,
   editable = false,
   onUpdate,
-  onRemove
+  onRemove,
 }) => {
   const { isMobile } = useMobileEnhanced();
   const riskColors = getRiskColorsByLevel(step.riskLevel || 'low');
@@ -73,7 +92,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   const addEquipment = () => {
     setEditedStep({
       ...editedStep,
-      equipment: [...(editedStep.equipment || []), '']
+      equipment: [...(editedStep.equipment || []), ''],
     });
   };
 
@@ -94,7 +113,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
         step={step}
         open={showEditSheet}
         onOpenChange={setShowEditSheet}
-        onSave={(stepId, updates) => { if (onUpdate) onUpdate(stepId, updates); }}
+        onSave={(stepId, updates) => {
+          if (onUpdate) onUpdate(stepId, updates);
+        }}
         onDelete={onRemove}
       />
 
@@ -114,20 +135,30 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
               {/* Step Number Badge */}
-              <div className={cn(
-                'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
-                riskColors.bg, riskColors.text
-              )}>
+              <div
+                className={cn(
+                  'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
+                  riskColors.bg,
+                  riskColors.text
+                )}
+              >
                 {index + 1}
               </div>
               {/* Duration Badge */}
               {step.duration && (
                 <Badge variant="outline" className="text-xs border-white/20 text-white px-3 py-1">
-                  <Clock className="h-3.5 w-3.5 mr-1.5" />{step.duration}
+                  <Clock className="h-3.5 w-3.5 mr-1.5" />
+                  {step.duration}
                 </Badge>
               )}
               {/* Risk Level */}
-              <Badge className={cn(riskColors.bg, riskColors.text, 'border-0 text-xs font-semibold px-3 py-1 capitalize')}>
+              <Badge
+                className={cn(
+                  riskColors.bg,
+                  riskColors.text,
+                  'border-0 text-xs font-semibold px-3 py-1 capitalize'
+                )}
+              >
                 {step.riskLevel || 'Low'}
               </Badge>
             </div>
@@ -146,7 +177,12 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
               )}
               {!isEditing && (
                 <div className="h-11 w-11 flex items-center justify-center">
-                  <ChevronDown className={cn('h-5 w-5 text-white transition-transform duration-200', isExpanded && 'rotate-180')} />
+                  <ChevronDown
+                    className={cn(
+                      'h-5 w-5 text-white transition-transform duration-200',
+                      isExpanded && 'rotate-180'
+                    )}
+                  />
                 </div>
               )}
             </div>
@@ -164,7 +200,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
               />
             ) : (
               <>
-                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">{step.title || 'Untitled Step'}</h4>
+                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">
+                  {step.title || 'Untitled Step'}
+                </h4>
                 <p className="text-sm text-white line-clamp-2 mt-1.5 leading-relaxed">
                   {step.description || 'No description'}
                 </p>
@@ -175,7 +213,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
         {isExpanded && (
           <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
             <div className="pt-4">
-              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">Description</label>
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">
+                Description
+              </label>
               {isEditing ? (
                 <Textarea
                   value={editedStep.description}
@@ -187,11 +227,12 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                 <div className="mt-2 text-sm text-white leading-relaxed space-y-2 text-left">
                   {(step.description || '')
                     .split(/(?=(?:^|\n)\d+\.|[A-Z]{2,}:|•|\n\n)/gm)
-                    .filter(section => section.trim())
+                    .filter((section) => section.trim())
                     .map((section, idx) => (
-                      <p key={idx} className="leading-relaxed text-left">{section.trim()}</p>
-                    ))
-                  }
+                      <p key={idx} className="leading-relaxed text-left">
+                        {section.trim()}
+                      </p>
+                    ))}
                 </div>
               )}
             </div>
@@ -205,14 +246,22 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                 {isEditing ? (
                   <Textarea
                     value={editedStep.safetyRequirements?.join('\n') || ''}
-                    onChange={(e) => setEditedStep({ ...editedStep, safetyRequirements: e.target.value.split('\n').filter(Boolean) })}
+                    onChange={(e) =>
+                      setEditedStep({
+                        ...editedStep,
+                        safetyRequirements: e.target.value.split('\n').filter(Boolean),
+                      })
+                    }
                     className="min-h-[80px]"
                     placeholder="One requirement per line"
                   />
                 ) : (
                   <ul className="space-y-2 text-left">
                     {step.safetyRequirements?.map((req, i) => (
-                      <li key={i} className="text-sm text-white flex items-start gap-2 leading-relaxed text-left">
+                      <li
+                        key={i}
+                        className="text-sm text-white flex items-start gap-2 leading-relaxed text-left"
+                      >
                         <span className="text-amber-500 mt-0.5 shrink-0">•</span>
                         <span className="text-left">{req}</span>
                       </li>
@@ -224,30 +273,35 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
 
             {(step.equipment?.length > 0 || isEditing) && (
               <div>
-                <label className="text-xs font-medium text-white uppercase tracking-wide">Equipment</label>
+                <label className="text-xs font-medium text-white uppercase tracking-wide">
+                  Equipment
+                </label>
                 {isEditing ? (
                   <div className="mt-2 space-y-2">
-                    {(props => (editedStep.equipment || []).map((item, idx) => (
-                      <div key={idx} className="flex gap-2">
-                        <Input
-                          value={item}
-                          onChange={(e) => updateEquipment(idx, e.target.value)}
-                          placeholder="Equipment item"
-                        />
-                        <Button variant="ghost" size="sm" onClick={() => removeEquipment(idx)}>
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )))()}
+                    {((props) =>
+                      (editedStep.equipment || []).map((item, idx) => (
+                        <div key={idx} className="flex gap-2">
+                          <Input
+                            value={item}
+                            onChange={(e) => updateEquipment(idx, e.target.value)}
+                            placeholder="Equipment item"
+                          />
+                          <Button variant="ghost" size="sm" onClick={() => removeEquipment(idx)}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )))()}
                     <Button variant="outline" size="sm" onClick={addEquipment}>
-                      <Plus className="h-4 w-4 mr-1" />Add
-                  </Button>
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </Button>
                   </div>
                 ) : (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {step.equipment?.map((item, i) => (
                       <Badge key={i} variant="outline" className="border-white/20 text-white">
-                        <Wrench className="h-3 w-3 mr-1" />{item}
+                        <Wrench className="h-3 w-3 mr-1" />
+                        {item}
                       </Badge>
                     ))}
                   </div>
@@ -266,7 +320,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     placeholder="e.g. 30 mins"
                   />
                 ) : (
-                  <p className="mt-2 text-sm font-medium text-white">{step.duration || 'Not specified'}</p>
+                  <p className="mt-2 text-sm font-medium text-white">
+                    {step.duration || 'Not specified'}
+                  </p>
                 )}
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
@@ -276,7 +332,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     value={editedStep.riskLevel || 'low'}
                     onValueChange={(v) => setEditedStep({ ...editedStep, riskLevel: v as any })}
                   >
-                    <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="low">Low</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
@@ -284,7 +342,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     </SelectContent>
                   </Select>
                 ) : (
-                  <Badge className={cn('mt-2', riskColors.bg, riskColors.text)}>{step.riskLevel || 'Low'}</Badge>
+                  <Badge className={cn('mt-2', riskColors.bg, riskColors.text)}>
+                    {step.riskLevel || 'Low'}
+                  </Badge>
                 )}
               </div>
             </div>
@@ -296,26 +356,43 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                   <Input
                     type="number"
                     value={editedStep.personnelRequired || 1}
-                    onChange={(e) => setEditedStep({ ...editedStep, personnelRequired: parseInt(e.target.value) || 1 })}
+                    onChange={(e) =>
+                      setEditedStep({
+                        ...editedStep,
+                        personnelRequired: parseInt(e.target.value) || 1,
+                      })
+                    }
                     className="w-20"
                     min={1}
                   />
                 ) : (
-                  <span className="text-sm text-white">{step.personnelRequired || 1} person(s) required</span>
+                  <span className="text-sm text-white">
+                    {step.personnelRequired || 1} person(s) required
+                  </span>
                 )}
               </div>
             )}
 
             {editable && isEditing && (
               <div className="flex gap-2 pt-4 border-t border-white/5">
-                <Button variant="outline" className="flex-1 border-red-500/40 text-red-400 hover:bg-red-500/10" onClick={handleDelete}>
-                  <Trash2 className="h-4 w-4 mr-2" />Delete
+                <Button
+                  variant="outline"
+                  className="flex-1 border-red-500/40 text-red-400 hover:bg-red-500/10"
+                  onClick={handleDelete}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
                 </Button>
                 <Button variant="outline" className="flex-1" onClick={handleCancel}>
-                  <X className="h-4 w-4 mr-2" />Cancel
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
                 </Button>
-                <Button className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90" onClick={handleSave}>
-                  <Save className="h-4 w-4 mr-2" />Save
+                <Button
+                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  onClick={handleSave}
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
                 </Button>
               </div>
             )}

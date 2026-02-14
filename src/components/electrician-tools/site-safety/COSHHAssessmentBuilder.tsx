@@ -46,7 +46,14 @@ import {
   Loader2,
   Clock,
   Copy,
+  Ban,
+  ArrowRightLeft,
+  Cog,
+  ClipboardList,
+  ChevronDown,
 } from 'lucide-react';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { useShowMore } from '@/hooks/useShowMore';
 
 // ─── Types ───
 
@@ -252,6 +259,116 @@ const RISK_COLOURS: Record<string, { bg: string; text: string; border: string }>
   'very-high': { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/20' },
 };
 
+// ─── Hierarchy of Controls ───
+
+type HierarchyKey = 'elimination' | 'substitution' | 'engineering' | 'administrative' | 'ppe';
+
+interface HierarchyLevel {
+  considered: boolean;
+  actions: string[];
+}
+
+type HierarchyControls = Record<HierarchyKey, HierarchyLevel>;
+
+const HIERARCHY_LEVELS: {
+  key: HierarchyKey;
+  label: string;
+  description: string;
+  icon: React.ElementType;
+  colour: string;
+  bg: string;
+  border: string;
+}[] = [
+  {
+    key: 'elimination',
+    label: '1. Elimination',
+    description: 'Can the substance be removed entirely?',
+    icon: Ban,
+    colour: 'text-green-400',
+    bg: 'bg-green-500/10',
+    border: 'border-green-500/20',
+  },
+  {
+    key: 'substitution',
+    label: '2. Substitution',
+    description: 'Can a safer alternative be used?',
+    icon: ArrowRightLeft,
+    colour: 'text-blue-400',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+  },
+  {
+    key: 'engineering',
+    label: '3. Engineering Controls',
+    description: 'LEV, enclosed systems, physical barriers',
+    icon: Cog,
+    colour: 'text-purple-400',
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+  },
+  {
+    key: 'administrative',
+    label: '4. Administrative Controls',
+    description: 'Training, procedures, signage, rotation',
+    icon: ClipboardList,
+    colour: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+  },
+  {
+    key: 'ppe',
+    label: '5. PPE (Last Resort)',
+    description: 'Personal protective equipment',
+    icon: Shield,
+    colour: 'text-cyan-400',
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+  },
+];
+
+const EMPTY_HIERARCHY: HierarchyControls = {
+  elimination: { considered: false, actions: [] },
+  substitution: { considered: false, actions: [] },
+  engineering: { considered: false, actions: [] },
+  administrative: { considered: false, actions: [] },
+  ppe: { considered: false, actions: [] },
+};
+
+function flattenHierarchy(hierarchy: HierarchyControls): string[] {
+  const result: string[] = [];
+  for (const level of HIERARCHY_LEVELS) {
+    const h = hierarchy[level.key];
+    if (h.considered && h.actions.length > 0) {
+      for (const action of h.actions) {
+        result.push(`[${level.label}] ${action}`);
+      }
+    }
+  }
+  return result;
+}
+
+function parseHierarchy(controls: string[]): HierarchyControls {
+  const hierarchy: HierarchyControls = JSON.parse(JSON.stringify(EMPTY_HIERARCHY));
+  for (const control of controls) {
+    let matched = false;
+    for (const level of HIERARCHY_LEVELS) {
+      const prefix = `[${level.label}] `;
+      if (control.startsWith(prefix)) {
+        hierarchy[level.key].considered = true;
+        hierarchy[level.key].actions.push(control.slice(prefix.length));
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) {
+      // Legacy controls without prefix go to administrative
+      hierarchy.administrative.considered = true;
+      hierarchy.administrative.actions.push(control);
+    }
+  }
+  return hierarchy;
+}
+
 // ─── Main Component ───
 
 export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
@@ -287,6 +404,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     review_date: a.review_date,
     created_at: a.created_at,
   }));
+
+  const {
+    visible: visibleAssessments,
+    hasMore: hasMoreAssessments,
+    remaining: remainingAssessments,
+    loadMore: loadMoreAssessments,
+  } = useShowMore(assessments);
+
   const [showWizard, setShowWizard] = useState(false);
   const [showSubstanceSheet, setShowSubstanceSheet] = useState(false);
   const [viewingAssessment, setViewingAssessment] = useState<COSHHAssessment | null>(null);
@@ -309,6 +434,17 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [oelValue, setOelValue] = useState('');
   const [controlMeasures, setControlMeasures] = useState<string[]>([]);
   const [newControl, setNewControl] = useState('');
+  const [hierarchyControls, setHierarchyControls] = useState<HierarchyControls>(
+    JSON.parse(JSON.stringify(EMPTY_HIERARCHY))
+  );
+  const [hierarchyInputs, setHierarchyInputs] = useState<Record<HierarchyKey, string>>({
+    elimination: '',
+    substitution: '',
+    engineering: '',
+    administrative: '',
+    ppe: '',
+  });
+  const [sdsReference, setSdsReference] = useState('');
   const [ppeRequired, setPpeRequired] = useState<string[]>([]);
   const [newPPE, setNewPPE] = useState('');
   const [storageRequirements, setStorageRequirements] = useState('');
@@ -336,6 +472,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       healthEffects,
       oelValue,
       controlMeasures,
+      hierarchyControls,
+      sdsReference,
       ppeRequired,
       storageRequirements,
       spillProcedure,
@@ -360,6 +498,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       healthEffects,
       oelValue,
       controlMeasures,
+      hierarchyControls,
+      sdsReference,
       ppeRequired,
       storageRequirements,
       spillProcedure,
@@ -402,6 +542,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     if (recoveredDraft.oelValue !== undefined) setOelValue(recoveredDraft.oelValue);
     if (recoveredDraft.controlMeasures !== undefined)
       setControlMeasures(recoveredDraft.controlMeasures);
+    if (recoveredDraft.hierarchyControls !== undefined)
+      setHierarchyControls(recoveredDraft.hierarchyControls);
+    if (recoveredDraft.sdsReference !== undefined) setSdsReference(recoveredDraft.sdsReference);
     if (recoveredDraft.ppeRequired !== undefined) setPpeRequired(recoveredDraft.ppeRequired);
     if (recoveredDraft.storageRequirements !== undefined)
       setStorageRequirements(recoveredDraft.storageRequirements);
@@ -435,6 +578,15 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setOelValue('');
     setControlMeasures([]);
     setNewControl('');
+    setHierarchyControls(JSON.parse(JSON.stringify(EMPTY_HIERARCHY)));
+    setHierarchyInputs({
+      elimination: '',
+      substitution: '',
+      engineering: '',
+      administrative: '',
+      ppe: '',
+    });
+    setSdsReference('');
     setPpeRequired([]);
     setNewPPE('');
     setStorageRequirements('');
@@ -466,6 +618,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setHealthEffects(assessment.health_effects);
     setOelValue(assessment.oel_value);
     setControlMeasures([...assessment.control_measures]);
+    setHierarchyControls(parseHierarchy(assessment.control_measures));
     setPpeRequired([...assessment.ppe_required]);
     setStorageRequirements(assessment.storage_requirements);
     setSpillProcedure(assessment.spill_procedure);
@@ -493,6 +646,17 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     );
     setHealthEffects(substance.health);
     setControlMeasures(substance.controls);
+    // Map common substance controls into administrative level by default
+    const substanceHierarchy: HierarchyControls = JSON.parse(JSON.stringify(EMPTY_HIERARCHY));
+    substanceHierarchy.administrative = {
+      considered: true,
+      actions: [...substance.controls],
+    };
+    substanceHierarchy.ppe = {
+      considered: true,
+      actions: [...substance.ppe],
+    };
+    setHierarchyControls(substanceHierarchy);
     setPpeRequired(substance.ppe);
     setStorageRequirements(substance.storage);
     setSpillProcedure(substance.spill);
@@ -501,45 +665,44 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setWizardStep(1);
   };
 
-  const saveAssessment = () => {
+  const saveAssessment = async () => {
     const now = new Date();
     const reviewDate = new Date(now);
     reviewDate.setFullYear(reviewDate.getFullYear() + 1);
 
-    const assessment: COSHHAssessment = {
-      id: `coshh-${Date.now()}`,
-      substance_name: substanceName,
-      manufacturer,
-      product_code: productCode,
-      location_of_use: locationOfUse,
-      task_description: taskDescription,
-      quantity_used: quantityUsed,
-      frequency_of_use: frequencyOfUse,
-      ghs_hazards: selectedGHS,
-      exposure_routes: exposureRoutes.filter((r) => r.selected).map((r) => r.id),
-      health_effects: healthEffects,
-      oel_value: oelValue,
-      control_measures: controlMeasures,
-      ppe_required: ppeRequired,
-      storage_requirements: storageRequirements,
-      spill_procedure: spillProcedure,
-      first_aid: firstAid,
-      disposal_method: disposalMethod,
-      monitoring_required: monitoringRequired,
-      monitoring_details: monitoringDetails,
-      risk_rating: riskRating,
-      assessed_by: assessedBy,
-      photos: photoUrls,
-      assessment_date: now.toISOString().split('T')[0],
-      review_date: reviewDate.toISOString().split('T')[0],
-      created_at: now.toISOString(),
-    };
-
-    setAssessments((prev) => [assessment, ...prev]);
-    clearDraft();
-    setShowWizard(false);
-    resetWizard();
-    toast.success('COSHH assessment saved');
+    try {
+      await createCOSHH.mutateAsync({
+        substance_name: substanceName,
+        manufacturer: manufacturer || null,
+        product_code: productCode || null,
+        location_of_use: locationOfUse || null,
+        task_description: taskDescription || null,
+        quantity_used: quantityUsed || null,
+        frequency_of_use: frequencyOfUse || null,
+        ghs_hazards: selectedGHS,
+        exposure_routes: exposureRoutes.filter((r) => r.selected).map((r) => r.id),
+        health_effects: healthEffects || null,
+        oel_value: oelValue || null,
+        control_measures: flattenHierarchy(hierarchyControls),
+        ppe_required: ppeRequired,
+        storage_requirements: storageRequirements || null,
+        spill_procedure: spillProcedure || null,
+        first_aid: firstAid || null,
+        disposal_method: disposalMethod || null,
+        monitoring_required: monitoringRequired,
+        monitoring_details: monitoringDetails || null,
+        risk_rating: riskRating,
+        assessed_by: assessedBy,
+        photos: photoUrls,
+        assessment_date: now.toISOString().split('T')[0],
+        review_date: reviewDate.toISOString().split('T')[0],
+      });
+      clearDraft();
+      setShowWizard(false);
+      resetWizard();
+    } catch {
+      // Error toast handled by hook
+    }
   };
 
   const toggleGHS = (id: string) => {
@@ -557,6 +720,39 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       setControlMeasures((prev) => [...prev, newControl.trim()]);
       setNewControl('');
     }
+  };
+
+  const addHierarchyAction = (level: HierarchyKey) => {
+    const input = hierarchyInputs[level].trim();
+    if (!input) return;
+    setHierarchyControls((prev) => ({
+      ...prev,
+      [level]: {
+        considered: true,
+        actions: [...prev[level].actions, input],
+      },
+    }));
+    setHierarchyInputs((prev) => ({ ...prev, [level]: '' }));
+  };
+
+  const removeHierarchyAction = (level: HierarchyKey, index: number) => {
+    setHierarchyControls((prev) => ({
+      ...prev,
+      [level]: {
+        ...prev[level],
+        actions: prev[level].actions.filter((_, i) => i !== index),
+      },
+    }));
+  };
+
+  const toggleHierarchyConsidered = (level: HierarchyKey) => {
+    setHierarchyControls((prev) => ({
+      ...prev,
+      [level]: {
+        ...prev[level],
+        considered: !prev[level].considered,
+      },
+    }));
   };
 
   const addPPE = () => {
@@ -655,6 +851,19 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   </Select>
                 </div>
               </div>
+            </div>
+
+            <div>
+              <Label className="text-white text-sm">Safety Data Sheet (SDS) Reference</Label>
+              <Input
+                value={sdsReference}
+                onChange={(e) => setSdsReference(e.target.value)}
+                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                placeholder="e.g. SDS-2024-001 or manufacturer reference"
+              />
+              <p className="text-xs text-white mt-1">
+                Reference number or location of the Safety Data Sheet for this substance
+              </p>
             </div>
           </div>
         );
@@ -759,49 +968,94 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       case 2:
         return (
           <div className="space-y-4">
-            <h3 className="text-base font-bold text-white">Controls & PPE</h3>
+            <h3 className="text-base font-bold text-white">Hierarchy of Controls</h3>
+            <p className="text-xs text-white">
+              Work through each level — eliminate or substitute first, then engineer controls, before
+              relying on administrative measures or PPE.
+            </p>
 
-            <div>
-              <Label className="text-white text-sm mb-2 block">Control Measures</Label>
-              <div className="space-y-1.5 mb-2">
-                {controlMeasures.map((c, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 p-2 rounded-lg border border-white/10 bg-white/[0.03]"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                    <span className="text-sm text-white flex-1">{c}</span>
-                    <button
-                      onClick={() =>
-                        setControlMeasures((prev) => prev.filter((_, idx) => idx !== i))
-                      }
-                      className="h-11 w-11 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
-                    >
-                      <Trash2 className="h-3.5 w-3.5 text-white" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <Input
-                  value={newControl}
-                  onChange={(e) => setNewControl(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && addControl()}
-                  className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 flex-1"
-                  placeholder="Add control measure..."
-                />
-                <Button
-                  onClick={addControl}
-                  size="sm"
-                  className="h-10 bg-elec-yellow text-black rounded-lg touch-manipulation"
+            {HIERARCHY_LEVELS.map((level) => {
+              const LevelIcon = level.icon;
+              const h = hierarchyControls[level.key];
+              return (
+                <div
+                  key={level.key}
+                  className={`rounded-xl border ${h.considered ? level.border : 'border-white/10'} ${h.considered ? level.bg : 'bg-white/[0.02]'} overflow-hidden`}
                 >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+                  <button
+                    onClick={() => toggleHierarchyConsidered(level.key)}
+                    className="w-full flex items-center gap-3 p-3 touch-manipulation active:bg-white/[0.05] transition-all"
+                  >
+                    <LevelIcon
+                      className={`h-4 w-4 flex-shrink-0 ${h.considered ? level.colour : 'text-white'}`}
+                    />
+                    <div className="flex-1 text-left">
+                      <p
+                        className={`text-sm font-semibold ${h.considered ? level.colour : 'text-white'}`}
+                      >
+                        {level.label}
+                      </p>
+                      <p className="text-[11px] text-white">{level.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {h.actions.length > 0 && (
+                        <Badge variant="outline" className={`${level.colour} text-[10px]`}>
+                          {h.actions.length}
+                        </Badge>
+                      )}
+                      <ChevronDown
+                        className={`h-4 w-4 text-white transition-transform ${h.considered ? 'rotate-180' : ''}`}
+                      />
+                    </div>
+                  </button>
+                  {h.considered && (
+                    <div className="px-3 pb-3 space-y-1.5">
+                      {h.actions.map((action, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 p-2 rounded-lg border border-white/10 bg-white/[0.03]"
+                        >
+                          <CheckCircle2
+                            className={`h-3.5 w-3.5 ${level.colour} flex-shrink-0`}
+                          />
+                          <span className="text-sm text-white flex-1">{action}</span>
+                          <button
+                            onClick={() => removeHierarchyAction(level.key, i)}
+                            className="h-11 w-11 rounded-full bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] flex-shrink-0"
+                          >
+                            <Trash2 className="h-3.5 w-3.5 text-white" />
+                          </button>
+                        </div>
+                      ))}
+                      <div className="flex gap-2">
+                        <Input
+                          value={hierarchyInputs[level.key]}
+                          onChange={(e) =>
+                            setHierarchyInputs((prev) => ({
+                              ...prev,
+                              [level.key]: e.target.value,
+                            }))
+                          }
+                          onKeyDown={(e) => e.key === 'Enter' && addHierarchyAction(level.key)}
+                          className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500 flex-1"
+                          placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control...`}
+                        />
+                        <Button
+                          onClick={() => addHierarchyAction(level.key)}
+                          size="sm"
+                          className="h-10 bg-elec-yellow text-black rounded-lg touch-manipulation"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
 
             <div>
-              <Label className="text-white text-sm mb-2 block">Required PPE</Label>
+              <Label className="text-white text-sm mb-2 block">Specific PPE Required</Label>
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {ppeRequired.map((item, i) => (
                   <Badge
@@ -1044,7 +1298,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {assessments.map((assessment) => {
+            {visibleAssessments.map((assessment) => {
               const riskColours = RISK_COLOURS[assessment.risk_rating];
               return (
                 <motion.button
@@ -1096,6 +1350,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </motion.button>
               );
             })}
+            {hasMoreAssessments && (
+              <LoadMoreButton onLoadMore={loadMoreAssessments} remaining={remainingAssessments} />
+            )}
           </div>
         )}
       </div>
@@ -1274,17 +1531,55 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   </div>
                 )}
 
-                {/* Controls */}
+                {/* Hierarchy of Controls */}
                 <div>
-                  <h4 className="text-sm font-bold text-white mb-2">Control Measures</h4>
-                  <div className="space-y-1.5">
-                    {viewingAssessment.control_measures.map((c, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                        <span className="text-sm text-white">{c}</span>
+                  <h4 className="text-sm font-bold text-white mb-2">Hierarchy of Controls</h4>
+                  {(() => {
+                    const parsed = parseHierarchy(viewingAssessment.control_measures);
+                    const activeLevels = HIERARCHY_LEVELS.filter(
+                      (l) => parsed[l.key].considered && parsed[l.key].actions.length > 0
+                    );
+                    if (activeLevels.length === 0) {
+                      return (
+                        <div className="space-y-1.5">
+                          {viewingAssessment.control_measures.map((c, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
+                              <span className="text-sm text-white">{c}</span>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="space-y-2">
+                        {activeLevels.map((level) => {
+                          const LevelIcon = level.icon;
+                          const h = parsed[level.key];
+                          return (
+                            <div
+                              key={level.key}
+                              className={`p-2.5 rounded-lg border ${level.border} ${level.bg}`}
+                            >
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <LevelIcon className={`h-3.5 w-3.5 ${level.colour}`} />
+                                <span className={`text-xs font-bold ${level.colour}`}>
+                                  {level.label}
+                                </span>
+                              </div>
+                              <div className="space-y-1 ml-5">
+                                {h.actions.map((action, i) => (
+                                  <p key={i} className="text-sm text-white">
+                                    {action}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })()}
                 </div>
 
                 {/* PPE */}

@@ -77,100 +77,110 @@ export function useSiteDiaryEntries() {
   }, [loadEntries]);
 
   // Create entry
-  const createEntry = useCallback(async (entry: NewDiaryEntry) => {
-    if (!user) {
-      toast.error('Please sign in to save diary entries');
-      return null;
-    }
+  const createEntry = useCallback(
+    async (entry: NewDiaryEntry) => {
+      if (!user) {
+        toast.error('Please sign in to save diary entries');
+        return null;
+      }
 
-    try {
-      const { data, error } = await supabase
-        .from('site_diary_entries')
-        .insert({
-          ...entry,
-          user_id: user.id,
-        })
-        .select()
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('site_diary_entries')
+          .insert({
+            ...entry,
+            user_id: user.id,
+          })
+          .select()
+          .single();
 
-      if (error) throw error;
+        if (error) throw error;
 
-      const newEntry = data as SiteDiaryEntry;
-      setEntries(prev => [newEntry, ...prev]);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([newEntry, ...entries]));
-      toast.success('Diary entry saved');
+        const newEntry = data as SiteDiaryEntry;
+        setEntries((prev) => [newEntry, ...prev]);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([newEntry, ...entries]));
+        toast.success('Diary entry saved');
 
-      // Log XP for diary entry
-      logActivity({
-        activityType: 'site_diary_entry',
-        sourceId: newEntry.id,
-        sourceTitle: `Site Diary: ${newEntry.site_name}`,
-        metadata: {
-          siteName: newEntry.site_name,
-          tasksCompleted: newEntry.tasks_completed?.length ?? 0,
-          skillsPractised: newEntry.skills_practised?.length ?? 0,
-        },
-      });
+        // Log XP for diary entry
+        logActivity({
+          activityType: 'site_diary_entry',
+          sourceId: newEntry.id,
+          sourceTitle: `Site Diary: ${newEntry.site_name}`,
+          metadata: {
+            siteName: newEntry.site_name,
+            tasksCompleted: newEntry.tasks_completed?.length ?? 0,
+            skillsPractised: newEntry.skills_practised?.length ?? 0,
+          },
+        });
 
-      return newEntry;
-    } catch (err) {
-      console.error('Failed to save diary entry:', err);
-      toast.error('Failed to save. Please try again.');
-      return null;
-    }
-  }, [user, entries]);
+        return newEntry;
+      } catch (err) {
+        console.error('Failed to save diary entry:', err);
+        toast.error('Failed to save. Please try again.');
+        return null;
+      }
+    },
+    [user, entries]
+  );
 
   // Update entry
-  const updateEntry = useCallback(async (id: string, updates: Partial<NewDiaryEntry>) => {
-    if (!user) return null;
+  const updateEntry = useCallback(
+    async (id: string, updates: Partial<NewDiaryEntry>) => {
+      if (!user) return null;
 
-    try {
-      const { data, error } = await supabase
-        .from('site_diary_entries')
-        .update(updates)
-        .eq('id', id)
-        .eq('user_id', user.id)
-        .select()
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('site_diary_entries')
+          .update(updates)
+          .eq('id', id)
+          .eq('user_id', user.id)
+          .select()
+          .single();
 
-      if (error) throw error;
+        if (error) throw error;
 
-      const updated = data as SiteDiaryEntry;
-      setEntries(prev => prev.map(e => e.id === id ? updated : e));
-      toast.success('Entry updated');
-      return updated;
-    } catch {
-      toast.error('Failed to update entry');
-      return null;
-    }
-  }, [user]);
+        const updated = data as SiteDiaryEntry;
+        setEntries((prev) => prev.map((e) => (e.id === id ? updated : e)));
+        toast.success('Entry updated');
+        return updated;
+      } catch {
+        toast.error('Failed to update entry');
+        return null;
+      }
+    },
+    [user]
+  );
 
   // Delete entry
-  const deleteEntry = useCallback(async (id: string) => {
-    if (!user) return false;
+  const deleteEntry = useCallback(
+    async (id: string) => {
+      if (!user) return false;
 
-    try {
-      const { error } = await supabase
-        .from('site_diary_entries')
-        .delete()
-        .eq('id', id)
-        .eq('user_id', user.id);
+      try {
+        const { error } = await supabase
+          .from('site_diary_entries')
+          .delete()
+          .eq('id', id)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      setEntries(prev => prev.filter(e => e.id !== id));
-      toast.success('Entry deleted');
-      return true;
-    } catch {
-      toast.error('Failed to delete entry');
-      return false;
-    }
-  }, [user]);
+        setEntries((prev) => prev.filter((e) => e.id !== id));
+        toast.success('Entry deleted');
+        return true;
+      } catch {
+        toast.error('Failed to delete entry');
+        return false;
+      }
+    },
+    [user]
+  );
 
   // Get recent sites for quick-select
-  const recentSites = Array.from(
-    new Set(entries.map(e => e.site_name).filter(Boolean))
-  ).slice(0, 5);
+  const recentSites = Array.from(new Set(entries.map((e) => e.site_name).filter(Boolean))).slice(
+    0,
+    5
+  );
 
   return {
     entries,

@@ -12,7 +12,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
   // Calculate hazard counts per cell
   const getCellCount = (likelihood: number, severity: number): number => {
     const score = likelihood * severity;
-    return hazards.filter(h => {
+    return hazards.filter((h) => {
       const hazardScore = h.likelihood * h.severity;
       return hazardScore === score;
     }).length;
@@ -45,24 +45,27 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
           <div className="grid grid-cols-6 gap-1 text-xs">
             {/* Header Row */}
             <div className="text-center font-semibold py-2"></div>
-            {[1, 2, 3, 4, 5].map(sev => (
+            {[1, 2, 3, 4, 5].map((sev) => (
               <div key={sev} className="text-center font-semibold py-2 text-white">
                 {sev}
               </div>
             ))}
 
             {/* Rows */}
-            {[5, 4, 3, 2, 1].map(likelihood => (
+            {[5, 4, 3, 2, 1].map((likelihood) => (
               <>
-                <div key={`label-${likelihood}`} className="text-right font-semibold py-2 pr-2 text-white">
+                <div
+                  key={`label-${likelihood}`}
+                  className="text-right font-semibold py-2 pr-2 text-white"
+                >
                   {likelihood}
                 </div>
-                {[1, 2, 3, 4, 5].map(severity => {
+                {[1, 2, 3, 4, 5].map((severity) => {
                   const score = likelihood * severity;
                   const count = getCellCount(likelihood, severity);
                   const cellKey = `${likelihood}-${severity}`;
                   const isSelected = selectedCell === cellKey;
-                  
+
                   return (
                     <button
                       key={cellKey}
@@ -78,9 +81,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
                       <div className="text-center">
                         <div className="text-lg leading-none">{score}</div>
                         {count > 0 && (
-                          <div className="text-[10px] leading-none mt-0.5 opacity-90">
-                            {count}
-                          </div>
+                          <div className="text-[10px] leading-none mt-0.5 opacity-90">{count}</div>
                         )}
                       </div>
                     </button>
@@ -98,9 +99,7 @@ export const RiskMatrixVisual = ({ hazards, onRiskLevelClick }: RiskMatrixVisual
             </div>
           </div>
           <div className="grid grid-cols-6 gap-1">
-            <div className="text-xs font-semibold text-white text-right pr-2">
-              ← LIKELIHOOD
-            </div>
+            <div className="text-xs font-semibold text-white text-right pr-2">← LIKELIHOOD</div>
             <div className="col-span-5"></div>
           </div>
         </div>

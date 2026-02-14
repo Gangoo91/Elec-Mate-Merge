@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Search,
@@ -12,53 +12,48 @@ import {
   Loader2,
   FolderOpen,
   Edit3,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+} from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   useSafetyTemplates,
   useUserSafetyDocuments,
   type SafetyTemplate,
   type UserSafetyDocument,
-} from "@/hooks/useSafetyTemplates";
-import { SafetyTemplateViewer } from "./SafetyTemplateViewer";
-import { SafetyTemplateEditor } from "./SafetyTemplateEditor";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
+} from '@/hooks/useSafetyTemplates';
+import { SafetyTemplateViewer } from './SafetyTemplateViewer';
+import { SafetyTemplateEditor } from './SafetyTemplateEditor';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
 
 interface SafetyTemplateLibraryProps {
   onBack: () => void;
 }
 
-type Tab = "browse" | "my-docs";
+type Tab = 'browse' | 'my-docs';
 
 const CATEGORIES = [
-  { key: "Risk Assessment", icon: Shield, colour: "text-red-400" },
-  { key: "Method Statement", icon: FileText, colour: "text-blue-400" },
-  { key: "Safe System of Work", icon: Wrench, colour: "text-amber-400" },
-  { key: "Checklist", icon: ClipboardCheck, colour: "text-green-400" },
+  { key: 'Risk Assessment', icon: Shield, colour: 'text-red-400' },
+  { key: 'Method Statement', icon: FileText, colour: 'text-blue-400' },
+  { key: 'Safe System of Work', icon: Wrench, colour: 'text-amber-400' },
+  { key: 'Checklist', icon: ClipboardCheck, colour: 'text-green-400' },
 ];
 
 const STATUS_COLOUR: Record<string, string> = {
-  Draft: "text-amber-400 bg-amber-500/10",
-  Active: "text-green-400 bg-green-500/10",
-  "Review Due": "text-orange-400 bg-orange-500/10",
-  Archived: "text-white bg-white/[0.06]",
+  Draft: 'text-amber-400 bg-amber-500/10',
+  Active: 'text-green-400 bg-green-500/10',
+  'Review Due': 'text-orange-400 bg-orange-500/10',
+  Archived: 'text-white bg-white/[0.06]',
 };
 
 export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
-  const [tab, setTab] = useState<Tab>("browse");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [tab, setTab] = useState<Tab>('browse');
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [viewingTemplate, setViewingTemplate] =
-    useState<SafetyTemplate | null>(null);
-  const [editingDocument, setEditingDocument] =
-    useState<UserSafetyDocument | null>(null);
+  const [viewingTemplate, setViewingTemplate] = useState<SafetyTemplate | null>(null);
+  const [editingDocument, setEditingDocument] = useState<UserSafetyDocument | null>(null);
 
-  const { data: templates, isLoading } = useSafetyTemplates(
-    selectedCategory ?? undefined
-  );
-  const { data: userDocs, isLoading: userDocsLoading } =
-    useUserSafetyDocuments();
+  const { data: templates, isLoading } = useSafetyTemplates(selectedCategory ?? undefined);
+  const { data: userDocs, isLoading: userDocsLoading } = useUserSafetyDocuments();
 
   const filtered = (templates ?? []).filter((t) =>
     searchTerm
@@ -68,14 +63,10 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
   );
 
   const filteredDocs = (userDocs ?? []).filter((d) =>
-    searchTerm
-      ? d.name.toLowerCase().includes(searchTerm.toLowerCase())
-      : true
+    searchTerm ? d.name.toLowerCase().includes(searchTerm.toLowerCase()) : true
   );
 
-  const adoptedTemplateIds = new Set(
-    (userDocs ?? []).map((d) => d.template_id).filter(Boolean)
-  );
+  const adoptedTemplateIds = new Set((userDocs ?? []).map((d) => d.template_id).filter(Boolean));
 
   if (viewingTemplate) {
     return (
@@ -104,9 +95,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
 
       <div className="px-4 space-y-4">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-1">
-            Safety Templates
-          </h2>
+          <h2 className="text-2xl font-bold text-white mb-1">Safety Templates</h2>
           <p className="text-sm text-white">
             UK electrical safety document templates ready to adopt and customise
           </p>
@@ -115,22 +104,18 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         {/* Tab switcher */}
         <div className="flex rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
           <button
-            onClick={() => setTab("browse")}
+            onClick={() => setTab('browse')}
             className={`flex-1 h-10 rounded-lg text-sm font-semibold touch-manipulation transition-all flex items-center justify-center gap-2 ${
-              tab === "browse"
-                ? "bg-elec-yellow text-black"
-                : "text-white"
+              tab === 'browse' ? 'bg-elec-yellow text-black' : 'text-white'
             }`}
           >
             <BookOpen className="h-4 w-4" />
             Browse
           </button>
           <button
-            onClick={() => setTab("my-docs")}
+            onClick={() => setTab('my-docs')}
             className={`flex-1 h-10 rounded-lg text-sm font-semibold touch-manipulation transition-all flex items-center justify-center gap-2 ${
-              tab === "my-docs"
-                ? "bg-elec-yellow text-black"
-                : "text-white"
+              tab === 'my-docs' ? 'bg-elec-yellow text-black' : 'text-white'
             }`}
           >
             <FolderOpen className="h-4 w-4" />
@@ -138,9 +123,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             {(userDocs ?? []).length > 0 && (
               <span
                 className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                  tab === "my-docs"
-                    ? "bg-black/20 text-black"
-                    : "bg-white/[0.1] text-white"
+                  tab === 'my-docs' ? 'bg-black/20 text-black' : 'bg-white/[0.1] text-white'
                 }`}
               >
                 {(userDocs ?? []).length}
@@ -153,18 +136,14 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
           <Input
-            placeholder={
-              tab === "browse"
-                ? "Search templates..."
-                : "Search my documents..."
-            }
+            placeholder={tab === 'browse' ? 'Search templates...' : 'Search my documents...'}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
           />
         </div>
 
-        {tab === "browse" ? (
+        {tab === 'browse' ? (
           <>
             {/* Category filter */}
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
@@ -172,8 +151,8 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                 onClick={() => setSelectedCategory(null)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
                   selectedCategory === null
-                    ? "bg-elec-yellow text-black"
-                    : "bg-white/[0.06] text-white border border-white/[0.08]"
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white border border-white/[0.08]'
                 }`}
               >
                 All
@@ -181,15 +160,11 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.key}
-                  onClick={() =>
-                    setSelectedCategory(
-                      selectedCategory === cat.key ? null : cat.key
-                    )
-                  }
+                  onClick={() => setSelectedCategory(selectedCategory === cat.key ? null : cat.key)}
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
                     selectedCategory === cat.key
-                      ? "bg-elec-yellow text-black"
-                      : "bg-white/[0.06] text-white border border-white/[0.08]"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] text-white border border-white/[0.08]'
                   }`}
                 >
                   {cat.key}
@@ -209,15 +184,13 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                 description={
                   searchTerm
                     ? `No templates match "${searchTerm}"`
-                    : "No templates available in this category"
+                    : 'No templates available in this category'
                 }
               />
             ) : (
               <div className="space-y-2 pb-8">
                 {filtered.map((template) => {
-                  const catConfig = CATEGORIES.find(
-                    (c) => c.key === template.category
-                  );
+                  const catConfig = CATEGORIES.find((c) => c.key === template.category);
                   const CatIcon = catConfig?.icon ?? FileText;
                   const isAdopted = adoptedTemplateIds.has(template.id);
 
@@ -230,9 +203,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                     >
                       <div className="p-3 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                          <CatIcon
-                            className={`h-5 w-5 ${catConfig?.colour ?? "text-white"}`}
-                          />
+                          <CatIcon className={`h-5 w-5 ${catConfig?.colour ?? 'text-white'}`} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
@@ -247,9 +218,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                           </div>
                           <p className="text-[11px] text-white truncate">
                             {template.category}
-                            {template.subcategory
-                              ? ` · ${template.subcategory}`
-                              : ""}
+                            {template.subcategory ? ` · ${template.subcategory}` : ''}
                           </p>
                         </div>
                         <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
@@ -270,13 +239,11 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             ) : filteredDocs.length === 0 ? (
               <SafetyEmptyState
                 icon={FolderOpen}
-                heading={
-                  searchTerm ? "No Documents Found" : "No Documents Yet"
-                }
+                heading={searchTerm ? 'No Documents Found' : 'No Documents Yet'}
                 description={
                   searchTerm
                     ? `No documents match "${searchTerm}"`
-                    : "Adopt a template from the Browse tab to create your first safety document."
+                    : 'Adopt a template from the Browse tab to create your first safety document.'
                 }
               />
             ) : (
@@ -299,8 +266,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                         <div className="flex items-center gap-2 mt-0.5">
                           <Badge
                             className={`border-none text-[9px] font-bold ${
-                              STATUS_COLOUR[doc.status] ??
-                              STATUS_COLOUR.Draft
+                              STATUS_COLOUR[doc.status] ?? STATUS_COLOUR.Draft
                             }`}
                           >
                             {doc.status}

@@ -1,6 +1,6 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2, AlertCircle, Info } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { CheckCircle2, AlertCircle, Info } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 
 interface ValidationRule {
   field: string;
@@ -57,22 +57,27 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
             field: 'briefingContent',
             label: 'Work description',
             isValid: formData.briefingContent?.trim().length >= 50,
-            hint: 'Provide at least 50 characters for AI to generate quality content (currently: ' + (formData.briefingContent?.length || 0) + ')',
+            hint:
+              'Provide at least 50 characters for AI to generate quality content (currently: ' +
+              (formData.briefingContent?.length || 0) +
+              ')',
           },
-          ...(formData.briefingType === 'site-work' ? [
-            {
-              field: 'workScope',
-              label: 'Work scope',
-              isValid: !!formData.workScope,
-              hint: 'Select the type of work being performed',
-            },
-            {
-              field: 'environment',
-              label: 'Environment type',
-              isValid: !!formData.environment,
-              hint: 'Environment affects risk level and required precautions',
-            },
-          ] : []),
+          ...(formData.briefingType === 'site-work'
+            ? [
+                {
+                  field: 'workScope',
+                  label: 'Work scope',
+                  isValid: !!formData.workScope,
+                  hint: 'Select the type of work being performed',
+                },
+                {
+                  field: 'environment',
+                  label: 'Environment type',
+                  isValid: !!formData.environment,
+                  hint: 'Environment affects risk level and required precautions',
+                },
+              ]
+            : []),
         ];
 
       case 3: // Hazards
@@ -121,7 +126,7 @@ export const StepValidation = ({ step, formData }: StepValidationProps) => {
   const rules = getStepRules();
   if (rules.length === 0) return null;
 
-  const validCount = rules.filter(r => r.isValid).length;
+  const validCount = rules.filter((r) => r.isValid).length;
   const totalCount = rules.length;
   const completionPercentage = (validCount / totalCount) * 100;
   const isComplete = validCount === totalCount;

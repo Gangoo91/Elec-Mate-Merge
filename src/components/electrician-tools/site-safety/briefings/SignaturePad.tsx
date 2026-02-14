@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
-import { Eraser, Check, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { Eraser, Check, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface SignaturePadProps {
   value?: string; // Base64 image data
@@ -12,13 +12,7 @@ interface SignaturePadProps {
   className?: string;
 }
 
-export function SignaturePad({
-  value,
-  onChange,
-  name,
-  error,
-  className,
-}: SignaturePadProps) {
+export function SignaturePad({ value, onChange, name, error, className }: SignaturePadProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -39,13 +33,13 @@ export function SignaturePad({
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(dpr, dpr);
-        ctx.strokeStyle = "#fff";
+        ctx.strokeStyle = '#fff';
         ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
       }
 
       // Restore signature if exists
@@ -60,8 +54,8 @@ export function SignaturePad({
     };
 
     updateCanvasSize();
-    window.addEventListener("resize", updateCanvasSize);
-    return () => window.removeEventListener("resize", updateCanvasSize);
+    window.addEventListener('resize', updateCanvasSize);
+    return () => window.removeEventListener('resize', updateCanvasSize);
   }, []);
 
   // Get position from event
@@ -71,7 +65,7 @@ export function SignaturePad({
 
     const rect = canvas.getBoundingClientRect();
 
-    if ("touches" in e) {
+    if ('touches' in e) {
       return {
         x: e.touches[0].clientX - rect.left,
         y: e.touches[0].clientY - rect.top,
@@ -84,33 +78,39 @@ export function SignaturePad({
   }, []);
 
   // Start drawing
-  const startDrawing = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    e.preventDefault();
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!ctx) return;
+  const startDrawing = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      e.preventDefault();
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!ctx) return;
 
-    setIsDrawing(true);
-    setHasDrawn(true);
+      setIsDrawing(true);
+      setHasDrawn(true);
 
-    const pos = getPosition(e);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
-  }, [getPosition]);
+      const pos = getPosition(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    },
+    [getPosition]
+  );
 
   // Continue drawing
-  const draw = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDrawing) return;
-    e.preventDefault();
+  const draw = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      if (!isDrawing) return;
+      e.preventDefault();
 
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!ctx) return;
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!ctx) return;
 
-    const pos = getPosition(e);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.stroke();
-  }, [isDrawing, getPosition]);
+      const pos = getPosition(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    },
+    [isDrawing, getPosition]
+  );
 
   // Stop drawing
   const stopDrawing = useCallback(() => {
@@ -119,7 +119,7 @@ export function SignaturePad({
 
     const canvas = canvasRef.current;
     if (canvas) {
-      const dataUrl = canvas.toDataURL("image/png");
+      const dataUrl = canvas.toDataURL('image/png');
       onChange(dataUrl);
     }
   }, [isDrawing, onChange]);
@@ -127,7 +127,7 @@ export function SignaturePad({
   // Clear signature
   const clearSignature = useCallback(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
+    const ctx = canvas?.getContext('2d');
     if (!ctx || !canvas) return;
 
     const rect = canvas.getBoundingClientRect();
@@ -137,17 +137,15 @@ export function SignaturePad({
   }, [onChange]);
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {name && (
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-white">
-            {name}
-          </label>
+          <label className="text-sm font-medium text-white">{name}</label>
           {hasDrawn && (
             <Button
               type="button"
               variant="ghost"
-                            onClick={clearSignature}
+              onClick={clearSignature}
               className="h-11 px-2 text-white hover:text-white hover:bg-white/10 touch-manipulation"
             >
               <Eraser className="h-4 w-4 mr-1" />
@@ -160,14 +158,14 @@ export function SignaturePad({
       <div
         ref={containerRef}
         className={cn(
-          "relative overflow-hidden rounded-xl",
-          "border-2 border-dashed transition-colors",
+          'relative overflow-hidden rounded-xl',
+          'border-2 border-dashed transition-colors',
           hasDrawn
-            ? "border-emerald-500/30 bg-emerald-500/5"
+            ? 'border-emerald-500/30 bg-emerald-500/5'
             : error
-              ? "border-red-500/30 bg-red-500/5"
-              : "border-white/20 bg-white/5",
-          "touch-none" // Prevent scrolling while drawing
+              ? 'border-red-500/30 bg-red-500/5'
+              : 'border-white/20 bg-white/5',
+          'touch-none' // Prevent scrolling while drawing
         )}
       >
         <canvas
@@ -201,9 +199,7 @@ export function SignaturePad({
         )}
       </div>
 
-      {error && (
-        <p className="text-sm text-red-400">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-400">{error}</p>}
     </div>
   );
 }
@@ -233,19 +229,15 @@ export function AttendeeSignatureCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -100 }}
       className={cn(
-        "flex items-center gap-3 p-3 rounded-xl border",
-        signed
-          ? "bg-emerald-500/5 border-emerald-500/20"
-          : "bg-white/5 border-white/10"
+        'flex items-center gap-3 p-3 rounded-xl border',
+        signed ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-white/5 border-white/10'
       )}
     >
       {/* Status icon */}
       <div
         className={cn(
-          "w-8 h-8 rounded-full flex items-center justify-center",
-          signed
-            ? "bg-emerald-500/20 text-emerald-400"
-            : "bg-white/10 text-white"
+          'w-8 h-8 rounded-full flex items-center justify-center',
+          signed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white'
         )}
       >
         {signed ? (
@@ -257,18 +249,14 @@ export function AttendeeSignatureCard({
 
       {/* Name and timestamp */}
       <div className="flex-1 min-w-0">
-        <p className={cn("font-medium truncate", signed ? "text-white" : "text-white")}>
-          {name}
-        </p>
-        {signed && timestamp && (
-          <p className="text-xs text-white">{timestamp}</p>
-        )}
+        <p className={cn('font-medium truncate', signed ? 'text-white' : 'text-white')}>{name}</p>
+        {signed && timestamp && <p className="text-xs text-white">{timestamp}</p>}
       </div>
 
       {/* Actions */}
       {!signed && onSign && (
         <Button
-                    onClick={onSign}
+          onClick={onSign}
           className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
         >
           Sign
@@ -277,7 +265,7 @@ export function AttendeeSignatureCard({
       {onRemove && (
         <Button
           variant="ghost"
-                    onClick={onRemove}
+          onClick={onRemove}
           className="h-11 w-11 p-0 text-white hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
         >
           <X className="h-4 w-4" />

@@ -1,16 +1,17 @@
-import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Grid3X3, Folder, Download, ArrowLeft } from "lucide-react";
-import { useSafetyPhotos } from "@/hooks/useSafetyPhotos";
+import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Grid3X3, Folder, Download, ArrowLeft } from 'lucide-react';
+import { useSafetyPhotos } from '@/hooks/useSafetyPhotos';
+import { usePhotoProjects } from '@/hooks/usePhotoProjects';
 
 // Tab components
-import GalleryTab from "./photo-docs/GalleryTab";
-import CameraTab from "./photo-docs/CameraTab";
-import ProjectsTab from "./photo-docs/ProjectsTab";
-import ExportTab from "./photo-docs/ExportTab";
+import GalleryTab from './photo-docs/GalleryTab';
+import CameraTab from './photo-docs/CameraTab';
+import ProjectsTab from './photo-docs/ProjectsTab';
+import ExportTab from './photo-docs/ExportTab';
 
-type TabId = "gallery" | "camera" | "projects" | "export";
+type TabId = 'gallery' | 'camera' | 'projects' | 'export';
 
 interface Tab {
   id: TabId;
@@ -25,47 +26,59 @@ interface PhotoDocumentationProps {
 
 export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabId>("gallery");
+  const [activeTab, setActiveTab] = useState<TabId>('gallery');
   const { stats } = useSafetyPhotos();
+  const { projects } = usePhotoProjects('active');
+  const [cameraProjectRef, setCameraProjectRef] = useState<string | undefined>();
 
   const tabs: Tab[] = [
     {
-      id: "gallery",
-      label: "Gallery",
+      id: 'gallery',
+      label: 'Gallery',
       icon: <Grid3X3 className="h-[22px] w-[22px]" />,
       badge: stats.total > 0 ? stats.total : undefined,
     },
     {
-      id: "camera",
-      label: "Camera",
+      id: 'camera',
+      label: 'Camera',
       icon: <Camera className="h-[22px] w-[22px]" />,
     },
     {
-      id: "projects",
-      label: "Projects",
+      id: 'projects',
+      label: 'Projects',
       icon: <Folder className="h-[22px] w-[22px]" />,
+      badge: projects.length > 0 ? projects.length : undefined,
     },
     {
-      id: "export",
-      label: "Export",
+      id: 'export',
+      label: 'Export',
       icon: <Download className="h-[22px] w-[22px]" />,
     },
   ];
 
   const handlePhotoUploaded = useCallback(() => {
     // Switch to gallery tab after upload
-    setActiveTab("gallery");
+    setCameraProjectRef(undefined);
+    setActiveTab('gallery');
   }, []);
+
+  const handleTabChange = useCallback((tabId: TabId) => {
+    // Clear camera project context when switching away from camera
+    if (activeTab === 'camera' && tabId !== 'camera') {
+      setCameraProjectRef(undefined);
+    }
+    setActiveTab(tabId);
+  }, [activeTab]);
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "gallery":
+      case 'gallery':
         return <GalleryTab />;
-      case "camera":
-        return <CameraTab onPhotoUploaded={handlePhotoUploaded} />;
-      case "projects":
+      case 'camera':
+        return <CameraTab onPhotoUploaded={handlePhotoUploaded} projectReference={cameraProjectRef} />;
+      case 'projects':
         return <ProjectsTab />;
-      case "export":
+      case 'export':
         return <ExportTab />;
       default:
         return null;
@@ -119,9 +132,9 @@ export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) 
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`flex-1 flex flex-col items-center justify-center py-2 touch-manipulation transition-colors ${
-                  isActive ? "text-elec-yellow" : "text-white active:text-white"
+                  isActive ? 'text-elec-yellow' : 'text-white active:text-white'
                 }`}
               >
                 {/* Icon with badge */}
@@ -129,13 +142,15 @@ export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) 
                   {tab.icon}
                   {tab.badge !== undefined && tab.badge > 0 && (
                     <span className="absolute -top-1 -right-2.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
-                      {tab.badge > 99 ? "99+" : tab.badge}
+                      {tab.badge > 99 ? '99+' : tab.badge}
                     </span>
                   )}
                 </div>
 
                 {/* Label */}
-                <span className={`text-[9px] mt-0.5 font-medium tracking-tight ${isActive ? "text-elec-yellow" : ""}`}>
+                <span
+                  className={`text-[9px] mt-0.5 font-medium tracking-tight ${isActive ? 'text-elec-yellow' : ''}`}
+                >
                   {tab.label}
                 </span>
               </button>

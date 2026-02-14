@@ -10,14 +10,13 @@ interface ComplianceReferencesCardProps {
 
 export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCardProps) {
   const [expandedCitation, setExpandedCitation] = useState<number | null>(null);
-  
+
   const complianceRegulations = methodData.complianceRegulations || [];
   const complianceWarnings = methodData.complianceWarnings || [];
   const ragCitations = methodData.ragCitations || [];
 
-  const hasAnyCompliance = complianceRegulations.length > 0 || 
-                           complianceWarnings.length > 0 || 
-                           ragCitations.length > 0;
+  const hasAnyCompliance =
+    complianceRegulations.length > 0 || complianceWarnings.length > 0 || ragCitations.length > 0;
 
   if (!hasAnyCompliance) {
     return null;
@@ -38,10 +37,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
             <h4 className="text-sm font-semibold text-elec-light mb-2">Regulations Referenced</h4>
             <div className="flex flex-wrap gap-2">
               {complianceRegulations.map((reg, idx) => (
-                <Badge 
-                  key={idx} 
-                  className="bg-purple-500/10 text-purple-400 border-purple-500/30"
-                >
+                <Badge key={idx} className="bg-purple-500/10 text-purple-400 border-purple-500/30">
                   {reg}
                 </Badge>
               ))}
@@ -120,8 +116,8 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
 
         {/* Footer Note */}
         <p className="text-xs text-white pt-2 border-t border-border/40">
-          All work must comply with current UK regulations and industry standards. 
-          Consult the latest editions of referenced documents.
+          All work must comply with current UK regulations and industry standards. Consult the
+          latest editions of referenced documents.
         </p>
       </CardContent>
     </Card>

@@ -1,4 +1,3 @@
-
 import MethodStatementWizard from './method-statement/MethodStatementWizard';
 
 const MethodStatementGenerator = () => {

@@ -93,7 +93,7 @@ interface NearMissData {
   potential_consequences?: string;
   immediate_actions?: string;
   preventive_measures?: string;
-  photo_urls?: string[];
+  photos?: string[];
 }
 
 interface BriefingFormWizardProps {
@@ -135,8 +135,7 @@ export const BriefingFormWizard = ({
     briefingTime: initialData?.briefing_time || '09:00',
     hazards: nearMissData ? [nearMissData.category] : initialData?.identified_hazards || [],
     riskLevel: (nearMissData?.severity as RiskLevel) || initialData?.risk_level || 'medium',
-    photos:
-      nearMissData?.photo_urls?.map((url) => ({ url, caption: '' })) || initialData?.photos || [],
+    photos: nearMissData?.photos?.map((url) => ({ url, caption: '' })) || initialData?.photos || [],
     attendees: initialData?.attendees || [],
   };
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 import {
   Search,
   Edit,
@@ -18,8 +18,8 @@ import {
   TrendingUp,
   Loader2,
   ArrowLeft,
-} from "lucide-react";
-import { TemplateEditor } from "./TemplateEditor";
+} from 'lucide-react';
+import { TemplateEditor } from './TemplateEditor';
 
 interface Template {
   id: string;
@@ -39,7 +39,7 @@ interface TemplateLibraryProps {
 export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [editingTemplateId, setEditingTemplateId] = useState<string | undefined>();
@@ -50,23 +50,25 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
 
   const fetchTemplates = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
-        .from("briefing_templates")
-        .select("*")
+        .from('briefing_templates')
+        .select('*')
         .or(`is_default.eq.true,user_id.eq.${user.id}`)
-        .order("usage_count", { ascending: false });
+        .order('usage_count', { ascending: false });
 
       if (error) throw error;
       setTemplates(data || []);
     } catch (error) {
-      console.error("Error fetching templates:", error);
+      console.error('Error fetching templates:', error);
       toast({
-        title: "Error",
-        description: "Failed to load templates",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load templates',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -74,92 +76,90 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
   };
 
   const handleDelete = async (templateId: string) => {
-    if (!confirm("Are you sure you want to delete this template?")) return;
+    if (!confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const { error } = await supabase
-        .from("briefing_templates")
-        .delete()
-        .eq("id", templateId);
+      const { error } = await supabase.from('briefing_templates').delete().eq('id', templateId);
 
       if (error) throw error;
 
       toast({
-        title: "Template Deleted",
-        description: "Template has been removed",
+        title: 'Template Deleted',
+        description: 'Template has been removed',
       });
 
       fetchTemplates();
     } catch (error) {
-      console.error("Error deleting template:", error);
+      console.error('Error deleting template:', error);
       toast({
-        title: "Error",
-        description: "Failed to delete template",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete template',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDuplicate = async (template: Template) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from("briefing_templates")
-        .insert([
-          {
-            name: `${template.name} (Copy)`,
-            description: template.description,
-            template_type: template.template_type,
-            template_schema: JSON.parse(JSON.stringify(template.template_schema)),
-            is_default: false,
-            user_id: user.id,
-          },
-        ]);
+      const { error } = await supabase.from('briefing_templates').insert([
+        {
+          name: `${template.name} (Copy)`,
+          description: template.description,
+          template_type: template.template_type,
+          template_schema: JSON.parse(JSON.stringify(template.template_schema)),
+          is_default: false,
+          user_id: user.id,
+        },
+      ]);
 
       if (error) throw error;
 
       toast({
-        title: "Template Duplicated",
-        description: "Template copy created successfully",
+        title: 'Template Duplicated',
+        description: 'Template copy created successfully',
       });
 
       fetchTemplates();
     } catch (error) {
-      console.error("Error duplicating template:", error);
+      console.error('Error duplicating template:', error);
       toast({
-        title: "Error",
-        description: "Failed to duplicate template",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to duplicate template',
+        variant: 'destructive',
       });
     }
   };
 
   const handleExport = (template: Template) => {
     const dataStr = JSON.stringify(template, null, 2);
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
     link.download = `${template.name.replace(/\s+/g, '_')}_template.json`;
     link.click();
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Template Exported",
-      description: "Template downloaded as JSON file",
+      title: 'Template Exported',
+      description: 'Template downloaded as JSON file',
     });
   };
 
   const filteredTemplates = templates.filter((template) => {
-    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       template.description?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesType = !selectedType || template.template_type === selectedType;
     return matchesSearch && matchesType;
   });
 
-  const templateTypes = Array.from(new Set(templates.map(t => t.template_type)));
+  const templateTypes = Array.from(new Set(templates.map((t) => t.template_type)));
 
   if (showEditor) {
     return (
@@ -183,24 +183,20 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
       {/* Header - Mobile Optimized */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onClose}
             className="md:flex touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1">
-            <h2 className="text-xl md:text-2xl font-bold text-elec-light">
-              Template Library
-            </h2>
-            <p className="text-xs md:text-sm text-white">
-              Manage your briefing templates
-            </p>
+            <h2 className="text-xl md:text-2xl font-bold text-elec-light">Template Library</h2>
+            <p className="text-xs md:text-sm text-white">Manage your briefing templates</p>
           </div>
         </div>
-        
+
         {/* Create button - full width on mobile */}
         <Button
           onClick={() => setShowEditor(true)}
@@ -221,12 +217,12 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search templates..."
-            className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
+            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-10')}
           />
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button
-            variant={selectedType === null ? "default" : "outline"}
+            variant={selectedType === null ? 'default' : 'outline'}
             onClick={() => setSelectedType(null)}
             className="h-11 touch-manipulation"
           >
@@ -235,7 +231,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
           {templateTypes.map((type) => (
             <Button
               key={type}
-              variant={selectedType === type ? "default" : "outline"}
+              variant={selectedType === type ? 'default' : 'outline'}
               onClick={() => setSelectedType(type)}
               className="h-11 touch-manipulation"
             >
@@ -266,9 +262,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                       )}
                       {template.name}
                     </CardTitle>
-                    <p className="text-sm text-white mt-1 line-clamp-2">
-                      {template.description}
-                    </p>
+                    <p className="text-sm text-white mt-1 line-clamp-2">{template.description}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-2">
@@ -332,8 +326,8 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
           <CardContent className="py-12 text-center">
             <p className="text-white mb-4">
               {searchQuery || selectedType
-                ? "No templates found matching your filters"
-                : "No templates yet"}
+                ? 'No templates found matching your filters'
+                : 'No templates yet'}
             </p>
             <Button onClick={() => setShowEditor(true)}>
               <Plus className="mr-2 h-4 w-4" />

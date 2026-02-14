@@ -9,10 +9,10 @@ interface RiskMatrixProps {
   className?: string;
 }
 
-export const RiskMatrix: React.FC<RiskMatrixProps> = ({ 
-  selectedLikelihood, 
-  selectedSeverity, 
-  className = "" 
+export const RiskMatrix: React.FC<RiskMatrixProps> = ({
+  selectedLikelihood,
+  selectedSeverity,
+  className = '',
 }) => {
   const getRiskLevel = (likelihood: number, severity: number): number => {
     return likelihood * severity;
@@ -51,13 +51,18 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
               L/S
             </div>
             {severityLabels.map((label, index) => (
-              <div key={label} className="bg-elec-dark/50 p-1 sm:p-2 text-center text-foreground text-xs font-bold border border-elec-yellow/20">
+              <div
+                key={label}
+                className="bg-elec-dark/50 p-1 sm:p-2 text-center text-foreground text-xs font-bold border border-elec-yellow/20"
+              >
                 {index + 1}
                 <br />
-                <span className="text-[8px] sm:text-[10px] hidden xs:inline break-words overflow-hidden">{label}</span>
+                <span className="text-[8px] sm:text-[10px] hidden xs:inline break-words overflow-hidden">
+                  {label}
+                </span>
               </div>
             ))}
-            
+
             {/* Matrix rows */}
             {[5, 4, 3, 2, 1].map((likelihood) => (
               <div key={likelihood} className="contents">
@@ -65,14 +70,17 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
                 <div className="bg-elec-dark/50 p-1 sm:p-2 text-center text-foreground text-xs font-bold border border-elec-yellow/20">
                   {likelihood}
                   <br />
-                  <span className="text-[8px] sm:text-[10px] hidden xs:inline">{likelihoodLabels[likelihood - 1]}</span>
+                  <span className="text-[8px] sm:text-[10px] hidden xs:inline">
+                    {likelihoodLabels[likelihood - 1]}
+                  </span>
                 </div>
-                
+
                 {/* Risk cells */}
                 {[1, 2, 3, 4, 5].map((severity) => {
                   const riskRating = getRiskLevel(likelihood, severity);
-                  const isSelected = selectedLikelihood === likelihood && selectedSeverity === severity;
-                  
+                  const isSelected =
+                    selectedLikelihood === likelihood && selectedSeverity === severity;
+
                   return (
                     <div
                       key={`${likelihood}-${severity}`}
@@ -84,7 +92,9 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
                       `}
                     >
                       <div className="font-bold text-xs sm:text-sm">{riskRating}</div>
-                      <div className="text-[8px] sm:text-[10px] mt-1 hidden sm:block">{getRiskText(riskRating)}</div>
+                      <div className="text-[8px] sm:text-[10px] mt-1 hidden sm:block">
+                        {getRiskText(riskRating)}
+                      </div>
                     </div>
                   );
                 })}
@@ -92,7 +102,7 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
             ))}
           </div>
         </div>
-        
+
         {/* Legend */}
         <div className="mt-4 flex flex-wrap gap-2 justify-center">
           <Badge className="bg-green-500 text-foreground">1-4 Low</Badge>
@@ -104,9 +114,14 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
         {selectedLikelihood && selectedSeverity && (
           <div className="mt-4 text-center">
             <div className="text-foreground text-sm">
-              Selected Risk Rating: <span className="font-bold">{getRiskLevel(selectedLikelihood, selectedSeverity)}</span>
+              Selected Risk Rating:{' '}
+              <span className="font-bold">
+                {getRiskLevel(selectedLikelihood, selectedSeverity)}
+              </span>
             </div>
-            <Badge className={`${getRiskColor(getRiskLevel(selectedLikelihood, selectedSeverity))} text-foreground mt-2`}>
+            <Badge
+              className={`${getRiskColor(getRiskLevel(selectedLikelihood, selectedSeverity))} text-foreground mt-2`}
+            >
               {getRiskText(getRiskLevel(selectedLikelihood, selectedSeverity))} Risk
             </Badge>
           </div>

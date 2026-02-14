@@ -4,11 +4,38 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, X, Trash2, Plus, Wrench, Package, Lightbulb, AlertTriangle, LucideIcon, Search, ChevronRight, Gauge, Zap, Cable, Ruler, ArrowUp, Hammer, Flashlight, Box, Plug, Link, CircleDot } from 'lucide-react';
+import {
+  Save,
+  X,
+  Trash2,
+  Plus,
+  Wrench,
+  Package,
+  Lightbulb,
+  AlertTriangle,
+  LucideIcon,
+  Search,
+  ChevronRight,
+  Gauge,
+  Zap,
+  Cable,
+  Ruler,
+  ArrowUp,
+  Hammer,
+  Flashlight,
+  Box,
+  Plug,
+  Link,
+  CircleDot,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { TOOLS_DATABASE, TOOL_CATEGORIES, type ToolDefinition } from '@/data/tools-database';
-import { MATERIALS_DATABASE, MATERIAL_CATEGORIES, type MaterialDefinition } from '@/data/materials-database';
+import {
+  MATERIALS_DATABASE,
+  MATERIAL_CATEGORIES,
+  type MaterialDefinition,
+} from '@/data/materials-database';
 
 type SectionType = 'tools' | 'materials' | 'tips' | 'mistakes';
 
@@ -53,7 +80,7 @@ const SECTION_CONFIGS: Record<SectionType, SectionConfig> = {
     emptyMessage: 'No common mistakes added yet',
     hasDatabase: false,
     browseLabel: '',
-  }
+  },
 };
 
 // Icons for tool categories
@@ -93,7 +120,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
   items,
   open,
   onOpenChange,
-  onSave
+  onSave,
 }) => {
   const [editedItems, setEditedItems] = useState<string[]>(items);
   const [hasChanges, setHasChanges] = useState(false);
@@ -124,24 +151,25 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
     if (!config.hasDatabase) return [];
 
     return database.filter((item: ToolDefinition | MaterialDefinition) => {
-      const matchesSearch = searchQuery === '' ||
+      const matchesSearch =
+        searchQuery === '' ||
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
       const notAlreadyAdded = !editedItems.some(
-        existing => existing.toLowerCase() === item.name.toLowerCase()
+        (existing) => existing.toLowerCase() === item.name.toLowerCase()
       );
       return matchesSearch && matchesCategory && notAlreadyAdded;
     });
   }, [searchQuery, selectedCategory, editedItems, config.hasDatabase, database]);
 
   const handleItemChange = (index: number, value: string) => {
-    setEditedItems(prev => prev.map((item, i) => i === index ? value : item));
+    setEditedItems((prev) => prev.map((item, i) => (i === index ? value : item)));
     setHasChanges(true);
   };
 
   const handleAddItem = (value?: string) => {
-    setEditedItems(prev => [...prev, value || '']);
+    setEditedItems((prev) => [...prev, value || '']);
     setHasChanges(true);
     if (!value) {
       setActiveTab('items');
@@ -149,8 +177,8 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
   };
 
   const handleAddFromDatabase = (item: ToolDefinition | MaterialDefinition) => {
-    if (!editedItems.some(existing => existing.toLowerCase() === item.name.toLowerCase())) {
-      setEditedItems(prev => [...prev, item.name]);
+    if (!editedItems.some((existing) => existing.toLowerCase() === item.name.toLowerCase())) {
+      setEditedItems((prev) => [...prev, item.name]);
       setHasChanges(true);
       toast({
         title: `${isTools ? 'Tool' : 'Material'} Added`,
@@ -160,12 +188,12 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
   };
 
   const handleRemoveItem = (index: number) => {
-    setEditedItems(prev => prev.filter((_, i) => i !== index));
+    setEditedItems((prev) => prev.filter((_, i) => i !== index));
     setHasChanges(true);
   };
 
   const handleSave = () => {
-    const validItems = editedItems.filter(item => item.trim());
+    const validItems = editedItems.filter((item) => item.trim());
     onSave(validItems);
     toast({
       title: `${config.title} Updated`,
@@ -193,12 +221,22 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
 
         {/* Tabs for tools and materials (which have database) */}
         {config.hasDatabase ? (
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'items' | 'add')} className="flex-1 flex flex-col overflow-hidden">
+          <Tabs
+            value={activeTab}
+            onValueChange={(v) => setActiveTab(v as 'items' | 'add')}
+            className="flex-1 flex flex-col overflow-hidden"
+          >
             <TabsList className="grid grid-cols-2 mx-4 mt-3 bg-white/[0.03]">
-              <TabsTrigger value="items" className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow">
+              <TabsTrigger
+                value="items"
+                className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow"
+              >
                 Current ({editedItems.length})
               </TabsTrigger>
-              <TabsTrigger value="add" className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow">
+              <TabsTrigger
+                value="add"
+                className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow"
+              >
                 <Plus className="h-4 w-4 mr-1" />
                 {config.browseLabel}
               </TabsTrigger>
@@ -279,25 +317,25 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                   <button
                     onClick={() => setSelectedCategory('all')}
                     className={cn(
-                      "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
+                      'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation',
                       selectedCategory === 'all'
-                        ? "bg-elec-yellow text-black"
-                        : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.05] text-white hover:bg-white/[0.08]'
                     )}
                   >
                     All
                   </button>
-                  {categories.map(cat => {
+                  {categories.map((cat) => {
                     const CatIcon = categoryIcons[cat.id] || Package;
                     return (
                       <button
                         key={cat.id}
                         onClick={() => setSelectedCategory(cat.id)}
                         className={cn(
-                          "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
+                          'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation',
                           selectedCategory === cat.id
-                            ? "bg-elec-yellow text-black"
-                            : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-white/[0.05] text-white hover:bg-white/[0.08]'
                         )}
                       >
                         <CatIcon className="h-3 w-3" />
@@ -335,9 +373,13 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
                             <CatIcon className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <span className="text-sm font-medium text-white block">{item.name}</span>
+                            <span className="text-sm font-medium text-white block">
+                              {item.name}
+                            </span>
                             {item.description && (
-                              <span className="text-xs text-white block mt-0.5">{item.description}</span>
+                              <span className="text-xs text-white block mt-0.5">
+                                {item.description}
+                              </span>
                             )}
                           </div>
                           <ChevronRight className="h-4 w-4 text-white shrink-0" />
@@ -429,7 +471,7 @@ export const MethodSummaryEditSheet: React.FC<MethodSummaryEditSheetProps> = ({
             onClick={handleSave}
           >
             <Save className="h-5 w-5 mr-2" />
-            Save ({editedItems.filter(i => i.trim()).length})
+            Save ({editedItems.filter((i) => i.trim()).length})
           </Button>
         </div>
       </SheetContent>

@@ -550,10 +550,7 @@ export default function PhotoViewer({
             {photo.tags && photo.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {photo.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-2.5 py-1 rounded-full bg-white/10 text-xs text-white"
-                  >
+                  <span key={i} className="px-2.5 py-1 rounded-full bg-white/10 text-xs text-white">
                     {tag}
                   </span>
                 ))}

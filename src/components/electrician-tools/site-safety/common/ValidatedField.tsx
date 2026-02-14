@@ -1,18 +1,18 @@
-import React from "react";
-import { CheckCircle2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import type { FieldValidation } from "@/hooks/useFieldValidation";
+import React from 'react';
+import { CheckCircle2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import type { FieldValidation } from '@/hooks/useFieldValidation';
 
 interface ValidatedFieldProps {
   name: string;
   label: string;
   validation: FieldValidation;
   placeholder?: string;
-  type?: "text" | "number" | "date" | "time" | "email" | "tel";
+  type?: 'text' | 'number' | 'date' | 'time' | 'email' | 'tel';
   multiline?: boolean;
   required?: boolean;
-  inputMode?: "text" | "numeric" | "email" | "tel";
+  inputMode?: 'text' | 'numeric' | 'email' | 'tel';
   className?: string;
 }
 
@@ -21,7 +21,7 @@ export function ValidatedField({
   label,
   validation,
   placeholder,
-  type = "text",
+  type = 'text',
   multiline = false,
   required = false,
   inputMode,
@@ -33,18 +33,18 @@ export function ValidatedField({
 
   const inputClasses = `h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 ${
     hasError
-      ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
       : showValid
-      ? "border-green-500/50 focus:border-green-500 focus:ring-green-500/20"
-      : ""
+        ? 'border-green-500/50 focus:border-green-500 focus:ring-green-500/20'
+        : ''
   }`;
 
   const textareaClasses = `touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 ${
     hasError
-      ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
       : showValid
-      ? "border-green-500/50 focus:border-green-500 focus:ring-green-500/20"
-      : ""
+        ? 'border-green-500/50 focus:border-green-500 focus:ring-green-500/20'
+        : ''
   }`;
 
   return (
@@ -54,14 +54,12 @@ export function ValidatedField({
           {label}
           {required && <span className="text-red-400 ml-0.5">*</span>}
         </label>
-        {showValid && (
-          <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
-        )}
+        {showValid && <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />}
       </div>
 
       {multiline ? (
         <Textarea
-          value={field?.value ?? ""}
+          value={field?.value ?? ''}
           onChange={(e) => validation.setValue(name, e.target.value)}
           onBlur={() => validation.setTouched(name)}
           placeholder={placeholder}
@@ -71,7 +69,7 @@ export function ValidatedField({
         <Input
           type={type}
           inputMode={inputMode}
-          value={field?.value ?? ""}
+          value={field?.value ?? ''}
           onChange={(e) => validation.setValue(name, e.target.value)}
           onBlur={() => validation.setTouched(name)}
           placeholder={placeholder}
@@ -79,9 +77,7 @@ export function ValidatedField({
         />
       )}
 
-      {hasError && (
-        <p className="text-xs text-red-400 mt-1">{field.error}</p>
-      )}
+      {hasError && <p className="text-xs text-red-400 mt-1">{field.error}</p>}
     </div>
   );
 }

@@ -1,15 +1,20 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertTriangle, Plus, Save, Eye, X, Edit3, Shield } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { HazardSelect } from "./common/HazardSelect";
-import { hazardCategories } from "@/data/hazards";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { AlertTriangle, Plus, Save, Eye, X, Edit3, Shield } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { HazardSelect } from './common/HazardSelect';
+import { hazardCategories } from '@/data/hazards';
 
 interface RiskFactor {
   id: string;
@@ -25,47 +30,65 @@ const RiskAssessmentBuilder = () => {
   const [riskFactors, setRiskFactors] = useState<RiskFactor[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [currentRisk, setCurrentRisk] = useState<Partial<RiskFactor>>({
-    category: "",
-    description: "",
+    category: '',
+    description: '',
     likelihood: 1,
     severity: 1,
-    controlMeasures: []
+    controlMeasures: [],
   });
 
-  const riskCategories = hazardCategories.map(cat => cat.name);
+  const riskCategories = hazardCategories.map((cat) => cat.name);
 
   // Use realistic risk ratings from enhanced database
-  const hazardTemplates = hazardCategories.map(cat => ({
+  const hazardTemplates = hazardCategories.map((cat) => ({
     category: cat.name,
-    defaultLikelihood: cat.name === "Electrical Hazards" ? 3 :
-                      cat.name === "Working at Height" ? 3 :
-                      cat.name === "Asbestos & Hazardous Materials" ? 2 :
-                      cat.name === "Manual Handling" ? 4 :
-                      cat.name === "Fire & Explosion" ? 2 :
-                      cat.name === "Environmental" ? 3 :
-                      cat.name === "Tools & Equipment" ? 3 : 3,
-    defaultSeverity: cat.name === "Electrical Hazards" ? 4 :
-                    cat.name === "Working at Height" ? 5 :
-                    cat.name === "Asbestos & Hazardous Materials" ? 5 :
-                    cat.name === "Manual Handling" ? 3 :
-                    cat.name === "Fire & Explosion" ? 5 :
-                    cat.name === "Environmental" ? 3 :
-                    cat.name === "Tools & Equipment" ? 3 : 3
+    defaultLikelihood:
+      cat.name === 'Electrical Hazards'
+        ? 3
+        : cat.name === 'Working at Height'
+          ? 3
+          : cat.name === 'Asbestos & Hazardous Materials'
+            ? 2
+            : cat.name === 'Manual Handling'
+              ? 4
+              : cat.name === 'Fire & Explosion'
+                ? 2
+                : cat.name === 'Environmental'
+                  ? 3
+                  : cat.name === 'Tools & Equipment'
+                    ? 3
+                    : 3,
+    defaultSeverity:
+      cat.name === 'Electrical Hazards'
+        ? 4
+        : cat.name === 'Working at Height'
+          ? 5
+          : cat.name === 'Asbestos & Hazardous Materials'
+            ? 5
+            : cat.name === 'Manual Handling'
+              ? 3
+              : cat.name === 'Fire & Explosion'
+                ? 5
+                : cat.name === 'Environmental'
+                  ? 3
+                  : cat.name === 'Tools & Equipment'
+                    ? 3
+                    : 3,
   }));
 
   const calculateRiskLevel = (likelihood: number, severity: number) => {
     const score = likelihood * severity;
-    if (score <= 4) return { level: "Low", color: "bg-green-500" };
-    if (score <= 9) return { level: "Medium", color: "bg-yellow-500" };
-    if (score <= 16) return { level: "High", color: "bg-orange-500" };
-    return { level: "Very High", color: "bg-red-500" };
+    if (score <= 4) return { level: 'Low', color: 'bg-green-500' };
+    if (score <= 9) return { level: 'Medium', color: 'bg-yellow-500' };
+    if (score <= 16) return { level: 'High', color: 'bg-orange-500' };
+    return { level: 'Very High', color: 'bg-red-500' };
   };
 
   const addRiskFactor = () => {
     if (!currentRisk.category || !currentRisk.description) return;
 
     const riskLevel = calculateRiskLevel(currentRisk.likelihood || 1, currentRisk.severity || 1);
-    
+
     const newRisk: RiskFactor = {
       id: Date.now().toString(),
       category: currentRisk.category,
@@ -73,30 +96,32 @@ const RiskAssessmentBuilder = () => {
       likelihood: currentRisk.likelihood || 1,
       severity: currentRisk.severity || 1,
       riskLevel: riskLevel.level,
-      controlMeasures: currentRisk.controlMeasures || []
+      controlMeasures: currentRisk.controlMeasures || [],
     };
 
-    setRiskFactors(prev => [...prev, newRisk]);
+    setRiskFactors((prev) => [...prev, newRisk]);
     setCurrentRisk({
-      category: "",
-      description: "",
+      category: '',
+      description: '',
       likelihood: 1,
       severity: 1,
-      controlMeasures: []
+      controlMeasures: [],
     });
     setShowAddForm(false); // Hide form after adding
   };
 
   const removeRiskFactor = (id: string) => {
-    setRiskFactors(prev => prev.filter(risk => risk.id !== id));
+    setRiskFactors((prev) => prev.filter((risk) => risk.id !== id));
   };
 
   const getRiskStats = () => {
     const total = riskFactors.length;
-    const high = riskFactors.filter(r => r.riskLevel === "High" || r.riskLevel === "Very High").length;
-    const medium = riskFactors.filter(r => r.riskLevel === "Medium").length;
-    const low = riskFactors.filter(r => r.riskLevel === "Low").length;
-    
+    const high = riskFactors.filter(
+      (r) => r.riskLevel === 'High' || r.riskLevel === 'Very High'
+    ).length;
+    const medium = riskFactors.filter((r) => r.riskLevel === 'Medium').length;
+    const low = riskFactors.filter((r) => r.riskLevel === 'Low').length;
+
     return { total, high, medium, low };
   };
 
@@ -112,7 +137,8 @@ const RiskAssessmentBuilder = () => {
             Risk Assessment Builder
           </CardTitle>
           <p className="text-sm text-white">
-            Build comprehensive risk assessments for electrical work using the 5x5 risk matrix methodology
+            Build comprehensive risk assessments for electrical work using the 5x5 risk matrix
+            methodology
           </p>
         </CardHeader>
       </Card>
@@ -149,7 +175,7 @@ const RiskAssessmentBuilder = () => {
       {!showAddForm && (
         <Card className="border-elec-yellow/20 bg-elec-gray/60">
           <CardContent className="p-6">
-            <Button 
+            <Button
               onClick={() => setShowAddForm(true)}
               className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12"
             >
@@ -184,16 +210,18 @@ const RiskAssessmentBuilder = () => {
             <div className="space-y-4">
               {/* Hazard Template Selection */}
               <div>
-                <Label className="text-foreground text-sm font-medium">Hazard Template (Optional)</Label>
-                <Select 
+                <Label className="text-foreground text-sm font-medium">
+                  Hazard Template (Optional)
+                </Label>
+                <Select
                   onValueChange={(value) => {
-                    const template = hazardTemplates.find(t => t.category === value);
+                    const template = hazardTemplates.find((t) => t.category === value);
                     if (template) {
-                      setCurrentRisk(prev => ({ 
-                        ...prev, 
+                      setCurrentRisk((prev) => ({
+                        ...prev,
                         category: template.category,
                         likelihood: template.defaultLikelihood,
-                        severity: template.defaultSeverity
+                        severity: template.defaultSeverity,
                       }));
                     }
                   }}
@@ -202,9 +230,10 @@ const RiskAssessmentBuilder = () => {
                     <SelectValue placeholder="Choose a hazard template for suggested defaults" />
                   </SelectTrigger>
                   <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-                    {hazardTemplates.map(template => (
+                    {hazardTemplates.map((template) => (
                       <SelectItem key={template.category} value={template.category}>
-                        {template.category} (L:{template.defaultLikelihood} S:{template.defaultSeverity})
+                        {template.category} (L:{template.defaultLikelihood} S:
+                        {template.defaultSeverity})
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -213,17 +242,23 @@ const RiskAssessmentBuilder = () => {
 
               {/* Risk Category */}
               <div>
-                <Label htmlFor="category" className="text-foreground text-sm font-medium">Risk Category</Label>
-                <Select 
-                  value={currentRisk.category} 
-                  onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, category: value }))}
+                <Label htmlFor="category" className="text-foreground text-sm font-medium">
+                  Risk Category
+                </Label>
+                <Select
+                  value={currentRisk.category}
+                  onValueChange={(value) =>
+                    setCurrentRisk((prev) => ({ ...prev, category: value }))
+                  }
                 >
                   <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                     <SelectValue placeholder="Select risk category" />
                   </SelectTrigger>
                   <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-                    {riskCategories.map(category => (
-                      <SelectItem key={category} value={category}>{category}</SelectItem>
+                    {riskCategories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -233,8 +268,10 @@ const RiskAssessmentBuilder = () => {
               <div>
                 <Label className="text-foreground text-sm font-medium">Specific Hazard</Label>
                 <HazardSelect
-                  value={currentRisk.description || ""}
-                  onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, description: value }))}
+                  value={currentRisk.description || ''}
+                  onValueChange={(value) =>
+                    setCurrentRisk((prev) => ({ ...prev, description: value }))
+                  }
                   placeholder="Select or search for specific hazards..."
                   className="mt-2"
                   showQuickPicks={false}
@@ -244,10 +281,14 @@ const RiskAssessmentBuilder = () => {
               {/* Likelihood and Severity - Side by Side on Larger Screens */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="likelihood" className="text-foreground text-sm font-medium">Likelihood (1-5)</Label>
-                  <Select 
-                    value={currentRisk.likelihood?.toString()} 
-                    onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, likelihood: parseInt(value) }))}
+                  <Label htmlFor="likelihood" className="text-foreground text-sm font-medium">
+                    Likelihood (1-5)
+                  </Label>
+                  <Select
+                    value={currentRisk.likelihood?.toString()}
+                    onValueChange={(value) =>
+                      setCurrentRisk((prev) => ({ ...prev, likelihood: parseInt(value) }))
+                    }
                   >
                     <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                       <SelectValue placeholder="Select likelihood" />
@@ -262,10 +303,14 @@ const RiskAssessmentBuilder = () => {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="severity" className="text-foreground text-sm font-medium">Severity (1-5)</Label>
-                  <Select 
-                    value={currentRisk.severity?.toString()} 
-                    onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, severity: parseInt(value) }))}
+                  <Label htmlFor="severity" className="text-foreground text-sm font-medium">
+                    Severity (1-5)
+                  </Label>
+                  <Select
+                    value={currentRisk.severity?.toString()}
+                    onValueChange={(value) =>
+                      setCurrentRisk((prev) => ({ ...prev, severity: parseInt(value) }))
+                    }
                   >
                     <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
                       <SelectValue placeholder="Select severity" />
@@ -286,7 +331,9 @@ const RiskAssessmentBuilder = () => {
                 <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                     <span className="text-sm text-white">Risk Level:</span>
-                    <Badge className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-foreground`}>
+                    <Badge
+                      className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-foreground`}
+                    >
                       {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
                     </Badge>
                     <span className="text-sm text-white">
@@ -299,8 +346,8 @@ const RiskAssessmentBuilder = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <Button 
-                onClick={addRiskFactor} 
+              <Button
+                onClick={addRiskFactor}
                 className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                 disabled={!currentRisk.category || !currentRisk.description}
               >
@@ -332,14 +379,19 @@ const RiskAssessmentBuilder = () => {
             <div className="text-center py-12">
               <AlertTriangle className="h-12 w-12 text-white mx-auto mb-4" />
               <p className="text-white mb-2">No risk factors identified yet</p>
-              <p className="text-sm text-white">Add your first risk factor to begin the assessment</p>
+              <p className="text-sm text-white">
+                Add your first risk factor to begin the assessment
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
               {riskFactors.map((risk) => {
                 const riskLevel = calculateRiskLevel(risk.likelihood, risk.severity);
                 return (
-                  <Card key={risk.id} className="border-elec-yellow/30 bg-elec-gray/40 hover:bg-elec-gray/60 transition-colors">
+                  <Card
+                    key={risk.id}
+                    className="border-elec-yellow/30 bg-elec-gray/40 hover:bg-elec-gray/60 transition-colors"
+                  >
                     <CardContent className="p-4">
                       {/* Mobile-Optimized Layout */}
                       <div className="space-y-3">
@@ -347,8 +399,8 @@ const RiskAssessmentBuilder = () => {
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 space-y-2">
                             <div className="flex flex-wrap items-center gap-2">
-                              <Badge 
-                                variant="outline" 
+                              <Badge
+                                variant="outline"
                                 className="border-elec-yellow/30 text-white text-xs"
                               >
                                 {risk.category}
@@ -376,15 +428,21 @@ const RiskAssessmentBuilder = () => {
                         <div className="grid grid-cols-3 gap-4 p-3 bg-elec-dark/30 rounded-lg">
                           <div className="text-center">
                             <div className="text-sm font-medium text-white">Likelihood</div>
-                            <div className="text-lg font-bold text-foreground">{risk.likelihood}/5</div>
+                            <div className="text-lg font-bold text-foreground">
+                              {risk.likelihood}/5
+                            </div>
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-medium text-white">Severity</div>
-                            <div className="text-lg font-bold text-foreground">{risk.severity}/5</div>
+                            <div className="text-lg font-bold text-foreground">
+                              {risk.severity}/5
+                            </div>
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-medium text-white">Score</div>
-                            <div className="text-lg font-bold text-elec-yellow">{risk.likelihood * risk.severity}</div>
+                            <div className="text-lg font-bold text-elec-yellow">
+                              {risk.likelihood * risk.severity}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -406,8 +464,8 @@ const RiskAssessmentBuilder = () => {
                 <Save className="h-4 w-4 mr-2" />
                 Save Assessment
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="flex-1 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12"
               >
                 <Eye className="h-4 w-4 mr-2" />

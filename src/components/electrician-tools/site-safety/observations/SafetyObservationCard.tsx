@@ -16,6 +16,7 @@ import {
   useCreateObservation,
   OBSERVATION_CATEGORIES,
   type SafetyObservation,
+  type ObservationSeverity,
 } from '@/hooks/useSafetyObservations';
 import { ObservationFeed } from './ObservationFeed';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
@@ -39,6 +40,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const [personObserved, setPersonObserved] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
+  const [severity, setSeverity] = useState<ObservationSeverity | ''>('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const { data: observations = [], isLoading } = useSafetyObservations();
@@ -55,6 +57,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       description: description.trim(),
       person_observed: personObserved.trim() || undefined,
       location: location.trim() || undefined,
+      severity: severity || undefined,
       photos: photoUrls,
     });
 
@@ -65,6 +68,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     setPersonObserved('');
     setDescription('');
     setLocation('');
+    setSeverity('');
     setObservationType('positive');
     setPhotoUrls([]);
   };
@@ -149,6 +153,34 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   </button>
                 </div>
               </div>
+
+              {/* Severity — improvement_needed only */}
+              {observationType === 'improvement_needed' && (
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">Severity</label>
+                  <div className="flex gap-2">
+                    {(
+                      [
+                        { value: 'low', label: 'Low', bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400' },
+                        { value: 'medium', label: 'Medium', bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400' },
+                        { value: 'high', label: 'High', bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400' },
+                      ] as const
+                    ).map((s) => (
+                      <button
+                        key={s.value}
+                        onClick={() => setSeverity(severity === s.value ? '' : s.value)}
+                        className={`h-11 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.97] transition-all border ${
+                          severity === s.value
+                            ? `${s.bg} ${s.border} ${s.text}`
+                            : 'bg-white/5 border-white/10 text-white'
+                        }`}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Category */}
               <div>

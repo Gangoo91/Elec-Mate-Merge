@@ -1,12 +1,18 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Loader2, Calendar, Users, AlertTriangle, Sparkles, FileText } from "lucide-react";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Loader2, Calendar, Users, AlertTriangle, Sparkles, FileText } from 'lucide-react';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface NearMissReport {
   id: string;
@@ -19,7 +25,7 @@ interface NearMissReport {
   potential_consequences: string;
   immediate_actions: string;
   preventive_measures: string;
-  photos_attached: string[];
+  photos: string[];
 }
 
 interface Props {
@@ -33,21 +39,26 @@ export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Prop
   const [generating, setGenerating] = useState(false);
   const [briefingData, setBriefingData] = useState({
     briefingDate: new Date().toISOString().split('T')[0],
-    briefingTime: "09:00",
-    conductorName: "",
+    briefingTime: '09:00',
+    conductorName: '',
   });
 
   const handleGenerateAndCreate = async () => {
     setGenerating(true);
     try {
       // Generate AI briefing content
-      const { data: aiData, error: aiError } = await supabase.functions.invoke('generate-briefing-from-near-miss', {
-        body: { nearMissData: nearMissReport }
-      });
+      const { data: aiData, error: aiError } = await supabase.functions.invoke(
+        'generate-briefing-from-near-miss',
+        {
+          body: { nearMissData: nearMissReport },
+        }
+      );
 
       if (aiError) throw aiError;
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data: profile } = await supabase
@@ -77,9 +88,9 @@ export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Prop
           nearMissId: nearMissReport.id,
           nearMissCategory: nearMissReport.category,
           nearMissSeverity: nearMissReport.severity,
-          aiGeneratedContent: true
+          aiGeneratedContent: true,
         } as any,
-        photos: nearMissReport.photos_attached.map(url => ({ url, caption: 'From near miss report' })),
+        photos: nearMissReport.photos.map((url) => ({ url, caption: 'From near miss report' })),
         linked_near_miss_id: nearMissReport.id,
         completed: false,
         created_by_name: profile?.full_name || user.email || '',
@@ -98,7 +109,7 @@ ${aiData.content.regulations || ''}
 
 **Required PPE:**
 ${aiData.content.requiredPPE || ''}
-        `.trim()
+        `.trim(),
       };
 
       const { data: briefing, error: briefingError } = await supabase
@@ -116,16 +127,16 @@ ${aiData.content.requiredPPE || ''}
           briefed_to_team: true,
           briefing_id: briefing.id,
           briefing_created_at: new Date().toISOString(),
-          status: 'Briefing Scheduled'
+          status: 'Briefing Scheduled',
         })
         .eq('id', nearMissReport.id);
 
       if (updateError) throw updateError;
 
       toast({
-        title: "Briefing Created",
-        description: "Team safety briefing created successfully from near miss report.",
-        variant: "success"
+        title: 'Briefing Created',
+        description: 'Team safety briefing created successfully from near miss report.',
+        variant: 'success',
       });
 
       onClose();
@@ -133,9 +144,9 @@ ${aiData.content.requiredPPE || ''}
     } catch (error) {
       console.error('Error creating briefing:', error);
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create briefing",
-        variant: "destructive"
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to create briefing',
+        variant: 'destructive',
       });
     } finally {
       setGenerating(false);
@@ -159,18 +170,21 @@ ${aiData.content.requiredPPE || ''}
           {/* Preview Card */}
           <div className="p-4 rounded-lg border border-border/50 bg-muted/50 space-y-2">
             <div className="flex items-start gap-2">
-              <AlertTriangle className={`h-5 w-5 mt-0.5 shrink-0 ${
-                nearMissReport.severity === 'Critical' ? 'text-destructive' :
-                nearMissReport.severity === 'High' ? 'text-orange-500' :
-                nearMissReport.severity === 'Medium' ? 'text-yellow-500' :
-                'text-green-500'
-              }`} />
+              <AlertTriangle
+                className={`h-5 w-5 mt-0.5 shrink-0 ${
+                  nearMissReport.severity === 'Critical'
+                    ? 'text-destructive'
+                    : nearMissReport.severity === 'High'
+                      ? 'text-orange-500'
+                      : nearMissReport.severity === 'Medium'
+                        ? 'text-yellow-500'
+                        : 'text-green-500'
+                }`}
+              />
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm">{nearMissReport.category}</p>
                 <p className="text-xs text-white truncate">{nearMissReport.location}</p>
-                <p className="text-sm text-white mt-1 line-clamp-2">
-                  {nearMissReport.description}
-                </p>
+                <p className="text-sm text-white mt-1 line-clamp-2">{nearMissReport.description}</p>
               </div>
             </div>
           </div>
@@ -180,28 +194,26 @@ ${aiData.content.requiredPPE || ''}
             label="Briefing Date"
             type="date"
             value={briefingData.briefingDate}
-            onChange={(e) => setBriefingData(prev => ({ ...prev, briefingDate: e.target.value }))}
+            onChange={(e) => setBriefingData((prev) => ({ ...prev, briefingDate: e.target.value }))}
           />
 
           <MobileInput
             label="Briefing Time"
             type="time"
             value={briefingData.briefingTime}
-            onChange={(e) => setBriefingData(prev => ({ ...prev, briefingTime: e.target.value }))}
+            onChange={(e) => setBriefingData((prev) => ({ ...prev, briefingTime: e.target.value }))}
           />
 
           <MobileInputWrapper
             label="Briefing Conductor (optional)"
             value={briefingData.conductorName}
-            onChange={(value) => setBriefingData(prev => ({ ...prev, conductorName: value }))}
+            onChange={(value) => setBriefingData((prev) => ({ ...prev, conductorName: value }))}
             placeholder="Who will conduct this briefing"
             icon={<Users className="h-4 w-4" />}
           />
 
           <div className="pt-2 space-y-2">
-            <p className="text-sm text-white">
-              The briefing will include:
-            </p>
+            <p className="text-sm text-white">The briefing will include:</p>
             <ul className="text-sm text-white space-y-1 ml-4">
               <li>• Professional incident summary</li>
               <li>• Key safety discussion points</li>

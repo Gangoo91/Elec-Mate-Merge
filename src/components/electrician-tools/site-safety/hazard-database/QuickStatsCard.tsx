@@ -7,10 +7,7 @@ interface QuickStatsCardProps {
   categoryName?: string;
 }
 
-export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
-  hazards,
-  categoryName,
-}) => {
+export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({ hazards, categoryName }) => {
   const stats = useMemo(() => {
     const highRiskCount = hazards.filter((h) => h.riskRating >= 9).length;
     const ppeCount = hazards.filter(
@@ -43,9 +40,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
               <AlertTriangle className="h-5 w-5 text-orange-400" />
             </div>
             <p className="text-lg font-bold text-white">{stats.highRisk}</p>
-            <p className="text-[10px] text-white uppercase tracking-wider">
-              High Risk
-            </p>
+            <p className="text-[10px] text-white uppercase tracking-wider">High Risk</p>
           </div>
 
           {/* PPE Required */}
@@ -54,9 +49,7 @@ export const QuickStatsCard: React.FC<QuickStatsCardProps> = ({
               <HardHat className="h-5 w-5 text-elec-yellow" />
             </div>
             <p className="text-lg font-bold text-white">{stats.withPPE}</p>
-            <p className="text-[10px] text-white uppercase tracking-wider">
-              PPE Req.
-            </p>
+            <p className="text-[10px] text-white uppercase tracking-wider">PPE Req.</p>
           </div>
         </div>
       </div>

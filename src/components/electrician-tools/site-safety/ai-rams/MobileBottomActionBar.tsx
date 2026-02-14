@@ -15,17 +15,19 @@ export const MobileBottomActionBar: React.FC<MobileBottomActionBarProps> = ({
   onSave,
   onDownload,
   isSaving = false,
-  className
+  className,
 }) => {
   const { isMobile } = useMobileEnhanced();
 
   if (!isMobile) return null;
 
   return (
-    <div className={cn(
-      "fixed bottom-0 left-0 right-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08] safe-area-bottom",
-      className
-    )}>
+    <div
+      className={cn(
+        'fixed bottom-0 left-0 right-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08] safe-area-bottom',
+        className
+      )}
+    >
       <div className="flex gap-2 px-2 py-3">
         <Button
           onClick={onSave}

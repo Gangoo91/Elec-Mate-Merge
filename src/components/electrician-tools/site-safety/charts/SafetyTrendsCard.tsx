@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { TrendingUp } from "lucide-react";
-import { NearMissSparkline } from "./NearMissSparkline";
-import { InspectionPassRate } from "./InspectionPassRate";
-import { SafetyActivityChart } from "./SafetyActivityChart";
-import type { SafetyTrends } from "@/hooks/useSafetyTrends";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { TrendingUp } from 'lucide-react';
+import { NearMissSparkline } from './NearMissSparkline';
+import { InspectionPassRate } from './InspectionPassRate';
+import { SafetyActivityChart } from './SafetyActivityChart';
+import type { SafetyTrends } from '@/hooks/useSafetyTrends';
 
 interface SafetyTrendsCardProps {
   trends: SafetyTrends;
 }
 
 const TABS = [
-  { key: "near-miss", label: "Near Misses" },
-  { key: "inspections", label: "Inspections" },
-  { key: "activity", label: "Activity" },
+  { key: 'near-miss', label: 'Near Misses' },
+  { key: 'inspections', label: 'Inspections' },
+  { key: 'activity', label: 'Activity' },
 ] as const;
 
-type TabKey = (typeof TABS)[number]["key"];
+type TabKey = (typeof TABS)[number]['key'];
 
 export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>("near-miss");
+  const [activeTab, setActiveTab] = useState<TabKey>('near-miss');
 
   return (
     <motion.div
@@ -42,9 +42,7 @@ export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`flex-1 px-2 py-1.5 rounded-lg text-[11px] font-semibold transition-all touch-manipulation ${
-                activeTab === tab.key
-                  ? "bg-white/[0.08] text-white"
-                  : "text-white"
+                activeTab === tab.key ? 'bg-white/[0.08] text-white' : 'text-white'
               }`}
             >
               {tab.label}
@@ -53,15 +51,9 @@ export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
         </div>
 
         {/* Chart content */}
-        {activeTab === "near-miss" && (
-          <NearMissSparkline data={trends.nearMissWeekly} />
-        )}
-        {activeTab === "inspections" && (
-          <InspectionPassRate data={trends.inspectionResults} />
-        )}
-        {activeTab === "activity" && (
-          <SafetyActivityChart data={trends.toolUsage} />
-        )}
+        {activeTab === 'near-miss' && <NearMissSparkline data={trends.nearMissWeekly} />}
+        {activeTab === 'inspections' && <InspectionPassRate data={trends.inspectionResults} />}
+        {activeTab === 'activity' && <SafetyActivityChart data={trends.toolUsage} />}
       </div>
     </motion.div>
   );

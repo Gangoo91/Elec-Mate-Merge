@@ -54,8 +54,12 @@ import {
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { NearMissReportDetail } from './NearMissReportDetail';
 import { SwipeableListItem } from './common/SwipeableListItem';
+import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
+import { LoadMoreButton } from './common/LoadMoreButton';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+import { useShowMore } from '@/hooks/useShowMore';
 import { NearMissReport, Witness } from './types';
+import { RiskMatrix } from './common/RiskMatrix';
 
 interface FormData {
   category: string;
@@ -79,6 +83,7 @@ interface FormData {
   supervisor_notified: boolean;
   supervisor_name: string;
   previous_similar_incidents: string;
+  likelihood: number;
 }
 
 const QUICK_TEMPLATES = [
@@ -164,6 +169,25 @@ const SEVERITIES = [
   },
 ];
 
+const SEVERITY_NUMERIC: Record<string, number> = {
+  low: 1,
+  medium: 2,
+  high: 3,
+  critical: 4,
+};
+
+function severityToNumber(severity: string): number {
+  return SEVERITY_NUMERIC[severity] || 1;
+}
+
+const LIKELIHOOD_LEVELS = [
+  { value: 1, label: 'Very Unlikely', description: 'Could happen but very rare' },
+  { value: 2, label: 'Unlikely', description: 'Not expected but possible' },
+  { value: 3, label: 'Possible', description: 'Could occur at some time' },
+  { value: 4, label: 'Likely', description: 'Will probably occur' },
+  { value: 5, label: 'Very Likely', description: 'Expected to occur' },
+];
+
 const WEATHER_CONDITIONS = [
   { value: 'clear', label: 'Clear/Sunny' },
   { value: 'overcast', label: 'Overcast' },
@@ -197,6 +221,8 @@ export const NearMissReporting: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [severityFilter, setSeverityFilter] = useState('all');
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Collapsible section states
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -226,6 +252,7 @@ export const NearMissReporting: React.FC = () => {
     supervisor_notified: false,
     supervisor_name: '',
     previous_similar_incidents: '',
+    likelihood: 0,
   });
 
   useEffect(() => {
@@ -257,6 +284,29 @@ export const NearMissReporting: React.FC = () => {
     loadReports();
   }, [user]);
 
+  // Check for escalation from Safety Observations
+  useEffect(() => {
+    const escalation = localStorage.getItem('escalate-to-near-miss');
+    if (escalation) {
+      try {
+        const data = JSON.parse(escalation);
+        setFormData((prev) => ({
+          ...prev,
+          category: data.category || prev.category,
+          severity: data.severity || prev.severity,
+          description: data.description
+            ? `[Escalated from Observation] ${data.description}`
+            : prev.description,
+          location: data.location || prev.location,
+        }));
+        setShowForm(true);
+        localStorage.removeItem('escalate-to-near-miss');
+      } catch {
+        localStorage.removeItem('escalate-to-near-miss');
+      }
+    }
+  }, []);
+
   const resetForm = () => {
     const now = new Date();
     setFormData({
@@ -281,6 +331,7 @@ export const NearMissReporting: React.FC = () => {
       supervisor_notified: false,
       supervisor_name: '',
       previous_similar_incidents: '',
+      likelihood: 0,
     });
     setPhotoUrls([]);
     setErrors({});
@@ -383,7 +434,7 @@ export const NearMissReporting: React.FC = () => {
         preventive_measures: formData.preventive_measures || null,
         status: 'open',
         follow_up_required: formData.severity === 'high' || formData.severity === 'critical',
-        witnesses: validWitnesses.length > 0 ? JSON.stringify(validWitnesses) : null,
+        witnesses: validWitnesses.length > 0 ? validWitnesses : null,
         third_party_involved: formData.third_party_involved,
         third_party_details: formData.third_party_details || null,
         weather_conditions: formData.weather_conditions || null,
@@ -394,7 +445,12 @@ export const NearMissReporting: React.FC = () => {
         supervisor_notified: formData.supervisor_notified,
         supervisor_name: formData.supervisor_name || null,
         previous_similar_incidents: formData.previous_similar_incidents || null,
-        photos_attached: photoUrls.length > 0 ? photoUrls : null,
+        photos: photoUrls.length > 0 ? photoUrls : null,
+        likelihood: formData.likelihood > 0 ? formData.likelihood : null,
+        risk_rating:
+          formData.likelihood > 0 && formData.severity
+            ? formData.likelihood * severityToNumber(formData.severity)
+            : null,
       };
       const { data, error } = await supabase
         .from('near_miss_reports')
@@ -445,6 +501,13 @@ export const NearMissReporting: React.FC = () => {
     });
   }, [reports, searchQuery, severityFilter]);
 
+  const {
+    visible: visibleReports,
+    hasMore: hasMoreReports,
+    remaining: remainingReports,
+    loadMore: loadMoreReports,
+  } = useShowMore(filteredReports);
+
   const severityFilterTabs = useMemo(() => {
     return [
       { key: 'all', label: 'All', count: reports.length },
@@ -477,7 +540,18 @@ export const NearMissReporting: React.FC = () => {
 
   // Show detail view if a report is selected
   if (selectedReport) {
-    return <NearMissReportDetail report={selectedReport} onBack={() => setSelectedReport(null)} />;
+    return (
+      <NearMissReportDetail
+        report={selectedReport}
+        onBack={() => setSelectedReport(null)}
+        onUpdate={(updated) => {
+          setSelectedReport((prev) => (prev ? { ...prev, ...updated } : prev));
+          setReports((prev) =>
+            prev.map((r) => (r.id === updated.id ? { ...r, ...updated } : r))
+          );
+        }}
+      />
+    );
   }
 
   if (!showForm) {
@@ -592,7 +666,7 @@ export const NearMissReporting: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-3">
-            {filteredReports.map((report) => (
+            {visibleReports.map((report) => (
               <SwipeableListItem
                 key={report.id}
                 rightActions={[
@@ -600,7 +674,7 @@ export const NearMissReporting: React.FC = () => {
                     icon: Trash2,
                     label: 'Delete',
                     color: 'bg-red-500',
-                    onAction: () => handleDeleteReport(report.id),
+                    onAction: () => setDeleteTarget(report.id),
                   },
                 ]}
               >
@@ -612,6 +686,11 @@ export const NearMissReporting: React.FC = () => {
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          {report.incident_number && (
+                            <Badge className="bg-white/10 text-white border-white/20 text-[10px] font-mono">
+                              {report.incident_number}
+                            </Badge>
+                          )}
                           {getSeverityBadge(report.severity)}
                           <Badge
                             variant="outline"
@@ -619,6 +698,17 @@ export const NearMissReporting: React.FC = () => {
                           >
                             {getCategoryLabel(report.category)}
                           </Badge>
+                          {report.status && report.status !== 'open' && (
+                            <Badge
+                              className={`text-[10px] border ${
+                                report.status === 'closed'
+                                  ? 'bg-green-500/15 text-green-400 border-green-500/30'
+                                  : 'bg-blue-500/15 text-blue-400 border-blue-500/30'
+                              }`}
+                            >
+                              {report.status === 'closed' ? 'Closed' : 'In Progress'}
+                            </Badge>
+                          )}
                         </div>
                         <p className="text-sm text-white line-clamp-2 mb-3">{report.description}</p>
                         <div className="flex items-center gap-4 text-xs text-white">
@@ -638,6 +728,9 @@ export const NearMissReporting: React.FC = () => {
                 </Card>
               </SwipeableListItem>
             ))}
+            {hasMoreReports && (
+              <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />
+            )}
           </div>
         )}
 
@@ -657,6 +750,23 @@ export const NearMissReporting: React.FC = () => {
             </Button>
           </DialogContent>
         </Dialog>
+
+        <DeleteConfirmSheet
+          open={!!deleteTarget}
+          onOpenChange={(open) => {
+            if (!open) setDeleteTarget(null);
+          }}
+          onConfirm={async () => {
+            if (!deleteTarget) return;
+            setIsDeleting(true);
+            await handleDeleteReport(deleteTarget);
+            setIsDeleting(false);
+            setDeleteTarget(null);
+          }}
+          title="Delete Near Miss Report?"
+          description="This report will be permanently removed"
+          isDeleting={isDeleting}
+        />
       </div>
     );
   }
@@ -813,6 +923,44 @@ export const NearMissReporting: React.FC = () => {
               </div>
               {errors.severity && <p className="text-xs text-red-400">{errors.severity}</p>}
             </div>
+
+            {/* Likelihood */}
+            <div className="space-y-2">
+              <Label className="text-white">Likelihood</Label>
+              <div className="flex gap-1.5">
+                {LIKELIHOOD_LEVELS.map((l) => (
+                  <button
+                    key={l.value}
+                    type="button"
+                    onClick={() =>
+                      setFormData((prev) => ({ ...prev, likelihood: l.value }))
+                    }
+                    className={`flex-1 h-11 rounded-xl border text-center touch-manipulation active:scale-[0.97] transition-all ${
+                      formData.likelihood === l.value
+                        ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
+                        : 'bg-[#1a1a1a] text-white border-white/10'
+                    }`}
+                  >
+                    <span className="text-sm font-medium">{l.value}</span>
+                  </button>
+                ))}
+              </div>
+              {formData.likelihood > 0 && (
+                <p className="text-xs text-white">
+                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.label} —{' '}
+                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.description}
+                </p>
+              )}
+            </div>
+
+            {/* Risk Matrix */}
+            {formData.severity && formData.likelihood > 0 && (
+              <RiskMatrix
+                selectedLikelihood={formData.likelihood}
+                selectedSeverity={severityToNumber(formData.severity)}
+              />
+            )}
+
             <div id="field-description" className="space-y-2">
               <Label className="text-white">
                 Description <span className="text-red-400">*</span>

@@ -21,7 +21,7 @@ import {
   Users,
   Star,
   Clock,
-  TrendingUp
+  TrendingUp,
 } from 'lucide-react';
 import { useEnhancedRAMS } from '@/hooks/useEnhancedRAMS';
 import { hazardCategories } from '@/data/hazards';
@@ -36,19 +36,13 @@ const categoryIcons = {
   'Asbestos & Hazardous Materials': AlertTriangle,
   'Manual Handling': Hammer,
   'Fire & Explosion': FlameKindling,
-  'Environmental': Wind,
+  Environmental: Wind,
   'Tools & Equipment': Building2,
-  'Human Factors': Users
+  'Human Factors': Users,
 };
 
 const HazardDatabase: React.FC = () => {
-  const {
-    hazards,
-    customHazards,
-    loading,
-    createCustomHazard,
-    trackUsage
-  } = useEnhancedRAMS();
+  const { hazards, customHazards, loading, createCustomHazard, trackUsage } = useEnhancedRAMS();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -58,31 +52,38 @@ const HazardDatabase: React.FC = () => {
 
   // Get all hazards (default + custom)
   const allHazards = useMemo(() => {
-    return [...hazards, ...customHazards.map(ch => ({
-      id: ch.id,
-      user_id: ch.user_id,
-      hazard_id: ch.id,
-      hazard_name: ch.name,
-      category: ch.category,
-      linked_tasks: [],
-      linked_risks: [],
-      linked_method_statements: [],
-      frequency: 0,
-      last_used: ch.created_at,
-      custom_controls: ch.default_controls,
-      is_custom: true,
-      created_at: ch.created_at,
-      updated_at: ch.updated_at
-    } as EnhancedHazard))];
+    return [
+      ...hazards,
+      ...customHazards.map(
+        (ch) =>
+          ({
+            id: ch.id,
+            user_id: ch.user_id,
+            hazard_id: ch.id,
+            hazard_name: ch.name,
+            category: ch.category,
+            linked_tasks: [],
+            linked_risks: [],
+            linked_method_statements: [],
+            frequency: 0,
+            last_used: ch.created_at,
+            custom_controls: ch.default_controls,
+            is_custom: true,
+            created_at: ch.created_at,
+            updated_at: ch.updated_at,
+          }) as EnhancedHazard
+      ),
+    ];
   }, [hazards, customHazards]);
 
   // Filter hazards based on search and category
   const filteredHazards = useMemo(() => {
-    return allHazards.filter(hazard => {
-      const matchesSearch = hazard.hazard_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           hazard.category.toLowerCase().includes(searchTerm.toLowerCase());
+    return allHazards.filter((hazard) => {
+      const matchesSearch =
+        hazard.hazard_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        hazard.category.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || hazard.category === selectedCategory;
-      
+
       return matchesSearch && matchesCategory;
     });
   }, [allHazards, searchTerm, selectedCategory]);
@@ -90,8 +91,8 @@ const HazardDatabase: React.FC = () => {
   // Group hazards by category
   const hazardsByCategory = useMemo(() => {
     const grouped: Record<string, EnhancedHazard[]> = {};
-    
-    filteredHazards.forEach(hazard => {
+
+    filteredHazards.forEach((hazard) => {
       if (!grouped[hazard.category]) {
         grouped[hazard.category] = [];
       }
@@ -99,7 +100,7 @@ const HazardDatabase: React.FC = () => {
     });
 
     // Sort hazards within each category by frequency
-    Object.keys(grouped).forEach(category => {
+    Object.keys(grouped).forEach((category) => {
       grouped[category].sort((a, b) => b.frequency - a.frequency);
     });
 
@@ -109,7 +110,7 @@ const HazardDatabase: React.FC = () => {
   // Get most frequently used hazards
   const frequentHazards = useMemo(() => {
     return allHazards
-      .filter(h => h.frequency > 0)
+      .filter((h) => h.frequency > 0)
       .sort((a, b) => b.frequency - a.frequency)
       .slice(0, 10);
   }, [allHazards]);
@@ -123,7 +124,7 @@ const HazardDatabase: React.FC = () => {
 
   // Get unique categories for filter
   const categories = useMemo(() => {
-    return Array.from(new Set(allHazards.map(h => h.category)));
+    return Array.from(new Set(allHazards.map((h) => h.category)));
   }, [allHazards]);
 
   // Handle hazard selection and tracking
@@ -131,23 +132,20 @@ const HazardDatabase: React.FC = () => {
     setSelectedHazard(hazard);
     await trackUsage('hazard', hazard.hazard_id, 'view', {
       category: hazard.category,
-      source: 'database'
+      source: 'database',
     });
   };
 
-  const HazardCard: React.FC<{ 
-    hazard: EnhancedHazard; 
+  const HazardCard: React.FC<{
+    hazard: EnhancedHazard;
     showCategory?: boolean;
     showUsage?: boolean;
-  }> = ({ 
-    hazard, 
-    showCategory = false,
-    showUsage = false 
-  }) => {
-    const IconComponent = categoryIcons[hazard.category as keyof typeof categoryIcons] || AlertTriangle;
+  }> = ({ hazard, showCategory = false, showUsage = false }) => {
+    const IconComponent =
+      categoryIcons[hazard.category as keyof typeof categoryIcons] || AlertTriangle;
 
     return (
-      <Card 
+      <Card
         className="cursor-pointer hover:shadow-md transition-shadow border-l-4 border-l-primary/20 hover:border-l-primary"
         onClick={() => handleHazardSelect(hazard)}
       >
@@ -157,10 +155,12 @@ const HazardDatabase: React.FC = () => {
               <IconComponent className="w-5 h-5 text-primary" />
               <h3 className="font-medium leading-tight">{hazard.hazard_name}</h3>
             </div>
-            
+
             <div className="flex items-center gap-2">
               {hazard.is_custom && (
-                <Badge variant="secondary" className="text-xs">Custom</Badge>
+                <Badge variant="secondary" className="text-xs">
+                  Custom
+                </Badge>
               )}
               {showUsage && hazard.frequency > 0 && (
                 <Badge variant="outline" className="text-xs">
@@ -170,19 +170,13 @@ const HazardDatabase: React.FC = () => {
             </div>
           </div>
 
-          {showCategory && (
-            <p className="text-sm text-white mb-2">{hazard.category}</p>
-          )}
+          {showCategory && <p className="text-sm text-white mb-2">{hazard.category}</p>}
 
           {/* Linked items summary */}
           {(hazard.linked_tasks.length > 0 || hazard.linked_risks.length > 0) && (
             <div className="flex gap-4 text-xs text-white">
-              {hazard.linked_tasks.length > 0 && (
-                <span>{hazard.linked_tasks.length} task(s)</span>
-              )}
-              {hazard.linked_risks.length > 0 && (
-                <span>{hazard.linked_risks.length} risk(s)</span>
-              )}
+              {hazard.linked_tasks.length > 0 && <span>{hazard.linked_tasks.length} task(s)</span>}
+              {hazard.linked_risks.length > 0 && <span>{hazard.linked_risks.length} risk(s)</span>}
             </div>
           )}
 
@@ -216,9 +210,7 @@ const HazardDatabase: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Hazard Database</h2>
-          <p className="text-white">
-            Comprehensive hazard library with intelligent categorization
-          </p>
+          <p className="text-white">Comprehensive hazard library with intelligent categorization</p>
         </div>
         <Button onClick={() => setShowCreateDialog(true)}>
           <Plus className="w-4 h-4 mr-2" />
@@ -239,19 +231,21 @@ const HazardDatabase: React.FC = () => {
                   placeholder="Search hazards..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn(!searchTerm && "pl-10")}
+                  className={cn(!searchTerm && 'pl-10')}
                 />
               </div>
             </div>
-            
+
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="px-3 py-2 border border-input rounded-md bg-background text-sm"
             >
               <option value="all">All Categories</option>
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
               ))}
             </select>
           </div>
@@ -271,8 +265,9 @@ const HazardDatabase: React.FC = () => {
         <TabsContent value="browse" className="mt-6">
           <div className="space-y-6">
             {Object.entries(hazardsByCategory).map(([category, categoryHazards]) => {
-              const IconComponent = categoryIcons[category as keyof typeof categoryIcons] || AlertTriangle;
-              
+              const IconComponent =
+                categoryIcons[category as keyof typeof categoryIcons] || AlertTriangle;
+
               return (
                 <Card key={category}>
                   <CardHeader>
@@ -284,12 +279,8 @@ const HazardDatabase: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {categoryHazards.map(hazard => (
-                        <HazardCard 
-                          key={hazard.hazard_id} 
-                          hazard={hazard} 
-                          showUsage={true}
-                        />
+                      {categoryHazards.map((hazard) => (
+                        <HazardCard key={hazard.hazard_id} hazard={hazard} showUsage={true} />
                       ))}
                     </div>
                   </CardContent>
@@ -311,10 +302,10 @@ const HazardDatabase: React.FC = () => {
             <CardContent>
               {frequentHazards.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {frequentHazards.map(hazard => (
-                    <HazardCard 
-                      key={hazard.hazard_id} 
-                      hazard={hazard} 
+                  {frequentHazards.map((hazard) => (
+                    <HazardCard
+                      key={hazard.hazard_id}
+                      hazard={hazard}
                       showCategory={true}
                       showUsage={true}
                     />
@@ -345,21 +336,15 @@ const HazardDatabase: React.FC = () => {
             <CardContent>
               {recentHazards.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {recentHazards.map(hazard => (
-                    <HazardCard 
-                      key={hazard.hazard_id} 
-                      hazard={hazard} 
-                      showCategory={true}
-                    />
+                  {recentHazards.map((hazard) => (
+                    <HazardCard key={hazard.hazard_id} hazard={hazard} showCategory={true} />
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-8">
                   <Clock className="w-12 h-12 mx-auto mb-4 text-white" />
                   <h3 className="text-lg font-semibold mb-2">No recent usage</h3>
-                  <p className="text-white">
-                    Hazards you use will appear here for quick access
-                  </p>
+                  <p className="text-white">Hazards you use will appear here for quick access</p>
                 </div>
               )}
             </CardContent>
@@ -378,9 +363,9 @@ const HazardDatabase: React.FC = () => {
             <CardContent>
               {customHazards.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {customHazards.map(hazard => (
-                    <HazardCard 
-                      key={hazard.id} 
+                  {customHazards.map((hazard) => (
+                    <HazardCard
+                      key={hazard.id}
                       hazard={{
                         id: hazard.id,
                         user_id: hazard.user_id,
@@ -395,7 +380,7 @@ const HazardDatabase: React.FC = () => {
                         custom_controls: hazard.default_controls,
                         is_custom: true,
                         created_at: hazard.created_at,
-                        updated_at: hazard.updated_at
+                        updated_at: hazard.updated_at,
                       }}
                       showCategory={true}
                     />
@@ -420,11 +405,8 @@ const HazardDatabase: React.FC = () => {
       </Tabs>
 
       {/* Dialogs */}
-      <CustomHazardDialog
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
-      />
-      
+      <CustomHazardDialog open={showCreateDialog} onOpenChange={setShowCreateDialog} />
+
       {selectedHazard && (
         <HazardDetailsPanel
           hazard={selectedHazard}

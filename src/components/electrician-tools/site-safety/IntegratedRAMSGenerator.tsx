@@ -8,14 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { 
-  FileText, 
-  Plus, 
-  X, 
-  Download, 
-  Eye, 
-  AlertTriangle, 
-  Building, 
+import {
+  FileText,
+  Plus,
+  X,
+  Download,
+  Eye,
+  AlertTriangle,
+  Building,
   Shield,
   ClipboardList,
   Edit3,
@@ -25,7 +25,7 @@ import {
   ArrowLeft,
   Clock,
   Users,
-  Wrench
+  Wrench,
 } from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
 import { generateRAMSPDF } from '@/utils/rams-pdf';
@@ -42,10 +42,10 @@ interface IntegratedRAMSData {
   location: string;
   assessor: string;
   date: string;
-  
+
   // Risk Assessment
   risks: RAMSRisk[];
-  
+
   // Method Statement
   contractor: string;
   supervisor: string;
@@ -60,11 +60,11 @@ interface IntegratedRAMSData {
 
 const IntegratedRAMSGenerator: React.FC = () => {
   const { ramsData, updateProjectInfo, addRisk, updateRisk, removeRisk } = useRAMS();
-  
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  
+
   // Method Statement specific data
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>({
     contractor: '',
@@ -75,7 +75,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
     description: '',
     overallRiskLevel: 'medium',
     reviewDate: '',
-    steps: []
+    steps: [],
   });
 
   const [newRisk, setNewRisk] = useState({
@@ -83,7 +83,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
     risk: '',
     likelihood: 1,
     severity: 1,
-    controls: ''
+    controls: '',
   });
 
   const [newStep, setNewStep] = useState<Partial<MethodStep>>({
@@ -93,14 +93,14 @@ const IntegratedRAMSGenerator: React.FC = () => {
     equipmentNeeded: [],
     qualifications: [],
     estimatedDuration: '',
-    riskLevel: 'medium'
+    riskLevel: 'medium',
   });
 
   const steps = [
     { id: 'project', title: 'Project Details', icon: Building },
     { id: 'risks', title: 'Risk Assessment', icon: Shield },
     { id: 'method', title: 'Method Statement', icon: ClipboardList },
-    { id: 'review', title: 'Review & Export', icon: Eye }
+    { id: 'review', title: 'Review & Export', icon: Eye },
   ];
 
   const currentStepProgress = ((currentStep + 1) / steps.length) * 100;
@@ -109,24 +109,24 @@ const IntegratedRAMSGenerator: React.FC = () => {
     if (newRisk.hazard && newRisk.risk) {
       const riskRating = newRisk.likelihood * newRisk.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
-      
+
       addRisk({
         ...newRisk,
         riskRating,
-        residualRisk
+        residualRisk,
       });
-      
+
       setNewRisk({
         hazard: '',
         risk: '',
         likelihood: 1,
         severity: 1,
-        controls: ''
+        controls: '',
       });
-      
+
       toast({
         title: 'Risk Added',
-        description: 'Risk assessment has been added successfully.'
+        description: 'Risk assessment has been added successfully.',
       });
     }
   };
@@ -143,12 +143,12 @@ const IntegratedRAMSGenerator: React.FC = () => {
         qualifications: newStep.qualifications || [],
         estimatedDuration: newStep.estimatedDuration || '30 mins',
         riskLevel: newStep.riskLevel || 'medium',
-        isCompleted: false
+        isCompleted: false,
       };
 
-      setMethodData(prev => ({
+      setMethodData((prev) => ({
         ...prev,
-        steps: [...(prev.steps || []), step]
+        steps: [...(prev.steps || []), step],
       }));
 
       setNewStep({
@@ -158,25 +158,26 @@ const IntegratedRAMSGenerator: React.FC = () => {
         equipmentNeeded: [],
         qualifications: [],
         estimatedDuration: '',
-        riskLevel: 'medium'
+        riskLevel: 'medium',
       });
 
       toast({
         title: 'Method Step Added',
-        description: 'Work step has been added to the method statement.'
+        description: 'Work step has been added to the method statement.',
       });
     }
   };
 
   const linkRiskToMethodStep = (riskId: string, stepId: string) => {
     // Link specific risks to method steps for integrated documentation
-    setMethodData(prev => ({
+    setMethodData((prev) => ({
       ...prev,
-      steps: prev.steps?.map(step => 
-        step.id === stepId 
-          ? { ...step, linkedHazards: [...(step.linkedHazards || []), riskId] }
-          : step
-      ) || []
+      steps:
+        prev.steps?.map((step) =>
+          step.id === stepId
+            ? { ...step, linkedHazards: [...(step.linkedHazards || []), riskId] }
+            : step
+        ) || [],
     }));
   };
 
@@ -186,7 +187,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
       toast({
         title: 'Validation Error',
         description: validation.errors.join('. '),
-        variant: 'destructive'
+        variant: 'destructive',
       });
       return;
     }
@@ -197,26 +198,27 @@ const IntegratedRAMSGenerator: React.FC = () => {
       const integratedData = {
         ...ramsData,
         methodStatement: methodData,
-        integrationNotes: 'This document contains both risk assessment and method statement for comprehensive safety planning.'
+        integrationNotes:
+          'This document contains both risk assessment and method statement for comprehensive safety planning.',
       };
 
       await generateRAMSPDF(integratedData, {
         includeSignatures: true,
         companyName: 'Professional Electrical Services',
         documentReference: `RAMS-${Date.now()}`,
-        reviewDate: methodData.reviewDate
+        reviewDate: methodData.reviewDate,
       });
 
       toast({
         title: 'RAMS Document Generated',
-        description: 'Professional integrated RAMS document has been downloaded.'
+        description: 'Professional integrated RAMS document has been downloaded.',
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast({
         title: 'Generation Failed',
         description: 'Failed to generate PDF. Please check your data and try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -225,18 +227,18 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
   const validateAllSections = () => {
     const errors: string[] = [];
-    
+
     // Project validation
     if (!ramsData.projectName) errors.push('Project name is required');
     if (!ramsData.location) errors.push('Location is required');
     if (!ramsData.assessor) errors.push('Assessor name is required');
     if (!ramsData.date) errors.push('Assessment date is required');
-    
+
     // Risk assessment validation
     if (!ramsData.risks || ramsData.risks.length === 0) {
       errors.push('At least one risk must be identified');
     }
-    
+
     // Method statement validation
     if (!methodData.contractor) errors.push('Contractor name is required');
     if (!methodData.supervisor) errors.push('Supervisor name is required');
@@ -244,10 +246,10 @@ const IntegratedRAMSGenerator: React.FC = () => {
     if (!methodData.steps || methodData.steps.length === 0) {
       errors.push('At least one method step is required');
     }
-    
+
     return {
       isValid: errors.length === 0,
-      errors
+      errors,
     };
   };
 
@@ -262,7 +264,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="projectName" className="text-foreground">Project Name *</Label>
+          <Label htmlFor="projectName" className="text-foreground">
+            Project Name *
+          </Label>
           <Input
             id="projectName"
             value={ramsData.projectName}
@@ -272,7 +276,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="location" className="text-foreground">Location *</Label>
+          <Label htmlFor="location" className="text-foreground">
+            Location *
+          </Label>
           <Input
             id="location"
             value={ramsData.location}
@@ -282,7 +288,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="assessor" className="text-foreground">Assessor *</Label>
+          <Label htmlFor="assessor" className="text-foreground">
+            Assessor *
+          </Label>
           <Input
             id="assessor"
             value={ramsData.assessor}
@@ -292,7 +300,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
           />
         </div>
         <div>
-          <Label htmlFor="date" className="text-foreground">Assessment Date *</Label>
+          <Label htmlFor="date" className="text-foreground">
+            Assessment Date *
+          </Label>
           <Input
             id="date"
             type="date"
@@ -305,41 +315,49 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="contractor" className="text-foreground">Contractor *</Label>
+          <Label htmlFor="contractor" className="text-foreground">
+            Contractor *
+          </Label>
           <Input
             id="contractor"
             value={methodData.contractor}
-            onChange={(e) => setMethodData(prev => ({ ...prev, contractor: e.target.value }))}
+            onChange={(e) => setMethodData((prev) => ({ ...prev, contractor: e.target.value }))}
             placeholder="Enter contractor name"
             className="mt-1 bg-background/50 border-primary/30 text-foreground"
           />
         </div>
         <div>
-          <Label htmlFor="supervisor" className="text-foreground">Supervisor *</Label>
+          <Label htmlFor="supervisor" className="text-foreground">
+            Supervisor *
+          </Label>
           <Input
             id="supervisor"
             value={methodData.supervisor}
-            onChange={(e) => setMethodData(prev => ({ ...prev, supervisor: e.target.value }))}
+            onChange={(e) => setMethodData((prev) => ({ ...prev, supervisor: e.target.value }))}
             placeholder="Enter supervisor name"
             className="mt-1 bg-background/50 border-primary/30 text-foreground"
           />
         </div>
         <div>
-          <Label htmlFor="workType" className="text-foreground">Work Type *</Label>
+          <Label htmlFor="workType" className="text-foreground">
+            Work Type *
+          </Label>
           <Input
             id="workType"
             value={methodData.workType}
-            onChange={(e) => setMethodData(prev => ({ ...prev, workType: e.target.value }))}
+            onChange={(e) => setMethodData((prev) => ({ ...prev, workType: e.target.value }))}
             placeholder="e.g., Electrical Installation"
             className="mt-1 bg-background/50 border-primary/30 text-foreground"
           />
         </div>
         <div>
-          <Label htmlFor="teamSize" className="text-foreground">Team Size</Label>
+          <Label htmlFor="teamSize" className="text-foreground">
+            Team Size
+          </Label>
           <Input
             id="teamSize"
             value={methodData.teamSize}
-            onChange={(e) => setMethodData(prev => ({ ...prev, teamSize: e.target.value }))}
+            onChange={(e) => setMethodData((prev) => ({ ...prev, teamSize: e.target.value }))}
             placeholder="e.g., 2 electricians"
             className="mt-1 bg-background/50 border-primary/30 text-foreground"
           />
@@ -347,11 +365,13 @@ const IntegratedRAMSGenerator: React.FC = () => {
       </div>
 
       <div>
-        <Label htmlFor="description" className="text-foreground">Work Description</Label>
+        <Label htmlFor="description" className="text-foreground">
+          Work Description
+        </Label>
         <Textarea
           id="description"
           value={methodData.description}
-          onChange={(e) => setMethodData(prev => ({ ...prev, description: e.target.value }))}
+          onChange={(e) => setMethodData((prev) => ({ ...prev, description: e.target.value }))}
           placeholder="Describe the work to be carried out..."
           className="mt-1 bg-background/50 border-primary/30 text-foreground"
           rows={3}
@@ -377,9 +397,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label className="text-foreground">Hazard *</Label>
-              <HazardSelect 
+              <HazardSelect
                 value={newRisk.hazard}
-                onValueChange={(hazard) => setNewRisk(prev => ({ ...prev, hazard }))}
+                onValueChange={(hazard) => setNewRisk((prev) => ({ ...prev, hazard }))}
                 placeholder="Select or type hazard"
               />
             </div>
@@ -388,8 +408,10 @@ const IntegratedRAMSGenerator: React.FC = () => {
               <RiskSelect
                 selectedHazard={newRisk.hazard}
                 value={newRisk.risk}
-                onValueChange={(risk) => setNewRisk(prev => ({ ...prev, risk }))}
-                onControlMeasuresChange={(measures) => setNewRisk(prev => ({ ...prev, controls: measures.join('\n• ') }))}
+                onValueChange={(risk) => setNewRisk((prev) => ({ ...prev, risk }))}
+                onControlMeasuresChange={(measures) =>
+                  setNewRisk((prev) => ({ ...prev, controls: measures.join('\n• ') }))
+                }
                 placeholder="Select or type risk"
               />
             </div>
@@ -403,7 +425,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 min="1"
                 max="5"
                 value={newRisk.likelihood}
-                onChange={(e) => setNewRisk(prev => ({ ...prev, likelihood: parseInt(e.target.value) || 1 }))}
+                onChange={(e) =>
+                  setNewRisk((prev) => ({ ...prev, likelihood: parseInt(e.target.value) || 1 }))
+                }
                 className="bg-background/50 border-primary/30 text-foreground"
               />
             </div>
@@ -414,7 +438,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 min="1"
                 max="5"
                 value={newRisk.severity}
-                onChange={(e) => setNewRisk(prev => ({ ...prev, severity: parseInt(e.target.value) || 1 }))}
+                onChange={(e) =>
+                  setNewRisk((prev) => ({ ...prev, severity: parseInt(e.target.value) || 1 }))
+                }
                 className="bg-background/50 border-primary/30 text-foreground"
               />
             </div>
@@ -424,14 +450,14 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <Label className="text-foreground">Control Measures</Label>
             <Textarea
               value={newRisk.controls}
-              onChange={(e) => setNewRisk(prev => ({ ...prev, controls: e.target.value }))}
+              onChange={(e) => setNewRisk((prev) => ({ ...prev, controls: e.target.value }))}
               placeholder="Describe control measures to mitigate this risk..."
               className="bg-background/50 border-primary/30 text-foreground"
               rows={3}
             />
           </div>
 
-          <Button 
+          <Button
             onClick={handleAddRisk}
             disabled={!newRisk.hazard || !newRisk.risk}
             className="bg-primary text-primary-foreground hover:bg-primary/90"
@@ -445,7 +471,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
       {ramsData.risks.length > 0 && (
         <Card className="border-primary/30 bg-card/60">
           <CardHeader>
-            <CardTitle className="text-foreground">Identified Risks ({ramsData.risks.length})</CardTitle>
+            <CardTitle className="text-foreground">
+              Identified Risks ({ramsData.risks.length})
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -486,7 +514,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <Label className="text-foreground">Step Title *</Label>
             <Input
               value={newStep.title}
-              onChange={(e) => setNewStep(prev => ({ ...prev, title: e.target.value }))}
+              onChange={(e) => setNewStep((prev) => ({ ...prev, title: e.target.value }))}
               placeholder="e.g., Isolate electrical supply"
               className="bg-background/50 border-primary/30 text-foreground"
             />
@@ -496,7 +524,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <Label className="text-foreground">Step Description *</Label>
             <Textarea
               value={newStep.description}
-              onChange={(e) => setNewStep(prev => ({ ...prev, description: e.target.value }))}
+              onChange={(e) => setNewStep((prev) => ({ ...prev, description: e.target.value }))}
               placeholder="Detailed description of how to perform this step safely..."
               className="bg-background/50 border-primary/30 text-foreground"
               rows={3}
@@ -508,7 +536,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
               <Label className="text-foreground">Duration</Label>
               <Input
                 value={newStep.estimatedDuration}
-                onChange={(e) => setNewStep(prev => ({ ...prev, estimatedDuration: e.target.value }))}
+                onChange={(e) =>
+                  setNewStep((prev) => ({ ...prev, estimatedDuration: e.target.value }))
+                }
                 placeholder="e.g., 30 mins"
                 className="bg-background/50 border-primary/30 text-foreground"
               />
@@ -517,7 +547,12 @@ const IntegratedRAMSGenerator: React.FC = () => {
               <Label className="text-foreground">Risk Level</Label>
               <select
                 value={newStep.riskLevel}
-                onChange={(e) => setNewStep(prev => ({ ...prev, riskLevel: e.target.value as 'low' | 'medium' | 'high' }))}
+                onChange={(e) =>
+                  setNewStep((prev) => ({
+                    ...prev,
+                    riskLevel: e.target.value as 'low' | 'medium' | 'high',
+                  }))
+                }
                 className="w-full p-2 rounded-md bg-background/50 border border-primary/30 text-foreground"
               >
                 <option value="low">Low</option>
@@ -527,7 +562,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={handleAddMethodStep}
             disabled={!newStep.title || !newStep.description}
             className="bg-primary text-primary-foreground hover:bg-primary/90"
@@ -540,7 +575,9 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
       {methodData.steps && methodData.steps.length > 0 && (
         <div className="space-y-4">
-          <h4 className="text-foreground text-lg font-semibold">Method Steps ({methodData.steps.length})</h4>
+          <h4 className="text-foreground text-lg font-semibold">
+            Method Steps ({methodData.steps.length})
+          </h4>
           <div className="space-y-3">
             {methodData.steps.map((step, index) => (
               <div key={step.id} className="p-4 border border-primary/20 rounded-lg bg-card/40">
@@ -556,7 +593,15 @@ const IntegratedRAMSGenerator: React.FC = () => {
                         <Clock className="h-3 w-3" />
                         {step.estimatedDuration}
                       </span>
-                      <Badge variant={step.riskLevel === 'high' ? 'destructive' : step.riskLevel === 'medium' ? 'secondary' : 'default'}>
+                      <Badge
+                        variant={
+                          step.riskLevel === 'high'
+                            ? 'destructive'
+                            : step.riskLevel === 'medium'
+                              ? 'secondary'
+                              : 'default'
+                        }
+                      >
                         {step.riskLevel} risk
                       </Badge>
                     </div>
@@ -572,7 +617,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
   const renderReview = () => {
     const validation = validateAllSections();
-    
+
     return (
       <div className="space-y-6">
         <Card className="border-primary/30 bg-card/60">
@@ -589,11 +634,15 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 <div className="text-sm text-white">Risks Identified</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">{methodData.steps?.length || 0}</div>
+                <div className="text-2xl font-bold text-primary">
+                  {methodData.steps?.length || 0}
+                </div>
                 <div className="text-sm text-white">Method Steps</div>
               </div>
               <div className="text-center">
-                <div className={`text-2xl font-bold ${validation.isValid ? 'text-green-500' : 'text-red-500'}`}>
+                <div
+                  className={`text-2xl font-bold ${validation.isValid ? 'text-green-500' : 'text-red-500'}`}
+                >
                   {validation.isValid ? '✓' : '✗'}
                 </div>
                 <div className="text-sm text-white">
@@ -614,7 +663,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
             )}
 
             <div className="flex gap-4">
-              <Button 
+              <Button
                 onClick={generateIntegratedPDF}
                 disabled={!validation.isValid || isGenerating}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 flex-1"
@@ -648,7 +697,8 @@ const IntegratedRAMSGenerator: React.FC = () => {
             Integrated Risk Assessment & Method Statement
           </CardTitle>
           <p className="text-sm text-white">
-            Professional RAMS documentation combining risk assessment and method statements in one workflow
+            Professional RAMS documentation combining risk assessment and method statements in one
+            workflow
           </p>
         </CardHeader>
       </Card>
@@ -662,16 +712,18 @@ const IntegratedRAMSGenerator: React.FC = () => {
               <span>{Math.round(currentStepProgress)}% Complete</span>
             </div>
             <Progress value={currentStepProgress} className="h-2" />
-            
+
             <div className="flex justify-between items-center">
               {steps.map((step, index) => {
                 const IconComponent = step.icon;
                 const isActive = index === currentStep;
                 const isCompleted = index < currentStep;
-                
+
                 return (
                   <div key={step.id} className="flex flex-col items-center gap-2">
-                    <div className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-foreground' : 'bg-muted text-white'}`}>
+                    <div
+                      className={`p-2 rounded-full ${isActive ? 'bg-primary text-primary-foreground' : isCompleted ? 'bg-green-500 text-foreground' : 'bg-muted text-white'}`}
+                    >
                       <IconComponent className="h-4 w-4" />
                     </div>
                     <span className="text-xs text-center">{step.title}</span>
@@ -704,7 +756,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Previous
         </Button>
-        
+
         <Button
           onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
           disabled={currentStep === steps.length - 1}

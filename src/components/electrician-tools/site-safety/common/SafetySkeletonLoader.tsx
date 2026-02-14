@@ -1,33 +1,23 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
-type SkeletonVariant = "card" | "list" | "form" | "chart" | "dashboard";
+type SkeletonVariant = 'card' | 'list' | 'form' | 'chart' | 'dashboard';
 
 interface SafetySkeletonLoaderProps {
   variant?: SkeletonVariant;
   count?: number;
 }
 
-const shimmer =
-  "animate-pulse bg-white/[0.06] rounded-lg";
+const shimmer = 'animate-pulse bg-white/[0.06] rounded-lg';
 
-function SkeletonBlock({
-  className,
-  style,
-}: {
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return <div className={`${shimmer} ${className ?? ""}`} style={style} />;
+function SkeletonBlock({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return <div className={`${shimmer} ${className ?? ''}`} style={style} />;
 }
 
 function CardSkeleton({ count }: { count: number }) {
   return (
     <div className="space-y-3 p-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div
-          key={i}
-          className="rounded-2xl border border-white/[0.06] p-4 space-y-3"
-        >
+        <div key={i} className="rounded-2xl border border-white/[0.06] p-4 space-y-3">
           <div className="flex items-center gap-3">
             <SkeletonBlock className="h-10 w-10 rounded-xl shrink-0" />
             <div className="flex-1 space-y-2">
@@ -47,10 +37,7 @@ function ListSkeleton({ count }: { count: number }) {
   return (
     <div className="space-y-2 p-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06]"
-        >
+        <div key={i} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06]">
           <SkeletonBlock className="h-9 w-9 rounded-full shrink-0" />
           <div className="flex-1 space-y-2">
             <SkeletonBlock className="h-4 w-2/3" />
@@ -86,11 +73,7 @@ function ChartSkeleton() {
       </div>
       <div className="flex gap-1 items-end h-32 pt-4">
         {[65, 40, 80, 55, 90, 45, 70].map((h, i) => (
-          <SkeletonBlock
-            key={i}
-            className="flex-1 rounded-t-md"
-            style={{ height: `${h}%` }}
-          />
+          <SkeletonBlock key={i} className="flex-1 rounded-t-md" style={{ height: `${h}%` }} />
         ))}
       </div>
       <div className="flex justify-between">
@@ -112,10 +95,7 @@ function DashboardSkeleton() {
       {/* Stat cards */}
       <div className="grid grid-cols-2 gap-3">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div
-            key={i}
-            className="rounded-2xl border border-white/[0.06] p-3 space-y-2"
-          >
+          <div key={i} className="rounded-2xl border border-white/[0.06] p-3 space-y-2">
             <SkeletonBlock className="h-3 w-16" />
             <SkeletonBlock className="h-7 w-12" />
           </div>
@@ -141,10 +121,7 @@ function DashboardSkeleton() {
   );
 }
 
-export function SafetySkeletonLoader({
-  variant = "card",
-  count = 3,
-}: SafetySkeletonLoaderProps) {
+export function SafetySkeletonLoader({ variant = 'card', count = 3 }: SafetySkeletonLoaderProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -152,11 +129,11 @@ export function SafetySkeletonLoader({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
     >
-      {variant === "card" && <CardSkeleton count={count} />}
-      {variant === "list" && <ListSkeleton count={count} />}
-      {variant === "form" && <FormSkeleton count={count} />}
-      {variant === "chart" && <ChartSkeleton />}
-      {variant === "dashboard" && <DashboardSkeleton />}
+      {variant === 'card' && <CardSkeleton count={count} />}
+      {variant === 'list' && <ListSkeleton count={count} />}
+      {variant === 'form' && <FormSkeleton count={count} />}
+      {variant === 'chart' && <ChartSkeleton />}
+      {variant === 'dashboard' && <DashboardSkeleton />}
     </motion.div>
   );
 }

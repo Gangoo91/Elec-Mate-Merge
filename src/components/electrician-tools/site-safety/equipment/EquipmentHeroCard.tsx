@@ -1,20 +1,14 @@
-import { useState, useEffect } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import {
-  Wrench,
-  CheckCircle,
-  AlertTriangle,
-  AlertCircle,
-  Plus,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { Wrench, CheckCircle, AlertTriangle, AlertCircle, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface StatItem {
   label: string;
   value: number;
   icon: typeof Wrench;
-  color: "yellow" | "green" | "amber" | "red";
+  color: 'yellow' | 'green' | 'amber' | 'red';
 }
 
 interface EquipmentHeroCardProps {
@@ -27,14 +21,12 @@ interface EquipmentHeroCardProps {
 
 function AnimatedCounter({ value }: { value: number }) {
   const spring = useSpring(0, { stiffness: 100, damping: 30 });
-  const display = useTransform(spring, (current) =>
-    Math.round(current).toLocaleString()
-  );
-  const [displayValue, setDisplayValue] = useState("0");
+  const display = useTransform(spring, (current) => Math.round(current).toLocaleString());
+  const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
     spring.set(value);
-    const unsubscribe = display.on("change", (v) => setDisplayValue(v));
+    const unsubscribe = display.on('change', (v) => setDisplayValue(v));
     return () => unsubscribe();
   }, [value, spring, display]);
 
@@ -43,17 +35,17 @@ function AnimatedCounter({ value }: { value: number }) {
 
 function StatCard({ stat, index }: { stat: StatItem; index: number }) {
   const colorMap = {
-    yellow: "from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow",
-    green: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500",
-    amber: "from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-500",
-    red: "from-red-500/20 to-red-500/5 border-red-500/30 text-red-500",
+    yellow: 'from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
+    green: 'from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500',
+    amber: 'from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-500',
+    red: 'from-red-500/20 to-red-500/5 border-red-500/30 text-red-500',
   };
 
   const iconBgMap = {
-    yellow: "bg-elec-yellow/20 text-elec-yellow",
-    green: "bg-emerald-500/20 text-emerald-500",
-    amber: "bg-amber-500/20 text-amber-500",
-    red: "bg-red-500/20 text-red-500",
+    yellow: 'bg-elec-yellow/20 text-elec-yellow',
+    green: 'bg-emerald-500/20 text-emerald-500',
+    amber: 'bg-amber-500/20 text-amber-500',
+    red: 'bg-red-500/20 text-red-500',
   };
 
   const Icon = stat.icon;
@@ -62,16 +54,16 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-lg p-2.5",
-        "bg-gradient-to-br border",
-        "backdrop-blur-sm",
+        'relative overflow-hidden rounded-lg p-2.5',
+        'bg-gradient-to-br border',
+        'backdrop-blur-sm',
         colorMap[stat.color]
       )}
     >
       <div className="flex flex-col items-center text-center gap-1">
-        <div className={cn("p-1.5 rounded-lg", iconBgMap[stat.color])}>
+        <div className={cn('p-1.5 rounded-lg', iconBgMap[stat.color])}>
           <Icon className="h-3.5 w-3.5" />
         </div>
         <p className="text-lg font-bold text-white leading-none">
@@ -92,28 +84,28 @@ export function EquipmentHeroCard({
 }: EquipmentHeroCardProps) {
   const stats: StatItem[] = [
     {
-      label: "Total",
+      label: 'Total',
       value: totalEquipment,
       icon: Wrench,
-      color: "yellow",
+      color: 'yellow',
     },
     {
-      label: "Good",
+      label: 'Good',
       value: goodCount,
       icon: CheckCircle,
-      color: "green",
+      color: 'green',
     },
     {
-      label: "Attention",
+      label: 'Attention',
       value: attentionCount,
       icon: AlertTriangle,
-      color: "amber",
+      color: 'amber',
     },
     {
-      label: "Overdue",
+      label: 'Overdue',
       value: overdueCount,
       icon: AlertCircle,
-      color: "red",
+      color: 'red',
     },
   ];
 
@@ -122,10 +114,10 @@ export function EquipmentHeroCard({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "relative overflow-hidden rounded-xl",
-        "bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent",
-        "border border-white/[0.08]",
-        "p-3"
+        'relative overflow-hidden rounded-xl',
+        'bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent',
+        'border border-white/[0.08]',
+        'p-3'
       )}
     >
       {/* Background decoration - subtle */}
@@ -141,7 +133,7 @@ export function EquipmentHeroCard({
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+            transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
             className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30"
           >
             <Wrench className="h-5 w-5 text-elec-yellow" />
@@ -182,11 +174,11 @@ export function EquipmentHeroCard({
           <Button
             onClick={onAddEquipment}
             className={cn(
-              "w-full h-10 text-sm font-semibold",
-              "bg-elec-yellow text-black hover:bg-elec-yellow/90",
-              "shadow-lg shadow-elec-yellow/20",
-              "transition-all duration-300",
-              "active:scale-[0.98]"
+              'w-full h-10 text-sm font-semibold',
+              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'shadow-lg shadow-elec-yellow/20',
+              'transition-all duration-300',
+              'active:scale-[0.98]'
             )}
           >
             <Plus className="h-4 w-4 mr-1.5" />

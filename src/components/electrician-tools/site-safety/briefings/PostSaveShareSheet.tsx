@@ -259,7 +259,10 @@ export function PostSaveShareSheet({
               <div className="flex items-center gap-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
                 <Users className="h-5 w-5 text-amber-400 shrink-0" />
                 <p className="text-sm text-amber-300">
-                  <span className="font-semibold">{attendeeCount} {attendeeCount === 1 ? 'person needs' : 'people need'}</span> to sign this briefing
+                  <span className="font-semibold">
+                    {attendeeCount} {attendeeCount === 1 ? 'person needs' : 'people need'}
+                  </span>{' '}
+                  to sign this briefing
                 </p>
               </div>
             )}

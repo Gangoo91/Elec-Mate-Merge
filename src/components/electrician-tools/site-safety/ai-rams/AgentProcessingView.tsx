@@ -46,7 +46,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
     const installerContribution = (installerAgentProgress / 100) * 50;
     const calculatedProgress = hsContribution + installerContribution;
 
-    const bothComplete = agentSteps.every(step => step.status === 'complete');
+    const bothComplete = agentSteps.every((step) => step.status === 'complete');
     if (bothComplete || overallProgress >= 100) {
       return 100;
     }
@@ -64,17 +64,23 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
   const getAgentIcon = (name: string) => {
     switch (name) {
-      case 'health-safety': return Shield;
-      case 'installer': return Wrench;
-      default: return Sparkles;
+      case 'health-safety':
+        return Shield;
+      case 'installer':
+        return Wrench;
+      default:
+        return Sparkles;
     }
   };
 
   const getAgentTitle = (name: string) => {
     switch (name) {
-      case 'health-safety': return 'H&S Agent';
-      case 'installer': return 'Install Planner';
-      default: return name;
+      case 'health-safety':
+        return 'H&S Agent';
+      case 'installer':
+        return 'Install Planner';
+      default:
+        return name;
     }
   };
 
@@ -82,9 +88,12 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
     if (status === 'complete') return 'Complete';
     if (status === 'pending') return 'Waiting...';
     switch (name) {
-      case 'health-safety': return 'Analysing hazards...';
-      case 'installer': return 'Creating procedures...';
-      default: return 'Processing...';
+      case 'health-safety':
+        return 'Analysing hazards...';
+      case 'installer':
+        return 'Creating procedures...';
+      default:
+        return 'Processing...';
     }
   };
 
@@ -95,13 +104,12 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-elec-yellow/5 blur-[60px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
       {/* Main Content - Full width with compact padding */}
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-3 py-4 w-full">
-
         {/* Header Section - Compact */}
         <div className="text-center space-y-2">
           {/* Animated Icon - Smaller */}
@@ -115,8 +123,8 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               />
               <motion.div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center",
-                  isComplete ? "bg-green-500/10" : "bg-elec-yellow/10"
+                  'w-12 h-12 rounded-full flex items-center justify-center',
+                  isComplete ? 'bg-green-500/10' : 'bg-elec-yellow/10'
                 )}
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -154,8 +162,8 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           <div className="text-center">
             <motion.span
               className={cn(
-                "text-4xl font-bold tabular-nums",
-                isComplete ? "text-green-400" : "text-elec-yellow"
+                'text-4xl font-bold tabular-nums',
+                isComplete ? 'text-green-400' : 'text-elec-yellow'
               )}
               key={displayProgress}
               initial={{ scale: 1.05 }}
@@ -163,10 +171,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             >
               {displayProgress}
             </motion.span>
-            <span className={cn(
-              "text-xl font-bold",
-              isComplete ? "text-green-400/60" : "text-elec-yellow/60"
-            )}>%</span>
+            <span
+              className={cn(
+                'text-xl font-bold',
+                isComplete ? 'text-green-400/60' : 'text-elec-yellow/60'
+              )}
+            >
+              %
+            </span>
           </div>
 
           {/* Progress Bar */}
@@ -174,10 +186,10 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             <div className="h-2 bg-white/5 rounded-full overflow-hidden">
               <motion.div
                 className={cn(
-                  "h-full rounded-full relative",
+                  'h-full rounded-full relative',
                   isComplete
-                    ? "bg-gradient-to-r from-green-500 via-green-400 to-green-500"
-                    : "bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80"
+                    ? 'bg-gradient-to-r from-green-500 via-green-400 to-green-500'
+                    : 'bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80'
                 )}
                 style={{ width: `${displayProgress}%` }}
                 transition={{ duration: 0.5 }}
@@ -185,14 +197,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
                 />
               </motion.div>
             </div>
             <div
               className={cn(
-                "absolute -bottom-1 left-0 h-3 blur-md rounded-full transition-all duration-300",
-                isComplete ? "bg-green-500/30" : "bg-elec-yellow/30"
+                'absolute -bottom-1 left-0 h-3 blur-md rounded-full transition-all duration-300',
+                isComplete ? 'bg-green-500/30' : 'bg-elec-yellow/30'
               )}
               style={{ width: `${displayProgress}%` }}
             />
@@ -237,7 +249,8 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             const isActive = agent.status === 'processing';
             const isAgentComplete = agent.status === 'complete';
             const isPending = agent.status === 'pending';
-            const realProgress = agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
+            const realProgress =
+              agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
 
             return (
               <motion.div
@@ -253,12 +266,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               >
                 <div className="flex items-center gap-2.5">
                   {/* Icon */}
-                  <div className={cn(
-                    'w-9 h-9 rounded-lg flex items-center justify-center shrink-0',
-                    isActive && 'bg-elec-yellow/10',
-                    isAgentComplete && 'bg-green-500/10',
-                    isPending && 'bg-white/5'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-lg flex items-center justify-center shrink-0',
+                      isActive && 'bg-elec-yellow/10',
+                      isAgentComplete && 'bg-green-500/10',
+                      isPending && 'bg-white/5'
+                    )}
+                  >
                     {isAgentComplete ? (
                       <CheckCircle className="w-4 h-4 text-green-400" />
                     ) : isActive ? (
@@ -271,12 +286,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className={cn(
-                        'font-semibold text-xs truncate',
-                        isActive && 'text-elec-yellow',
-                        isAgentComplete && 'text-green-400',
-                        isPending && 'text-white'
-                      )}>
+                      <h3
+                        className={cn(
+                          'font-semibold text-xs truncate',
+                          isActive && 'text-elec-yellow',
+                          isAgentComplete && 'text-green-400',
+                          isPending && 'text-white'
+                        )}
+                      >
                         {getAgentTitle(agent.name)}
                       </h3>
                       {isActive && (
@@ -290,12 +307,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                         </span>
                       )}
                     </div>
-                    <p className={cn(
-                      'text-[10px] mt-0.5',
-                      isActive && 'text-white',
-                      isAgentComplete && 'text-green-400/40',
-                      isPending && 'text-white'
-                    )}>
+                    <p
+                      className={cn(
+                        'text-[10px] mt-0.5',
+                        isActive && 'text-white',
+                        isAgentComplete && 'text-green-400/40',
+                        isPending && 'text-white'
+                      )}
+                    >
                       {getAgentDescription(agent.name, agent.status)}
                     </p>
 

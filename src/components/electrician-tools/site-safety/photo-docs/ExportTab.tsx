@@ -1,15 +1,21 @@
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
-import { FileText, Download, ChevronRight, Loader2, Check } from "lucide-react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useSafetyPhotos, PHOTO_CATEGORIES, getCategoryLabel } from "@/hooks/useSafetyPhotos";
-import { toast } from "@/hooks/use-toast";
-import jsPDF from "jspdf";
-import { format } from "date-fns";
-import JSZip from "jszip";
+import { useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { FileText, Download, ChevronRight, Loader2, Check } from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useSafetyPhotos, PHOTO_CATEGORIES, getCategoryLabel } from '@/hooks/useSafetyPhotos';
+import { toast } from '@/hooks/use-toast';
+import jsPDF from 'jspdf';
+import { format } from 'date-fns';
+import JSZip from 'jszip';
 
-type ExportType = "pdf" | "zip" | "email";
+type ExportType = 'pdf' | 'zip' | 'email';
 
 export default function ExportTab() {
   const [selectedExport, setSelectedExport] = useState<ExportType | null>(null);
@@ -17,8 +23,8 @@ export default function ExportTab() {
   const [exportProgress, setExportProgress] = useState(0);
 
   // Export options
-  const [selectedProject, setSelectedProject] = useState<string>("all");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedProject, setSelectedProject] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [includeMetadata, setIncludeMetadata] = useState(true);
 
   const { photos, projects, stats } = useSafetyPhotos();
@@ -27,11 +33,11 @@ export default function ExportTab() {
   const getFilteredPhotos = useCallback(() => {
     let filtered = [...photos];
 
-    if (selectedProject !== "all") {
+    if (selectedProject !== 'all') {
       filtered = filtered.filter((p) => p.project_reference === selectedProject);
     }
 
-    if (selectedCategory !== "all") {
+    if (selectedCategory !== 'all') {
       filtered = filtered.filter((p) => p.category === selectedCategory);
     }
 
@@ -44,9 +50,9 @@ export default function ExportTab() {
 
     if (filteredPhotos.length === 0) {
       toast({
-        title: "No photos to export",
-        description: "Please select photos to include in the report",
-        variant: "destructive",
+        title: 'No photos to export',
+        description: 'Please select photos to include in the report',
+        variant: 'destructive',
       });
       return;
     }
@@ -63,16 +69,16 @@ export default function ExportTab() {
 
       // Header
       doc.setFillColor(251, 191, 36); // Yellow
-      doc.rect(0, 0, pageWidth, 35, "F");
+      doc.rect(0, 0, pageWidth, 35, 'F');
 
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(18);
-      doc.setFont("helvetica", "bold");
-      doc.text("Photo Documentation Report", margin, 22);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Photo Documentation Report', margin, 22);
 
       doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      const dateStr = format(new Date(), "d MMMM yyyy, HH:mm");
+      doc.setFont('helvetica', 'normal');
+      const dateStr = format(new Date(), 'd MMMM yyyy, HH:mm');
       doc.text(dateStr, pageWidth - margin - doc.getTextWidth(dateStr), 22);
 
       // Summary section
@@ -80,8 +86,9 @@ export default function ExportTab() {
       doc.setTextColor(100, 100, 100);
       doc.setFontSize(9);
 
-      const projectName = selectedProject === "all" ? "All Projects" : selectedProject;
-      const categoryName = selectedCategory === "all" ? "All Categories" : getCategoryLabel(selectedCategory);
+      const projectName = selectedProject === 'all' ? 'All Projects' : selectedProject;
+      const categoryName =
+        selectedCategory === 'all' ? 'All Categories' : getCategoryLabel(selectedCategory);
 
       doc.text(`Project: ${projectName}`, margin, yPos);
       doc.text(`Category: ${categoryName}`, margin, yPos + 5);
@@ -118,39 +125,46 @@ export default function ExportTab() {
             reader.readAsDataURL(blob);
           });
 
-          doc.addImage(base64, "JPEG", xPos, yPos, photoWidth, photoHeight);
+          doc.addImage(base64, 'JPEG', xPos, yPos, photoWidth, photoHeight);
         } catch (err) {
           // Draw placeholder if image fails to load
           doc.setFillColor(240, 240, 240);
-          doc.rect(xPos, yPos, photoWidth, photoHeight, "F");
+          doc.rect(xPos, yPos, photoWidth, photoHeight, 'F');
           doc.setTextColor(150, 150, 150);
           doc.setFontSize(8);
-          doc.text("Image unavailable", xPos + photoWidth / 2 - 15, yPos + photoHeight / 2);
+          doc.text('Image unavailable', xPos + photoWidth / 2 - 15, yPos + photoHeight / 2);
         }
 
         // Add metadata below image
         if (includeMetadata) {
           doc.setTextColor(60, 60, 60);
           doc.setFontSize(8);
-          doc.setFont("helvetica", "bold");
+          doc.setFont('helvetica', 'bold');
           doc.text(getCategoryLabel(photo.category), xPos, yPos + photoHeight + 6);
 
-          doc.setFont("helvetica", "normal");
+          doc.setFont('helvetica', 'normal');
           doc.setFontSize(7);
           doc.setTextColor(100, 100, 100);
 
           // Truncate description
           const maxDescLength = 50;
-          const desc = photo.description.length > maxDescLength
-            ? photo.description.substring(0, maxDescLength) + "..."
-            : photo.description;
+          const desc =
+            photo.description.length > maxDescLength
+              ? photo.description.substring(0, maxDescLength) + '...'
+              : photo.description;
           doc.text(desc, xPos, yPos + photoHeight + 12, { maxWidth: photoWidth });
 
           if (photo.location) {
-            doc.text(`Location: ${photo.location}`, xPos, yPos + photoHeight + 22, { maxWidth: photoWidth });
+            doc.text(`Location: ${photo.location}`, xPos, yPos + photoHeight + 22, {
+              maxWidth: photoWidth,
+            });
           }
 
-          doc.text(format(new Date(photo.created_at), "d MMM yyyy, HH:mm"), xPos, yPos + photoHeight + 28);
+          doc.text(
+            format(new Date(photo.created_at), 'd MMM yyyy, HH:mm'),
+            xPos,
+            yPos + photoHeight + 28
+          );
         }
 
         // Move to next position
@@ -167,24 +181,24 @@ export default function ExportTab() {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
-        doc.text(`Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: "center" });
-        doc.text("Generated by Elec-Mate", margin, pageHeight - 10);
+        doc.text(`Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+        doc.text('Generated by Elec-Mate', margin, pageHeight - 10);
       }
 
       // Save PDF
-      const filename = `photo-report-${format(new Date(), "yyyy-MM-dd-HHmm")}.pdf`;
+      const filename = `photo-report-${format(new Date(), 'yyyy-MM-dd-HHmm')}.pdf`;
       doc.save(filename);
 
       toast({
-        title: "Report generated",
+        title: 'Report generated',
         description: `${filename} has been downloaded`,
       });
     } catch (err) {
-      console.error("PDF generation error:", err);
+      console.error('PDF generation error:', err);
       toast({
-        title: "Export failed",
-        description: "Failed to generate PDF report",
-        variant: "destructive",
+        title: 'Export failed',
+        description: 'Failed to generate PDF report',
+        variant: 'destructive',
       });
     } finally {
       setIsExporting(false);
@@ -199,9 +213,9 @@ export default function ExportTab() {
 
     if (filteredPhotos.length === 0) {
       toast({
-        title: "No photos to export",
-        description: "Please select photos to include in the archive",
-        variant: "destructive",
+        title: 'No photos to export',
+        description: 'Please select photos to include in the archive',
+        variant: 'destructive',
       });
       return;
     }
@@ -238,7 +252,7 @@ export default function ExportTab() {
             const response = await fetch(photo.file_url);
             const blob = await response.blob();
 
-            const filename = `${format(new Date(photo.created_at), "yyyy-MM-dd_HHmm")}_${i + 1}.jpg`;
+            const filename = `${format(new Date(photo.created_at), 'yyyy-MM-dd_HHmm')}_${i + 1}.jpg`;
             folder?.file(filename, blob);
 
             // Add metadata file
@@ -250,11 +264,15 @@ export default function ExportTab() {
                 project: photo.project_reference,
                 tags: photo.tags,
                 createdAt: photo.created_at,
-                gps: photo.gps_latitude && photo.gps_longitude
-                  ? { lat: photo.gps_latitude, lng: photo.gps_longitude }
-                  : null,
+                gps:
+                  photo.gps_latitude && photo.gps_longitude
+                    ? { lat: photo.gps_latitude, lng: photo.gps_longitude }
+                    : null,
               };
-              folder?.file(`${filename.replace(".jpg", "_metadata.json")}`, JSON.stringify(metadata, null, 2));
+              folder?.file(
+                `${filename.replace('.jpg', '_metadata.json')}`,
+                JSON.stringify(metadata, null, 2)
+              );
             }
           } catch (err) {
             console.error(`Failed to add photo ${photo.id}:`, err);
@@ -263,12 +281,12 @@ export default function ExportTab() {
       }
 
       // Generate ZIP file
-      const content = await zip.generateAsync({ type: "blob" });
-      const filename = `safety-photos-${format(new Date(), "yyyy-MM-dd")}.zip`;
+      const content = await zip.generateAsync({ type: 'blob' });
+      const filename = `safety-photos-${format(new Date(), 'yyyy-MM-dd')}.zip`;
 
       // Download
       const url = URL.createObjectURL(content);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
       a.download = filename;
       document.body.appendChild(a);
@@ -277,15 +295,15 @@ export default function ExportTab() {
       URL.revokeObjectURL(url);
 
       toast({
-        title: "Export complete",
+        title: 'Export complete',
         description: `${filename} has been downloaded`,
       });
     } catch (err) {
-      console.error("ZIP generation error:", err);
+      console.error('ZIP generation error:', err);
       toast({
-        title: "Export failed",
-        description: "Failed to create archive",
-        variant: "destructive",
+        title: 'Export failed',
+        description: 'Failed to create archive',
+        variant: 'destructive',
       });
     } finally {
       setIsExporting(false);
@@ -297,20 +315,20 @@ export default function ExportTab() {
   // Export options
   const exportOptions = [
     {
-      type: "pdf" as ExportType,
-      title: "PDF Report",
-      description: "Professional report with photos and details",
+      type: 'pdf' as ExportType,
+      title: 'PDF Report',
+      description: 'Professional report with photos and details',
       icon: FileText,
-      color: "text-red-400",
-      bgColor: "bg-red-500/10",
+      color: 'text-red-400',
+      bgColor: 'bg-red-500/10',
     },
     {
-      type: "zip" as ExportType,
-      title: "ZIP Archive",
-      description: "Download all photos as a ZIP file",
+      type: 'zip' as ExportType,
+      title: 'ZIP Archive',
+      description: 'Download all photos as a ZIP file',
       icon: Download,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/10",
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/10',
     },
   ];
 
@@ -344,7 +362,9 @@ export default function ExportTab() {
           <div className="text-[10px] text-white">Projects</div>
         </div>
         <div className="bg-black p-3 text-center">
-          <div className="text-xl font-bold text-elec-yellow">{Object.keys(stats.byCategory).length}</div>
+          <div className="text-xl font-bold text-elec-yellow">
+            {Object.keys(stats.byCategory).length}
+          </div>
           <div className="text-[10px] text-white">Categories</div>
         </div>
       </div>
@@ -390,7 +410,9 @@ export default function ExportTab() {
           onClick={() => setIncludeMetadata(!includeMetadata)}
           className="w-full flex items-center gap-2.5 px-3 py-2.5 bg-white/5 rounded-lg touch-manipulation active:bg-white/10"
         >
-          <div className={`w-4 h-4 rounded border flex items-center justify-center ${includeMetadata ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'}`}>
+          <div
+            className={`w-4 h-4 rounded border flex items-center justify-center ${includeMetadata ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'}`}
+          >
             {includeMetadata && <Check className="h-3 w-3 text-black" />}
           </div>
           <span className="text-sm text-white">Include metadata</span>
@@ -412,7 +434,9 @@ export default function ExportTab() {
             disabled={isExporting || filteredCount === 0}
             className="w-full flex items-center gap-3 px-3 py-3 active:bg-white/5 transition-colors touch-manipulation disabled:opacity-40"
           >
-            <div className={`w-10 h-10 rounded-lg ${option.bgColor} flex items-center justify-center flex-shrink-0`}>
+            <div
+              className={`w-10 h-10 rounded-lg ${option.bgColor} flex items-center justify-center flex-shrink-0`}
+            >
               <option.icon className={`h-5 w-5 ${option.color}`} />
             </div>
             <div className="flex-1 min-w-0 text-left">
@@ -430,7 +454,7 @@ export default function ExportTab() {
           <div className="p-3 border-b border-white/5">
             <div className="w-8 h-1 bg-white/20 rounded-full mx-auto mb-3" />
             <h3 className="text-sm font-semibold text-white text-center">
-              {selectedExport === "pdf" ? "Generate PDF Report" : "Download ZIP Archive"}
+              {selectedExport === 'pdf' ? 'Generate PDF Report' : 'Download ZIP Archive'}
             </h3>
           </div>
 
@@ -443,7 +467,9 @@ export default function ExportTab() {
               </div>
               <div className="bg-white/5 rounded-lg p-2.5">
                 <span className="text-white">Metadata</span>
-                <span className="float-right font-medium text-white">{includeMetadata ? "Yes" : "No"}</span>
+                <span className="float-right font-medium text-white">
+                  {includeMetadata ? 'Yes' : 'No'}
+                </span>
               </div>
             </div>
 
@@ -474,7 +500,7 @@ export default function ExportTab() {
                 Cancel
               </button>
               <button
-                onClick={selectedExport === "pdf" ? generatePDF : generateZIP}
+                onClick={selectedExport === 'pdf' ? generatePDF : generateZIP}
                 disabled={isExporting || filteredCount === 0}
                 className="flex-[2] h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50"
               >
@@ -485,7 +511,11 @@ export default function ExportTab() {
                   </>
                 ) : (
                   <>
-                    {selectedExport === "pdf" ? <FileText className="h-4 w-4" /> : <Download className="h-4 w-4" />}
+                    {selectedExport === 'pdf' ? (
+                      <FileText className="h-4 w-4" />
+                    ) : (
+                      <Download className="h-4 w-4" />
+                    )}
                     <span>Export</span>
                   </>
                 )}

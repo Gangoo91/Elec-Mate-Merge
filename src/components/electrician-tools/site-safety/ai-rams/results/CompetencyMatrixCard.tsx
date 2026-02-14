@@ -9,15 +9,16 @@ interface CompetencyMatrixCardProps {
 
 export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) {
   const competency = methodData.competencyMatrix;
-  
+
   if (!competency) {
     return null;
   }
 
-  const hasAnyCompetency = competency.competencyRequirements || 
-                           competency.trainingRequired ||
-                           competency.supervisionLevel || 
-                           competency.additionalCertifications;
+  const hasAnyCompetency =
+    competency.competencyRequirements ||
+    competency.trainingRequired ||
+    competency.supervisionLevel ||
+    competency.additionalCertifications;
 
   if (!hasAnyCompetency) {
     return null;
@@ -70,7 +71,9 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
           <div className="bg-elec-gray/30 border border-purple-500/10 rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <Award className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-semibold text-elec-light">Additional Certifications</span>
+              <span className="text-sm font-semibold text-elec-light">
+                Additional Certifications
+              </span>
             </div>
             <p className="text-sm text-white">{competency.additionalCertifications}</p>
           </div>
@@ -80,7 +83,9 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
         <div className="pt-2 border-t border-border/40">
           <p className="text-xs text-white flex items-start gap-2">
             <FileCheck className="h-3 w-3 mt-0.5 flex-shrink-0" />
-            <span>All personnel must have appropriate qualifications verified before commencing work</span>
+            <span>
+              All personnel must have appropriate qualifications verified before commencing work
+            </span>
           </p>
         </div>
       </CardContent>

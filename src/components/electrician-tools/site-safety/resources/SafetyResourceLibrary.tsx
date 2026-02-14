@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Search,
@@ -9,14 +9,11 @@ import {
   File,
   Loader2,
   ExternalLink,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  useSafetyResources,
-  type SafetyResource,
-} from "@/hooks/useSafetyResources";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
+} from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { useSafetyResources, type SafetyResource } from '@/hooks/useSafetyResources';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
 
 interface SafetyResourceLibraryProps {
   onBack: () => void;
@@ -29,11 +26,9 @@ const FILE_ICONS: Record<string, React.ElementType> = {
 };
 
 export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { data: resources, isLoading } = useSafetyResources(
-    selectedCategory ?? undefined
-  );
+  const { data: resources, isLoading } = useSafetyResources(selectedCategory ?? undefined);
 
   const filtered = (resources ?? []).filter((r) =>
     searchTerm
@@ -43,13 +38,11 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
   );
 
   // Extract unique categories
-  const categories = Array.from(
-    new Set((resources ?? []).map((r) => r.category))
-  ).sort();
+  const categories = Array.from(new Set((resources ?? []).map((r) => r.category))).sort();
 
   const handleDownload = (resource: SafetyResource) => {
     if (resource.file_url) {
-      window.open(resource.file_url, "_blank");
+      window.open(resource.file_url, '_blank');
     }
   };
 
@@ -70,12 +63,8 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
 
       <div className="px-4 space-y-4 pb-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-1">
-            Safety Resources
-          </h2>
-          <p className="text-sm text-white">
-            Guidance notes, posters, and HSE publications
-          </p>
+          <h2 className="text-2xl font-bold text-white mb-1">Safety Resources</h2>
+          <p className="text-sm text-white">Guidance notes, posters, and HSE publications</p>
         </div>
 
         {/* Search */}
@@ -96,8 +85,8 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
               onClick={() => setSelectedCategory(null)}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
                 selectedCategory === null
-                  ? "bg-elec-yellow text-black"
-                  : "bg-white/[0.06] text-white border border-white/[0.08]"
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-white/[0.06] text-white border border-white/[0.08]'
               }`}
             >
               All
@@ -105,15 +94,11 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === cat ? null : cat
-                  )
-                }
+                onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap touch-manipulation transition-all ${
                   selectedCategory === cat
-                    ? "bg-elec-yellow text-black"
-                    : "bg-white/[0.06] text-white border border-white/[0.08]"
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white border border-white/[0.08]'
                 }`}
               >
                 {cat}
@@ -134,14 +119,13 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
             description={
               searchTerm
                 ? `No resources match "${searchTerm}"`
-                : "No safety resources available yet. Check back soon."
+                : 'No safety resources available yet. Check back soon.'
             }
           />
         ) : (
           <div className="space-y-2">
             {filtered.map((resource) => {
-              const FileIcon =
-                FILE_ICONS[resource.file_type] ?? FileText;
+              const FileIcon = FILE_ICONS[resource.file_type] ?? FileText;
 
               return (
                 <motion.button
@@ -158,17 +142,13 @@ export function SafetyResourceLibrary({ onBack }: SafetyResourceLibraryProps) {
                       <h3 className="text-[13px] font-semibold text-white truncate">
                         {resource.title}
                       </h3>
-                      <p className="text-[11px] text-white line-clamp-1">
-                        {resource.summary}
-                      </p>
+                      <p className="text-[11px] text-white line-clamp-1">{resource.summary}</p>
                       <div className="flex items-center gap-2 mt-0.5">
                         <Badge className="bg-white/[0.06] text-white border-none text-[9px]">
                           {resource.category}
                         </Badge>
                         {resource.file_size && (
-                          <span className="text-[9px] text-white">
-                            {resource.file_size}
-                          </span>
+                          <span className="text-[9px] text-white">{resource.file_size}</span>
                         )}
                         {(resource.download_count ?? 0) > 0 && (
                           <span className="text-[9px] text-white flex items-center gap-0.5">

@@ -42,8 +42,11 @@ const ContactRow: React.FC<ContactRowProps> = ({ role, name, phone, icon }) => {
 };
 
 export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps) {
-  const hasAnyContact = methodData.siteManagerName || methodData.firstAiderName ||
-    methodData.safetyOfficerName || methodData.assemblyPoint;
+  const hasAnyContact =
+    methodData.siteManagerName ||
+    methodData.firstAiderName ||
+    methodData.safetyOfficerName ||
+    methodData.assemblyPoint;
 
   return (
     <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
@@ -90,7 +93,9 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
               <Phone className="h-5 w-5 text-red-400" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-red-400/70 font-medium">Emergency Services</p>
+              <p className="text-[10px] uppercase tracking-wider text-red-400/70 font-medium">
+                Emergency Services
+              </p>
               <p className="text-lg font-bold text-red-400">999</p>
             </div>
           </div>
@@ -111,7 +116,9 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
               <MapPin className="h-4 w-4 text-amber-400" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-amber-400/70 font-medium">Assembly Point</p>
+              <p className="text-[10px] uppercase tracking-wider text-amber-400/70 font-medium">
+                Assembly Point
+              </p>
               <p className="text-sm font-semibold text-white">{methodData.assemblyPoint}</p>
             </div>
           </div>

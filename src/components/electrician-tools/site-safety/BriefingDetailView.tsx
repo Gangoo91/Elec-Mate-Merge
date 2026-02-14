@@ -110,7 +110,10 @@ export function BriefingDetailView({
   const hazards: string[] = briefing.identified_hazards || [];
   const photos: any[] = briefing.photos || [];
   const description = briefing.briefing_description || briefing.work_scope || '';
-  const typeLabel = BRIEFING_TYPE_LABELS[briefing.briefing_type] || briefing.briefing_type?.replace(/-/g, ' ') || 'General';
+  const typeLabel =
+    BRIEFING_TYPE_LABELS[briefing.briefing_type] ||
+    briefing.briefing_type?.replace(/-/g, ' ') ||
+    'General';
 
   return (
     <div className="min-h-screen bg-elec-dark">
@@ -178,7 +181,11 @@ export function BriefingDetailView({
                   <Calendar className="h-3.5 w-3.5 text-white" />
                 </div>
                 <span className="text-white whitespace-nowrap">
-                  {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </span>
               </div>
               <span className="text-white hidden sm:inline">|</span>
@@ -211,9 +218,7 @@ export function BriefingDetailView({
                 Briefing Content
               </span>
             </div>
-            <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">
-              {description}
-            </p>
+            <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">{description}</p>
           </div>
         )}
 

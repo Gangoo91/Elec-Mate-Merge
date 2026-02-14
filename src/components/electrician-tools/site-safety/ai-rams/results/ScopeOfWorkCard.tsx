@@ -9,12 +9,13 @@ interface ScopeOfWorkCardProps {
 
 export function ScopeOfWorkCard({ methodData }: ScopeOfWorkCardProps) {
   const scopeOfWork = methodData.scopeOfWork;
-  
+
   // Hide if no meaningful data
-  const hasDescription = scopeOfWork?.description && scopeOfWork.description !== 'Work scope to be defined';
+  const hasDescription =
+    scopeOfWork?.description && scopeOfWork.description !== 'Work scope to be defined';
   const hasDeliverables = scopeOfWork?.keyDeliverables && scopeOfWork.keyDeliverables.length > 0;
   const hasExclusions = scopeOfWork?.exclusions;
-  
+
   if (!hasDescription && !hasDeliverables && !hasExclusions) {
     return null;
   }

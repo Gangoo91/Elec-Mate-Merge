@@ -2,6 +2,7 @@ import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -29,6 +30,9 @@ import {
   Download,
   Trash2,
   Copy,
+  FileText,
+  Shield,
+  CheckCircle2,
 } from 'lucide-react';
 import {
   useElectricianSiteDiary,
@@ -36,6 +40,8 @@ import {
   useDeleteDiaryEntry,
   type SiteDiaryEntry,
 } from '@/hooks/useElectricianSiteDiary';
+import { useActivePermits } from '@/hooks/usePermitsToWork';
+import { useRAMSDocumentsByStatus } from '@/hooks/useRAMSDocuments';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
@@ -47,6 +53,7 @@ import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { DraftRecoveryBanner } from '../common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from '../common/DraftSaveIndicator';
 import { LocationAutoFill } from '../common/LocationAutoFill';
+import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 
@@ -93,6 +100,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [selectedDate, setSelectedDate] = useState(today);
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
 
   // Validation for required fields
@@ -111,6 +119,12 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [materialsUsed, setMaterialsUsed] = useState('');
   const [notes, setNotes] = useState('');
   const [diaryPhotos, setDiaryPhotos] = useState<string[]>([]);
+  const [selectedRamsIds, setSelectedRamsIds] = useState<string[]>([]);
+  const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
+
+  // Linked data sources
+  const { data: activePermits = [] } = useActivePermits();
+  const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
 
   // Draft persistence
   const {
@@ -131,6 +145,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       issues,
       materialsUsed,
       notes,
+      selectedRamsIds,
+      selectedPermitIds,
     },
     enabled: showForm,
   });
@@ -147,6 +163,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     if (recoveredDraft.issues) setIssues(recoveredDraft.issues);
     if (recoveredDraft.materialsUsed) setMaterialsUsed(recoveredDraft.materialsUsed);
     if (recoveredDraft.notes) setNotes(recoveredDraft.notes);
+    if (recoveredDraft.selectedRamsIds?.length) setSelectedRamsIds(recoveredDraft.selectedRamsIds);
+    if (recoveredDraft.selectedPermitIds?.length)
+      setSelectedPermitIds(recoveredDraft.selectedPermitIds);
     dismissDraft();
   };
 
@@ -184,6 +203,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setMaterialsUsed('');
     setNotes('');
     setDiaryPhotos([]);
+    setSelectedRamsIds([]);
+    setSelectedPermitIds([]);
     clearDraft();
   };
 
@@ -193,6 +214,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setSiteAddress(entry.site_address || '');
     setWeather(entry.weather || '');
     setPersonnelCount(entry.personnel_count != null ? String(entry.personnel_count) : '');
+    // Carry forward linked RAMS/permits
+    setSelectedRamsIds(entry.rams_ids ?? []);
+    setSelectedPermitIds(entry.permit_ids ?? []);
     // Clear date-specific fields
     setStartTime('');
     setEndTime('');
@@ -205,10 +229,12 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     haptic.success();
   };
 
-  const canSubmit = validation.isValid;
+  const timeValid = !(startTime && endTime && endTime <= startTime);
+  const canSubmit = validation.isValid && timeValid;
 
   const handleSubmit = async () => {
     if (!validation.validateAll()) return;
+    if (startTime && endTime && endTime <= startTime) return;
 
     await createEntry.mutateAsync({
       entry_date: selectedDateKey,
@@ -223,8 +249,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       delays: null,
       materials_used: materialsUsed.trim() || null,
       photos: diaryPhotos.length > 0 ? diaryPhotos : [],
-      rams_ids: [],
-      permit_ids: [],
+      rams_ids: selectedRamsIds,
+      permit_ids: selectedPermitIds,
       notes: notes.trim() || null,
     });
 
@@ -282,16 +308,21 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                 (e: SiteDiaryEntry) => e.entry_date === formatDateKey(day)
               );
 
+              const isFuture = day > today && !isToday;
+
               return (
                 <button
                   key={day.toISOString()}
-                  onClick={() => setSelectedDate(day)}
+                  onClick={() => !isFuture && setSelectedDate(day)}
+                  disabled={isFuture}
                   className={`flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all ${
-                    isSelected
-                      ? 'bg-elec-yellow text-black'
-                      : isToday
-                        ? 'bg-white/10 text-white border border-elec-yellow/50'
-                        : 'bg-white/5 text-white'
+                    isFuture
+                      ? 'bg-white/[0.02] text-white/20 pointer-events-none'
+                      : isSelected
+                        ? 'bg-elec-yellow text-black'
+                        : isToday
+                          ? 'bg-white/10 text-white border border-elec-yellow/50'
+                          : 'bg-white/5 text-white'
                   }`}
                 >
                   <span className="text-[10px] font-medium uppercase">
@@ -418,10 +449,16 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       type="time"
                       value={endTime}
                       onChange={(e) => setEndTime(e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                      className={`h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 ${startTime && endTime && endTime <= startTime ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
                     />
                   </div>
                 </div>
+                {startTime && endTime && endTime <= startTime && (
+                  <p className="text-xs text-red-400 -mt-1 flex items-center gap-1">
+                    <span className="w-1 h-1 bg-red-400 rounded-full" />
+                    End time must be after start time
+                  </p>
+                )}
 
                 {/* Personnel Count */}
                 <div>
@@ -489,6 +526,113 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                     className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                   />
                 </div>
+
+                {/* Linked RAMS */}
+                {approvedRams.length > 0 && (
+                  <div>
+                    <label className="block text-sm font-medium text-white mb-2 flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-elec-yellow" />
+                      Link RAMS (Optional)
+                    </label>
+                    {selectedRamsIds.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {selectedRamsIds.map((id) => {
+                          const doc = approvedRams.find((r) => r.id === id);
+                          return (
+                            <Badge
+                              key={id}
+                              className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-xs pl-2 pr-1 py-1 flex items-center gap-1"
+                            >
+                              {doc?.project_name ?? 'RAMS'}
+                              <button
+                                onClick={() =>
+                                  setSelectedRamsIds((prev) => prev.filter((x) => x !== id))
+                                }
+                                className="ml-0.5 p-0.5 rounded-full hover:bg-white/10 touch-manipulation"
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                      {approvedRams
+                        .filter((r) => !selectedRamsIds.includes(r.id))
+                        .map((r) => (
+                          <button
+                            key={r.id}
+                            onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
+                            className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.03] text-left touch-manipulation active:scale-[0.99] transition-all"
+                          >
+                            <Shield className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-white truncate">
+                                {r.project_name}
+                              </p>
+                              <p className="text-xs text-white truncate">{r.location}</p>
+                            </div>
+                            <CheckCircle2 className="h-4 w-4 text-white flex-shrink-0" />
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Linked Permits */}
+                {activePermits.length > 0 && (
+                  <div>
+                    <label className="block text-sm font-medium text-white mb-2 flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-elec-yellow" />
+                      Link Permits (Optional)
+                    </label>
+                    {selectedPermitIds.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {selectedPermitIds.map((id) => {
+                          const permit = activePermits.find((p) => p.id === id);
+                          return (
+                            <Badge
+                              key={id}
+                              className="bg-amber-500/15 text-amber-300 border-amber-500/20 text-xs pl-2 pr-1 py-1 flex items-center gap-1"
+                            >
+                              {permit?.title ?? 'Permit'}
+                              <button
+                                onClick={() =>
+                                  setSelectedPermitIds((prev) => prev.filter((x) => x !== id))
+                                }
+                                className="ml-0.5 p-0.5 rounded-full hover:bg-white/10 touch-manipulation"
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                      {activePermits
+                        .filter((p) => !selectedPermitIds.includes(p.id))
+                        .map((p) => (
+                          <button
+                            key={p.id}
+                            onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
+                            className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.03] text-left touch-manipulation active:scale-[0.99] transition-all"
+                          >
+                            <FileText className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-white truncate">{p.title}</p>
+                              <p className="text-xs text-white truncate">
+                                {p.location} &middot;{' '}
+                                {new Date(p.end_time).toLocaleDateString('en-GB')}
+                              </p>
+                            </div>
+                            <CheckCircle2 className="h-4 w-4 text-white flex-shrink-0" />
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Site Photos */}
                 <SafetyPhotoCapture
@@ -573,7 +717,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             icon: Trash2,
                             label: 'Delete',
                             color: 'bg-red-500',
-                            onAction: () => deleteEntry.mutate(entry.id),
+                            onAction: () => setDeleteTarget(entry.id),
                           },
                         ]}
                       >
@@ -625,6 +769,29 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             <p className="text-sm text-white line-clamp-3">
                               {entry.work_completed}
                             </p>
+                          )}
+                          {((entry.rams_ids?.length ?? 0) > 0 ||
+                            (entry.permit_ids?.length ?? 0) > 0) && (
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {entry.rams_ids?.map((id) => (
+                                <Badge
+                                  key={id}
+                                  className="bg-cyan-500/15 text-cyan-300 border-cyan-500/20 text-[10px] flex items-center gap-1"
+                                >
+                                  <Shield className="h-3 w-3" />
+                                  RAMS
+                                </Badge>
+                              ))}
+                              {entry.permit_ids?.map((id) => (
+                                <Badge
+                                  key={id}
+                                  className="bg-amber-500/15 text-amber-300 border-amber-500/20 text-[10px] flex items-center gap-1"
+                                >
+                                  <FileText className="h-3 w-3" />
+                                  Permit
+                                </Badge>
+                              ))}
+                            </div>
                           )}
                           <div className="mt-3 pt-3 border-t border-white/10 flex items-center gap-2">
                             <button
@@ -689,6 +856,20 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
           <Plus className="w-6 h-6" />
         </motion.button>
       )}
+
+      <DeleteConfirmSheet
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        onConfirm={() => {
+          if (deleteTarget) deleteEntry.mutate(deleteTarget);
+          setDeleteTarget(null);
+        }}
+        title="Delete Diary Entry?"
+        description="This entry will be permanently removed"
+        isDeleting={deleteEntry.isPending}
+      />
     </div>
   );
 }

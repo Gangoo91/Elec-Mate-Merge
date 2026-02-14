@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from 'react';
 
 type ValidationRule = {
   required?: boolean;
@@ -46,7 +46,7 @@ export function useFieldValidation(config: FieldConfig) {
   const [fields, setFields] = useState<Record<string, FieldState>>(() => {
     const initial: Record<string, FieldState> = {};
     for (const key of Object.keys(config)) {
-      initial[key] = { value: "", error: null, touched: false, valid: false };
+      initial[key] = { value: '', error: null, touched: false, valid: false };
     }
     return initial;
   });
@@ -59,7 +59,7 @@ export function useFieldValidation(config: FieldConfig) {
       if (!rule) return null;
 
       if (rule.required && !value.trim()) {
-        return rule.message ?? "This field is required";
+        return rule.message ?? 'This field is required';
       }
       if (rule.minLength && value.trim().length < rule.minLength) {
         return `Minimum ${rule.minLength} characters`;
@@ -68,7 +68,7 @@ export function useFieldValidation(config: FieldConfig) {
         return `Maximum ${rule.maxLength} characters`;
       }
       if (rule.pattern && !rule.pattern.test(value)) {
-        return rule.message ?? "Invalid format";
+        return rule.message ?? 'Invalid format';
       }
       if (rule.custom) {
         return rule.custom(value);
@@ -81,9 +81,7 @@ export function useFieldValidation(config: FieldConfig) {
   const setValue = useCallback(
     (name: string, value: string) => {
       setFields((prev) => {
-        const error = prev[name]?.touched
-          ? validateSingleField(name, value)
-          : null;
+        const error = prev[name]?.touched ? validateSingleField(name, value) : null;
         return {
           ...prev,
           [name]: {
@@ -101,7 +99,7 @@ export function useFieldValidation(config: FieldConfig) {
   const setTouched = useCallback(
     (name: string) => {
       setFields((prev) => {
-        const value = prev[name]?.value ?? "";
+        const value = prev[name]?.value ?? '';
         const error = validateSingleField(name, value);
         return {
           ...prev,
@@ -130,7 +128,7 @@ export function useFieldValidation(config: FieldConfig) {
     setFields((prev) => {
       const next = { ...prev };
       for (const name of Object.keys(config)) {
-        const value = next[name]?.value ?? "";
+        const value = next[name]?.value ?? '';
         const error = validateSingleField(name, value);
         next[name] = { value, error, touched: true, valid: !error };
         if (error && !firstErrorName) {
@@ -144,7 +142,7 @@ export function useFieldValidation(config: FieldConfig) {
     if (firstErrorName) {
       const el = fieldRefs.current[firstErrorName];
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       return false;
     }
@@ -154,14 +152,12 @@ export function useFieldValidation(config: FieldConfig) {
   const reset = useCallback(() => {
     const initial: Record<string, FieldState> = {};
     for (const key of Object.keys(config)) {
-      initial[key] = { value: "", error: null, touched: false, valid: false };
+      initial[key] = { value: '', error: null, touched: false, valid: false };
     }
     setFields(initial);
   }, [config]);
 
-  const isValid = Object.keys(config).every(
-    (k) => !validateSingleField(k, fields[k]?.value ?? "")
-  );
+  const isValid = Object.keys(config).every((k) => !validateSingleField(k, fields[k]?.value ?? ''));
 
   return {
     fields,

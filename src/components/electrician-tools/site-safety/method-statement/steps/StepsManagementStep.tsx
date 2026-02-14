@@ -4,21 +4,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { 
-  Plus, 
-  Trash2, 
-  GripVertical, 
-  AlertTriangle, 
-  Clock, 
+import {
+  Plus,
+  Trash2,
+  GripVertical,
+  AlertTriangle,
+  Clock,
   Shield,
   Wrench,
   GraduationCap,
   Copy,
   Lightbulb,
-  Edit3
+  Edit3,
 } from 'lucide-react';
 import { MethodStep } from '@/types/method-statement';
 import { stepTemplates } from '@/data/method-statement-templates';
@@ -34,7 +40,14 @@ interface StepsManagementStepProps {
   onHazardLink?: (hazardId: string) => void;
 }
 
-const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazards = [], onHazardLink }: StepsManagementStepProps) => {
+const StepsManagementStep = ({
+  steps,
+  onStepsChange,
+  onNext,
+  onBack,
+  linkedHazards = [],
+  onHazardLink,
+}: StepsManagementStepProps) => {
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
   const [showHazardSelector, setShowHazardSelector] = useState(false);
@@ -53,7 +66,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
       estimatedDuration: '',
       riskLevel: 'medium',
       isCompleted: false,
-      linkedHazards: []
+      linkedHazards: [],
     };
     onStepsChange([...steps, newStep]);
     setExpandedStep(newStep.id);
@@ -71,20 +84,19 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
       estimatedDuration: template.estimatedDuration,
       riskLevel: template.riskLevel,
       isCompleted: false,
-      linkedHazards: []
+      linkedHazards: [],
     };
     onStepsChange([...steps, newStep]);
     setShowTemplates(false);
   };
 
   const updateStep = (id: string, updates: Partial<MethodStep>) => {
-    onStepsChange(steps.map(step => 
-      step.id === id ? { ...step, ...updates } : step
-    ));
+    onStepsChange(steps.map((step) => (step.id === id ? { ...step, ...updates } : step)));
   };
 
   const removeStep = (id: string) => {
-    const updatedSteps = steps.filter(step => step.id !== id)
+    const updatedSteps = steps
+      .filter((step) => step.id !== id)
       .map((step, index) => ({ ...step, stepNumber: index + 1 }));
     onStepsChange(updatedSteps);
   };
@@ -95,7 +107,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
       id: `step-${Date.now()}`,
       stepNumber: steps.length + 1,
       title: `${step.title} (Copy)`,
-      linkedHazards: [...(step.linkedHazards || [])]
+      linkedHazards: [...(step.linkedHazards || [])],
     };
     onStepsChange([...steps, newStep]);
   };
@@ -110,24 +122,32 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
     // Renumber steps
     const numberedSteps = reorderedSteps.map((step, index) => ({
       ...step,
-      stepNumber: index + 1
+      stepNumber: index + 1,
     }));
 
     onStepsChange(numberedSteps);
   };
 
-  const addArrayItem = (stepId: string, field: 'safetyRequirements' | 'equipmentNeeded' | 'qualifications', value: string) => {
+  const addArrayItem = (
+    stepId: string,
+    field: 'safetyRequirements' | 'equipmentNeeded' | 'qualifications',
+    value: string
+  ) => {
     if (!value.trim()) return;
-    const step = steps.find(s => s.id === stepId);
+    const step = steps.find((s) => s.id === stepId);
     if (step) {
       updateStep(stepId, {
-        [field]: [...step[field], value.trim()]
+        [field]: [...step[field], value.trim()],
       });
     }
   };
 
-  const removeArrayItem = (stepId: string, field: 'safetyRequirements' | 'equipmentNeeded' | 'qualifications', index: number) => {
-    const step = steps.find(s => s.id === stepId);
+  const removeArrayItem = (
+    stepId: string,
+    field: 'safetyRequirements' | 'equipmentNeeded' | 'qualifications',
+    index: number
+  ) => {
+    const step = steps.find((s) => s.id === stepId);
     if (step) {
       const newArray = [...step[field]];
       newArray.splice(index, 1);
@@ -137,20 +157,24 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'low': return 'bg-green-500/20 text-green-300';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-300';
-      case 'high': return 'bg-red-500/20 text-red-300';
-      default: return 'bg-gray-500/20 text-white';
+      case 'low':
+        return 'bg-green-500/20 text-green-300';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-300';
+      case 'high':
+        return 'bg-red-500/20 text-red-300';
+      default:
+        return 'bg-gray-500/20 text-white';
     }
   };
 
   const linkHazardToStep = (stepId: string, hazardId: string) => {
-    const step = steps.find(s => s.id === stepId);
+    const step = steps.find((s) => s.id === stepId);
     if (step) {
       const linkedHazards = step.linkedHazards || [];
       if (!linkedHazards.includes(hazardId)) {
         updateStep(stepId, {
-          linkedHazards: [...linkedHazards, hazardId]
+          linkedHazards: [...linkedHazards, hazardId],
         });
       }
     }
@@ -160,11 +184,11 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
   };
 
   const unlinkHazardFromStep = (stepId: string, hazardId: string) => {
-    const step = steps.find(s => s.id === stepId);
+    const step = steps.find((s) => s.id === stepId);
     if (step) {
       const linkedHazards = step.linkedHazards || [];
       updateStep(stepId, {
-        linkedHazards: linkedHazards.filter(h => h !== hazardId)
+        linkedHazards: linkedHazards.filter((h) => h !== hazardId),
       });
     }
   };
@@ -207,7 +231,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
             <div className="mt-4 p-4 border border-blue-500/20 rounded-lg bg-blue-500/5">
               <h4 className="text-blue-300 mb-3">Quick Step Templates</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {stepTemplates.map(template => (
+                {stepTemplates.map((template) => (
                   <Button
                     key={template.id}
                     onClick={() => addStepFromTemplate(template)}
@@ -234,7 +258,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
           <CardContent className="p-8 text-center">
             <div className="text-yellow-300 mb-2">No method steps added yet</div>
             <p className="text-white mb-4">
-              Click "Add Step" to start building your method statement, or use our step templates for common procedures.
+              Click "Add Step" to start building your method statement, or use our step templates
+              for common procedures.
             </p>
             <div className="flex justify-center gap-2">
               <Button onClick={addNewStep} variant="outline">
@@ -277,64 +302,73 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                     <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold">
                                       {step.stepNumber}
                                     </div>
-                                   <div>
-                                     <h4 className="font-semibold text-elec-yellow">
-                                       {step.title || `Step ${step.stepNumber}`}
-                                     </h4>
-                                     <div className="flex gap-2 mt-1">
-                                       <Badge className={getRiskColor(step.riskLevel)} variant="outline">
-                                         {step.riskLevel} risk
-                                       </Badge>
-                                       {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                         <Badge variant="outline" className="border-orange-500/30 text-orange-400">
-                                           {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
-                                         </Badge>
-                                       )}
-                                     </div>
-                                   </div>
+                                    <div>
+                                      <h4 className="font-semibold text-elec-yellow">
+                                        {step.title || `Step ${step.stepNumber}`}
+                                      </h4>
+                                      <div className="flex gap-2 mt-1">
+                                        <Badge
+                                          className={getRiskColor(step.riskLevel)}
+                                          variant="outline"
+                                        >
+                                          {step.riskLevel} risk
+                                        </Badge>
+                                        {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                          <Badge
+                                            variant="outline"
+                                            className="border-orange-500/30 text-orange-400"
+                                          >
+                                            {step.linkedHazards.length} hazard
+                                            {step.linkedHazards.length !== 1 ? 's' : ''}
+                                          </Badge>
+                                        )}
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                                 <div className="flex items-center gap-2">
-                                   <Button
-                                     onClick={() => {
-                                       setSelectedStep(step.id);
-                                       setShowHazardSelector(true);
-                                     }}
-                                     size="sm"
-                                     variant="outline"
-                                     className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
-                                   >
-                                     <Shield className="h-4 w-4" />
-                                   </Button>
-                                   <Button
-                                     onClick={() => duplicateStep(step)}
-                                     size="sm"
-                                     variant="outline"
-                                   >
-                                     <Copy className="h-4 w-4" />
-                                   </Button>
-                                   <Button
-                                     onClick={() => setExpandedStep(null)}
-                                     size="sm"
-                                     variant="outline"
-                                   >
-                                     Done
-                                   </Button>
-                                   <Button
-                                     onClick={() => removeStep(step.id)}
-                                     size="sm"
-                                     variant="outline"
-                                   >
-                                     <Trash2 className="h-4 w-4" />
-                                   </Button>
-                                 </div>
+                                <div className="flex items-center gap-2">
+                                  <Button
+                                    onClick={() => {
+                                      setSelectedStep(step.id);
+                                      setShowHazardSelector(true);
+                                    }}
+                                    size="sm"
+                                    variant="outline"
+                                    className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                                  >
+                                    <Shield className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    onClick={() => duplicateStep(step)}
+                                    size="sm"
+                                    variant="outline"
+                                  >
+                                    <Copy className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    onClick={() => setExpandedStep(null)}
+                                    size="sm"
+                                    variant="outline"
+                                  >
+                                    Done
+                                  </Button>
+                                  <Button
+                                    onClick={() => removeStep(step.id)}
+                                    size="sm"
+                                    variant="outline"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
                               </div>
                             </CardHeader>
 
                             <CardContent className="space-y-6 border-t border-elec-yellow/20 pt-6">
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                  <Label htmlFor={`title-${step.id}`} className="text-foreground">Step Title</Label>
+                                  <Label htmlFor={`title-${step.id}`} className="text-foreground">
+                                    Step Title
+                                  </Label>
                                   <Input
                                     id={`title-${step.id}`}
                                     value={step.title}
@@ -344,11 +378,18 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                   />
                                 </div>
                                 <div>
-                                  <Label htmlFor={`duration-${step.id}`} className="text-foreground">Estimated Duration</Label>
+                                  <Label
+                                    htmlFor={`duration-${step.id}`}
+                                    className="text-foreground"
+                                  >
+                                    Estimated Duration
+                                  </Label>
                                   <Input
                                     id={`duration-${step.id}`}
                                     value={step.estimatedDuration}
-                                    onChange={(e) => updateStep(step.id, { estimatedDuration: e.target.value })}
+                                    onChange={(e) =>
+                                      updateStep(step.id, { estimatedDuration: e.target.value })
+                                    }
                                     placeholder="e.g., 30 minutes"
                                     className="mt-1"
                                   />
@@ -356,11 +397,18 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               </div>
 
                               <div>
-                                <Label htmlFor={`description-${step.id}`} className="text-foreground">Step Description</Label>
+                                <Label
+                                  htmlFor={`description-${step.id}`}
+                                  className="text-foreground"
+                                >
+                                  Step Description
+                                </Label>
                                 <Textarea
                                   id={`description-${step.id}`}
                                   value={step.description}
-                                  onChange={(e) => updateStep(step.id, { description: e.target.value })}
+                                  onChange={(e) =>
+                                    updateStep(step.id, { description: e.target.value })
+                                  }
                                   placeholder="Describe what needs to be done in this step"
                                   rows={3}
                                   className="mt-1"
@@ -368,10 +416,12 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               </div>
 
                               <div>
-                                <Label htmlFor={`risk-${step.id}`} className="text-foreground">Risk Level</Label>
+                                <Label htmlFor={`risk-${step.id}`} className="text-foreground">
+                                  Risk Level
+                                </Label>
                                 <Select
                                   value={step.riskLevel}
-                                  onValueChange={(value: 'low' | 'medium' | 'high') => 
+                                  onValueChange={(value: 'low' | 'medium' | 'high') =>
                                     updateStep(step.id, { riskLevel: value })
                                   }
                                 >
@@ -384,7 +434,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                     <SelectItem value="high">High Risk</SelectItem>
                                   </SelectContent>
                                 </Select>
-                               </div>
+                              </div>
 
                               {/* Linked Hazards */}
                               {step.linkedHazards && step.linkedHazards.length > 0 && (
@@ -398,14 +448,21 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       const hazard = getHazardById(hazardId);
                                       if (!hazard) return null;
                                       return (
-                                        <div key={hazardId} className="flex items-center justify-between p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                                        <div
+                                          key={hazardId}
+                                          className="flex items-center justify-between p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg"
+                                        >
                                           <div className="flex items-center gap-3">
                                             <div className="p-1 rounded bg-orange-500/20">
                                               <hazard.icon className="h-4 w-4 text-orange-400" />
                                             </div>
                                             <div>
-                                              <div className="font-medium text-foreground">{hazard.name}</div>
-                                              <div className="text-xs text-white">{hazard.category}</div>
+                                              <div className="font-medium text-foreground">
+                                                {hazard.name}
+                                              </div>
+                                              <div className="text-xs text-white">
+                                                {hazard.category}
+                                              </div>
                                             </div>
                                           </div>
                                           <Button
@@ -423,8 +480,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                               )}
 
-                               {/* Safety Requirements */}
-                               <div>
+                              {/* Safety Requirements */}
+                              <div>
                                 <Label className="flex items-center gap-2 text-foreground mb-2">
                                   <Shield className="h-4 w-4" />
                                   Safety Requirements
@@ -435,7 +492,11 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       placeholder="Add safety requirement"
                                       onKeyPress={(e) => {
                                         if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'safetyRequirements', e.currentTarget.value);
+                                          addArrayItem(
+                                            step.id,
+                                            'safetyRequirements',
+                                            e.currentTarget.value
+                                          );
                                           e.currentTarget.value = '';
                                         }
                                       }}
@@ -444,7 +505,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       type="button"
                                       size="sm"
                                       onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                                        const input = e.currentTarget
+                                          .previousElementSibling as HTMLInputElement;
                                         addArrayItem(step.id, 'safetyRequirements', input.value);
                                         input.value = '';
                                       }}
@@ -465,7 +527,9 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                           size="sm"
                                           variant="ghost"
                                           className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'safetyRequirements', index)}
+                                          onClick={() =>
+                                            removeArrayItem(step.id, 'safetyRequirements', index)
+                                          }
                                         >
                                           ×
                                         </Button>
@@ -487,7 +551,11 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       placeholder="Add equipment"
                                       onKeyPress={(e) => {
                                         if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'equipmentNeeded', e.currentTarget.value);
+                                          addArrayItem(
+                                            step.id,
+                                            'equipmentNeeded',
+                                            e.currentTarget.value
+                                          );
                                           e.currentTarget.value = '';
                                         }
                                       }}
@@ -496,7 +564,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       type="button"
                                       size="sm"
                                       onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                                        const input = e.currentTarget
+                                          .previousElementSibling as HTMLInputElement;
                                         addArrayItem(step.id, 'equipmentNeeded', input.value);
                                         input.value = '';
                                       }}
@@ -517,7 +586,9 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                           size="sm"
                                           variant="ghost"
                                           className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'equipmentNeeded', index)}
+                                          onClick={() =>
+                                            removeArrayItem(step.id, 'equipmentNeeded', index)
+                                          }
                                         >
                                           ×
                                         </Button>
@@ -539,7 +610,11 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       placeholder="Add qualification"
                                       onKeyPress={(e) => {
                                         if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'qualifications', e.currentTarget.value);
+                                          addArrayItem(
+                                            step.id,
+                                            'qualifications',
+                                            e.currentTarget.value
+                                          );
                                           e.currentTarget.value = '';
                                         }
                                       }}
@@ -548,7 +623,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                       type="button"
                                       size="sm"
                                       onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                                        const input = e.currentTarget
+                                          .previousElementSibling as HTMLInputElement;
                                         addArrayItem(step.id, 'qualifications', input.value);
                                         input.value = '';
                                       }}
@@ -569,7 +645,9 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                           size="sm"
                                           variant="ghost"
                                           className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'qualifications', index)}
+                                          onClick={() =>
+                                            removeArrayItem(step.id, 'qualifications', index)
+                                          }
                                         >
                                           ×
                                         </Button>
@@ -603,23 +681,30 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                   >
                                     <GripVertical className="h-4 w-4" />
                                   </div>
-                                  
+
                                   <div className="w-8 h-8 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-sm">
                                     {step.stepNumber}
                                   </div>
-                                  
+
                                   <div className="flex items-center gap-2">
-                                    <Badge className={getRiskColor(step.riskLevel)} variant="outline">
+                                    <Badge
+                                      className={getRiskColor(step.riskLevel)}
+                                      variant="outline"
+                                    >
                                       {step.riskLevel}
                                     </Badge>
                                     {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                      <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs">
-                                        {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
+                                      <Badge
+                                        variant="outline"
+                                        className="border-orange-500/30 text-orange-400 text-xs"
+                                      >
+                                        {step.linkedHazards.length} hazard
+                                        {step.linkedHazards.length !== 1 ? 's' : ''}
                                       </Badge>
                                     )}
                                   </div>
                                 </div>
-                                
+
                                 <Button
                                   onClick={() => setExpandedStep(step.id)}
                                   size="sm"
@@ -630,7 +715,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                   Edit
                                 </Button>
                               </div>
-                              
+
                               {/* Content Row: Title and description with better spacing */}
                               <div className="pl-11">
                                 <h3 className="font-semibold text-foreground text-lg mb-2">
@@ -639,7 +724,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 <p className="text-sm text-white mb-3 leading-relaxed">
                                   {step.description || 'No description provided'}
                                 </p>
-                                
+
                                 {/* Duration badge - cleaner placement */}
                                 {step.estimatedDuration && (
                                   <div className="inline-flex items-center gap-1 text-xs text-white bg-muted/30 px-2 py-1 rounded-full">
@@ -652,7 +737,6 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
 
                             {/* Three Column Layout matching the original screenshot design */}
                             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-                              
                               {/* Safety Requirements Card - Dark styling to match screenshot */}
                               <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
@@ -663,7 +747,10 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li key={index} className="text-sm text-white flex items-start gap-2">
+                                    <li
+                                      key={index}
+                                      className="text-sm text-white flex items-start gap-2"
+                                    >
                                       <span className="text-red-400 flex-shrink-0 w-2">•</span>
                                       <span className="break-words text-left">{req}</span>
                                     </li>
@@ -691,7 +778,10 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-white flex items-start gap-2">
+                                    <li
+                                      key={index}
+                                      className="text-sm text-white flex items-start gap-2"
+                                    >
                                       <span className="text-blue-400 flex-shrink-0 w-2">•</span>
                                       <span className="break-words">{equipment}</span>
                                     </li>
@@ -719,9 +809,12 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.qualifications.slice(0, 3).map((qual, index) => (
-                                     <li key={index} className="text-sm text-white flex items-start gap-2">
-                                       <span className="text-green-400 w-2 flex-shrink-0">•</span>
-                                       <span className="break-words text-left">{qual}</span>
+                                    <li
+                                      key={index}
+                                      className="text-sm text-white flex items-start gap-2"
+                                    >
+                                      <span className="text-green-400 w-2 flex-shrink-0">•</span>
+                                      <span className="break-words text-left">{qual}</span>
                                     </li>
                                   ))}
                                   {step.qualifications.length > 3 && (
@@ -748,7 +841,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
             )}
           </Droppable>
         </DragDropContext>
-       )}
+      )}
 
       {/* Hazard Selector Modal */}
       <HazardSelector

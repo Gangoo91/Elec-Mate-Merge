@@ -3,9 +3,26 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Save, X, Trash2, Shield, Wrench, Award, Clock, Plus, AlertTriangle, Users } from 'lucide-react';
+import {
+  Save,
+  X,
+  Trash2,
+  Shield,
+  Wrench,
+  Award,
+  Clock,
+  Plus,
+  AlertTriangle,
+  Users,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
 import type { MethodStep } from '@/types/method-statement';
@@ -24,7 +41,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
   open,
   onOpenChange,
   onSave,
-  onDelete
+  onDelete,
 }) => {
   const [editedStep, setEditedStep] = useState<MethodStep>(step);
   const [hasChanges, setHasChanges] = useState(false);
@@ -35,7 +52,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
   }, [step, open]);
 
   const handleChange = (updates: Partial<MethodStep>) => {
-    setEditedStep(prev => ({ ...prev, ...updates }));
+    setEditedStep((prev) => ({ ...prev, ...updates }));
     setHasChanges(true);
   };
 
@@ -86,11 +103,13 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
       <SheetContent side="bottom" className="h-[95vh] overflow-y-auto">
         <SheetHeader className="sticky top-0 bg-background z-10 pb-4 border-b border-primary/10">
           <SheetTitle className="text-lg font-bold text-elec-light flex items-center gap-3">
-            <div className={cn(
-              "flex items-center justify-center w-10 h-10 rounded-full font-bold",
-              riskColors.bg,
-              riskColors.text
-            )}>
+            <div
+              className={cn(
+                'flex items-center justify-center w-10 h-10 rounded-full font-bold',
+                riskColors.bg,
+                riskColors.text
+              )}
+            >
               {step.stepNumber}
             </div>
             Edit Step
@@ -100,9 +119,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
         <div className="space-y-4 py-4 pb-24">
           {/* Step Title */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">
-              Step Title
-            </label>
+            <label className="text-sm font-semibold text-elec-light">Step Title</label>
             <Input
               value={editedStep.title}
               onChange={(e) => handleChange({ title: e.target.value })}
@@ -113,9 +130,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-elec-light">
-              Description
-            </label>
+            <label className="text-sm font-semibold text-elec-light">Description</label>
             <Textarea
               value={editedStep.description}
               onChange={(e) => handleChange({ description: e.target.value })}
@@ -174,7 +189,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             </div>
             <div className="flex flex-wrap gap-2">
               {editedStep.equipmentNeeded.map((equip, idx) => (
-                <Badge key={idx} className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-sm py-1">
+                <Badge
+                  key={idx}
+                  className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-sm py-1"
+                >
                   {equip}
                   <button
                     onClick={() => removeArrayItem('equipmentNeeded', idx)}
@@ -204,7 +222,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             </div>
             <div className="flex flex-wrap gap-2">
               {editedStep.qualifications.map((qual, idx) => (
-                <Badge key={idx} className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-sm py-1">
+                <Badge
+                  key={idx}
+                  className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-sm py-1"
+                >
                   ✓ {qual}
                   <button
                     onClick={() => removeArrayItem('qualifications', idx)}
@@ -234,7 +255,10 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
             </div>
             <div className="flex flex-wrap gap-2">
               {(editedStep.assignedPersonnel || []).map((person, idx) => (
-                <Badge key={idx} className="bg-green-500/10 text-green-400 border-green-500/30 text-sm py-1">
+                <Badge
+                  key={idx}
+                  className="bg-green-500/10 text-green-400 border-green-500/30 text-sm py-1"
+                >
                   👤 {person}
                   <button
                     onClick={() => removeArrayItem('assignedPersonnel', idx)}
@@ -279,7 +303,9 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               </label>
               <Select
                 value={editedStep.riskLevel}
-                onValueChange={(value: 'low' | 'medium' | 'high') => handleChange({ riskLevel: value })}
+                onValueChange={(value: 'low' | 'medium' | 'high') =>
+                  handleChange({ riskLevel: value })
+                }
               >
                 <SelectTrigger className="min-h-[48px]">
                   <SelectValue />
@@ -306,11 +332,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
               Delete
             </Button>
           )}
-          <Button
-            variant="outline"
-            className="flex-1 min-h-[48px]"
-            onClick={handleClose}
-          >
+          <Button variant="outline" className="flex-1 min-h-[48px]" onClick={handleClose}>
             <X className="h-5 w-5 mr-2" />
             Cancel
           </Button>

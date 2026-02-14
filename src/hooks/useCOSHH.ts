@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export interface COSHHAssessment {
   id: string;
@@ -24,7 +24,7 @@ export interface COSHHAssessment {
   disposal_method: string | null;
   monitoring_required: boolean;
   monitoring_details: string | null;
-  risk_rating: "low" | "medium" | "high" | "very-high";
+  risk_rating: 'low' | 'medium' | 'high' | 'very-high';
   assessed_by: string;
   assessment_date: string;
   review_date: string;
@@ -33,20 +33,27 @@ export interface COSHHAssessment {
   updated_at: string;
 }
 
-export type CreateCOSHHInput = Omit<COSHHAssessment, "id" | "user_id" | "created_at" | "updated_at" | "pdf_url">;
+export type CreateCOSHHInput = Omit<
+  COSHHAssessment,
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'pdf_url'
+> & {
+  photos?: string[];
+};
 
 export function useCOSHHAssessments() {
   return useQuery({
-    queryKey: ["coshh-assessments"],
+    queryKey: ['coshh-assessments'],
     queryFn: async (): Promise<COSHHAssessment[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("coshh_assessments")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        .from('coshh_assessments')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as COSHHAssessment[];
@@ -60,24 +67,26 @@ export function useCreateCOSHH() {
 
   return useMutation({
     mutationFn: async (input: CreateCOSHHInput): Promise<COSHHAssessment> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("coshh_assessments")
+        .from('coshh_assessments')
         .insert({ ...input, user_id: user.id })
-        .select("*")
+        .select('*')
         .single();
 
       if (error) throw error;
       return data as COSHHAssessment;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["coshh-assessments"] });
-      toast({ title: "Assessment saved", description: "COSHH assessment has been saved." });
+      queryClient.invalidateQueries({ queryKey: ['coshh-assessments'] });
+      toast({ title: 'Assessment saved', description: 'COSHH assessment has been saved.' });
     },
     onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 }
@@ -87,23 +96,26 @@ export function useUpdateCOSHH() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, ...input }: Partial<CreateCOSHHInput> & { id: string }): Promise<COSHHAssessment> => {
+    mutationFn: async ({
+      id,
+      ...input
+    }: Partial<CreateCOSHHInput> & { id: string }): Promise<COSHHAssessment> => {
       const { data, error } = await supabase
-        .from("coshh_assessments")
+        .from('coshh_assessments')
         .update(input)
-        .eq("id", id)
-        .select("*")
+        .eq('id', id)
+        .select('*')
         .single();
 
       if (error) throw error;
       return data as COSHHAssessment;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["coshh-assessments"] });
-      toast({ title: "Assessment updated", description: "COSHH assessment has been updated." });
+      queryClient.invalidateQueries({ queryKey: ['coshh-assessments'] });
+      toast({ title: 'Assessment updated', description: 'COSHH assessment has been updated.' });
     },
     onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 }
@@ -114,38 +126,37 @@ export function useDeleteCOSHH() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("coshh_assessments")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('coshh_assessments').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["coshh-assessments"] });
-      toast({ title: "Assessment deleted", description: "COSHH assessment has been removed." });
+      queryClient.invalidateQueries({ queryKey: ['coshh-assessments'] });
+      toast({ title: 'Assessment deleted', description: 'COSHH assessment has been removed.' });
     },
     onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
 }
 
 export function useCOSHHOverdueReviews() {
   return useQuery({
-    queryKey: ["coshh-assessments", "overdue"],
+    queryKey: ['coshh-assessments', 'overdue'],
     queryFn: async (): Promise<COSHHAssessment[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
-      const today = new Date().toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
 
       const { data, error } = await supabase
-        .from("coshh_assessments")
-        .select("*")
-        .eq("user_id", user.id)
-        .lt("review_date", today)
-        .order("review_date", { ascending: true });
+        .from('coshh_assessments')
+        .select('*')
+        .eq('user_id', user.id)
+        .lt('review_date', today)
+        .order('review_date', { ascending: true });
 
       if (error) throw error;
       return data as COSHHAssessment[];

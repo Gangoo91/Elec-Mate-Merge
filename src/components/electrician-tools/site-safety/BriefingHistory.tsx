@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 import {
   FileText,
   Search,
@@ -16,9 +16,9 @@ import {
   CheckCircle2,
   Wrench,
   ClipboardList,
-} from "lucide-react";
-import { BriefingPDFActions } from "./BriefingPDFActions";
-import { BriefingActionsMenu } from "./BriefingActionsMenu";
+} from 'lucide-react';
+import { BriefingPDFActions } from './BriefingPDFActions';
+import { BriefingActionsMenu } from './BriefingActionsMenu';
 
 interface BriefingHistoryProps {
   onEdit: (briefing: any) => void;
@@ -26,75 +26,68 @@ interface BriefingHistoryProps {
   onStatusChange: (briefingId: string, status: string) => void;
 }
 
-const statusConfig: Record<
-  string,
-  { bg: string; text: string; border: string; label: string }
-> = {
+const statusConfig: Record<string, { bg: string; text: string; border: string; label: string }> = {
   completed: {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-400",
-    border: "border-emerald-500/20",
-    label: "Completed",
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    label: 'Completed',
   },
   in_progress: {
-    bg: "bg-amber-500/10",
-    text: "text-amber-400",
-    border: "border-amber-500/20",
-    label: "In Progress",
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    label: 'In Progress',
   },
   scheduled: {
-    bg: "bg-blue-500/10",
-    text: "text-blue-400",
-    border: "border-blue-500/20",
-    label: "Scheduled",
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/20',
+    label: 'Scheduled',
   },
   cancelled: {
-    bg: "bg-red-500/10",
-    text: "text-red-400",
-    border: "border-red-500/20",
-    label: "Cancelled",
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    label: 'Cancelled',
   },
   draft: {
-    bg: "bg-white/10",
-    text: "text-white",
-    border: "border-white/20",
-    label: "Draft",
+    bg: 'bg-white/10',
+    text: 'text-white',
+    border: 'border-white/20',
+    label: 'Draft',
   },
 };
 
 const briefingTypeConfig: Record<string, { label: string; color: string }> = {
-  "site-work": { label: "Site Work", color: "bg-blue-500/15 text-blue-400" },
-  lfe: { label: "LFE Report", color: "bg-red-500/15 text-red-400" },
-  "hse-update": {
-    label: "HSE Update",
-    color: "bg-orange-500/15 text-orange-400",
+  'site-work': { label: 'Site Work', color: 'bg-blue-500/15 text-blue-400' },
+  lfe: { label: 'LFE Report', color: 'bg-red-500/15 text-red-400' },
+  'hse-update': {
+    label: 'HSE Update',
+    color: 'bg-orange-500/15 text-orange-400',
   },
-  "business-update": {
-    label: "Business",
-    color: "bg-purple-500/15 text-purple-400",
+  'business-update': {
+    label: 'Business',
+    color: 'bg-purple-500/15 text-purple-400',
   },
-  "safety-alert": {
-    label: "Safety Alert",
-    color: "bg-yellow-500/15 text-yellow-400",
+  'safety-alert': {
+    label: 'Safety Alert',
+    color: 'bg-yellow-500/15 text-yellow-400',
   },
   regulatory: {
-    label: "Regulatory",
-    color: "bg-green-500/15 text-green-400",
+    label: 'Regulatory',
+    color: 'bg-green-500/15 text-green-400',
   },
-  general: { label: "General", color: "bg-gray-500/15 text-white" },
+  general: { label: 'General', color: 'bg-gray-500/15 text-white' },
 };
 
-export const BriefingHistory = ({
-  onEdit,
-  onDuplicate,
-  onStatusChange,
-}: BriefingHistoryProps) => {
+export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: BriefingHistoryProps) => {
   const { toast } = useToast();
   const [briefings, setBriefings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [aiFilter, setAiFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [aiFilter, setAiFilter] = useState('all');
   const [companyProfile, setCompanyProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -110,19 +103,19 @@ export const BriefingHistory = ({
       if (!user) return;
 
       const { data, error } = await supabase
-        .from("team_briefings")
-        .select("*")
-        .neq("status", "cancelled")
-        .order("briefing_date", { ascending: true });
+        .from('team_briefings')
+        .select('*')
+        .neq('status', 'cancelled')
+        .order('briefing_date', { ascending: true });
 
       if (error) throw error;
       setBriefings(data || []);
     } catch (error: any) {
-      console.error("Error fetching briefings:", error);
+      console.error('Error fetching briefings:', error);
       toast({
-        title: "Error",
-        description: "Failed to load briefings",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load briefings',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -137,47 +130,44 @@ export const BriefingHistory = ({
       if (!user) return;
 
       const { data } = await supabase
-        .from("company_profiles")
-        .select("*")
-        .eq("user_id", user.id)
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
         .single();
 
       setCompanyProfile(data);
     } catch (error) {
-      console.error("Error fetching company profile:", error);
+      console.error('Error fetching company profile:', error);
     }
   };
 
   const filteredBriefings = briefings.filter((briefing) => {
     const matchesSearch =
-      briefing.briefing_name
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+      briefing.briefing_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       briefing.job_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       briefing.location?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus =
-      statusFilter === "all" || briefing.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || briefing.status === statusFilter;
 
     const matchesAI =
-      aiFilter === "all" ||
-      (aiFilter === "ai" && briefing.ai_generated) ||
-      (aiFilter === "manual" && !briefing.ai_generated);
+      aiFilter === 'all' ||
+      (aiFilter === 'ai' && briefing.ai_generated) ||
+      (aiFilter === 'manual' && !briefing.ai_generated);
 
     return matchesSearch && matchesStatus && matchesAI;
   });
 
   const filterButtons = [
-    { id: "all", label: "All Status" },
-    { id: "completed", label: "Completed" },
-    { id: "scheduled", label: "Scheduled" },
-    { id: "draft", label: "Draft" },
+    { id: 'all', label: 'All Status' },
+    { id: 'completed', label: 'Completed' },
+    { id: 'scheduled', label: 'Scheduled' },
+    { id: 'draft', label: 'Draft' },
   ];
 
   const aiButtons = [
-    { id: "all", label: "All Types" },
-    { id: "ai", label: "AI Generated", icon: Sparkles },
-    { id: "manual", label: "Manual" },
+    { id: 'all', label: 'All Types' },
+    { id: 'ai', label: 'AI Generated', icon: Sparkles },
+    { id: 'manual', label: 'Manual' },
   ];
 
   if (loading) {
@@ -211,9 +201,9 @@ export const BriefingHistory = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search briefings..."
             className={cn(
-              "h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white touch-manipulation",
-              "focus:border-yellow-500 focus:ring-yellow-500",
-              !searchTerm && "pl-10"
+              'h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white touch-manipulation',
+              'focus:border-yellow-500 focus:ring-yellow-500',
+              !searchTerm && 'pl-10'
             )}
           />
         </div>
@@ -225,10 +215,10 @@ export const BriefingHistory = ({
               key={btn.id}
               onClick={() => setStatusFilter(btn.id)}
               className={cn(
-                "px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+                'px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
                 statusFilter === btn.id
-                  ? "bg-elec-yellow text-black"
-                  : "bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20"
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20'
               )}
             >
               {btn.label}
@@ -240,10 +230,10 @@ export const BriefingHistory = ({
               key={btn.id}
               onClick={() => setAiFilter(btn.id)}
               className={cn(
-                "px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+                'px-4 py-2 min-h-[44px] rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
                 aiFilter === btn.id
-                  ? "bg-elec-yellow text-black"
-                  : "bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20"
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-[#1e1e1e] border border-white/10 text-white hover:text-white hover:border-white/20'
               )}
             >
               {btn.icon && <btn.icon className="h-3 w-3 inline mr-1" />}
@@ -261,32 +251,27 @@ export const BriefingHistory = ({
           </div>
           <h3 className="text-base font-semibold text-white mb-1">No Briefings Found</h3>
           <p className="text-sm text-white text-center max-w-xs">
-            {searchTerm || statusFilter !== "all" || aiFilter !== "all"
-              ? "Try adjusting your filters"
-              : "Create your first briefing to get started"}
+            {searchTerm || statusFilter !== 'all' || aiFilter !== 'all'
+              ? 'Try adjusting your filters'
+              : 'Create your first briefing to get started'}
           </p>
         </div>
       ) : (
         <div className="space-y-3">
           {filteredBriefings.map((briefing) => {
             const typeInfo =
-              briefingTypeConfig[
-                briefing.briefing_type as keyof typeof briefingTypeConfig
-              ] || briefingTypeConfig["general"];
+              briefingTypeConfig[briefing.briefing_type as keyof typeof briefingTypeConfig] ||
+              briefingTypeConfig['general'];
             const photoCount = briefing.photos?.length || 0;
             const equipmentCount = briefing.equipment?.length || 0;
             const keyPointsCount = briefing.key_points?.length || 0;
-            const description =
-              briefing.briefing_description || briefing.job_description || "";
+            const description = briefing.briefing_description || briefing.job_description || '';
             const truncatedDesc =
-              description.length > 80
-                ? description.substring(0, 80) + "..."
-                : description;
+              description.length > 80 ? description.substring(0, 80) + '...' : description;
 
             const status =
-              statusConfig[
-                briefing.completed ? "completed" : briefing.status
-              ] || statusConfig.scheduled;
+              statusConfig[briefing.completed ? 'completed' : briefing.status] ||
+              statusConfig.scheduled;
 
             return (
               <div
@@ -296,12 +281,7 @@ export const BriefingHistory = ({
                 {/* Top badges row with actions */}
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge
-                      className={cn(
-                        "border-0 text-xs",
-                        typeInfo.color
-                      )}
-                    >
+                    <Badge className={cn('border-0 text-xs', typeInfo.color)}>
                       {typeInfo.label}
                     </Badge>
                     {briefing.ai_generated && (
@@ -310,17 +290,8 @@ export const BriefingHistory = ({
                         AI
                       </Badge>
                     )}
-                    <Badge
-                      className={cn(
-                        "border text-xs",
-                        status.bg,
-                        status.text,
-                        status.border
-                      )}
-                    >
-                      {status.label === "Completed" && (
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                      )}
+                    <Badge className={cn('border text-xs', status.bg, status.text, status.border)}>
+                      {status.label === 'Completed' && <CheckCircle2 className="h-3 w-3 mr-1" />}
                       {status.label}
                     </Badge>
                   </div>
@@ -339,19 +310,15 @@ export const BriefingHistory = ({
                 </h3>
 
                 {/* Description preview */}
-                {truncatedDesc && (
-                  <p className="text-sm text-white mb-3">{truncatedDesc}</p>
-                )}
+                {truncatedDesc && <p className="text-sm text-white mb-3">{truncatedDesc}</p>}
 
                 {/* Metadata grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white mb-3">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-white" />
                     <span className="whitespace-nowrap">
-                      {new Date(briefing.briefing_date).toLocaleDateString(
-                        "en-GB"
-                      )}{" "}
-                      at {briefing.briefing_time}
+                      {new Date(briefing.briefing_date).toLocaleDateString('en-GB')} at{' '}
+                      {briefing.briefing_time}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -360,9 +327,7 @@ export const BriefingHistory = ({
                   </div>
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-white" />
-                    <span className="truncate">
-                      {briefing.conductor_name || "Not specified"}
-                    </span>
+                    <span className="truncate">{briefing.conductor_name || 'Not specified'}</span>
                   </div>
                   {briefing.team_size && (
                     <div className="flex items-center gap-2">
@@ -387,7 +352,7 @@ export const BriefingHistory = ({
                     <div className="flex items-center gap-2">
                       <Camera className="h-4 w-4 text-white" />
                       <span>
-                        {photoCount} photo{photoCount > 1 ? "s" : ""}
+                        {photoCount} photo{photoCount > 1 ? 's' : ''}
                       </span>
                     </div>
                   )}
@@ -407,10 +372,7 @@ export const BriefingHistory = ({
 
                 {/* PDF Actions at bottom */}
                 <div className="pt-3 border-t border-white/10">
-                  <BriefingPDFActions
-                    briefing={briefing}
-                    companyProfile={companyProfile}
-                  />
+                  <BriefingPDFActions briefing={briefing} companyProfile={companyProfile} />
                 </div>
               </div>
             );

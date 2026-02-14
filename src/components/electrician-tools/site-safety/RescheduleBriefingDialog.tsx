@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
+import { useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { format, addDays } from "date-fns";
-import { CalendarDays, Clock } from "lucide-react";
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { format, addDays } from 'date-fns';
+import { CalendarDays, Clock } from 'lucide-react';
 
 interface RescheduleBriefingDialogProps {
   open: boolean;
@@ -32,12 +32,12 @@ export const RescheduleBriefingDialog = ({
   const [date, setDate] = useState<Date | undefined>(
     briefing?.briefing_date ? new Date(briefing.briefing_date) : undefined
   );
-  const [time, setTime] = useState(briefing?.briefing_time || "09:00");
-  const [rescheduleReason, setRescheduleReason] = useState("");
+  const [time, setTime] = useState(briefing?.briefing_time || '09:00');
+  const [rescheduleReason, setRescheduleReason] = useState('');
   const [loading, setLoading] = useState(false);
 
   const originalDate = briefing?.briefing_date ? new Date(briefing.briefing_date) : null;
-  const originalTime = briefing?.briefing_time || "09:00";
+  const originalTime = briefing?.briefing_time || '09:00';
 
   const suggestNextSlot = () => {
     if (originalDate) {
@@ -49,9 +49,9 @@ export const RescheduleBriefingDialog = ({
   const handleReschedule = async () => {
     if (!date) {
       toast({
-        title: "Date Required",
-        description: "Please select a new date for the briefing.",
-        variant: "destructive",
+        title: 'Date Required',
+        description: 'Please select a new date for the briefing.',
+        variant: 'destructive',
       });
       return;
     }
@@ -60,42 +60,42 @@ export const RescheduleBriefingDialog = ({
     try {
       // Update briefing
       const { error: updateError } = await supabase
-        .from("team_briefings")
+        .from('team_briefings')
         .update({
-          briefing_date: format(date, "yyyy-MM-dd"),
+          briefing_date: format(date, 'yyyy-MM-dd'),
           briefing_time: time,
         })
-        .eq("id", briefing.id);
+        .eq('id', briefing.id);
 
       if (updateError) throw updateError;
 
       // Create status history entry
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user && rescheduleReason) {
-        await supabase
-          .from("briefing_status_history")
-          .insert({
-            briefing_id: briefing.id,
-            old_status: briefing.status,
-            new_status: 'scheduled',
-            reason: `Rescheduled: ${rescheduleReason}`,
-            changed_by: user.id,
-          });
+        await supabase.from('briefing_status_history').insert({
+          briefing_id: briefing.id,
+          old_status: briefing.status,
+          new_status: 'scheduled',
+          reason: `Rescheduled: ${rescheduleReason}`,
+          changed_by: user.id,
+        });
       }
 
       toast({
-        title: "Briefing Rescheduled",
-        description: `Briefing moved to ${format(date, "PPP")} at ${time}`,
+        title: 'Briefing Rescheduled',
+        description: `Briefing moved to ${format(date, 'PPP')} at ${time}`,
       });
 
       onOpenChange(false);
       onSuccess();
     } catch (error) {
-      console.error("Error rescheduling briefing:", error);
+      console.error('Error rescheduling briefing:', error);
       toast({
-        title: "Error",
-        description: "Failed to reschedule briefing. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to reschedule briefing. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -123,7 +123,7 @@ export const RescheduleBriefingDialog = ({
               <div className="flex items-center gap-4 text-sm text-white flex-wrap">
                 <div className="flex items-center gap-1 whitespace-nowrap">
                   <CalendarDays className="h-4 w-4" />
-                  {format(originalDate, "PPP")}
+                  {format(originalDate, 'PPP')}
                 </div>
                 <div className="flex items-center gap-1 whitespace-nowrap">
                   <Clock className="h-4 w-4" />
@@ -182,11 +182,20 @@ export const RescheduleBriefingDialog = ({
           </div>
 
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading} className="flex-1 h-11 touch-manipulation">
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={loading}
+              className="flex-1 h-11 touch-manipulation"
+            >
               Cancel
             </Button>
-            <Button onClick={handleReschedule} disabled={loading || !date} className="flex-1 h-11 touch-manipulation">
-              {loading ? "Rescheduling..." : "Reschedule"}
+            <Button
+              onClick={handleReschedule}
+              disabled={loading || !date}
+              className="flex-1 h-11 touch-manipulation"
+            >
+              {loading ? 'Rescheduling...' : 'Reschedule'}
             </Button>
           </div>
         </div>

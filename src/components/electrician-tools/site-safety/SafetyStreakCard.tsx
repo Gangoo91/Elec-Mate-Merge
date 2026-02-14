@@ -1,14 +1,6 @@
-import { motion } from "framer-motion";
-import {
-  Shield,
-  Camera,
-  FileText,
-  CheckCircle2,
-  Flame,
-  Trophy,
-  Zap,
-} from "lucide-react";
-import type { SafetyStreak } from "@/hooks/useSafetyStreak";
+import { motion } from 'framer-motion';
+import { Shield, Camera, FileText, CheckCircle2, Flame, Trophy, Zap } from 'lucide-react';
+import type { SafetyStreak } from '@/hooks/useSafetyStreak';
 
 interface SafetyStreakCardProps {
   streak: SafetyStreak;
@@ -51,28 +43,18 @@ export function SafetyStreakCard({ streak }: SafetyStreakCardProps) {
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">
           <div className="text-center p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-lg font-bold text-white block">
-              {streak.daysIncidentFree}
-            </span>
-            <span className="text-[10px] text-white font-medium">
-              Days Safe
-            </span>
+            <span className="text-lg font-bold text-white block">{streak.daysIncidentFree}</span>
+            <span className="text-[10px] text-white font-medium">Days Safe</span>
           </div>
           <div className="text-center p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            <span className="text-lg font-bold text-white block">
-              {streak.weeklyActionCount}
-            </span>
-            <span className="text-[10px] text-white font-medium">
-              This Week
-            </span>
+            <span className="text-lg font-bold text-white block">{streak.weeklyActionCount}</span>
+            <span className="text-[10px] text-white font-medium">This Week</span>
           </div>
           <div className="text-center p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <span className="text-lg font-bold text-white block">
               {streak.consecutiveWeeksActive}
             </span>
-            <span className="text-[10px] text-white font-medium">
-              Weeks Active
-            </span>
+            <span className="text-[10px] text-white font-medium">Weeks Active</span>
           </div>
         </div>
 
@@ -85,18 +67,16 @@ export function SafetyStreakCard({ streak }: SafetyStreakCardProps) {
                 key={badge.key}
                 className={`flex-1 flex flex-col items-center gap-1.5 p-2 rounded-xl border transition-colors ${
                   badge.unlocked
-                    ? "bg-elec-yellow/10 border-elec-yellow/20"
-                    : "bg-white/[0.02] border-white/[0.06]"
+                    ? 'bg-elec-yellow/10 border-elec-yellow/20'
+                    : 'bg-white/[0.02] border-white/[0.06]'
                 }`}
               >
                 <IconComponent
-                  className={`h-4 w-4 ${
-                    badge.unlocked ? "text-elec-yellow" : "text-white/[0.15]"
-                  }`}
+                  className={`h-4 w-4 ${badge.unlocked ? 'text-elec-yellow' : 'text-white/[0.15]'}`}
                 />
                 <span
                   className={`text-[9px] font-semibold text-center leading-tight ${
-                    badge.unlocked ? "text-white" : "text-white/[0.3]"
+                    badge.unlocked ? 'text-white' : 'text-white/[0.3]'
                   }`}
                 >
                   {badge.label}

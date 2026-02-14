@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   AlertTriangle,
@@ -8,37 +8,34 @@ import {
   ChevronUp,
   Loader2,
   Shield,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { useSafetyAlerts, type SafetyAlert } from "@/hooks/useSafetyAlerts";
-import { SafetyEmptyState } from "../common/SafetyEmptyState";
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { useSafetyAlerts, type SafetyAlert } from '@/hooks/useSafetyAlerts';
+import { SafetyEmptyState } from '../common/SafetyEmptyState';
 
 interface SafetyAlertsFeedProps {
   onBack: () => void;
 }
 
-const SEVERITY_CONFIG: Record<
-  string,
-  { colour: string; bg: string; icon: React.ElementType }
-> = {
+const SEVERITY_CONFIG: Record<string, { colour: string; bg: string; icon: React.ElementType }> = {
   critical: {
-    colour: "text-red-400",
-    bg: "bg-red-500/10 border-red-500/20",
+    colour: 'text-red-400',
+    bg: 'bg-red-500/10 border-red-500/20',
     icon: AlertTriangle,
   },
   high: {
-    colour: "text-amber-400",
-    bg: "bg-amber-500/10 border-amber-500/20",
+    colour: 'text-amber-400',
+    bg: 'bg-amber-500/10 border-amber-500/20',
     icon: AlertTriangle,
   },
   medium: {
-    colour: "text-yellow-400",
-    bg: "bg-yellow-500/10 border-yellow-500/20",
+    colour: 'text-yellow-400',
+    bg: 'bg-yellow-500/10 border-yellow-500/20',
     icon: Bell,
   },
   low: {
-    colour: "text-blue-400",
-    bg: "bg-blue-500/10 border-blue-500/20",
+    colour: 'text-blue-400',
+    bg: 'bg-blue-500/10 border-blue-500/20',
     icon: Shield,
   },
 };
@@ -63,9 +60,7 @@ function AlertCard({ alert }: { alert: SafetyAlert }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <h3 className="text-[13px] font-semibold text-white truncate">
-              {alert.title}
-            </h3>
+            <h3 className="text-[13px] font-semibold text-white truncate">{alert.title}</h3>
             <Badge
               className={`${config.colour} bg-white/[0.06] border-none text-[9px] font-bold flex-shrink-0`}
             >
@@ -74,10 +69,10 @@ function AlertCard({ alert }: { alert: SafetyAlert }) {
           </div>
           <p className="text-[11px] text-white line-clamp-2">{alert.summary}</p>
           <span className="text-[10px] text-white mt-1 block">
-            {new Date(alert.date_published).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
+            {new Date(alert.date_published).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
             })}
           </span>
         </div>
@@ -92,7 +87,7 @@ function AlertCard({ alert }: { alert: SafetyAlert }) {
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -133,9 +128,7 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
       <div className="px-4 space-y-4 pb-8">
         <div>
           <h2 className="text-2xl font-bold text-white mb-1">Safety Alerts</h2>
-          <p className="text-sm text-white">
-            Latest safety alerts and industry notices
-          </p>
+          <p className="text-sm text-white">Latest safety alerts and industry notices</p>
         </div>
 
         {isLoading ? (

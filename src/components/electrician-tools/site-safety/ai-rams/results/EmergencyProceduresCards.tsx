@@ -6,7 +6,9 @@ interface EmergencyProceduresCardsProps {
   procedures?: string[];
 }
 
-export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> = ({ procedures }) => {
+export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> = ({
+  procedures,
+}) => {
   if (!procedures || procedures.length === 0) {
     return (
       <Card className="bg-card border-elec-yellow/20">
@@ -42,9 +44,7 @@ export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> =
                 {idx + 1}
               </div>
               <div className="flex-1">
-                <p className="text-sm text-elec-light leading-relaxed">
-                  {procedure}
-                </p>
+                <p className="text-sm text-elec-light leading-relaxed">{procedure}</p>
               </div>
             </div>
           ))}

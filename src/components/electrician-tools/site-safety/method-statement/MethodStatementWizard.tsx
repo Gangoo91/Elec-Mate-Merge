@@ -24,7 +24,7 @@ const MethodStatementWizard = () => {
     description: '',
     overallRiskLevel: 'medium',
     reviewDate: '',
-    steps: []
+    steps: [],
   });
 
   const steps = [
@@ -32,17 +32,17 @@ const MethodStatementWizard = () => {
     { id: 'details', title: 'Job Details', description: 'Basic information' },
     { id: 'steps', title: 'Method Steps', description: 'Build your process' },
     { id: 'hazards', title: 'Hazards', description: 'Link hazards from database' },
-    { id: 'review', title: 'Review', description: 'Generate document' }
+    { id: 'review', title: 'Review', description: 'Generate document' },
   ];
 
-  const currentStepIndex = steps.findIndex(step => step.id === currentStep);
+  const currentStepIndex = steps.findIndex((step) => step.id === currentStep);
   const progress = ((currentStepIndex + 1) / steps.length) * 100;
 
   // Scroll to top when step changes - improved implementation
   useEffect(() => {
     // Scroll to top immediately
     window.scrollTo(0, 0);
-    
+
     // Also smooth scroll as fallback
     setTimeout(() => {
       const container = document.querySelector('.method-statement-container') || window;
@@ -69,17 +69,17 @@ const MethodStatementWizard = () => {
   };
 
   const updateMethodStatement = (updates: Partial<MethodStatementData>) => {
-    setMethodStatementData(prev => ({ ...prev, ...updates }));
+    setMethodStatementData((prev) => ({ ...prev, ...updates }));
   };
 
   const handleHazardLink = (hazardId: string) => {
     if (!linkedHazards.includes(hazardId)) {
-      setLinkedHazards(prev => [...prev, hazardId]);
+      setLinkedHazards((prev) => [...prev, hazardId]);
     }
   };
 
   const handleHazardUnlink = (hazardId: string) => {
-    setLinkedHazards(prev => prev.filter(id => id !== hazardId));
+    setLinkedHazards((prev) => prev.filter((id) => id !== hazardId));
   };
 
   const renderStepContent = () => {
@@ -101,8 +101,8 @@ const MethodStatementWizard = () => {
                   qualifications: step.qualifications,
                   estimatedDuration: step.estimatedDuration,
                   riskLevel: step.riskLevel,
-                  isCompleted: false
-                }))
+                  isCompleted: false,
+                })),
               });
               handleNext();
             }}
@@ -157,38 +157,25 @@ const MethodStatementWizard = () => {
 
   return (
     <div className="space-y-4 md:space-y-6 method-statement-container">
-
       {/* Step Content */}
-      <div className="min-h-[500px]">
-        {renderStepContent()}
-      </div>
+      <div className="min-h-[500px]">{renderStepContent()}</div>
 
       {/* Navigation */}
       {!isFirstStep && currentStep !== 'template' && (
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <Button
-            onClick={handlePrevious}
-            variant="outline"
-            className="flex items-center gap-2"
-          >
+          <Button onClick={handlePrevious} variant="outline" className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" />
             Previous
           </Button>
 
           {!isLastStep ? (
-            <Button
-              onClick={handleNext}
-              className="flex items-center gap-2"
-            >
+            <Button onClick={handleNext} className="flex items-center gap-2">
               Next
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
             <div className="flex flex-col sm:flex-row gap-2">
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-              >
+              <Button variant="outline" className="flex items-center gap-2">
                 <Download className="h-4 w-4" />
                 Export PDF
               </Button>

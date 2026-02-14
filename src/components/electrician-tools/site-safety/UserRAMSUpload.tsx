@@ -25,11 +25,7 @@ interface UserRAMSUploadProps {
   onUploadComplete?: () => void;
 }
 
-export const UserRAMSUpload = ({
-  open,
-  onOpenChange,
-  onUploadComplete,
-}: UserRAMSUploadProps) => {
+export const UserRAMSUpload = ({ open, onOpenChange, onUploadComplete }: UserRAMSUploadProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -70,14 +66,17 @@ export const UserRAMSUpload = ({
     }
   };
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      handleFileSelect(file);
-    }
-  }, [projectName]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        handleFileSelect(file);
+      }
+    },
+    [projectName]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -169,10 +168,7 @@ export const UserRAMSUpload = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-4 py-4 border-b border-white/[0.06]">
@@ -206,8 +202,8 @@ export const UserRAMSUpload = ({
                 isDragging
                   ? 'border-elec-yellow bg-elec-yellow/10'
                   : selectedFile
-                  ? 'border-green-500/40 bg-green-500/5'
-                  : 'border-white/20 bg-white/[0.02] hover:border-white/40 hover:bg-white/[0.04]'
+                    ? 'border-green-500/40 bg-green-500/5'
+                    : 'border-white/20 bg-white/[0.02] hover:border-white/40 hover:bg-white/[0.04]'
               )}
             >
               <input
@@ -223,12 +219,8 @@ export const UserRAMSUpload = ({
                   <div className="w-14 h-14 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mx-auto mb-3">
                     <FileText className="h-7 w-7 text-green-400" />
                   </div>
-                  <p className="font-medium text-white text-base mb-1">
-                    {selectedFile.name}
-                  </p>
-                  <p className="text-sm text-white">
-                    {formatFileSize(selectedFile.size)}
-                  </p>
+                  <p className="font-medium text-white text-base mb-1">{selectedFile.name}</p>
+                  <p className="text-sm text-white">{formatFileSize(selectedFile.size)}</p>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -248,12 +240,8 @@ export const UserRAMSUpload = ({
                   <div className="w-14 h-14 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center mb-3">
                     <Upload className="h-7 w-7 text-elec-yellow" />
                   </div>
-                  <p className="font-medium text-white text-base mb-1">
-                    Drop your PDF here
-                  </p>
-                  <p className="text-sm text-white mb-3">
-                    or tap to browse files
-                  </p>
+                  <p className="font-medium text-white text-base mb-1">Drop your PDF here</p>
+                  <p className="text-sm text-white mb-3">or tap to browse files</p>
                   <p className="text-xs text-white">PDF only, max 50MB</p>
                 </>
               )}
@@ -272,9 +260,7 @@ export const UserRAMSUpload = ({
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-white">Uploading...</span>
-                  <span className="text-elec-yellow font-medium">
-                    {uploadProgress}%
-                  </span>
+                  <span className="text-elec-yellow font-medium">{uploadProgress}%</span>
                 </div>
                 <Progress value={uploadProgress} className="h-2" />
               </div>
@@ -289,9 +275,7 @@ export const UserRAMSUpload = ({
 
               <div className="space-y-3">
                 <div>
-                  <Label className="text-xs text-white mb-1.5 block">
-                    Project Name
-                  </Label>
+                  <Label className="text-xs text-white mb-1.5 block">Project Name</Label>
                   <Input
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}

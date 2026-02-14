@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,9 @@ import { toast } from 'sonner';
 import { SignaturePad } from './common/SignaturePad';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { useInspectionRecords, useCreateInspectionRecord } from '@/hooks/useInspectionRecords';
+import { useLocalDraft } from '@/hooks/useLocalDraft';
+import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
+import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import {
   ArrowLeft,
   Plus,
@@ -37,10 +40,13 @@ import {
   FileDown,
   Loader2,
 } from 'lucide-react';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { useShowMore } from '@/hooks/useShowMore';
 
 // ─── Types ───
 
 type CheckResult = 'pass' | 'fail' | 'na' | null;
+type NonConformanceClass = 'critical' | 'major' | 'minor' | null;
 
 interface ChecklistItem {
   id: string;
@@ -48,6 +54,8 @@ interface ChecklistItem {
   result: CheckResult;
   notes: string;
   photo: string | null;
+  classification: NonConformanceClass;
+  remedial_action: string;
 }
 
 interface ChecklistSection {
@@ -396,6 +404,33 @@ const RESULT_CONFIG = {
   na: { icon: MinusCircle, colour: 'text-white', bg: 'bg-gray-500/15', label: 'N/A' },
 };
 
+const CLASSIFICATION_CONFIG = {
+  critical: {
+    label: 'Critical',
+    description: 'Stop work immediately',
+    colour: 'text-red-400',
+    bg: 'bg-red-500/15',
+    border: 'border-red-500/30',
+    badge: 'bg-red-500/20 text-red-300 border-red-500/30',
+  },
+  major: {
+    label: 'Major',
+    description: 'Rectify within 24 hours',
+    colour: 'text-orange-400',
+    bg: 'bg-orange-500/15',
+    border: 'border-orange-500/30',
+    badge: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+  },
+  minor: {
+    label: 'Minor',
+    description: 'Advisory — rectify when practical',
+    colour: 'text-yellow-400',
+    bg: 'bg-yellow-500/15',
+    border: 'border-yellow-500/30',
+    badge: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
+  },
+} as const;
+
 // ─── Main Component ───
 
 export function InspectionChecklists({ onBack }: { onBack: () => void }) {
@@ -420,6 +455,13 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
     created_at: r.created_at,
   }));
 
+  const {
+    visible: visibleInspections,
+    hasMore: hasMoreInspections,
+    remaining: remainingInspections,
+    loadMore: loadMoreInspections,
+  } = useShowMore(completedInspections);
+
   const [activeTemplate, setActiveTemplate] = useState<ChecklistTemplate | null>(null);
   const [sections, setSections] = useState<ChecklistSection[]>([]);
   const [inspectorName, setInspectorName] = useState('');
@@ -431,6 +473,67 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const [inspectorSigDate, setInspectorSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+
+  // ─── Draft Auto-save ───
+  const inspectionDraftData = useMemo(
+    () => ({
+      templateId: activeTemplate?.id ?? null,
+      inspectorName,
+      location,
+      sections,
+      additionalNotes,
+      inspectorSigName,
+      inspectorSigData,
+      photoUrls,
+    }),
+    [
+      activeTemplate,
+      inspectorName,
+      location,
+      sections,
+      additionalNotes,
+      inspectorSigName,
+      inspectorSigData,
+      photoUrls,
+    ]
+  );
+
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'inspection-checklist',
+    data: inspectionDraftData,
+    enabled: activeTemplate !== null,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.templateId) {
+      const template = TEMPLATES.find((t) => t.id === recoveredDraft.templateId);
+      if (template) {
+        setActiveTemplate(template);
+        if (recoveredDraft.sections?.length) {
+          setSections(recoveredDraft.sections);
+        } else {
+          startInspection(template);
+          return;
+        }
+      }
+    }
+    if (recoveredDraft.inspectorName !== undefined) setInspectorName(recoveredDraft.inspectorName);
+    if (recoveredDraft.location !== undefined) setLocation(recoveredDraft.location);
+    if (recoveredDraft.additionalNotes !== undefined)
+      setAdditionalNotes(recoveredDraft.additionalNotes);
+    if (recoveredDraft.inspectorSigName !== undefined)
+      setInspectorSigName(recoveredDraft.inspectorSigName);
+    if (recoveredDraft.inspectorSigData !== undefined)
+      setInspectorSigData(recoveredDraft.inspectorSigData);
+    if (recoveredDraft.photoUrls !== undefined) setPhotoUrls(recoveredDraft.photoUrls);
+    dismissDraft();
+  };
 
   const startInspection = (template: ChecklistTemplate) => {
     setActiveTemplate(template);
@@ -445,6 +548,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           result: null,
           notes: '',
           photo: null,
+          classification: null,
+          remedial_action: '',
         })),
       }))
     );
@@ -456,7 +561,12 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
       const updated = [...prev];
       const section = { ...updated[sectionIndex] };
       const items = [...section.items];
-      items[itemIndex] = { ...items[itemIndex], result };
+      const item = { ...items[itemIndex], result };
+      if (result !== 'fail') {
+        item.classification = null;
+        item.remedial_action = '';
+      }
+      items[itemIndex] = item;
       section.items = items;
       updated[sectionIndex] = section;
       return updated;
@@ -475,6 +585,34 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
     });
   };
 
+  const setItemClassification = (
+    sectionIndex: number,
+    itemIndex: number,
+    classification: NonConformanceClass
+  ) => {
+    setSections((prev) => {
+      const updated = [...prev];
+      const section = { ...updated[sectionIndex] };
+      const items = [...section.items];
+      items[itemIndex] = { ...items[itemIndex], classification };
+      section.items = items;
+      updated[sectionIndex] = section;
+      return updated;
+    });
+  };
+
+  const setItemRemedialAction = (sectionIndex: number, itemIndex: number, remedial_action: string) => {
+    setSections((prev) => {
+      const updated = [...prev];
+      const section = { ...updated[sectionIndex] };
+      const items = [...section.items];
+      items[itemIndex] = { ...items[itemIndex], remedial_action };
+      section.items = items;
+      updated[sectionIndex] = section;
+      return updated;
+    });
+  };
+
   const toggleSection = (index: number) => {
     setSections((prev) => prev.map((s, i) => (i === index ? { ...s, isOpen: !s.isOpen } : s)));
   };
@@ -486,6 +624,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
   const naCount = allItems.filter((i) => i.result === 'na').length;
   const totalItems = allItems.length;
   const progress = totalItems > 0 ? Math.round((answeredCount / totalItems) * 100) : 0;
+  const criticalCount = allItems.filter((i) => i.classification === 'critical').length;
+  const majorCount = allItems.filter((i) => i.classification === 'major').length;
+  const minorCount = allItems.filter((i) => i.classification === 'minor').length;
 
   const submitInspection = async () => {
     if (!activeTemplate) return;
@@ -508,8 +649,11 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
         total_items: totalItems,
         additional_notes: additionalNotes || null,
         photos: photoUrls,
+        inspector_signature: inspectorSigData || undefined,
+        inspector_signature_name: inspectorSigName.trim() || undefined,
       });
 
+      clearDraft();
       setActiveTemplate(null);
       setSections([]);
       setInspectorName('');
@@ -541,19 +685,31 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <ArrowLeft className="h-5 w-5" />
               <span className="text-sm font-medium">Cancel</span>
             </button>
-            <div className="text-right">
-              <p className="text-xs text-white">
-                {answeredCount}/{totalItems} items
-              </p>
-              <div className="w-20 h-1.5 bg-white/10 rounded-full mt-1">
-                <div
-                  className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-green-400' : 'bg-elec-yellow'}`}
-                  style={{ width: `${progress}%` }}
-                />
+            <div className="flex items-center gap-2">
+              <DraftSaveIndicator status={draftStatus} />
+              <div className="text-right">
+                <p className="text-xs text-white">
+                  {answeredCount}/{totalItems} items
+                </p>
+                <div className="w-20 h-1.5 bg-white/10 rounded-full mt-1">
+                  <div
+                    className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-green-400' : 'bg-elec-yellow'}`}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Draft Recovery Banner */}
+        <AnimatePresence>
+          {recoveredDraft && (
+            <div className="px-4 pt-3">
+              <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+            </div>
+          )}
+        </AnimatePresence>
 
         <div className="px-4 py-4 space-y-4">
           <div>
@@ -675,12 +831,54 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                             })}
                           </div>
                           {item.result === 'fail' && (
-                            <div className="mt-2">
+                            <div className="mt-2 space-y-2">
+                              {/* Classification */}
+                              <div>
+                                <p className="text-xs text-white mb-1.5">Classification</p>
+                                <div className="flex gap-1.5">
+                                  {(['critical', 'major', 'minor'] as const).map((cls) => {
+                                    const cfg = CLASSIFICATION_CONFIG[cls];
+                                    const isActive = item.classification === cls;
+                                    return (
+                                      <button
+                                        key={cls}
+                                        onClick={() =>
+                                          setItemClassification(
+                                            sectionIdx,
+                                            itemIdx,
+                                            isActive ? null : cls
+                                          )
+                                        }
+                                        className={`flex-1 flex flex-col items-center justify-center py-2 rounded-lg border touch-manipulation active:scale-[0.97] transition-all ${
+                                          isActive
+                                            ? `${cfg.bg} ${cfg.colour} ${cfg.border}`
+                                            : 'border-white/10 bg-white/[0.03] text-white'
+                                        }`}
+                                      >
+                                        <span className="text-xs font-semibold">{cfg.label}</span>
+                                        <span className="text-[10px] mt-0.5 opacity-80">
+                                          {cfg.description}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                              {/* Defect description */}
                               <Input
                                 value={item.notes}
                                 onChange={(e) => setItemNotes(sectionIdx, itemIdx, e.target.value)}
                                 className="h-11 text-sm touch-manipulation border-red-500/20 focus:border-red-500 focus:ring-red-500/20 bg-transparent"
                                 placeholder="Describe the defect or issue..."
+                              />
+                              {/* Remedial action */}
+                              <Textarea
+                                value={item.remedial_action}
+                                onChange={(e) =>
+                                  setItemRemedialAction(sectionIdx, itemIdx, e.target.value)
+                                }
+                                className="touch-manipulation text-sm min-h-[60px] border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
+                                placeholder="Remedial action required..."
                               />
                             </div>
                           )}
@@ -691,6 +889,52 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 </div>
               );
             })}
+
+            {/* Non-conformance summary */}
+            {failCount > 0 && (
+              <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
+                <h4 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400" />
+                  Non-Conformance Summary
+                </h4>
+                <div className="flex gap-2">
+                  {criticalCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className={`${CLASSIFICATION_CONFIG.critical.badge} text-xs`}
+                    >
+                      {criticalCount} Critical
+                    </Badge>
+                  )}
+                  {majorCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className={`${CLASSIFICATION_CONFIG.major.badge} text-xs`}
+                    >
+                      {majorCount} Major
+                    </Badge>
+                  )}
+                  {minorCount > 0 && (
+                    <Badge
+                      variant="outline"
+                      className={`${CLASSIFICATION_CONFIG.minor.badge} text-xs`}
+                    >
+                      {minorCount} Minor
+                    </Badge>
+                  )}
+                  {failCount - criticalCount - majorCount - minorCount > 0 && (
+                    <Badge variant="outline" className="text-xs border-white/20 text-white">
+                      {failCount - criticalCount - majorCount - minorCount} Unclassified
+                    </Badge>
+                  )}
+                </div>
+                {criticalCount > 0 && (
+                  <p className="text-xs text-red-300 mt-2 font-medium">
+                    Critical non-conformance detected — stop work and rectify before proceeding
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Additional notes */}
             <div>
@@ -801,7 +1045,7 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
               <Clock className="h-4 w-4" />
               Completed Inspections
             </h3>
-            {completedInspections.map((inspection, index) => {
+            {visibleInspections.map((inspection, index) => {
               const template = TEMPLATES.find((t) => t.id === inspection.template_id);
               const Icon = template?.icon || ClipboardCheck;
               const gradient = template?.gradient || 'from-gray-400 to-gray-500';
@@ -861,6 +1105,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                 </motion.button>
               );
             })}
+            {hasMoreInspections && (
+              <LoadMoreButton onLoadMore={loadMoreInspections} remaining={remainingInspections} />
+            )}
           </div>
         )}
       </div>
@@ -952,32 +1199,90 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                   </div>
                 </div>
 
-                {/* Failed items */}
-                {viewingInspection.fail_count > 0 && (
-                  <div>
-                    <h4 className="text-sm font-bold text-red-400 mb-2 flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      Failed Items
-                    </h4>
-                    <div className="space-y-1.5">
-                      {viewingInspection.sections.flatMap((s) =>
-                        s.items
-                          .filter((i) => i.result === 'fail')
-                          .map((item) => (
-                            <div
-                              key={item.id}
-                              className="p-2.5 rounded-lg border border-red-500/20 bg-red-500/5"
-                            >
-                              <p className="text-sm text-white">{item.text}</p>
-                              {item.notes && (
-                                <p className="text-xs text-red-300 mt-1">{item.notes}</p>
-                              )}
-                            </div>
-                          ))
-                      )}
-                    </div>
-                  </div>
-                )}
+                {/* Failed items with classification */}
+                {viewingInspection.fail_count > 0 &&
+                  (() => {
+                    const failedItems = viewingInspection.sections.flatMap((s) =>
+                      s.items.filter((i) => i.result === 'fail')
+                    );
+                    const viewCritical = failedItems.filter(
+                      (i) => i.classification === 'critical'
+                    ).length;
+                    const viewMajor = failedItems.filter(
+                      (i) => i.classification === 'major'
+                    ).length;
+                    const viewMinor = failedItems.filter(
+                      (i) => i.classification === 'minor'
+                    ).length;
+                    return (
+                      <div>
+                        <h4 className="text-sm font-bold text-red-400 mb-2 flex items-center gap-2">
+                          <AlertTriangle className="h-4 w-4" />
+                          Non-Conformances ({failedItems.length})
+                        </h4>
+                        {(viewCritical > 0 || viewMajor > 0 || viewMinor > 0) && (
+                          <div className="flex gap-2 mb-2">
+                            {viewCritical > 0 && (
+                              <Badge
+                                variant="outline"
+                                className={`${CLASSIFICATION_CONFIG.critical.badge} text-xs`}
+                              >
+                                {viewCritical} Critical
+                              </Badge>
+                            )}
+                            {viewMajor > 0 && (
+                              <Badge
+                                variant="outline"
+                                className={`${CLASSIFICATION_CONFIG.major.badge} text-xs`}
+                              >
+                                {viewMajor} Major
+                              </Badge>
+                            )}
+                            {viewMinor > 0 && (
+                              <Badge
+                                variant="outline"
+                                className={`${CLASSIFICATION_CONFIG.minor.badge} text-xs`}
+                              >
+                                {viewMinor} Minor
+                              </Badge>
+                            )}
+                          </div>
+                        )}
+                        <div className="space-y-1.5">
+                          {failedItems.map((item) => {
+                            const cls = item.classification;
+                            const clsCfg = cls ? CLASSIFICATION_CONFIG[cls] : null;
+                            return (
+                              <div
+                                key={item.id}
+                                className={`p-2.5 rounded-lg border ${clsCfg ? `${clsCfg.border} ${clsCfg.bg}` : 'border-red-500/20 bg-red-500/5'}`}
+                              >
+                                <div className="flex items-start justify-between gap-2">
+                                  <p className="text-sm text-white">{item.text}</p>
+                                  {clsCfg && (
+                                    <Badge
+                                      variant="outline"
+                                      className={`${clsCfg.badge} text-[10px] shrink-0`}
+                                    >
+                                      {clsCfg.label}
+                                    </Badge>
+                                  )}
+                                </div>
+                                {item.notes && (
+                                  <p className="text-xs text-red-300 mt-1">{item.notes}</p>
+                                )}
+                                {item.remedial_action && (
+                                  <p className="text-xs text-yellow-300 mt-1">
+                                    Remedial action: {item.remedial_action}
+                                  </p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                 {/* All sections */}
                 {viewingInspection.sections.map((section) => (

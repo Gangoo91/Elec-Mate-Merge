@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Wrench, Package, Lightbulb, AlertTriangle, Pencil, ClipboardList, LucideIcon } from 'lucide-react';
+import {
+  ChevronDown,
+  Wrench,
+  Package,
+  Lightbulb,
+  AlertTriangle,
+  Pencil,
+  ClipboardList,
+  LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MethodStatementData } from '@/types/method-statement';
 import { MethodSummaryEditSheet } from './MethodSummaryEditSheet';
@@ -28,7 +37,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   defaultOpen = false,
   accentColor = 'elec-yellow',
   editable = false,
-  onEdit
+  onEdit,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -39,14 +48,14 @@ const SummarySection: React.FC<SummarySectionProps> = ({
       <CollapsibleTrigger className="w-full group">
         <div className="flex items-center justify-between py-3 px-1 touch-manipulation min-h-[44px]">
           <div className="flex items-center gap-3">
-            <Icon className={cn(
-              "h-5 w-5 shrink-0",
-              accentColor === 'amber-500' ? 'text-amber-500' : 'text-elec-yellow'
-            )} />
+            <Icon
+              className={cn(
+                'h-5 w-5 shrink-0',
+                accentColor === 'amber-500' ? 'text-amber-500' : 'text-elec-yellow'
+              )}
+            />
             <span className="text-sm font-semibold text-white">{title}</span>
-            <Badge className="bg-white/10 text-white border-0 text-xs px-2 py-0.5">
-              {count}
-            </Badge>
+            <Badge className="bg-white/10 text-white border-0 text-xs px-2 py-0.5">{count}</Badge>
           </div>
           <div className="flex items-center gap-1">
             {editable && onEdit && (
@@ -62,10 +71,12 @@ const SummarySection: React.FC<SummarySectionProps> = ({
                 <Pencil className="h-4 w-4" />
               </Button>
             )}
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white transition-transform duration-200",
-              isOpen && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white transition-transform duration-200',
+                isOpen && 'rotate-180'
+              )}
+            />
           </div>
         </div>
       </CollapsibleTrigger>
@@ -111,7 +122,7 @@ export function MethodStatementSummary({
   onUpdateTools,
   onUpdateMaterials,
   onUpdateTips,
-  onUpdateMistakes
+  onUpdateMistakes,
 }: MethodStatementSummaryProps) {
   const [editingSection, setEditingSection] = useState<SectionType | null>(null);
 
@@ -151,11 +162,16 @@ export function MethodStatementSummary({
 
   const getEditingItems = (): string[] => {
     switch (editingSection) {
-      case 'tools': return tools;
-      case 'materials': return materials;
-      case 'tips': return tips;
-      case 'mistakes': return mistakes;
-      default: return [];
+      case 'tools':
+        return tools;
+      case 'materials':
+        return materials;
+      case 'tips':
+        return tips;
+      case 'mistakes':
+        return mistakes;
+      default:
+        return [];
     }
   };
 
@@ -168,9 +184,7 @@ export function MethodStatementSummary({
             <ClipboardList className="h-4 w-4 text-elec-yellow" />
             <h3 className="text-sm font-semibold text-white">Job Summary</h3>
           </div>
-          <Badge className="bg-white/10 text-white border-0 text-[10px]">
-            {totalItems} items
-          </Badge>
+          <Badge className="bg-white/10 text-white border-0 text-[10px]">{totalItems} items</Badge>
         </div>
 
         {/* Collapsible Sections */}

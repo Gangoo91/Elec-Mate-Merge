@@ -8,25 +8,29 @@ interface RegulationQuickReferenceProps {
   onRegulationClick: (regulation: string) => void;
 }
 
-export const RegulationQuickReference = ({ hazards, onRegulationClick }: RegulationQuickReferenceProps) => {
+export const RegulationQuickReference = ({
+  hazards,
+  onRegulationClick,
+}: RegulationQuickReferenceProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Group hazards by regulation
-  const regulationGroups = hazards.reduce((acc, hazard) => {
-    if (hazard.bs7671References) {
-      hazard.bs7671References.forEach((reg: string) => {
-        if (!acc[reg]) {
-          acc[reg] = [];
-        }
-        acc[reg].push(hazard);
-      });
-    }
-    return acc;
-  }, {} as Record<string, any[]>);
-
-  const sortedRegulations = Object.entries(regulationGroups).sort(([a], [b]) => 
-    a.localeCompare(b)
+  const regulationGroups = hazards.reduce(
+    (acc, hazard) => {
+      if (hazard.bs7671References) {
+        hazard.bs7671References.forEach((reg: string) => {
+          if (!acc[reg]) {
+            acc[reg] = [];
+          }
+          acc[reg].push(hazard);
+        });
+      }
+      return acc;
+    },
+    {} as Record<string, any[]>
   );
+
+  const sortedRegulations = Object.entries(regulationGroups).sort(([a], [b]) => a.localeCompare(b));
 
   return (
     <div className="bg-elec-card/50 rounded-lg border border-border/50 p-4">
@@ -40,9 +44,7 @@ export const RegulationQuickReference = ({ hazards, onRegulationClick }: Regulat
                 {sortedRegulations.length} Regulations
               </Badge>
             </div>
-            <ChevronDown 
-              className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-            />
+            <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </div>
         </CollapsibleTrigger>
 
@@ -56,19 +58,16 @@ export const RegulationQuickReference = ({ hazards, onRegulationClick }: Regulat
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <div className="font-mono text-xs text-elec-yellow mb-1">
-                      {regulation}
+                    <div className="font-mono text-xs text-elec-yellow mb-1">{regulation}</div>
+                    <div className="text-xs text-white truncate">
+                      {Array.isArray(regHazards) ? regHazards.length : 0} hazard
+                      {Array.isArray(regHazards) && regHazards.length !== 1 ? 's' : ''} reference
+                      this regulation
                     </div>
-                        <div className="text-xs text-white truncate">
-                          {Array.isArray(regHazards) ? regHazards.length : 0} hazard{Array.isArray(regHazards) && regHazards.length !== 1 ? 's' : ''} reference this regulation
-                        </div>
-                      </div>
-                      <Badge 
-                        variant="outline" 
-                        className="flex-shrink-0 text-xs"
-                      >
-                        {Array.isArray(regHazards) ? regHazards.length : 0}
-                      </Badge>
+                  </div>
+                  <Badge variant="outline" className="flex-shrink-0 text-xs">
+                    {Array.isArray(regHazards) ? regHazards.length : 0}
+                  </Badge>
                 </div>
               </button>
             ))}

@@ -1,11 +1,6 @@
 import React from 'react';
 import { X, Check } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -73,9 +68,7 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
 
         <SheetHeader className="text-left pt-4 pb-2">
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-lg font-semibold text-white">
-              Filter Documents
-            </SheetTitle>
+            <SheetTitle className="text-lg font-semibold text-white">Filter Documents</SheetTitle>
             {hasActiveFilters && (
               <Button
                 variant="ghost"
@@ -101,11 +94,11 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                   key={option.value}
                   onClick={() => onStatusChange(option.value)}
                   className={cn(
-                    "py-2.5 px-3 rounded-xl text-sm font-medium transition-all",
-                    "border active:scale-[0.97]",
+                    'py-2.5 px-3 rounded-xl text-sm font-medium transition-all',
+                    'border active:scale-[0.97]',
                     statusFilter === option.value
-                      ? "bg-elec-yellow text-black border-elec-yellow"
-                      : "bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]"
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                      : 'bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]'
                   )}
                 >
                   {option.label}
@@ -125,11 +118,11 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                   key={option.value}
                   onClick={() => onDateChange(option.value)}
                   className={cn(
-                    "py-2 px-4 rounded-full text-sm font-medium transition-all",
-                    "border active:scale-[0.97]",
+                    'py-2 px-4 rounded-full text-sm font-medium transition-all',
+                    'border active:scale-[0.97]',
                     dateFilter === option.value
-                      ? "bg-elec-yellow text-black border-elec-yellow"
-                      : "bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]"
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                      : 'bg-white/[0.03] text-white border-white/[0.06] hover:border-white/[0.12]'
                   )}
                 >
                   {option.label}
@@ -149,11 +142,11 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                   <button
                     onClick={() => onLocationChange('all')}
                     className={cn(
-                      "w-full text-left py-3 px-4 rounded-lg text-sm transition-all",
-                      "flex items-center justify-between",
+                      'w-full text-left py-3 px-4 rounded-lg text-sm transition-all',
+                      'flex items-center justify-between',
                       locationFilter === 'all'
-                        ? "bg-elec-yellow/10 text-elec-yellow"
-                        : "text-white hover:bg-white/[0.05]"
+                        ? 'bg-elec-yellow/10 text-elec-yellow'
+                        : 'text-white hover:bg-white/[0.05]'
                     )}
                   >
                     <span>All Locations</span>
@@ -164,11 +157,11 @@ export const RAMSFilterSheet: React.FC<RAMSFilterSheetProps> = ({
                       key={loc}
                       onClick={() => onLocationChange(loc)}
                       className={cn(
-                        "w-full text-left py-3 px-4 rounded-lg text-sm transition-all",
-                        "flex items-center justify-between",
+                        'w-full text-left py-3 px-4 rounded-lg text-sm transition-all',
+                        'flex items-center justify-between',
                         locationFilter === loc
-                          ? "bg-elec-yellow/10 text-elec-yellow"
-                          : "text-white hover:bg-white/[0.05]"
+                          ? 'bg-elec-yellow/10 text-elec-yellow'
+                          : 'text-white hover:bg-white/[0.05]'
                       )}
                     >
                       <span className="truncate">{loc}</span>

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   ChevronRight,
   MapPin,
@@ -14,12 +14,12 @@ import {
   Check,
   Clock,
   Sparkles,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
-type BriefingStatus = "scheduled" | "in_progress" | "completed" | "cancelled" | "draft";
+type BriefingStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'draft';
 
 interface BriefingTemplate {
   id: string;
@@ -45,21 +45,44 @@ interface BriefingHistory {
 
 // Type icons mapping
 const typeIcons: Record<string, string> = {
-  "site-induction": "construction",
-  "electrical": "zap",
-  "toolbox-talk": "wrench",
-  "hot-works": "flame",
-  "height-work": "arrow-up",
-  "custom": "settings",
+  'site-induction': 'construction',
+  electrical: 'zap',
+  'toolbox-talk': 'wrench',
+  'hot-works': 'flame',
+  'height-work': 'arrow-up',
+  custom: 'settings',
 };
 
 // Status colors
-const statusConfig: Record<BriefingStatus, { bg: string; text: string; border: string; label: string }> = {
-  scheduled: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-400/20", label: "Scheduled" },
-  in_progress: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-400/20", label: "In Progress" },
-  completed: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-400/20", label: "Completed" },
-  cancelled: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-400/20", label: "Cancelled" },
-  draft: { bg: "bg-white/10", text: "text-white", border: "border-white/20", label: "Draft" },
+const statusConfig: Record<
+  BriefingStatus,
+  { bg: string; text: string; border: string; label: string }
+> = {
+  scheduled: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-400/20',
+    label: 'Scheduled',
+  },
+  in_progress: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-400/20',
+    label: 'In Progress',
+  },
+  completed: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-400/20',
+    label: 'Completed',
+  },
+  cancelled: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-400/20',
+    label: 'Cancelled',
+  },
+  draft: { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20', label: 'Draft' },
 };
 
 // Template Card
@@ -82,12 +105,12 @@ export function TemplateCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-[#1e1e1e] border border-white/10",
-        "hover:border-elec-yellow/30 transition-all duration-300",
-        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
+        'relative overflow-hidden rounded-2xl',
+        'bg-[#1e1e1e] border border-white/10',
+        'hover:border-elec-yellow/30 transition-all duration-300',
+        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
       )}
     >
       <div className="p-4">
@@ -130,7 +153,10 @@ export function TemplateCard({
           {onEdit && (
             <Button
               variant="ghost"
-                            onClick={(e) => { e.stopPropagation(); onEdit(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit();
+              }}
               className="flex-1 h-11 text-yellow-400/80 hover:text-yellow-400 hover:bg-yellow-400/10 border border-yellow-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <FileText className="h-4 w-4 mr-1.5" />
@@ -140,7 +166,10 @@ export function TemplateCard({
           {onDuplicate && (
             <Button
               variant="ghost"
-                            onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDuplicate();
+              }}
               className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Copy className="h-4 w-4 mr-1.5" />
@@ -149,7 +178,10 @@ export function TemplateCard({
           )}
           {onStart && (
             <Button
-                            onClick={(e) => { e.stopPropagation(); onStart(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onStart();
+              }}
               className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
               <Play className="h-4 w-4 mr-1.5" />
@@ -179,30 +211,30 @@ export function HistoryCard({
   index = 0,
 }: HistoryCardProps) {
   const status = statusConfig[briefing.status] || statusConfig.draft;
-  const isComplete = briefing.status === "completed";
+  const isComplete = briefing.status === 'completed';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-[#1e1e1e] border",
-        isComplete ? "border-emerald-500/20" : "border-white/10",
-        "hover:border-elec-yellow/30 transition-all duration-300",
-        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
+        'relative overflow-hidden rounded-2xl',
+        'bg-[#1e1e1e] border',
+        isComplete ? 'border-emerald-500/20' : 'border-white/10',
+        'hover:border-elec-yellow/30 transition-all duration-300',
+        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
       )}
     >
       <div className="p-4">
         {/* Header */}
         <div className="flex items-start gap-3 mb-3">
-          <div className={cn(
-            "p-2.5 rounded-xl border flex-shrink-0",
-            isComplete
-              ? "bg-emerald-500/10 border-emerald-500/20"
-              : "bg-white/5 border-white/10"
-          )}>
+          <div
+            className={cn(
+              'p-2.5 rounded-xl border flex-shrink-0',
+              isComplete ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-white/5 border-white/10'
+            )}
+          >
             {isComplete ? (
               <Check className="h-5 w-5 text-emerald-400" />
             ) : (
@@ -212,10 +244,14 @@ export function HistoryCard({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-white truncate">{briefing.name}</h3>
-              <Badge className={cn(
-                "border text-[10px] px-1.5 py-0",
-                status.bg, status.text, status.border
-              )}>
+              <Badge
+                className={cn(
+                  'border text-[10px] px-1.5 py-0',
+                  status.bg,
+                  status.text,
+                  status.border
+                )}
+              >
                 {status.label}
               </Badge>
             </div>
@@ -239,8 +275,7 @@ export function HistoryCard({
             <span>
               {briefing.signedCount !== undefined
                 ? `${briefing.signedCount}/${briefing.attendeeCount} signed`
-                : `${briefing.attendeeCount} attendees`
-              }
+                : `${briefing.attendeeCount} attendees`}
             </span>
           </div>
         </div>
@@ -256,10 +291,10 @@ export function HistoryCard({
                 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
                 className={cn(
-                  "h-full rounded-full",
+                  'h-full rounded-full',
                   briefing.signedCount === briefing.attendeeCount
-                    ? "bg-emerald-400"
-                    : "bg-amber-400"
+                    ? 'bg-emerald-400'
+                    : 'bg-amber-400'
                 )}
               />
             </div>
@@ -271,7 +306,10 @@ export function HistoryCard({
           {onView && (
             <Button
               variant="ghost"
-                            onClick={(e) => { e.stopPropagation(); onView(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onView();
+              }}
               className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Eye className="h-4 w-4 mr-1.5" />
@@ -281,7 +319,10 @@ export function HistoryCard({
           {onShare && (
             <Button
               variant="ghost"
-                            onClick={(e) => { e.stopPropagation(); onShare(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onShare();
+              }}
               className="flex-1 h-11 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-400/10 border border-emerald-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Share2 className="h-4 w-4 mr-1.5" />
@@ -291,7 +332,10 @@ export function HistoryCard({
           {onDownload && (
             <Button
               variant="ghost"
-                            onClick={(e) => { e.stopPropagation(); onDownload(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDownload();
+              }}
               className="flex-1 h-11 text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10 border border-purple-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Download className="h-4 w-4 mr-1.5" />
@@ -311,23 +355,19 @@ interface PendingCardProps {
   index?: number;
 }
 
-export function PendingCard({
-  briefing,
-  onContinue,
-  index = 0,
-}: PendingCardProps) {
+export function PendingCard({ briefing, onContinue, index = 0 }: PendingCardProps) {
   const pendingCount = briefing.attendeeCount - (briefing.signedCount || 0);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-[#1e1e1e] border border-amber-500/20",
-        "hover:border-elec-yellow/30 transition-all duration-300",
-        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
+        'relative overflow-hidden rounded-2xl',
+        'bg-[#1e1e1e] border border-amber-500/20',
+        'hover:border-elec-yellow/30 transition-all duration-300',
+        'touch-manipulation active:scale-[0.995] transition-transform duration-150'
       )}
     >
       <div className="p-4">
@@ -359,7 +399,9 @@ export function PendingCard({
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${((briefing.signedCount || 0) / briefing.attendeeCount) * 100}%` }}
+              animate={{
+                width: `${((briefing.signedCount || 0) / briefing.attendeeCount) * 100}%`,
+              }}
               transition={{ delay: 0.3, duration: 0.5 }}
               className="h-full bg-amber-400 rounded-full"
             />

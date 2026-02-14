@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
   ChevronUp,
@@ -8,37 +8,34 @@ import {
   Calendar,
   AlertTriangle,
   CheckCircle2,
-} from "lucide-react";
-import type { SafetyDashboardStats } from "@/hooks/useSafetyDashboardStats";
+} from 'lucide-react';
+import type { SafetyDashboardStats } from '@/hooks/useSafetyDashboardStats';
 
 interface WeeklySummaryCardProps {
   stats: SafetyDashboardStats;
   weekOverWeekChange?: number;
 }
 
-export function WeeklySummaryCard({
-  stats,
-  weekOverWeekChange = 0,
-}: WeeklySummaryCardProps) {
+export function WeeklySummaryCard({ stats, weekOverWeekChange = 0 }: WeeklySummaryCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Calculate quick wins
   const quickWins: string[] = [];
   if (stats.totalPhotosThisWeek === 0) {
-    quickWins.push("Take a safety photo to boost your score");
+    quickWins.push('Take a safety photo to boost your score');
   }
   if (stats.equipmentOverdue > 0) {
     quickWins.push(
-      `Check ${stats.equipmentOverdue} overdue equipment item${stats.equipmentOverdue > 1 ? "s" : ""}`
+      `Check ${stats.equipmentOverdue} overdue equipment item${stats.equipmentOverdue > 1 ? 's' : ''}`
     );
   }
   if (stats.coshhOverdueReviews > 0) {
     quickWins.push(
-      `Review ${stats.coshhOverdueReviews} overdue COSHH assessment${stats.coshhOverdueReviews > 1 ? "s" : ""}`
+      `Review ${stats.coshhOverdueReviews} overdue COSHH assessment${stats.coshhOverdueReviews > 1 ? 's' : ''}`
     );
   }
   if (stats.completedBriefingsThisMonth === 0) {
-    quickWins.push("Schedule a team briefing this month");
+    quickWins.push('Schedule a team briefing this month');
   }
 
   // Outstanding items
@@ -48,10 +45,10 @@ export function WeeklySummaryCard({
   const actionsThisWeek = stats.totalPhotosThisWeek + stats.completedBriefingsThisMonth;
 
   const TrendIcon = weekOverWeekChange <= 0 ? TrendingDown : TrendingUp;
-  const trendColour = weekOverWeekChange <= 0 ? "text-green-400" : "text-red-400";
+  const trendColour = weekOverWeekChange <= 0 ? 'text-green-400' : 'text-red-400';
   const trendLabel =
     weekOverWeekChange === 0
-      ? "No change"
+      ? 'No change'
       : weekOverWeekChange < 0
         ? `${Math.abs(weekOverWeekChange)} fewer incidents`
         : `${weekOverWeekChange} more incidents`;
@@ -75,9 +72,7 @@ export function WeeklySummaryCard({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <TrendIcon className={`h-3.5 w-3.5 ${trendColour}`} />
-            <span className={`text-[11px] font-semibold ${trendColour}`}>
-              {trendLabel}
-            </span>
+            <span className={`text-[11px] font-semibold ${trendColour}`}>{trendLabel}</span>
           </div>
           {isExpanded ? (
             <ChevronUp className="h-4 w-4 text-white" />
@@ -92,7 +87,7 @@ export function WeeklySummaryCard({
         {isExpanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -103,24 +98,16 @@ export function WeeklySummaryCard({
                 <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
-                    <span className="text-[10px] text-white font-medium">
-                      Actions This Week
-                    </span>
+                    <span className="text-[10px] text-white font-medium">Actions This Week</span>
                   </div>
-                  <span className="text-lg font-bold text-white">
-                    {actionsThisWeek}
-                  </span>
+                  <span className="text-lg font-bold text-white">{actionsThisWeek}</span>
                 </div>
                 <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
-                    <span className="text-[10px] text-white font-medium">
-                      Outstanding
-                    </span>
+                    <span className="text-[10px] text-white font-medium">Outstanding</span>
                   </div>
-                  <span className="text-lg font-bold text-white">
-                    {outstandingItems}
-                  </span>
+                  <span className="text-lg font-bold text-white">{outstandingItems}</span>
                 </div>
               </div>
 

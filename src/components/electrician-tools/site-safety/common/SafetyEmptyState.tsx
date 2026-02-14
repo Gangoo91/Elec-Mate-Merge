@@ -1,4 +1,4 @@
-import { type LucideIcon, Sparkles } from "lucide-react";
+import { type LucideIcon, Sparkles } from 'lucide-react';
 
 interface SafetyEmptyStateProps {
   icon: LucideIcon;
@@ -23,9 +23,7 @@ export function SafetyEmptyState({
         <Icon className="w-12 h-12 text-elec-yellow" />
       </div>
       <h3 className="text-xl font-semibold text-white mb-2">{heading}</h3>
-      <p className="text-white text-center max-w-xs mb-6 text-sm leading-relaxed">
-        {description}
-      </p>
+      <p className="text-white text-center max-w-xs mb-6 text-sm leading-relaxed">{description}</p>
       {ctaLabel && onCta && (
         <button
           onClick={onCta}

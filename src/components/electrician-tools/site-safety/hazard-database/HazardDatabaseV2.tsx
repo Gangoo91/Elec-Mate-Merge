@@ -47,15 +47,18 @@ export const HazardDatabaseV2: React.FC = () => {
   }, []);
 
   // Toggle bookmark
-  const toggleBookmark = useCallback((id: string) => {
-    const newBookmarks = new Set(bookmarks);
-    if (newBookmarks.has(id)) {
-      newBookmarks.delete(id);
-    } else {
-      newBookmarks.add(id);
-    }
-    saveBookmarks(newBookmarks);
-  }, [bookmarks, saveBookmarks]);
+  const toggleBookmark = useCallback(
+    (id: string) => {
+      const newBookmarks = new Set(bookmarks);
+      if (newBookmarks.has(id)) {
+        newBookmarks.delete(id);
+      } else {
+        newBookmarks.add(id);
+      }
+      saveBookmarks(newBookmarks);
+    },
+    [bookmarks, saveBookmarks]
+  );
 
   // Get all hazards from the enhanced database
   const hazards = enhancedRiskDatabase;
@@ -106,15 +109,12 @@ export const HazardDatabaseV2: React.FC = () => {
           <h1 className="text-xl font-semibold text-white">Hazard Database</h1>
           <button
             onClick={() => setBookmarksOpen(true)}
-            className={cn(
-              "relative p-2 rounded-xl transition-colors",
-              "hover:bg-white/[0.05]"
-            )}
+            className={cn('relative p-2 rounded-xl transition-colors', 'hover:bg-white/[0.05]')}
           >
             <Bookmark
               className={cn(
-                "h-5 w-5",
-                bookmarks.size > 0 ? "text-elec-yellow fill-elec-yellow" : "text-white"
+                'h-5 w-5',
+                bookmarks.size > 0 ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
               )}
             />
             {bookmarks.size > 0 && (
@@ -130,9 +130,9 @@ export const HazardDatabaseV2: React.FC = () => {
           <button
             onClick={() => setSearchOpen(true)}
             className={cn(
-              "w-full h-12 bg-white/[0.05] rounded-2xl flex items-center gap-3 px-4",
-              "border border-white/[0.08] hover:border-white/[0.12] transition-colors",
-              "active:scale-[0.99]"
+              'w-full h-12 bg-white/[0.05] rounded-2xl flex items-center gap-3 px-4',
+              'border border-white/[0.08] hover:border-white/[0.12] transition-colors',
+              'active:scale-[0.99]'
             )}
           >
             <Search className="h-5 w-5 text-white" />
@@ -165,9 +165,9 @@ export const HazardDatabaseV2: React.FC = () => {
               <button
                 onClick={() => setActiveCategory('all')}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1 rounded-full",
-                  "bg-elec-yellow/10 border border-elec-yellow/20",
-                  "text-sm text-elec-yellow hover:bg-elec-yellow/20 transition-colors"
+                  'flex items-center gap-1.5 px-3 py-1 rounded-full',
+                  'bg-elec-yellow/10 border border-elec-yellow/20',
+                  'text-sm text-elec-yellow hover:bg-elec-yellow/20 transition-colors'
                 )}
               >
                 {activeCategoryName}
@@ -193,9 +193,7 @@ export const HazardDatabaseV2: React.FC = () => {
               <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
                 <Search className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">
-                No Hazards Found
-              </h3>
+              <h3 className="text-lg font-semibold text-white mb-2">No Hazards Found</h3>
               <p className="text-sm text-white text-center max-w-xs">
                 No hazards match the selected category
               </p>
@@ -216,10 +214,10 @@ export const HazardDatabaseV2: React.FC = () => {
                 <button
                   onClick={handleShowMore}
                   className={cn(
-                    "w-full py-4 mt-2 rounded-2xl",
-                    "bg-elec-yellow/10 border border-elec-yellow/20",
-                    "text-elec-yellow font-medium text-sm",
-                    "hover:bg-elec-yellow/15 active:scale-[0.98] transition-all"
+                    'w-full py-4 mt-2 rounded-2xl',
+                    'bg-elec-yellow/10 border border-elec-yellow/20',
+                    'text-elec-yellow font-medium text-sm',
+                    'hover:bg-elec-yellow/15 active:scale-[0.98] transition-all'
                   )}
                 >
                   Show More ({filteredHazards.length - displayCount} remaining)

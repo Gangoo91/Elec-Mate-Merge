@@ -46,10 +46,7 @@ const highlightText = (text: string, highlight?: string) => {
 
 // Count total control measures
 const countControls = (controlMeasures: EnhancedRiskConsequence['controlMeasures']) => {
-  return Object.values(controlMeasures).reduce(
-    (acc, measures) => acc + (measures?.length || 0),
-    0
-  );
+  return Object.values(controlMeasures).reduce((acc, measures) => acc + (measures?.length || 0), 0);
 };
 
 export const HazardCardV2: React.FC<HazardCardV2Props> = ({
@@ -68,15 +65,15 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
 
   return (
     <div
-      className={shouldAnimate ? "animate-fade-in-up" : ""}
+      className={shouldAnimate ? 'animate-fade-in-up' : ''}
       style={shouldAnimate ? { animationDelay: `${index * 30}ms`, opacity: 0 } : undefined}
     >
       <div
         onClick={onTap}
         className={cn(
-          "bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4",
-          "active:scale-[0.98] transition-all duration-200 cursor-pointer",
-          "hover:border-white/[0.1] hover:bg-white/[0.04]"
+          'bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4',
+          'active:scale-[0.98] transition-all duration-200 cursor-pointer',
+          'hover:border-white/[0.1] hover:bg-white/[0.04]'
         )}
       >
         <div className="flex items-start gap-3">
@@ -104,12 +101,12 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
                   <div
                     key={control}
                     className={cn(
-                      "w-6 h-6 rounded-md flex items-center justify-center",
-                      "bg-white/[0.05] border border-white/[0.08]"
+                      'w-6 h-6 rounded-md flex items-center justify-center',
+                      'bg-white/[0.05] border border-white/[0.08]'
                     )}
                     title={config.label}
                   >
-                    <Icon className={cn("h-3.5 w-3.5", config.color)} />
+                    <Icon className={cn('h-3.5 w-3.5', config.color)} />
                   </div>
                 );
               })}
@@ -127,16 +124,14 @@ export const HazardCardV2: React.FC<HazardCardV2Props> = ({
                 onBookmark();
               }}
               className={cn(
-                "p-1.5 -mr-1 rounded-lg transition-all",
-                "hover:bg-white/[0.05] active:scale-90"
+                'p-1.5 -mr-1 rounded-lg transition-all',
+                'hover:bg-white/[0.05] active:scale-90'
               )}
             >
               <Bookmark
                 className={cn(
-                  "h-5 w-5 transition-all duration-200",
-                  isBookmarked
-                    ? "fill-elec-yellow text-elec-yellow"
-                    : "text-white"
+                  'h-5 w-5 transition-all duration-200',
+                  isBookmarked ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
                 )}
               />
             </button>

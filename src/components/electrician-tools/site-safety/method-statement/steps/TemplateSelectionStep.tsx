@@ -3,9 +3,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { Zap, Clock, Star, Search, Filter, SkipForward, ArrowRight, CheckCircle, Eye, GitCompare, Bookmark, Heart, Info } from 'lucide-react';
+import {
+  Zap,
+  Clock,
+  Star,
+  Search,
+  Filter,
+  SkipForward,
+  ArrowRight,
+  CheckCircle,
+  Eye,
+  GitCompare,
+  Bookmark,
+  Heart,
+  Info,
+} from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 import { methodTemplates, getTemplatesByCategory } from '@/data/method-statement-templates';
 import TemplatePreviewModal from './TemplatePreviewModal';
@@ -18,7 +38,10 @@ interface TemplateSelectionStepProps {
   onSkipTemplate: () => void;
 }
 
-const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSelectionStepProps) => {
+const TemplateSelectionStep = ({
+  onTemplateSelect,
+  onSkipTemplate,
+}: TemplateSelectionStepProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedTemplate, setSelectedTemplate] = useState<MethodTemplate | null>(null);
@@ -59,30 +82,41 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
     }
   };
 
-  const categories = Array.from(new Set(methodTemplates.map(t => t.category)));
-  
-  const filteredTemplates = methodTemplates.filter(template => {
-    const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         template.requiredQualifications.some(qual => 
-                           qual.toLowerCase().includes(searchTerm.toLowerCase())
-                         );
+  const categories = Array.from(new Set(methodTemplates.map((t) => t.category)));
+
+  const filteredTemplates = methodTemplates.filter((template) => {
+    const matchesSearch =
+      template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      template.requiredQualifications.some((qual) =>
+        qual.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     const matchesCategory = !selectedCategory || template.category === selectedCategory;
-    const matchesDifficulty = !selectedDifficulty || selectedDifficulty === 'all-difficulty' || template.difficultyLevel === selectedDifficulty;
-    const matchesDuration = !selectedDuration || selectedDuration === 'all-duration' || (
-      selectedDuration === 'quick' && parseInt(template.estimatedDuration.split('-')[0]) <= 2 ||
-      selectedDuration === 'medium' && parseInt(template.estimatedDuration.split('-')[0]) > 2 && parseInt(template.estimatedDuration.split('-')[0]) <= 6 ||
-      selectedDuration === 'long' && parseInt(template.estimatedDuration.split('-')[0]) > 6
-    );
+    const matchesDifficulty =
+      !selectedDifficulty ||
+      selectedDifficulty === 'all-difficulty' ||
+      template.difficultyLevel === selectedDifficulty;
+    const matchesDuration =
+      !selectedDuration ||
+      selectedDuration === 'all-duration' ||
+      (selectedDuration === 'quick' && parseInt(template.estimatedDuration.split('-')[0]) <= 2) ||
+      (selectedDuration === 'medium' &&
+        parseInt(template.estimatedDuration.split('-')[0]) > 2 &&
+        parseInt(template.estimatedDuration.split('-')[0]) <= 6) ||
+      (selectedDuration === 'long' && parseInt(template.estimatedDuration.split('-')[0]) > 6);
     return matchesSearch && matchesCategory && matchesDifficulty && matchesDuration;
   });
 
   const getDifficultyColor = (level: string) => {
     switch (level) {
-      case 'basic': return 'bg-green-500/20 text-green-300';
-      case 'intermediate': return 'bg-blue-500/20 text-blue-300';
-      case 'advanced': return 'bg-red-500/20 text-red-300';
-      default: return 'bg-elec-gray/20 text-elec-gray';
+      case 'basic':
+        return 'bg-green-500/20 text-green-300';
+      case 'intermediate':
+        return 'bg-blue-500/20 text-blue-300';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-300';
+      default:
+        return 'bg-elec-gray/20 text-elec-gray';
     }
   };
 
@@ -115,14 +149,14 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
   const toggleComparison = (template: MethodTemplate) => {
     const newComparisons = [...comparisonTemplates];
-    const index = newComparisons.findIndex(t => t.id === template.id);
-    
+    const index = newComparisons.findIndex((t) => t.id === template.id);
+
     if (index > -1) {
       newComparisons.splice(index, 1);
     } else if (newComparisons.length < 3) {
       newComparisons.push(template);
     }
-    
+
     setComparisonTemplates(newComparisons);
   };
 
@@ -137,7 +171,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <RequiredFieldTooltip content="Templates are pre-built method statements that comply with BS7671:2018+A3:2024 regulations and include all necessary safety procedures" />
           </CardTitle>
           <p className="text-white mobile-text">
-            Start with a proven template or build from scratch. Templates include BS7671-compliant safety requirements and detailed step-by-step procedures.
+            Start with a proven template or build from scratch. Templates include BS7671-compliant
+            safety requirements and detailed step-by-step procedures.
           </p>
           {!selectedTemplate && (
             <div className="mt-3 flex items-center gap-2 text-sm text-blue-300/80">
@@ -149,7 +184,10 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <div className="mt-3 flex items-center justify-between gap-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
               <div className="flex items-center gap-2 text-sm text-purple-300">
                 <GitCompare className="h-4 w-4" />
-                <span>{comparisonTemplates.length} template{comparisonTemplates.length !== 1 ? 's' : ''} selected for comparison</span>
+                <span>
+                  {comparisonTemplates.length} template{comparisonTemplates.length !== 1 ? 's' : ''}{' '}
+                  selected for comparison
+                </span>
               </div>
               <Button
                 size="sm"
@@ -178,7 +216,10 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 placeholder="Search templates by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("w-full pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20", !searchTerm && "pl-10")}
+                className={cn(
+                  'w-full pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20',
+                  !searchTerm && 'pl-10'
+                )}
                 autoComplete="off"
                 autoCapitalize="none"
                 aria-label="Search method statement templates"
@@ -189,17 +230,20 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 </div>
               )}
             </div>
-            
+
             {/* Filters Row - Mobile-first stacked layout */}
             <div className="w-full flex flex-col gap-3">
               {/* Category Filter - Full width on mobile */}
               <div className="w-full">
-                <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value === "all" ? "" : value)}>
+                <Select
+                  value={selectedCategory}
+                  onValueChange={(value) => setSelectedCategory(value === 'all' ? '' : value)}
+                >
                   <SelectTrigger className="w-full h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 transition-all duration-200 shadow-sm">
                     <div className="flex items-center gap-2 w-full overflow-hidden">
                       <Filter className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                       <span className="flex-1 text-left truncate">
-                        {selectedCategory || "All Categories"}
+                        {selectedCategory || 'All Categories'}
                       </span>
                     </div>
                   </SelectTrigger>
@@ -207,15 +251,19 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     <SelectItem value="all" className="text-base py-3 cursor-pointer w-full">
                       All Categories
                     </SelectItem>
-                    {categories.map(category => (
-                      <SelectItem key={category} value={category} className="text-base py-3 cursor-pointer w-full">
+                    {categories.map((category) => (
+                      <SelectItem
+                        key={category}
+                        value={category}
+                        className="text-base py-3 cursor-pointer w-full"
+                      >
                         <span className="break-words w-full">{category}</span>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
-              
+
               {/* Advanced Filters Toggle */}
               <Button
                 variant="outline"
@@ -247,7 +295,9 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Difficulty Filter */}
               <div>
-                <label className="text-sm font-medium text-elec-yellow mb-2 block">Difficulty Level</label>
+                <label className="text-sm font-medium text-elec-yellow mb-2 block">
+                  Difficulty Level
+                </label>
                 <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
                   <SelectTrigger className="h-10 border-elec-yellow/20">
                     <SelectValue placeholder="Any difficulty" />
@@ -263,7 +313,9 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
               {/* Duration Filter */}
               <div>
-                <label className="text-sm font-medium text-elec-yellow mb-2 block">Project Duration</label>
+                <label className="text-sm font-medium text-elec-yellow mb-2 block">
+                  Project Duration
+                </label>
                 <Select value={selectedDuration} onValueChange={setSelectedDuration}>
                   <SelectTrigger className="h-10 border-elec-yellow/20">
                     <SelectValue placeholder="Any duration" />
@@ -346,9 +398,10 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               cursor-pointer mobile-interactive mobile-card-compact border-2 h-full flex flex-col group
               transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
               focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:ring-offset-2 focus:ring-offset-background
-              ${selectedTemplate?.id === template.id
-                ? 'border-elec-yellow bg-elec-card shadow-lg ring-2 ring-elec-yellow/20'
-                : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 hover:shadow-md'
+              ${
+                selectedTemplate?.id === template.id
+                  ? 'border-elec-yellow bg-elec-card shadow-lg ring-2 ring-elec-yellow/20'
+                  : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 hover:shadow-md'
               }
               ${template.isPopular ? 'relative overflow-hidden' : ''}
             `}
@@ -373,13 +426,13 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={`${getDifficultyColor(template.difficultyLevel)} text-xs flex-shrink-0 px-2 py-1 transition-colors duration-200`}>
+                    <Badge
+                      className={`${getDifficultyColor(template.difficultyLevel)} text-xs flex-shrink-0 px-2 py-1 transition-colors duration-200`}
+                    >
                       {template.difficultyLevel}
                     </Badge>
                     {focusedTemplate === template.id && (
-                      <div className="text-xs text-elec-yellow">
-                        Press Enter to select
-                      </div>
+                      <div className="text-xs text-elec-yellow">Press Enter to select</div>
                     )}
                   </div>
                 </div>
@@ -410,7 +463,9 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                       favoriteTemplates.has(template.id) ? 'bg-red-500/20 text-red-400' : ''
                     }`}
                   >
-                    <Heart className={`h-3 w-3 ${favoriteTemplates.has(template.id) ? 'fill-current' : ''}`} />
+                    <Heart
+                      className={`h-3 w-3 ${favoriteTemplates.has(template.id) ? 'fill-current' : ''}`}
+                    />
                   </Button>
 
                   <Button
@@ -421,9 +476,14 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                       toggleComparison(template);
                     }}
                     className={`h-6 px-2 text-xs border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-1 ${
-                      comparisonTemplates.some(t => t.id === template.id) ? 'bg-purple-500/20 text-purple-400' : ''
+                      comparisonTemplates.some((t) => t.id === template.id)
+                        ? 'bg-purple-500/20 text-purple-400'
+                        : ''
                     }`}
-                    disabled={!comparisonTemplates.some(t => t.id === template.id) && comparisonTemplates.length >= 3}
+                    disabled={
+                      !comparisonTemplates.some((t) => t.id === template.id) &&
+                      comparisonTemplates.length >= 3
+                    }
                   >
                     <GitCompare className="h-3 w-3" />
                   </Button>
@@ -436,7 +496,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 {template.description}
               </p>
             </CardHeader>
-            
+
             {/* Card Content - Flexible layout with proper spacing */}
             <CardContent className="p-0 space-y-4 flex-1 flex flex-col">
               {/* Duration Info */}
@@ -444,22 +504,27 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow group-hover:scale-110 transition-transform duration-200" />
                 <span className="break-words">{template.estimatedDuration}</span>
               </div>
-              
+
               {/* Qualifications Section */}
               <div className="space-y-2 flex-shrink-0">
-                <div className="text-xs sm:text-sm font-medium text-elec-yellow">Required Qualifications:</div>
+                <div className="text-xs sm:text-sm font-medium text-elec-yellow">
+                  Required Qualifications:
+                </div>
                 <div className="flex flex-wrap gap-1.5">
                   {template.requiredQualifications.slice(0, 2).map((qual, index) => (
-                    <Badge 
-                      key={index} 
-                      variant="outline" 
+                    <Badge
+                      key={index}
+                      variant="outline"
                       className="text-xs break-words max-w-full border-elec-yellow/30 text-elec-yellow/90 hover:bg-elec-yellow/10 transition-colors"
                     >
                       <span className="truncate max-w-[120px]">{qual}</span>
                     </Badge>
                   ))}
                   {template.requiredQualifications.length > 2 && (
-                    <Badge variant="outline" className="text-xs flex-shrink-0 border-elec-yellow/30 text-elec-yellow/90">
+                    <Badge
+                      variant="outline"
+                      className="text-xs flex-shrink-0 border-elec-yellow/30 text-elec-yellow/90"
+                    >
                       +{template.requiredQualifications.length - 2} more
                     </Badge>
                   )}
@@ -511,7 +576,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                   This template includes {selectedTemplate.steps.length} pre-configured steps
                 </p>
               </div>
-                <Button
+              <Button
                 onClick={() => onTemplateSelect(selectedTemplate)}
                 className="bg-green-600 hover:bg-green-700 h-12 px-6 text-base w-full sm:w-auto flex-shrink-0 transition-all duration-200 active:scale-[0.98] focus:ring-2 focus:ring-green-400/50 group"
                 aria-label={`Use ${selectedTemplate.name} template to continue`}
@@ -547,8 +612,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <p className="text-white mb-6 mobile-text max-w-md mx-auto">
               Try adjusting your search terms or create a method statement from scratch.
             </p>
-            <Button 
-              onClick={onSkipTemplate} 
+            <Button
+              onClick={onSkipTemplate}
               variant="outline"
               className="h-12 px-6 text-base transition-all duration-200 active:scale-[0.98]"
             >

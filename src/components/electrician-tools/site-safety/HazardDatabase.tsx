@@ -1,121 +1,126 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { Shield, Search, AlertTriangle, Zap, HardHat, Flame, Droplets, Wind } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { Shield, Search, AlertTriangle, Zap, HardHat, Flame, Droplets, Wind } from 'lucide-react';
 
 interface Hazard {
   id: string;
   name: string;
   category: string;
   description: string;
-  riskLevel: "Low" | "Medium" | "High" | "Very High";
+  riskLevel: 'Low' | 'Medium' | 'High' | 'Very High';
   commonControls: string[];
   regulations: string[];
   icon: any;
 }
 
 const HazardDatabase = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const hazards: Hazard[] = [
     {
-      id: "1",
-      name: "Electric Shock",
-      category: "Electrical",
-      description: "Contact with live electrical parts causing injury or death",
-      riskLevel: "Very High",
+      id: '1',
+      name: 'Electric Shock',
+      category: 'Electrical',
+      description: 'Contact with live electrical parts causing injury or death',
+      riskLevel: 'Very High',
       commonControls: [
-        "Isolation and lock-off procedures",
-        "Prove dead testing",
-        "Appropriate PPE",
-        "Safe systems of work"
+        'Isolation and lock-off procedures',
+        'Prove dead testing',
+        'Appropriate PPE',
+        'Safe systems of work',
       ],
-      regulations: ["BS 7671", "CDM Regulations", "HASAWA"],
-      icon: Zap
+      regulations: ['BS 7671', 'CDM Regulations', 'HASAWA'],
+      icon: Zap,
     },
     {
-      id: "2", 
-      name: "Arc Flash",
-      category: "Electrical",
-      description: "Explosive release of energy from electrical equipment",
-      riskLevel: "Very High",
+      id: '2',
+      name: 'Arc Flash',
+      category: 'Electrical',
+      description: 'Explosive release of energy from electrical equipment',
+      riskLevel: 'Very High',
       commonControls: [
-        "Arc flash PPE",
-        "Remote operation where possible",
-        "De-energise equipment",
-        "Proper working distances"
+        'Arc flash PPE',
+        'Remote operation where possible',
+        'De-energise equipment',
+        'Proper working distances',
       ],
-      regulations: ["BS 7671", "IEC 61482"],
-      icon: Flame
+      regulations: ['BS 7671', 'IEC 61482'],
+      icon: Flame,
     },
     {
-      id: "3",
-      name: "Falls from Height",
-      category: "Physical",
-      description: "Risk of falling when working at elevated positions",
-      riskLevel: "High",
+      id: '3',
+      name: 'Falls from Height',
+      category: 'Physical',
+      description: 'Risk of falling when working at elevated positions',
+      riskLevel: 'High',
       commonControls: [
-        "Edge protection systems",
-        "Safety harnesses",
-        "Proper ladder use",
-        "Mobile elevated work platforms"
+        'Edge protection systems',
+        'Safety harnesses',
+        'Proper ladder use',
+        'Mobile elevated work platforms',
       ],
-      regulations: ["Work at Height Regulations", "CDM Regulations"],
-      icon: HardHat
+      regulations: ['Work at Height Regulations', 'CDM Regulations'],
+      icon: HardHat,
     },
     {
-      id: "4",
-      name: "Chemical Exposure", 
-      category: "Chemical",
-      description: "Exposure to hazardous substances and chemicals",
-      riskLevel: "Medium",
+      id: '4',
+      name: 'Chemical Exposure',
+      category: 'Chemical',
+      description: 'Exposure to hazardous substances and chemicals',
+      riskLevel: 'Medium',
       commonControls: [
-        "Appropriate PPE",
-        "Proper ventilation",
-        "COSHH assessments",
-        "Safe storage procedures"
+        'Appropriate PPE',
+        'Proper ventilation',
+        'COSHH assessments',
+        'Safe storage procedures',
       ],
-      regulations: ["COSHH Regulations", "REACH"],
-      icon: Droplets
+      regulations: ['COSHH Regulations', 'REACH'],
+      icon: Droplets,
     },
     {
-      id: "5",
-      name: "Confined Spaces",
-      category: "Environmental",
-      description: "Working in spaces with restricted entry/exit",
-      riskLevel: "High",
+      id: '5',
+      name: 'Confined Spaces',
+      category: 'Environmental',
+      description: 'Working in spaces with restricted entry/exit',
+      riskLevel: 'High',
       commonControls: [
-        "Atmospheric testing",
-        "Emergency rescue plans",
-        "Continuous monitoring",
-        "Permit to work systems"
+        'Atmospheric testing',
+        'Emergency rescue plans',
+        'Continuous monitoring',
+        'Permit to work systems',
       ],
-      regulations: ["Confined Spaces Regulations", "CDM Regulations"],
-      icon: Wind
-    }
+      regulations: ['Confined Spaces Regulations', 'CDM Regulations'],
+      icon: Wind,
+    },
   ];
 
-  
-
-  const filteredHazards = hazards.filter(hazard => {
-    const matchesSearch = hazard.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         hazard.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         hazard.commonControls.some(control => control.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                         hazard.regulations.some(reg => reg.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredHazards = hazards.filter((hazard) => {
+    const matchesSearch =
+      hazard.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hazard.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hazard.commonControls.some((control) =>
+        control.toLowerCase().includes(searchTerm.toLowerCase())
+      ) ||
+      hazard.regulations.some((reg) => reg.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesSearch;
   });
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case "Low": return "bg-green-500/20 text-green-300 border-green-500/30";
-      case "Medium": return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
-      case "High": return "bg-orange-500/20 text-orange-300 border-orange-500/30";
-      case "Very High": return "bg-red-500/20 text-red-300 border-red-500/30";
-      default: return "bg-gray-500/20 text-white border-gray-500/30";
+      case 'Low':
+        return 'bg-green-500/20 text-green-300 border-green-500/30';
+      case 'Medium':
+        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+      case 'High':
+        return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
+      case 'Very High':
+        return 'bg-red-500/20 text-red-300 border-red-500/30';
+      default:
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -129,7 +134,8 @@ const HazardDatabase = () => {
             Hazard Database
           </CardTitle>
           <p className="text-sm text-white">
-            Comprehensive database of electrical and workplace hazards with risk assessments and control measures
+            Comprehensive database of electrical and workplace hazards with risk assessments and
+            control measures
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -142,10 +148,12 @@ const HazardDatabase = () => {
               placeholder="Search hazards, controls, or regulations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn("bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50 h-12", !searchTerm && "pl-10")}
+              className={cn(
+                'bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50 h-12',
+                !searchTerm && 'pl-10'
+              )}
             />
           </div>
-          
         </CardContent>
       </Card>
 
@@ -154,7 +162,7 @@ const HazardDatabase = () => {
         <Card className="border-red-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-red-400">
-              {hazards.filter(h => h.riskLevel === "Very High").length}
+              {hazards.filter((h) => h.riskLevel === 'Very High').length}
             </div>
             <div className="text-xs sm:text-sm text-white">Very High Risk</div>
           </CardContent>
@@ -162,7 +170,7 @@ const HazardDatabase = () => {
         <Card className="border-orange-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-orange-400">
-              {hazards.filter(h => h.riskLevel === "High").length}
+              {hazards.filter((h) => h.riskLevel === 'High').length}
             </div>
             <div className="text-xs sm:text-sm text-white">High Risk</div>
           </CardContent>
@@ -170,7 +178,7 @@ const HazardDatabase = () => {
         <Card className="border-yellow-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-yellow-400">
-              {hazards.filter(h => h.riskLevel === "Medium").length}
+              {hazards.filter((h) => h.riskLevel === 'Medium').length}
             </div>
             <div className="text-xs sm:text-sm text-white">Medium Risk</div>
           </CardContent>
@@ -178,7 +186,7 @@ const HazardDatabase = () => {
         <Card className="border-green-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-green-400">
-              {hazards.filter(h => h.riskLevel === "Low").length}
+              {hazards.filter((h) => h.riskLevel === 'Low').length}
             </div>
             <div className="text-xs sm:text-sm text-white">Low Risk</div>
           </CardContent>
@@ -190,8 +198,8 @@ const HazardDatabase = () => {
         {filteredHazards.map((hazard) => {
           const IconComponent = hazard.icon;
           return (
-            <Card 
-              key={hazard.id} 
+            <Card
+              key={hazard.id}
               className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/30 transition-colors duration-200"
             >
               <CardContent className="p-6">
@@ -201,12 +209,12 @@ const HazardDatabase = () => {
                     <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                       <IconComponent className="h-5 w-5 text-elec-yellow" />
                     </div>
-                    
+
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg text-foreground mb-2">{hazard.name}</h3>
                       <div className="flex flex-wrap items-center gap-2">
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className="text-xs border-elec-yellow/30 text-elec-yellow/70"
                         >
                           {hazard.category}
@@ -217,12 +225,18 @@ const HazardDatabase = () => {
                       </div>
                     </div>
                   </div>
-                  
-                  <AlertTriangle className={`h-5 w-5 ${
-                    hazard.riskLevel === "Very High" ? "text-red-400" :
-                    hazard.riskLevel === "High" ? "text-orange-400" :
-                    hazard.riskLevel === "Medium" ? "text-yellow-400" : "text-green-400"
-                  }`} />
+
+                  <AlertTriangle
+                    className={`h-5 w-5 ${
+                      hazard.riskLevel === 'Very High'
+                        ? 'text-red-400'
+                        : hazard.riskLevel === 'High'
+                          ? 'text-orange-400'
+                          : hazard.riskLevel === 'Medium'
+                            ? 'text-yellow-400'
+                            : 'text-green-400'
+                    }`}
+                  />
                 </div>
 
                 {/* Simple description */}
@@ -241,14 +255,14 @@ const HazardDatabase = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-medium text-foreground mb-3 text-sm">Regulations</h4>
                     <div className="flex flex-wrap gap-2">
                       {hazard.regulations.map((regulation, index) => (
-                        <Badge 
-                          key={index} 
-                          variant="outline" 
+                        <Badge
+                          key={index}
+                          variant="outline"
                           className="text-xs border-elec-yellow/30 text-white"
                         >
                           {regulation}
@@ -269,7 +283,9 @@ const HazardDatabase = () => {
           <CardContent className="p-8 text-center">
             <Shield className="h-12 w-12 text-white mx-auto mb-4" />
             <p className="text-white mb-2">No hazards found matching your search criteria.</p>
-            <p className="text-sm text-white">Try adjusting your search terms or category filter.</p>
+            <p className="text-sm text-white">
+              Try adjusting your search terms or category filter.
+            </p>
           </CardContent>
         </Card>
       )}

@@ -1,18 +1,18 @@
-import { useState, useEffect, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Loader2, FileText, Clock, CheckCircle, Plus } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { BriefingFormWizard } from "./BriefingFormWizard";
-import { BriefingDetailView } from "./BriefingDetailView";
-import { TemplateLibrary } from "./briefing-templates/TemplateLibrary";
+import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Loader2, FileText, Clock, CheckCircle, Plus } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { BriefingFormWizard } from './BriefingFormWizard';
+import { BriefingDetailView } from './BriefingDetailView';
+import { TemplateLibrary } from './briefing-templates/TemplateLibrary';
 import {
   BriefingHeroCard,
   BriefingFilterTabs,
   TemplateCard,
   HistoryCard,
   PendingCard,
-} from "./briefings";
+} from './briefings';
 
 interface TeamBriefing {
   id: string;
@@ -21,14 +21,20 @@ interface TeamBriefing {
   location: string;
   briefing_date: string;
   briefing_time: string;
-  attendees: Array<{ name: string; role?: string; signature?: string; timestamp?: string; photo?: string }>;
+  attendees: Array<{
+    name: string;
+    role?: string;
+    signature?: string;
+    timestamp?: string;
+    photo?: string;
+  }>;
   key_points: string[];
   safety_points: string[];
   equipment_required: string[];
   duration_minutes: number;
   notes: string;
   completed: boolean;
-  status: "scheduled" | "in_progress" | "completed" | "cancelled" | "postponed";
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'postponed';
   qr_code?: string;
   created_at: string;
 }
@@ -47,10 +53,10 @@ interface NearMissData {
   potential_consequences?: string;
   immediate_actions?: string;
   preventive_measures?: string;
-  photo_urls?: string[];
+  photos?: string[];
 }
 
-type TabId = "templates" | "history" | "pending";
+type TabId = 'templates' | 'history' | 'pending';
 
 const TeamBriefingTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,7 +67,7 @@ const TeamBriefingTemplates = () => {
   const [viewingBriefing, setViewingBriefing] = useState<any>(null);
   const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabId>("templates");
+  const [activeTab, setActiveTab] = useState<TabId>('templates');
 
   useEffect(() => {
     fetchBriefings();
@@ -69,7 +75,7 @@ const TeamBriefingTemplates = () => {
   }, []);
 
   const checkForNearMissData = () => {
-    const nearMissSessionId = searchParams.get("nearMissSessionId");
+    const nearMissSessionId = searchParams.get('nearMissSessionId');
     if (nearMissSessionId) {
       const storedData = sessionStorage.getItem(`nearMissData_${nearMissSessionId}`);
       if (storedData) {
@@ -77,15 +83,15 @@ const TeamBriefingTemplates = () => {
           const parsedData = JSON.parse(storedData) as NearMissData;
           setNearMissData(parsedData);
           setShowAIWizard(true);
-          searchParams.delete("nearMissSessionId");
+          searchParams.delete('nearMissSessionId');
           setSearchParams(searchParams, { replace: true });
           sessionStorage.removeItem(`nearMissData_${nearMissSessionId}`);
           toast({
-            title: "Creating Briefing from Near Miss",
-            description: "The form has been pre-filled with details from the near miss report.",
+            title: 'Creating Briefing from Near Miss',
+            description: 'The form has been pre-filled with details from the near miss report.',
           });
         } catch (e) {
-          console.error("Error parsing near miss data:", e);
+          console.error('Error parsing near miss data:', e);
         }
       }
     }
@@ -93,36 +99,44 @@ const TeamBriefingTemplates = () => {
 
   const fetchBriefings = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
-        .from("team_briefings")
-        .select("*")
-        .order("briefing_date", { ascending: false });
+        .from('team_briefings')
+        .select('*')
+        .order('briefing_date', { ascending: false });
 
       if (error) throw error;
       setBriefings(
         (data || []).map((item) => ({
           ...item,
           attendees: Array.isArray(item.attendees)
-            ? (item.attendees as Array<{ name: string; role?: string; signature?: string; timestamp?: string; photo?: string }>)
+            ? (item.attendees as Array<{
+                name: string;
+                role?: string;
+                signature?: string;
+                timestamp?: string;
+                photo?: string;
+              }>)
             : [],
           key_points: item.key_points || [],
           safety_points: item.safety_points || [],
           equipment_required: item.equipment_required || [],
           duration_minutes: item.duration_minutes || 10,
-          notes: item.notes || "",
-          status: ((item as any).status || "scheduled") as TeamBriefing["status"],
+          notes: item.notes || '',
+          status: ((item as any).status || 'scheduled') as TeamBriefing['status'],
           qr_code: (item as any).qr_code || undefined,
         }))
       );
     } catch (error) {
-      console.error("Error fetching briefings:", error);
+      console.error('Error fetching briefings:', error);
       toast({
-        title: "Error",
-        description: "Failed to load briefings",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load briefings',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -140,12 +154,21 @@ const TeamBriefingTemplates = () => {
   };
 
   const handleDuplicate = async (briefing: any) => {
-    const { id, created_at, updated_at, status, started_at, cancelled_at, cancelled_reason, ...duplicateData } = briefing;
+    const {
+      id,
+      created_at,
+      updated_at,
+      status,
+      started_at,
+      cancelled_at,
+      cancelled_reason,
+      ...duplicateData
+    } = briefing;
     setEditingBriefing({
       ...duplicateData,
       title: `${duplicateData.title || duplicateData.briefing_name} (Copy)`,
       briefing_date: null,
-      briefing_time: "09:00",
+      briefing_time: '09:00',
     });
     setNearMissData(null);
     setShowAIWizard(true);
@@ -154,31 +177,28 @@ const TeamBriefingTemplates = () => {
   const handleStatusChange = async (briefingId: string, newStatus: string) => {
     try {
       const updates: any = { status: newStatus };
-      if (newStatus === "in_progress") {
+      if (newStatus === 'in_progress') {
         updates.started_at = new Date().toISOString();
-      } else if (newStatus === "completed") {
+      } else if (newStatus === 'completed') {
         updates.completed = true;
       }
 
-      const { error } = await supabase
-        .from("team_briefings")
-        .update(updates)
-        .eq("id", briefingId);
+      const { error } = await supabase.from('team_briefings').update(updates).eq('id', briefingId);
 
       if (error) throw error;
 
       toast({
-        title: "Status Updated",
-        description: `Briefing marked as ${newStatus.replace("_", " ")}`,
+        title: 'Status Updated',
+        description: `Briefing marked as ${newStatus.replace('_', ' ')}`,
       });
 
       fetchBriefings();
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error('Error updating status:', error);
       toast({
-        title: "Error",
-        description: "Failed to update briefing status",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update briefing status',
+        variant: 'destructive',
       });
     }
   };
@@ -203,10 +223,11 @@ const TeamBriefingTemplates = () => {
     const totalBriefings = briefings.length;
     const thisWeek = briefings.filter((b) => new Date(b.created_at) >= weekAgo).length;
     const pendingSignatures = briefings.filter(
-      (b) => b.status !== "completed" && b.attendees.some((a) => !a.signature)
+      (b) => b.status !== 'completed' && b.attendees.some((a) => !a.signature)
     ).length;
-    const completedBriefings = briefings.filter((b) => b.status === "completed").length;
-    const signatureRate = totalBriefings > 0 ? Math.round((completedBriefings / totalBriefings) * 100) : 0;
+    const completedBriefings = briefings.filter((b) => b.status === 'completed').length;
+    const signatureRate =
+      totalBriefings > 0 ? Math.round((completedBriefings / totalBriefings) * 100) : 0;
 
     return { totalBriefings, thisWeek, pendingSignatures, signatureRate };
   }, [briefings]);
@@ -214,19 +235,24 @@ const TeamBriefingTemplates = () => {
   // Filter briefings by tab
   const pendingBriefings = useMemo(() => {
     return briefings.filter(
-      (b) => b.status !== "completed" && b.status !== "cancelled" && b.attendees.some((a) => !a.signature)
+      (b) =>
+        b.status !== 'completed' &&
+        b.status !== 'cancelled' &&
+        b.attendees.some((a) => !a.signature)
     );
   }, [briefings]);
 
   const completedBriefings = useMemo(() => {
-    return briefings.filter((b) => b.status === "completed" || b.attendees.every((a) => a.signature));
+    return briefings.filter(
+      (b) => b.status === 'completed' || b.attendees.every((a) => a.signature)
+    );
   }, [briefings]);
 
   // Tab configuration
   const tabs = [
-    { id: "templates" as const, label: "Templates", count: 0 },
-    { id: "history" as const, label: "History", count: completedBriefings.length },
-    { id: "pending" as const, label: "Pending", count: pendingBriefings.length },
+    { id: 'templates' as const, label: 'Templates', count: 0 },
+    { id: 'history' as const, label: 'History', count: completedBriefings.length },
+    { id: 'pending' as const, label: 'Pending', count: pendingBriefings.length },
   ];
 
   if (loading) {
@@ -299,15 +325,15 @@ const TeamBriefingTemplates = () => {
       {/* Tab Content */}
       <div className="space-y-3">
         {/* Templates Tab */}
-        {activeTab === "templates" && (
+        {activeTab === 'templates' && (
           <div className="space-y-3">
             <TemplateCard
               template={{
-                id: "site-induction",
-                name: "Site Induction",
-                description: "Standard site induction briefing",
+                id: 'site-induction',
+                name: 'Site Induction',
+                description: 'Standard site induction briefing',
                 hazardCount: 8,
-                usageCount: briefings.filter((b) => b.template_id === "site-induction").length,
+                usageCount: briefings.filter((b) => b.template_id === 'site-induction').length,
                 isAIPowered: true,
               }}
               onStart={handleCreateNew}
@@ -315,11 +341,11 @@ const TeamBriefingTemplates = () => {
             />
             <TemplateCard
               template={{
-                id: "toolbox-talk",
-                name: "Toolbox Talk",
-                description: "Daily toolbox talk template",
+                id: 'toolbox-talk',
+                name: 'Toolbox Talk',
+                description: 'Daily toolbox talk template',
                 hazardCount: 5,
-                usageCount: briefings.filter((b) => b.template_id === "toolbox-talk").length,
+                usageCount: briefings.filter((b) => b.template_id === 'toolbox-talk').length,
                 isAIPowered: true,
               }}
               onStart={handleCreateNew}
@@ -327,11 +353,11 @@ const TeamBriefingTemplates = () => {
             />
             <TemplateCard
               template={{
-                id: "electrical-safety",
-                name: "Electrical Safety",
-                description: "Electrical work safety briefing",
+                id: 'electrical-safety',
+                name: 'Electrical Safety',
+                description: 'Electrical work safety briefing',
                 hazardCount: 10,
-                usageCount: briefings.filter((b) => b.template_id === "electrical-safety").length,
+                usageCount: briefings.filter((b) => b.template_id === 'electrical-safety').length,
                 isAIPowered: true,
               }}
               onStart={handleCreateNew}
@@ -339,11 +365,11 @@ const TeamBriefingTemplates = () => {
             />
             <TemplateCard
               template={{
-                id: "hot-works",
-                name: "Hot Works Permit",
-                description: "Hot works safety briefing",
+                id: 'hot-works',
+                name: 'Hot Works Permit',
+                description: 'Hot works safety briefing',
                 hazardCount: 7,
-                usageCount: briefings.filter((b) => b.template_id === "hot-works").length,
+                usageCount: briefings.filter((b) => b.template_id === 'hot-works').length,
               }}
               onStart={handleCreateNew}
               index={3}
@@ -359,7 +385,7 @@ const TeamBriefingTemplates = () => {
         )}
 
         {/* History Tab */}
-        {activeTab === "history" && (
+        {activeTab === 'history' && (
           <div className="space-y-3">
             {completedBriefings.length > 0 ? (
               completedBriefings.map((briefing, index) => (
@@ -369,7 +395,7 @@ const TeamBriefingTemplates = () => {
                     id: briefing.id,
                     name: briefing.briefing_name,
                     location: briefing.location,
-                    date: new Date(briefing.briefing_date).toLocaleDateString("en-GB"),
+                    date: new Date(briefing.briefing_date).toLocaleDateString('en-GB'),
                     time: briefing.briefing_time,
                     attendeeCount: briefing.attendees.length,
                     status: briefing.status,
@@ -378,14 +404,14 @@ const TeamBriefingTemplates = () => {
                   onView={() => handleView(briefing)}
                   onShare={() => {
                     toast({
-                      title: "Share",
-                      description: "Share functionality coming soon",
+                      title: 'Share',
+                      description: 'Share functionality coming soon',
                     });
                   }}
                   onDownload={() => {
                     toast({
-                      title: "Download",
-                      description: "PDF download coming soon",
+                      title: 'Download',
+                      description: 'PDF download coming soon',
                     });
                   }}
                   index={index}
@@ -413,7 +439,7 @@ const TeamBriefingTemplates = () => {
         )}
 
         {/* Pending Tab */}
-        {activeTab === "pending" && (
+        {activeTab === 'pending' && (
           <div className="space-y-3">
             {pendingBriefings.length > 0 ? (
               pendingBriefings.map((briefing, index) => (
@@ -423,7 +449,7 @@ const TeamBriefingTemplates = () => {
                     id: briefing.id,
                     name: briefing.briefing_name,
                     location: briefing.location,
-                    date: new Date(briefing.briefing_date).toLocaleDateString("en-GB"),
+                    date: new Date(briefing.briefing_date).toLocaleDateString('en-GB'),
                     time: briefing.briefing_time,
                     attendeeCount: briefing.attendees.length,
                     status: briefing.status,

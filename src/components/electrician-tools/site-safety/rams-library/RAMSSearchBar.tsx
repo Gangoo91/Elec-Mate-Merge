@@ -19,7 +19,7 @@ export const RAMSSearchBar = ({ searchTerm, onSearchChange }: RAMSSearchBarProps
         placeholder="Search by project, location, or assessor..."
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
-        className={cn("pr-10 h-11 bg-background border-border", !searchTerm && "pl-10")}
+        className={cn('pr-10 h-11 bg-background border-border', !searchTerm && 'pl-10')}
       />
       {searchTerm && (
         <Button

@@ -16,10 +16,7 @@ import {
   Lightbulb,
   GraduationCap,
 } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -37,11 +34,46 @@ interface HazardDetailSheetProps {
 
 // Control hierarchy configuration
 const controlHierarchy = [
-  { key: 'elimination', label: 'Elimination', icon: Ban, color: 'text-red-400', bgColor: 'bg-red-500/10', borderColor: 'border-red-500/20' },
-  { key: 'substitution', label: 'Substitution', icon: Shield, color: 'text-orange-400', bgColor: 'bg-orange-500/10', borderColor: 'border-orange-500/20' },
-  { key: 'engineering', label: 'Engineering Controls', icon: Wrench, color: 'text-yellow-400', bgColor: 'bg-yellow-500/10', borderColor: 'border-yellow-500/20' },
-  { key: 'administrative', label: 'Administrative Controls', icon: ClipboardList, color: 'text-blue-400', bgColor: 'bg-blue-500/10', borderColor: 'border-blue-500/20' },
-  { key: 'ppe', label: 'PPE', icon: HardHat, color: 'text-green-400', bgColor: 'bg-green-500/10', borderColor: 'border-green-500/20' },
+  {
+    key: 'elimination',
+    label: 'Elimination',
+    icon: Ban,
+    color: 'text-red-400',
+    bgColor: 'bg-red-500/10',
+    borderColor: 'border-red-500/20',
+  },
+  {
+    key: 'substitution',
+    label: 'Substitution',
+    icon: Shield,
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/10',
+    borderColor: 'border-orange-500/20',
+  },
+  {
+    key: 'engineering',
+    label: 'Engineering Controls',
+    icon: Wrench,
+    color: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/10',
+    borderColor: 'border-yellow-500/20',
+  },
+  {
+    key: 'administrative',
+    label: 'Administrative Controls',
+    icon: ClipboardList,
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/10',
+    borderColor: 'border-blue-500/20',
+  },
+  {
+    key: 'ppe',
+    label: 'PPE',
+    icon: HardHat,
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/10',
+    borderColor: 'border-green-500/20',
+  },
 ];
 
 // Collapsible section component
@@ -63,8 +95,8 @@ const CollapsibleSection = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full flex items-center justify-between p-4",
-          "hover:bg-white/[0.02] transition-colors"
+          'w-full flex items-center justify-between p-4',
+          'hover:bg-white/[0.02] transition-colors'
         )}
       >
         <div className="flex items-center gap-3">
@@ -77,11 +109,7 @@ const CollapsibleSection = ({
           <ChevronRight className="h-5 w-5 text-white" />
         )}
       </button>
-      {isOpen && (
-        <div className="px-4 pb-4 pt-0">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="px-4 pb-4 pt-0">{children}</div>}
     </div>
   );
 };
@@ -109,7 +137,9 @@ RISK RATING: ${hazard.riskRating}/25
 CONTROL MEASURES:
 ${Object.entries(hazard.controlMeasures)
   .filter(([_, measures]) => measures && measures.length > 0)
-  .map(([type, measures]) => `\n${type.toUpperCase()}:\n${measures?.map(m => `- ${m}`).join('\n')}`)
+  .map(
+    ([type, measures]) => `\n${type.toUpperCase()}:\n${measures?.map((m) => `- ${m}`).join('\n')}`
+  )
   .join('\n')}
 
 ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671References.join(', ')}` : ''}
@@ -156,9 +186,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     {categoryLabel}
                   </span>
                 </div>
-                <h2 className="text-xl font-semibold text-white leading-tight">
-                  {hazard.hazard}
-                </h2>
+                <h2 className="text-xl font-semibold text-white leading-tight">{hazard.hazard}</h2>
               </div>
               <button
                 onClick={onToggleBookmark}
@@ -166,19 +194,15 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               >
                 <Bookmark
                   className={cn(
-                    "h-6 w-6 transition-all",
-                    isBookmarked
-                      ? "fill-elec-yellow text-elec-yellow"
-                      : "text-white"
+                    'h-6 w-6 transition-all',
+                    isBookmarked ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
                   )}
                 />
               </button>
             </div>
 
             {/* Consequence */}
-            <p className="text-white leading-relaxed mb-6">
-              {hazard.consequence}
-            </p>
+            <p className="text-white leading-relaxed mb-6">{hazard.consequence}</p>
 
             {/* Control Hierarchy */}
             <div className="mb-6">
@@ -188,7 +212,8 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
               </h3>
               <div className="space-y-2">
                 {controlHierarchy.map((step, index) => {
-                  const measures = hazard.controlMeasures[step.key as keyof typeof hazard.controlMeasures];
+                  const measures =
+                    hazard.controlMeasures[step.key as keyof typeof hazard.controlMeasures];
                   const hasControls = measures && measures.length > 0;
                   const Icon = step.icon;
 
@@ -196,30 +221,32 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     <div
                       key={step.key}
                       className={cn(
-                        "p-3 rounded-xl border transition-all",
+                        'p-3 rounded-xl border transition-all',
                         hasControls
                           ? `${step.bgColor} ${step.borderColor}`
-                          : "bg-white/[0.02] border-white/[0.06] opacity-50"
+                          : 'bg-white/[0.02] border-white/[0.06] opacity-50'
                       )}
                     >
                       <div className="flex items-center gap-3 mb-2">
-                        <div className={cn(
-                          "w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold",
-                          hasControls ? "bg-white/20 text-white" : "bg-white/10 text-white"
-                        )}>
+                        <div
+                          className={cn(
+                            'w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold',
+                            hasControls ? 'bg-white/20 text-white' : 'bg-white/10 text-white'
+                          )}
+                        >
                           {index + 1}
                         </div>
-                        <Icon className={cn("h-4 w-4", hasControls ? step.color : "text-white")} />
-                        <span className={cn(
-                          "text-sm font-medium",
-                          hasControls ? "text-white" : "text-white"
-                        )}>
+                        <Icon className={cn('h-4 w-4', hasControls ? step.color : 'text-white')} />
+                        <span
+                          className={cn(
+                            'text-sm font-medium',
+                            hasControls ? 'text-white' : 'text-white'
+                          )}
+                        >
                           {step.label}
                         </span>
                         {hasControls && (
-                          <span className="ml-auto text-xs text-white">
-                            {measures.length}
-                          </span>
+                          <span className="ml-auto text-xs text-white">{measures.length}</span>
                         )}
                       </div>
                       {hasControls && (

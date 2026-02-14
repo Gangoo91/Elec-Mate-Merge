@@ -27,20 +27,11 @@ export const RAMSBulkActionBar = ({
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClearSelection}
-          >
+          <Button variant="ghost" size="sm" onClick={onClearSelection}>
             <X className="h-4 w-4 mr-2" />
             Clear Selection
           </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={onBulkDelete}
-            disabled={isDeleting}
-          >
+          <Button variant="destructive" size="sm" onClick={onBulkDelete} disabled={isDeleting}>
             <Trash2 className="h-4 w-4 mr-2" />
             Delete Selected
           </Button>
@@ -50,24 +41,13 @@ export const RAMSBulkActionBar = ({
       {/* Mobile Version - Sticky Bottom */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/95 border-t border-border p-2.5 shadow-md">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs font-medium text-white">
-            {selectedCount} selected
-          </span>
+          <span className="text-xs font-medium text-white">{selectedCount} selected</span>
           <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClearSelection}
-            >
+            <Button variant="ghost" size="sm" onClick={onClearSelection}>
               <X className="h-4 w-4 mr-1" />
               Clear
             </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={onBulkDelete}
-              disabled={isDeleting}
-            >
+            <Button variant="destructive" size="sm" onClick={onBulkDelete} disabled={isDeleting}>
               <Trash2 className="h-4 w-4 mr-1" />
               Delete
             </Button>

@@ -30,17 +30,24 @@ export interface SafetyEquipment {
 }
 
 export type SafetyEquipmentInsert = Omit<SafetyEquipment, 'id' | 'created_at' | 'updated_at'>;
-export type SafetyEquipmentUpdate = Partial<Omit<SafetyEquipment, 'id' | 'user_id' | 'created_at' | 'updated_at'>>;
+export type SafetyEquipmentUpdate = Partial<
+  Omit<SafetyEquipment, 'id' | 'user_id' | 'created_at' | 'updated_at'>
+>;
 
 export function useSafetyEquipment() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: equipment = [], isLoading, error, refetch } = useQuery({
+  const {
+    data: equipment = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ['safety-equipment', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      
+
       const { data, error } = await supabase
         .from('safety_equipment')
         .select('*')
@@ -127,7 +134,7 @@ export function useSafetyEquipment() {
     mutationFn: async (id: string) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const item = equipment.find(e => e.id === id);
+      const item = equipment.find((e) => e.id === id);
       if (!item) throw new Error('Equipment not found');
 
       const today = new Date().toISOString().split('T')[0];
@@ -163,7 +170,7 @@ export function useSafetyEquipment() {
     mutationFn: async (id: string) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const item = equipment.find(e => e.id === id);
+      const item = equipment.find((e) => e.id === id);
       if (!item) throw new Error('Equipment not found');
 
       const today = new Date().toISOString().split('T')[0];
@@ -197,9 +204,9 @@ export function useSafetyEquipment() {
   // Calculate stats
   const stats = {
     total: equipment.length,
-    good: equipment.filter(e => e.status === 'good').length,
-    needsAttention: equipment.filter(e => e.status === 'needs_attention').length,
-    overdue: equipment.filter(e => {
+    good: equipment.filter((e) => e.status === 'good').length,
+    needsAttention: equipment.filter((e) => e.status === 'needs_attention').length,
+    overdue: equipment.filter((e) => {
       if (e.next_inspection) {
         return new Date(e.next_inspection) < new Date();
       }
@@ -208,7 +215,7 @@ export function useSafetyEquipment() {
       }
       return false;
     }).length,
-    outOfService: equipment.filter(e => e.status === 'out_of_service').length,
+    outOfService: equipment.filter((e) => e.status === 'out_of_service').length,
   };
 
   return {

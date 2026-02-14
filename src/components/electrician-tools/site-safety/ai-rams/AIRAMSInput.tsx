@@ -28,10 +28,7 @@ export interface AIRAMSInputProps {
   isProcessing: boolean;
 }
 
-export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
-  onGenerate,
-  isProcessing
-}) => {
+export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
   const [jobDescription, setJobDescription] = useState('');
   const [projectInfo, setProjectInfo] = useState({
     projectName: '',
@@ -45,11 +42,15 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
     firstAiderPhone: '',
     safetyOfficerName: '',
     safetyOfficerPhone: '',
-    assemblyPoint: ''
+    assemblyPoint: '',
   });
 
-  const [detectedScale, setDetectedScale] = useState<'domestic' | 'commercial' | 'industrial'>('commercial');
-  const [manualScale, setManualScale] = useState<'domestic' | 'commercial' | 'industrial' | null>(null);
+  const [detectedScale, setDetectedScale] = useState<'domestic' | 'commercial' | 'industrial'>(
+    'commercial'
+  );
+  const [manualScale, setManualScale] = useState<'domestic' | 'commercial' | 'industrial' | null>(
+    null
+  );
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
 
@@ -58,37 +59,74 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       'Consumer unit in 3-bed house',
       'Rewire kitchen + sockets',
       'EV charger in garage',
-      'Bathroom shower circuit'
+      'Bathroom shower circuit',
     ],
     commercial: [
       'Emergency lighting in office',
       'DB upgrade in retail unit',
       'Fire alarm in school',
-      'Socket circuits in restaurant'
+      'Socket circuits in restaurant',
     ],
     industrial: [
       '3-phase motor in factory',
       '400V distribution upgrade',
       'Switchgear replacement',
-      'Cable tray for production'
-    ]
+      'Cable tray for production',
+    ],
   };
 
-  const detectJobScale = (description: string, location: string): { scale: 'domestic' | 'commercial' | 'industrial'; confidence: number } => {
+  const detectJobScale = (
+    description: string,
+    location: string
+  ): { scale: 'domestic' | 'commercial' | 'industrial'; confidence: number } => {
     const text = `${description} ${location}`.toLowerCase();
-    
+
     // Industrial indicators (highest priority)
-    const industrialKeywords = ['factory', 'plant', 'industrial estate', 'warehouse', 'manufacturing', 'substation', '3-phase motor', 'hv', '400v', 'switchgear', 'production line'];
-    const industrialScore = industrialKeywords.filter(k => text.includes(k)).length;
-    
+    const industrialKeywords = [
+      'factory',
+      'plant',
+      'industrial estate',
+      'warehouse',
+      'manufacturing',
+      'substation',
+      '3-phase motor',
+      'hv',
+      '400v',
+      'switchgear',
+      'production line',
+    ];
+    const industrialScore = industrialKeywords.filter((k) => text.includes(k)).length;
+
     // Commercial indicators
-    const commercialKeywords = ['office', 'shop', 'retail', 'restaurant', 'hotel', 'school', 'hospital', 'commercial', 'business premises', 'surgery'];
-    const commercialScore = commercialKeywords.filter(k => text.includes(k)).length;
-    
+    const commercialKeywords = [
+      'office',
+      'shop',
+      'retail',
+      'restaurant',
+      'hotel',
+      'school',
+      'hospital',
+      'commercial',
+      'business premises',
+      'surgery',
+    ];
+    const commercialScore = commercialKeywords.filter((k) => text.includes(k)).length;
+
     // Domestic indicators
-    const domesticKeywords = ['house', 'home', 'flat', 'apartment', 'bungalow', 'kitchen', 'bedroom', 'domestic', 'residential', 'consumer unit'];
-    const domesticScore = domesticKeywords.filter(k => text.includes(k)).length;
-    
+    const domesticKeywords = [
+      'house',
+      'home',
+      'flat',
+      'apartment',
+      'bungalow',
+      'kitchen',
+      'bedroom',
+      'domestic',
+      'residential',
+      'consumer unit',
+    ];
+    const domesticScore = domesticKeywords.filter((k) => text.includes(k)).length;
+
     // Determine scale with confidence
     if (industrialScore >= 2 || text.includes('factory')) {
       return { scale: 'industrial', confidence: Math.min(industrialScore * 30 + 40, 95) };
@@ -97,7 +135,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
     } else if (domesticScore >= 1) {
       return { scale: 'domestic', confidence: Math.min(domesticScore * 20 + 60, 85) };
     }
-    
+
     return { scale: 'commercial', confidence: 40 }; // Default fallback
   };
 
@@ -117,7 +155,9 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
   };
 
   const loadMockData = () => {
-    setJobDescription('Install new 3-phase distribution board in warehouse with additional socket circuits, emergency lighting, and fire alarm panel upgrade. Work includes cable containment, trunking installation, and testing of existing circuits.');
+    setJobDescription(
+      'Install new 3-phase distribution board in warehouse with additional socket circuits, emergency lighting, and fire alarm panel upgrade. Work includes cable containment, trunking installation, and testing of existing circuits.'
+    );
     setProjectInfo({
       projectName: 'Industrial Warehouse Electrical Upgrade',
       location: 'Unit 12, Riverside Industrial Estate, Manchester',
@@ -130,7 +170,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       firstAiderPhone: '07891 234567',
       safetyOfficerName: 'David Taylor',
       safetyOfficerPhone: '07890 345678',
-      assemblyPoint: 'Main car park near site entrance'
+      assemblyPoint: 'Main car park near site entrance',
     });
     setManualScale('industrial');
     setShowEmergencyContacts(true);
@@ -138,7 +178,11 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
 
   const isFormValid = jobDescription.trim() && projectInfo.projectName.trim();
   const completionPercentage = Math.round(
-    ([jobDescription, projectInfo.projectName, projectInfo.location, projectInfo.assessor].filter(Boolean).length / 4) * 100
+    ([jobDescription, projectInfo.projectName, projectInfo.location, projectInfo.assessor].filter(
+      Boolean
+    ).length /
+      4) *
+      100
   );
 
   return (
@@ -153,12 +197,8 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
             <Sparkles className="h-5 w-5 text-elec-yellow" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">
-              RAMS Generator
-            </h2>
-            <p className="text-xs text-white">
-              Professional documentation
-            </p>
+            <h2 className="text-lg font-bold text-white">RAMS Generator</h2>
+            <p className="text-xs text-white">Professional documentation</p>
           </div>
         </div>
 
@@ -171,7 +211,9 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                 style={{ width: `${completionPercentage}%` }}
               />
             </div>
-            <span className="text-xs font-semibold text-elec-yellow tabular-nums">{completionPercentage}%</span>
+            <span className="text-xs font-semibold text-elec-yellow tabular-nums">
+              {completionPercentage}%
+            </span>
           </div>
         )}
       </div>
@@ -234,130 +276,146 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         <h3 className="text-xs font-medium text-white">Project Details</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileInput
-              label="Project Name"
-              value={projectInfo.projectName}
-              onChange={(e) => setProjectInfo(prev => ({ ...prev, projectName: e.target.value }))}
-              placeholder="e.g., Warehouse Lighting Upgrade"
-              disabled={isProcessing}
-              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-            />
+          <MobileInput
+            label="Project Name"
+            value={projectInfo.projectName}
+            onChange={(e) => setProjectInfo((prev) => ({ ...prev, projectName: e.target.value }))}
+            placeholder="e.g., Warehouse Lighting Upgrade"
+            disabled={isProcessing}
+            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
+          />
 
-            <MobileInput
-              label="Location"
-              value={projectInfo.location}
-              onChange={(e) => setProjectInfo(prev => ({ ...prev, location: e.target.value }))}
-              placeholder="e.g., Unit 5, Industrial Estate"
-              disabled={isProcessing}
-              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-            />
+          <MobileInput
+            label="Location"
+            value={projectInfo.location}
+            onChange={(e) => setProjectInfo((prev) => ({ ...prev, location: e.target.value }))}
+            placeholder="e.g., Unit 5, Industrial Estate"
+            disabled={isProcessing}
+            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
+          />
 
-            <MobileInput
-              label="Assessor"
-              value={projectInfo.assessor}
-              onChange={(e) => setProjectInfo(prev => ({ ...prev, assessor: e.target.value }))}
-              placeholder="Your name"
-              disabled={isProcessing}
-              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-            />
+          <MobileInput
+            label="Assessor"
+            value={projectInfo.assessor}
+            onChange={(e) => setProjectInfo((prev) => ({ ...prev, assessor: e.target.value }))}
+            placeholder="Your name"
+            disabled={isProcessing}
+            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
+          />
 
-            <MobileInput
-              label="Contractor"
-              value={projectInfo.contractor}
-              onChange={(e) => setProjectInfo(prev => ({ ...prev, contractor: e.target.value }))}
-              placeholder="Company name"
-              disabled={isProcessing}
-              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-            />
+          <MobileInput
+            label="Contractor"
+            value={projectInfo.contractor}
+            onChange={(e) => setProjectInfo((prev) => ({ ...prev, contractor: e.target.value }))}
+            placeholder="Company name"
+            disabled={isProcessing}
+            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
+          />
 
-            <MobileInput
-              label="Supervisor (Optional)"
-              value={projectInfo.supervisor}
-              onChange={(e) => setProjectInfo(prev => ({ ...prev, supervisor: e.target.value }))}
-              placeholder="Site supervisor"
-              disabled={isProcessing}
-              className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-            />
-          </div>
+          <MobileInput
+            label="Supervisor (Optional)"
+            value={projectInfo.supervisor}
+            onChange={(e) => setProjectInfo((prev) => ({ ...prev, supervisor: e.target.value }))}
+            placeholder="Site supervisor"
+            disabled={isProcessing}
+            className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
+          />
+        </div>
 
-          {/* Emergency Contacts Section */}
-          <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
-            <CollapsibleTrigger asChild>
-              <button
-                type="button"
-                className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/[0.08] hover:border-elec-yellow/30 transition-all touch-manipulation active:scale-[0.98]"
-              >
-                <div className="flex items-center gap-2">
-                  <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-                  <span className="text-xs font-medium text-white">Emergency Contacts</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white font-medium">
-                    Optional
-                  </span>
-                </div>
-                <ChevronDown className={`h-3.5 w-3.5 text-white transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pt-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <MobileInput
-                  label="Site Manager Name"
-                  value={projectInfo.siteManagerName}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerName: e.target.value }))}
-                  placeholder="John Smith"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="Site Manager Phone"
-                  value={projectInfo.siteManagerPhone}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerPhone: e.target.value }))}
-                  placeholder="07XXX XXXXXX"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="First Aider Name"
-                  value={projectInfo.firstAiderName}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderName: e.target.value }))}
-                  placeholder="Jane Doe"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="First Aider Phone"
-                  value={projectInfo.firstAiderPhone}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderPhone: e.target.value }))}
-                  placeholder="07XXX XXXXXX"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="H&S Officer Name"
-                  value={projectInfo.safetyOfficerName}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerName: e.target.value }))}
-                  placeholder="Safety Officer"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="H&S Officer Phone"
-                  value={projectInfo.safetyOfficerPhone}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerPhone: e.target.value }))}
-                  placeholder="07XXX XXXXXX"
-                  disabled={isProcessing}
-                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
-                <MobileInput
-                  label="Emergency Assembly Point"
-                  value={projectInfo.assemblyPoint}
-                  onChange={(e) => setProjectInfo(prev => ({ ...prev, assemblyPoint: e.target.value }))}
-                  placeholder="e.g., Main car park, Site entrance"
-                  disabled={isProcessing}
-                  className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm"
-                />
+        {/* Emergency Contacts Section */}
+        <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
+          <CollapsibleTrigger asChild>
+            <button
+              type="button"
+              className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/[0.08] hover:border-elec-yellow/30 transition-all touch-manipulation active:scale-[0.98]"
+            >
+              <div className="flex items-center gap-2">
+                <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+                <span className="text-xs font-medium text-white">Emergency Contacts</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white font-medium">
+                  Optional
+                </span>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-white transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`}
+              />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <MobileInput
+                label="Site Manager Name"
+                value={projectInfo.siteManagerName}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, siteManagerName: e.target.value }))
+                }
+                placeholder="John Smith"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="Site Manager Phone"
+                value={projectInfo.siteManagerPhone}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, siteManagerPhone: e.target.value }))
+                }
+                placeholder="07XXX XXXXXX"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="First Aider Name"
+                value={projectInfo.firstAiderName}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, firstAiderName: e.target.value }))
+                }
+                placeholder="Jane Doe"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="First Aider Phone"
+                value={projectInfo.firstAiderPhone}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, firstAiderPhone: e.target.value }))
+                }
+                placeholder="07XXX XXXXXX"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="H&S Officer Name"
+                value={projectInfo.safetyOfficerName}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, safetyOfficerName: e.target.value }))
+                }
+                placeholder="Safety Officer"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="H&S Officer Phone"
+                value={projectInfo.safetyOfficerPhone}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, safetyOfficerPhone: e.target.value }))
+                }
+                placeholder="07XXX XXXXXX"
+                disabled={isProcessing}
+                className="bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+              <MobileInput
+                label="Emergency Assembly Point"
+                value={projectInfo.assemblyPoint}
+                onChange={(e) =>
+                  setProjectInfo((prev) => ({ ...prev, assemblyPoint: e.target.value }))
+                }
+                placeholder="e.g., Main car park, Site entrance"
+                disabled={isProcessing}
+                className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm"
+              />
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
 
       {/* Divider */}

@@ -12,6 +12,9 @@ import {
   type EquipmentFilterId,
 } from './equipment';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { DeleteConfirmSheet } from './common/DeleteConfirmSheet';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { useShowMore } from '@/hooks/useShowMore';
 
 export const SafetyEquipmentTracker: React.FC = () => {
   const navigate = useNavigate();
@@ -31,6 +34,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingEquipment, setEditingEquipment] = useState<SafetyEquipment | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   // Filter equipment based on active tab and search query
   const filteredEquipment = useMemo(() => {
@@ -71,6 +75,13 @@ export const SafetyEquipmentTracker: React.FC = () => {
     return result;
   }, [equipment, activeFilter, searchQuery]);
 
+  const {
+    visible: visibleEquipment,
+    hasMore: hasMoreEquipment,
+    remaining: remainingEquipment,
+    loadMore: loadMoreEquipment,
+  } = useShowMore(filteredEquipment);
+
   // Tab configuration with counts
   const tabs = [
     { id: 'all' as const, label: 'All', count: stats.total, color: 'default' as const },
@@ -104,7 +115,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
       condition_notes: data.condition_notes || null,
       status: 'good',
       requires_calibration: false,
-      photos: [],
+      photos: (data.photos as string[]) || [],
     });
     setShowForm(false);
     setEditingEquipment(null);
@@ -132,6 +143,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
         next_inspection,
         inspection_interval_days: data.inspection_interval_days || 180,
         condition_notes: data.condition_notes || null,
+        photos: (data.photos as string[]) || [],
       },
     });
     setShowForm(false);
@@ -144,7 +156,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
   };
 
   const handleDelete = (id: string) => {
-    deleteEquipment.mutate(id);
+    setDeleteTarget(id);
   };
 
   const handleMarkInspected = (id: string) => {
@@ -267,7 +279,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 </CardContent>
               </Card>
             ) : (
-              filteredEquipment.map((item, index) => (
+              visibleEquipment.map((item, index) => (
                 <PremiumEquipmentCard
                   key={item.id}
                   equipment={item}
@@ -281,9 +293,26 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 />
               ))
             )}
+            {hasMoreEquipment && (
+              <LoadMoreButton onLoadMore={loadMoreEquipment} remaining={remainingEquipment} />
+            )}
           </div>
         </div>
       </PullToRefresh>
+
+      <DeleteConfirmSheet
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        onConfirm={() => {
+          if (deleteTarget) deleteEquipment.mutate(deleteTarget);
+          setDeleteTarget(null);
+        }}
+        title="Delete Equipment?"
+        description="This equipment record will be permanently removed"
+        isDeleting={deleteEquipment.isPending}
+      />
     </div>
   );
 };

@@ -1,21 +1,14 @@
-import { motion } from "framer-motion";
-import {
-  Plug,
-  Zap,
-  ArrowUpDown,
-  Wrench,
-  Shield,
-  Settings,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Plug, Zap, ArrowUpDown, Wrench, Shield, Settings } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export type EquipmentCategory =
-  | "pat-tester"
-  | "test-equipment"
-  | "ladders"
-  | "power-tools"
-  | "ppe"
-  | "other";
+  | 'pat-tester'
+  | 'test-equipment'
+  | 'ladders'
+  | 'power-tools'
+  | 'ppe'
+  | 'other';
 
 interface CategoryOption {
   id: EquipmentCategory;
@@ -28,52 +21,52 @@ interface CategoryOption {
 
 export const equipmentCategories: CategoryOption[] = [
   {
-    id: "pat-tester",
-    label: "PAT Tester",
+    id: 'pat-tester',
+    label: 'PAT Tester',
     icon: Plug,
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/10",
-    borderColor: "border-blue-500/30",
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/10',
+    borderColor: 'border-blue-500/30',
   },
   {
-    id: "test-equipment",
-    label: "Test Equipment",
+    id: 'test-equipment',
+    label: 'Test Equipment',
     icon: Zap,
-    color: "text-elec-yellow",
-    bgColor: "bg-elec-yellow/10",
-    borderColor: "border-elec-yellow/30",
+    color: 'text-elec-yellow',
+    bgColor: 'bg-elec-yellow/10',
+    borderColor: 'border-elec-yellow/30',
   },
   {
-    id: "ladders",
-    label: "Ladders",
+    id: 'ladders',
+    label: 'Ladders',
     icon: ArrowUpDown,
-    color: "text-orange-400",
-    bgColor: "bg-orange-500/10",
-    borderColor: "border-orange-500/30",
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/10',
+    borderColor: 'border-orange-500/30',
   },
   {
-    id: "power-tools",
-    label: "Power Tools",
+    id: 'power-tools',
+    label: 'Power Tools',
     icon: Wrench,
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/10",
-    borderColor: "border-purple-500/30",
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/10',
+    borderColor: 'border-purple-500/30',
   },
   {
-    id: "ppe",
-    label: "PPE",
+    id: 'ppe',
+    label: 'PPE',
     icon: Shield,
-    color: "text-emerald-400",
-    bgColor: "bg-emerald-500/10",
-    borderColor: "border-emerald-500/30",
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/30',
   },
   {
-    id: "other",
-    label: "Other",
+    id: 'other',
+    label: 'Other',
     icon: Settings,
-    color: "text-white",
-    bgColor: "bg-gray-500/10",
-    borderColor: "border-gray-500/30",
+    color: 'text-white',
+    bgColor: 'bg-gray-500/10',
+    borderColor: 'border-gray-500/30',
   },
 ];
 
@@ -83,16 +76,10 @@ interface EquipmentCategoryPickerProps {
   error?: string;
 }
 
-export function EquipmentCategoryPicker({
-  value,
-  onChange,
-  error,
-}: EquipmentCategoryPickerProps) {
+export function EquipmentCategoryPicker({ value, onChange, error }: EquipmentCategoryPickerProps) {
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-white">
-        Category
-      </label>
+      <label className="block text-xs font-medium text-white">Category</label>
 
       <div className="grid grid-cols-3 gap-1.5">
         {equipmentCategories.map((category, index) => {
@@ -105,16 +92,16 @@ export function EquipmentCategoryPicker({
               type="button"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.03, type: "spring", stiffness: 200 }}
+              transition={{ delay: index * 0.03, type: 'spring', stiffness: 200 }}
               onClick={() => onChange(category.id)}
               className={cn(
-                "relative flex flex-col items-center gap-1.5 p-3 rounded-lg",
-                "border transition-all duration-200",
-                "touch-manipulation min-h-[76px]",
-                "active:scale-95",
+                'relative flex flex-col items-center gap-1.5 p-3 rounded-lg',
+                'border transition-all duration-200',
+                'touch-manipulation min-h-[76px]',
+                'active:scale-95',
                 isSelected
                   ? cn(category.bgColor, category.borderColor)
-                  : "bg-white/5 border-white/[0.08]"
+                  : 'bg-white/5 border-white/[0.08]'
               )}
             >
               {/* Selection indicator */}
@@ -122,33 +109,23 @@ export function EquipmentCategoryPicker({
                 <motion.div
                   layoutId="selectedCategoryIndicator"
                   className={cn(
-                    "absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full",
-                    category.color.replace("text-", "bg-")
+                    'absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full',
+                    category.color.replace('text-', 'bg-')
                   )}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
 
               {/* Icon */}
-              <div
-                className={cn(
-                  "p-2 rounded-lg",
-                  isSelected ? category.bgColor : "bg-white/5"
-                )}
-              >
-                <Icon
-                  className={cn(
-                    "h-5 w-5",
-                    isSelected ? category.color : "text-white"
-                  )}
-                />
+              <div className={cn('p-2 rounded-lg', isSelected ? category.bgColor : 'bg-white/5')}>
+                <Icon className={cn('h-5 w-5', isSelected ? category.color : 'text-white')} />
               </div>
 
               {/* Label */}
               <span
                 className={cn(
-                  "text-[10px] font-medium text-center",
-                  isSelected ? "text-white" : "text-white"
+                  'text-[10px] font-medium text-center',
+                  isSelected ? 'text-white' : 'text-white'
                 )}
               >
                 {category.label}
@@ -158,9 +135,7 @@ export function EquipmentCategoryPicker({
         })}
       </div>
 
-      {error && (
-        <p className="text-xs text-red-400">{error}</p>
-      )}
+      {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );
 }

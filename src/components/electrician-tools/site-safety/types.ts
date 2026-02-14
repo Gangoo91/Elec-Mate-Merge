@@ -15,7 +15,7 @@ export interface NearMissReport {
   potential_consequences?: string;
   immediate_actions?: string;
   preventive_measures?: string;
-  photo_urls?: string[];
+  photos?: string[];
   created_at: string;
   user_id: string;
   witnesses?: Witness[];
@@ -29,4 +29,12 @@ export interface NearMissReport {
   supervisor_notified?: boolean;
   supervisor_name?: string;
   previous_similar_incidents?: string;
+  follow_up_required?: boolean;
+  status?: 'open' | 'in_progress' | 'closed';
+  assigned_to?: string;
+  due_date?: string;
+  completed_date?: string;
+  incident_number?: string;
+  likelihood?: number;
+  risk_rating?: number;
 }

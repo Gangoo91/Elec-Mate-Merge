@@ -1,5 +1,5 @@
-import { Shield, FileText, Camera, Users, CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { Shield, FileText, Camera, Users, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface GettingStartedCardProps {
   onAction: (section: string) => void;
@@ -7,33 +7,33 @@ interface GettingStartedCardProps {
 
 const quickStartActions = [
   {
-    id: "ai-rams",
-    label: "Create RAMS",
+    id: 'ai-rams',
+    label: 'Create RAMS',
     icon: FileText,
-    gradient: "from-orange-500/20 to-red-500/20",
-    iconColour: "text-orange-400",
+    gradient: 'from-orange-500/20 to-red-500/20',
+    iconColour: 'text-orange-400',
   },
   {
-    id: "photo-docs",
-    label: "Take Photo",
+    id: 'photo-docs',
+    label: 'Take Photo',
     icon: Camera,
-    gradient: "from-emerald-500/20 to-green-500/20",
-    iconColour: "text-emerald-400",
+    gradient: 'from-emerald-500/20 to-green-500/20',
+    iconColour: 'text-emerald-400',
   },
   {
-    id: "team-briefing",
-    label: "Log Briefing",
+    id: 'team-briefing',
+    label: 'Log Briefing',
     icon: Users,
-    gradient: "from-purple-500/20 to-purple-600/20",
-    iconColour: "text-purple-400",
+    gradient: 'from-purple-500/20 to-purple-600/20',
+    iconColour: 'text-purple-400',
   },
 ];
 
 const checklist = [
-  "Create your first RAMS document",
-  "Take a safety photo on site",
-  "Log a team briefing",
-  "Add equipment to the tracker",
+  'Create your first RAMS document',
+  'Take a safety photo on site',
+  'Log a team briefing',
+  'Add equipment to the tracker',
 ];
 
 export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
@@ -53,12 +53,8 @@ export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">
-              Welcome to Site Safety
-            </h3>
-            <p className="text-sm text-white">
-              Get started with your safety toolkit
-            </p>
+            <h3 className="text-base font-bold text-white">Welcome to Site Safety</h3>
+            <p className="text-sm text-white">Get started with your safety toolkit</p>
           </div>
         </div>
 
@@ -73,9 +69,7 @@ export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
                 className={`flex flex-col items-center gap-2 p-3 rounded-xl bg-gradient-to-br ${action.gradient} border border-white/[0.06] touch-manipulation active:scale-[0.96] active:opacity-80 transition-all min-h-[80px] justify-center`}
               >
                 <Icon className={`h-5 w-5 ${action.iconColour}`} />
-                <span className="text-xs font-semibold text-white">
-                  {action.label}
-                </span>
+                <span className="text-xs font-semibold text-white">{action.label}</span>
               </button>
             );
           })}
@@ -83,9 +77,7 @@ export function GettingStartedCard({ onAction }: GettingStartedCardProps) {
 
         {/* Setup checklist */}
         <div className="space-y-2">
-          <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-            Setup Checklist
-          </h4>
+          <h4 className="text-xs font-bold text-white uppercase tracking-wider">Setup Checklist</h4>
           <div className="space-y-1.5">
             {checklist.map((item) => (
               <div

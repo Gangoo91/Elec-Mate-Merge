@@ -1,20 +1,17 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Clock, 
-  Shield, 
-  X,
-  GitCompare,
-  CheckCircle2,
-  Settings,
-  Users,
-  Star
-} from 'lucide-react';
+import { Clock, Shield, X, GitCompare, CheckCircle2, Settings, Users, Star } from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 
 interface TemplateComparisonModalProps {
@@ -28,25 +25,30 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
   templates,
   isOpen,
   onClose,
-  onSelectTemplate
+  onSelectTemplate,
 }) => {
   if (templates.length === 0) return null;
 
   const getDifficultyColor = (level: string) => {
     switch (level) {
-      case 'basic': return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'intermediate': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      case 'advanced': return 'bg-red-500/20 text-red-300 border-red-500/30';
-      default: return 'bg-elec-gray/20 text-elec-gray border-elec-gray/30';
+      case 'basic':
+        return 'bg-green-500/20 text-green-300 border-green-500/30';
+      case 'intermediate':
+        return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-300 border-red-500/30';
+      default:
+        return 'bg-elec-gray/20 text-elec-gray border-elec-gray/30';
     }
   };
 
-  const compareFeature = (feature: string, template1?: string[], template2?: string[], template3?: string[]) => {
-    const allFeatures = new Set([
-      ...(template1 || []),
-      ...(template2 || []),
-      ...(template3 || [])
-    ]);
+  const compareFeature = (
+    feature: string,
+    template1?: string[],
+    template2?: string[],
+    template3?: string[]
+  ) => {
+    const allFeatures = new Set([...(template1 || []), ...(template2 || []), ...(template3 || [])]);
 
     return Array.from(allFeatures);
   };
@@ -62,7 +64,8 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                 Template Comparison
               </DialogTitle>
               <p className="text-white text-sm">
-                Compare up to {templates.length} templates side by side to choose the best fit for your project
+                Compare up to {templates.length} templates side by side to choose the best fit for
+                your project
               </p>
             </div>
             <DialogClose className="text-white hover:text-foreground transition-colors">
@@ -89,9 +92,7 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                         </div>
                       )}
                     </div>
-                    <p className="text-xs text-white leading-relaxed">
-                      {template.description}
-                    </p>
+                    <p className="text-xs text-white leading-relaxed">{template.description}</p>
                   </CardHeader>
                 </Card>
 
@@ -115,7 +116,9 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                         <Settings className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                         <div>
                           <div className="text-xs font-medium text-elec-yellow">Steps</div>
-                          <div className="text-xs text-white">{template.steps.length} procedures</div>
+                          <div className="text-xs text-white">
+                            {template.steps.length} procedures
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -125,7 +128,9 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                 {/* Difficulty */}
                 <Card className="border-elec-yellow/10 bg-elec-card/30">
                   <CardContent className="p-3">
-                    <div className="text-xs font-medium text-elec-yellow mb-2">Difficulty Level</div>
+                    <div className="text-xs font-medium text-elec-yellow mb-2">
+                      Difficulty Level
+                    </div>
                     <Badge className={`${getDifficultyColor(template.difficultyLevel)} text-xs`}>
                       {template.difficultyLevel}
                     </Badge>
@@ -199,19 +204,31 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
                   <div>
                     <div className="font-medium text-blue-300 mb-2">Duration Range</div>
                     <div className="text-white">
-                      {Math.min(...templates.map(t => parseInt(t.estimatedDuration.split('-')[0])))} - {Math.max(...templates.map(t => parseInt(t.estimatedDuration.split('-')[1] || t.estimatedDuration.split('-')[0])))} hours
+                      {Math.min(
+                        ...templates.map((t) => parseInt(t.estimatedDuration.split('-')[0]))
+                      )}{' '}
+                      -{' '}
+                      {Math.max(
+                        ...templates.map((t) =>
+                          parseInt(
+                            t.estimatedDuration.split('-')[1] || t.estimatedDuration.split('-')[0]
+                          )
+                        )
+                      )}{' '}
+                      hours
                     </div>
                   </div>
                   <div>
                     <div className="font-medium text-blue-300 mb-2">Steps Range</div>
                     <div className="text-white">
-                      {Math.min(...templates.map(t => t.steps.length))} - {Math.max(...templates.map(t => t.steps.length))} procedures
+                      {Math.min(...templates.map((t) => t.steps.length))} -{' '}
+                      {Math.max(...templates.map((t) => t.steps.length))} procedures
                     </div>
                   </div>
                   <div>
                     <div className="font-medium text-blue-300 mb-2">Difficulty Spread</div>
                     <div className="flex flex-wrap gap-1">
-                      {Array.from(new Set(templates.map(t => t.difficultyLevel))).map(level => (
+                      {Array.from(new Set(templates.map((t) => t.difficultyLevel))).map((level) => (
                         <Badge key={level} className={`${getDifficultyColor(level)} text-xs`}>
                           {level}
                         </Badge>

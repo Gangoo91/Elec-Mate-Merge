@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   GripVertical,
   Plus,
@@ -27,7 +27,7 @@ import {
   CheckSquare,
   Calendar,
   Clock,
-} from "lucide-react";
+} from 'lucide-react';
 
 interface FieldDefinition {
   id: string;
@@ -46,9 +46,9 @@ interface TemplateEditorProps {
 }
 
 export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorProps) => {
-  const [templateName, setTemplateName] = useState("");
-  const [templateDescription, setTemplateDescription] = useState("");
-  const [templateType, setTemplateType] = useState<string>("site-work");
+  const [templateName, setTemplateName] = useState('');
+  const [templateDescription, setTemplateDescription] = useState('');
+  const [templateType, setTemplateType] = useState<string>('site-work');
   const [fields, setFields] = useState<FieldDefinition[]>([]);
   const [showPreview, setShowPreview] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -74,64 +74,63 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
   };
 
   const updateField = (id: string, updates: Partial<FieldDefinition>) => {
-    setFields(fields.map(f => f.id === id ? { ...f, ...updates } : f));
+    setFields(fields.map((f) => (f.id === id ? { ...f, ...updates } : f)));
   };
 
   const removeField = (id: string) => {
-    setFields(fields.filter(f => f.id !== id));
+    setFields(fields.filter((f) => f.id !== id));
   };
 
   const handleSave = async () => {
     if (!templateName.trim()) {
       toast({
-        title: "Name Required",
-        description: "Please enter a template name",
-        variant: "destructive",
+        title: 'Name Required',
+        description: 'Please enter a template name',
+        variant: 'destructive',
       });
       return;
     }
 
     setSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const templateData = {
         name: templateName,
         description: templateDescription,
         template_type: templateType,
-        template_schema: JSON.parse(JSON.stringify({
-          fields,
-          version: '1.0',
-        })),
+        template_schema: JSON.parse(
+          JSON.stringify({
+            fields,
+            version: '1.0',
+          })
+        ),
         is_default: false,
         user_id: user.id,
       };
 
       const { error } = templateId
-        ? await supabase
-            .from("briefing_templates")
-            .update(templateData)
-            .eq("id", templateId)
-        : await supabase
-            .from("briefing_templates")
-            .insert([templateData]);
+        ? await supabase.from('briefing_templates').update(templateData).eq('id', templateId)
+        : await supabase.from('briefing_templates').insert([templateData]);
 
       if (error) throw error;
 
       toast({
-        title: "Template Saved",
+        title: 'Template Saved',
         description: `${templateName} has been saved successfully`,
       });
 
       onSaved();
       onClose();
     } catch (error) {
-      console.error("Error saving template:", error);
+      console.error('Error saving template:', error);
       toast({
-        title: "Error",
-        description: "Failed to save template",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save template',
+        variant: 'destructive',
       });
     } finally {
       setSaving(false);
@@ -150,13 +149,15 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
             <h2 className="text-lg sm:text-2xl font-bold text-elec-light">
               {templateId ? 'Edit Template' : 'Create Template'}
             </h2>
-            <p className="text-sm text-white">
-              Build a custom briefing template
-            </p>
+            <p className="text-sm text-white">Build a custom briefing template</p>
           </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setShowPreview(!showPreview)} className="h-11 touch-manipulation">
+          <Button
+            variant="outline"
+            onClick={() => setShowPreview(!showPreview)}
+            className="h-11 touch-manipulation"
+          >
             <Eye className="mr-2 h-4 w-4" />
             {showPreview ? 'Edit' : 'Preview'}
           </Button>
@@ -263,9 +264,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                             <div className="flex-1">
                               <Input
                                 value={field.label}
-                                onChange={(e) =>
-                                  updateField(field.id, { label: e.target.value })
-                                }
+                                onChange={(e) => updateField(field.id, { label: e.target.value })}
                                 placeholder="Field label"
                                 className="font-medium"
                               />
@@ -297,18 +296,14 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
 
                         <Input
                           value={field.placeholder || ''}
-                          onChange={(e) =>
-                            updateField(field.id, { placeholder: e.target.value })
-                          }
+                          onChange={(e) => updateField(field.id, { placeholder: e.target.value })}
                           placeholder="Placeholder text"
                           className="text-sm"
                         />
 
                         <Textarea
                           value={field.aiHint || ''}
-                          onChange={(e) =>
-                            updateField(field.id, { aiHint: e.target.value })
-                          }
+                          onChange={(e) => updateField(field.id, { aiHint: e.target.value })}
                           placeholder="AI hint: Tell the AI what to generate for this field"
                           className="text-sm"
                           rows={2}
@@ -344,11 +339,7 @@ export const TemplateEditor = ({ templateId, onClose, onSaved }: TemplateEditorP
                       Checklist items will appear here
                     </div>
                   ) : (
-                    <Input
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      disabled
-                    />
+                    <Input type={field.type} placeholder={field.placeholder} disabled />
                   )}
                 </div>
               );

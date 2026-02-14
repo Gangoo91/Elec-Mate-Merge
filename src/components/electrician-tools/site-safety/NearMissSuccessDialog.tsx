@@ -1,6 +1,12 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, Eye, Sparkles, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, Eye, Sparkles, X } from 'lucide-react';
 
 interface Props {
   open: boolean;
@@ -10,12 +16,7 @@ interface Props {
   reportId: string;
 }
 
-export const NearMissSuccessDialog = ({ 
-  open, 
-  onClose, 
-  onCreateBriefing, 
-  onViewReport 
-}: Props) => {
+export const NearMissSuccessDialog = ({ open, onClose, onCreateBriefing, onViewReport }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px] bg-card">
@@ -35,9 +36,7 @@ export const NearMissSuccessDialog = ({
         </DialogHeader>
 
         <div className="space-y-3 pt-4">
-          <p className="text-sm text-white">
-            What would you like to do next?
-          </p>
+          <p className="text-sm text-white">What would you like to do next?</p>
 
           <Button
             onClick={() => {
@@ -77,11 +76,7 @@ export const NearMissSuccessDialog = ({
             </div>
           </Button>
 
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            className="w-full"
-          >
+          <Button onClick={onClose} variant="ghost" className="w-full">
             Done
           </Button>
         </div>

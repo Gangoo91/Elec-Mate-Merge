@@ -29,7 +29,7 @@ const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
 export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
   methodData,
   projectName,
-  location
+  location,
 }) => {
   const title = methodData.jobTitle || projectName || 'Untitled Project';
   const locationValue = methodData.location || location;

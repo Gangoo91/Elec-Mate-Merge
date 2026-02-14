@@ -13,14 +13,13 @@ export function HeroAIBriefingCard({ onCreateBriefing }: HeroAIBriefingCardProps
         <div className="h-16 w-16 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
           <FileText className="h-8 w-8 text-elec-yellow" />
         </div>
-        
+
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-elec-light">
-            AI-Powered Team Briefing
-          </h2>
-          
+          <h2 className="text-xl font-semibold text-elec-light">AI-Powered Team Briefing</h2>
+
           <p className="text-sm text-white max-w-md">
-            Generate BS 7671 compliant safety briefings with AI assistance. Complete setup in minutes with intelligent content generation.
+            Generate BS 7671 compliant safety briefings with AI assistance. Complete setup in
+            minutes with intelligent content generation.
           </p>
         </div>
 

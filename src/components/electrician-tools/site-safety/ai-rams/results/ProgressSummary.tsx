@@ -11,7 +11,7 @@ interface ProgressSummaryProps {
 
 export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEstimatedTime }) => {
   const totalSteps = steps.length;
-  const completedSteps = steps.filter(s => s.isCompleted).length;
+  const completedSteps = steps.filter((s) => s.isCompleted).length;
   const progressPercent = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
 
   // Calculate total time if not provided
@@ -62,9 +62,7 @@ export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEs
               <Clock className="h-3.5 w-3.5 text-amber-400" />
             </div>
             <div className="text-base font-bold text-elec-light">{estimatedTime}</div>
-            <div className="mt-1.5 text-[10px] text-white">
-              Duration
-            </div>
+            <div className="mt-1.5 text-[10px] text-white">Duration</div>
           </div>
         </div>
       </CardContent>

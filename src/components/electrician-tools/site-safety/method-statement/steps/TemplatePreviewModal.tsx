@@ -1,21 +1,27 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Clock, 
-  Users, 
-  Shield, 
-  AlertTriangle, 
-  CheckCircle2, 
+import {
+  Clock,
+  Users,
+  Shield,
+  AlertTriangle,
+  CheckCircle2,
   X,
   Zap,
   BookOpen,
   Settings,
-  Eye
+  Eye,
 } from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
@@ -31,25 +37,33 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
   template,
   isOpen,
   onClose,
-  onUseTemplate
+  onUseTemplate,
 }) => {
   if (!template) return null;
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case 'low': return 'text-green-400 bg-green-500/20';
-      case 'medium': return 'text-yellow-400 bg-yellow-500/20';
-      case 'high': return 'text-red-400 bg-red-500/20';
-      default: return 'text-elec-gray bg-elec-gray/20';
+      case 'low':
+        return 'text-green-400 bg-green-500/20';
+      case 'medium':
+        return 'text-yellow-400 bg-yellow-500/20';
+      case 'high':
+        return 'text-red-400 bg-red-500/20';
+      default:
+        return 'text-elec-gray bg-elec-gray/20';
     }
   };
 
   const getDifficultyColor = (level: string) => {
     switch (level) {
-      case 'basic': return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'intermediate': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
-      case 'advanced': return 'bg-red-500/20 text-red-300 border-red-500/30';
-      default: return 'bg-elec-gray/20 text-elec-gray border-elec-gray/30';
+      case 'basic':
+        return 'bg-green-500/20 text-green-300 border-green-500/30';
+      case 'intermediate':
+        return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+      case 'advanced':
+        return 'bg-red-500/20 text-red-300 border-red-500/30';
+      default:
+        return 'bg-elec-gray/20 text-elec-gray border-elec-gray/30';
     }
   };
 
@@ -68,14 +82,10 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                 <Eye className="h-5 w-5 flex-shrink-0" />
                 <span className="break-words">{template.name}</span>
                 {template.isPopular && (
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                    Popular
-                  </Badge>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">Popular</Badge>
                 )}
               </DialogTitle>
-              <p className="text-white text-sm leading-relaxed">
-                {template.description}
-              </p>
+              <p className="text-white text-sm leading-relaxed">{template.description}</p>
             </div>
             <DialogClose className="text-white hover:text-foreground transition-colors">
               <X className="h-5 w-5" />
@@ -105,7 +115,9 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <Settings className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                     <div>
                       <div className="text-sm font-medium text-elec-yellow">Difficulty</div>
-                      <Badge className={`${getDifficultyColor(template.difficultyLevel)} text-xs mt-1`}>
+                      <Badge
+                        className={`${getDifficultyColor(template.difficultyLevel)} text-xs mt-1`}
+                      >
                         {template.difficultyLevel}
                       </Badge>
                     </div>
@@ -138,9 +150,9 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
               <CardContent className="p-4 pt-0">
                 <div className="flex flex-wrap gap-2">
                   {template.requiredQualifications.map((qual, index) => (
-                    <Badge 
+                    <Badge
                       key={index}
-                      variant="outline" 
+                      variant="outline"
                       className="border-elec-yellow/30 text-elec-yellow/90 bg-elec-yellow/5"
                     >
                       {qual}
@@ -158,14 +170,15 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     <Zap className="h-4 w-4" />
                     Method Steps ({template.steps.length})
                   </div>
-                  <div className="text-sm text-white">
-                    Est. {totalEstimatedTime} min total
-                  </div>
+                  <div className="text-sm text-white">Est. {totalEstimatedTime} min total</div>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 pt-0 space-y-4">
                 {template.steps.map((step, index) => (
-                  <div key={index} className="border border-elec-yellow/10 rounded-lg p-4 bg-elec-card/30">
+                  <div
+                    key={index}
+                    className="border border-elec-yellow/10 rounded-lg p-4 bg-elec-card/30"
+                  >
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-sm font-medium flex-shrink-0">
                         {index + 1}
@@ -180,10 +193,8 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             <div className="text-xs text-white">{step.estimatedDuration}</div>
                           </div>
                         </div>
-                        
-                        <p className="text-sm text-white leading-relaxed">
-                          {step.description}
-                        </p>
+
+                        <p className="text-sm text-white leading-relaxed">{step.description}</p>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs">
                           <div>
@@ -244,10 +255,13 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-medium text-orange-400 mb-1">Safety & Compliance Notice</div>
+                    <div className="font-medium text-orange-400 mb-1">
+                      Safety & Compliance Notice
+                    </div>
                     <p className="text-sm text-white leading-relaxed">
-                      This template is designed to meet BS7671:2018+A3:2024 requirements and CDM regulations. 
-                      Always conduct site-specific risk assessments and adapt procedures as needed for your specific installation.
+                      This template is designed to meet BS7671:2018+A3:2024 requirements and CDM
+                      regulations. Always conduct site-specific risk assessments and adapt
+                      procedures as needed for your specific installation.
                     </p>
                   </div>
                 </div>

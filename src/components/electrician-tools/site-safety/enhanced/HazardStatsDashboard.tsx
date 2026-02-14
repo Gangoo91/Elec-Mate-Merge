@@ -39,17 +39,17 @@ export const HazardStatsDashboard = ({
           <div className="text-2xl font-bold text-elec-yellow">{totalHazards}</div>
           <div className="text-xs text-white">Total Hazards</div>
         </div>
-        
+
         <div className="bg-red-500/10 rounded-lg p-3 border border-red-500/30">
           <div className="text-2xl font-bold text-red-400">{veryHighRisk}</div>
           <div className="text-xs text-white">Very High Risk</div>
         </div>
-        
+
         <div className="bg-orange-500/10 rounded-lg p-3 border border-orange-500/30">
           <div className="text-2xl font-bold text-orange-400">{highRisk}</div>
           <div className="text-xs text-white">High Risk</div>
         </div>
-        
+
         <div className="bg-background/50 rounded-lg p-3 border border-border/30">
           <div className="text-2xl font-bold text-foreground">{totalControls}</div>
           <div className="text-xs text-white">Controls</div>
@@ -64,11 +64,7 @@ export const HazardStatsDashboard = ({
         </div>
         <div className="flex flex-wrap gap-2">
           {categoryBreakdown.slice(0, 6).map((cat) => (
-            <Badge 
-              key={cat.category} 
-              variant="outline" 
-              className={`${cat.color} text-xs`}
-            >
+            <Badge key={cat.category} variant="outline" className={`${cat.color} text-xs`}>
               {cat.category} ({cat.count})
             </Badge>
           ))}

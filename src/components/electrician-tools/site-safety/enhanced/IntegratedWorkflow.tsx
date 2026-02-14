@@ -7,17 +7,17 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  FileText, 
-  CheckCircle, 
-  Clock, 
-  ArrowRight, 
+import {
+  FileText,
+  CheckCircle,
+  Clock,
+  ArrowRight,
   ArrowLeft,
   Link2,
   AlertTriangle,
   Zap,
   Save,
-  Download
+  Download,
 } from 'lucide-react';
 import { useRAMS } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { useEnhancedRAMS } from '@/hooks/useEnhancedRAMS';
@@ -52,7 +52,7 @@ const IntegratedWorkflow: React.FC = () => {
     description: '',
     overallRiskLevel: 'medium',
     reviewDate: '',
-    steps: []
+    steps: [],
   });
   const [linkedTasks, setLinkedTasks] = useState<string[]>([]);
   const [linkedHazards, setLinkedHazards] = useState<string[]>([]);
@@ -65,7 +65,7 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Define project details and scope',
       component: ProjectSetupStep,
       required: true,
-      completed: false
+      completed: false,
     },
     {
       id: 'task-management',
@@ -73,7 +73,7 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Create and organize work tasks',
       component: TaskManager,
       required: true,
-      completed: false
+      completed: false,
     },
     {
       id: 'hazard-assessment',
@@ -81,7 +81,7 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Identify and assess hazards from database',
       component: HazardDatabase,
       required: true,
-      completed: false
+      completed: false,
     },
     {
       id: 'rams-creation',
@@ -96,9 +96,9 @@ const IntegratedWorkflow: React.FC = () => {
           is_valid: result.isValid,
           warnings: [],
           errors: result.errors,
-          suggestions: []
+          suggestions: [],
         };
-      }
+      },
     },
     {
       id: 'method-statement',
@@ -106,7 +106,7 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Develop detailed work method',
       component: MethodStatementStep,
       required: true,
-      completed: false
+      completed: false,
     },
     {
       id: 'integration',
@@ -114,7 +114,7 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Link all documents and validate completeness',
       component: IntegrationStep,
       required: true,
-      completed: false
+      completed: false,
     },
     {
       id: 'review-export',
@@ -122,12 +122,13 @@ const IntegratedWorkflow: React.FC = () => {
       description: 'Final review and document generation',
       component: ReviewExportStep,
       required: true,
-      completed: false
-    }
+      completed: false,
+    },
   ];
 
   // Calculate progress based on completed steps
-  const progress = (workflowSteps.filter(step => step.completed).length / workflowSteps.length) * 100;
+  const progress =
+    (workflowSteps.filter((step) => step.completed).length / workflowSteps.length) * 100;
 
   // Navigation functions
   const goToNextStep = () => {
@@ -154,7 +155,7 @@ const IntegratedWorkflow: React.FC = () => {
   // Validate current step
   const validateCurrentStep = (): ValidationResult => {
     const currentStepData = workflowSteps[currentStep];
-    
+
     if (currentStepData.validation) {
       return currentStepData.validation();
     }
@@ -164,7 +165,7 @@ const IntegratedWorkflow: React.FC = () => {
       is_valid: true,
       warnings: [],
       errors: [],
-      suggestions: []
+      suggestions: [],
     };
   };
 
@@ -173,9 +174,7 @@ const IntegratedWorkflow: React.FC = () => {
       {/* Header */}
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-2">Integrated Safety Workflow</h1>
-        <p className="text-white">
-          Complete safety documentation with task and hazard management
-        </p>
+        <p className="text-white">Complete safety documentation with task and hazard management</p>
       </div>
 
       {/* Progress indicator */}
@@ -183,42 +182,40 @@ const IntegratedWorkflow: React.FC = () => {
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <span className="text-sm font-medium">Workflow Progress</span>
-            <span className="text-sm text-white">
-              {Math.round(progress)}% Complete
-            </span>
+            <span className="text-sm text-white">{Math.round(progress)}% Complete</span>
           </div>
           <Progress value={progress} className="mb-4" />
-          
+
           {/* Step indicators */}
           <div className="flex justify-between">
             {workflowSteps.map((step, index) => (
               <div
                 key={step.id}
                 className={`flex flex-col items-center cursor-pointer p-2 rounded active:scale-[0.98] transition-all touch-manipulation ${
-                  index === currentStep 
-                    ? 'bg-primary/10 text-primary' 
-                    : step.completed 
-                      ? 'text-green-600 hover:bg-green-50' 
+                  index === currentStep
+                    ? 'bg-primary/10 text-primary'
+                    : step.completed
+                      ? 'text-green-600 hover:bg-green-50'
                       : 'text-white hover:bg-muted'
                 }`}
                 onClick={() => goToStep(index)}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${
-                  step.completed 
-                    ? 'bg-green-100 text-green-600' 
-                    : index === currentStep 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'bg-muted text-white'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${
+                    step.completed
+                      ? 'bg-green-100 text-green-600'
+                      : index === currentStep
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted text-white'
+                  }`}
+                >
                   {step.completed ? (
                     <CheckCircle className="w-4 h-4" />
                   ) : (
                     <span className="text-xs font-semibold">{index + 1}</span>
                   )}
                 </div>
-                <span className="text-xs text-center leading-tight">
-                  {step.title}
-                </span>
+                <span className="text-xs text-center leading-tight">{step.title}</span>
               </div>
             ))}
           </div>
@@ -236,11 +233,9 @@ const IntegratedWorkflow: React.FC = () => {
                 </span>
                 {workflowSteps[currentStep].title}
               </CardTitle>
-              <p className="text-white mt-1">
-                {workflowSteps[currentStep].description}
-              </p>
+              <p className="text-white mt-1">{workflowSteps[currentStep].description}</p>
             </div>
-            
+
             {workflowSteps[currentStep].completed && (
               <Badge variant="outline" className="text-green-600 border-green-200">
                 <CheckCircle className="w-3 h-3 mr-1" />
@@ -249,7 +244,7 @@ const IntegratedWorkflow: React.FC = () => {
             )}
           </div>
         </CardHeader>
-        
+
         <CardContent>
           {/* Render current step component */}
           {React.createElement(workflowSteps[currentStep].component, {
@@ -261,18 +256,14 @@ const IntegratedWorkflow: React.FC = () => {
             linkedTasks,
             setLinkedTasks,
             linkedHazards,
-            setLinkedHazards
+            setLinkedHazards,
           })}
         </CardContent>
       </Card>
 
       {/* Navigation */}
       <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={goToPreviousStep}
-          disabled={currentStep === 0}
-        >
+        <Button variant="outline" onClick={goToPreviousStep} disabled={currentStep === 0}>
           <ArrowLeft className="w-4 h-4 mr-2" />
           Previous
         </Button>
@@ -300,10 +291,7 @@ const IntegratedWorkflow: React.FC = () => {
             return null;
           })()}
 
-          <Button
-            onClick={goToNextStep}
-            disabled={currentStep === workflowSteps.length - 1}
-          >
+          <Button onClick={goToNextStep} disabled={currentStep === workflowSteps.length - 1}>
             Next
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
@@ -318,7 +306,12 @@ const ProjectSetupStep: React.FC<any> = ({ onComplete, onNext }) => {
   return (
     <div className="space-y-4">
       <p>Project setup component would go here...</p>
-      <Button onClick={() => { onComplete(); onNext(); }}>
+      <Button
+        onClick={() => {
+          onComplete();
+          onNext();
+        }}
+      >
         Complete Setup
       </Button>
     </div>
@@ -329,7 +322,12 @@ const RAMSCreationStep: React.FC<any> = ({ onComplete, onNext }) => {
   return (
     <div className="space-y-4">
       <p>RAMS creation component would go here...</p>
-      <Button onClick={() => { onComplete(); onNext(); }}>
+      <Button
+        onClick={() => {
+          onComplete();
+          onNext();
+        }}
+      >
         Complete RAMS
       </Button>
     </div>
@@ -340,7 +338,12 @@ const MethodStatementStep: React.FC<any> = ({ onComplete, onNext }) => {
   return (
     <div className="space-y-4">
       <p>Method statement component would go here...</p>
-      <Button onClick={() => { onComplete(); onNext(); }}>
+      <Button
+        onClick={() => {
+          onComplete();
+          onNext();
+        }}
+      >
         Complete Method Statement
       </Button>
     </div>
@@ -351,7 +354,12 @@ const IntegrationStep: React.FC<any> = ({ onComplete, onNext }) => {
   return (
     <div className="space-y-4">
       <p>Document integration component would go here...</p>
-      <Button onClick={() => { onComplete(); onNext(); }}>
+      <Button
+        onClick={() => {
+          onComplete();
+          onNext();
+        }}
+      >
         Complete Integration
       </Button>
     </div>

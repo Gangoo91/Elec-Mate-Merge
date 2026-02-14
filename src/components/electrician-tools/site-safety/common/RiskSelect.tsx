@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -7,15 +7,11 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Check, ChevronDown, AlertTriangle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { riskConsequences } from "@/data/hazards";
+} from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Check, ChevronDown, AlertTriangle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { riskConsequences } from '@/data/hazards';
 
 interface RiskSelectProps {
   selectedHazard?: string;
@@ -26,28 +22,28 @@ interface RiskSelectProps {
   className?: string;
 }
 
-export function RiskSelect({ 
-  selectedHazard, 
-  value, 
-  onValueChange, 
+export function RiskSelect({
+  selectedHazard,
+  value,
+  onValueChange,
   onControlMeasuresChange,
-  placeholder = "Select potential consequence...", 
-  className 
+  placeholder = 'Select potential consequence...',
+  className,
 }: RiskSelectProps) {
   const [open, setOpen] = useState(false);
 
   // Filter risks based on selected hazard
-  const availableRisks = selectedHazard 
-    ? riskConsequences.filter(risk => risk.applicableHazards?.includes(selectedHazard))
+  const availableRisks = selectedHazard
+    ? riskConsequences.filter((risk) => risk.applicableHazards?.includes(selectedHazard))
     : riskConsequences;
 
   const handleSelect = (selectedValue: string) => {
     onValueChange(selectedValue);
     setOpen(false);
-    
+
     // Auto-suggest control measures if callback provided
     if (onControlMeasuresChange) {
-      const selectedRisk = riskConsequences.find(risk => risk.consequence === selectedValue);
+      const selectedRisk = riskConsequences.find((risk) => risk.consequence === selectedValue);
       if (selectedRisk) {
         onControlMeasuresChange(selectedRisk.suggestedControls || []);
       }
@@ -62,33 +58,31 @@ export function RiskSelect({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "w-full justify-between bg-background/80 backdrop-blur-sm border-elec-yellow/20 text-left font-normal",
-            !value && "text-white",
+            'w-full justify-between bg-background/80 backdrop-blur-sm border-elec-yellow/20 text-left font-normal',
+            !value && 'text-white',
             className
           )}
         >
           <div className="flex items-center gap-2 truncate">
             <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
-            <span className="truncate">
-              {value || placeholder}
-            </span>
+            <span className="truncate">{value || placeholder}</span>
           </div>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent 
-        className="w-full p-0 bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50" 
+      <PopoverContent
+        className="w-full p-0 bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50"
         align="start"
-        style={{ width: "var(--radix-popover-trigger-width)" }}
+        style={{ width: 'var(--radix-popover-trigger-width)' }}
       >
         <Command className="bg-transparent">
-          <CommandInput 
-            placeholder="Search risks..." 
+          <CommandInput
+            placeholder="Search risks..."
             className="border-none bg-transparent text-foreground"
           />
           <CommandList className="max-h-60">
             <CommandEmpty>No risks found.</CommandEmpty>
-            
+
             {selectedHazard ? (
               <CommandGroup heading={`Risks for: ${selectedHazard}`}>
                 {availableRisks.map((risk) => (
@@ -100,8 +94,8 @@ export function RiskSelect({
                     <div className="flex items-center gap-2 w-full">
                       <Check
                         className={cn(
-                          "h-4 w-4",
-                          value === risk.consequence ? "opacity-100" : "opacity-0"
+                          'h-4 w-4',
+                          value === risk.consequence ? 'opacity-100' : 'opacity-0'
                         )}
                       />
                       <div className="flex-1">
@@ -125,8 +119,8 @@ export function RiskSelect({
                     <div className="flex items-center gap-2 w-full">
                       <Check
                         className={cn(
-                          "h-4 w-4",
-                          value === risk.consequence ? "opacity-100" : "opacity-0"
+                          'h-4 w-4',
+                          value === risk.consequence ? 'opacity-100' : 'opacity-0'
                         )}
                       />
                       <div className="flex-1">

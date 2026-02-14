@@ -25,17 +25,40 @@ interface SwipeableRiskCardProps {
 }
 
 const getRiskColor = (rating: number) => {
-  if (rating <= 4) return { bg: 'bg-green-500/10', border: 'border-green-500/40', text: 'text-green-400', label: 'Low' };
-  if (rating <= 9) return { bg: 'bg-yellow-500/10', border: 'border-yellow-500/40', text: 'text-yellow-400', label: 'Medium' };
-  if (rating <= 15) return { bg: 'bg-orange-500/10', border: 'border-orange-500/40', text: 'text-orange-400', label: 'High' };
-  return { bg: 'bg-red-500/10', border: 'border-red-500/40', text: 'text-red-400', label: 'Very High' };
+  if (rating <= 4)
+    return {
+      bg: 'bg-green-500/10',
+      border: 'border-green-500/40',
+      text: 'text-green-400',
+      label: 'Low',
+    };
+  if (rating <= 9)
+    return {
+      bg: 'bg-yellow-500/10',
+      border: 'border-yellow-500/40',
+      text: 'text-yellow-400',
+      label: 'Medium',
+    };
+  if (rating <= 15)
+    return {
+      bg: 'bg-orange-500/10',
+      border: 'border-orange-500/40',
+      text: 'text-orange-400',
+      label: 'High',
+    };
+  return {
+    bg: 'bg-red-500/10',
+    border: 'border-red-500/40',
+    text: 'text-red-400',
+    label: 'Very High',
+  };
 };
 
 export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
   risk,
   index,
   onEdit,
-  onDelete
+  onDelete,
 }) => {
   const { isMobile } = useMobileEnhanced();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,19 +79,28 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
   };
 
   const CardContent = (
-    <Card className={cn(
-      "backdrop-blur-sm transition-all duration-300 border-l-4",
-      riskColor.border,
-      riskColor.bg,
-      showDeleteConfirm && "translate-x-[-100px] opacity-70"
-    )}>
+    <Card
+      className={cn(
+        'backdrop-blur-sm transition-all duration-300 border-l-4',
+        riskColor.border,
+        riskColor.bg,
+        showDeleteConfirm && 'translate-x-[-100px] opacity-70'
+      )}
+    >
       <div className="p-5 space-y-4">
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-sm font-bold text-elec-yellow">#{index + 1}</span>
-              <Badge className={cn("text-xs font-semibold", riskColor.bg, riskColor.text, riskColor.border)}>
+              <Badge
+                className={cn(
+                  'text-xs font-semibold',
+                  riskColor.bg,
+                  riskColor.text,
+                  riskColor.border
+                )}
+              >
                 {riskColor.label} ({risk.riskRating})
               </Badge>
             </div>
@@ -76,7 +108,7 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
               {risk.hazard}
             </h4>
           </div>
-          
+
           {/* Action Buttons - Larger on mobile */}
           <div className="flex gap-2 shrink-0">
             <Button
@@ -100,7 +132,9 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
 
         {/* Who at Risk */}
         <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-elec-yellow/80 uppercase tracking-wide">Who's at Risk</p>
+          <p className="text-xs font-semibold text-elec-yellow/80 uppercase tracking-wide">
+            Who's at Risk
+          </p>
           <p className="text-sm text-foreground/90 font-medium">{risk.whoAtRisk}</p>
         </div>
 
@@ -113,7 +147,7 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
             <span>Control Measures ({risk.controlMeasures.length})</span>
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
-          
+
           {isExpanded && (
             <ul className="space-y-2 animate-fade-in">
               {risk.controlMeasures.map((measure, idx) => (
@@ -135,8 +169,8 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
                 <div
                   key={level}
                   className={cn(
-                    "h-2 flex-1 rounded-full transition-colors",
-                    level <= risk.likelihood ? "bg-elec-yellow" : "bg-elec-gray"
+                    'h-2 flex-1 rounded-full transition-colors',
+                    level <= risk.likelihood ? 'bg-elec-yellow' : 'bg-elec-gray'
                   )}
                 />
               ))}
@@ -149,8 +183,8 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
                 <div
                   key={level}
                   className={cn(
-                    "h-2 flex-1 rounded-full transition-colors",
-                    level <= risk.severity ? "bg-elec-yellow" : "bg-elec-gray"
+                    'h-2 flex-1 rounded-full transition-colors',
+                    level <= risk.severity ? 'bg-elec-yellow' : 'bg-elec-gray'
                   )}
                 />
               ))}
@@ -179,10 +213,7 @@ export const SwipeableRiskCard: React.FC<SwipeableRiskCardProps> = ({
 
   if (isMobile) {
     return (
-      <MobileGestureHandler
-        onSwipeLeft={handleSwipeLeft}
-        onLongPress={handleLongPress}
-      >
+      <MobileGestureHandler onSwipeLeft={handleSwipeLeft} onLongPress={handleLongPress}>
         {CardContent}
       </MobileGestureHandler>
     );

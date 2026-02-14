@@ -20,7 +20,7 @@ export const MobilePDFDownloadSheet: React.FC<MobilePDFDownloadSheetProps> = ({
   open,
   onOpenChange,
   onDownloadCombined,
-  isGenerating
+  isGenerating,
 }) => {
   const handleDownload = (downloadFn: () => void) => {
     downloadFn();
@@ -35,9 +35,7 @@ export const MobilePDFDownloadSheet: React.FC<MobilePDFDownloadSheetProps> = ({
             <Download className="w-5 h-5" />
             Download PDF
           </SheetTitle>
-          <SheetDescription>
-            Download your complete RAMS document
-          </SheetDescription>
+          <SheetDescription>Download your complete RAMS document</SheetDescription>
         </SheetHeader>
 
         <div className="pb-6">

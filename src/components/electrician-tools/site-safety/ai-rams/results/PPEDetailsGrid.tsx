@@ -79,8 +79,8 @@ export function PPEDetailsGrid({ methodData }: PPEDetailsGridProps) {
         {/* Safety Note */}
         <div className="mt-4 bg-red-500/10 border border-red-500/20 rounded-lg p-3">
           <p className="text-xs text-white">
-            <strong className="text-red-400">⚠️ Important:</strong> All PPE must be inspected before use and replaced if damaged. 
-            Ensure proper fit and training on correct usage.
+            <strong className="text-red-400">⚠️ Important:</strong> All PPE must be inspected before
+            use and replaced if damaged. Ensure proper fit and training on correct usage.
           </p>
         </div>
       </CardContent>

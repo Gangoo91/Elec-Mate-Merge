@@ -78,12 +78,7 @@ export const RAMSFilterPanel = ({
 
         {/* Clear Filters */}
         {hasActiveFilters && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClearFilters}
-            className="h-11"
-          >
+          <Button variant="ghost" size="sm" onClick={onClearFilters} className="h-11">
             <X className="h-4 w-4 mr-2" />
             Clear Filters
           </Button>
@@ -98,23 +93,19 @@ export const RAMSFilterPanel = ({
           {statusFilter !== 'all' && (
             <Badge variant="secondary" className="text-xs">
               {statusFilter}
-              <button
-                onClick={() => onStatusChange('all')}
-                className="ml-1 hover:text-destructive"
-              >
+              <button onClick={() => onStatusChange('all')} className="ml-1 hover:text-destructive">
                 <X className="h-3 w-3" />
               </button>
             </Badge>
           )}
           {dateFilter !== 'all' && (
             <Badge variant="secondary" className="text-xs">
-              {dateFilter === '7days' ? 'Last 7 days' : 
-               dateFilter === '30days' ? 'Last 30 days' : 
-               'Last 90 days'}
-              <button
-                onClick={() => onDateChange('all')}
-                className="ml-1 hover:text-destructive"
-              >
+              {dateFilter === '7days'
+                ? 'Last 7 days'
+                : dateFilter === '30days'
+                  ? 'Last 30 days'
+                  : 'Last 90 days'}
+              <button onClick={() => onDateChange('all')} className="ml-1 hover:text-destructive">
                 <X className="h-3 w-3" />
               </button>
             </Badge>

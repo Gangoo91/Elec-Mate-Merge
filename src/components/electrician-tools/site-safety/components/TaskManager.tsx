@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Edit3, X, Link2, Users } from 'lucide-react';
@@ -29,7 +35,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     responsiblePerson: '',
     linkedHazards: [] as string[],
     prerequisites: [] as string[],
-    status: 'pending' as 'pending' | 'in-progress' | 'completed'
+    status: 'pending' as 'pending' | 'in-progress' | 'completed',
   });
 
   const handleAddTask = useCallback(() => {
@@ -44,13 +50,13 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         responsiblePerson: '',
         linkedHazards: [],
         prerequisites: [],
-        status: 'pending'
+        status: 'pending',
       });
       setShowAddTask(false);
       toast({
         title: 'Task Added',
         description: 'Task has been added to the project.',
-        variant: 'success'
+        variant: 'success',
       });
     }
   }, [newTask, addTask]);
@@ -73,12 +79,12 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         responsiblePerson: '',
         linkedHazards: [],
         prerequisites: [],
-        status: 'pending'
+        status: 'pending',
       });
       toast({
         title: 'Task Updated',
         description: 'Task has been updated successfully.',
-        variant: 'success'
+        variant: 'success',
       });
     }
   }, [editingTask, newTask, updateTask]);
@@ -95,51 +101,59 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       responsiblePerson: '',
       linkedHazards: [],
       prerequisites: [],
-      status: 'pending'
+      status: 'pending',
     });
   }, []);
 
   const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setNewTask(prev => ({ ...prev, title: e.target.value }));
+    setNewTask((prev) => ({ ...prev, title: e.target.value }));
   }, []);
 
   const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewTask(prev => ({ ...prev, description: e.target.value }));
+    setNewTask((prev) => ({ ...prev, description: e.target.value }));
   }, []);
 
   const handleCategoryChange = useCallback((value: string) => {
-    setNewTask(prev => ({ ...prev, category: value }));
+    setNewTask((prev) => ({ ...prev, category: value }));
   }, []);
 
   const handleRiskLevelChange = useCallback((value: string) => {
-    setNewTask(prev => ({ ...prev, riskLevel: value as 'low' | 'medium' | 'high' }));
+    setNewTask((prev) => ({ ...prev, riskLevel: value as 'low' | 'medium' | 'high' }));
   }, []);
 
   const handleDurationChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value }));
+    setNewTask((prev) => ({ ...prev, estimatedDuration: e.target.value }));
   }, []);
 
   const handleResponsiblePersonChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(prev => ({ ...prev, responsiblePerson: e.target.value }));
+    setNewTask((prev) => ({ ...prev, responsiblePerson: e.target.value }));
   }, []);
 
   const getRiskLevelColor = (level: string) => {
     switch (level) {
-      case 'low': return 'bg-gradient-to-r from-green-500 to-green-600';
-      case 'medium': return 'bg-gradient-to-r from-yellow-500 to-amber-500';
-      case 'high': return 'bg-gradient-to-r from-red-500 to-red-600';
-      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
+      case 'low':
+        return 'bg-gradient-to-r from-green-500 to-green-600';
+      case 'medium':
+        return 'bg-gradient-to-r from-yellow-500 to-amber-500';
+      case 'high':
+        return 'bg-gradient-to-r from-red-500 to-red-600';
+      default:
+        return 'bg-gradient-to-r from-gray-500 to-gray-600';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-gradient-to-r from-slate-500 to-slate-600';
-      case 'in-progress': return 'bg-gradient-to-r from-blue-500 to-blue-600';
-      case 'completed': return 'bg-gradient-to-r from-green-500 to-emerald-600';
-      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
+      case 'pending':
+        return 'bg-gradient-to-r from-slate-500 to-slate-600';
+      case 'in-progress':
+        return 'bg-gradient-to-r from-blue-500 to-blue-600';
+      case 'completed':
+        return 'bg-gradient-to-r from-green-500 to-emerald-600';
+      default:
+        return 'bg-gradient-to-r from-gray-500 to-gray-600';
     }
   };
 
@@ -153,103 +167,118 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     }
   }, [showAddTask, editingTask]);
 
-  const TaskForm = React.useMemo(() => (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <Label className="text-foreground">Task Title *</Label>
-          <Input
-            ref={titleInputRef}
-            key={`title-input-${editingTask || 'new'}`}
-            value={newTask.title}
-            onChange={handleTitleChange}
-            onBlur={(e) => e.preventDefault()}
-            onFocus={(e) => e.stopPropagation()}
-            placeholder="Enter task title"
-            className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
-            autoComplete="off"
-          />
+  const TaskForm = React.useMemo(
+    () => (
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label className="text-foreground">Task Title *</Label>
+            <Input
+              ref={titleInputRef}
+              key={`title-input-${editingTask || 'new'}`}
+              value={newTask.title}
+              onChange={handleTitleChange}
+              onBlur={(e) => e.preventDefault()}
+              onFocus={(e) => e.stopPropagation()}
+              placeholder="Enter task title"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+              autoComplete="off"
+            />
+          </div>
+          <div>
+            <Label className="text-foreground">Category *</Label>
+            <Select value={newTask.category} onValueChange={handleCategoryChange}>
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="installation">Installation</SelectItem>
+                <SelectItem value="testing">Testing</SelectItem>
+                <SelectItem value="maintenance">Maintenance</SelectItem>
+                <SelectItem value="inspection">Inspection</SelectItem>
+                <SelectItem value="certification">Certification</SelectItem>
+                <SelectItem value="troubleshooting">Troubleshooting</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div>
-          <Label className="text-foreground">Category *</Label>
-          <Select value={newTask.category} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="installation">Installation</SelectItem>
-              <SelectItem value="testing">Testing</SelectItem>
-              <SelectItem value="maintenance">Maintenance</SelectItem>
-              <SelectItem value="inspection">Inspection</SelectItem>
-              <SelectItem value="certification">Certification</SelectItem>
-              <SelectItem value="troubleshooting">Troubleshooting</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      
-      <div>
-        <Label className="text-foreground">Description</Label>
-        <Textarea
-          value={newTask.description}
-          onChange={handleDescriptionChange}
-          placeholder="Enter task description"
-          className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
-        />
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <Label className="text-foreground">Risk Level</Label>
-          <Select value={newTask.riskLevel} onValueChange={handleRiskLevelChange}>
-            <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="low">Low</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label className="text-foreground">Duration</Label>
-          <Input
-            value={newTask.estimatedDuration}
-            onChange={handleDurationChange}
-            placeholder="e.g. 2 hours"
+          <Label className="text-foreground">Description</Label>
+          <Textarea
+            value={newTask.description}
+            onChange={handleDescriptionChange}
+            placeholder="Enter task description"
             className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
           />
         </div>
-        <div>
-          <Label className="text-foreground">Responsible Person</Label>
-          <Input
-            value={newTask.responsiblePerson}
-            onChange={handleResponsiblePersonChange}
-            placeholder="Enter name"
-            className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
-          />
-        </div>
-      </div>
 
-      <div className="flex gap-2">
-        <Button
-          onClick={editingTask ? handleSaveEdit : handleAddTask}
-          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-          disabled={!newTask.title.trim() || !newTask.category.trim()}
-        >
-          {editingTask ? 'Update Task' : 'Add Task'}
-        </Button>
-        <Button
-          onClick={handleCancelEdit}
-          variant="outline"
-          className="border-gray-500/30 text-white hover:bg-gray-500/10"
-        >
-          Cancel
-        </Button>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <Label className="text-foreground">Risk Level</Label>
+            <Select value={newTask.riskLevel} onValueChange={handleRiskLevelChange}>
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-foreground">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label className="text-foreground">Duration</Label>
+            <Input
+              value={newTask.estimatedDuration}
+              onChange={handleDurationChange}
+              placeholder="e.g. 2 hours"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+            />
+          </div>
+          <div>
+            <Label className="text-foreground">Responsible Person</Label>
+            <Input
+              value={newTask.responsiblePerson}
+              onChange={handleResponsiblePersonChange}
+              placeholder="Enter name"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            onClick={editingTask ? handleSaveEdit : handleAddTask}
+            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            disabled={!newTask.title.trim() || !newTask.category.trim()}
+          >
+            {editingTask ? 'Update Task' : 'Add Task'}
+          </Button>
+          <Button
+            onClick={handleCancelEdit}
+            variant="outline"
+            className="border-gray-500/30 text-white hover:bg-gray-500/10"
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
-    </div>
-  ), [newTask, editingTask, handleTitleChange, handleDescriptionChange, handleCategoryChange, handleRiskLevelChange, handleDurationChange, handleResponsiblePersonChange, handleAddTask, handleSaveEdit, handleCancelEdit]);
+    ),
+    [
+      newTask,
+      editingTask,
+      handleTitleChange,
+      handleDescriptionChange,
+      handleCategoryChange,
+      handleRiskLevelChange,
+      handleDurationChange,
+      handleResponsiblePersonChange,
+      handleAddTask,
+      handleSaveEdit,
+      handleCancelEdit,
+    ]
+  );
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray/60">
@@ -270,11 +299,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       </CardHeader>
       <CardContent className="space-y-4">
         {(showAddTask || editingTask) && TaskForm}
-        
+
         {tasks.length > 0 && (
           <div className="space-y-3">
             {tasks.map((task) => (
-              <Card key={task.id} className="group border-elec-yellow/30 bg-elec-dark/20 hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in">
+              <Card
+                key={task.id}
+                className="group border-elec-yellow/30 bg-elec-dark/20 hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in"
+              >
                 <CardContent className="p-0">
                   {/* Header Section with Title and Actions */}
                   <div className="flex items-start justify-between p-4 pb-3 border-b border-elec-yellow/10">
@@ -283,23 +315,25 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         {task.title}
                       </h4>
                       <div className="flex items-center gap-2 mb-2 pt-3">
-                        <Badge 
-                          variant="secondary" 
+                        <Badge
+                          variant="secondary"
                           className="bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 text-xs font-medium px-2 py-1 rounded-full"
                         >
                           {task.category}
                         </Badge>
-                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-foreground text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm`}>
+                        <Badge
+                          className={`${getRiskLevelColor(task.riskLevel)} text-foreground text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm`}
+                        >
                           {task.riskLevel}
                         </Badge>
-                        <Badge 
+                        <Badge
                           className={`${getStatusColor(task.status)} text-foreground text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm capitalize`}
                         >
                           {task.status.replace('-', ' ')}
                         </Badge>
                       </div>
                     </div>
-                    
+
                     {/* Action Buttons */}
                     <div className="flex gap-1 ml-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                       {onLinkHazard && (
@@ -334,9 +368,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                   {/* Description Section */}
                   {task.description && (
                     <div className="px-4 py-3 border-b border-elec-yellow/10">
-                      <p className="text-sm text-white leading-relaxed">
-                        {task.description}
-                      </p>
+                      <p className="text-sm text-white leading-relaxed">{task.description}</p>
                     </div>
                   )}
 
@@ -357,12 +389,10 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                           </div>
                         )}
                       </div>
-                      
+
                       {/* Hazard Links Indicator */}
                       {task.linkedHazards.length > 0 && (
-                        <Badge 
-                          className="bg-orange-500/20 border border-orange-500/40 text-orange-300 text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm"
-                        >
+                        <Badge className="bg-orange-500/20 border border-orange-500/40 text-orange-300 text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm">
                           <Link2 className="h-3 w-3 mr-1" />
                           {task.linkedHazards.length} linked
                         </Badge>
@@ -374,7 +404,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
             ))}
           </div>
         )}
-        
+
         {tasks.length === 0 && !showAddTask && (
           <div className="text-center py-6 text-white">
             <p className="mb-2">No tasks added yet</p>

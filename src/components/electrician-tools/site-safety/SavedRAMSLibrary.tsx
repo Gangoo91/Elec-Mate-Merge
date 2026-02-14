@@ -113,12 +113,12 @@ export const SavedRAMSLibrary = () => {
   }, [documents, searchTerm, statusFilter, dateFilter, locationFilter, sourceFilter]);
 
   // Count documents by source for tabs
-  const aiGeneratedCount = useMemo(() =>
-    documents.filter(d => !d.source || d.source === 'ai-generated').length,
+  const aiGeneratedCount = useMemo(
+    () => documents.filter((d) => !d.source || d.source === 'ai-generated').length,
     [documents]
   );
-  const uploadedCount = useMemo(() =>
-    documents.filter(d => d.source === 'user-uploaded').length,
+  const uploadedCount = useMemo(
+    () => documents.filter((d) => d.source === 'user-uploaded').length,
     [documents]
   );
 
@@ -492,7 +492,10 @@ export const SavedRAMSLibrary = () => {
                 placeholder="Search documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn("pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white", !searchTerm && "pl-10")}
+                className={cn(
+                  'pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white',
+                  !searchTerm && 'pl-10'
+                )}
               />
               {searchTerm && (
                 <Button
@@ -511,9 +514,7 @@ export const SavedRAMSLibrary = () => {
           {hasActiveFilters && (
             <div className="flex items-center gap-2 pb-3 overflow-x-auto scrollbar-hide">
               {statusFilter !== 'all' && (
-                <Badge
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1"
-                >
+                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1">
                   {statusFilter}
                   <button
                     onClick={() => setStatusFilter('all')}
@@ -524,14 +525,12 @@ export const SavedRAMSLibrary = () => {
                 </Badge>
               )}
               {dateFilter !== 'all' && (
-                <Badge
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1"
-                >
+                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1">
                   {dateFilter === '7days'
                     ? 'Last 7 days'
                     : dateFilter === '30days'
-                    ? 'Last 30 days'
-                    : 'Last 90 days'}
+                      ? 'Last 30 days'
+                      : 'Last 90 days'}
                   <button
                     onClick={() => setDateFilter('all')}
                     className="ml-1 hover:bg-elec-yellow/20 rounded p-0.5"
@@ -541,9 +540,7 @@ export const SavedRAMSLibrary = () => {
                 </Badge>
               )}
               {locationFilter !== 'all' && (
-                <Badge
-                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1 max-w-[150px]"
-                >
+                <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 shrink-0 pr-1 max-w-[150px]">
                   <span className="truncate">{locationFilter}</span>
                   <button
                     onClick={() => setLocationFilter('all')}
@@ -630,7 +627,9 @@ export const SavedRAMSLibrary = () => {
                   onClick={toggleSelectAll}
                   className="text-white h-11 touch-manipulation active:scale-[0.98]"
                 >
-                  {selectedDocIds.size === displayedDocuments.length ? 'Deselect All' : 'Select All'}
+                  {selectedDocIds.size === displayedDocuments.length
+                    ? 'Deselect All'
+                    : 'Select All'}
                 </Button>
                 <span className="text-sm text-white">{selectedDocIds.size} selected</span>
               </div>
@@ -668,7 +667,10 @@ export const SavedRAMSLibrary = () => {
                   placeholder="Search by project, location, or assessor..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn("pr-10 h-11 bg-background border-border touch-manipulation", !searchTerm && "pl-10")}
+                  className={cn(
+                    'pr-10 h-11 bg-background border-border touch-manipulation',
+                    !searchTerm && 'pl-10'
+                  )}
                 />
                 {searchTerm && (
                   <Button
@@ -845,7 +847,10 @@ export const SavedRAMSLibrary = () => {
                       </td>
                       <td className="px-4 py-3 text-sm text-white">{doc.location}</td>
                       <td className="px-4 py-3">
-                        <Badge variant="outline" className={`${getStatusColor(doc.status)} capitalize`}>
+                        <Badge
+                          variant="outline"
+                          className={`${getStatusColor(doc.status)} capitalize`}
+                        >
                           {doc.status}
                         </Badge>
                       </td>

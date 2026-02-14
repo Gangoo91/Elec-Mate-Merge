@@ -4,7 +4,21 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ShieldCheck, HardHat, Eye, Hand, Footprints, Ear, Zap, Pencil, Save, X, Plus, Trash2, ChevronDown } from 'lucide-react';
+import {
+  ShieldCheck,
+  HardHat,
+  Eye,
+  Hand,
+  Footprints,
+  Ear,
+  Zap,
+  Pencil,
+  Save,
+  X,
+  Plus,
+  Trash2,
+  ChevronDown,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PPEItem } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
@@ -21,9 +35,17 @@ interface PPEGridViewProps {
 const getPPEIcon = (ppeType: string) => {
   const type = ppeType.toLowerCase();
   if (type.includes('helmet') || type.includes('hat')) return HardHat;
-  if (type.includes('eye') || type.includes('goggles') || type.includes('glasses') || type.includes('face') || type.includes('shield')) return Eye;
+  if (
+    type.includes('eye') ||
+    type.includes('goggles') ||
+    type.includes('glasses') ||
+    type.includes('face') ||
+    type.includes('shield')
+  )
+    return Eye;
   if (type.includes('glove') || type.includes('insulating glove')) return Hand;
-  if (type.includes('boot') || type.includes('footwear') || type.includes('shoe')) return Footprints;
+  if (type.includes('boot') || type.includes('footwear') || type.includes('shoe'))
+    return Footprints;
   if (type.includes('ear') || type.includes('hearing')) return Ear;
   if (type.includes('insulated') || type.includes('arc')) return Zap;
   return ShieldCheck;
@@ -33,7 +55,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   ppeDetails,
   requiredPPE,
   editable = false,
-  onUpdate
+  onUpdate,
 }) => {
   const { isMobile } = useMobileEnhanced();
   const [isOpen, setIsOpen] = useState(true);
@@ -42,16 +64,17 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   const [editedPPE, setEditedPPE] = useState<PPEItem[]>([]);
 
   // Convert requiredPPE strings to PPEItem objects if ppeDetails not provided
-  const items = ppeDetails && ppeDetails.length > 0
-    ? ppeDetails
-    : requiredPPE?.map((ppe, idx) => ({
-        id: 'ppe-' + idx,
-        itemNumber: idx + 1,
-        ppeType: ppe,
-        standard: 'BS EN Standard',
-        mandatory: true,
-        purpose: 'Required for safety'
-      })) || [];
+  const items =
+    ppeDetails && ppeDetails.length > 0
+      ? ppeDetails
+      : requiredPPE?.map((ppe, idx) => ({
+          id: 'ppe-' + idx,
+          itemNumber: idx + 1,
+          ppeType: ppe,
+          standard: 'BS EN Standard',
+          mandatory: true,
+          purpose: 'Required for safety',
+        })) || [];
 
   useEffect(() => {
     setEditedPPE(items);
@@ -68,9 +91,12 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
 
   const handleSave = () => {
     if (onUpdate) {
-      const validItems = editedPPE.filter(item => item.ppeType.trim());
+      const validItems = editedPPE.filter((item) => item.ppeType.trim());
       onUpdate(validItems);
-      toast({ title: 'PPE Updated', description: `${validItems.length} PPE item${validItems.length !== 1 ? 's' : ''} saved` });
+      toast({
+        title: 'PPE Updated',
+        description: `${validItems.length} PPE item${validItems.length !== 1 ? 's' : ''} saved`,
+      });
     }
     setIsEditing(false);
   };
@@ -81,9 +107,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   };
 
   const handleItemChange = (id: string, updates: Partial<PPEItem>) => {
-    setEditedPPE(prev => prev.map(item =>
-      item.id === id ? { ...item, ...updates } : item
-    ));
+    setEditedPPE((prev) => prev.map((item) => (item.id === id ? { ...item, ...updates } : item)));
   };
 
   const handleAddItem = () => {
@@ -93,16 +117,20 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
       ppeType: '',
       standard: '',
       mandatory: true,
-      purpose: ''
+      purpose: '',
     };
-    setEditedPPE(prev => [...prev, newItem]);
+    setEditedPPE((prev) => [...prev, newItem]);
   };
 
   const handleRemoveItem = (id: string) => {
-    setEditedPPE(prev => prev.filter(item => item.id !== id).map((item, idx) => ({
-      ...item,
-      itemNumber: idx + 1
-    })));
+    setEditedPPE((prev) =>
+      prev
+        .filter((item) => item.id !== id)
+        .map((item, idx) => ({
+          ...item,
+          itemNumber: idx + 1,
+        }))
+    );
   };
 
   const handleSheetSave = (ppeItems: PPEItem[]) => {
@@ -159,10 +187,12 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                   <span className="text-sm text-white">
                     {isOpen ? 'Hide details' : 'Show all PPE requirements'}
                   </span>
-                  <ChevronDown className={cn(
-                    "h-4 w-4 text-white transition-transform duration-200",
-                    isOpen && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 text-white transition-transform duration-200',
+                      isOpen && 'rotate-180'
+                    )}
+                  />
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -170,7 +200,10 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                   {items.map((item) => {
                     const Icon = getPPEIcon(item.ppeType);
                     return (
-                      <li key={item.id} className="flex items-start gap-3 text-sm text-white py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors">
+                      <li
+                        key={item.id}
+                        className="flex items-start gap-3 text-sm text-white py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors"
+                      >
                         <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
                           <Icon className="h-4 w-4 text-elec-yellow" />
                         </div>
@@ -257,7 +290,9 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                           <label className="text-xs font-medium text-white">Standard</label>
                           <Input
                             value={item.standard}
-                            onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
+                            onChange={(e) =>
+                              handleItemChange(item.id, { standard: e.target.value })
+                            }
                             placeholder="e.g., BS EN 397"
                             className="h-10 text-sm"
                           />

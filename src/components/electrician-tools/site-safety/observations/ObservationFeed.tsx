@@ -84,6 +84,19 @@ function ObservationItem({
             <Badge className="bg-white/10 text-white border-white/20 text-xs">
               {observation.category}
             </Badge>
+            {observation.severity && (
+              <Badge
+                className={`text-xs ${
+                  observation.severity === 'high'
+                    ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                    : observation.severity === 'medium'
+                      ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                      : 'bg-green-500/20 text-green-400 border-green-500/30'
+                }`}
+              >
+                {observation.severity.charAt(0).toUpperCase() + observation.severity.slice(1)}
+              </Badge>
+            )}
           </div>
           <p className="text-sm text-white line-clamp-2">{observation.description}</p>
           <div className="flex items-center gap-2 mt-1.5 text-sm text-white">

@@ -3,13 +3,44 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, X, Trash2, ShieldCheck, Plus, HardHat, Eye, Hand, Footprints, Ear, Zap, Wind, ArrowDown, Sun, Shield, ChevronRight, Sparkles, Search } from 'lucide-react';
+import {
+  Save,
+  X,
+  Trash2,
+  ShieldCheck,
+  Plus,
+  HardHat,
+  Eye,
+  Hand,
+  Footprints,
+  Ear,
+  Zap,
+  Wind,
+  ArrowDown,
+  Sun,
+  Shield,
+  ChevronRight,
+  Sparkles,
+  Search,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PPEItem } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
-import { PPE_DATABASE, PPE_CATEGORIES, PPE_PRESETS, type PPEDefinition, type PPEPresetKey } from '@/data/ppe-database';
+import {
+  PPE_DATABASE,
+  PPE_CATEGORIES,
+  PPE_PRESETS,
+  type PPEDefinition,
+  type PPEPresetKey,
+} from '@/data/ppe-database';
 
 interface PPEEditSheetProps {
   ppeItems: PPEItem[];
@@ -34,14 +65,34 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 const getPPEIcon = (ppeType: string) => {
   const type = ppeType.toLowerCase();
   if (type.includes('helmet') || type.includes('hat') || type.includes('hood')) return HardHat;
-  if (type.includes('eye') || type.includes('goggles') || type.includes('glasses') || type.includes('face') || type.includes('shield')) return Eye;
+  if (
+    type.includes('eye') ||
+    type.includes('goggles') ||
+    type.includes('glasses') ||
+    type.includes('face') ||
+    type.includes('shield')
+  )
+    return Eye;
   if (type.includes('glove') || type.includes('insulating glove')) return Hand;
-  if (type.includes('boot') || type.includes('footwear') || type.includes('shoe') || type.includes('wellington')) return Footprints;
+  if (
+    type.includes('boot') ||
+    type.includes('footwear') ||
+    type.includes('shoe') ||
+    type.includes('wellington')
+  )
+    return Footprints;
   if (type.includes('ear') || type.includes('hearing') || type.includes('defender')) return Ear;
   if (type.includes('respiratory') || type.includes('mask') || type.includes('ffp')) return Wind;
-  if (type.includes('harness') || type.includes('lanyard') || type.includes('fall')) return ArrowDown;
+  if (type.includes('harness') || type.includes('lanyard') || type.includes('fall'))
+    return ArrowDown;
   if (type.includes('hi-vis') || type.includes('visibility')) return Sun;
-  if (type.includes('arc') || type.includes('insulating') || type.includes('voltage') || type.includes('electrical')) return Zap;
+  if (
+    type.includes('arc') ||
+    type.includes('insulating') ||
+    type.includes('voltage') ||
+    type.includes('electrical')
+  )
+    return Zap;
   return ShieldCheck;
 };
 
@@ -49,7 +100,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
   ppeItems,
   open,
   onOpenChange,
-  onSave
+  onSave,
 }) => {
   const [editedItems, setEditedItems] = useState<PPEItem[]>(ppeItems);
   const [hasChanges, setHasChanges] = useState(false);
@@ -67,24 +118,23 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
   // Filter PPE database based on search and category
   const filteredPPE = useMemo(() => {
-    return PPE_DATABASE.filter(ppe => {
-      const matchesSearch = searchQuery === '' ||
+    return PPE_DATABASE.filter((ppe) => {
+      const matchesSearch =
+        searchQuery === '' ||
         ppe.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ppe.standard.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ppe.purpose.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || ppe.category === selectedCategory;
       // Don't show items already added
       const notAlreadyAdded = !editedItems.some(
-        item => item.ppeType.toLowerCase() === ppe.name.toLowerCase()
+        (item) => item.ppeType.toLowerCase() === ppe.name.toLowerCase()
       );
       return matchesSearch && matchesCategory && notAlreadyAdded;
     });
   }, [searchQuery, selectedCategory, editedItems]);
 
   const handleItemChange = (id: string, updates: Partial<PPEItem>) => {
-    setEditedItems(prev => prev.map(item =>
-      item.id === id ? { ...item, ...updates } : item
-    ));
+    setEditedItems((prev) => prev.map((item) => (item.id === id ? { ...item, ...updates } : item)));
     setHasChanges(true);
   };
 
@@ -95,9 +145,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
       ppeType: ppeDef.name,
       standard: ppeDef.standard,
       mandatory: ppeDef.mandatory,
-      purpose: ppeDef.purpose
+      purpose: ppeDef.purpose,
     };
-    setEditedItems(prev => [...prev, newItem]);
+    setEditedItems((prev) => [...prev, newItem]);
     setHasChanges(true);
     toast({
       title: 'PPE Added',
@@ -112,9 +162,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
       ppeType: '',
       standard: '',
       mandatory: true,
-      purpose: ''
+      purpose: '',
     };
-    setEditedItems(prev => [...prev, newItem]);
+    setEditedItems((prev) => [...prev, newItem]);
     setHasChanges(true);
     setActiveTab('items');
   };
@@ -124,21 +174,24 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
     const newItems: PPEItem[] = [];
 
     presetIds.forEach((ppeId, idx) => {
-      const ppeDef = PPE_DATABASE.find(p => p.id === ppeId);
-      if (ppeDef && !editedItems.some(item => item.ppeType.toLowerCase() === ppeDef.name.toLowerCase())) {
+      const ppeDef = PPE_DATABASE.find((p) => p.id === ppeId);
+      if (
+        ppeDef &&
+        !editedItems.some((item) => item.ppeType.toLowerCase() === ppeDef.name.toLowerCase())
+      ) {
         newItems.push({
           id: `ppe-${Date.now()}-${idx}`,
           itemNumber: editedItems.length + newItems.length + 1,
           ppeType: ppeDef.name,
           standard: ppeDef.standard,
           mandatory: ppeDef.mandatory,
-          purpose: ppeDef.purpose
+          purpose: ppeDef.purpose,
         });
       }
     });
 
     if (newItems.length > 0) {
-      setEditedItems(prev => [...prev, ...newItems]);
+      setEditedItems((prev) => [...prev, ...newItems]);
       setHasChanges(true);
       toast({
         title: 'Preset Applied',
@@ -153,15 +206,19 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
   };
 
   const handleRemoveItem = (id: string) => {
-    setEditedItems(prev => prev.filter(item => item.id !== id).map((item, idx) => ({
-      ...item,
-      itemNumber: idx + 1
-    })));
+    setEditedItems((prev) =>
+      prev
+        .filter((item) => item.id !== id)
+        .map((item, idx) => ({
+          ...item,
+          itemNumber: idx + 1,
+        }))
+    );
     setHasChanges(true);
   };
 
   const handleSave = () => {
-    const validItems = editedItems.filter(item => item.ppeType.trim());
+    const validItems = editedItems.filter((item) => item.ppeType.trim());
     onSave(validItems);
     toast({
       title: 'PPE Updated',
@@ -179,9 +236,10 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
   // Find matching PPE definition for autocomplete
   const findMatchingPPE = (ppeType: string): PPEDefinition | undefined => {
-    return PPE_DATABASE.find(p =>
-      p.name.toLowerCase() === ppeType.toLowerCase() ||
-      p.name.toLowerCase().includes(ppeType.toLowerCase())
+    return PPE_DATABASE.find(
+      (p) =>
+        p.name.toLowerCase() === ppeType.toLowerCase() ||
+        p.name.toLowerCase().includes(ppeType.toLowerCase())
     );
   };
 
@@ -192,7 +250,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
         ppeType: match.name,
         standard: match.standard,
         purpose: match.purpose,
-        mandatory: match.mandatory
+        mandatory: match.mandatory,
       });
     } else {
       handleItemChange(id, { ppeType: value });
@@ -209,12 +267,22 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
           </SheetTitle>
         </SheetHeader>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'items' | 'add')} className="flex-1 flex flex-col overflow-hidden">
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => setActiveTab(v as 'items' | 'add')}
+          className="flex-1 flex flex-col overflow-hidden"
+        >
           <TabsList className="grid grid-cols-2 mx-4 mt-3 bg-white/[0.03]">
-            <TabsTrigger value="items" className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow">
+            <TabsTrigger
+              value="items"
+              className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow"
+            >
               Current ({editedItems.length})
             </TabsTrigger>
-            <TabsTrigger value="add" className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow">
+            <TabsTrigger
+              value="add"
+              className="data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow"
+            >
               <Plus className="h-4 w-4 mr-1" />
               Add PPE
             </TabsTrigger>
@@ -275,13 +343,11 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                             <SelectValue placeholder="Select PPE type..." />
                           </SelectTrigger>
                           <SelectContent className="max-h-[300px] bg-[#1c1c1e] border-white/[0.08]">
-                            {item.ppeType && !PPE_DATABASE.some(p => p.name === item.ppeType) && (
-                              <SelectItem value={item.ppeType}>
-                                {item.ppeType} (Custom)
-                              </SelectItem>
+                            {item.ppeType && !PPE_DATABASE.some((p) => p.name === item.ppeType) && (
+                              <SelectItem value={item.ppeType}>{item.ppeType} (Custom)</SelectItem>
                             )}
-                            {PPE_CATEGORIES.map(cat => {
-                              const catItems = PPE_DATABASE.filter(p => p.category === cat.id);
+                            {PPE_CATEGORIES.map((cat) => {
+                              const catItems = PPE_DATABASE.filter((p) => p.category === cat.id);
                               if (catItems.length === 0) return null;
                               const CatIcon = CATEGORY_ICONS[cat.id] || ShieldCheck;
                               return (
@@ -290,7 +356,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                                     <CatIcon className="h-3 w-3" />
                                     {cat.name}
                                   </div>
-                                  {catItems.map(ppe => (
+                                  {catItems.map((ppe) => (
                                     <SelectItem key={ppe.id} value={ppe.name}>
                                       {ppe.name}
                                     </SelectItem>
@@ -335,7 +401,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
             <div className="space-y-4 py-4">
               {/* Quick Presets */}
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">Quick Presets</h4>
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">
+                  Quick Presets
+                </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { key: 'domestic-electrical', label: 'Domestic', icon: '🏠' },
@@ -344,7 +412,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                     { key: 'live-lv-working', label: 'Live LV Work', icon: '⚡' },
                     { key: 'hv-switching', label: 'HV Switching', icon: '🔌' },
                     { key: 'height-work', label: 'Height Work', icon: '🪜' },
-                  ].map(preset => (
+                  ].map((preset) => (
                     <button
                       key={preset.key}
                       onClick={() => handleApplyPreset(preset.key as PPEPresetKey)}
@@ -365,7 +433,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
 
               {/* Search & Filter */}
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">Browse PPE Database</h4>
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wide">
+                  Browse PPE Database
+                </h4>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
@@ -379,25 +449,25 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                   <button
                     onClick={() => setSelectedCategory('all')}
                     className={cn(
-                      "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
+                      'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation',
                       selectedCategory === 'all'
-                        ? "bg-elec-yellow text-black"
-                        : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.05] text-white hover:bg-white/[0.08]'
                     )}
                   >
                     All
                   </button>
-                  {PPE_CATEGORIES.map(cat => {
+                  {PPE_CATEGORIES.map((cat) => {
                     const CatIcon = CATEGORY_ICONS[cat.id];
                     return (
                       <button
                         key={cat.id}
                         onClick={() => setSelectedCategory(cat.id)}
                         className={cn(
-                          "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation",
+                          'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all touch-manipulation',
                           selectedCategory === cat.id
-                            ? "bg-elec-yellow text-black"
-                            : "bg-white/[0.05] text-white hover:bg-white/[0.08]"
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-white/[0.05] text-white hover:bg-white/[0.08]'
                         )}
                       >
                         <CatIcon className="h-3 w-3" />
@@ -424,7 +494,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                     </Button>
                   </div>
                 ) : (
-                  filteredPPE.map(ppe => {
+                  filteredPPE.map((ppe) => {
                     const CatIcon = CATEGORY_ICONS[ppe.category] || ShieldCheck;
                     return (
                       <button
@@ -444,7 +514,9 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
                               </Badge>
                             )}
                           </div>
-                          <p className="text-xs text-elec-yellow/80 font-mono mt-0.5">{ppe.standard}</p>
+                          <p className="text-xs text-elec-yellow/80 font-mono mt-0.5">
+                            {ppe.standard}
+                          </p>
                           <p className="text-xs text-white mt-1 line-clamp-2">{ppe.purpose}</p>
                         </div>
                         <ChevronRight className="h-4 w-4 text-white shrink-0 mt-1" />
@@ -482,7 +554,7 @@ export const PPEEditSheet: React.FC<PPEEditSheetProps> = ({
             onClick={handleSave}
           >
             <Save className="h-5 w-5 mr-2" />
-            Save ({editedItems.filter(i => i.ppeType.trim()).length})
+            Save ({editedItems.filter((i) => i.ppeType.trim()).length})
           </Button>
         </div>
       </SheetContent>

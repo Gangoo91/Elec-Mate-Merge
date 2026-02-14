@@ -7,7 +7,7 @@ import {
   getHighestRiskScore,
   getOverallRiskLevel,
   getTotalControlMeasures,
-  getRiskColors
+  getRiskColors,
 } from '@/utils/risk-level-helpers';
 import { cn } from '@/lib/utils';
 import type { RAMSRisk } from '@/types/rams';
@@ -28,27 +28,27 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
       icon: AlertTriangle,
       label: 'Total Hazards',
       value: totalHazards,
-      color: 'text-elec-yellow'
+      color: 'text-elec-yellow',
     },
     {
       icon: TrendingUp,
       label: 'Highest Risk',
       value: highestScore,
       color: riskColors.text,
-      badge: overallLevel.toUpperCase()
+      badge: overallLevel.toUpperCase(),
     },
     {
       icon: Shield,
       label: 'Control Measures',
       value: totalControls,
-      color: 'text-green-400'
+      color: 'text-green-400',
     },
     {
       icon: CheckCircle,
       label: 'Mitigated Risks',
-      value: risks.filter(r => r.residualRisk <= 4).length,
-      color: 'text-blue-400'
-    }
+      value: risks.filter((r) => r.residualRisk <= 4).length,
+      color: 'text-blue-400',
+    },
   ];
 
   return (
@@ -68,14 +68,10 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
                 className="flex flex-col items-center text-center p-2 bg-card/50 rounded-lg border border-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Icon className={`h-5 w-5 mb-1 ${stat.color}`} />
-                <div className="text-xl font-bold text-elec-light">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] text-white">
-                  {stat.label}
-                </div>
+                <div className="text-xl font-bold text-elec-light">{stat.value}</div>
+                <div className="text-[10px] text-white">{stat.label}</div>
                 {stat.badge && (
-                  <Badge className={cn(riskColors.badge, "text-[9px] px-1.5 py-0 mt-1")}>
+                  <Badge className={cn(riskColors.badge, 'text-[9px] px-1.5 py-0 mt-1')}>
                     {stat.badge}
                   </Badge>
                 )}

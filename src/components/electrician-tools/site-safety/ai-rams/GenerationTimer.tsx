@@ -16,7 +16,7 @@ export const GenerationTimer: React.FC<GenerationTimerProps> = ({ isRunning, onT
     }
 
     const interval = setInterval(() => {
-      setSeconds(prev => {
+      setSeconds((prev) => {
         const newValue = prev + 1;
         onTimeUpdate?.(newValue);
         return newValue;

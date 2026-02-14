@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 interface UseLocalDraftOptions<T> {
   /** Unique key for this draft (e.g. 'coshh-draft', 'permit-draft') */
@@ -16,7 +16,7 @@ interface DraftEnvelope<T> {
   timestamp: number;
 }
 
-type SaveStatus = "idle" | "saved" | "recovered";
+type SaveStatus = 'idle' | 'saved' | 'recovered';
 
 /**
  * useLocalDraft — Persist form data to localStorage for draft recovery.
@@ -37,7 +37,7 @@ export function useLocalDraft<T>({
   enabled = true,
   maxAgeHours = 24,
 }: UseLocalDraftOptions<T>) {
-  const [status, setStatus] = useState<SaveStatus>("idle");
+  const [status, setStatus] = useState<SaveStatus>('idle');
   const [recoveredData, setRecoveredData] = useState<T | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dataRef = useRef(data);
@@ -56,7 +56,7 @@ export function useLocalDraft<T>({
         timestamp: Date.now(),
       };
       localStorage.setItem(storageKey, JSON.stringify(envelope));
-      setStatus("saved");
+      setStatus('saved');
     } catch {
       // localStorage full or unavailable — best effort
     }
@@ -69,7 +69,7 @@ export function useLocalDraft<T>({
     } catch {
       // noop
     }
-    setStatus("idle");
+    setStatus('idle');
     setRecoveredData(null);
   }, [storageKey]);
 
@@ -89,7 +89,7 @@ export function useLocalDraft<T>({
       const ageHours = (Date.now() - envelope.timestamp) / (1000 * 60 * 60);
       if (ageHours < maxAgeHours && envelope.data) {
         setRecoveredData(envelope.data);
-        setStatus("recovered");
+        setStatus('recovered');
       } else {
         localStorage.removeItem(storageKey);
       }
@@ -115,8 +115,8 @@ export function useLocalDraft<T>({
   useEffect(() => {
     if (!enabled) return;
     const handler = () => saveDraft();
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
   }, [saveDraft, enabled]);
 
   return {
