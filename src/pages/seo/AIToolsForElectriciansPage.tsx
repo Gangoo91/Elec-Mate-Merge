@@ -80,9 +80,9 @@ export default function AIToolsForElectriciansPage() {
                 Trade-specific AI tools are different. They are built on top of large language
                 models but augmented with specialist data — the full text of BS 7671:2018+A3:2024,
                 IET Guidance Notes, real trade pricing databases, and installation scenario
-                libraries. This approach, called retrieval-augmented generation (RAG), means the AI
-                retrieves the exact regulation text or pricing data before generating its response,
-                rather than relying on what it memorised during training.
+                libraries. This means the AI retrieves the exact regulation text or pricing data
+                before generating its response, rather than relying on what it memorised during
+                training.
               </p>
               <p>
                 The result is AI that can cite Regulation 411.3.3 when discussing disconnection
@@ -432,9 +432,8 @@ export default function AIToolsForElectriciansPage() {
                 <li>
                   <span className="font-semibold text-white">No hallucinations</span> — all AI
                   systems can generate plausible-sounding but incorrect information
-                  ("hallucinations"). The best trade AI tools use RAG (retrieval-augmented
-                  generation) to ground responses in actual regulation text and pricing data, which
-                  dramatically reduces hallucination.
+                  ("hallucinations"). The best trade AI tools ground their responses in actual
+                  regulation text and pricing data, which dramatically reduces hallucination.
                 </li>
               </ul>
               <p>
@@ -551,7 +550,7 @@ export default function AIToolsForElectriciansPage() {
         {
           question: 'How accurate is AI for BS 7671 regulation lookups?',
           answer:
-            "Accuracy depends entirely on how the AI tool is built. General-purpose AI models like ChatGPT have been trained on a broad dataset that includes some electrical regulation content, but they frequently confuse BS 7671 with NEC (the US National Electrical Code), cite regulation numbers that do not exist, or give answers based on older editions. Trade-specific AI tools that use retrieval-augmented generation (RAG) are far more accurate because they retrieve the exact regulation text from a current copy of BS 7671:2018+A3:2024 before generating a response. Elec-Mate's AI Regulations Lookup uses this approach, achieving high accuracy on regulation references. However, no AI tool should be used as the sole reference for compliance decisions — always verify critical regulation references against the published standard.",
+            "Accuracy depends entirely on how the AI tool is built. General-purpose AI models like ChatGPT have been trained on a broad dataset that includes some electrical regulation content, but they frequently confuse BS 7671 with NEC (the US National Electrical Code), cite regulation numbers that do not exist, or give answers based on older editions. Trade-specific AI tools built for electricians are far more accurate because they retrieve the exact regulation text from a current copy of BS 7671:2018+A3:2024 before generating a response. Elec-Mate's AI Regulations Lookup uses this approach, achieving high accuracy on regulation references. However, no AI tool should be used as the sole reference for compliance decisions — always verify critical regulation references against the published standard.",
         },
         {
           question: "What does Elec-Mate's AI actually include?",

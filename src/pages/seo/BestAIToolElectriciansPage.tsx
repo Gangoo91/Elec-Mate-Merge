@@ -67,7 +67,7 @@ export default function BestAIToolElectriciansPage() {
         { feature: 'AI Board Scanner (Photo to Data)', values: [true, false, false] },
         { feature: 'Certificate Integration (EICR, EIC etc.)', values: ['8 Types', false, false] },
         { feature: '70+ BS 7671 Calculators', values: [true, false, false] },
-        { feature: 'UK Trade Pricing RAG Data', values: [true, false, false] },
+        { feature: 'UK Trade Pricing Database', values: [true, false, false] },
         { feature: 'Offline Mode', values: [true, false, false] },
         { feature: 'Free Tier Available', values: ['7-day trial', 'Limited free', 'Limited free'] },
       ]}
