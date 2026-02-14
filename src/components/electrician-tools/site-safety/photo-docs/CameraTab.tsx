@@ -1,25 +1,19 @@
 import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Camera,
-  Image as ImageIcon,
-  X,
-  Check,
-  MapPin,
-  Loader2,
-  Zap,
-  Stamp,
-  ChevronDown,
-} from 'lucide-react';
+import { Camera, Image as ImageIcon, X, Check, MapPin, Loader2, Zap, Stamp } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useSafetyPhotoUpload, UploadOptions } from '@/hooks/useSafetyPhotoUpload';
 import { PHOTO_CATEGORIES, getCategoryColor } from '@/hooks/useSafetyPhotos';
+import { PHOTO_TYPES, usePhotoProjects } from '@/hooks/usePhotoProjects';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { usePhotoAI } from '@/hooks/usePhotoAI';
 import { toast } from '@/hooks/use-toast';
 
 interface CameraTabProps {
   onPhotoUploaded?: () => void;
   projectReference?: string;
+  projectId?: string;
   onClose?: () => void;
 }
 
@@ -34,6 +28,7 @@ interface QueuedPhoto {
 export default function CameraTab({
   onPhotoUploaded,
   projectReference: initialProject,
+  projectId: initialProjectId,
   onClose,
 }: CameraTabProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -56,8 +51,12 @@ export default function CameraTab({
   const isProjectLocked = Boolean(initialProject);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
+  const [selectedPhotoType, setSelectedPhotoType] = useState<string>('general');
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(initialProjectId || '');
+  const { projects } = usePhotoProjects('active');
 
   const { uploadPhoto, uploadProgress, isUploading, getCurrentLocation } = useSafetyPhotoUpload();
+  const { classifyPhoto } = usePhotoAI();
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,12 +164,19 @@ export default function CameraTab({
       location: location || undefined,
       tags: tags.length > 0 ? tags : undefined,
       projectReference: projectReference || undefined,
+      projectId: selectedProjectId || undefined,
+      photoType: selectedPhotoType || 'general',
       addWatermark,
     };
 
     const result = await uploadPhoto(capturedImage, options);
 
     if (result) {
+      // Fire-and-forget AI classification in background
+      if (result.id) {
+        classifyPhoto(result.id).catch(() => {});
+      }
+
       setCapturedImage(null);
       setImagePreview(null);
       setDescription('');
@@ -180,6 +186,7 @@ export default function CameraTab({
       }
       setTags([]);
       setSelectedCategory('before_work');
+      setSelectedPhotoType('general');
       setCaptureState('ready');
       onPhotoUploaded?.();
       onClose?.();
@@ -191,7 +198,10 @@ export default function CameraTab({
     location,
     tags,
     projectReference,
+    selectedProjectId,
+    selectedPhotoType,
     uploadPhoto,
+    classifyPhoto,
     onPhotoUploaded,
     onClose,
     isProjectLocked,
@@ -217,6 +227,8 @@ export default function CameraTab({
         location: location || undefined,
         tags: tags.length > 0 ? tags : undefined,
         projectReference: projectReference || undefined,
+        projectId: selectedProjectId || undefined,
+        photoType: selectedPhotoType || 'general',
         addWatermark,
       };
 
@@ -249,6 +261,8 @@ export default function CameraTab({
     location,
     tags,
     projectReference,
+    selectedProjectId,
+    selectedPhotoType,
     addWatermark,
     uploadPhoto,
     isProjectLocked,
@@ -495,6 +509,60 @@ export default function CameraTab({
             </div>
           )}
 
+          {/* Project selector */}
+          {!isProjectLocked && projects.length > 0 && (
+            <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
+              <label className="text-xs font-medium text-white uppercase tracking-wide text-center block mb-2">
+                Project (optional)
+              </label>
+              <MobileSelectPicker
+                value={selectedProjectId}
+                onValueChange={(val) => {
+                  setSelectedProjectId(val);
+                  const proj = projects.find((p) => p.id === val);
+                  if (proj) setProjectReference(proj.name);
+                  else setProjectReference('');
+                }}
+                title="Select Project"
+                placeholder="No project"
+                options={[
+                  { value: '', label: 'No Project' },
+                  ...projects.map((p) => ({
+                    value: p.id,
+                    label: p.name,
+                    description: p.customer_name || undefined,
+                  })),
+                ]}
+                triggerClassName="bg-white/5 border-white/10"
+              />
+            </div>
+          )}
+
+          {/* Photo type grid */}
+          <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
+            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+              Photo Type
+            </label>
+            <div className="grid grid-cols-4 gap-1.5 md:gap-2 mt-2">
+              {PHOTO_TYPES.map((type) => (
+                <button
+                  key={type.value}
+                  onClick={() => setSelectedPhotoType(type.value)}
+                  className={`flex flex-col items-center gap-1 p-2 md:p-3 rounded-lg transition-all touch-manipulation ${
+                    selectedPhotoType === type.value
+                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
+                      : 'bg-white/5 active:bg-white/10'
+                  }`}
+                >
+                  <span className={`w-2.5 h-2.5 rounded-full ${type.dotColour}`} />
+                  <span className="text-[10px] md:text-xs text-white text-center leading-tight">
+                    {type.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Category grid */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
             <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
@@ -582,9 +650,7 @@ export default function CameraTab({
             <Stamp className={`h-5 w-5 ${addWatermark ? 'text-elec-yellow' : 'text-white'}`} />
             <div className="flex-1 text-left">
               <p className="text-sm text-white">Timestamp Watermark</p>
-              <p className="text-[10px] text-white">
-                Burns date, time & location onto the photo
-              </p>
+              <p className="text-[10px] text-white">Burns date, time & location onto the photo</p>
             </div>
             <div
               className={`w-10 h-6 rounded-full transition-colors ${addWatermark ? 'bg-elec-yellow' : 'bg-white/10'}`}

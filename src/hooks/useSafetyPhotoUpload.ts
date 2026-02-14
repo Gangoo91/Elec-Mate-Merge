@@ -17,6 +17,8 @@ export interface UploadOptions {
   location?: string;
   tags?: string[];
   projectReference?: string;
+  projectId?: string;
+  photoType?: string;
   gpsLatitude?: number;
   gpsLongitude?: number;
   addWatermark?: boolean;
@@ -285,6 +287,9 @@ export function useSafetyPhotoUpload() {
             location: options.location || null,
             tags: options.tags || null,
             project_reference: options.projectReference || null,
+            project_id: options.projectId || null,
+            photo_type: options.photoType || 'general',
+            storage_path: filePath,
             gps_latitude: gpsLat || null,
             gps_longitude: gpsLng || null,
             file_size: compressedFile.size,
@@ -310,6 +315,7 @@ export function useSafetyPhotoUpload() {
         queryClient.invalidateQueries({ queryKey: ['safety-photos'] });
         queryClient.invalidateQueries({ queryKey: ['safety-photo-stats'] });
         queryClient.invalidateQueries({ queryKey: ['safety-photo-projects'] });
+        queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
 
         toast({
           title: 'Photo uploaded',

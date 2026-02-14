@@ -16,6 +16,10 @@ import {
   CheckSquare,
   Square,
   ArrowLeftRight,
+  Plus,
+  MoreVertical,
+  Camera,
+  Clock,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -37,18 +41,20 @@ import {
   getCategoryIcon,
   PhotoFilters,
 } from '@/hooks/useSafetyPhotos';
-import { formatDistanceToNow, format } from 'date-fns';
+import { formatDistanceToNow, format, subDays } from 'date-fns';
 import PhotoViewer from './PhotoViewer';
+import PhotoDetailSheet from './PhotoDetailSheet';
 import GalleryStats from './GalleryStats';
 import BatchSelectBar from './BatchSelectBar';
 import BeforeAfterCompare from './BeforeAfterCompare';
+import CreateProjectSheet from './CreateProjectSheet';
 import { toast } from '@/hooks/use-toast';
 
 interface GalleryTabProps {
   onPhotoSelect?: (photo: SafetyPhoto) => void;
 }
 
-type ViewMode = 'projects' | 'grid' | 'list';
+type ViewMode = 'projects' | 'grid' | 'list' | 'recent';
 type SortMode = 'newest' | 'oldest' | 'category' | 'project';
 
 interface ProjectGroup {
@@ -75,6 +81,16 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
 
   // Before/after compare
   const [showCompare, setShowCompare] = useState(false);
+
+  // Photo detail sheet
+  const [detailPhoto, setDetailPhoto] = useState<SafetyPhoto | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+
+  // Create project sheet
+  const [createProjectOpen, setCreateProjectOpen] = useState(false);
+
+  // Overflow menu
+  const [showOverflowMenu, setShowOverflowMenu] = useState(false);
 
   const { photos, isLoading, refetch, deletePhoto, isDeleting, updatePhoto, stats } =
     useSafetyPhotos(filters);
@@ -129,6 +145,14 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
     });
   }, [sortedPhotos]);
 
+  // Recent photos: last 7 days, newest first
+  const recentPhotos = useMemo(() => {
+    const sevenDaysAgo = subDays(new Date(), 7);
+    return [...photos]
+      .filter((p) => new Date(p.created_at) >= sevenDaysAgo)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }, [photos]);
+
   const displayPhotos = useMemo(() => {
     if (expandedProject) {
       return sortedPhotos.filter((p) =>
@@ -137,8 +161,9 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           : p.project_reference === expandedProject
       );
     }
+    if (viewMode === 'recent') return recentPhotos;
     return sortedPhotos;
-  }, [sortedPhotos, expandedProject]);
+  }, [sortedPhotos, expandedProject, viewMode, recentPhotos]);
 
   const handleRefresh = useCallback(async () => {
     await refetch();
@@ -161,12 +186,10 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
         });
         return;
       }
-      const photoList = projectPhotos || displayPhotos;
-      const actualIndex = projectPhotos ? index : photoList.findIndex((p) => p.id === photo.id);
-      setSelectedIndex(actualIndex);
-      setSelectedPhoto(photo);
+      setDetailPhoto(photo);
+      setDetailOpen(true);
     },
-    [displayPhotos, batchMode]
+    [batchMode]
   );
 
   const handleCloseViewer = useCallback(() => {
@@ -350,6 +373,20 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           )}
         </AnimatePresence>
 
+        {/* Photo detail sheet (expanded project) */}
+        <PhotoDetailSheet
+          open={detailOpen}
+          onOpenChange={setDetailOpen}
+          photo={detailPhoto}
+          photos={displayPhotos}
+          onNavigate={(photo) => setDetailPhoto(photo)}
+          onDeleted={() => {
+            setDetailOpen(false);
+            setDetailPhoto(null);
+            refetch();
+          }}
+        />
+
         <AnimatePresence>
           {selectedPhoto && (
             <PhotoViewer
@@ -411,113 +448,114 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
       {/* Stats dashboard */}
       <GalleryStats total={stats.total} byCategory={stats.byCategory} />
 
-      {/* Search bar */}
-      <div className="sticky top-0 bg-elec-dark z-10 px-3 py-2 border-b border-white/10">
+      {/* Toolbar */}
+      <div className="sticky top-0 bg-elec-dark z-10 px-3 py-2 border-b border-white/10 space-y-2">
+        {/* Row 1: Search + New */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               placeholder="Search photos..."
-              className="pl-9 pr-8 h-10 bg-[#1e1e1e] border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+              className="pl-9 pr-8 h-11 bg-[#1e1e1e] border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-xl"
               value={filters.search || ''}
               onChange={(e) => handleSearch(e.target.value)}
             />
             {filters.search && (
               <button
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 active:bg-white/10 rounded-full touch-manipulation"
                 onClick={() => handleSearch('')}
               >
                 <X className="h-3.5 w-3.5 text-white" />
               </button>
             )}
           </div>
+          <button
+            onClick={() => setCreateProjectOpen(true)}
+            className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-sm font-semibold flex items-center gap-1.5 touch-manipulation active:bg-yellow-400 flex-shrink-0"
+          >
+            <Plus className="h-4 w-4" />
+            New
+          </button>
+        </div>
 
-          {/* View toggle */}
-          <div className="flex items-center bg-[#1e1e1e] border border-white/10 rounded-lg p-0.5">
+        {/* Row 2: View tabs + overflow */}
+        <div className="flex items-center gap-2">
+          <div className="flex-1 flex items-center bg-[#1e1e1e] border border-white/10 rounded-xl p-1">
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'projects' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
               onClick={() => setViewMode('projects')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all touch-manipulation ${
+                viewMode === 'projects'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white active:bg-white/10'
+              }`}
             >
-              <Folder className="h-4 w-4" />
+              <Folder className="h-3.5 w-3.5" />
+              Projects
             </button>
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'grid' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
               onClick={() => setViewMode('grid')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all touch-manipulation ${
+                viewMode === 'grid' ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10'
+              }`}
             >
-              <Grid3X3 className="h-4 w-4" />
+              <Camera className="h-3.5 w-3.5" />
+              All
             </button>
             <button
-              className={`p-2 rounded-md transition-colors touch-manipulation ${viewMode === 'list' ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'}`}
-              onClick={() => setViewMode('list')}
+              onClick={() => setViewMode('recent')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all touch-manipulation ${
+                viewMode === 'recent'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white active:bg-white/10'
+              }`}
             >
-              <List className="h-4 w-4" />
+              <Clock className="h-3.5 w-3.5" />
+              Recent
             </button>
           </div>
 
-          {/* Sort */}
+          {/* Overflow menu button */}
           <button
-            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white hover:text-white touch-manipulation"
-            onClick={() =>
-              setSortMode((prev) => {
-                const modes: SortMode[] = ['newest', 'oldest', 'category', 'project'];
-                return modes[(modes.indexOf(prev) + 1) % modes.length];
-              })
-            }
-            title={`Sort: ${sortMode}`}
+            onClick={() => setShowOverflowMenu(true)}
+            className="h-11 w-11 flex items-center justify-center rounded-xl bg-[#1e1e1e] border border-white/10 text-white touch-manipulation active:bg-white/10 flex-shrink-0"
           >
-            <ArrowUpDown className="h-4 w-4" />
-          </button>
-
-          {/* Filter */}
-          <button
-            className="p-2 rounded-lg bg-[#1e1e1e] border border-white/10 text-white hover:text-white touch-manipulation"
-            onClick={() => setShowFilters(true)}
-          >
-            <Filter className="h-4 w-4" />
-          </button>
-
-          {/* Batch select */}
-          <button
-            onClick={() => {
-              setBatchMode(!batchMode);
-              setSelectedPhotos(new Set());
-            }}
-            className={`p-2 rounded-lg border touch-manipulation ${batchMode ? 'bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow' : 'bg-[#1e1e1e] border-white/10 text-white'}`}
-          >
-            <CheckSquare className="h-4 w-4" />
+            <MoreVertical className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Active chips */}
-        <div className="flex items-center gap-2 mt-2 flex-wrap">
-          {sortMode !== 'newest' && (
-            <Badge
-              className="bg-white/5 text-white border-white/10 text-[10px] h-6 px-2"
-              onClick={() => setSortMode('newest')}
-            >
-              Sort: {sortMode} <X className="h-2.5 w-2.5 ml-1" />
-            </Badge>
-          )}
-          {filters.category && (
-            <Badge
-              className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 cursor-pointer text-xs h-7 px-2.5"
-              onClick={() => handleCategoryChange('all')}
-            >
-              {getCategoryIcon(filters.category)} {getCategoryLabel(filters.category)}
-              <X className="h-3 w-3 ml-1.5" />
-            </Badge>
-          )}
-          {/* Before/after compare shortcut */}
-          {photos.length >= 2 && !batchMode && (
-            <button
-              onClick={() => setShowCompare(true)}
-              className="flex items-center gap-1 h-6 px-2 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-medium touch-manipulation active:bg-blue-500/20"
-            >
-              <ArrowLeftRight className="h-3 w-3" />
-              Compare
-            </button>
-          )}
-        </div>
+        {/* Active filter/sort chips */}
+        {(sortMode !== 'newest' || filters.category || batchMode) && (
+          <div className="flex items-center gap-2 flex-wrap">
+            {sortMode !== 'newest' && (
+              <Badge
+                className="bg-white/5 text-white border-white/10 text-[10px] h-6 px-2 cursor-pointer"
+                onClick={() => setSortMode('newest')}
+              >
+                Sort: {sortMode} <X className="h-2.5 w-2.5 ml-1" />
+              </Badge>
+            )}
+            {filters.category && (
+              <Badge
+                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 cursor-pointer text-xs h-7 px-2.5"
+                onClick={() => handleCategoryChange('all')}
+              >
+                {getCategoryIcon(filters.category)} {getCategoryLabel(filters.category)}
+                <X className="h-3 w-3 ml-1.5" />
+              </Badge>
+            )}
+            {batchMode && (
+              <Badge
+                className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] h-6 px-2 cursor-pointer"
+                onClick={() => {
+                  setBatchMode(false);
+                  setSelectedPhotos(new Set());
+                }}
+              >
+                Batch mode <X className="h-2.5 w-2.5 ml-1" />
+              </Badge>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -617,12 +655,36 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
             </div>
           )}
 
-          {/* Grid View */}
+          {/* Grid View (All) */}
           {viewMode === 'grid' && (
             <div className="p-3">
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                 {sortedPhotos.map((photo, index) => renderPhotoTile(photo, index))}
               </div>
+            </div>
+          )}
+
+          {/* Recent View */}
+          {viewMode === 'recent' && (
+            <div className="p-3">
+              {recentPhotos.length === 0 ? (
+                <div className="text-center py-12">
+                  <Clock className="h-8 w-8 text-white mx-auto mb-2" />
+                  <p className="text-sm text-white">No photos from the last 7 days</p>
+                </div>
+              ) : (
+                <>
+                  <p className="text-xs text-white mb-3">
+                    {recentPhotos.length} photo{recentPhotos.length !== 1 ? 's' : ''} from the last
+                    7 days
+                  </p>
+                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                    {recentPhotos.map((photo, index) =>
+                      renderPhotoTile(photo, index, recentPhotos)
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -817,12 +879,130 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
         </SheetContent>
       </Sheet>
 
+      {/* Overflow menu */}
+      <Sheet open={showOverflowMenu} onOpenChange={setShowOverflowMenu}>
+        <SheetContent
+          side="bottom"
+          className="h-auto rounded-t-2xl p-0 bg-elec-dark border-white/10"
+        >
+          <div className="pt-3 px-4">
+            <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-4" />
+          </div>
+          <div className="px-2 pb-4 space-y-1">
+            {/* Sort options */}
+            <p className="px-4 pt-1 pb-2 text-[10px] font-medium text-white uppercase tracking-wider">
+              Sort by
+            </p>
+            {(['newest', 'oldest', 'category', 'project'] as SortMode[]).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => {
+                  setSortMode(mode);
+                  setShowOverflowMenu(false);
+                }}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation transition-colors ${
+                  sortMode === mode
+                    ? 'bg-elec-yellow/10 text-elec-yellow'
+                    : 'text-white active:bg-white/5'
+                }`}
+              >
+                <ArrowUpDown className="h-4 w-4" />
+                <span className="text-sm font-medium capitalize">{mode}</span>
+                {sortMode === mode && (
+                  <span className="ml-auto text-xs text-elec-yellow">Active</span>
+                )}
+              </button>
+            ))}
+
+            <div className="h-px bg-white/10 mx-4 my-2" />
+
+            {/* Filter by category */}
+            <button
+              onClick={() => {
+                setShowOverflowMenu(false);
+                setShowFilters(true);
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white active:bg-white/5 touch-manipulation"
+            >
+              <Filter className="h-4 w-4" />
+              <span className="text-sm font-medium">Filter by category</span>
+              {filters.category && (
+                <span className="ml-auto text-xs text-elec-yellow">
+                  {getCategoryLabel(filters.category)}
+                </span>
+              )}
+            </button>
+
+            {/* Batch select */}
+            <button
+              onClick={() => {
+                setBatchMode(!batchMode);
+                setSelectedPhotos(new Set());
+                setShowOverflowMenu(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation ${
+                batchMode ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white active:bg-white/5'
+              }`}
+            >
+              <CheckSquare className="h-4 w-4" />
+              <span className="text-sm font-medium">Batch select</span>
+              {batchMode && <span className="ml-auto text-xs text-elec-yellow">On</span>}
+            </button>
+
+            {/* Compare */}
+            {photos.length >= 2 && (
+              <button
+                onClick={() => {
+                  setShowOverflowMenu(false);
+                  setShowCompare(true);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white active:bg-white/5 touch-manipulation"
+              >
+                <ArrowLeftRight className="h-4 w-4" />
+                <span className="text-sm font-medium">Compare (before/after)</span>
+              </button>
+            )}
+
+            {/* List view toggle */}
+            <button
+              onClick={() => {
+                setViewMode('list');
+                setShowOverflowMenu(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl touch-manipulation ${
+                viewMode === 'list'
+                  ? 'bg-elec-yellow/10 text-elec-yellow'
+                  : 'text-white active:bg-white/5'
+              }`}
+            >
+              <List className="h-4 w-4" />
+              <span className="text-sm font-medium">List view</span>
+            </button>
+          </div>
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </SheetContent>
+      </Sheet>
+
       {/* Before/After Compare */}
       <AnimatePresence>
         {showCompare && (
           <BeforeAfterCompare photos={sortedPhotos} onClose={() => setShowCompare(false)} />
         )}
       </AnimatePresence>
+
+      {/* Photo detail sheet */}
+      <PhotoDetailSheet
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        photo={detailPhoto}
+        photos={expandedProject ? displayPhotos : sortedPhotos}
+        onNavigate={(photo) => setDetailPhoto(photo)}
+        onDeleted={() => {
+          setDetailOpen(false);
+          setDetailPhoto(null);
+          refetch();
+        }}
+      />
 
       {/* Photo viewer */}
       <AnimatePresence>
@@ -839,6 +1019,16 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           />
         )}
       </AnimatePresence>
+
+      {/* Create project sheet */}
+      <CreateProjectSheet
+        open={createProjectOpen}
+        onOpenChange={setCreateProjectOpen}
+        onCreated={() => {
+          refetch();
+          toast({ title: 'Project created' });
+        }}
+      />
     </div>
   );
 }
