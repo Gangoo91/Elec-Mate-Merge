@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'First fix electrical covers all cabling, containment, back boxes, and infrastructure installed before plastering — getting it wrong means chasing out finished walls later.',
-  'Cable routes must comply with BS 7671 safe zones (Regulation 522.6.06) to prevent future damage from nails, screws, and fixings driven into walls by other trades or occupants.',
+  'Cable routes must comply with BS 7671 safe zones (Regulation 522.6.202) to prevent future damage from nails, screws, and fixings driven into walls by other trades or occupants.',
   'Coordination with plumbers, plasterers, and carpenters is essential — agree back box positions, chase depths, and board access points before anyone starts work.',
   'Part P notification is required for new circuits in dwellings, new consumer units, and work in special locations (bathrooms, kitchens with new circuits, swimming pools, saunas).',
   "Elec-Mate's AI circuit designer helps plan the full first fix layout — circuit allocation, cable routes, and containment — before you pick up a drill.",
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What are the BS 7671 safe zones for cable routes?',
     answer:
-      'BS 7671 Regulation 522.6.06 defines prescribed zones (safe zones) where cables can be installed in walls to minimise the risk of damage from nails, screws, and fixings. Cables must be run horizontally or vertically from an accessory position (socket, switch, or other fixed electrical equipment). Horizontal runs must be within 150mm of the ceiling or floor. Vertical runs must be directly above or below the accessory, within 150mm of the corner of the wall, or within a defined zone around door and window frames. Cables outside safe zones must either be protected by an RCD with a rated residual current not exceeding 30mA, enclosed in earthed metallic containment, or buried at a depth of at least 50mm from the finished wall surface. In practice, staying within safe zones is the simplest approach and avoids reliance on RCD protection for mechanical protection.',
+      'BS 7671 Regulation 522.6.202 defines prescribed zones (safe zones) where cables can be installed in walls to minimise the risk of damage from nails, screws, and fixings. Cables must be run horizontally or vertically from an accessory position (socket, switch, or other fixed electrical equipment). Horizontal runs must be within 150mm of the ceiling or floor. Vertical runs must be directly above or below the accessory, within 150mm of the corner of the wall, or within a defined zone around door and window frames. Cables outside safe zones must either be protected by an RCD with a rated residual current not exceeding 30mA, enclosed in earthed metallic containment, or buried at a depth of at least 50mm from the finished wall surface. In practice, staying within safe zones is the simplest approach and avoids reliance on RCD protection for mechanical protection.',
   },
   {
     question: 'How deep should cable chases be in walls?',
@@ -182,7 +182,7 @@ const sections = [
           overheating.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
-          <h4 className="font-bold text-white mb-3">BS 7671 Safe Zones (Regulation 522.6.06)</h4>
+          <h4 className="font-bold text-white mb-3">BS 7671 Safe Zones (Regulation 522.6.202)</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -495,7 +495,7 @@ const sections = [
               <span>
                 <strong>Cables outside safe zones without protection</strong> — running cables
                 diagonally across walls or at random heights without RCD protection or earthed
-                metallic containment. This is a direct breach of BS 7671 Regulation 522.6.06.
+                metallic containment. This is a direct breach of BS 7671 Regulation 522.6.202.
               </span>
             </li>
             <li className="flex items-start gap-3">

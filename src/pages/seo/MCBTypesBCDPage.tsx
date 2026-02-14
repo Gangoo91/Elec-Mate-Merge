@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'Can I use a Type C MCB for a domestic socket circuit?',
     answer:
-      'Technically you can, but it is poor practice. Domestic socket circuits supply resistive or lightly inductive loads — kettles, lamps, phone chargers, vacuum cleaners — none of which produce significant inrush current. A Type B MCB is the correct choice because its lower magnetic trip threshold (3-5x) provides faster disconnection under fault conditions. Using a Type C MCB (5-10x) on a socket circuit halves the maximum permitted Zs — from 1.44 ohms (B32) to 0.72 ohms (C32) for a 32A device at 0.4-second disconnection. This dramatically reduces the margin for compliance and may cause the circuit to fail Zs testing, especially on installations with higher Ze values such as TN-S systems. Only use Type C where the load genuinely requires it.',
+      'Technically you can, but it is poor practice. Domestic socket circuits supply resistive or lightly inductive loads — kettles, lamps, phone chargers, vacuum cleaners — none of which produce significant inrush current. A Type B MCB is the correct choice because its lower magnetic trip threshold (3-5x) provides faster disconnection under fault conditions. Using a Type C MCB (5-10x) on a socket circuit halves the maximum permitted Zs — from 1.37 ohms (B32) to 0.68 ohms (C32) for a 32A device at 0.4-second disconnection. This dramatically reduces the margin for compliance and may cause the circuit to fail Zs testing, especially on installations with higher Ze values such as TN-S systems. Only use Type C where the load genuinely requires it.',
   },
   {
     question: 'What is the difference between the magnetic and thermal trip mechanisms?',
@@ -61,12 +61,12 @@ const faqs = [
   {
     question: 'Why does the MCB type affect the maximum Zs value?',
     answer:
-      "The maximum Zs value is calculated from the minimum fault current required to trip the MCB within the permitted disconnection time (0.4 seconds for final circuits). For 0.4-second disconnection, the MCB must trip on its magnetic mechanism (instantaneous trip). The magnetic trip threshold is defined by the MCB type — 5x rated current for Type B, 10x for Type C, 20x for Type D. Using Ohm's law: maximum Zs = supply voltage divided by magnetic trip current. For a 32A MCB: Type B = 230/(5x32) = 1.44 ohms; Type C = 230/(10x32) = 0.72 ohms; Type D = 230/(20x32) = 0.36 ohms. A higher MCB type requires more fault current to trip, which requires a lower loop impedance, which means a lower maximum Zs.",
+      "The maximum Zs value is calculated from the minimum fault current required to trip the MCB within the permitted disconnection time (0.4 seconds for final circuits). For 0.4-second disconnection, the MCB must trip on its magnetic mechanism (instantaneous trip). The magnetic trip threshold is defined by the MCB type — 5x rated current for Type B, 10x for Type C, 20x for Type D. Using Ohm's law: maximum Zs = (0.95 × 230) divided by magnetic trip current, where 0.95 is the Cmin factor accounting for the lowest expected supply voltage. For a 32A MCB: Type B = 218.5/(5×32) = 1.37 ohms; Type C = 218.5/(10×32) = 0.68 ohms; Type D = 218.5/(20×32) = 0.34 ohms. A higher MCB type requires more fault current to trip, which requires a lower loop impedance, which means a lower maximum Zs.",
   },
   {
     question: 'When should I use a Type D MCB?',
     answer:
-      'Type D MCBs are reserved for loads with extremely high inrush currents — typically 10 to 20 times the running current. Common applications include welding equipment, large transformers on initial energisation, X-ray machines, UPS systems with large capacitor banks, and some industrial motor starters. In domestic installations, Type D MCBs are almost never appropriate. The very high magnetic trip threshold (10-20x) means the maximum Zs is extremely low — just 0.36 ohms for a D32 at 0.4-second disconnection. Achieving such a low Zs is impossible in most domestic and many commercial installations. If you find a Type D MCB in a domestic consumer unit, it is almost certainly incorrect and should be flagged on the EICR.',
+      'Type D MCBs are reserved for loads with extremely high inrush currents — typically 10 to 20 times the running current. Common applications include welding equipment, large transformers on initial energisation, X-ray machines, UPS systems with large capacitor banks, and some industrial motor starters. In domestic installations, Type D MCBs are almost never appropriate. The very high magnetic trip threshold (10-20x) means the maximum Zs is extremely low — just 0.34 ohms for a D32 at 0.4-second disconnection. Achieving such a low Zs is impossible in most domestic and many commercial installations. If you find a Type D MCB in a domestic consumer unit, it is almost certainly incorrect and should be flagged on the EICR.',
   },
   {
     question: 'How do I identify the MCB type on site?',
@@ -319,10 +319,10 @@ const sections = [
         <p>
           The trade-off with Type C is a lower maximum Zs. A C32 has a{' '}
           <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
-            maximum Zs of 0.72 ohms
+            maximum Zs of 0.68 ohms
           </SEOInternalLink>{' '}
-          compared to 1.44 ohms for a B32 — half the value. On installations with higher Ze values
-          (TN-S systems, long supply cables), achieving a Zs below 0.58 ohms (corrected) on a Type C
+          compared to 1.37 ohms for a B32 — half the value. On installations with higher Ze values
+          (TN-S systems, long supply cables), achieving a Zs below 0.54 ohms (corrected) on a Type C
           circuit can be challenging. Always verify that the loop impedance will be within limits
           before specifying Type C.
         </p>
@@ -383,7 +383,7 @@ const sections = [
         </div>
         <p>
           Type D MCBs are rarely appropriate for domestic installations. The maximum Zs for a D32 at
-          0.4-second disconnection is just 0.36 ohms — achieving this requires an extremely low Ze
+          0.4-second disconnection is just 0.34 ohms — achieving this requires an extremely low Ze
           and very short circuit runs with large conductors. In most domestic installations,
           particularly those with TN-S earthing, this Zs is impossible to achieve. If you find a
           Type D MCB in a domestic consumer unit during an EICR, it is almost certainly the wrong
@@ -469,27 +469,27 @@ const sections = [
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>B32</span>
-              <span className="font-mono">1.44 ohms</span>
-              <span className="font-mono">1.15 ohms</span>
+              <span className="font-mono">1.37 ohms</span>
+              <span className="font-mono">1.10 ohms</span>
             </div>
             <div className="flex justify-between border-b border-white/10 pb-2">
               <span>C32</span>
-              <span className="font-mono">0.72 ohms</span>
-              <span className="font-mono">0.58 ohms</span>
+              <span className="font-mono">0.68 ohms</span>
+              <span className="font-mono">0.54 ohms</span>
             </div>
             <div className="flex justify-between">
               <span>D32</span>
-              <span className="font-mono">0.36 ohms</span>
-              <span className="font-mono">0.29 ohms</span>
+              <span className="font-mono">0.34 ohms</span>
+              <span className="font-mono">0.27 ohms</span>
             </div>
           </div>
         </div>
         <p>
-          The difference is stark. A B32 gives you 1.15 ohms of headroom (corrected). A C32 cuts
-          that in half to 0.58 ohms. A D32 reduces it further to just 0.29 ohms. On a TN-S
+          The difference is stark. A B32 gives you 1.10 ohms of headroom (corrected). A C32 cuts
+          that in half to 0.54 ohms. A D32 reduces it further to just 0.27 ohms. On a TN-S
           installation where Ze might be 0.60 ohms, a B32 circuit with R1+R2 of 0.50 ohms would give
           a Zs of 1.10 ohms — comfortably within the B32 limit. But the same circuit with a C32
-          would fail (1.10 ohms exceeds the 0.58 ohm limit). With a D32, it would fail dramatically.
+          would fail (1.10 ohms exceeds the 0.54 ohm limit). With a D32, it would fail dramatically.
         </p>
         <p>
           This is why MCB type selection is not just an academic exercise — it directly determines

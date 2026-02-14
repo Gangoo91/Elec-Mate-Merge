@@ -576,7 +576,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Carry spare fuses for your instrument.</strong> A blown instrument fuse
-                mid-test is a common cause of wasted time. Keep HRC fuses in your test kit.
+                mid-test is a common cause of wasted time. Keep HBC fuses in your test kit.
               </span>
             </li>
           </ul>

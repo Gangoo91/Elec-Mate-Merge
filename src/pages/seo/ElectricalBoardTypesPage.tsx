@@ -75,9 +75,9 @@ export default function ElectricalBoardTypesPage() {
                   current BS 7671 regulations
                 </SEOInternalLink>
                 , all consumer units in domestic premises must have metal enclosures (Regulation
-                421.1.201), and almost every circuit requires 30 mA RCD protection (Regulation
-                411.3.4). The question is not whether to provide RCD protection, but how to arrange
-                it — and that decision depends on the type of consumer unit you choose.
+                421.1.201), and almost every circuit requires 30 mA RCD protection (Regulations
+                411.3.3 and 411.3.4). The question is not whether to provide RCD protection, but how
+                to arrange it — and that decision depends on the type of consumer unit you choose.
               </p>
               <p>
                 There are five main types of consumer unit available in the UK market. Each has
@@ -539,7 +539,7 @@ export default function ElectricalBoardTypesPage() {
         {
           question: 'Can I use MCBs instead of RCBOs in a new consumer unit?',
           answer:
-            'MCBs can be used in a consumer unit, but they must be downstream of an RCD to provide the 30 mA RCD protection required by BS 7671 for most domestic circuits. MCBs alone do not provide RCD protection and cannot comply with Regulation 411.3.4. In a dual RCD board, MCBs are used within each RCD-protected group. In a main switch only board, you would need individual RCBOs because there are no group RCDs. The only circuits that may use MCBs without RCD protection are those exempt from the RCD requirement, such as fire alarm circuits where RCD protection could compromise safety.',
+            'MCBs can be used in a consumer unit, but they must be downstream of an RCD to provide the 30 mA RCD protection required by BS 7671 for most domestic circuits. MCBs alone do not provide RCD protection and cannot comply with Regulations 411.3.3 and 411.3.4. In a dual RCD board, MCBs are used within each RCD-protected group. In a main switch only board, you would need individual RCBOs because there are no group RCDs. The only circuits that may use MCBs without RCD protection are those exempt from the RCD requirement, such as fire alarm circuits where RCD protection could compromise safety.',
         },
         {
           question: 'Do all consumer units need to be metal under BS 7671?',

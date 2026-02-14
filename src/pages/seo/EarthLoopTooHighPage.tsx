@@ -185,8 +185,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type B MCB (most domestic circuits):</strong> Maximum Zs ranges from 13.68
-                ohms (6 A) down to 0.86 ohms (50 A). Common values: 6 A = 7.67 ohms, 10 A = 4.60
-                ohms, 16 A = 2.73 ohms, 20 A = 2.30 ohms, 32 A = 1.37 ohms, 40 A = 1.09 ohms (all at
+                ohms (6 A) down to 0.86 ohms (50 A). Common values: 6 A = 7.28 ohms, 10 A = 4.37
+                ohms, 16 A = 2.73 ohms, 20 A = 2.19 ohms, 32 A = 1.37 ohms, 40 A = 1.09 ohms (all at
                 0.4s disconnection).
               </span>
             </li>
@@ -194,8 +194,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type C MCB (inductive loads):</strong> Maximum Zs values are lower because
-                Type C MCBs require higher fault currents to trip magnetically. 6 A = 3.83 ohms, 10
-                A = 2.30 ohms, 16 A = 1.37 ohms, 32 A = 0.68 ohms (at 0.4s disconnection).
+                Type C MCBs require higher fault currents to trip magnetically. 6 A = 3.64 ohms, 10
+                A = 2.19 ohms, 16 A = 1.37 ohms, 32 A = 0.68 ohms (at 0.4s disconnection).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -419,7 +419,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use a lower-rated MCB:</strong> A 20 A Type B MCB has a maximum Zs of 2.30
+                <strong>Use a lower-rated MCB:</strong> A 20 A Type B MCB has a maximum Zs of 2.19
                 ohms instead of 1.37 ohms for a 32 A. If the circuit loading permits, reducing the
                 MCB rating extends the allowable cable length significantly.
               </span>

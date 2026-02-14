@@ -50,27 +50,27 @@ const faqs = [
   {
     question: 'Why must dead tests be done before live tests?',
     answer:
-      'Dead tests verify the fundamental safety of the circuit before it is energised. Continuity testing confirms that protective conductors are connected and will carry fault current. Insulation resistance testing confirms that there are no short circuits between live conductors or between live conductors and earth. If you skip dead testing and energise a circuit with a short circuit or a broken earth, you could cause a fault, a fire, or an electric shock. The sequence is not optional — it is a requirement of BS 7671 Chapter 61, which specifies that dead tests (Regulation 612) must be completed before the installation is energised for live testing (Regulation 613). GN3 (Guidance Note 3) reinforces this sequence and provides the detailed procedures for each test.',
+      'Dead tests verify the fundamental safety of the circuit before it is energised. Continuity testing confirms that protective conductors are connected and will carry fault current. Insulation resistance testing confirms that there are no short circuits between live conductors or between live conductors and earth. If you skip dead testing and energise a circuit with a short circuit or a broken earth, you could cause a fault, a fire, or an electric shock. The sequence is not optional — it is a requirement of BS 7671 Chapter 64, which specifies that dead tests (Section 643) must be completed before the installation is energised for live testing (Section 644). GN3 (Guidance Note 3) reinforces this sequence and provides the detailed procedures for each test.',
   },
   {
     question: 'What counts as a dead test?',
     answer:
-      'The dead tests specified in BS 7671 Regulation 612 are: continuity of protective conductors including main and supplementary bonding (612.2), continuity of ring final circuit conductors (612.2.2), insulation resistance between live conductors and between live conductors and earth (612.3), separation of circuits such as SELV and PELV (612.4), insulation resistance or impedance of non-conducting floors and walls (612.5), polarity verification (612.6), and earth electrode resistance for TT systems (612.7). These tests are all performed with the supply isolated and the circuits de-energised. The instrument used depends on the test — a low-resistance ohmmeter for continuity, a 500 V DC insulation resistance tester for IR, and a dedicated earth electrode tester for RA.',
+      'The dead tests specified in BS 7671 Section 643 are: continuity of protective conductors including main and supplementary bonding (643.2), continuity of ring final circuit conductors (643.2), insulation resistance between live conductors and between live conductors and earth (643.3), separation of circuits such as SELV and PELV (643.4), insulation resistance or impedance of non-conducting floors and walls (643.5), polarity verification (643.6), and earth electrode resistance for TT systems (643.7). These tests are all performed with the supply isolated and the circuits de-energised. The instrument used depends on the test — a low-resistance ohmmeter for continuity, a 500 V DC insulation resistance tester for IR, and a dedicated earth electrode tester for RA.',
   },
   {
     question: 'What counts as a live test?',
     answer:
-      'The live tests specified in BS 7671 Regulation 613 are: earth fault loop impedance Zs (613.2), prospective fault current — both prospective short-circuit current (PSCC) and prospective earth fault current (PEFC) (613.3), RCD operation including trip time and trip current (613.4), verification of phase sequence for three-phase supplies (613.5), and functional testing of switchgear, controls, interlocks, and other devices (613.6). These tests require the supply to be energised. A multifunction tester (MFT) can perform Zs, PSCC/PEFC, and RCD tests. Functional testing is done manually by operating each device and confirming correct operation.',
+      'The live tests specified in BS 7671 Section 644 are: earth fault loop impedance Zs (644.3), prospective fault current — both prospective short-circuit current (PSCC) and prospective earth fault current (PEFC) (644.4), RCD operation including trip time and trip current (643.10), verification of phase sequence for three-phase supplies (644.5), and functional testing of switchgear, controls, interlocks, and other devices (643.10). These tests require the supply to be energised. A multifunction tester (MFT) can perform Zs, PSCC/PEFC, and RCD tests. Functional testing is done manually by operating each device and confirming correct operation.',
   },
   {
     question: 'Can I do live testing without completing all dead tests first?',
     answer:
-      'No. BS 7671 Regulation 610.1 specifies that every installation must be inspected and tested during erection and on completion, before being put into service. The sequence in Chapter 61 is prescriptive: inspection first (Chapter 611), then dead testing (612), then live testing (613). Energising a circuit without completing dead tests is dangerous and non-compliant. If you are doing a periodic inspection and the installation is already energised, you should still follow the correct procedure: isolate each circuit before performing dead tests on it, then re-energise for live tests. In practice, some electricians perform live tests first on a periodic inspection to minimise supply disruption — this is accepted by some scheme providers but carries risk and should only be done where the electrician is confident the circuit is safe.',
+      'No. BS 7671 requires that every installation is inspected and tested during erection and on completion, before being put into service. The sequence in Part 6 is prescriptive: inspection first (Section 641), then dead testing (Section 643), then live testing (Section 644). Energising a circuit without completing dead tests is dangerous and non-compliant. If you are doing a periodic inspection and the installation is already energised, you should still follow the correct procedure: isolate each circuit before performing dead tests on it, then re-energise for live tests. In practice, some electricians perform live tests first on a periodic inspection to minimise supply disruption — this is accepted by some scheme providers but carries risk and should only be done where the electrician is confident the circuit is safe.',
   },
   {
     question: 'Do I need to do dead and live tests on every circuit during a periodic inspection?',
     answer:
-      'For a periodic inspection (EICR), BS 7671 Regulation 650.3 allows sampling — you do not have to test every circuit if the results from a representative sample indicate the installation is in good condition. However, certain tests must be done on every circuit regardless: earth fault loop impedance, RCD operation (where RCDs are installed), and polarity. Continuity and insulation resistance can be sampled, but if any sample fails, the scope must be extended to include all circuits. GN3 recommends a minimum sample size of 10% of similar circuits, increasing to 100% if faults are found. The decision on sampling should be justified and recorded on the EICR. For initial verification, every circuit must be fully tested — no sampling is permitted.',
+      'For a periodic inspection (EICR), IET Guidance Note 3 (GN3) allows sampling — you do not have to test every circuit if the results from a representative sample indicate the installation is in good condition. However, certain tests must be done on every circuit regardless: earth fault loop impedance, RCD operation (where RCDs are installed), and polarity. Continuity and insulation resistance can be sampled, but if any sample fails, the scope must be extended to include all circuits. GN3 recommends a minimum sample size of 10% of similar circuits, increasing to 100% if faults are found. The decision on sampling should be justified and recorded on the EICR. For initial verification, every circuit must be fully tested — no sampling is permitted.',
   },
   {
     question: 'What instrument settings do I need for dead tests vs live tests?',
@@ -244,7 +244,7 @@ const sections = [
       <>
         <p>
           Dead tests are performed with the circuit de-energised (isolated). They are specified in
-          BS 7671 Regulation 612 and must be completed before the circuit is energised for live
+          BS 7671 Section 643 and must be completed before the circuit is energised for live
           testing. The dead tests are:
         </p>
         <div className="space-y-4 my-4">
@@ -347,9 +347,8 @@ const sections = [
     content: (
       <>
         <p>
-          Live tests are performed with the supply energised. They are specified in BS 7671
-          Regulation 613 and must only be carried out after all dead tests have been completed
-          satisfactorily.
+          Live tests are performed with the supply energised. They are specified in BS 7671 Section
+          644 and must only be carried out after all dead tests have been completed satisfactorily.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">

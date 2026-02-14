@@ -24,13 +24,13 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'Electrical Testing Sequence | GN3 Order Explained | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete guide to the correct electrical testing sequence from IET Guidance Note 3 (9th Edition). Continuity, insulation resistance, polarity, loop impedance, PFC, and RCD testing explained.';
+  'Complete guide to the correct electrical testing sequence from IET Guidance Note 3 (9th Edition). Continuity, insulation resistance, polarity, earth electrode resistance, loop impedance, PFC, and functional testing including RCDs explained.';
 
 const faqs = [
   {
     question: 'Why does the testing sequence matter?',
     answer:
-      'The testing sequence matters because each test builds on the results of the previous test and, critically, each test relies on the safety conditions established by the previous test. For example, you must confirm that the insulation resistance is satisfactory (test 3) before you energise the circuit to carry out earth fault loop impedance testing (test 5). If you performed loop impedance testing without first verifying insulation resistance, you could energise a circuit with a fault to earth, causing a dangerous short circuit, damaging the test instrument, or injuring yourself. Similarly, you must verify continuity of the protective conductor (test 1) before relying on the earth path for loop impedance testing. The IET Guidance Note 3 (GN3) specifies the testing sequence precisely because it is the safe order — deviating from it introduces risk to both the electrician and the installation.',
+      'The testing sequence matters because each test builds on the results of the previous test and, critically, each test relies on the safety conditions established by the previous test. For example, you must confirm that the insulation resistance is satisfactory (test 3) before you energise the circuit to carry out earth fault loop impedance testing (test 6). If you performed loop impedance testing without first verifying insulation resistance, you could energise a circuit with a fault to earth, causing a dangerous short circuit, damaging the test instrument, or injuring yourself. Similarly, you must verify continuity of the protective conductor (test 1) before relying on the earth path for loop impedance testing. The IET Guidance Note 3 (GN3) specifies the testing sequence precisely because it is the safe order — deviating from it introduces risk to both the electrician and the installation.',
   },
   {
     question: 'What is the difference between R1+R2 and R2 continuity tests?',
@@ -43,7 +43,7 @@ const faqs = [
       'BS 7671 Table 61 specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500V AC (which covers all standard domestic and commercial installations at 230V and 400V), the test voltage is 500V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MΩ). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12V or 24V circuits), the test voltage is 250V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kΩ). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MΩ to 200 MΩ or more are common for new installations. Low but passing readings (for example, 2-5 MΩ) may indicate deteriorating insulation that should be monitored. Readings below 1 MΩ are failures that must be investigated and rectified before the circuit is energised.',
   },
   {
-    question: 'Can I use a multifunction tester for all seven tests?',
+    question: 'Can I use a multifunction tester for all the tests?',
     answer:
       'A modern multifunction test instrument (MFT) can perform all of the primary tests in the GN3 sequence: continuity (using the low-reading ohmmeter function), insulation resistance (using the insulation resistance function at 250V or 500V DC), polarity (confirmed during continuity testing and visual inspection), earth fault loop impedance (using the loop impedance function), prospective fault current (calculated automatically from the loop impedance measurement or measured directly), and RCD testing (using the RCD test function at various multiples of the rated current). You will also need a voltage indicator (sometimes called a proving unit or voltage tester) that complies with HSE Guidance Note GS38 for proving circuits dead before testing. This is not a function of the MFT — it is a separate instrument that is essential for safe isolation. Some tests, such as earth electrode resistance on TT systems using the fall-of-potential method, may require a dedicated earth electrode resistance tester, though the MFT loop impedance function can provide a working value.',
   },
@@ -244,14 +244,16 @@ export default function TestingSequenceGuidePage() {
         </div>
       </section>
 
-      {/* The Seven Tests */}
+      {/* The Testing Sequence */}
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">The Seven Tests in Order</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              The Testing Sequence in Order
+            </h2>
           </div>
 
           {/* Test 1 */}
@@ -425,10 +427,55 @@ export default function TestingSequenceGuidePage() {
           </div>
 
           {/* Test 5 */}
-          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 mb-4">
+          <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                 <span className="font-bold text-yellow-400">5</span>
+              </div>
+              <h3 className="font-bold text-white text-xl">Earth Electrode Resistance</h3>
+            </div>
+            <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
+              <p>
+                <strong className="text-yellow-400">What it proves:</strong> That the resistance of
+                the earth electrode (on TT systems) or the earth path is low enough to allow
+                sufficient fault current to flow for the protective device to operate. On TT
+                systems, where the installation relies on its own earth electrode rather than the
+                supply company earth, this test confirms the electrode provides an adequate
+                connection to the general mass of earth.
+              </p>
+              <p>
+                <strong className="text-yellow-400">Method:</strong> The earth electrode resistance
+                can be measured using the dedicated earth electrode resistance function on an MFT or
+                a dedicated earth electrode resistance tester using the fall-of-potential method.
+                Alternatively, a working value can be obtained from the loop impedance test — the
+                measured Ze on a TT system is approximately equal to the earth electrode resistance
+                plus the resistance of the supply transformer earthing. The test is applicable to TT
+                installations (where the means of earthing is an earth electrode) and is not
+                required on TN-S or TN-C-S systems where the earth is provided by the supply
+                company.
+              </p>
+              <p>
+                <strong className="text-yellow-400">Pass/fail:</strong> The earth electrode
+                resistance must be low enough that the product of the electrode resistance and the
+                rated residual operating current of the RCD does not exceed 50 V (the touch voltage
+                limit). For a 30 mA RCD: RA x IΔn must be no greater than 50 V, giving a maximum RA
+                of 1667 ohms. In practice, values below 200 ohms are preferred for reliability.
+              </p>
+              <p>
+                <strong className="text-yellow-400">Why it is fifth:</strong> Earth electrode
+                resistance is the final dead test (or can be measured live). It must be confirmed
+                before energising the installation for live tests on TT systems because the earth
+                electrode is the sole means of earthing — if it is inadequate, energising could
+                create a shock hazard.
+              </p>
+            </div>
+          </div>
+
+          {/* Test 6 */}
+          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 mb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <span className="font-bold text-yellow-400">6</span>
               </div>
               <h3 className="font-bold text-white text-xl">Earth Fault Loop Impedance</h3>
             </div>
@@ -461,20 +508,20 @@ export default function TestingSequenceGuidePage() {
                 the tabulated maximum are failures.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is fifth:</strong> This is a live test —
+                <strong className="text-yellow-400">Why it is sixth:</strong> This is a live test —
                 the circuit must be energised. It can only be performed safely after continuity
                 (confirming the earth path exists), insulation resistance (confirming there are no
-                faults), and polarity (confirming the circuit is correctly wired) have all been
-                verified satisfactory.
+                faults), polarity (confirming the circuit is correctly wired), and earth electrode
+                resistance (where applicable) have all been verified satisfactory.
               </p>
             </div>
           </div>
 
-          {/* Test 6 */}
+          {/* Test 7 */}
           <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
-                <span className="font-bold text-yellow-400">6</span>
+                <span className="font-bold text-yellow-400">7</span>
               </div>
               <h3 className="font-bold text-white text-xl">Prospective Fault Current</h3>
             </div>
@@ -504,53 +551,63 @@ export default function TestingSequenceGuidePage() {
                 EICR.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is sixth:</strong> It follows naturally
+                <strong className="text-yellow-400">Why it is seventh:</strong> It follows naturally
                 from the loop impedance test — in many cases, the Ipf is calculated from the same
                 measurements. It is a live test and requires the circuit to be energised.
               </p>
             </div>
           </div>
 
-          {/* Test 7 */}
+          {/* Test 8 */}
           <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
-                <span className="font-bold text-yellow-400">7</span>
+                <span className="font-bold text-yellow-400">8</span>
               </div>
-              <h3 className="font-bold text-white text-xl">RCD Operation</h3>
+              <h3 className="font-bold text-white text-xl">Functional Testing</h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That every RCD in the
-                installation (RCCBs, RCBOs, and socket-outlet RCDs) operates correctly — tripping at
-                the correct current and within the required time. This is the final safety
-                verification, confirming that the additional protection against electric shock
-                provided by RCDs is functional.
+                <strong className="text-yellow-400">What it proves:</strong> That all assemblies,
+                switchgear, controlgear, interlocks, controls, and RCDs function correctly as
+                intended. This includes verifying that every RCD in the installation (RCCBs, RCBOs,
+                and socket-outlet RCDs) operates correctly — tripping at the correct current and
+                within the required time. It also confirms that all switching devices, isolators,
+                and interlocking arrangements operate as designed.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> For each RCD, carry out the
-                following tests using the RCD test function on the multifunction tester: Push-button
-                test (mechanical function check), half-rated current test at 0.5x IΔn on both
-                half-cycles (must NOT trip), full rated current test at 1x IΔn on both half-cycles
-                (must trip within 300 ms for general type, 130-500 ms for Type S), and five-times
-                rated current test at 5x IΔn on both half-cycles (must trip within 40 ms for general
-                type, 50-200 ms for Type S). Record the worst-case trip time from both half-cycles
-                for each test.
+                <strong className="text-yellow-400">RCD testing method:</strong> For each RCD, carry
+                out the following tests using the RCD test function on the multifunction tester:
+                push-button test (mechanical function check), half-rated current test at 0.5x IΔn on
+                both half-cycles (must NOT trip), full rated current test at 1x IΔn on both
+                half-cycles (must trip within 300 ms for general type, 130-500 ms for Type S), and
+                five-times rated current test at 5x IΔn on both half-cycles (must trip within 40 ms
+                for general type, 50-200 ms for Type S). Record the worst-case trip time from both
+                half-cycles for each test.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> At 0.5x IΔn — must NOT trip.
-                At 1x IΔn — must trip within 300 ms (general type) or 130-500 ms (Type S). At 5x IΔn
-                — must trip within 40 ms (general type) or 50-200 ms (Type S). Failure at any stage
-                requires investigation and may require device replacement.
+                <strong className="text-yellow-400">Other functional tests:</strong> Verify correct
+                operation of all isolators, switches, circuit breakers, fireman switches, emergency
+                stop buttons, time clocks, PIR sensors, dimmer switches, interlocking devices, and
+                any automation or BMS controls. All switchgear must operate smoothly and latch
+                correctly.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is last:</strong> RCD testing is the
-                final test because it requires the circuit to be energised and draws a significant
-                test current through the earth path. All previous tests must have confirmed that the
-                earth path is continuous (test 1), the ring is complete (test 2), the insulation is
-                sound (test 3), the polarity is correct (test 4), the loop impedance is acceptable
-                (test 5), and the fault current is within device ratings (test 6). Only then is it
-                safe to deliberately inject a fault current to test the RCD.
+                <strong className="text-yellow-400">Pass/fail (RCDs):</strong> At 0.5x IΔn — must
+                NOT trip. At 1x IΔn — must trip within 300 ms (general type) or 130-500 ms (Type S).
+                At 5x IΔn — must trip within 40 ms (general type) or 50-200 ms (Type S). Failure at
+                any stage requires investigation and may require device replacement.
+              </p>
+              <p>
+                <strong className="text-yellow-400">Why it is last:</strong> Functional testing is
+                the final test because it requires the installation to be fully energised and
+                operating in its normal state. RCD testing draws a significant test current through
+                the earth path. All previous tests must have confirmed that the earth path is
+                continuous (test 1), the ring is complete (test 2), the insulation is sound (test
+                3), the polarity is correct (test 4), the earth electrode resistance is adequate
+                where applicable (test 5), the loop impedance is acceptable (test 6), and the fault
+                current is within device ratings (test 7). Only then is it safe to deliberately
+                inject fault current and test all functional aspects of the installation.
               </p>
             </div>
           </div>
@@ -672,12 +729,12 @@ export default function TestingSequenceGuidePage() {
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
                 <h3 className="font-bold text-white text-lg mb-2">Multifunction Tester (MFT)</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The primary test instrument for all seven tests. Must be capable of: low-reading
-                  ohmmeter function for continuity (4-24V DC), insulation resistance testing at 250V
-                  and 500V DC, earth fault loop impedance (both Ze and Zs), prospective fault
-                  current measurement or calculation, and RCD testing at 0.5x, 1x, and 5x IΔn on
-                  both half-cycles. Major brands include Megger, Metrel, Fluke, Kewtech, and
-                  Seaward. Must be calibrated annually.
+                  The primary test instrument for all tests in the sequence. Must be capable of:
+                  low-reading ohmmeter function for continuity (4-24V DC), insulation resistance
+                  testing at 250V and 500V DC, earth fault loop impedance (both Ze and Zs),
+                  prospective fault current measurement or calculation, and RCD testing at 0.5x, 1x,
+                  and 5x IΔn on both half-cycles. Major brands include Megger, Metrel, Fluke,
+                  Kewtech, and Seaward. Must be calibrated annually.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">

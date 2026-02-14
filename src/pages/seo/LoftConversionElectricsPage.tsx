@@ -276,9 +276,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          All new circuits must be RCD-protected. Under BS 7671 Regulation 411.3.4, socket outlets
-          rated up to 32A and lighting circuits in domestic premises must be protected by a 30mA
-          RCD. If the existing{' '}
+          All new circuits must be RCD-protected. Under BS 7671 Regulation 411.3.3, socket outlets
+          rated up to 32A must be protected by a 30mA RCD, and Regulation 411.3.4 requires
+          additional protection for cables concealed in walls or partitions. If the existing{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           does not have RCD protection, this may trigger a consumer unit upgrade as part of the loft
           conversion project.

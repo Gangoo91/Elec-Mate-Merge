@@ -162,7 +162,7 @@ const sections = [
           deterioration.
         </p>
         <p>
-          BS 7671 Regulation 612.3 requires insulation resistance to be measured during initial
+          BS 7671 Regulation 643.3 requires insulation resistance to be measured during initial
           verification and periodic inspection. The minimum acceptable values are specified in Table
           61 of BS 7671, and these values depend on the nominal voltage of the circuit.
         </p>
@@ -175,14 +175,14 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 612.3.1 requires that the insulation resistance of every circuit is
+          BS 7671 Regulation 643.3.1 requires that the insulation resistance of every circuit is
           measured between live conductors (line and neutral connected together) and earth, and
           between line and neutral individually. The measurements must be taken with all loads
           disconnected, all switches closed (to include all wiring in the test), and all fuses in
           place or MCBs switched on.
         </p>
         <p>
-          Regulation 612.3.2 specifies that where circuits include surge protective devices (SPDs)
+          Regulation 643.3.2 specifies that where circuits include surge protective devices (SPDs)
           or other voltage-limiting devices connected between live conductors and earth, these
           devices may need to be disconnected before testing, as they can give misleadingly low
           readings. Similarly, electronic equipment with filter capacitors or EMC components can

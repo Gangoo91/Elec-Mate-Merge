@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What are the maximum Zs values for Type B MCBs?',
     answer:
-      'BS 7671 Table 41.3 gives the maximum Zs values for Type B MCBs to achieve disconnection within 0.4 seconds: 6 A = 7.67 ohms, 10 A = 4.60 ohms, 16 A = 2.87 ohms, 20 A = 2.30 ohms, 25 A = 1.84 ohms, 32 A = 1.44 ohms, 40 A = 1.15 ohms, 50 A = 0.92 ohms. These are the absolute maximum values at the maximum conductor operating temperature. When testing at ambient temperature (which is the norm), you should apply the 0.8 correction factor — meaning your measured Zs should not exceed 80% of these values. For example, a B32 MCB has a tabulated maximum of 1.44 ohms, but your measured Zs at ambient should not exceed 1.15 ohms (1.44 x 0.8).',
+      'BS 7671 Table 41.3 gives the maximum Zs values for Type B MCBs to achieve disconnection within 0.4 seconds: 6 A = 7.28 ohms, 10 A = 4.37 ohms, 16 A = 2.73 ohms, 20 A = 2.18 ohms, 25 A = 1.75 ohms, 32 A = 1.37 ohms, 40 A = 1.09 ohms, 50 A = 0.87 ohms. These values are derived using Cmin = 0.95 (i.e. 0.95 x 230 = 218.5 V) divided by the MCB magnetic trip current. They represent the absolute maximum values at the maximum conductor operating temperature. When testing at ambient temperature (which is the norm), you should apply the 0.8 correction factor — meaning your measured Zs should not exceed 80% of these values. For example, a B32 MCB has a tabulated maximum of 1.37 ohms, but your measured Zs at ambient should not exceed 1.10 ohms (1.37 x 0.8).',
   },
   {
     question: 'What is the 0.8 correction factor for temperature?',
@@ -310,8 +310,9 @@ const sections = [
         </p>
         <p>
           For example, a Type B 32 A MCB trips magnetically at 5 times its rated current (5 x 32 =
-          160 A). To achieve 160 A of fault current at 230 V, the maximum loop impedance is 230/160
-          = 1.44 ohms. This is exactly the value you find in BS 7671 Table 41.3 for a B32 MCB.
+          160 A). BS 7671 applies a voltage factor Cmin = 0.95 to account for supply voltage
+          tolerance, giving 0.95 x 230 = 218.5 V. The maximum loop impedance is therefore 218.5/160
+          = 1.37 ohms. This is exactly the value you find in BS 7671 Table 41.3 for a B32 MCB.
         </p>
       </>
     ),
@@ -338,43 +339,43 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B6:</strong> 7.67 Ω (corrected: 6.13 Ω)
+                <strong className="text-yellow-400">B6:</strong> 7.28 Ω (corrected: 5.82 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B10:</strong> 4.60 Ω (corrected: 3.68 Ω)
+                <strong className="text-yellow-400">B10:</strong> 4.37 Ω (corrected: 3.50 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B16:</strong> 2.87 Ω (corrected: 2.30 Ω)
+                <strong className="text-yellow-400">B16:</strong> 2.73 Ω (corrected: 2.18 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B20:</strong> 2.30 Ω (corrected: 1.84 Ω)
+                <strong className="text-yellow-400">B20:</strong> 2.18 Ω (corrected: 1.75 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B32:</strong> 1.44 Ω (corrected: 1.15 Ω)
+                <strong className="text-yellow-400">B32:</strong> 1.37 Ω (corrected: 1.10 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B40:</strong> 1.15 Ω (corrected: 0.92 Ω)
+                <strong className="text-yellow-400">B40:</strong> 1.09 Ω (corrected: 0.87 Ω)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">B50:</strong> 0.92 Ω (corrected: 0.74 Ω)
+                <strong className="text-yellow-400">B50:</strong> 0.87 Ω (corrected: 0.70 Ω)
               </span>
             </li>
           </ul>
@@ -455,11 +456,11 @@ const sections = [
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Example Calculation</h3>
           <p className="text-white leading-relaxed">
-            For a B32 MCB, the tabulated maximum Zs is 1.44 ohms (at 70 degrees Celsius). Applying
-            the 0.8 factor: 1.44 x 0.8 = 1.15 ohms. Your measured Zs at ambient temperature should
-            not exceed 1.15 ohms. If you measure 1.20 ohms, it passes the tabulated maximum but
+            For a B32 MCB, the tabulated maximum Zs is 1.37 ohms (at 70 degrees Celsius). Applying
+            the 0.8 factor: 1.37 x 0.8 = 1.10 ohms. Your measured Zs at ambient temperature should
+            not exceed 1.10 ohms. If you measure 1.20 ohms, it passes the tabulated maximum but
             fails the corrected maximum — when the cables heat up under load, the actual Zs could
-            exceed 1.44 ohms and the circuit would not disconnect within 0.4 seconds.
+            exceed 1.37 ohms and the circuit would not disconnect within 0.4 seconds.
           </p>
         </div>
         <p>

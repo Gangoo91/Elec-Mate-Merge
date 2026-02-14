@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What does NICEIC stand for?',
     answer:
-      'NICEIC stands for the National Inspection Council for Electrical Installation Contracting. It was established in 1956 as a consumer safety organisation and is now the UK\'s largest voluntary regulatory body for the electrical contracting industry. Despite the word "Council" in its name, NICEIC is not a government body — it is an independent organisation that assesses and registers electrical contractors to ensure they are competent to carry out work in accordance with BS 7671 (the IET Wiring Regulations). NICEIC is approved by the UK government as a competent person scheme operator under Part P of the Building Regulations in England and Wales, meaning work carried out by NICEIC-registered contractors can be self-certified without the need for separate Building Control approval.',
+      'NICEIC stands for the National Inspection Council for Electrical Installation Contracting. It was established in 1956 as a consumer safety organisation and is now the UK\'s largest voluntary registration body for the electrical contracting industry. Despite the word "Council" in its name, NICEIC is not a government body — it is an independent organisation that assesses and registers electrical contractors to ensure they are competent to carry out work in accordance with BS 7671 (the IET Wiring Regulations). NICEIC is approved by the UK government as a competent person scheme operator under Part P of the Building Regulations in England and Wales, meaning work carried out by NICEIC-registered contractors can be self-certified without the need for separate Building Control approval.',
   },
   {
     question: 'How is NICEIC different from NAPIT and ELECSA?',
@@ -144,7 +144,7 @@ const sections = [
       <>
         <p>
           NICEIC (the National Inspection Council for Electrical Installation Contracting) is the
-          UK's largest independent voluntary regulatory body for the electrical contracting
+          UK's largest independent voluntary registration body for the electrical contracting
           industry. Established in 1956, it was created with a single purpose: to protect consumers
           by ensuring that electrical work is carried out by competent contractors to safe
           standards.
@@ -424,8 +424,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">NAPIT</h3>
             <p className="text-white text-sm leading-relaxed">
               Approximately 10,000 registered contractors. Multi-trade registration (electrical,
-              gas, plumbing, ventilation). Assessment visits every 12 to 18 months. Insurance-backed
-              warranty scheme. Generally lower annual fee than NICEIC.
+              gas, plumbing, ventilation). Annual assessment visits. Insurance-backed warranty
+              scheme. Generally lower annual fee than NICEIC.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">

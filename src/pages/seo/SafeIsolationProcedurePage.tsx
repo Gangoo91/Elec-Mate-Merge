@@ -46,7 +46,7 @@ const tocItems = [
 const keyTakeaways = [
   'Safe isolation is a legal requirement under the Electricity at Work Regulations 1989 (Regulation 12) and must be carried out before any work on or near live conductors.',
   'The prove-test-prove method is the standard: prove your voltage indicator works, test the circuit is dead, prove the indicator still works.',
-  'HSE Guidance Note GS 38 specifies the requirements for test equipment — fused leads, finger guards, maximum 4 mm exposed probe tips, and a proving unit.',
+  'HSE Guidance Note GS 38 specifies the requirements for test equipment — HBC fused leads, finger guards, maximum 4 mm exposed probe tips, and a proving unit.',
   'Lock-off with a personal padlock is not optional — it prevents inadvertent re-energisation and is the physical guarantee of your safety.',
   'Elec-Mate includes guided safe isolation checklists, AI Health and Safety agents that generate RAMS with safe isolation procedures, and testing tools that validate results against BS 7671.',
 ];
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What is GS 38 and why does it matter for safe isolation?',
     answer:
-      'GS 38 is a Guidance Note published by the Health and Safety Executive (HSE) titled "Electrical test equipment for use by electricians." It sets out the requirements for test equipment and test leads used for proving circuits dead before working on them. While GS 38 is guidance rather than regulation, following it is considered best practice and is expected by all competent person scheme providers. The key GS 38 requirements are: test probes must have finger guards to prevent accidental contact with live parts, test leads must be fused (with a fuse no greater than 500 mA), probe tips must be spring-loaded and no more than 4 mm of exposed metal, and the voltage indicator must be clearly marked with its voltage rating and conform to a recognised standard such as BS EN 61243-3. Using non-GS 38 compliant equipment is dangerous and could result in electric shock, arc flash, or a false dead reading that leads an electrician to work on a live circuit.',
+      'GS 38 is a Guidance Note published by the Health and Safety Executive (HSE) titled "Electrical test equipment for use by electricians." It sets out the requirements for test equipment and test leads used for proving circuits dead before working on them. While GS 38 is guidance rather than regulation, following it is considered best practice and is expected by all competent person scheme providers. The key GS 38 requirements are: test probes must have finger guards to prevent accidental contact with live parts, test leads must be fused with an HBC fuse (no greater than 500 mA), probe tips must be spring-loaded and no more than 4 mm of exposed metal, and the voltage indicator must be clearly marked with its voltage rating and conform to a recognised standard such as BS EN 61243-3. Using non-GS 38 compliant equipment is dangerous and could result in electric shock, arc flash, or a false dead reading that leads an electrician to work on a live circuit.',
   },
   {
     question: 'Can I use a multimeter instead of a voltage indicator for safe isolation?',
@@ -91,28 +91,28 @@ const faqs = [
 
 const howToSteps = [
   {
+    name: 'Identify the circuit to be worked on',
+    text: 'Identify the correct circuit at the distribution board or consumer unit. Check the circuit chart and labelling, but never rely solely on labels — they may be incorrect or out of date. Verify the circuit identity by switching the load on and off at the consumer unit and observing the result at the point of work. For example, switch off the MCB and confirm that the light or socket at the work location goes off. This prevents you from isolating the wrong circuit — a surprisingly common error.',
+  },
+  {
     name: 'Select a GS 38 compliant voltage indicator',
-    text: 'Choose a two-pole voltage indicator that complies with HSE Guidance Note GS 38. The instrument must be rated to at least CAT III (for distribution-level testing) or CAT IV (for origin-level testing). Check that test leads have fused probes (maximum 500 mA fuse), finger guards to prevent contact with live parts, and spring-loaded tips with no more than 4 mm of exposed metal. Verify the instrument is within its calibration date. Have a proving unit (battery-powered device that outputs a known voltage) available for the prove steps.',
+    text: 'Choose a two-pole voltage indicator that complies with HSE Guidance Note GS 38. The instrument must be rated to at least CAT III (for distribution-level testing) or CAT IV (for origin-level testing). Check that test leads have HBC fused probes (maximum 500 mA HBC fuse), finger guards to prevent contact with live parts, and spring-loaded tips with no more than 4 mm of exposed metal. Verify the instrument is within its calibration date. Have a proving unit (battery-powered device that outputs a known voltage) available for the prove steps.',
   },
   {
     name: 'Prove the voltage indicator works (first prove)',
     text: 'Test your voltage indicator on a known live source — either a dedicated proving unit or another circuit you know is energised. The indicator must give a clear, positive indication that voltage is present. If the indicator does not respond to the known live source, it is faulty. Do not use it. Replace the instrument, battery, or fuses and re-test. This step confirms that the instrument you are about to rely on for your safety is actually working.',
   },
   {
-    name: 'Identify the correct circuit',
-    text: 'Identify the correct circuit at the distribution board or consumer unit. Check the circuit chart and labelling, but never rely solely on labels — they may be incorrect or out of date. Verify the circuit identity by switching the load on and off at the consumer unit and observing the result at the point of work. For example, switch off the MCB and confirm that the light or socket at the work location goes off. This prevents you from isolating the wrong circuit — a surprisingly common error.',
-  },
-  {
     name: 'Isolate and lock off',
     text: 'Switch off the circuit breaker or remove the fuse carrier for the identified circuit. Apply a lock-off device and your personal padlock to the circuit breaker or fuse carrier to prevent re-energisation. Attach a warning label reading "Danger — Do Not Switch On — Men at Work" on the distribution board, clearly visible. If multiple people are working on the same circuit, each person must apply their own padlock using a multi-lock hasp. Keep the key in your personal possession at all times.',
   },
   {
-    name: 'Test the circuit is dead at the point of work',
+    name: 'Prove the circuit is dead at the point of work',
     text: 'At the point where you will be working (not at the consumer unit), use your proved voltage indicator to test between all conductor combinations. For single-phase: Line to Neutral (L-N), Line to Earth (L-E), and Neutral to Earth (N-E). All three tests must show zero volts. If any test shows voltage, the circuit is not properly isolated — stop immediately, investigate, and do not proceed until all conductors are confirmed dead. For three-phase circuits, test between all phase combinations (L1-L2, L1-L3, L2-L3) plus each phase to neutral and each phase to earth.',
   },
   {
     name: 'Prove the voltage indicator still works (second prove)',
-    text: 'Immediately after confirming the circuit is dead, return to the known live source and test your voltage indicator again. It must give the same clear, positive indication of voltage as it did in Step 2. This final step confirms that your instrument did not fail between the first prove and the test — if it had failed silently, the dead reading you got in Step 5 would be meaningless. If the indicator fails the second prove, treat the circuit as live and repeat the entire procedure with a different instrument.',
+    text: 'Immediately after confirming the circuit is dead, return to the known live source and test your voltage indicator again. It must give the same clear, positive indication of voltage as it did in Step 3. This final step confirms that your instrument did not fail between the first prove and the test — if it had failed silently, the dead reading you got in Step 5 would be meaningless. If the indicator fails the second prove, treat the circuit as live and repeat the entire procedure with a different instrument.',
   },
 ];
 
@@ -254,10 +254,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fused leads:</strong> Test leads must contain a fuse — no greater than 500
-                mA — as close as possible to the test probe. The fuse limits the energy available in
-                the event of an accidental short circuit. Spare fuses should be carried at all times
-                because a blown fuse can give a false dead reading.
+                <strong>Fused leads:</strong> Test leads must contain an HBC (High Breaking
+                Capacity) fuse — no greater than 500 mA — as close as possible to the test probe.
+                The fuse limits the energy available in the event of an accidental short circuit.
+                Spare fuses should be carried at all times because a blown fuse can give a false
+                dead reading.
               </span>
             </li>
             <li className="flex items-start gap-3">

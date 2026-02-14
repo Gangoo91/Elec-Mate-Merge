@@ -192,7 +192,7 @@ const sections = [
                   <strong>Maximum assumed value (BS 7671):</strong> 0.80 ohms
                 </li>
                 <li>
-                  <strong>Typical measured range:</strong> 0.30 to 0.80 ohms
+                  <strong>Typical measured range:</strong> 0.20 to 0.80 ohms
                 </li>
                 <li>
                   <strong>Common in:</strong> Older properties (pre-1970s), properties with
@@ -216,7 +216,7 @@ const sections = [
         </p>
         <p>
           With a Ze of 0.60 to 0.80 ohms, the available R1+R2 headroom for a B32 circuit (maximum
-          corrected Zs of 1.15 ohms) is only 0.35 to 0.55 ohms. This limits the permissible cable
+          corrected Zs of 1.10 ohms) is only 0.30 to 0.50 ohms. This limits the permissible cable
           length and may require larger conductor sizes than would be needed on a lower-Ze supply.
           Always check Ze first when testing an older TN-S installation — if it is high, expect some
           circuits to fail Zs testing.
@@ -262,8 +262,8 @@ const sections = [
         </div>
         <p>
           The low Ze of a PME supply provides excellent headroom for Zs compliance. With a typical
-          Ze of 0.20 ohms, a B32 circuit has 0.95 ohms of R1+R2 headroom (corrected maximum Zs of
-          1.15 ohms minus Ze of 0.20). This allows comfortably long cable runs even with smaller
+          Ze of 0.20 ohms, a B32 circuit has 0.90 ohms of R1+R2 headroom (corrected maximum Zs of
+          1.10 ohms minus Ze of 0.20). This allows comfortably long cable runs even with smaller
           conductor sizes.
         </p>
         <p>

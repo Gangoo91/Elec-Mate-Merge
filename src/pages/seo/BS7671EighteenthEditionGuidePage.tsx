@@ -491,10 +491,9 @@ const sections = [
           </div>
         </div>
         <p className="mt-6">
-          Until Amendment 4 is published, all new work must comply with BS 7671:2018+A2:2022 with
-          the provisions of Amendment 3 (A3:2024). Elec-Mate will be updated promptly when Amendment
-          4 is released to ensure all calculators, regulation references, and certificate forms
-          reflect the latest requirements.
+          Until Amendment 4 is published, all new work must comply with BS 7671:2018+A3:2024.
+          Elec-Mate will be updated promptly when Amendment 4 is released to ensure all calculators,
+          regulation references, and certificate forms reflect the latest requirements.
         </p>
       </>
     ),

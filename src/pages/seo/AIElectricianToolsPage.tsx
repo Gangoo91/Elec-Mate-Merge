@@ -51,7 +51,7 @@ const faqData = [
   {
     question: 'How is the AI trained on BS 7671 regulations?',
     answer:
-      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A3:2024, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.3 for TN system disconnection times). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
+      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A3:2024, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
   },
   {
     question: 'Can the AI Circuit Designer produce a complete consumer unit schedule?',

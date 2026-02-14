@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What is the difference between the 2391-50, 2391-51, and 2391-52?',
     answer:
-      'The C&G 2391 qualification comes in three variants: 2391-50 (Initial Verification only — for testing new installations you have just installed), 2391-51 (Periodic Inspection and Testing only — for inspecting existing installations), and 2391-52 (both Initial Verification and Periodic Inspection and Testing combined). Most electricians take the 2391-52 as it covers both scopes and is the most widely recognised by employers and competent person schemes. If you only do periodic inspections (for example, landlord EICRs) and never install, the 2391-51 is sufficient. The 2391-50 on its own is less common as most people who can verify new installations also need to do periodic inspections. The exams for each variant are similar in format but the questions and practical scenarios differ based on the scope.',
+      'The C&G 2391 qualification comes in three variants: 2391-52 (the current combined qualification covering both Initial Verification and Periodic Inspection and Testing). The 2391-52 replaced the earlier 2391-51, which was itself a combined qualification that replaced the older separate qualifications: the C&G 2394 (Initial Verification) and C&G 2395 (Periodic Inspection and Testing). Most electricians take the 2391-52 as it covers both scopes and is the most widely recognised by employers and competent person schemes. The exams for each variant are similar in format but the questions and practical scenarios differ based on the scope.',
   },
   {
     question: 'How hard is the 2391 compared to the 18th Edition?',

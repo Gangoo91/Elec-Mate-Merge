@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'What is type testing and why does it matter?',
     answer:
-      'Type testing (BS EN 61439) is a set of tests performed by the manufacturer to verify that a consumer unit or switchgear assembly meets safety and performance standards. The tests include temperature rise (verifying the assembly does not overheat under rated load), dielectric withstand (verifying insulation integrity), short-circuit performance (verifying the assembly can withstand fault currents without dangerous failure), mechanical operation (verifying switches and devices operate correctly within the enclosure), and IP rating (verifying the degree of protection against ingress). A type-tested assembly has been verified as a complete system — the enclosure, busbars, and protective devices work together safely. An untested or mixed assembly has no such verification. BS 7671 Regulation 132.1.1 requires that every installation uses equipment that complies with the relevant product standard — for consumer units, this is BS EN 61439-3. Using non-type-tested assemblies fails this requirement.',
+      'Type testing (BS EN 61439) is a set of tests performed by the manufacturer to verify that a consumer unit or switchgear assembly meets safety and performance standards. The tests include temperature rise (verifying the assembly does not overheat under rated load), dielectric withstand (verifying insulation integrity), short-circuit performance (verifying the assembly can withstand fault currents without dangerous failure), mechanical operation (verifying switches and devices operate correctly within the enclosure), and IP rating (verifying the degree of protection against ingress). A type-tested assembly has been verified as a complete system — the enclosure, busbars, and protective devices work together safely. An untested or mixed assembly has no such verification. BS 7671 requires that every installation uses equipment that complies with the relevant product standard — for consumer units, this is BS EN 61439-3. Using non-type-tested assemblies fails this requirement.',
   },
 ];
 
@@ -401,9 +401,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consequences of non-compliance</strong> — installing a non-type-tested
-                consumer unit fails BS 7671 Regulation 132.1.1. It may be identified during an EICR
-                and could result in a C2 (Potentially Dangerous) or C3 observation depending on the
-                nature of the non-compliance.
+                consumer unit fails to meet BS 7671 requirements. It may be identified during an
+                EICR and could result in a C2 (Potentially Dangerous) or C3 observation depending on
+                the nature of the non-compliance.
               </span>
             </li>
           </ul>

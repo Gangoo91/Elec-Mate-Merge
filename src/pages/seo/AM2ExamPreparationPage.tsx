@@ -237,15 +237,16 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The AM2 is the Assessment of Competence in Electrical Installation. There are three
-              versions: the standard <strong>AM2</strong> (for candidates with a Level 3 NVQ),{' '}
-              <strong>AM2S</strong> (for apprentices on the Installation and Maintenance standard —
-              includes additional conduit tasks and takes approximately 16.5 hours over 2.5 days),
-              and <strong>AM2E</strong> (for apprentices on the Electrotechnical standard from
-              September 2023). All versions are practical assessments that demonstrate you can
-              safely and competently carry out electrical installation work to the standard required
-              of a qualified electrician. Passing the AM2 is the final step in becoming a fully
-              qualified Installation Electrician and is required to obtain the JIB ECS Gold Card.
+              The AM2 (Achievement Measurement 2) is the practical assessment of competence in
+              electrical installation. There are three versions: the standard <strong>AM2</strong>{' '}
+              (for candidates with a Level 3 NVQ), <strong>AM2S</strong> (for apprentices on the
+              Installation and Maintenance standard — includes additional conduit tasks and takes
+              approximately 16.5 hours over 2.5 days), and <strong>AM2E</strong> (for apprentices on
+              the Electrotechnical standard from September 2023). All versions are practical
+              assessments that demonstrate you can safely and competently carry out electrical
+              installation work to the standard required of a qualified electrician. Passing the AM2
+              is the final step in becoming a fully qualified Installation Electrician and is
+              required to obtain the JIB ECS Gold Card.
             </p>
             <p>
               The AM2 is not a classroom exam — it is a hands-on practical assessment carried out in

@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition, 2023) is the primary reference document for EV charger installations in the UK, supplementing BS 7671.',
+  'The IET Code of Practice for Electric Vehicle Charging Equipment Installation (4th Edition, 2020) is the primary reference document for EV charger installations in the UK, supplementing BS 7671.',
   'Mode 3 (dedicated EVSE with control pilot) is the standard for UK domestic and commercial installations — Mode 1 and Mode 2 are not intended as permanent charging solutions.',
   'PME (TN-C-S) earthing systems require additional protective measures for EV charging, including earth electrode installation or use of a charger with PEN fault detection, due to the risk of transferring a PEN conductor fault to the vehicle body.',
   'Load management (static or dynamic) is essential to prevent overloading the supply — the DNO must be notified for installations above 3.68 kW single-phase or 11 kW three-phase under the Electricity Safety, Quality and Continuity Regulations (ESQCR).',
@@ -90,7 +90,7 @@ const modules = [
   {
     title: 'The IET Code of Practice',
     description:
-      'Detailed coverage of the IET Code of Practice for EV Charging Equipment Installation (5th Edition). Scope, definitions, assessment of supply characteristics, and design considerations.',
+      'Detailed coverage of the IET Code of Practice for EV Charging Equipment Installation (4th Edition). Scope, definitions, assessment of supply characteristics, and design considerations.',
   },
   {
     title: 'Earthing Arrangements and PME Restrictions',
@@ -272,8 +272,8 @@ const sections = [
       <>
         <p>
           The IET Code of Practice for Electric Vehicle Charging Equipment Installation is the
-          primary reference document for EV charger installations in the UK. Now in its 5th edition
-          (2023), it supplements{' '}
+          primary reference document for EV charger installations in the UK. Now in its 4th edition
+          (2020), it supplements{' '}
           <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink> with
           specific guidance for the unique requirements of EV charging installations.
         </p>

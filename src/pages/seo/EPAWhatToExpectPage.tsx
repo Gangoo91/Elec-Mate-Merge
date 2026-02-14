@@ -358,8 +358,8 @@ const sections = [
           answers — "I installed a consumer unit and it worked" — will not score well. Detailed,
           reflective answers — "I selected Type B MCBs for the lighting circuits because the loads
           were resistive, and I chose a Type A RCBO for the electric vehicle charge point circuit
-          because Regulation 722.531.2 requires protection against DC fault currents" — demonstrate
-          the depth of understanding that earns a Distinction.
+          because Regulation 722.531.3.101 requires protection against DC fault currents" —
+          demonstrate the depth of understanding that earns a Distinction.
         </p>
         <SEOAppBridge
           title="EPA Professional Discussion Simulator"

@@ -35,7 +35,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'CPD (Continuing Professional Development) is a requirement for all electricians registered with competent person schemes. NICEIC requires a minimum of 35 hours per year. NAPIT and other schemes have similar requirements.',
+  'CPD (Continuing Professional Development) is a requirement for all electricians registered with competent person schemes. NICEIC requires a minimum of 30 hours per year. NAPIT and other schemes have similar requirements.',
   'CPD covers much more than formal courses — it includes self-study, on-the-job learning, manufacturer training, trade events, mentoring, and online platforms like Elec-Mate. All count towards your annual hours.',
   'The most valuable CPD topics for 2026 include BS 7671:2018+A3:2024 updates, EV charging installation, solar PV systems, fire alarm design, battery storage, and energy efficiency regulations.',
   'Recording CPD is essential. You need evidence of what you studied, when, how long, and what you learned. Elec-Mate tracks study hours automatically and generates CPD records you can show at your scheme assessment.',
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'How many CPD hours do electricians need per year?',
     answer:
-      'The exact requirement depends on your competent person scheme. NICEIC requires a minimum of 35 hours of CPD per year for registered contractors and qualifying supervisors. NAPIT has a similar requirement. Other schemes may specify different hour targets or use a points-based system. Regardless of the exact number, the principle is the same: you must demonstrate that you are keeping your knowledge and skills current. In practice, 35 hours per year works out to less than one hour per week, which is very achievable through a combination of online study, self-directed reading, manufacturer training, and attending trade events. Many electricians exceed the minimum requirement without even realising it — the challenge is usually recording the hours, not completing them.',
+      'The exact requirement depends on your competent person scheme. NICEIC requires a minimum of 30 hours of CPD per year for registered contractors and qualifying supervisors. NAPIT has a similar requirement of 30 hours per year. Other schemes may specify different hour targets or use a points-based system. Regardless of the exact number, the principle is the same: you must demonstrate that you are keeping your knowledge and skills current. In practice, 30 hours per year works out to less than one hour per week, which is very achievable through a combination of online study, self-directed reading, manufacturer training, and attending trade events. Many electricians exceed the minimum requirement without even realising it — the challenge is usually recording the hours, not completing them.',
   },
   {
     question: 'What counts as CPD for electricians?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What happens if I do not complete my CPD hours?',
     answer:
-      'If you are registered with a competent person scheme and fail to complete the required CPD hours, the consequences depend on the scheme. NICEIC may place you under enhanced monitoring, require you to complete additional training, or in persistent cases, remove you from the register. NAPIT and other schemes have similar escalation processes. During your periodic scheme assessment (which typically occurs every 1 to 3 years, depending on your scheme and grade), the assessor will review your CPD records. If you cannot demonstrate sufficient CPD activity, this will be flagged and you will be given a timeframe to rectify it. In the worst case, failure to maintain CPD can result in loss of registration, which means you can no longer self-certify notifiable electrical work under Part P of the Building Regulations.',
+      'If you are registered with a competent person scheme and fail to complete the required CPD hours, the consequences depend on the scheme. NICEIC may place you under enhanced monitoring, require you to complete additional training, or in persistent cases, remove you from the register. NAPIT and other schemes have similar escalation processes. During your annual scheme assessment, the assessor will review your CPD records. If you cannot demonstrate sufficient CPD activity, this will be flagged and you will be given a timeframe to rectify it. In the worst case, failure to maintain CPD can result in loss of registration, which means you can no longer self-certify notifiable electrical work under Part P of the Building Regulations.',
   },
   {
     question: 'Can online study count towards CPD hours?',
@@ -211,13 +211,12 @@ const sections = [
           benchmarks.
         </p>
         <p>
-          <strong>NICEIC:</strong> A minimum of 35 hours of CPD per year for qualifying supervisors.
-          This is assessed during your periodic scheme inspection (typically every 1 to 3 years,
-          depending on your grade). The 35 hours can be made up from any combination of formal and
-          informal CPD activities.
+          <strong>NICEIC:</strong> A minimum of 30 hours of CPD per year for qualifying supervisors.
+          This is assessed during your annual scheme inspection. The 30 hours can be made up from
+          any combination of formal and informal CPD activities.
         </p>
         <p>
-          <strong>NAPIT:</strong> Similar annual CPD requirements, typically 35 hours. NAPIT also
+          <strong>NAPIT:</strong> Similar annual CPD requirements of 30 hours per year. NAPIT also
           offers its own CPD courses and webinars that count towards the target.
         </p>
         <p>
@@ -225,7 +224,7 @@ const sections = [
           assessment visits.
         </p>
         <p>
-          <strong>In practice:</strong> 35 hours per year works out to approximately 40 minutes per
+          <strong>In practice:</strong> 30 hours per year works out to approximately 35 minutes per
           week. This is very achievable — a single 15-minute study session on your phone during a
           tea break, three times a week, puts you close to the target. Add in any manufacturer
           training days, trade events, or formal courses and you will exceed it comfortably. The

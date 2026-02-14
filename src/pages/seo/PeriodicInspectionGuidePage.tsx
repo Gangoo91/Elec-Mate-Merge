@@ -63,12 +63,12 @@ const faqs = [
   {
     question: 'Can I sample circuits during a periodic inspection?',
     answer:
-      'Yes. BS 7671 Regulation 650.3 allows representative sampling during periodic inspection. GN3 recommends a minimum sample size of 10% of each type of similar circuit (for example, 10% of ring circuits, 10% of lighting circuits). If any sample fails, the scope must be extended — GN3 suggests increasing to 100% of circuits of that type to determine the extent of the defect. Certain tests must be carried out on every circuit regardless of sampling: earth fault loop impedance (Zs), RCD operation (where fitted), and polarity verification. The decision to sample and the extent of sampling should be recorded on the EICR along with a justification. Sampling is not appropriate if the installation is in poor condition or if significant defects are already apparent — in those cases, 100% testing should be carried out.',
+      'Yes. IET Guidance Note 3 (GN3) allows representative sampling during periodic inspection. GN3 recommends a minimum sample size of 10% of each type of similar circuit (for example, 10% of ring circuits, 10% of lighting circuits). If any sample fails, the scope must be extended — GN3 suggests increasing to 100% of circuits of that type to determine the extent of the defect. Certain tests must be carried out on every circuit regardless of sampling: earth fault loop impedance (Zs), RCD operation (where fitted), and polarity verification. The decision to sample and the extent of sampling should be recorded on the EICR along with a justification. Sampling is not appropriate if the installation is in poor condition or if significant defects are already apparent — in those cases, 100% testing should be carried out.',
   },
   {
     question: 'What do the EICR observation codes mean?',
     answer:
-      'The EICR uses four observation codes to classify defects. C1 (Danger Present) means an immediate risk of injury exists — the inspector should make the installation safe before leaving (for example, isolating a dangerous circuit). C2 (Potentially Dangerous) means a defect that could become dangerous and requires remedial action. C3 (Improvement Recommended) means the installation does not meet the current edition of BS 7671 but is not dangerous — these are advisory. FI (Further Investigation) means the inspector could not fully assess a part of the installation and further investigation is needed to determine if a defect exists. An EICR is classified as Unsatisfactory if any C1 or C2 codes are recorded. C3 and FI codes alone do not make the report Unsatisfactory. See the observation codes guide for detailed examples of each code.',
+      'The EICR uses four observation codes to classify defects. C1 (Danger Present) means an immediate risk of injury exists — the inspector should make the installation safe before leaving (for example, isolating a dangerous circuit). C2 (Potentially Dangerous) means a defect that could become dangerous and requires remedial action. C3 (Improvement Recommended) means the installation does not meet the current edition of BS 7671 but is not dangerous — these are advisory. FI (Further Investigation) means the inspector could not fully assess a part of the installation and further investigation is needed to determine if a defect exists. An EICR is classified as Unsatisfactory if any C1, C2, or FI codes are recorded. Only C3 codes alone do not make the report Unsatisfactory. See the observation codes guide for detailed examples of each code.',
   },
   {
     question: 'Do I need to isolate the supply during a periodic inspection?',
@@ -374,8 +374,8 @@ const sections = [
       <>
         <p>
           Sampling is one of the key differences between periodic inspection and initial
-          verification. BS 7671 Regulation 650.3 allows representative sampling during periodic
-          inspection. GN3 provides the detailed guidance:
+          verification. IET Guidance Note 3 (GN3) allows representative sampling during periodic
+          inspection, with detailed guidance on sample sizes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -548,8 +548,8 @@ const sections = [
           </div>
         </div>
         <p>
-          An EICR is classified as <strong>Unsatisfactory</strong> if any C1 or C2 codes are
-          recorded. C3 and FI codes alone do not make the report Unsatisfactory. See the{' '}
+          An EICR is classified as <strong>Unsatisfactory</strong> if any C1, C2, or FI codes are
+          recorded. Only C3 codes alone do not make the report Unsatisfactory. See the{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
             observation codes guide
           </SEOInternalLink>{' '}

@@ -228,9 +228,9 @@ export default function EighteenthEditionCoursePage() {
             <p>
               BS 7671 is often referred to as the "brown book" due to its distinctive cover. It
               replaced the 17th Edition (BS 7671:2008) on 1 January 2019 and has since been amended
-              twice in its main cycle: Amendment 1 (2020), Amendment 2 (2022), and most recently
-              Amendment 3 (2024). Every practising electrician, electrical engineer, and
-              installation designer in the UK needs a thorough working knowledge of this standard.
+              three times: Amendment 1 (2020), Amendment 2 (2022), and most recently Amendment 3
+              (2024). Every practising electrician, electrical engineer, and installation designer
+              in the UK needs a thorough working knowledge of this standard.
             </p>
             <p>
               The standard is divided into seven parts covering general rules, definitions,
@@ -385,9 +385,9 @@ export default function EighteenthEditionCoursePage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Traditional classroom-based 18th Edition courses typically run over three to five days
-              and cost between £250 and £400, plus travel and time off work. While classroom
-              training offers face-to-face interaction with a tutor, it forces you into a fixed
-              schedule and pace that may not suit everyone.
+              and cost between £300 and £550 (plus VAT where applicable), plus travel and time off
+              work. While classroom training offers face-to-face interaction with a tutor, it forces
+              you into a fixed schedule and pace that may not suit everyone.
             </p>
             <p>
               Studying online with Elec-Mate offers several distinct advantages. You study at your

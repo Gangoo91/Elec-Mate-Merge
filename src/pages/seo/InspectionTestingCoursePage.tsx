@@ -234,12 +234,13 @@ export default function InspectionTestingCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The City & Guilds 2391 — officially titled "Initial Verification and Certification of
-              Electrical Installations" — is the recognised qualification for electricians who carry
-              out inspection and testing of electrical installations. It demonstrates that you have
-              the knowledge and practical skills to inspect new installations before they are
-              energised (initial verification) and to periodically inspect existing installations
-              that are already in service (periodic inspection and testing).
+              The City & Guilds 2391 — officially titled "Level 3 Award in Initial and Periodic
+              Inspection and Testing of Electrical Installations" — is the recognised qualification
+              for electricians who carry out inspection and testing of electrical installations. It
+              demonstrates that you have the knowledge and practical skills to inspect new
+              installations before they are energised (initial verification) and to periodically
+              inspect existing installations that are already in service (periodic inspection and
+              testing).
             </p>
             <p>
               The 2391 is a combined qualification that replaced the older C&G 2394 (Initial

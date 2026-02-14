@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What tests are required for initial verification?',
     answer:
-      'BS 7671 Regulation 612 and 613 specify the full test sequence. Dead tests (with supply isolated): continuity of protective conductors (R1+R2), continuity of ring final circuit conductors, insulation resistance between all conductors (line-neutral, line-earth, neutral-earth at 500 V DC), polarity verification, and earth electrode resistance (for TT systems). Live tests (with supply energised): earth fault loop impedance (Zs) at every circuit end-point, prospective fault current (PSCC and PEFC) at the origin, RCD operation (trip time at x1 and x5 for every RCD), phase sequence (for three-phase supplies), and functional testing of all switchgear and controls. Every circuit must be tested — 100% testing, no sampling. The test results are recorded on the schedule of test results that accompanies the EIC.',
+      'BS 7671 Sections 643 and 644 specify the full test sequence. Dead tests (with supply isolated): continuity of protective conductors (R1+R2), continuity of ring final circuit conductors, insulation resistance between all conductors (line-neutral, line-earth, neutral-earth at 500 V DC), polarity verification, and earth electrode resistance (for TT systems). Live tests (with supply energised): earth fault loop impedance (Zs) at every circuit end-point, prospective fault current (PSCC and PEFC) at the origin, RCD operation (trip time at x1 and x5 for every RCD), phase sequence (for three-phase supplies), and functional testing of all switchgear and controls. Every circuit must be tested — 100% testing, no sampling. The test results are recorded on the schedule of test results that accompanies the EIC.',
   },
   {
     question: 'What happens if initial verification reveals a fault?',
@@ -148,8 +148,8 @@ const sections = [
         </p>
         <p>
           Initial verification consists of three stages: visual inspection (Chapter 611), dead
-          testing (Regulation 612), and live testing (Regulation 613). The inspection and all tests
-          must be completed satisfactorily before the installation can be certified. The certificate
+          testing (Section 643), and live testing (Section 644). The inspection and all tests must
+          be completed satisfactorily before the installation can be certified. The certificate
           issued for initial verification is the Electrical Installation Certificate (EIC).
         </p>
         <p>

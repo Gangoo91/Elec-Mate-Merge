@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'A modern kitchen typically requires 5-8 separate circuits: ring or radial for worktop sockets, cooker circuit, hob circuit (if separate), dishwasher, washing machine, fridge/freezer, extractor fan, and lighting.',
   'Dedicated circuits for high-power appliances (cooker, hob, dishwasher, washing machine) prevent nuisance tripping and ensure adequate current capacity — do not share a circuit between a cooker and anything else.',
-  'All socket outlets in a kitchen require 30mA RCD protection under BS 7671 Regulation 411.3.4. Using individual RCBOs prevents a fault on one circuit tripping the entire kitchen.',
+  'All socket outlets in a kitchen require 30mA RCD protection under BS 7671 Regulation 411.3.3. Using individual RCBOs prevents a fault on one circuit tripping the entire kitchen.',
   'The fridge/freezer should be on a non-RCD circuit or a separate RCBO — if an RCD protecting multiple circuits trips, the fridge/freezer will defrost, potentially spoiling food without the occupant noticing.',
   "Elec-Mate's AI circuit designer creates complete kitchen wiring schedules — enter the appliance list and it allocates circuits, sizes cables, and selects protective devices automatically.",
 ];
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every kitchen circuit?',
     answer:
-      'BS 7671 Regulation 411.3.4 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. The cooker circuit (connected via a cooker control unit, not a socket) does not technically require 30mA RCD protection under Regulation 411.3.4 — but it does require RCD protection if the cable is concealed in a wall or partition at a depth of less than 50mm (Regulation 522.6.202). In practice, most modern consumer units use RCBOs on every circuit, which provides 30mA RCD protection across all circuits including the cooker. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
+      'BS 7671 Regulation 411.3.3 requires 30mA RCD protection for all socket outlets rated up to 32A. This covers all kitchen socket circuits, including the worktop sockets, dishwasher socket, washing machine socket, and any other socket outlets. The cooker circuit (connected via a cooker control unit, not a socket) does not technically require 30mA RCD protection under Regulation 411.3.3 — but it does require RCD protection if the cable is concealed in a wall or partition at a depth of less than 50mm (Regulation 411.3.4). In practice, most modern consumer units use RCBOs on every circuit, which provides 30mA RCD protection across all circuits including the cooker. The key consideration is the fridge/freezer — it should be on a separate RCBO so that a fault on another kitchen circuit does not trip the fridge/freezer circuit.',
   },
   {
     question: 'Where should kitchen worktop sockets be positioned?',
@@ -368,7 +368,7 @@ const sections = [
     content: (
       <>
         <p>
-          RCD protection in the kitchen requires careful consideration. BS 7671 Regulation 411.3.4
+          RCD protection in the kitchen requires careful consideration. BS 7671 Regulation 411.3.3
           requires 30mA RCD protection for all socket outlets rated up to 32A. This covers every
           kitchen socket — worktop sockets, dishwasher sockets, washing machine sockets, and the
           fridge/freezer socket.

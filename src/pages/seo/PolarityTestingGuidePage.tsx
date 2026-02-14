@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in the installation. Reversed polarity can leave equipment energised when apparently switched off, creating a lethal shock risk.',
-  'BS 7671 Regulation 612.6 requires polarity to be verified on every circuit during initial verification — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder.',
+  'BS 7671 Regulation 643.6 requires polarity to be verified on every circuit during initial verification — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder.',
   'Polarity is verified by continuity testing during dead testing (GN3 sequence). A dedicated polarity test using a continuity instrument confirms that the line conductor is connected to the correct terminal at every accessory.',
   'Common polarity faults include crossed line and neutral at a socket outlet, line connected to the neutral terminal of a single-pole switch, and reversed connections at the consumer unit busbar or RCBO.',
   'Elec-Mate schedule of test results captures polarity verification for every circuit. The app flags any circuit where polarity is not confirmed as a deficiency requiring immediate attention.',
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is polarity in electrical installations?',
     answer:
-      'Polarity in electrical installations refers to the correct connection of line (brown), neutral (blue), and earth (green/yellow) conductors at every point in the circuit. Correct polarity ensures that single-pole switching devices break the line conductor (not the neutral), that socket outlets have the line conductor connected to the correct terminal, and that centre-contact lamp holders have the line connected to the centre contact rather than the outer screw shell. If polarity is reversed, equipment that appears to be switched off may still have a live conductor connected to accessible parts, creating a serious electric shock risk. BS 7671 Regulation 612.6 requires verification of polarity during initial verification of every new installation and alteration.',
+      'Polarity in electrical installations refers to the correct connection of line (brown), neutral (blue), and earth (green/yellow) conductors at every point in the circuit. Correct polarity ensures that single-pole switching devices break the line conductor (not the neutral), that socket outlets have the line conductor connected to the correct terminal, and that centre-contact lamp holders have the line connected to the centre contact rather than the outer screw shell. If polarity is reversed, equipment that appears to be switched off may still have a live conductor connected to accessible parts, creating a serious electric shock risk. BS 7671 Regulation 643.6 requires verification of polarity during initial verification of every new installation and alteration.',
   },
   {
     question: 'How do you test polarity on a socket outlet?',
@@ -145,7 +145,7 @@ const sections = [
         </p>
         <p>
           BS 7671 Regulation 132.14.1 requires that single-pole switching devices shall be connected
-          in the line conductor only. Regulation 612.6 requires verification of polarity during
+          in the line conductor only. Regulation 643.6 requires verification of polarity during
           initial verification. These are not optional checks — they are mandatory requirements that
           exist because reversed polarity has directly caused fatalities in the UK.
         </p>
@@ -480,9 +480,9 @@ const sections = [
         <p>
           The{' '}
           <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>{' '}
-          places polarity verification within the dead testing phase, after continuity of protective
-          conductors and before insulation resistance testing. This sequence is critical because
-          polarity errors must be corrected before any live testing takes place.
+          places polarity verification within the dead testing phase, after insulation resistance
+          testing. This sequence is critical because polarity errors must be corrected before any
+          live testing takes place.
         </p>
       </>
     ),

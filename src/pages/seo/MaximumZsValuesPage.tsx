@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Maximum Zs Values BS 7671 | Complete Table Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to maximum Zs values per BS 7671 for UK electricians. Tables 41.2, 41.3, 41.4 with values for Type B MCBs (B6=7.67, B10=4.60, B16=2.87, B20=2.30, B32=1.44, B40=1.15, B50=0.92), Type C MCBs, BS 3036 fuses, 0.8 correction factor for temperature, how to use the tables, what to do when Zs exceeds maximum. Zs lookup calculator in Elec-Mate.';
+  'Complete guide to maximum Zs values per BS 7671 for UK electricians. Tables 41.2, 41.3, 41.4 with values for Type B MCBs (B6=7.28, B10=4.37, B16=2.73, B20=2.19, B32=1.37, B40=1.09, B50=0.87), Type C MCBs, BS 3036 fuses, 0.8 correction factor for temperature, how to use the tables, what to do when Zs exceeds maximum. Zs lookup calculator in Elec-Mate.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -48,7 +48,7 @@ const tocItems = [
 const keyTakeaways = [
   'Maximum Zs values are the highest earth fault loop impedance that ensures the protective device will disconnect within the required time (0.4 s for final circuits, 5 s for distribution circuits) in the event of an earth fault.',
   'BS 7671 Tables 41.2 (BS 3036 fuses), 41.3 (Type B MCBs), and 41.4 (Type C and D MCBs) provide the maximum values at maximum conductor operating temperature. Apply the 0.8 correction factor when testing at ambient.',
-  'Key Type B MCB values for 0.4 s disconnection: B6=7.67 ohms, B10=4.60 ohms, B16=2.87 ohms, B20=2.30 ohms, B32=1.44 ohms, B40=1.15 ohms, B50=0.92 ohms.',
+  'Key Type B MCB values for 0.4 s disconnection: B6=7.28 ohms, B10=4.37 ohms, B16=2.73 ohms, B20=2.19 ohms, B32=1.37 ohms, B40=1.09 ohms, B50=0.87 ohms.',
   'Type C MCBs have lower maximum Zs values than Type B (same rating) because they require higher fault current to trip magnetically — Type C trips at 10x rated current vs 5x for Type B.',
   'Elec-Mate provides an instant Zs lookup calculator — select the protective device type and rating, and the app shows the maximum permitted Zs with the 0.8 correction already applied.',
 ];
@@ -57,17 +57,17 @@ const faqs = [
   {
     question: 'What does "maximum Zs" actually mean?',
     answer:
-      "The maximum Zs value for a given protective device is the highest earth fault loop impedance at which the device will still disconnect the supply within the required time (0.4 seconds for final circuits or 5 seconds for distribution circuits). The value is calculated from the time-current characteristic of the protective device. For an MCB, the magnetic trip mechanism operates instantaneously when the current exceeds a certain multiple of the rated current. For a Type B MCB, this is 5 times the rated current. So for a B32 MCB, the magnetic trip current is 5 x 32 = 160 A. Using Ohm's law with a 230 V supply: maximum Zs = 230/160 = 1.4375 ohms, rounded to 1.44 ohms. This is the value in BS 7671 Table 41.3. If the actual Zs exceeds this value, the fault current will be less than 160 A and the MCB may not trip within the required time.",
+      "The maximum Zs value for a given protective device is the highest earth fault loop impedance at which the device will still disconnect the supply within the required time (0.4 seconds for final circuits or 5 seconds for distribution circuits). The value is calculated from the time-current characteristic of the protective device. For an MCB, the magnetic trip mechanism operates instantaneously when the current exceeds a certain multiple of the rated current. For a Type B MCB, this is 5 times the rated current. So for a B32 MCB, the magnetic trip current is 5 x 32 = 160 A. BS 7671 applies a voltage factor Cmin of 0.95 to the nominal 230 V supply to account for voltage tolerance, so the effective voltage used is 0.95 x 230 = 218.5 V. Using Ohm's law: maximum Zs = 218.5/160 = 1.365 ohms, rounded to 1.37 ohms. This is the value in BS 7671 Table 41.3. If the actual Zs exceeds this value, the fault current will be less than 160 A and the MCB may not trip within the required time.",
   },
   {
     question: 'Why are Type C MCB Zs values lower than Type B?',
     answer:
-      'Type C MCBs have a higher magnetic trip point than Type B MCBs. A Type B MCB trips magnetically at 3 to 5 times its rated current, while a Type C MCB trips at 5 to 10 times its rated current. Because the maximum Zs calculation assumes the worst case (the highest multiple at which the device is guaranteed to trip), Type B uses 5x and Type C uses 10x. For a 32 A MCB: Type B maximum Zs = 230/(5x32) = 1.44 ohms; Type C maximum Zs = 230/(10x32) = 0.72 ohms. The higher trip current required by Type C means more fault current is needed, which requires a lower loop impedance. This is why Type C MCBs should only be used where the additional inrush current protection is genuinely needed (motors, discharge lighting) — using Type C unnecessarily reduces the available Zs margin.',
+      'Type C MCBs have a higher magnetic trip point than Type B MCBs. A Type B MCB trips magnetically at 3 to 5 times its rated current, while a Type C MCB trips at 5 to 10 times its rated current. Because the maximum Zs calculation assumes the worst case (the highest multiple at which the device is guaranteed to trip), Type B uses 5x and Type C uses 10x. BS 7671 applies a Cmin voltage factor of 0.95 (effective voltage 218.5 V). For a 32 A MCB: Type B maximum Zs = 218.5/(5x32) = 1.37 ohms; Type C maximum Zs = 218.5/(10x32) = 0.68 ohms. The higher trip current required by Type C means more fault current is needed, which requires a lower loop impedance. This is why Type C MCBs should only be used where the additional inrush current protection is genuinely needed (motors, discharge lighting) — using Type C unnecessarily reduces the available Zs margin.',
   },
   {
     question: 'What is the 0.8 correction factor and when do I apply it?',
     answer:
-      'The 0.8 correction factor accounts for the increase in conductor resistance when cables heat up during normal operation. The maximum Zs values in BS 7671 tables are given at the maximum conductor operating temperature (70 degrees Celsius for PVC cables). When you measure Zs on site, the conductors are typically at ambient temperature (around 20 degrees Celsius), giving a lower reading than what the Zs will be when the cables are carrying their design current and have heated up. Copper resistance increases by approximately 20% between 20 and 70 degrees Celsius. The 0.8 factor compensates: if your measured Zs at ambient does not exceed 80% of the tabulated maximum, the actual Zs at operating temperature should still be within the tabulated limit. You apply the 0.8 factor by multiplying the tabulated maximum Zs by 0.8 to get the corrected value that your ambient measurement should not exceed. For example: B32 tabulated maximum = 1.44 ohms; corrected ambient maximum = 1.44 x 0.8 = 1.15 ohms.',
+      'The 0.8 correction factor accounts for the increase in conductor resistance when cables heat up during normal operation. The maximum Zs values in BS 7671 tables are given at the maximum conductor operating temperature (70 degrees Celsius for PVC cables). When you measure Zs on site, the conductors are typically at ambient temperature (around 20 degrees Celsius), giving a lower reading than what the Zs will be when the cables are carrying their design current and have heated up. Copper resistance increases by approximately 20% between 20 and 70 degrees Celsius. The 0.8 factor compensates: if your measured Zs at ambient does not exceed 80% of the tabulated maximum, the actual Zs at operating temperature should still be within the tabulated limit. You apply the 0.8 factor by multiplying the tabulated maximum Zs by 0.8 to get the corrected value that your ambient measurement should not exceed. For example: B32 tabulated maximum = 1.37 ohms; corrected ambient maximum = 1.37 x 0.8 = 1.10 ohms.',
   },
   {
     question: 'Do I use the 0.4-second or 5-second disconnection values?',
@@ -77,12 +77,12 @@ const faqs = [
   {
     question: 'What maximum Zs values apply to BS 3036 rewirable fuses?',
     answer:
-      'BS 3036 rewirable fuses (the older cartridge-style fuses with replaceable fuse wire) have different maximum Zs values from MCBs because their operating characteristics are different. BS 7671 Table 41.2 gives the values for 0.4-second disconnection: 5 A = 10.90 ohms, 15 A = 3.43 ohms, 20 A = 2.64 ohms, 30 A = 1.78 ohms, 45 A = 1.20 ohms. Note that these values already include a correction factor of 0.725 applied to the basic calculation because rewirable fuses have less predictable operating characteristics than MCBs — the fuse wire can deteriorate, oxidise, or be replaced with the wrong rating. The actual maximum Zs before correction is higher, but BS 7671 has already applied the correction. When testing at ambient temperature, you should still apply the 0.8 factor to these values. Many older domestic installations in the UK still have BS 3036 rewirable fuses, so these values are frequently needed during EICRs.',
+      'BS 3036 rewirable fuses (the older semi-enclosed fuses with replaceable fuse wire) have different maximum Zs values from MCBs because their operating characteristics are different. BS 7671 Table 41.2 gives the values for 0.4-second disconnection: 5 A = 10.35 ohms, 15 A = 3.26 ohms, 20 A = 2.51 ohms, 30 A = 1.69 ohms, 45 A = 1.14 ohms. These values include the Cmin voltage factor of 0.95 and a built-in correction for the less predictable operating characteristics of rewirable fuses — the fuse wire can deteriorate, oxidise, or be replaced with the wrong rating. When testing at ambient temperature, you should still apply the 0.8 factor to these values. Many older domestic installations in the UK still have BS 3036 rewirable fuses, so these values are frequently needed during EICRs.',
   },
   {
     question: 'Can I use the BS 7671 tables for RCBOs?',
     answer:
-      'Yes. RCBOs (Residual Current Breaker with Overcurrent protection) combine RCD and MCB functions in a single device. The overcurrent (short circuit and overload) protection element of an RCBO operates identically to a standalone MCB of the same type. Therefore, the maximum Zs values for Type B, Type C, or Type D MCBs in BS 7671 Tables 41.3 and 41.4 apply equally to RCBOs of the same type and rating. For example, a Type B 32 A RCBO has the same maximum Zs of 1.44 ohms as a Type B 32 A MCB. The RCD element of the RCBO provides additional protection against earth leakage but does not change the Zs requirements for overcurrent disconnection. However, note that on TT systems where Zs values are very high, the RCD element provides the primary fault disconnection — the Zs requirement for the MCB element may not be met, but the RCD provides adequate protection.',
+      'Yes. RCBOs (Residual Current Breaker with Overcurrent protection) combine RCD and MCB functions in a single device. The overcurrent (short circuit and overload) protection element of an RCBO operates identically to a standalone MCB of the same type. Therefore, the maximum Zs values for Type B, Type C, or Type D MCBs in BS 7671 Tables 41.3 and 41.4 apply equally to RCBOs of the same type and rating. For example, a Type B 32 A RCBO has the same maximum Zs of 1.37 ohms as a Type B 32 A MCB. The RCD element of the RCBO provides additional protection against earth leakage but does not change the Zs requirements for overcurrent disconnection. However, note that on TT systems where Zs values are very high, the RCD element provides the primary fault disconnection — the Zs requirement for the MCB element may not be met, but the RCD provides adequate protection.',
   },
   {
     question: 'What happens if my measured Zs is between the corrected and uncorrected maximum?',
@@ -102,7 +102,7 @@ const howToSteps = [
   },
   {
     name: 'Apply the 0.8 temperature correction factor',
-    text: 'Multiply the tabulated maximum Zs by 0.8 to obtain the corrected maximum for ambient temperature testing. For example, B32 tabulated maximum = 1.44 ohms; corrected maximum = 1.44 x 0.8 = 1.15 ohms. Your measured Zs at ambient temperature should not exceed this corrected value.',
+    text: 'Multiply the tabulated maximum Zs by 0.8 to obtain the corrected maximum for ambient temperature testing. For example, B32 tabulated maximum = 1.37 ohms; corrected maximum = 1.37 x 0.8 = 1.10 ohms. Your measured Zs at ambient temperature should not exceed this corrected value.',
   },
   {
     name: 'Measure Zs at the furthest point of the circuit',
@@ -134,9 +134,11 @@ const sections = [
         <p>
           The calculation is straightforward: the protective device has a time-current
           characteristic that defines the minimum current at which it will trip within the required
-          time. Using Ohm's law, the maximum Zs equals the supply voltage (230 V) divided by this
-          minimum trip current. For example, a Type B 32 A MCB trips magnetically at 5 times its
-          rated current (160 A), giving a maximum Zs of 230/160 = 1.44 ohms.
+          time. BS 7671 applies a voltage factor Cmin of 0.95 to the nominal 230 V supply to account
+          for voltage tolerance (per Appendix 3), giving an effective voltage of 218.5 V. Using
+          Ohm's law, the maximum Zs equals this effective voltage divided by the minimum trip
+          current. For example, a Type B 32 A MCB trips magnetically at 5 times its rated current
+          (160 A), giving a maximum Zs of 218.5/160 = 1.37 ohms.
         </p>
         <p>
           If the actual{' '}
@@ -174,43 +176,43 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B6</span>
-              <span>7.67 Ω</span>
-              <span>6.13 Ω</span>
+              <span>7.28 Ω</span>
+              <span>5.82 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B10</span>
-              <span>4.60 Ω</span>
-              <span>3.68 Ω</span>
+              <span>4.37 Ω</span>
+              <span>3.50 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B16</span>
-              <span>2.87 Ω</span>
-              <span>2.30 Ω</span>
+              <span>2.73 Ω</span>
+              <span>2.18 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B20</span>
-              <span>2.30 Ω</span>
-              <span>1.84 Ω</span>
+              <span>2.19 Ω</span>
+              <span>1.75 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B25</span>
-              <span>1.84 Ω</span>
-              <span>1.47 Ω</span>
+              <span>1.75 Ω</span>
+              <span>1.40 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B32</span>
-              <span>1.44 Ω</span>
-              <span>1.15 Ω</span>
+              <span>1.37 Ω</span>
+              <span>1.10 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B40</span>
-              <span>1.15 Ω</span>
-              <span>0.92 Ω</span>
+              <span>1.09 Ω</span>
+              <span>0.87 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 text-sm">
               <span>B50</span>
-              <span>0.92 Ω</span>
-              <span>0.74 Ω</span>
+              <span>0.87 Ω</span>
+              <span>0.70 Ω</span>
             </div>
           </div>
         </div>
@@ -251,49 +253,49 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C6</span>
-              <span>3.83 Ω</span>
-              <span>3.07 Ω</span>
+              <span>3.64 Ω</span>
+              <span>2.91 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C10</span>
-              <span>2.30 Ω</span>
-              <span>1.84 Ω</span>
+              <span>2.19 Ω</span>
+              <span>1.75 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C16</span>
-              <span>1.44 Ω</span>
-              <span>1.15 Ω</span>
+              <span>1.37 Ω</span>
+              <span>1.10 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C20</span>
-              <span>1.15 Ω</span>
-              <span>0.92 Ω</span>
+              <span>1.09 Ω</span>
+              <span>0.87 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C25</span>
-              <span>0.92 Ω</span>
-              <span>0.74 Ω</span>
+              <span>0.87 Ω</span>
+              <span>0.70 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C32</span>
-              <span>0.72 Ω</span>
-              <span>0.58 Ω</span>
+              <span>0.68 Ω</span>
+              <span>0.54 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>C40</span>
-              <span>0.57 Ω</span>
-              <span>0.46 Ω</span>
+              <span>0.55 Ω</span>
+              <span>0.44 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 text-sm">
               <span>C50</span>
-              <span>0.46 Ω</span>
-              <span>0.37 Ω</span>
+              <span>0.44 Ω</span>
+              <span>0.35 Ω</span>
             </div>
           </div>
         </div>
         <p>
           Notice how much lower the Type C values are compared to Type B at the same rating. A C32
-          has a corrected maximum of only 0.58 ohms, compared to 1.15 ohms for a B32. This is why
+          has a corrected maximum of only 0.54 ohms, compared to 1.10 ohms for a B32. This is why
           Type C MCBs should only be used where the inrush current characteristics of the load
           genuinely require them — using Type C unnecessarily on a lighting or socket circuit
           significantly reduces the available Zs margin and may cause the circuit to fail.
@@ -324,28 +326,28 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>5 A</span>
-              <span>10.90 Ω</span>
-              <span>8.72 Ω</span>
+              <span>10.35 Ω</span>
+              <span>8.28 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>15 A</span>
-              <span>3.43 Ω</span>
-              <span>2.74 Ω</span>
+              <span>3.26 Ω</span>
+              <span>2.61 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>20 A</span>
-              <span>2.64 Ω</span>
-              <span>2.11 Ω</span>
+              <span>2.51 Ω</span>
+              <span>2.01 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>30 A</span>
-              <span>1.78 Ω</span>
-              <span>1.42 Ω</span>
+              <span>1.69 Ω</span>
+              <span>1.35 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 text-sm">
               <span>45 A</span>
-              <span>1.20 Ω</span>
-              <span>0.96 Ω</span>
+              <span>1.14 Ω</span>
+              <span>0.91 Ω</span>
             </div>
           </div>
         </div>
@@ -388,15 +390,15 @@ const sections = [
               <strong className="text-yellow-400">Example — B32 MCB:</strong>
             </p>
             <p className="text-white text-sm leading-relaxed mt-1">
-              Tabulated maximum Zs = 1.44 Ω (at 70 degrees Celsius)
+              Tabulated maximum Zs = 1.37 Ω (at 70 degrees Celsius)
             </p>
             <p className="text-white text-sm leading-relaxed">
-              Corrected ambient maximum = 1.44 x 0.8 = 1.15 Ω
+              Corrected ambient maximum = 1.37 x 0.8 = 1.10 Ω
             </p>
             <p className="text-white text-sm leading-relaxed mt-1">
-              If you measure Zs = 1.20 Ω at ambient, this exceeds the corrected maximum (1.15 Ω)
-              even though it is below the tabulated maximum (1.44 Ω). When the cables heat up under
-              load, the actual Zs could reach 1.50 Ω — exceeding the tabulated maximum and
+              If you measure Zs = 1.15 Ω at ambient, this exceeds the corrected maximum (1.10 Ω)
+              even though it is below the tabulated maximum (1.37 Ω). When the cables heat up under
+              load, the actual Zs could reach 1.44 Ω — exceeding the tabulated maximum and
               preventing disconnection within the required time.
             </p>
           </div>
@@ -517,7 +519,7 @@ const sections = [
                   Type B MCBs have higher maximum Zs values than Type C. If the load does not
                   require the higher inrush current tolerance of a Type C device, changing from Type
                   C to Type B may bring Zs within limits. For example, a C32 has a corrected maximum
-                  of 0.58 Ω while a B32 has 1.15 Ω — double the headroom.
+                  of 0.54 Ω while a B32 has 1.10 Ω — double the headroom.
                 </p>
               </div>
             </div>
@@ -570,23 +572,23 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B16</span>
-              <span>2.87 Ω</span>
-              <span>4.79 Ω</span>
+              <span>2.73 Ω</span>
+              <span>4.55 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B32</span>
-              <span>1.44 Ω</span>
-              <span>2.40 Ω</span>
+              <span>1.37 Ω</span>
+              <span>2.28 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>B40</span>
-              <span>1.15 Ω</span>
-              <span>1.92 Ω</span>
+              <span>1.09 Ω</span>
+              <span>1.82 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 text-sm">
               <span>B50</span>
-              <span>0.92 Ω</span>
-              <span>1.53 Ω</span>
+              <span>0.87 Ω</span>
+              <span>1.46 Ω</span>
             </div>
           </div>
         </div>

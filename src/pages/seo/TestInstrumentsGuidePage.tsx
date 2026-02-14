@@ -187,9 +187,9 @@ const sections = [
     content: (
       <>
         <p>
-          A proving unit is a battery-powered device that outputs a known voltage — typically 230V
-          or 400V — to verify that your voltage indicator is working correctly. It is an essential
-          component of the{' '}
+          A proving unit is a battery-powered device that outputs a known voltage — typically 50V or
+          230V AC equivalent — to verify that your voltage indicator is working correctly. It is an
+          essential component of the{' '}
           <SEOInternalLink href="/guides/safe-isolation-procedure">
             safe isolation procedure
           </SEOInternalLink>{' '}

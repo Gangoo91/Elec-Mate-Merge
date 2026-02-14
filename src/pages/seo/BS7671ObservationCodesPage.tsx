@@ -24,9 +24,9 @@ const PAGE_DESCRIPTION =
 
 const faqs = [
   {
-    question: 'Does a single C1 or C2 observation make the entire EICR unsatisfactory?',
+    question: 'Does a single C1, C2, or FI observation make the entire EICR unsatisfactory?',
     answer:
-      'Yes. If any observation on the EICR is classified as C1 (Danger Present) or C2 (Potentially Dangerous), the overall assessment of the installation must be recorded as Unsatisfactory. This is a binary rule — there is no weighting or averaging. Even if the rest of the installation is in excellent condition, a single C1 or C2 means the report is Unsatisfactory and remedial action is required. An EICR with only C3 (Improvement Recommended) observations, or with no observations at all, is classified as Satisfactory.',
+      'Yes. If any observation on the EICR is classified as C1 (Danger Present), C2 (Potentially Dangerous), or FI (Further Investigation required without delay), the overall assessment of the installation must be recorded as Unsatisfactory. This is a binary rule — there is no weighting or averaging. Even if the rest of the installation is in excellent condition, a single C1, C2, or FI means the report is Unsatisfactory. FI makes the report Unsatisfactory because the inspector could not fully determine the condition of part of the installation — the installation cannot be confirmed as safe until that investigation is completed. An EICR with only C3 (Improvement Recommended) observations, or with no observations at all, is classified as Satisfactory.',
   },
   {
     question: 'What is the difference between C2 and C3?',
@@ -39,9 +39,9 @@ const faqs = [
       'FI (Further Investigation) should be used when you cannot fully assess a part of the installation and therefore cannot give it a classification. Common situations include: parts of the installation that are concealed or inaccessible (behind plasterwork, in ceiling voids you cannot reach), components that require specialist testing beyond the scope of the current inspection, unexpected or inconsistent test results that need deeper investigation, or areas where the installation is in use and cannot be safely isolated during the inspection. FI is not a way to avoid making a judgement — you must explain specifically why further investigation is needed and what additional work is required.',
   },
   {
-    question: 'How long does a landlord have to fix C1 and C2 observations?',
+    question: 'How long does a landlord have to fix C1, C2, and FI observations?',
     answer:
-      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, if an EICR identifies any observations that require urgent remedial action (C1 or C2), the landlord must ensure that further investigative or remedial work is carried out within 28 days. If the inspector specifies a shorter period on the report (for example, for a C1 Danger Present observation that requires immediate action), the landlord must comply with that shorter period. The landlord must then obtain written confirmation from a qualified person that the remedial work has been completed to a satisfactory standard. Failure to comply can result in civil penalties of up to 30,000 pounds per breach.',
+      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, if an EICR identifies any observations that require urgent remedial action or further investigation (C1, C2, or FI), the landlord must ensure that further investigative or remedial work is carried out within 28 days. If the inspector specifies a shorter period on the report (for example, for a C1 Danger Present observation that requires immediate action), the landlord must comply with that shorter period. The landlord must then obtain written confirmation from a qualified person that the remedial work has been completed to a satisfactory standard. Failure to comply can result in civil penalties of up to 30,000 pounds per breach.',
   },
   {
     question: 'Can I change an observation code after the EICR has been issued?',
@@ -409,7 +409,7 @@ export default function BS7671ObservationCodesPage() {
               </p>
               <p>
                 C3 observations do not make the EICR Unsatisfactory. A report with only C3 codes
-                (and no C1 or C2 codes) is classified as Satisfactory. This is an important
+                (and no C1, C2, or FI codes) is classified as Satisfactory. This is an important
                 distinction because it means the installation is safe for continued use, even though
                 improvements would bring it closer to the current standard.
               </p>
@@ -655,10 +655,11 @@ export default function BS7671ObservationCodesPage() {
                 <h3 className="font-bold text-white text-lg">Satisfactory</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                The installation is safe for continued use. No C1 or C2 observations are present.
-                There may be C3 observations (improvement recommended) and/or FI observations
-                (further investigation required), but no items that represent a current or potential
-                danger. The person responsible can continue to use the installation with confidence.
+                The installation is safe for continued use. No C1, C2, or FI observations are
+                present. There may be C3 observations (improvement recommended), but no items that
+                represent a current or potential danger and no areas requiring further
+                investigation. The person responsible can continue to use the installation with
+                confidence.
               </p>
             </div>
             <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -667,23 +668,23 @@ export default function BS7671ObservationCodesPage() {
                 <h3 className="font-bold text-white text-lg">Unsatisfactory</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                One or more C1 or C2 observations are present. The installation is either currently
-                dangerous (C1) or potentially dangerous (C2). Remedial action is required to make
-                the installation safe. The person responsible must arrange for the identified
-                defects to be corrected by a competent person, and confirmation of completion should
-                be obtained.
+                One or more C1, C2, or FI observations are present. The installation is either
+                currently dangerous (C1), potentially dangerous (C2), or could not be fully assessed
+                (FI). Remedial action or further investigation is required. The person responsible
+                must arrange for the identified defects to be corrected or investigated by a
+                competent person, and confirmation of completion should be obtained.
               </p>
             </div>
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
               An important point often overlooked is the treatment of FI observations in relation to
-              the overall assessment. An FI does not automatically make the report Unsatisfactory.
-              However, if the inspector has reason to believe that the area requiring further
-              investigation may reveal a dangerous condition, they should consider whether the
-              overall assessment should reflect this uncertainty. In practice, an FI observation
-              alongside an otherwise clean report usually results in a Satisfactory assessment with
-              a clear note that further investigation is required.
+              the overall assessment. An FI observation makes the report Unsatisfactory. This is
+              because the inspector could not fully determine the condition of part of the
+              installation, and the installation cannot be confirmed as safe until that
+              investigation is completed. FI observations must be actioned without delay so that the
+              area in question can be properly assessed and the appropriate classification (C1, C2,
+              C3, or no defect) can be determined.
             </p>
           </div>
         </div>
@@ -703,7 +704,7 @@ export default function BS7671ObservationCodesPage() {
               need to communicate them to landlords) and landlords (who need to act on them).
             </p>
             <p>
-              When the EICR identifies observations requiring urgent remedial action (any C1 or C2
+              When the EICR identifies observations requiring urgent action (any C1, C2, or FI
               code), the landlord must ensure that investigative or remedial work is completed
               within 28 days of the inspection date, or within any shorter period specified by the
               inspector on the report. For C1 (Danger Present) observations, inspectors often

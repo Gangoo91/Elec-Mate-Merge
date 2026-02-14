@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Why do we test insulation resistance at 500V DC?',
     answer:
-      'Insulation resistance is tested at a voltage higher than the normal operating voltage of the circuit to stress-test the insulation under conditions that exceed normal service. For circuits rated up to 500V AC (which includes standard 230V domestic circuits), BS 7671 Table 64.3 specifies a test voltage of 500V DC. DC is used because AC would charge and discharge any capacitance in the circuit, making the reading unstable. The 500V DC test voltage is high enough to reveal insulation weaknesses that might not be apparent at 230V but low enough not to damage healthy insulation. For SELV and PELV circuits (up to 50V), a 250V DC test voltage is used. For circuits rated above 500V, a 1000V DC test voltage is specified. The minimum acceptable insulation resistance is 1 megohm for all voltage bands, though values below 2 megohms should be investigated.',
+      'Insulation resistance is tested at a voltage higher than the normal operating voltage of the circuit to stress-test the insulation under conditions that exceed normal service. For circuits rated up to 500V AC (which includes standard 230V domestic circuits), BS 7671 Table 61 specifies a test voltage of 500V DC. DC is used because AC would charge and discharge any capacitance in the circuit, making the reading unstable. The 500V DC test voltage is high enough to reveal insulation weaknesses that might not be apparent at 230V but low enough not to damage healthy insulation. For SELV and PELV circuits (up to 50V), a 250V DC test voltage is used. For circuits rated above 500V, a 1000V DC test voltage is specified. The minimum acceptable insulation resistance is 1 megohm for circuits rated up to 500V and above 500V, and 0.5 megohm for SELV/PELV circuits, though values below 2 megohms should be investigated.',
   },
   {
     question: 'What should I do if I get unexpected test results?',
@@ -279,9 +279,12 @@ const sections = [
             <div>
               <h3 className="font-bold text-white text-base mb-1">7. RCD Testing</h3>
               <p className="text-white text-sm leading-relaxed">
-                Test all RCDs at 1x and 5x rated residual operating current. A 30mA RCD must trip
-                within 300ms at 1x (30mA) and within 40ms at 5x (150mA). Also test the RCD test
-                button to confirm the mechanical trip mechanism operates correctly.
+                Test all RCDs at 0.5x, 1x, and 5x rated residual operating current. At 0.5x (15mA
+                for a 30mA RCD) the device must NOT trip. At 1x (30mA) it must trip within 300ms. At
+                5x (150mA) it must trip within 40ms. All tests must be performed on both the 0
+                degree and 180 degree half-cycles. Also test the RCD test button to confirm the
+                mechanical trip mechanism works — but this is NOT a substitute for instrument
+                testing.
               </p>
             </div>
           </div>

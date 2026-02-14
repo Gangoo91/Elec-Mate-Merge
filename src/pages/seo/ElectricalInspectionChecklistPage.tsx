@@ -152,9 +152,9 @@ const sections = [
         </p>
         <p>
           BS 7671 Section 621 requires that initial verification of every new installation begins
-          with a careful visual inspection. Section 650 requires the same for periodic inspection
-          and testing. The visual inspection must be carried out before any instruments are
-          connected, for two critical reasons: first, testing a circuit with a visible defect
+          with a careful visual inspection. Chapter 64 (Section 643) requires the same for periodic
+          inspection and testing. The visual inspection must be carried out before any instruments
+          are connected, for two critical reasons: first, testing a circuit with a visible defect
           (damaged insulation, loose connections, exposed conductors) can cause a fault or injury;
           second, test results from a circuit with a visual defect may be misleading and give false
           confidence about the safety of the installation.

@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'GS 38 is an HSE Guidance Note that specifies the requirements for electrical test equipment used by electricians when proving circuits dead. It is the accepted industry standard for safe testing.',
   'A two-pole voltage indicator (not a multimeter) is strongly recommended by GS 38 for proving dead, as it has fewer failure modes and does not rely on batteries or correct range selection.',
-  'Test leads must be fused with a maximum 500 mA HRC fuse as close as possible to the probe tip, and probe tips must be spring-loaded with no more than 4 mm of exposed metal.',
+  'Test leads must be fused with a maximum 500 mA HBC fuse as close as possible to the probe tip, and probe tips must be spring-loaded with no more than 4 mm of exposed metal.',
   'The prove-test-prove procedure is mandatory: prove the voltage indicator works on a known live source, test the circuit being worked on, then prove the indicator still works afterwards.',
   'Elec-Mate AI tools and training courses cover safe isolation procedures, GS 38 compliance, and test equipment requirements to keep your team competent and compliant.',
 ];
@@ -286,7 +286,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fused leads</strong> — each test lead must contain a fuse rated at no more
-                than 500 mA (HRC). The fuse must be located as close as possible to the probe tip.
+                than 500 mA (HBC). The fuse must be located as close as possible to the probe tip.
                 This limits the energy available in the event of an accidental short circuit.
               </span>
             </li>
@@ -514,7 +514,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Spare fuses and batteries</strong> — always carry spare fuses for test leads
-                (500 mA HRC) and spare batteries for the proving unit.
+                (500 mA HBC) and spare batteries for the proving unit.
               </span>
             </li>
             <li className="flex items-start gap-3">

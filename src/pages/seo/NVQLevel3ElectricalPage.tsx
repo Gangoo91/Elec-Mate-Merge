@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What is the difference between the NVQ Level 3 and the Diploma?',
     answer:
-      'The Diploma (such as the C&G 2365 or 2357) is an academic qualification that you study for at college. It covers the theory and practical skills of electrical installation through classroom learning, workshop exercises, and written exams. The NVQ Level 3 is a work-based qualification that you complete on the job — it assesses your ability to carry out real electrical installation work in a real working environment. You need both: the Diploma provides the theoretical knowledge, and the NVQ proves you can apply that knowledge in practice. Together with the AM2 assessment, these qualifications make you eligible for the gold ECS card (Installation Electrician). The NVQ cannot be completed in a college workshop alone — it requires evidence from genuine work situations.',
+      'The Diploma (C&G 2365) is an academic qualification that you study for at college. It covers the theory and practical skills of electrical installation through classroom learning, workshop exercises, and written exams. The NVQ Level 3 is a work-based qualification that you complete on the job — it assesses your ability to carry out real electrical installation work in a real working environment. You need both: the Diploma provides the theoretical knowledge, and the NVQ proves you can apply that knowledge in practice. Together with the AM2 assessment, these qualifications make you eligible for the gold ECS card (Installation Electrician). The NVQ cannot be completed in a college workshop alone — it requires evidence from genuine work situations.',
   },
   {
     question: 'Can I do the NVQ Level 3 without an employer?',

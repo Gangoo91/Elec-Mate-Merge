@@ -85,7 +85,7 @@ export default function AIToolsForElectriciansPage() {
                 training.
               </p>
               <p>
-                The result is AI that can cite Regulation 411.3.3 when discussing disconnection
+                The result is AI that can cite Regulation 411.3.2 when discussing disconnection
                 times, quote current Hager RCBO prices when estimating a board change, and know that
                 a 10mm twin and earth cable to a cooker circuit needs a 32A MCB, not a 40A. This
                 level of accuracy makes AI genuinely useful on site, not just a novelty.

@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in a domestic consumer unit?',
     answer:
-      'BS 7671 Regulation 411.3.4 requires additional protection by a 30mA RCD for several categories of circuit: all socket outlet circuits rated up to 32A, all circuits supplying mobile equipment intended for outdoor use up to 32A, all circuits where cables are concealed in walls at a depth of less than 50mm (unless the cable has an earthed metallic covering), and all circuits where cables are in walls or partitions containing metallic parts regardless of depth (unless the cable has an earthed metallic covering). In practice, this covers the vast majority of circuits in a domestic installation. The only circuits that may not require 30mA RCD protection are those supplying fixed equipment with permanently connected cables at a depth exceeding 50mm, and specific circuits where RCD protection might cause a greater hazard (such as fire alarm circuits, where the loss of supply due to an RCD trip could compromise fire safety). Even for these circuits, many designers choose to provide RCD protection as good practice.',
+      'BS 7671 requires additional protection by a 30mA RCD for several categories of circuit: all socket outlet circuits rated up to 32A and all circuits supplying mobile equipment intended for outdoor use up to 32A (Regulation 411.3.3), and all circuits where cables are concealed in walls at a depth of less than 50mm unless the cable has an earthed metallic covering (Regulation 411.3.4). In practice, this covers the vast majority of circuits in a domestic installation. The only circuits that may not require 30mA RCD protection are those supplying fixed equipment with permanently connected cables at a depth exceeding 50mm, and specific circuits where RCD protection might cause a greater hazard (such as fire alarm circuits, where the loss of supply due to an RCD trip could compromise fire safety). Even for these circuits, many designers choose to provide RCD protection as good practice.',
   },
 ];
 
@@ -302,15 +302,15 @@ export default function ConsumerUnitRegulationsPage() {
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              RCD Protection Requirements (Regulation 411.3.4)
+              RCD Protection Requirements (Regulations 411.3.3 and 411.3.4)
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Regulation 411.3.4 sets out the circumstances where additional protection by a
-              30 mA RCD is required. The requirements have expanded with each edition of the
-              standard, and in the current 18th Edition, almost every circuit in a domestic consumer
-              unit requires RCD protection.
+              BS 7671 Regulations 411.3.3 and 411.3.4 set out the circumstances where additional
+              protection by a 30 mA RCD is required. The requirements have expanded with each
+              edition of the standard, and in the current 18th Edition, almost every circuit in a
+              domestic consumer unit requires RCD protection.
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
               <h3 className="font-bold text-white text-lg mb-4">

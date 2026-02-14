@@ -45,7 +45,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'There are four EICR observation codes: C1 (Danger Present), C2 (Potentially Dangerous), C3 (Improvement Recommended), and FI (Further Investigation).',
-  'Any C1 or C2 observation makes the overall EICR assessment Unsatisfactory — no exceptions.',
+  'Any C1, C2, or FI observation makes the overall EICR assessment Unsatisfactory — no exceptions.',
   'C3 observations are advisory and do not affect the overall assessment, but should still be communicated to the client.',
   'FI means the inspector could not fully assess part of the installation — further investigation is needed before a classification can be given.',
   'Elec-Mate Defect Code AI lets you describe a defect in plain English and returns the correct classification code with the matching BS 7671 regulation number.',
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Can an EICR have a C1 code and still be Satisfactory?',
     answer:
-      'No. An EICR with any C1 or C2 observation must be classified as Unsatisfactory. This is a mandatory requirement under BS 7671. There are no exceptions, regardless of how minor the C1 defect might seem or how quickly it was remedied. Even if the inspector made the installation safe before leaving (for example, by isolating a dangerous circuit), the report must still record the C1 observation and the overall assessment must be Unsatisfactory. A separate remedial visit is required to permanently fix the defect, and the landlord or responsible person must be informed that the report is Unsatisfactory and remedial action is needed. Only after the remedial work is completed and confirmed by a qualified person can the installation be considered safe for continued use.',
+      'No. An EICR with any C1, C2, or FI observation must be classified as Unsatisfactory. This is a mandatory requirement under BS 7671. There are no exceptions, regardless of how minor the C1 defect might seem or how quickly it was remedied. Even if the inspector made the installation safe before leaving (for example, by isolating a dangerous circuit), the report must still record the C1 observation and the overall assessment must be Unsatisfactory. FI also makes the report Unsatisfactory because the inspector could not fully determine the condition of part of the installation. A separate remedial visit is required to permanently fix the defect or complete the further investigation, and the landlord or responsible person must be informed that the report is Unsatisfactory and action is needed. Only after the remedial work or investigation is completed and confirmed by a qualified person can the installation be considered safe for continued use.',
   },
   {
     question: 'Should I record a C3 for old wiring colours that have not been re-identified?',
@@ -289,7 +289,7 @@ const sections = [
         <h4 className="font-bold text-white text-lg mb-3">Real Examples of C2 Defects</h4>
         <div className="space-y-3 mb-4">
           {[
-            'Absence of RCD protection on socket outlet circuits where required by BS 7671 Regulation 411.3.4 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
+            'Absence of RCD protection on socket outlet circuits where required by BS 7671 Regulation 411.3.3 — particularly in bathrooms, kitchens, and circuits supplying equipment intended for outdoor use.',
             'Missing circuit protective conductor (CPC / earth wire) connection at an accessory — the socket or light fitting has no earth, meaning metalwork could become live under a fault condition.',
             'Earth fault loop impedance (Zs) exceeding the maximum permitted value for the protective device — meaning the device may not disconnect within the required time during a fault.',
             'Absence of main protective bonding to gas, water, or oil services as required by Regulation 411.3.1.2.',
@@ -341,8 +341,8 @@ const sections = [
             items are advisory — they represent improvements that would be required if the
             installation were being designed and installed today, but were acceptable under the
             regulations in force when the original work was carried out. C3 observations do not
-            affect the overall assessment of the EICR. A report with only C3 observations (and no C1
-            or C2) is classified as Satisfactory.
+            affect the overall assessment of the EICR. A report with only C3 observations (and no
+            C1, C2, or FI) is classified as Satisfactory.
           </p>
         </div>
         <h4 className="font-bold text-white text-lg mb-3">Real Examples of C3 Observations</h4>
@@ -451,11 +451,11 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <Zap className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span>C3 observations may be present (advisory only)</span>
+                <span>No FI observations</span>
               </li>
               <li className="flex items-start gap-2">
                 <Zap className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span>FI observations may be present (need follow-up)</span>
+                <span>C3 observations may be present (advisory only)</span>
               </li>
             </ul>
           </div>
@@ -475,7 +475,11 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <Zap className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span>Even a single C1 or C2 makes it Unsatisfactory</span>
+                <span>Any FI observation present</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                <span>Even a single C1, C2, or FI makes it Unsatisfactory</span>
               </li>
               <li className="flex items-start gap-2">
                 <Zap className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
@@ -486,20 +490,20 @@ const sections = [
         </div>
         <p>
           Elec-Mate tracks observation codes in real time as you add them to the EICR. The moment
-          you add a C1 or C2 observation, the overall assessment flips to Unsatisfactory
+          you add a C1, C2, or FI observation, the overall assessment flips to Unsatisfactory
           automatically. This eliminates the human error of accidentally marking a report
-          Satisfactory when a C2 defect is present — one of the most common mistakes flagged by
-          scheme provider audits.
+          Satisfactory when a C2 defect or FI observation is present — one of the most common
+          mistakes flagged by scheme provider audits.
         </p>
         <p>
-          Note that FI observations do not, by themselves, make the report Unsatisfactory. However,
-          an FI should prompt the inspector to consider whether the unknown condition could
-          reasonably be expected to be dangerous. If so, the professional approach is to recommend
-          that the further investigation is carried out urgently and to note this in the report.
+          FI observations make the report Unsatisfactory because the inspector could not fully
+          determine the condition of part of the installation. The installation cannot be confirmed
+          as safe until the further investigation is completed and the area in question is properly
+          classified as C1, C2, C3, or acceptable. FI observations must be actioned without delay.
         </p>
         <SEOAppBridge
           title="Auto overall assessment — no human error"
-          description="Elec-Mate watches your observation codes in real time. The moment a C1 or C2 is added, the overall assessment flips to Unsatisfactory automatically. You cannot accidentally mark an unsafe installation as Satisfactory."
+          description="Elec-Mate watches your observation codes in real time. The moment a C1, C2, or FI is added, the overall assessment flips to Unsatisfactory automatically. You cannot accidentally mark an unsafe installation as Satisfactory."
           icon={ShieldCheck}
         />
       </>
@@ -542,12 +546,12 @@ const sections = [
                   Marking the report Satisfactory with a C2 present
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  This is a hard rule with no exceptions. Any C1 or C2 observation makes the overall
-                  assessment Unsatisfactory. Some electricians mark a report Satisfactory despite a
-                  C2 being present because the client pressures them or because the defect seems
-                  minor. This is incorrect and will be flagged by scheme provider audits. It can
-                  result in disciplinary action and, in a landlord context, could leave the landlord
-                  unknowingly non-compliant with the 2020 Regulations.
+                  This is a hard rule with no exceptions. Any C1, C2, or FI observation makes the
+                  overall assessment Unsatisfactory. Some electricians mark a report Satisfactory
+                  despite a C2 or FI being present because the client pressures them or because the
+                  defect seems minor. This is incorrect and will be flagged by scheme provider
+                  audits. It can result in disciplinary action and, in a landlord context, could
+                  leave the landlord unknowingly non-compliant with the 2020 Regulations.
                 </p>
               </div>
             </div>

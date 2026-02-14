@@ -52,7 +52,7 @@ export default function CableSizingGuideBS7671Page() {
       keyTakeaways={[
         'Cable sizing follows 5 steps: design current (Ib), protective device (In), correction factors (Ca, Cg, Ci, Cf), tabulated current (It = In / correction factors), and voltage drop check.',
         'Correction factors account for ambient temperature (Ca from Table 4B1), grouping (Cg from Table 4C1), thermal insulation (Ci = 0.5 if fully enclosed, 0.89 one side), and BS 3036 fuses (Cf = 0.725).',
-        'The reference method (A through G) determines the current-carrying capacity of the cable — Method A (enclosed in insulated wall) has the lowest ratings, while Method E (on perforated tray) has the highest.',
+        'The reference method (A through G) determines the current-carrying capacity of the cable — Method A (enclosed in insulated wall) has the lowest ratings, while Method G (spaced from a surface) has the highest.',
         'After selecting the cable, verify voltage drop using mV/A/m values from Appendix 4: maximum 3% for lighting (6.9V) and 5% for other circuits (11.5V) from a 230V supply.',
         "Elec-Mate's cable sizing calculator handles all 5 steps automatically — enter your load, conditions, and cable run, and get the correct cable size with voltage drop and fault current verification.",
       ]}
@@ -275,7 +275,7 @@ export default function CableSizingGuideBS7671Page() {
                     </span>
                     <div>
                       <h4 className="font-bold text-white">
-                        On perforated cable tray (horizontal or vertical)
+                        On perforated cable tray (horizontal)
                       </h4>
                       <p className="text-white text-sm leading-relaxed">
                         Excellent heat dissipation with air circulation on all sides. High current
@@ -288,10 +288,10 @@ export default function CableSizingGuideBS7671Page() {
                       F
                     </span>
                     <div>
-                      <h4 className="font-bold text-white">On non-perforated cable tray</h4>
+                      <h4 className="font-bold text-white">On perforated cable tray (vertical)</h4>
                       <p className="text-white text-sm leading-relaxed">
-                        Similar to Method E but with reduced air circulation from the bottom.
-                        Slightly lower ratings than perforated tray.
+                        Similar to Method E but mounted vertically. Slightly different ratings due
+                        to convection effects on vertical runs.
                       </p>
                     </div>
                   </div>
@@ -540,8 +540,8 @@ export default function CableSizingGuideBS7671Page() {
                     </p>
                     <p>
                       <strong>Conditions:</strong> Enclosed in insulated wall (Method A) for 3m,
-                      then clipped direct — use Method A (worst case), 30C ambient, grouped with 2
-                      other circuits, not in thermal insulation
+                      then clipped direct — use Method A (worst case), 30C ambient, grouped with 1
+                      other circuit, not in thermal insulation
                     </p>
                     <p>
                       <strong>Correction factors:</strong> Ca = 1.0, Cg = 0.80, Ci = 1.0, Cf = 1.0
@@ -675,9 +675,9 @@ export default function CableSizingGuideBS7671Page() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-yellow-400">Table 4D4A</strong> — PVC multicore
-                      armoured cables (SWA). Used for buried cables, supplies to outbuildings, and
-                      external circuits. Includes Method D (direct buried) ratings.
+                      <strong className="text-yellow-400">Table 4D4A</strong> — Multicore 70C
+                      thermoplastic (LSF) cables. Used where low smoke and fume cables are required,
+                      such as public buildings and escape routes.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">

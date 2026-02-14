@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every circuit in a three phase board?',
     answer:
-      'BS 7671:2018+A2:2022 Regulation 411.3.4 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A, mobile equipment rated up to 32A for outdoor use, and cables concealed in walls at a depth less than 50mm. This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
+      'BS 7671:2018+A2:2022 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A and mobile equipment rated up to 32A for outdoor use (Regulation 411.3.3), and for cables concealed in walls at a depth less than 50mm (Regulation 411.3.4). This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
   },
   {
     question: 'How do I test a three phase installation for initial verification?',
@@ -353,7 +353,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SPD (Surge Protection Device)</strong> — BS 7671 Regulation 443.4 requires
+                <strong>SPD (Surge Protection Device)</strong> — BS 7671 Regulation 443.4.1 requires
                 an SPD where the consequence of an overvoltage would cause serious injury, danger to
                 life, disruption to a public service, or damage to cultural heritage. In practice,
                 most new three phase installations should include a Type 2 SPD as a minimum.

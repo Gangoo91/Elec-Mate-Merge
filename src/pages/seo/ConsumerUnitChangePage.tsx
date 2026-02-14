@@ -90,11 +90,11 @@ export default function ConsumerUnitChangePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     If the existing consumer unit has no RCD protection at all, it does not meet the
-                    current requirements of BS 7671 Regulation 411.3.4, which requires 30 mA RCD
-                    protection for almost all circuits in a domestic installation. While there is no
-                    legal requirement to upgrade an existing installation retrospectively, the
-                    safety benefit of adding RCD protection is substantial — an RCD can prevent
-                    fatal electric shock and reduce the risk of electrical fires.
+                    current requirements of BS 7671 Regulations 411.3.3 and 411.3.4, which require
+                    30 mA RCD protection for almost all circuits in a domestic installation. While
+                    there is no legal requirement to upgrade an existing installation
+                    retrospectively, the safety benefit of adding RCD protection is substantial — an
+                    RCD can prevent fatal electric shock and reduce the risk of electrical fires.
                   </p>
                 </div>
 
@@ -178,7 +178,7 @@ export default function ConsumerUnitChangePage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        30 mA RCD protection (Regulation 411.3.4)
+                        30 mA RCD protection (Regulations 411.3.3 and 411.3.4)
                       </strong>{' '}
                       — Almost all circuits require 30 mA RCD protection. This is typically achieved
                       with individual RCBOs or a split-load arrangement with dual RCDs.

@@ -42,9 +42,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'NICEIC and NAPIT are both government-approved competent person schemes — registration with either allows you to self-certify notifiable electrical work under Part P of the Building Regulations.',
-  'NICEIC is the older, larger, and more widely recognised scheme; NAPIT is generally cheaper, with faster registration and a reputation for being more contractor-friendly.',
-  'Annual costs vary: NICEIC Domestic Installer typically costs £400 to £550 per year; NAPIT Domestic Installer typically costs £300 to £450 per year (prices vary by category and region).',
-  'Both schemes require periodic assessment visits — NICEIC typically every 12 months, NAPIT every 12 to 18 months — where an assessor inspects your work, paperwork, and test equipment.',
+  'NICEIC is the older, larger, and more widely recognised scheme; NAPIT offers faster registration and has a reputation for being contractor-friendly. Fees for both schemes are broadly comparable.',
+  'Annual costs vary: NICEIC Domestic Installer typically costs £400 to £550 per year; NAPIT Domestic Installer typically costs £540 to £650 per year plus VAT (prices vary by category and region).',
+  'Both schemes require annual assessment visits where an assessor inspects your work, paperwork, and test equipment.',
   "Elec-Mate's digital certification and business tools help you pass scheme assessments with professional, compliant documentation — certificates, test results, and job records all in one place.",
 ];
 
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How much does NAPIT registration cost?',
     answer:
-      'NAPIT registration costs are generally lower than NICEIC. As of 2026, typical costs are: Domestic Installer — approximately £300 to £450 per year (includes initial assessment and annual subscription). Full Scope (domestic and commercial) — approximately £450 to £600+ per year. The initial registration fee is typically lower than NICEIC, ranging from £150 to £300. NAPIT also offers additional services like public liability insurance packages and notification portal access as part of some membership tiers. As with NICEIC, check the NAPIT website for current pricing as costs are updated periodically.',
+      'NAPIT registration costs as of 2026 are: Domestic Installer — approximately £540 to £650 per year plus VAT (includes annual subscription and assessment). Full Scope (domestic and commercial) — approximately £600 to £800+ per year plus VAT. The initial registration fee is approximately £600 to £730 including VAT. NAPIT also offers additional services like public liability insurance packages and notification portal access as part of some membership tiers. Check the NAPIT website for current pricing as costs are updated periodically.',
   },
   {
     question: 'Can I switch from NICEIC to NAPIT (or vice versa)?',
@@ -235,9 +235,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cost advantage:</strong> NAPIT registration is generally 20% to 30% cheaper
-                than NICEIC for equivalent categories. This makes it attractive for sole traders and
-                small businesses where annual scheme costs are a significant expense.
+                <strong>Competitive pricing:</strong> NAPIT and NICEIC fees are broadly comparable
+                for domestic installer categories. Both schemes review their prices annually, so
+                check current fee sheets before deciding. The difference often comes down to the
+                specific scheme tier and any additional disciplines you register for.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -251,9 +252,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Assessment:</strong> Periodic assessment visits, typically every 12 to 18
-                months. The assessment process is broadly similar to NICEIC — qualifications,
-                equipment, certificates, and a job inspection.
+                <strong>Assessment:</strong> Annual assessment visits. The assessment process is
+                broadly similar to NICEIC — qualifications, equipment, certificates, and a job
+                inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -303,16 +304,16 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">NAPIT Costs</h3>
             <ul className="space-y-3 text-white text-sm">
               <li>
-                <strong>Domestic Installer:</strong> £300 - £450/year
+                <strong>Domestic Installer:</strong> £540 - £650/year (+VAT)
               </li>
               <li>
-                <strong>Full Scope:</strong> £450 - £600/year
+                <strong>Full Scope:</strong> £600 - £800/year (+VAT)
               </li>
               <li>
-                <strong>Initial registration fee:</strong> £150 - £300
+                <strong>Initial registration fee:</strong> £600 - £730 (inc VAT)
               </li>
               <li>
-                <strong>Assessment frequency:</strong> Every 12 - 18 months
+                <strong>Assessment frequency:</strong> Annual
               </li>
               <li>
                 <strong>Re-assessment (if failed):</strong> Additional charge
@@ -321,10 +322,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Over a 5-year period, the cost difference between NICEIC and NAPIT can be £500 to £1,500 —
-          significant for a sole trader. However, cost should not be the only factor. Consider the
-          value each scheme provides in terms of consumer leads, technical support, and brand
-          recognition.
+          Over a 5-year period, the total cost of either scheme depends on which tier you choose and
+          any additional disciplines. Cost should not be the only factor — consider the value each
+          scheme provides in terms of consumer leads, technical support, and brand recognition.
+          Always check the latest fee sheets from both schemes before making your decision.
         </p>
       </>
     ),

@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'RCD Testing Procedure | How to Test RCDs BS 7671';
 const PAGE_DESCRIPTION =
-  'Complete RCD testing procedure per BS 7671 for UK electricians. Full test sequence: 1x rated current (should NOT trip), 5x rated current (must trip within 40 ms for 30 mA), ramp test, half-cycle test, button test. Testing at 0 and 180 degree phase angle. Time-delayed and discrimination testing. Record results with Elec-Mate.';
+  'Complete RCD testing procedure per BS 7671 for UK electricians. Full test sequence: half-rated current (must NOT trip), 1x rated current (must trip within 300 ms), 5x rated current (must trip within 40 ms for 30 mA), ramp test, half-cycle test, button test. Testing at 0 and 180 degree phase angle. Time-delayed and discrimination testing. Record results with Elec-Mate.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

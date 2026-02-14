@@ -36,7 +36,7 @@ const faqs = [
   {
     question: 'How do I determine the overall condition of the installation on an EICR?',
     answer:
-      'The overall condition is determined by the observation codes recorded during the inspection. If any C1 (Danger Present) or C2 (Potentially Dangerous) observations are recorded, the overall condition must be marked as Unsatisfactory. If only C3 (Improvement Recommended) observations are present, or no observations are recorded at all, the overall condition is Satisfactory. FI (Further Investigation) observations indicate that certain parts of the installation could not be fully assessed and require further investigation before a final classification can be given for those items. The inspector must make a professional judgement on the overall condition based on the totality of findings.',
+      'The overall condition is determined by the observation codes recorded during the inspection. If any C1 (Danger Present), C2 (Potentially Dangerous), or FI (Further Investigation) observations are recorded, the overall condition must be marked as Unsatisfactory. FI makes the report Unsatisfactory because the inspector could not fully determine the condition of part of the installation — the installation cannot be confirmed as safe until that investigation is completed. If only C3 (Improvement Recommended) observations are present, or no observations are recorded at all, the overall condition is Satisfactory.',
   },
   {
     question: 'What should I write in the "Extent and Limitations" section of an EICR?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What happens if a landlord does not have a valid EICR?',
     answer:
-      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, landlords must have a valid EICR for all privately rented properties. Failure to comply can result in civil penalties of up to 30,000 pounds per breach, enforced by the local authority. The local authority can also arrange for the inspection and any remedial work to be carried out at the landlord expense. If an EICR returns an unsatisfactory result (any C1 or C2 observations), the landlord must complete the remedial work within 28 days (or a shorter period if specified by the inspector) and obtain confirmation from a qualified person that the work has been completed satisfactorily. The EICR must be provided to new tenants before they move in and to existing tenants within 28 days of the inspection date.',
+      'Under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, landlords must have a valid EICR for all privately rented properties. Failure to comply can result in civil penalties of up to 30,000 pounds per breach, enforced by the local authority. The local authority can also arrange for the inspection and any remedial work to be carried out at the landlord expense. If an EICR returns an unsatisfactory result (any C1, C2, or FI observations), the landlord must complete the remedial work or further investigation within 28 days (or a shorter period if specified by the inspector) and obtain confirmation from a qualified person that the work has been completed satisfactorily. The EICR must be provided to new tenants before they move in and to existing tenants within 28 days of the inspection date.',
   },
 ];
 
@@ -96,7 +96,7 @@ const howToSteps = [
   },
   {
     name: 'Determine the overall condition and complete the declaration',
-    text: 'Based on the observations, determine the overall condition of the installation. If any C1 or C2 observations are present, the overall condition must be Unsatisfactory. If only C3 observations or no observations are present, the overall condition is Satisfactory. Complete the declaration section with the inspector name, signature, qualifications, and the date. If there is a separate supervisor reviewing the report, they must also sign the declaration. The person responsible for the electrical installation (the client or landlord) should be informed of the results and provided with a copy of the completed report.',
+    text: 'Based on the observations, determine the overall condition of the installation. If any C1, C2, or FI observations are present, the overall condition must be Unsatisfactory. If only C3 observations or no observations are present, the overall condition is Satisfactory. Complete the declaration section with the inspector name, signature, qualifications, and the date. If there is a separate supervisor reviewing the report, they must also sign the declaration. The person responsible for the electrical installation (the client or landlord) should be informed of the results and provided with a copy of the completed report.',
   },
 ];
 
@@ -471,11 +471,11 @@ export default function HowToFillInEICRPage() {
                     Marking the report Satisfactory with a C2 present
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    Any C1 or C2 observation makes the overall condition Unsatisfactory — no
+                    Any C1, C2, or FI observation makes the overall condition Unsatisfactory — no
                     exceptions. This is a mandatory requirement. Some electricians mark a report
-                    Satisfactory despite a C2 observation being present, perhaps because the client
-                    pressures them or because the issue seems minor. This is incorrect and could
-                    result in disciplinary action from the scheme provider.
+                    Satisfactory despite a C2 or FI observation being present, perhaps because the
+                    client pressures them or because the issue seems minor. This is incorrect and
+                    could result in disciplinary action from the scheme provider.
                   </p>
                 </div>
               </div>

@@ -477,9 +477,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT:</strong> Second largest, competitive pricing, strong trade
-                reputation, assessments every 12 to 18 months. Best for cost-conscious electricians
-                who value good customer service and a practical approach. Approximately 8,000 to
-                10,000 registered electrical contractors.
+                reputation, annual assessments. Best for cost-conscious electricians who value good
+                customer service and a practical approach. Approximately 8,000 to 10,000 registered
+                electrical contractors.
               </span>
             </li>
             <li className="flex items-start gap-3">

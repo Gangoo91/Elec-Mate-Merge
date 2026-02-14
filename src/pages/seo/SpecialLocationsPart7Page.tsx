@@ -166,11 +166,11 @@ const sections = [
           regulation takes precedence for that location.
         </p>
         <p>
-          Part 7 currently covers twelve special locations, numbered from Section 701 to Section
-          753. Not all section numbers are used — the numbering follows the international standard
-          IEC 60364-7. The most commonly encountered special locations in UK domestic and commercial
-          work are bathrooms (701), swimming pools (702), construction sites (704), and solar PV
-          installations (712).
+          Part 7 currently covers eleven special locations, numbered from Section 701 to Section
+          712. Not all section numbers are used — the numbering follows the international standard
+          IEC 60364-7 (for example, there is no Section 707). The most commonly encountered special
+          locations in UK domestic and commercial work are bathrooms (701), swimming pools (702),
+          construction sites (704), and solar PV installations (712).
         </p>
         <p>
           Every electrician working in the UK must be familiar with Part 7. These sections are

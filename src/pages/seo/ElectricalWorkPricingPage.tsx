@@ -46,7 +46,7 @@ const tocItems = [
 const keyTakeaways = [
   'Socket installation costs between £80 and £200 per socket depending on whether it is a new circuit or an addition to an existing ring.',
   'A consumer unit upgrade (fuse box change) typically costs £500 to £900 including materials, labour, and the required Electrical Installation Certificate.',
-  'A full house rewire costs £3,000 to £6,000 for a 3-bedroom house, plus making good (plastering and decorating) which can add 30 to 50 percent on top.',
+  'A full house rewire costs £5,000 to £7,500 for a 3-bedroom house, plus making good (plastering and decorating) which can add 30 to 50 percent on top.',
   'EV charger installation ranges from £800 to £1,500 including the charger unit, cabling, earthing, and the required notification to Building Control.',
   'Elec-Mate helps electricians price jobs accurately with its AI-powered cost engineer, which calculates materials, labour, margin, and generates professional quotes on site.',
 ];
@@ -60,12 +60,12 @@ const faqs = [
   {
     question: 'How much does a full house rewire cost in 2026?',
     answer:
-      'A full rewire for a typical 3-bedroom semi-detached house in the UK costs between £3,000 and £6,000 for the electrical work alone. This includes stripping out all existing wiring, installing new cables, a new consumer unit, new sockets, switches, and light fittings, and all testing and certification. The price varies significantly based on the size of the property, the number of circuits, accessibility (solid walls vs stud walls, floor void access), and your location (London and the South East are typically 20 to 30 percent more expensive than the North). The figure does not include making good — plastering, painting, and decorating after the rewire — which can add 30 to 50 percent to the total cost. A 2-bedroom flat might cost £2,000 to £3,500 for the electrical work, while a 4 or 5-bedroom detached house could be £5,000 to £10,000 or more. Always get at least three quotes and make sure each quote specifies exactly what is included.',
+      'A full rewire for a typical 3-bedroom semi-detached house in the UK costs between £5,000 and £7,500 for the electrical work alone. This includes stripping out all existing wiring, installing new cables, a new consumer unit, new sockets, switches, and light fittings, and all testing and certification. The price varies significantly based on the size of the property, the number of circuits, accessibility (solid walls vs stud walls, floor void access), and your location (London and the South East are typically 20 to 30 percent more expensive than the North). The figure does not include making good — plastering, painting, and decorating after the rewire — which can add 30 to 50 percent to the total cost. A 2-bedroom flat might cost £2,500 to £4,000 for the electrical work, while a 4 or 5-bedroom detached house could be £7,000 to £10,000 or more. Always get at least three quotes and make sure each quote specifies exactly what is included.',
   },
   {
     question: 'How much does an EV charger installation cost?',
     answer:
-      'EV charger installation in the UK typically costs between £800 and £1,500 as a complete package including the charger unit, installation, cabling, earthing, and Building Control notification. The charger unit itself (a 7kW Type 2 tethered or untethered unit from brands like Ohme, Easee, Zappi, or Pod Point) costs £300 to £700 depending on the model and features. Installation labour is typically £300 to £600, covering the cable run from the consumer unit to the charge point location, a dedicated circuit with appropriate MCB or RCBO, earthing to BS 7671 requirements, and the electrical certification. If your consumer unit does not have a spare way or needs upgrading, add £300 to £500. Long cable runs (more than 15 metres) or complex routing through multiple walls can increase the cost. The OZEV (Office for Zero Emission Vehicles) grant for landlords and tenants can provide up to £350 towards the installation cost, though the homeowner grant scheme ended in March 2024.',
+      'EV charger installation in the UK typically costs between £800 and £1,500 as a complete package including the charger unit, installation, cabling, earthing, and Building Control notification. The charger unit itself (a 7kW Type 2 tethered or untethered unit from brands like Ohme, Easee, Zappi, or Pod Point) costs £300 to £700 depending on the model and features. Installation labour is typically £300 to £600, covering the cable run from the consumer unit to the charge point location, a dedicated circuit with appropriate MCB or RCBO, earthing to BS 7671 requirements, and the electrical certification. If your consumer unit does not have a spare way or needs upgrading, add £300 to £500. Long cable runs (more than 15 metres) or complex routing through multiple walls can increase the cost. The OZEV (Office for Zero Emission Vehicles) grant for landlords and tenants can provide up to £350 towards the installation cost, though the original OZEV homeowner grant scheme ended in March 2022. The EV Chargepoint Grant for flat owners and renters continues.',
   },
   {
     question: 'Should I get multiple quotes for electrical work?',
@@ -293,28 +293,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1-bedroom flat:</strong> £2,000 to £3,500. Typically 4 to 6 circuits.
+                <strong>1-bedroom flat:</strong> £2,500 to £4,000. Typically 4 to 6 circuits.
                 Usually completed in 2 to 3 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>2-bedroom house:</strong> £2,500 to £4,500. Typically 6 to 10 circuits.
+                <strong>2-bedroom house:</strong> £3,500 to £5,500. Typically 6 to 10 circuits.
                 Usually completed in 3 to 4 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3-bedroom semi-detached:</strong> £3,000 to £6,000. Typically 8 to 14
+                <strong>3-bedroom semi-detached:</strong> £5,000 to £7,500. Typically 8 to 14
                 circuits. Usually completed in 4 to 6 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4-5 bedroom detached:</strong> £5,000 to £10,000. Typically 12 to 20+
+                <strong>4-5 bedroom detached:</strong> £7,000 to £10,000+. Typically 12 to 20+
                 circuits. Usually completed in 5 to 8 days.
               </span>
             </li>

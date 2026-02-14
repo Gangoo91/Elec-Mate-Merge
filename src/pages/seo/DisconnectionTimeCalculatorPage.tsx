@@ -55,7 +55,7 @@ export default function DisconnectionTimeCalculatorPage() {
       readingTime={10}
       keyTakeaways={[
         'BS 7671 Regulation 411.3.2 requires disconnection within 0.4 seconds for final circuits rated up to 63A in TN systems, and 0.2 seconds for TT systems.',
-        'Distribution circuits and circuits exceeding 63A are permitted a maximum disconnection time of 5 seconds in TN systems, provided supplementary equipotential bonding is in place.',
+        'Distribution circuits and circuits exceeding 63A are permitted a maximum disconnection time of 5 seconds in TN systems, provided all exposed-conductive-parts are connected within the same protective equipotential bonding system.',
         'The maximum permitted earth fault loop impedance (Zs) for each protective device and disconnection time is tabulated in BS 7671 Tables 41.2 to 41.6.',
         'TT systems rely on RCDs for disconnection because the earth fault loop impedance through the general mass of earth is too high for overcurrent devices alone.',
         'The Elec-Mate calculator checks Zs against tabulated maximums for your specific protective device type and rating, giving instant pass/fail results on site.',

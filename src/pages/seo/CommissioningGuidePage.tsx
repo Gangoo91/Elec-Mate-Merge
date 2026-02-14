@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What functional checks are needed during commissioning?',
     answer:
-      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 612.13 and 613.6 require functional testing as part of initial verification. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
+      'Functional checks confirm that every device operates correctly as part of the complete installation. BS 7671 Regulation 643.10 requires functional testing as part of initial verification. The checks include: operating every MCB, RCBO, and RCD to confirm they trip and reset correctly, testing every isolator switch for correct operation, verifying that emergency switching devices (fireman switches, emergency stop buttons) operate correctly, confirming that interlocked devices operate in the correct sequence, testing automation and control systems (timers, sensors, BMS interfaces), checking that all indicator lights and displays show the correct status, testing that no-volt release contactors and motor starters operate as designed, and verifying that standby generators and UPS systems switch correctly on loss of mains supply.',
   },
   {
     question: 'How long does commissioning take?',
@@ -245,7 +245,7 @@ const sections = [
         <p>
           Functional checks go beyond the instrument-based testing of initial verification. They
           involve physically operating every device in the installation to confirm it works
-          correctly. BS 7671 Regulation 613.6 requires functional testing of assemblies such as
+          correctly. BS 7671 Regulation 643.10 requires functional testing of assemblies such as
           switchgear, controls, and interlocks.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

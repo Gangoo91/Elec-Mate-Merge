@@ -38,7 +38,7 @@ const tocItems = [
 const keyTakeaways = [
   "NAPIT is one of the UK's leading competent person scheme providers, enabling electricians to self-certify notifiable electrical work under Part P of the Building Regulations without involving building control.",
   'The application process involves submitting your qualifications, completing a desk-based assessment of your certification work, and passing a practical on-site assessment. Most applications are completed within 4-8 weeks.',
-  'NAPIT membership costs approximately GBP 400-700 per year depending on the scheme and number of disciplines. This is a legitimate business expense that pays for itself through the ability to self-certify work.',
+  'NAPIT membership costs approximately GBP 540-800 per year (plus VAT) depending on the scheme and number of disciplines. This is a legitimate business expense that pays for itself through the ability to self-certify work.',
   'Schemes available include domestic installer, commercial installer, fire detection and alarm, emergency lighting, unvented hot water, and EV charger installation — allowing you to expand your service offering.',
   'NAPIT provides technical support, compliance documentation templates, building control notification services, and professional development resources as part of your membership.',
 ];
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'How much does NAPIT membership cost?',
     answer:
-      'NAPIT membership fees for a single domestic electrical installer scheme are approximately GBP 400-500 per year (fees are reviewed annually). If you want to add additional schemes — such as fire detection and alarm, emergency lighting, or EV charger installation — each additional discipline typically adds GBP 50-150 per year. There is also an initial joining fee that covers your first assessment, typically around GBP 200-350. These costs are a legitimate business expense and are tax-deductible for self-employed electricians. Many electricians find that the ability to self-certify notifiable work — rather than paying building control fees of GBP 150-300 per job — means the membership pays for itself within a few jobs.',
+      'NAPIT membership fees for a single domestic electrical installer scheme are approximately GBP 540-650 per year plus VAT (fees are reviewed annually). If you want to add additional schemes — such as fire detection and alarm, emergency lighting, or EV charger installation — each additional discipline typically adds GBP 50-150 per year. There is also an initial registration fee of approximately GBP 600-730 including VAT, which covers your first assessment and registration processing. These costs are a legitimate business expense and are tax-deductible for self-employed electricians. Many electricians find that the ability to self-certify notifiable work — rather than paying building control fees of GBP 150-300 per job — means the membership pays for itself within a few jobs.',
   },
   {
     question: 'What happens during the NAPIT on-site assessment?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What is the difference between NAPIT and NICEIC?',
     answer:
-      'Both NAPIT and NICEIC are government-authorised competent person scheme providers for electrical work. They serve the same fundamental purpose — enabling electricians to self-certify notifiable work under Part P of the Building Regulations. The main differences are in membership fees (NAPIT is generally slightly cheaper), assessment approach (both conduct on-site assessments but with slightly different formats), additional services (NICEIC has a larger brand presence and marketing support; NAPIT offers competitive technical support), and reputation (NICEIC is longer established and more widely recognised, though NAPIT has grown significantly and is fully equivalent in regulatory terms). Both are equally valid for self-certification purposes, and clients, building control, and estate agents should accept certificates from either scheme.',
+      'Both NAPIT and NICEIC are government-authorised competent person scheme providers for electrical work. They serve the same fundamental purpose — enabling electricians to self-certify notifiable work under Part P of the Building Regulations. The main differences are in membership fees (both are broadly comparable; check current fee sheets), assessment approach (both conduct on-site assessments but with slightly different formats), additional services (NICEIC has a larger brand presence and marketing support; NAPIT offers competitive technical support), and reputation (NICEIC is longer established and more widely recognised, though NAPIT has grown significantly and is fully equivalent in regulatory terms). Both are equally valid for self-certification purposes, and clients, building control, and estate agents should accept certificates from either scheme.',
   },
   {
     question: 'Do I need to be NAPIT registered to do electrical work?',
@@ -106,8 +106,8 @@ const sections = [
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/guides/elecsa-registration">ELECSA</SEOInternalLink>, and others.
           All are equally valid in regulatory terms — the choice between them comes down to cost,
-          service, and personal preference. NAPIT has built a strong reputation for competitive
-          pricing, responsive technical support, and a straightforward assessment process.
+          service, and personal preference. NAPIT has built a strong reputation for responsive
+          technical support and a straightforward assessment process.
         </p>
       </>
     ),
@@ -355,14 +355,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Initial joining fee:</strong> GBP 200-350 (covers your first assessment and
-                registration processing)
+                <strong>Initial registration fee:</strong> GBP 600-730 including VAT (covers your
+                first assessment and registration processing)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>Annual membership (domestic electrical):</strong> GBP 400-500 per year
+                <strong>Annual membership (domestic electrical):</strong> GBP 540-650 per year (plus
+                VAT)
               </span>
             </li>
             <li className="flex items-start gap-3">

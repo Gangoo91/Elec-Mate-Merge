@@ -340,7 +340,7 @@ const sections = [
         <p>
           For mains-wired smoke alarm systems in domestic premises, the design and installation
           should follow{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 5839-6</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">BS 5839-6</SEOInternalLink>{' '}
           (the code of practice for fire detection and fire alarm systems in domestic premises).
           This standard covers system grades (A to F), categories (LD1, LD2, LD3), positioning,
           wiring, interlinking, and testing.

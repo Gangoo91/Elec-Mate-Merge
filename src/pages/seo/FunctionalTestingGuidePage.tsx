@@ -102,7 +102,7 @@ const sections = [
           conditions.
         </p>
         <p>
-          Regulation 612.13 of BS 7671:2018+A2:2022 states that assemblies such as switchgear,
+          Regulation 643.10 of BS 7671:2018+A2:2022 states that assemblies such as switchgear,
           controlgear, interlocks, and similar equipment shall be subjected to a functional test to
           verify that they are properly mounted, adjusted, and installed in accordance with the
           relevant requirements of the Regulations. This means every switch, every isolator, every

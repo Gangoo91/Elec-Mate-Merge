@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What are acceptable R1+R2 values?',
     answer:
-      'There is no single maximum R1+R2 value in BS 7671. The acceptable value depends on the cable length, conductor cross-sectional area, and conductor material. What matters is whether the resulting Zs (Ze + R1+R2) is within the maximum permitted Zs for the protective device. For example, a B32 MCB has a maximum Zs of 1.44 ohms. If Ze is 0.35 ohms, then R1+R2 must not exceed approximately 1.09 ohms (before temperature correction). In practice, you check R1+R2 against the expected value calculated from the cable data: resistance per metre from BS 7671 tables multiplied by the cable length. If the measured value significantly exceeds the calculated value, there may be a high-resistance joint or damaged conductor.',
+      'There is no single maximum R1+R2 value in BS 7671. The acceptable value depends on the cable length, conductor cross-sectional area, and conductor material. What matters is whether the resulting Zs (Ze + R1+R2) is within the maximum permitted Zs for the protective device. For example, a B32 MCB has a maximum Zs of 1.37 ohms. If Ze is 0.35 ohms, then R1+R2 must not exceed approximately 1.02 ohms (before temperature correction). In practice, you check R1+R2 against the expected value calculated from the cable data: resistance per metre from BS 7671 tables multiplied by the cable length. If the measured value significantly exceeds the calculated value, there may be a high-resistance joint or damaged conductor.',
   },
   {
     question: 'How do I test continuity on a ring circuit?',

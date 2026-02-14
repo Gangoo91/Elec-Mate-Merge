@@ -256,7 +256,7 @@ export default function OutdoorElectricsPage() {
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <span className="text-white">
-                    <strong className="text-white">Regulation 411.3.4</strong> — Requires 30mA RCD
+                    <strong className="text-white">Regulation 411.3.3</strong> — Requires 30mA RCD
                     protection for all socket outlets rated up to 32A and all circuits supplying
                     mobile equipment intended for outdoor use.
                   </span>
@@ -521,7 +521,7 @@ export default function OutdoorElectricsPage() {
                     <span>
                       <strong className="text-yellow-400">RCD protection</strong> — 30mA RCD
                       protection is mandatory for all outdoor socket outlets (BS 7671 Regulation
-                      411.3.4). An individual RCBO in the consumer unit is the preferred approach.
+                      411.3.3). An individual RCBO in the consumer unit is the preferred approach.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">

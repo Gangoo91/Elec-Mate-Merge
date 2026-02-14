@@ -352,7 +352,7 @@ const sections = [
       <>
         <p>
           All socket outlets rated up to 32A and all lighting circuits in a garage must be protected
-          by a 30mA RCD in accordance with BS 7671 Regulation 411.3.4. This requirement applies
+          by a 30mA RCD in accordance with BS 7671 Regulation 411.3.3. This requirement applies
           regardless of whether the garage is integral or detached.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

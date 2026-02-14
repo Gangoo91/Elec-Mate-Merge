@@ -41,7 +41,7 @@ const keyTakeaways = [
   'NICEIC (National Inspection Council for Electrical Installation Contracting) is the largest competent person scheme for electricians in the UK, allowing self-certification of notifiable domestic electrical work under Part P.',
   'There are two main registration types: Domestic Installer (for domestic-only electricians, lower cost) and Approved Contractor (for all electrical work including commercial, higher credibility).',
   'Registration requires appropriate qualifications (18th Edition, 2391 or equivalent), relevant experience, adequate premises, calibrated test instruments, and public liability insurance.',
-  'Annual registration fees range from approximately 300 to 600 pounds or more depending on the scheme type, with additional costs for the initial assessment visit.',
+  'Annual registration fees range from approximately 400 to 650 pounds or more depending on the scheme type, with additional costs for the initial assessment visit.',
   'Elec-Mate certificates meet NICEIC scheme requirements with professional PDF output, BS 7671 compliance, and all 8 certificate types ready for upload to the NICEIC portal.',
 ];
 
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'How much does NICEIC registration cost per year?',
     answer:
-      'NICEIC registration costs vary by scheme type and are subject to annual review. As of 2026, the Domestic Installer scheme typically costs in the region of 300 to 400 pounds per year, while the Approved Contractor scheme costs approximately 500 to 650 pounds per year. There is also a one-off initial assessment fee, which is typically between 300 and 500 pounds. This covers the assessor visit to your premises and the review of your qualifications, test instruments, and sample work. Additional costs may apply for supplementary registrations such as the NICEIC Fire Detection and Alarm scheme or the Unvented Hot Water scheme. These figures are approximate and you should confirm the current fees directly with NICEIC before applying.',
+      'NICEIC registration costs vary by scheme type and are subject to annual review. As of 2026, the Domestic Installer scheme typically costs in the region of 400 to 550 pounds per year, while the Approved Contractor scheme costs approximately 550 to 750 pounds per year. There is also a one-off initial assessment fee, which is typically between 200 and 400 pounds. This covers the assessor visit to your premises and the review of your qualifications, test instruments, and sample work. Additional costs may apply for supplementary registrations such as the NICEIC Fire Detection and Alarm scheme or the Unvented Hot Water scheme. These figures are approximate and you should confirm the current fees directly with NICEIC before applying.',
   },
   {
     question: 'What happens during the NICEIC initial assessment visit?',
@@ -93,7 +93,7 @@ const sections = [
           NICEIC stands for the National Inspection Council for Electrical Installation Contracting.
           It is the largest and most widely recognised competent person scheme for electricians in
           the United Kingdom. Established in 1956, NICEIC operates as an independent, voluntary
-          regulatory body that assesses the competence of electrical contractors and allows
+          registration body that assesses the competence of electrical contractors and allows
           registered members to self-certify certain types of electrical installation work as
           complying with building regulations.
         </p>
@@ -296,10 +296,10 @@ const sections = [
                 <strong>Initial assessment fee:</strong> approximately 300 to 400 pounds
               </li>
               <li>
-                <strong>Annual registration fee:</strong> approximately 300 to 400 pounds per year
+                <strong>Annual registration fee:</strong> approximately 400 to 550 pounds per year
               </li>
               <li>
-                <strong>Total first year:</strong> approximately 600 to 800 pounds
+                <strong>Total first year:</strong> approximately 700 to 950 pounds
               </li>
             </ul>
           </div>

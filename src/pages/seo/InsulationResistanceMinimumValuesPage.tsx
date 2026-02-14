@@ -46,7 +46,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The minimum acceptable insulation resistance value per BS 7671 Table 61 is 1.0 megohm for all circuit voltages. Any reading below 1 megohm is a failure.',
+  'The minimum acceptable insulation resistance for standard circuits (up to 500V) per BS 7671 Table 61 is 1.0 megohm. For SELV and PELV circuits the minimum is 0.5 megohm. Any reading below the applicable minimum is a failure.',
   'The test voltage depends on the circuit voltage: 250V DC for SELV and PELV circuits (up to 50V), 500V DC for circuits up to and including 500V (standard 230V circuits), and 1000V DC for circuits above 500V.',
   'Insulation resistance readings are affected by temperature, humidity, cable age, contamination, and cable length. Hot, humid conditions give lower readings — always note the environmental conditions.',
   'Low IR readings can be caused by moisture ingress, damaged cable insulation, contaminated accessories, over-long cable runs, or connected equipment with low insulation resistance.',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What is the minimum insulation resistance value per BS 7671?',
     answer:
-      'The minimum insulation resistance value per BS 7671 Table 61 is 1.0 megohm (1 MΩ). This applies to all circuit voltages — whether you are testing a SELV circuit at 12V or a 400V three-phase circuit, the minimum acceptable insulation resistance is 1.0 megohm between all live conductors and earth, and between all live conductors. A reading below 1.0 megohm indicates a fault in the insulation and requires investigation. In practice, new installations typically produce readings of 200 megohms or higher — readings in the low single digits (1 to 10 megohms) warrant investigation even though they technically pass.',
+      'BS 7671 Table 61 specifies minimum insulation resistance values based on the circuit voltage. For SELV and PELV circuits (up to 50V), the test voltage is 250V DC and the minimum is 0.5 MΩ. For circuits up to and including 500V (standard 230V and 400V circuits), the test voltage is 500V DC and the minimum is 1.0 MΩ. For circuits above 500V, the test voltage is 1000V DC and the minimum is 1.0 MΩ. A reading below the applicable minimum indicates a fault in the insulation and requires investigation. In practice, new installations typically produce readings of 200 megohms or higher — readings in the low single digits (1 to 10 megohms) warrant investigation even though they technically pass.',
   },
   {
     question: 'Why is the test voltage different for different circuit voltages?',
@@ -112,7 +112,7 @@ const sections = [
           reading indicates that the insulation is compromised and current is leaking.
         </p>
         <p>
-          Insulation resistance testing is test number two in the{' '}
+          Insulation resistance testing is test number three in the{' '}
           <SEOInternalLink href="/guides/testing-sequence-guide">
             GN3 testing sequence
           </SEOInternalLink>

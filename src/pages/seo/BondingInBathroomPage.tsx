@@ -282,7 +282,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition 1:</strong> All circuits serving the location are protected by a
-                30mA RCD (Regulation 411.3.3). This includes the lighting circuit, any socket
+                30mA RCD (Regulation 701.411.3.3). This includes the lighting circuit, any socket
                 circuit (if sockets are installed in the bathroom), the shower circuit, the electric
                 towel rail circuit, and any underfloor heating circuit.
               </span>

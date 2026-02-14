@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What is R1+R2 and how do I measure it?',
     answer:
-      'R1+R2 is the combined resistance of the phase conductor (R1) and the circuit protective conductor (R2) from the origin of the installation (the distribution board) to the furthest point of the circuit. R1+R2 is measured during the dead tests as part of the continuity of protective conductors test (BS 7671 Regulation 612.2). The standard method uses a low-resistance ohmmeter: the phase and CPC are linked together at the distribution board, and the resistance is measured at the furthest point of the circuit. The reading gives R1+R2 directly. For ring final circuits, the R1+R2 value at each socket should be approximately one-quarter of the total end-to-end resistance (for a properly wired ring). R1+R2 depends on the cable length and the conductor cross-sectional area — longer circuits and thinner conductors give higher R1+R2 values.',
+      'R1+R2 is the combined resistance of the phase conductor (R1) and the circuit protective conductor (R2) from the origin of the installation (the distribution board) to the furthest point of the circuit. R1+R2 is measured during the dead tests as part of the continuity of protective conductors test (BS 7671 Regulation 643.2). The standard method uses a low-resistance ohmmeter: the phase and CPC are linked together at the distribution board, and the resistance is measured at the furthest point of the circuit. The reading gives R1+R2 directly. For ring final circuits, the R1+R2 value at each socket should be approximately one-quarter of the total end-to-end resistance (for a properly wired ring). R1+R2 depends on the cable length and the conductor cross-sectional area — longer circuits and thinner conductors give higher R1+R2 values.',
   },
   {
     question: 'Why do I need to apply temperature correction to Zs?',
@@ -402,45 +402,45 @@ const sections = [
             <tbody className="divide-y divide-white/5">
               <tr>
                 <td className="py-3 pr-4">6</td>
-                <td className="py-3 pr-4">7.67</td>
-                <td className="py-3 pr-4">3.83</td>
-                <td className="py-3 pr-4">1.92</td>
+                <td className="py-3 pr-4">7.28</td>
+                <td className="py-3 pr-4">3.64</td>
+                <td className="py-3 pr-4">1.82</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">10</td>
-                <td className="py-3 pr-4">4.60</td>
-                <td className="py-3 pr-4">2.30</td>
-                <td className="py-3 pr-4">1.15</td>
+                <td className="py-3 pr-4">4.37</td>
+                <td className="py-3 pr-4">2.19</td>
+                <td className="py-3 pr-4">1.09</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">16</td>
-                <td className="py-3 pr-4">2.87</td>
-                <td className="py-3 pr-4">1.44</td>
-                <td className="py-3 pr-4">0.72</td>
+                <td className="py-3 pr-4">2.73</td>
+                <td className="py-3 pr-4">1.37</td>
+                <td className="py-3 pr-4">0.68</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">20</td>
-                <td className="py-3 pr-4">2.30</td>
-                <td className="py-3 pr-4">1.15</td>
-                <td className="py-3 pr-4">0.57</td>
+                <td className="py-3 pr-4">2.19</td>
+                <td className="py-3 pr-4">1.09</td>
+                <td className="py-3 pr-4">0.55</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">32</td>
-                <td className="py-3 pr-4">1.44</td>
-                <td className="py-3 pr-4">0.72</td>
-                <td className="py-3 pr-4">0.36</td>
+                <td className="py-3 pr-4">1.37</td>
+                <td className="py-3 pr-4">0.68</td>
+                <td className="py-3 pr-4">0.34</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">40</td>
-                <td className="py-3 pr-4">1.15</td>
-                <td className="py-3 pr-4">0.57</td>
-                <td className="py-3 pr-4">0.29</td>
+                <td className="py-3 pr-4">1.09</td>
+                <td className="py-3 pr-4">0.55</td>
+                <td className="py-3 pr-4">0.27</td>
               </tr>
               <tr>
                 <td className="py-3 pr-4">50</td>
-                <td className="py-3 pr-4">0.92</td>
-                <td className="py-3 pr-4">0.46</td>
-                <td className="py-3 pr-4">0.23</td>
+                <td className="py-3 pr-4">0.87</td>
+                <td className="py-3 pr-4">0.44</td>
+                <td className="py-3 pr-4">0.22</td>
               </tr>
             </tbody>
           </table>
@@ -484,13 +484,13 @@ const sections = [
                 <strong>Zs (calculated):</strong> 0.35 + 0.56 = <strong>0.91 ohms</strong>
               </li>
               <li>
-                <strong>Maximum Zs (32 A Type B, 0.4s):</strong> 1.44 ohms
+                <strong>Maximum Zs (32 A Type B, 0.4s):</strong> 1.37 ohms
               </li>
               <li>
-                <strong>80% of maximum:</strong> 1.15 ohms
+                <strong>80% of maximum:</strong> 1.10 ohms
               </li>
               <li>
-                <strong>Result:</strong> 0.91 ohms is less than 1.15 ohms — <strong>PASS</strong>
+                <strong>Result:</strong> 0.91 ohms is less than 1.10 ohms — <strong>PASS</strong>
               </li>
             </ul>
           </div>
@@ -520,10 +520,10 @@ const sections = [
                 <strong>Zs (design):</strong> 0.45 + 1.268 = <strong>1.718 ohms</strong>
               </li>
               <li>
-                <strong>Maximum Zs (6 A Type B, 0.4s):</strong> 7.67 ohms
+                <strong>Maximum Zs (6 A Type B, 0.4s):</strong> 7.28 ohms
               </li>
               <li>
-                <strong>Result:</strong> 1.718 ohms is well within 7.67 ohms — <strong>PASS</strong>
+                <strong>Result:</strong> 1.718 ohms is well within 7.28 ohms — <strong>PASS</strong>
               </li>
             </ul>
           </div>
@@ -554,13 +554,13 @@ const sections = [
                 <strong>Zs (design):</strong> 0.50 + 0.139 = <strong>0.639 ohms</strong>
               </li>
               <li>
-                <strong>Maximum Zs (40 A Type B, 0.4s):</strong> 1.15 ohms
+                <strong>Maximum Zs (40 A Type B, 0.4s):</strong> 1.09 ohms
               </li>
               <li>
-                <strong>80% of maximum:</strong> 0.92 ohms
+                <strong>80% of maximum:</strong> 0.87 ohms
               </li>
               <li>
-                <strong>Result:</strong> 0.639 ohms is within 0.92 ohms — <strong>PASS</strong>
+                <strong>Result:</strong> 0.639 ohms is within 0.87 ohms — <strong>PASS</strong>
               </li>
             </ul>
             <p className="text-white text-sm mt-3">

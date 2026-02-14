@@ -54,7 +54,7 @@ export default function NetworkedFireAlarmPage() {
         'Conventional fire alarm systems divide the building into zones, each wired as a separate circuit. When a detector activates, the panel identifies the zone but not the individual device — suitable for smaller buildings with clearly defined zones.',
         'Addressable fire alarm systems wire all devices on a single loop circuit. Each device has a unique address, allowing the panel to identify exactly which detector has activated — essential for larger buildings where rapid location of the fire is critical.',
         'Analogue addressable systems provide the highest level of intelligence — devices continuously report their environmental readings to the panel, enabling pre-alarm warnings, drift compensation, and predictive maintenance.',
-        'BS 5839-1 defines fire alarm system categories from M (manual only) through L1 (full property protection) and P1 (full property protection for property), with each category specifying different levels of coverage and detection.',
+        'BS 5839-1 defines fire alarm system categories from M (manual only) through L1 (full life protection) and P1 (full property protection), with each category specifying different levels of coverage and detection.',
         'Hybrid systems combine conventional zones and addressable loops on a single panel — useful for phased upgrades of existing conventional systems or buildings with mixed requirements.',
       ]}
       sections={[
