@@ -43,6 +43,7 @@ interface SafetyDashboardProps {
   onCardTap?: (section: string) => void;
   recentDocuments?: RecentDocument[];
   isLoadingDocuments?: boolean;
+  overrideScore?: number;
 }
 
 const containerVariants = {
@@ -236,8 +237,26 @@ export function SafetyDashboard({
   onCardTap,
   recentDocuments,
   isLoadingDocuments,
+  overrideScore,
 }: SafetyDashboardProps) {
-  const safetyInfo = useMemo(() => calculateSafetyScore(stats), [stats]);
+  const safetyInfo = useMemo(() => {
+    const info = calculateSafetyScore(stats);
+    if (overrideScore !== undefined) {
+      const score = Math.max(0, Math.min(100, overrideScore));
+      const label =
+        score >= 90 ? 'Excellent' : score >= 70 ? 'Good' : score >= 50 ? 'Needs Attention' : 'Action Required';
+      const colours =
+        score >= 90
+          ? { colour: 'text-green-400', strokeColour: '#4ade80', glowColour: 'rgba(74,222,128,0.15)' }
+          : score >= 70
+            ? { colour: 'text-emerald-400', strokeColour: '#34d399', glowColour: 'rgba(52,211,153,0.15)' }
+            : score >= 50
+              ? { colour: 'text-amber-400', strokeColour: '#fbbf24', glowColour: 'rgba(251,191,36,0.15)' }
+              : { colour: 'text-red-400', strokeColour: '#f87171', glowColour: 'rgba(248,113,113,0.15)' };
+      return { score, label, ...colours };
+    }
+    return info;
+  }, [stats, overrideScore]);
 
   if (isLoading) {
     return (

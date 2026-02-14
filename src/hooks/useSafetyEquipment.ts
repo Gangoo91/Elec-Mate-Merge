@@ -202,20 +202,35 @@ export function useSafetyEquipment() {
   });
 
   // Calculate stats
+  const now = new Date();
+  const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+  const overdueItems = equipment.filter((e) => {
+    if (e.next_inspection) return new Date(e.next_inspection) < now;
+    if (e.calibration_due) return new Date(e.calibration_due) < now;
+    return false;
+  });
+
+  const dueSoonItems = equipment.filter((e) => {
+    if (overdueItems.some((o) => o.id === e.id)) return false;
+    if (e.next_inspection) {
+      const d = new Date(e.next_inspection);
+      return d >= now && d <= sevenDaysFromNow;
+    }
+    if (e.calibration_due) {
+      const d = new Date(e.calibration_due);
+      return d >= now && d <= sevenDaysFromNow;
+    }
+    return false;
+  });
+
   const stats = {
     total: equipment.length,
     good: equipment.filter((e) => e.status === 'good').length,
     needsAttention: equipment.filter((e) => e.status === 'needs_attention').length,
-    overdue: equipment.filter((e) => {
-      if (e.next_inspection) {
-        return new Date(e.next_inspection) < new Date();
-      }
-      if (e.calibration_due) {
-        return new Date(e.calibration_due) < new Date();
-      }
-      return false;
-    }).length,
+    overdue: overdueItems.length,
     outOfService: equipment.filter((e) => e.status === 'out_of_service').length,
+    dueSoon: dueSoonItems.length,
   };
 
   return {
@@ -223,6 +238,8 @@ export function useSafetyEquipment() {
     isLoading,
     error,
     stats,
+    overdueItems,
+    dueSoonItems,
     refetch,
     addEquipment,
     updateEquipment,

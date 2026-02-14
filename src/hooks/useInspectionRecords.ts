@@ -102,6 +102,67 @@ export function useCreateInspectionRecord() {
   });
 }
 
+export interface InspectionComparison {
+  current: InspectionRecord;
+  previous: InspectionRecord | null;
+  trend: 'improving' | 'declining' | 'stable' | 'first';
+  passRateChange: number;
+}
+
+export function useInspectionComparison(templateId: string, location?: string | null) {
+  return useQuery({
+    queryKey: ['inspection-comparison', templateId, location],
+    queryFn: async (): Promise<InspectionComparison | null> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      let query = supabase
+        .from('inspection_records')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('template_id', templateId)
+        .order('date', { ascending: false })
+        .limit(2);
+
+      if (location) {
+        query = query.eq('location', location);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+
+      const records = data as InspectionRecord[];
+      if (records.length === 0) return null;
+
+      const current = records[0];
+      const previous = records.length > 1 ? records[1] : null;
+
+      const currentPassRate =
+        current.total_items > 0 ? current.pass_count / current.total_items : 0;
+      const previousPassRate =
+        previous && previous.total_items > 0
+          ? previous.pass_count / previous.total_items
+          : 0;
+
+      const passRateChange = previous
+        ? Math.round((currentPassRate - previousPassRate) * 100)
+        : 0;
+
+      let trend: InspectionComparison['trend'] = 'first';
+      if (previous) {
+        if (passRateChange > 5) trend = 'improving';
+        else if (passRateChange < -5) trend = 'declining';
+        else trend = 'stable';
+      }
+
+      return { current, previous, trend, passRateChange };
+    },
+    enabled: !!templateId,
+  });
+}
+
 export function useDeleteInspectionRecord() {
   const queryClient = useQueryClient();
   const { toast } = useToast();

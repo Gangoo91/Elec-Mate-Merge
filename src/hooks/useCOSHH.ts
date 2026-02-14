@@ -163,3 +163,31 @@ export function useCOSHHOverdueReviews() {
     },
   });
 }
+
+export function useCOSHHUpcomingReviews(withinDays = 30) {
+  return useQuery({
+    queryKey: ['coshh-assessments', 'upcoming', withinDays],
+    queryFn: async (): Promise<COSHHAssessment[]> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const today = new Date().toISOString().split('T')[0];
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + withinDays);
+      const futureDateStr = futureDate.toISOString().split('T')[0];
+
+      const { data, error } = await supabase
+        .from('coshh_assessments')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('review_date', today)
+        .lte('review_date', futureDateStr)
+        .order('review_date', { ascending: true });
+
+      if (error) throw error;
+      return data as COSHHAssessment[];
+    },
+  });
+}

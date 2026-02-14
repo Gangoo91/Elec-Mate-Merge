@@ -36,6 +36,13 @@ import { SafetyTrendsCard } from '@/components/electrician-tools/site-safety/cha
 import { WeeklySummaryCard } from '@/components/electrician-tools/site-safety/WeeklySummaryCard';
 import { useSafetyStreak } from '@/hooks/useSafetyStreak';
 import { useSafetyTrends } from '@/hooks/useSafetyTrends';
+import { ScoreBreakdownCard } from '@/components/electrician-tools/site-safety/charts/ScoreBreakdownCard';
+import { EquipmentAlertsCard } from '@/components/electrician-tools/site-safety/EquipmentAlertsCard';
+import { COSHHAlertsCard } from '@/components/electrician-tools/site-safety/COSHHAlertsCard';
+import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
+import { useCOSHHOverdueReviews, useCOSHHUpcomingReviews } from '@/hooks/useCOSHH';
+import { WeeklyReportCard } from '@/components/electrician-tools/site-safety/WeeklyReportCard';
+import { useWeeklySafetySummary } from '@/hooks/useWeeklySafetySummary';
 
 // Lazy-loaded tool components for code splitting
 const RAMSGenerator = lazy(
@@ -100,14 +107,18 @@ const DigitalAccidentBook = lazy(() =>
   }))
 );
 const SafetyTemplateLibrary = lazy(() =>
-  import('@/components/electrician-tools/site-safety/templates/SafetyTemplateLibrary').then((m) => ({
-    default: m.SafetyTemplateLibrary,
-  }))
+  import('@/components/electrician-tools/site-safety/templates/SafetyTemplateLibrary').then(
+    (m) => ({
+      default: m.SafetyTemplateLibrary,
+    })
+  )
 );
 const SafeIsolationRecord = lazy(() =>
-  import('@/components/electrician-tools/site-safety/safe-isolation/SafeIsolationRecord').then((m) => ({
-    default: m.SafeIsolationRecord,
-  }))
+  import('@/components/electrician-tools/site-safety/safe-isolation/SafeIsolationRecord').then(
+    (m) => ({
+      default: m.SafeIsolationRecord,
+    })
+  )
 );
 const PreUseCheckTool = lazy(() =>
   import('@/components/electrician-tools/site-safety/pre-use-checks/PreUseCheckTool').then((m) => ({
@@ -115,14 +126,18 @@ const PreUseCheckTool = lazy(() =>
   }))
 );
 const SafetyObservationCard = lazy(() =>
-  import('@/components/electrician-tools/site-safety/observations/SafetyObservationCard').then((m) => ({
-    default: m.SafetyObservationCard,
-  }))
+  import('@/components/electrician-tools/site-safety/observations/SafetyObservationCard').then(
+    (m) => ({
+      default: m.SafetyObservationCard,
+    })
+  )
 );
 const ElectricianSiteDiary = lazy(() =>
-  import('@/components/electrician-tools/site-safety/site-diary/ElectricianSiteDiary').then((m) => ({
-    default: m.ElectricianSiteDiary,
-  }))
+  import('@/components/electrician-tools/site-safety/site-diary/ElectricianSiteDiary').then(
+    (m) => ({
+      default: m.ElectricianSiteDiary,
+    })
+  )
 );
 const FireWatchTimer = lazy(() =>
   import('@/components/electrician-tools/site-safety/fire-watch/FireWatchTimer').then((m) => ({
@@ -135,9 +150,11 @@ const SafetyAlertsFeed = lazy(() =>
   }))
 );
 const SafetyResourceLibrary = lazy(() =>
-  import('@/components/electrician-tools/site-safety/resources/SafetyResourceLibrary').then((m) => ({
-    default: m.SafetyResourceLibrary,
-  }))
+  import('@/components/electrician-tools/site-safety/resources/SafetyResourceLibrary').then(
+    (m) => ({
+      default: m.SafetyResourceLibrary,
+    })
+  )
 );
 
 // Animation variants
@@ -195,6 +212,10 @@ const SiteSafety = () => {
   const { data: recentDocuments, isLoading: isLoadingDocuments } = useRecentDocuments();
   const { data: streakData } = useSafetyStreak();
   const { data: trendsData } = useSafetyTrends();
+  const { overdueItems: equipmentOverdue, dueSoonItems: equipmentDueSoon } = useSafetyEquipment();
+  const { data: coshhOverdue = [] } = useCOSHHOverdueReviews();
+  const { data: coshhUpcoming = [] } = useCOSHHUpcomingReviews();
+  const { data: weeklySummary, isLoading: weeklyLoading } = useWeeklySafetySummary();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -541,6 +562,11 @@ const SiteSafety = () => {
               onCardTap={(section) => setActiveView(section)}
               recentDocuments={recentDocuments}
               isLoadingDocuments={isLoadingDocuments}
+              overrideScore={
+                trendsData?.scoreBreakdown
+                  ? trendsData.scoreBreakdown.reduce((sum, b) => sum + b.score, 0)
+                  : undefined
+              }
             />
           </motion.section>
 
@@ -559,12 +585,43 @@ const SiteSafety = () => {
             />
           </motion.section>
 
+          {/* Weekly Report (Edge Function) */}
+          <motion.section variants={itemVariants}>
+            <WeeklyReportCard summary={weeklySummary} isLoading={weeklyLoading} />
+          </motion.section>
+
           {/* Trends & Charts */}
           {trendsData && (
             <motion.section variants={itemVariants}>
               <SafetyTrendsCard trends={trendsData} />
             </motion.section>
           )}
+
+          {/* Score Breakdown */}
+          {trendsData?.scoreBreakdown && (
+            <motion.section variants={itemVariants}>
+              <ScoreBreakdownCard breakdown={trendsData.scoreBreakdown} />
+            </motion.section>
+          )}
+
+          {/* Equipment Alerts */}
+          <motion.section variants={itemVariants}>
+            <EquipmentAlertsCard
+              overdueItems={equipmentOverdue}
+              dueSoonItems={equipmentDueSoon}
+              onTap={() => setActiveView('equipment')}
+            />
+          </motion.section>
+
+          {/* COSHH Review Alerts */}
+          <motion.section variants={itemVariants}>
+            <COSHHAlertsCard
+              overdueAssessments={coshhOverdue}
+              upcomingAssessments={coshhUpcoming}
+              onTap={() => setActiveView('coshh')}
+              onRenew={() => setActiveView('coshh')}
+            />
+          </motion.section>
 
           {/* Quick Actions */}
           <motion.section variants={itemVariants}>
@@ -740,10 +797,7 @@ const SiteSafety = () => {
             <div className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-orange-400" />
               <h2 className="text-base font-bold text-white">Safety Tools</h2>
-              <Badge
-                variant="secondary"
-                className="bg-white/10 text-white border-white/10 text-xs"
-              >
+              <Badge variant="secondary" className="bg-white/10 text-white border-white/10 text-xs">
                 {safetyTools.length} Tools
               </Badge>
             </div>

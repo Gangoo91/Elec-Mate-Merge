@@ -4,6 +4,7 @@ import { TrendingUp } from 'lucide-react';
 import { NearMissSparkline } from './NearMissSparkline';
 import { InspectionPassRate } from './InspectionPassRate';
 import { SafetyActivityChart } from './SafetyActivityChart';
+import { AccidentSeverityChart } from './AccidentSeverityChart';
 import type { SafetyTrends } from '@/hooks/useSafetyTrends';
 
 interface SafetyTrendsCardProps {
@@ -13,6 +14,7 @@ interface SafetyTrendsCardProps {
 const TABS = [
   { key: 'near-miss', label: 'Near Misses' },
   { key: 'inspections', label: 'Inspections' },
+  { key: 'accidents', label: 'Accidents' },
   { key: 'activity', label: 'Activity' },
 ] as const;
 
@@ -53,6 +55,9 @@ export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
         {/* Chart content */}
         {activeTab === 'near-miss' && <NearMissSparkline data={trends.nearMissWeekly} />}
         {activeTab === 'inspections' && <InspectionPassRate data={trends.inspectionResults} />}
+        {activeTab === 'accidents' && (
+          <AccidentSeverityChart data={trends.accidentSeverity} />
+        )}
         {activeTab === 'activity' && <SafetyActivityChart data={trends.toolUsage} />}
       </div>
     </motion.div>

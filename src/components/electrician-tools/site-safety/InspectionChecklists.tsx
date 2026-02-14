@@ -39,6 +39,9 @@ import {
   Eye,
   FileDown,
   Loader2,
+  TrendingUp,
+  TrendingDown,
+  Minus,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
@@ -1062,6 +1065,26 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     ? 'bg-red-500/15'
                     : 'bg-amber-500/15';
 
+              // Comparative trend — find previous inspection with same template
+              const previousSame = completedInspections.find(
+                (prev) =>
+                  prev.id !== inspection.id &&
+                  prev.template_id === inspection.template_id &&
+                  new Date(prev.date) < new Date(inspection.date)
+              );
+              const currentRate =
+                inspection.total_items > 0
+                  ? inspection.pass_count / inspection.total_items
+                  : 0;
+              const previousRate =
+                previousSame && previousSame.total_items > 0
+                  ? previousSame.pass_count / previousSame.total_items
+                  : null;
+              const rateChange =
+                previousRate !== null
+                  ? Math.round((currentRate - previousRate) * 100)
+                  : null;
+
               return (
                 <motion.button
                   key={inspection.id}
@@ -1098,6 +1121,27 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                           {inspection.pass_count}P / {inspection.fail_count}F /{' '}
                           {inspection.na_count}NA
                         </span>
+                        {rateChange !== null && (
+                          <span
+                            className={`inline-flex items-center gap-0.5 text-[10px] font-bold ${
+                              rateChange > 5
+                                ? 'text-green-400'
+                                : rateChange < -5
+                                  ? 'text-red-400'
+                                  : 'text-white'
+                            }`}
+                          >
+                            {rateChange > 5 ? (
+                              <TrendingUp className="h-2.5 w-2.5" />
+                            ) : rateChange < -5 ? (
+                              <TrendingDown className="h-2.5 w-2.5" />
+                            ) : (
+                              <Minus className="h-2.5 w-2.5" />
+                            )}
+                            {rateChange > 0 ? '+' : ''}
+                            {rateChange}%
+                          </span>
+                        )}
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
