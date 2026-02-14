@@ -8,6 +8,7 @@ import {
   useAccidentRecords,
   useCreateAccidentRecord,
   useRIDDORDeadlineCheck,
+  useArchiveOldRecords,
   getRIDDORDeadlineStatus,
   calculateRIDDORDeadline,
 } from '@/hooks/useAccidentRecords';
@@ -139,6 +140,7 @@ interface AccidentRecord {
   corrective_actions: string;
   photos?: string[];
   incident_number?: string;
+  is_archived?: boolean;
   created_at: string;
 }
 
@@ -267,6 +269,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   // RIDDOR deadline warning toasts
   useRIDDORDeadlineCheck();
+  // Auto-archive records older than 3 years (server-side)
+  useArchiveOldRecords();
   const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
     id: r.id,
     injured_name: r.injured_name,
@@ -304,7 +308,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     recorded_by: r.recorded_by,
     additional_notes: r.additional_notes || '',
     corrective_actions: r.corrective_actions || '',
-    incident_number: (r as unknown as { incident_number?: string }).incident_number || undefined,
+    incident_number: r.incident_number || undefined,
+    is_archived: r.is_archived ?? false,
     created_at: r.created_at,
   }));
   const [showForm, setShowForm] = useState(false);
@@ -472,11 +477,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     }
   };
 
-  // 3-year archival: records older than 3 years are "archived" (never deleted — legal requirement)
-  const THREE_YEARS_MS = 3 * 365.25 * 24 * 60 * 60 * 1000;
-  const now = Date.now();
-  const isArchived = (r: AccidentRecord) =>
-    now - new Date(r.incident_date).getTime() > THREE_YEARS_MS;
+  // 3-year archival: records flagged by DB trigger (never deleted — legal requirement)
+  const isArchived = (r: AccidentRecord) => r.is_archived ?? false;
   const archivedCount = records.filter(isArchived).length;
 
   const filteredRecords = records.filter((r) => {

@@ -45,6 +45,8 @@ export interface AccidentRecord {
   pdf_url: string | null;
   photos: string[] | null;
   incident_number: string | null;
+  is_archived: boolean;
+  archived_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -59,6 +61,8 @@ export type CreateAccidentRecordInput = Omit<
   | 'photos'
   | 'reporter_signature'
   | 'incident_number'
+  | 'is_archived'
+  | 'archived_at'
 > & {
   photos?: string[];
   reporter_signature?: string;
@@ -298,4 +302,32 @@ export function useRIDDORDeadlineCheck() {
       }
     }
   }, [riddorRecords, toast]);
+}
+
+/**
+ * Trigger server-side archival of accident records older than 3 years.
+ * Call on component mount to ensure archival flags are current.
+ */
+export function useArchiveOldRecords() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const archive = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data } = await supabase.rpc('archive_old_accident_records', {
+        target_user_id: user.id,
+      });
+
+      // If any records were archived, refresh the list
+      if (data && data > 0) {
+        queryClient.invalidateQueries({ queryKey: ['accident-records'] });
+      }
+    };
+
+    archive();
+  }, [queryClient]);
 }
