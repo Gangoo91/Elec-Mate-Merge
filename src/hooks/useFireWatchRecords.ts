@@ -18,6 +18,7 @@ export interface FireWatchRecord {
   checklist: FireWatchChecklistItem[];
   completed_by: string | null;
   completed_signature: string | null;
+  photos: string[] | null;
   status: 'active' | 'completed' | 'extended';
   created_at: string;
 }
