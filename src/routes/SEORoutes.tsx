@@ -532,6 +532,91 @@ const SmartHomeAutomationCoursePage = lazy(
 );
 const WorkingAtHeightCoursePage = lazy(() => import('@/pages/seo/WorkingAtHeightCoursePage'));
 
+// Batch 2 — previously missing routes
+const AFDDGuidePage = lazy(() => import('@/pages/seo/AFDDGuidePage'));
+const AIToolsForElectriciansPage = lazy(() => import('@/pages/seo/AIToolsForElectriciansPage'));
+const BathroomElectricalRegsPage = lazy(() => import('@/pages/seo/BathroomElectricalRegsPage'));
+const BestApprenticeAppPage = lazy(() => import('@/pages/seo/BestApprenticeAppPage'));
+const BestCableSizingAppPage = lazy(() => import('@/pages/seo/BestCableSizingAppPage'));
+const BestEICRSoftwareUKPage = lazy(() => import('@/pages/seo/BestEICRSoftwareUKPage'));
+const BestElectricalTrainingAppPage = lazy(
+  () => import('@/pages/seo/BestElectricalTrainingAppPage')
+);
+const BestQuotingAppPage = lazy(() => import('@/pages/seo/BestQuotingAppPage'));
+const BS7671RunThroughPage = lazy(() => import('@/pages/seo/BS7671RunThroughPage'));
+const CableSizingGuideBS7671Page = lazy(() => import('@/pages/seo/CableSizingGuideBS7671Page'));
+const CDMRegulationsCoursePage = lazy(() => import('@/pages/seo/CDMRegulationsCoursePage'));
+const ConsumerUnitChangePage = lazy(() => import('@/pages/seo/ConsumerUnitChangePage'));
+const ElecMateVsEasyEICRPage = lazy(() => import('@/pages/seo/ElecMateVsEasyEICRPage'));
+const ElectricalBIMGuidePage = lazy(() => import('@/pages/seo/ElectricalBIMGuidePage'));
+const ElectricalBoardTypesPage = lazy(() => import('@/pages/seo/ElectricalBoardTypesPage'));
+const ElectricalConduitsGuidePage = lazy(() => import('@/pages/seo/ElectricalConduitsGuidePage'));
+const ElectricalCustomerServicePage = lazy(
+  () => import('@/pages/seo/ElectricalCustomerServicePage')
+);
+const ElectricalExtensionGuidePage = lazy(() => import('@/pages/seo/ElectricalExtensionGuidePage'));
+const ElectricalLoadAssessmentPage = lazy(() => import('@/pages/seo/ElectricalLoadAssessmentPage'));
+const ElectricalMarketingTipsPage = lazy(() => import('@/pages/seo/ElectricalMarketingTipsPage'));
+const ElectricalNoiseAndInterferencePage = lazy(
+  () => import('@/pages/seo/ElectricalNoiseAndInterferencePage')
+);
+const ElectricalRetrofitGuidePage = lazy(() => import('@/pages/seo/ElectricalRetrofitGuidePage'));
+const ElectricalSafetyAuditPage = lazy(() => import('@/pages/seo/ElectricalSafetyAuditPage'));
+const ElectricalSiteInductionPage = lazy(() => import('@/pages/seo/ElectricalSiteInductionPage'));
+const ElectricalSubcontractingGuidePage = lazy(
+  () => import('@/pages/seo/ElectricalSubcontractingGuidePage')
+);
+const ElectricalTestCertificatePage = lazy(
+  () => import('@/pages/seo/ElectricalTestCertificatePage')
+);
+const ElectricianAccountingSoftwarePage = lazy(
+  () => import('@/pages/seo/ElectricianAccountingSoftwarePage')
+);
+const ElectricianAppForAndroidPage = lazy(() => import('@/pages/seo/ElectricianAppForAndroidPage'));
+const EmergencyElectricalRepairsPage = lazy(
+  () => import('@/pages/seo/EmergencyElectricalRepairsPage')
+);
+const EmergencyLightingTestingPage = lazy(() => import('@/pages/seo/EmergencyLightingTestingPage'));
+const EVChargerInstallationPage = lazy(() => import('@/pages/seo/EVChargerInstallationPage'));
+const FP200CableGuidePage = lazy(() => import('@/pages/seo/FP200CableGuidePage'));
+const FutureOfElectricalTradePage = lazy(() => import('@/pages/seo/FutureOfElectricalTradePage'));
+const GoingSelfEmployedElectricianPage = lazy(
+  () => import('@/pages/seo/GoingSelfEmployedElectricianPage')
+);
+const HouseRewireGuidePage = lazy(() => import('@/pages/seo/HouseRewireGuidePage'));
+const HowToFillInMinorWorksPage = lazy(() => import('@/pages/seo/HowToFillInMinorWorksPage'));
+const HowToPriceElectricalJobsPage = lazy(() => import('@/pages/seo/HowToPriceElectricalJobsPage'));
+const InsulationResistanceMinimumValuesPage = lazy(
+  () => import('@/pages/seo/InsulationResistanceMinimumValuesPage')
+);
+const LandlordElectricalSafetyPage = lazy(() => import('@/pages/seo/LandlordElectricalSafetyPage'));
+const LEDLightingGuidePage = lazy(() => import('@/pages/seo/LEDLightingGuidePage'));
+const MEWPCoursePage = lazy(() => import('@/pages/seo/MEWPCoursePage'));
+const MICCCableGuidePage = lazy(() => import('@/pages/seo/MICCCableGuidePage'));
+const MockExamsElectricianPage = lazy(() => import('@/pages/seo/MockExamsElectricianPage'));
+const NAPICertificateGuidePage = lazy(() => import('@/pages/seo/NAPICertificateGuidePage'));
+const NetworkedFireAlarmPage = lazy(() => import('@/pages/seo/NetworkedFireAlarmPage'));
+const OutdoorElectricsPage = lazy(() => import('@/pages/seo/OutdoorElectricsPage'));
+const PATTestingGuideUKPage = lazy(() => import('@/pages/seo/PATTestingGuideUKPage'));
+const PFCExplainedPage = lazy(() => import('@/pages/seo/PFCExplainedPage'));
+const RCDKeepsTrippingPage = lazy(() => import('@/pages/seo/RCDKeepsTrippingPage'));
+const RCDTypesExplainedPage = lazy(() => import('@/pages/seo/RCDTypesExplainedPage'));
+const SmokeAlarmRegsPage = lazy(() => import('@/pages/seo/SmokeAlarmRegsPage'));
+const SolarPanelInstallationPage = lazy(() => import('@/pages/seo/SolarPanelInstallationPage'));
+const SPDSurgeProtectionPage = lazy(() => import('@/pages/seo/SPDSurgeProtectionPage'));
+const StartingElectricalBusinessPage = lazy(
+  () => import('@/pages/seo/StartingElectricalBusinessPage')
+);
+const SWACableInstallationPage = lazy(() => import('@/pages/seo/SWACableInstallationPage'));
+const TrunkingInstallationGuidePage = lazy(
+  () => import('@/pages/seo/TrunkingInstallationGuidePage')
+);
+const UPSInstallationGuidePage = lazy(() => import('@/pages/seo/UPSInstallationGuidePage'));
+const VoltageDropGuideBS7671Page = lazy(() => import('@/pages/seo/VoltageDropGuideBS7671Page'));
+const WhenIsEICRequiredPage = lazy(() => import('@/pages/seo/WhenIsEICRequiredPage'));
+const WiringColoursUKPage = lazy(() => import('@/pages/seo/WiringColoursUKPage'));
+const WorkplaceSafetyCoursePage = lazy(() => import('@/pages/seo/WorkplaceSafetyCoursePage'));
+
 /**
  * Returns all SEO page routes as JSX elements.
  * Usage in AppRouter: {getSEORoutes()}
@@ -1757,6 +1842,14 @@ export function getSEORoutes() {
       />
       <Route
         path="/guides/how-to-become-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToBecomeElectricianPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-become-electrician"
         element={
           <LazyRoute>
             <HowToBecomeElectricianPage />
@@ -3256,6 +3349,496 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <WorkingAtHeightCoursePage />
+          </LazyRoute>
+        }
+      />
+
+      {/* Batch 2 — previously missing routes */}
+      <Route
+        path="/guides/afdd-arc-fault-detection"
+        element={
+          <LazyRoute>
+            <AFDDGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/ai-tools-for-electricians"
+        element={
+          <LazyRoute>
+            <AIToolsForElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bathroom-electrical-regulations"
+        element={
+          <LazyRoute>
+            <BathroomElectricalRegsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/best-apprentice-app"
+        element={
+          <LazyRoute>
+            <BestApprenticeAppPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/best-cable-sizing-app"
+        element={
+          <LazyRoute>
+            <BestCableSizingAppPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/best-eicr-software-uk"
+        element={
+          <LazyRoute>
+            <BestEICRSoftwareUKPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/best-electrical-training-app"
+        element={
+          <LazyRoute>
+            <BestElectricalTrainingAppPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/best-quoting-app-electricians"
+        element={
+          <LazyRoute>
+            <BestQuotingAppPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-run-through"
+        element={
+          <LazyRoute>
+            <BS7671RunThroughPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cable-sizing-guide-bs-7671"
+        element={
+          <LazyRoute>
+            <CableSizingGuideBS7671Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/training/cdm-regulations-course"
+        element={
+          <LazyRoute>
+            <CDMRegulationsCoursePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-change"
+        element={
+          <LazyRoute>
+            <ConsumerUnitChangePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-easy-eicr"
+        element={
+          <LazyRoute>
+            <ElecMateVsEasyEICRPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-bim-guide"
+        element={
+          <LazyRoute>
+            <ElectricalBIMGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-types"
+        element={
+          <LazyRoute>
+            <ElectricalBoardTypesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-conduit-guide"
+        element={
+          <LazyRoute>
+            <ElectricalConduitsGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/customer-service-electricians"
+        element={
+          <LazyRoute>
+            <ElectricalCustomerServicePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/house-extension-electrics"
+        element={
+          <LazyRoute>
+            <ElectricalExtensionGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-load-assessment"
+        element={
+          <LazyRoute>
+            <ElectricalLoadAssessmentPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/marketing-tips-electricians"
+        element={
+          <LazyRoute>
+            <ElectricalMarketingTipsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-noise-interference"
+        element={
+          <LazyRoute>
+            <ElectricalNoiseAndInterferencePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-retrofit-guide"
+        element={
+          <LazyRoute>
+            <ElectricalRetrofitGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-safety-audit"
+        element={
+          <LazyRoute>
+            <ElectricalSafetyAuditPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-site-induction"
+        element={
+          <LazyRoute>
+            <ElectricalSiteInductionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-subcontracting"
+        element={
+          <LazyRoute>
+            <ElectricalSubcontractingGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-test-certificate"
+        element={
+          <LazyRoute>
+            <ElectricalTestCertificatePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrician-accounting-software"
+        element={
+          <LazyRoute>
+            <ElectricianAccountingSoftwarePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/electrician-app-android"
+        element={
+          <LazyRoute>
+            <ElectricianAppForAndroidPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/emergency-electrical-repairs"
+        element={
+          <LazyRoute>
+            <EmergencyElectricalRepairsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/emergency-lighting-testing"
+        element={
+          <LazyRoute>
+            <EmergencyLightingTestingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/ev-charger-installation"
+        element={
+          <LazyRoute>
+            <EVChargerInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/fp200-cable-guide"
+        element={
+          <LazyRoute>
+            <FP200CableGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/future-of-electrical-trade"
+        element={
+          <LazyRoute>
+            <FutureOfElectricalTradePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/going-self-employed-electrician"
+        element={
+          <LazyRoute>
+            <GoingSelfEmployedElectricianPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/house-rewire-guide"
+        element={
+          <LazyRoute>
+            <HouseRewireGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-fill-in-minor-works"
+        element={
+          <LazyRoute>
+            <HowToFillInMinorWorksPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-electrical-jobs"
+        element={
+          <LazyRoute>
+            <HowToPriceElectricalJobsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/insulation-resistance-minimum-values"
+        element={
+          <LazyRoute>
+            <InsulationResistanceMinimumValuesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/landlord-electrical-safety"
+        element={
+          <LazyRoute>
+            <LandlordElectricalSafetyPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/led-lighting-guide"
+        element={
+          <LazyRoute>
+            <LEDLightingGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/training/mewp-course"
+        element={
+          <LazyRoute>
+            <MEWPCoursePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/micc-cable-guide"
+        element={
+          <LazyRoute>
+            <MICCCableGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/mock-exams-electrician"
+        element={
+          <LazyRoute>
+            <MockExamsElectricianPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/napit-certificate-guide"
+        element={
+          <LazyRoute>
+            <NAPICertificateGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/networked-fire-alarm-system"
+        element={
+          <LazyRoute>
+            <NetworkedFireAlarmPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/outdoor-electrical-installations"
+        element={
+          <LazyRoute>
+            <OutdoorElectricsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/pat-testing-guide-uk"
+        element={
+          <LazyRoute>
+            <PATTestingGuideUKPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/prospective-fault-current-explained"
+        element={
+          <LazyRoute>
+            <PFCExplainedPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcd-keeps-tripping"
+        element={
+          <LazyRoute>
+            <RCDKeepsTrippingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcd-types-explained"
+        element={
+          <LazyRoute>
+            <RCDTypesExplainedPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/smoke-alarm-regulations-uk"
+        element={
+          <LazyRoute>
+            <SmokeAlarmRegsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/solar-panel-installation"
+        element={
+          <LazyRoute>
+            <SolarPanelInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/spd-surge-protection"
+        element={
+          <LazyRoute>
+            <SPDSurgeProtectionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/starting-an-electrical-business"
+        element={
+          <LazyRoute>
+            <StartingElectricalBusinessPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/swa-cable-installation"
+        element={
+          <LazyRoute>
+            <SWACableInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/trunking-installation-guide"
+        element={
+          <LazyRoute>
+            <TrunkingInstallationGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/ups-installation-guide"
+        element={
+          <LazyRoute>
+            <UPSInstallationGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/voltage-drop-limits-bs-7671"
+        element={
+          <LazyRoute>
+            <VoltageDropGuideBS7671Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/when-is-eic-required"
+        element={
+          <LazyRoute>
+            <WhenIsEICRequiredPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/wiring-colours-uk"
+        element={
+          <LazyRoute>
+            <WiringColoursUKPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/training/workplace-safety-course"
+        element={
+          <LazyRoute>
+            <WorkplaceSafetyCoursePage />
           </LazyRoute>
         }
       />
