@@ -10,6 +10,13 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import AdminPagination from '@/components/admin/AdminPagination';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import {
@@ -141,6 +148,10 @@ export default function AdminUsers() {
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkActionPending, setBulkActionPending] = useState(false);
+
+  const [grantSheetUser, setGrantSheetUser] = useState<UserProfile | null>(null);
+  const [grantTier, setGrantTier] = useState('');
+  const [grantDuration, setGrantDuration] = useState('7');
 
   useEffect(() => {
     const urlFilter = searchParams.get('filter');
@@ -401,9 +412,22 @@ export default function AdminUsers() {
   });
 
   const grantSubscriptionMutation = useMutation({
-    mutationFn: async ({ userId, tier }: { userId: string; tier: string }) => {
-      const { data, error } = await supabase.functions.invoke('admin-grant-subscription', {
-        body: { userId, tier },
+    mutationFn: async ({
+      userId,
+      tier,
+      expiresAt,
+    }: {
+      userId: string;
+      tier: string;
+      expiresAt: string | null;
+    }) => {
+      const { data, error } = await supabase.functions.invoke('admin-manage-subscription', {
+        body: {
+          action: 'grant_free_access',
+          target_user_id: userId,
+          subscription_tier: tier,
+          expires_at: expiresAt,
+        },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -413,7 +437,7 @@ export default function AdminUsers() {
         action: 'grant_subscription',
         entity_type: 'profile',
         entity_id: userId,
-        details: { tier },
+        details: { tier, expires_at: expiresAt },
       });
 
       return data;
@@ -457,6 +481,7 @@ export default function AdminUsers() {
     onSuccess: () => {
       haptic.success();
       setSelectedUser(null);
+      setGrantSheetUser(null);
       toast({ title: 'Subscription granted', description: 'User now has free access' });
     },
     onSettled: () => {
@@ -569,12 +594,28 @@ export default function AdminUsers() {
     setSelectedUser(user);
   }, []);
 
-  const handleGrantAccess = useCallback(
-    (userId: string) => {
-      grantSubscriptionMutation.mutate({ userId, tier: 'Employer' });
-    },
-    [grantSubscriptionMutation]
-  );
+  const openGrantSheet = useCallback((user: UserProfile) => {
+    setGrantTier(
+      user.role === 'apprentice'
+        ? 'Apprentice'
+        : user.role === 'employer'
+          ? 'Employer'
+          : 'Electrician'
+    );
+    setGrantDuration('7');
+    setGrantSheetUser(user);
+  }, []);
+
+  const handleConfirmGrant = useCallback(() => {
+    if (!grantSheetUser) return;
+    const days = grantDuration === 'never' ? null : parseInt(grantDuration, 10);
+    const expiresAt = days ? new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString() : null;
+    grantSubscriptionMutation.mutate({
+      userId: grantSheetUser.id,
+      tier: grantTier,
+      expiresAt,
+    });
+  }, [grantSheetUser, grantTier, grantDuration, grantSubscriptionMutation]);
 
   const exportCSV = () => {
     if (!users || users.length === 0) return;
@@ -939,7 +980,7 @@ export default function AdminUsers() {
                       label: 'Grant',
                       colour: 'bg-green-500',
                       onClick: () => {
-                        handleGrantAccess(user.id);
+                        openGrantSheet(user);
                       },
                     },
                   ]}
@@ -1283,20 +1324,9 @@ export default function AdminUsers() {
                 ) : !selectedUser?.subscribed ? (
                   <Button
                     className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"
-                    onClick={() =>
-                      selectedUser &&
-                      grantSubscriptionMutation.mutate({
-                        userId: selectedUser.id,
-                        tier: 'Employer',
-                      })
-                    }
-                    disabled={grantSubscriptionMutation.isPending}
+                    onClick={() => selectedUser && openGrantSheet(selectedUser)}
                   >
-                    {grantSubscriptionMutation.isPending ? (
-                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    ) : (
-                      <Gift className="h-5 w-5 mr-2" />
-                    )}
+                    <Gift className="h-5 w-5 mr-2" />
                     Grant Free Access
                   </Button>
                 ) : (
@@ -1402,6 +1432,82 @@ export default function AdminUsers() {
           }}
           user={messageUser}
         />
+
+        {/* Grant Access Sheet */}
+        <Sheet
+          open={!!grantSheetUser}
+          onOpenChange={(open) => {
+            if (!open) setGrantSheetUser(null);
+          }}
+        >
+          <SheetContent
+            side="bottom"
+            className="h-auto max-h-[50vh] rounded-t-3xl p-0 border-t border-border/50"
+          >
+            <div className="flex flex-col bg-background">
+              {/* Drag Handle */}
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20" />
+              </div>
+
+              <div className="px-6 pb-6 pt-2 space-y-5">
+                {/* Header */}
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">Grant Free Access</h3>
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    {grantSheetUser?.full_name || 'User'} · {grantSheetUser?.role || 'visitor'}
+                  </p>
+                </div>
+
+                {/* Tier Selector */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Tier</label>
+                  <Select value={grantTier} onValueChange={setGrantTier}>
+                    <SelectTrigger className="h-11 touch-manipulation bg-card border-border/50 focus:border-yellow-500 focus:ring-yellow-500">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border/50">
+                      <SelectItem value="Apprentice">Apprentice</SelectItem>
+                      <SelectItem value="Electrician">Electrician</SelectItem>
+                      <SelectItem value="Employer">Employer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Duration Selector */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Duration</label>
+                  <Select value={grantDuration} onValueChange={setGrantDuration}>
+                    <SelectTrigger className="h-11 touch-manipulation bg-card border-border/50 focus:border-yellow-500 focus:ring-yellow-500">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border/50">
+                      <SelectItem value="7">1 Week</SelectItem>
+                      <SelectItem value="30">30 Days</SelectItem>
+                      <SelectItem value="90">90 Days</SelectItem>
+                      <SelectItem value="365">1 Year</SelectItem>
+                      <SelectItem value="never">Never Expires</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Confirm Button */}
+                <Button
+                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20 font-semibold text-base"
+                  onClick={handleConfirmGrant}
+                  disabled={grantSubscriptionMutation.isPending}
+                >
+                  {grantSubscriptionMutation.isPending ? (
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  ) : (
+                    <Gift className="h-5 w-5 mr-2" />
+                  )}
+                  Grant Access
+                </Button>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </PullToRefresh>
   );
