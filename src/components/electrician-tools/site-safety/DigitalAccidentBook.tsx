@@ -4,7 +4,13 @@ import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
-import { useAccidentRecords, useCreateAccidentRecord } from '@/hooks/useAccidentRecords';
+import {
+  useAccidentRecords,
+  useCreateAccidentRecord,
+  useRIDDORDeadlineCheck,
+  getRIDDORDeadlineStatus,
+  calculateRIDDORDeadline,
+} from '@/hooks/useAccidentRecords';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -45,6 +51,8 @@ import {
   FileDown,
   Loader2,
 } from 'lucide-react';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { useShowMore } from '@/hooks/useShowMore';
 
 // ─── Types ───
 
@@ -123,11 +131,14 @@ interface AccidentRecord {
   riddor_category: string;
   riddor_reference: string;
   riddor_reported: boolean;
+  riddor_deadline: string | null;
+  riddor_reported_date: string | null;
   // Meta
   recorded_by: string;
   additional_notes: string;
   corrective_actions: string;
   photos?: string[];
+  incident_number?: string;
   created_at: string;
 }
 
@@ -196,41 +207,54 @@ const RIDDOR_DANGEROUS_OCCURRENCES = [
 
 // ─── RIDDOR Check ───
 
-function checkRIDDOR(record: Partial<AccidentRecord>): { reportable: boolean; reasons: string[] } {
+function checkRIDDOR(record: Partial<AccidentRecord>): {
+  reportable: boolean;
+  reasons: string[];
+  deadline: string | null;
+} {
   const reasons: string[] = [];
 
-  // Fatal
+  // Fatal — immediate phone report
   if (record.severity === 'fatal') {
-    reasons.push('Fatal injury — must be reported immediately by phone');
+    reasons.push('Fatal injury — must be reported immediately by phone (0345 300 9923)');
   }
 
-  // Major/specified injuries
+  // Major/specified injuries — immediate
   if (record.severity === 'major') {
-    reasons.push('Major/specified injury');
+    reasons.push('Major/specified injury — report immediately');
   }
 
-  // Electric shock leading to loss of consciousness or requiring resuscitation
-  if (record.injury_type === 'electric-shock') {
+  // Electric shock — only RIDDOR-reportable if causing hospital visit,
+  // loss of consciousness, or requiring resuscitation (not ALL electric shocks)
+  if (record.injury_type === 'electric-shock' && record.hospital_visit) {
     reasons.push(
-      'Electric shock — potentially reportable if causing loss of consciousness or requiring resuscitation'
+      'Electric shock requiring hospital treatment — reportable as dangerous occurrence (10 days)'
     );
   }
 
-  // Over 7 days incapacitation
-  if (record.time_off_work && record.days_off >= 7) {
+  // Over 7 days incapacitation — report within 15 days
+  if (record.time_off_work && record.days_off && record.days_off >= 7) {
     reasons.push(
-      `Over 7 consecutive days incapacitation (${record.days_off} days) — must be reported within 15 days`
+      `Over 7 consecutive days incapacitation (${record.days_off} days) — report within 15 days`
     );
   }
 
-  // Hospital visit from workplace accident
-  if (record.hospital_visit) {
+  // Hospital visit from workplace accident (only flag if not already covered above)
+  if (
+    record.hospital_visit &&
+    record.severity !== 'major' &&
+    record.severity !== 'fatal' &&
+    record.injury_type !== 'electric-shock'
+  ) {
     reasons.push('Hospital attendance — review if this constitutes a "specified injury"');
   }
+
+  const deadline = calculateRIDDORDeadline(record as AccidentRecord);
 
   return {
     reportable: reasons.length > 0,
     reasons,
+    deadline,
   };
 }
 
@@ -240,6 +264,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const { data: dbRecords, isLoading } = useAccidentRecords();
   const createRecord = useCreateAccidentRecord();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+
+  // RIDDOR deadline warning toasts
+  useRIDDORDeadlineCheck();
   const records: AccidentRecord[] = (dbRecords || []).map((r) => ({
     id: r.id,
     injured_name: r.injured_name,
@@ -272,43 +299,27 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     riddor_category: r.riddor_category || '',
     riddor_reference: r.riddor_reference || '',
     riddor_reported: r.riddor_reported,
+    riddor_deadline: r.riddor_deadline || null,
+    riddor_reported_date: r.riddor_reported_date || null,
     recorded_by: r.recorded_by,
     additional_notes: r.additional_notes || '',
     corrective_actions: r.corrective_actions || '',
+    incident_number: (r as unknown as { incident_number?: string }).incident_number || undefined,
     created_at: r.created_at,
   }));
   const [showForm, setShowForm] = useState(false);
   const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
   const [formStep, setFormStep] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showArchived, setShowArchived] = useState(false);
   const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
 
-  // Signature state (UI only — not persisted to DB yet)
   const [reporterSigName, setReporterSigName] = useState('');
   const [reporterSigDate, setReporterSigDate] = useState(new Date().toISOString().split('T')[0]);
   const [reporterSigData, setReporterSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
-  // ─── Draft persistence ───
-  const {
-    status: draftStatus,
-    recoveredData: recoveredDraft,
-    clearDraft,
-    dismissRecovery: dismissDraft,
-  } = useLocalDraft({
-    key: 'accident-book',
-    data: { form, formStep },
-    enabled: showForm,
-  });
-
-  const restoreDraft = () => {
-    if (!recoveredDraft) return;
-    if (recoveredDraft.form) setForm((prev) => ({ ...prev, ...recoveredDraft.form }));
-    if (recoveredDraft.formStep !== undefined) setFormStep(recoveredDraft.formStep);
-    dismissDraft();
-  };
-
-  // Form state
+  // Form state (must be declared before useLocalDraft which references it)
   const [form, setForm] = useState<Partial<AccidentRecord>>({
     injured_name: '',
     injured_role: '',
@@ -340,10 +351,31 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     riddor_category: '',
     riddor_reference: '',
     riddor_reported: false,
+    riddor_deadline: null,
+    riddor_reported_date: null,
     recorded_by: '',
     additional_notes: '',
     corrective_actions: '',
   });
+
+  // ─── Draft persistence ───
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
+    key: 'accident-book',
+    data: { form, formStep },
+    enabled: showForm,
+  });
+
+  const restoreDraft = () => {
+    if (!recoveredDraft) return;
+    if (recoveredDraft.form) setForm((prev) => ({ ...prev, ...recoveredDraft.form }));
+    if (recoveredDraft.formStep !== undefined) setFormStep(recoveredDraft.formStep);
+    dismissDraft();
+  };
 
   const updateForm = (updates: Partial<AccidentRecord>) => {
     setForm((prev) => ({ ...prev, ...updates }));
@@ -391,64 +423,80 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   const riddorCheck = useMemo(() => checkRIDDOR(form), [form]);
 
-  const saveRecord = () => {
-    const record: AccidentRecord = {
-      id: `acc-${Date.now()}`,
-      injured_name: form.injured_name || '',
-      injured_role: form.injured_role || '',
-      injured_employer: form.injured_employer || '',
-      injured_address: form.injured_address || '',
-      incident_date: form.incident_date || '',
-      incident_time: form.incident_time || '',
-      location: form.location || '',
-      location_detail: form.location_detail || '',
-      injury_type: form.injury_type || 'other',
-      body_part: form.body_part || 'multiple',
-      severity: form.severity || 'minor',
-      injury_description: form.injury_description || '',
-      incident_description: form.incident_description || '',
-      activity_at_time: form.activity_at_time || '',
-      cause: form.cause || '',
-      witnesses: form.witnesses || '',
-      first_aid_given: form.first_aid_given || false,
-      first_aid_details: form.first_aid_details || '',
-      first_aider_name: form.first_aider_name || '',
-      hospital_visit: form.hospital_visit || false,
-      hospital_name: form.hospital_name || '',
-      time_off_work: form.time_off_work || false,
-      days_off: form.days_off || 0,
-      return_date: form.return_date || '',
-      reported_to: form.reported_to || '',
-      reported_date: form.reported_date || '',
-      is_riddor_reportable: riddorCheck.reportable,
-      riddor_category: riddorCheck.reasons.join('; '),
-      riddor_reference: form.riddor_reference || '',
-      riddor_reported: form.riddor_reported || false,
-      recorded_by: form.recorded_by || '',
-      additional_notes: form.additional_notes || '',
-      corrective_actions: form.corrective_actions || '',
-      photos: photoUrls,
-      created_at: new Date().toISOString(),
-    };
-
-    setRecords((prev) => [record, ...prev]);
-    clearDraft();
-    setShowForm(false);
-    resetForm();
-
-    if (riddorCheck.reportable) {
-      toast.warning('RIDDOR: This incident may be reportable — review the RIDDOR guidance');
-    } else {
-      toast.success('Accident record saved');
+  const saveRecord = async () => {
+    try {
+      await createRecord.mutateAsync({
+        injured_name: form.injured_name || '',
+        injured_role: form.injured_role || '',
+        injured_employer: form.injured_employer || '',
+        injured_address: form.injured_address || '',
+        incident_date: form.incident_date || '',
+        incident_time: form.incident_time || '',
+        location: form.location || '',
+        location_detail: form.location_detail || '',
+        injury_type: form.injury_type || 'other',
+        body_part: form.body_part || 'multiple',
+        severity: form.severity || 'minor',
+        injury_description: form.injury_description || '',
+        incident_description: form.incident_description || '',
+        activity_at_time: form.activity_at_time || '',
+        cause: form.cause || '',
+        witnesses: form.witnesses || '',
+        first_aid_given: form.first_aid_given || false,
+        first_aid_details: form.first_aid_details || '',
+        first_aider_name: form.first_aider_name || '',
+        hospital_visit: form.hospital_visit || false,
+        hospital_name: form.hospital_name || '',
+        time_off_work: form.time_off_work || false,
+        days_off: form.days_off || 0,
+        return_date: form.return_date || '',
+        reported_to: form.reported_to || '',
+        reported_date: form.reported_date || '',
+        is_riddor_reportable: riddorCheck.reportable,
+        riddor_category: riddorCheck.reasons.join('; '),
+        riddor_reference: form.riddor_reference || '',
+        riddor_reported: form.riddor_reported || false,
+        riddor_deadline: riddorCheck.deadline || null,
+        riddor_reported_date: null,
+        recorded_by: form.recorded_by || '',
+        additional_notes: form.additional_notes || '',
+        corrective_actions: form.corrective_actions || '',
+        photos: photoUrls,
+        reporter_signature: reporterSigData || undefined,
+      });
+      clearDraft();
+      setShowForm(false);
+      resetForm();
+    } catch {
+      // Error toast handled by the hook
     }
   };
 
-  const filteredRecords = records.filter(
-    (r) =>
-      r.injured_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      r.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      r.incident_description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // 3-year archival: records older than 3 years are "archived" (never deleted — legal requirement)
+  const THREE_YEARS_MS = 3 * 365.25 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const isArchived = (r: AccidentRecord) =>
+    now - new Date(r.incident_date).getTime() > THREE_YEARS_MS;
+  const archivedCount = records.filter(isArchived).length;
+
+  const filteredRecords = records.filter((r) => {
+    // Archive filter
+    if (!showArchived && isArchived(r)) return false;
+    // Search filter
+    const q = searchQuery.toLowerCase();
+    return (
+      r.injured_name.toLowerCase().includes(q) ||
+      r.location.toLowerCase().includes(q) ||
+      r.incident_description.toLowerCase().includes(q)
+    );
+  });
+
+  const {
+    visible: visibleRecords,
+    hasMore: hasMoreRecords,
+    remaining: remainingRecords,
+    loadMore: loadMoreRecords,
+  } = useShowMore(filteredRecords);
 
   const riddorCount = records.filter((r) => r.is_riddor_reportable).length;
 
@@ -937,16 +985,31 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </div>
         </div>
 
-        {/* Search */}
+        {/* Search + Archive toggle */}
         {records.length > 0 && (
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-            <Input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
-              placeholder="Search records..."
-            />
+          <div className="space-y-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+              <Input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-11 pl-9 text-base touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500"
+                placeholder="Search records..."
+              />
+            </div>
+            {archivedCount > 0 && (
+              <button
+                onClick={() => setShowArchived(!showArchived)}
+                className={`h-9 px-3 rounded-lg text-xs font-medium flex items-center gap-1.5 touch-manipulation active:scale-[0.97] transition-all ${
+                  showArchived
+                    ? 'bg-amber-500/15 border border-amber-500/30 text-amber-400'
+                    : 'bg-white/5 border border-white/10 text-white'
+                }`}
+              >
+                <BookOpen className="h-3 w-3" />
+                {showArchived ? 'Hide' : 'Show'} Archived ({archivedCount})
+              </button>
+            )}
           </div>
         )}
 
@@ -967,7 +1030,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {filteredRecords.map((record) => {
+            {visibleRecords.map((record) => {
               const sevConfig = SEVERITY_CONFIG[record.severity];
               return (
                 <motion.button
@@ -983,9 +1046,21 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       <Activity className={`h-5 w-5 ${sevConfig.colour}`} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-[15px] font-bold text-white truncate">
-                        {record.injured_name}
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-[15px] font-bold text-white truncate">
+                          {record.injured_name}
+                        </h4>
+                        {record.incident_number && (
+                          <Badge className="bg-white/10 text-white border-white/20 text-[10px] font-mono flex-shrink-0">
+                            {record.incident_number}
+                          </Badge>
+                        )}
+                        {isArchived(record) && (
+                          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[10px] flex-shrink-0">
+                            Archived
+                          </Badge>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2 text-xs text-white mt-0.5">
                         <Calendar className="h-3 w-3" />
                         <span>{record.incident_date}</span>
@@ -1003,11 +1078,34 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                           {INJURY_TYPES.find((t) => t.id === record.injury_type)?.label ||
                             record.injury_type}
                         </Badge>
-                        {record.is_riddor_reportable && (
-                          <Badge className="bg-red-500/15 text-red-400 border-none text-[10px]">
-                            RIDDOR
-                          </Badge>
-                        )}
+                        {record.is_riddor_reportable &&
+                          (() => {
+                            const deadlineStatus = getRIDDORDeadlineStatus(record);
+                            return (
+                              <>
+                                <Badge className="bg-red-500/15 text-red-400 border-none text-[10px]">
+                                  RIDDOR
+                                </Badge>
+                                {deadlineStatus.status === 'reported' ? (
+                                  <Badge className="bg-green-500/15 text-green-400 border-none text-[10px]">
+                                    Reported
+                                  </Badge>
+                                ) : deadlineStatus.status === 'overdue' ? (
+                                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-[10px] animate-pulse">
+                                    {deadlineStatus.label}
+                                  </Badge>
+                                ) : deadlineStatus.status === 'immediate' ? (
+                                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-[10px] animate-pulse">
+                                    Report Now
+                                  </Badge>
+                                ) : deadlineStatus.status === 'due_soon' ? (
+                                  <Badge className="bg-amber-500/15 text-amber-400 border-none text-[10px]">
+                                    {deadlineStatus.label}
+                                  </Badge>
+                                ) : null}
+                              </>
+                            );
+                          })()}
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
@@ -1015,6 +1113,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 </motion.button>
               );
             })}
+            {hasMoreRecords && (
+              <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />
+            )}
           </div>
         )}
       </div>
@@ -1083,7 +1184,14 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           {viewingRecord && (
             <div className="flex flex-col h-full bg-background">
               <div className="px-4 py-3 border-b border-white/10">
-                <h2 className="text-base font-bold text-white">{viewingRecord.injured_name}</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold text-white">{viewingRecord.injured_name}</h2>
+                  {viewingRecord.incident_number && (
+                    <Badge className="bg-white/10 text-white border-white/20 text-xs font-mono">
+                      {viewingRecord.incident_number}
+                    </Badge>
+                  )}
+                </div>
                 <div className="flex items-center gap-2 mt-1">
                   <Badge
                     className={`${SEVERITY_CONFIG[viewingRecord.severity].bg} ${SEVERITY_CONFIG[viewingRecord.severity].colour} border-none text-xs`}
@@ -1205,17 +1313,71 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 )}
 
                 {/* RIDDOR */}
-                {viewingRecord.is_riddor_reportable && (
-                  <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
-                    <h4 className="text-sm font-bold text-red-300 mb-1">RIDDOR Status</h4>
-                    <p className="text-xs text-red-200">{viewingRecord.riddor_category}</p>
-                    {viewingRecord.riddor_reference && (
-                      <p className="text-xs text-white mt-1">
-                        Reference: {viewingRecord.riddor_reference}
-                      </p>
-                    )}
-                  </div>
-                )}
+                {viewingRecord.is_riddor_reportable &&
+                  (() => {
+                    const deadlineStatus = getRIDDORDeadlineStatus(viewingRecord);
+                    return (
+                      <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-sm font-bold text-red-300">RIDDOR Status</h4>
+                          <Badge
+                            className={`text-[10px] ${
+                              deadlineStatus.status === 'reported'
+                                ? 'bg-green-500/15 text-green-400'
+                                : deadlineStatus.status === 'overdue' ||
+                                    deadlineStatus.status === 'immediate'
+                                  ? 'bg-red-500/20 text-red-300 animate-pulse'
+                                  : deadlineStatus.status === 'due_soon'
+                                    ? 'bg-amber-500/15 text-amber-400'
+                                    : 'bg-white/10 text-white'
+                            }`}
+                          >
+                            {deadlineStatus.label}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-white">{viewingRecord.riddor_category}</p>
+                        {viewingRecord.riddor_deadline && (
+                          <p className="text-xs text-white">
+                            Deadline:{' '}
+                            {new Date(viewingRecord.riddor_deadline).toLocaleDateString('en-GB')}
+                          </p>
+                        )}
+                        {viewingRecord.riddor_reference && (
+                          <p className="text-xs text-white">
+                            Reference: {viewingRecord.riddor_reference}
+                          </p>
+                        )}
+                        {viewingRecord.riddor_reported_date && (
+                          <p className="text-xs text-green-400">
+                            Reported:{' '}
+                            {new Date(viewingRecord.riddor_reported_date).toLocaleDateString(
+                              'en-GB'
+                            )}
+                          </p>
+                        )}
+                        {deadlineStatus.status !== 'reported' && (
+                          <div className="flex gap-2 pt-1">
+                            <a
+                              href="https://www.hse.gov.uk/riddor"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                            >
+                              <FileText className="h-3.5 w-3.5" />
+                              Report Online
+                            </a>
+                            <a
+                              href="tel:03453009923"
+                              className="h-11 px-4 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                            >
+                              <Phone className="h-3.5 w-3.5" />
+                              Call HSE
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                 {/* Corrective Actions */}
                 {viewingRecord.corrective_actions && (
@@ -1230,6 +1392,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     <span>Recorded by: {viewingRecord.recorded_by}</span>
                     <span>Reported to: {viewingRecord.reported_to}</span>
                   </div>
+                  {isArchived(viewingRecord) && (
+                    <p className="text-[10px] text-amber-400 mt-2 text-center">
+                      Retained for statutory period (3 years). Do not delete.
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">

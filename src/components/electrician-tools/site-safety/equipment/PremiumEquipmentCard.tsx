@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
@@ -21,10 +21,12 @@ import {
   Gauge,
   Download,
   Loader2,
+  ClipboardCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { usePreUseChecks, type PreUseCheck } from '@/hooks/usePreUseChecks';
 
 type EquipmentStatus = 'good' | 'needs_attention' | 'out_of_service' | 'overdue';
 
@@ -111,6 +113,13 @@ export function PremiumEquipmentCard({
 }: PremiumEquipmentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+
+  // Recent pre-use checks for this equipment
+  const { data: allChecks = [] } = usePreUseChecks();
+  const recentChecks = useMemo(
+    () => (allChecks as PreUseCheck[]).filter((c) => c.equipment_id === equipment.id).slice(0, 3),
+    [allChecks, equipment.id]
+  );
 
   const status = statusConfig[equipment.status] || statusConfig.good;
   const StatusIcon = status.icon;
@@ -233,6 +242,65 @@ export function PremiumEquipmentCard({
                 <div className="mb-3 p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
                   <p className="text-[10px] text-white mb-0.5">Notes</p>
                   <p className="text-xs text-white">{equipment.condition_notes}</p>
+                </div>
+              )}
+
+              {/* Recent Pre-Use Checks */}
+              {recentChecks.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-[10px] text-white mb-1.5 flex items-center gap-1">
+                    <ClipboardCheck className="h-3 w-3 text-elec-yellow" />
+                    Recent Pre-Use Checks
+                  </p>
+                  <div className="space-y-1">
+                    {recentChecks.map((check) => (
+                      <div
+                        key={check.id}
+                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/[0.08]"
+                      >
+                        <div
+                          className={cn(
+                            'w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0',
+                            check.overall_result === 'pass'
+                              ? 'bg-emerald-500/20'
+                              : check.overall_result === 'fail'
+                                ? 'bg-red-500/20'
+                                : 'bg-white/10'
+                          )}
+                        >
+                          {check.overall_result === 'pass' ? (
+                            <CheckCircle className="h-3 w-3 text-emerald-400" />
+                          ) : check.overall_result === 'fail' ? (
+                            <XCircle className="h-3 w-3 text-red-400" />
+                          ) : (
+                            <AlertCircle className="h-3 w-3 text-white" />
+                          )}
+                        </div>
+                        <span className="text-[10px] text-white capitalize flex-1">
+                          {check.equipment_type.replace(/_/g, ' ')}
+                        </span>
+                        <span className="text-[10px] text-white">
+                          {formatDate(check.check_date || check.created_at)}
+                        </span>
+                        <span
+                          className={cn(
+                            'text-[9px] font-medium px-1.5 py-0.5 rounded-full',
+                            check.overall_result === 'pass'
+                              ? 'bg-emerald-500/15 text-emerald-400'
+                              : check.overall_result === 'fail'
+                                ? 'bg-red-500/15 text-red-400'
+                                : 'bg-white/10 text-white'
+                          )}
+                        >
+                          {check.overall_result === 'pass'
+                            ? 'Pass'
+                            : check.overall_result === 'fail'
+                              ? 'Fail'
+                              : 'N/A'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 

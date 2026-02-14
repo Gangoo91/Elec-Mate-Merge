@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { LocationAutoFill } from '../common/LocationAutoFill';
 import { SignaturePad } from '../common/SignaturePad';
-import { CheckCircle2, XCircle, MinusCircle, Sparkles, ArrowLeft, Loader2 } from 'lucide-react';
-import { useCreatePreUseCheck, type CheckItem } from '@/hooks/usePreUseChecks';
+import {
+  CheckCircle2,
+  XCircle,
+  MinusCircle,
+  Sparkles,
+  ArrowLeft,
+  Loader2,
+  Wrench,
+  BookOpen,
+  AlertTriangle,
+} from 'lucide-react';
+import {
+  useCreatePreUseCheck,
+  REGULATION_REFS,
+  getStatutoryInspectionStatus,
+  type CheckItem,
+} from '@/hooks/usePreUseChecks';
+import { useSafetyEquipment, type SafetyEquipment } from '@/hooks/useSafetyEquipment';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
+
+// Map pre-use check equipment types to equipment register categories
+const CHECK_TYPE_TO_CATEGORIES: Record<string, string[]> = {
+  ladder: ['ladders'],
+  scaffold: ['other'],
+  power_tool: ['power-tools'],
+  test_instrument: ['test-equipment', 'pat-tester'],
+  access_equipment: ['other'],
+};
 
 interface ChecklistFormProps {
   equipmentType: string;
@@ -23,6 +49,7 @@ export function ChecklistForm({
   onCancel,
 }: ChecklistFormProps) {
   const [items, setItems] = useState<CheckItem[]>(initialItems);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
   const [equipmentDescription, setEquipmentDescription] = useState('');
   const [siteAddress, setSiteAddress] = useState('');
   const [inspectorSigName, setInspectorSigName] = useState('');
@@ -30,6 +57,27 @@ export function ChecklistForm({
   const [inspectorSigData, setInspectorSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const createCheck = useCreatePreUseCheck();
+
+  // Equipment register integration
+  const { equipment = [] } = useSafetyEquipment();
+  const matchingCategories = CHECK_TYPE_TO_CATEGORIES[equipmentType] || [];
+  const matchingEquipment = useMemo(
+    () => equipment.filter((e: SafetyEquipment) => matchingCategories.includes(e.category)),
+    [equipment, matchingCategories]
+  );
+
+  const selectEquipment = (eq: SafetyEquipment) => {
+    setSelectedEquipmentId(eq.id);
+    const desc = [eq.name, eq.serial_number ? `S/N: ${eq.serial_number}` : '']
+      .filter(Boolean)
+      .join(', ');
+    setEquipmentDescription(desc);
+  };
+
+  const clearEquipmentSelection = () => {
+    setSelectedEquipmentId(null);
+    setEquipmentDescription('');
+  };
 
   const updateItemResult = (id: string, result: CheckResult) => {
     setItems((prev) => prev.map((item) => (item.id === id ? { ...item, result } : item)));
@@ -53,11 +101,14 @@ export function ChecklistForm({
   const handleSubmit = async () => {
     await createCheck.mutateAsync({
       equipment_type: equipmentType,
+      equipment_id: selectedEquipmentId || undefined,
       equipment_description: equipmentDescription || undefined,
       site_address: siteAddress || undefined,
       items,
       overall_result: computeOverallResult(),
       photos: photoUrls,
+      checked_by: inspectorSigName.trim() || undefined,
+      signature: inspectorSigData || undefined,
     });
     setPhotoUrls([]);
     onSubmit();
@@ -80,6 +131,67 @@ export function ChecklistForm({
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-4 pt-4 space-y-4">
+        {/* Regulation reference banner */}
+        {REGULATION_REFS[equipmentType] && (
+          <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] p-3 flex items-start gap-3">
+            <BookOpen className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-bold text-blue-400">
+                {REGULATION_REFS[equipmentType].shortName}
+              </p>
+              <p className="text-xs text-white mt-0.5 leading-relaxed">
+                {REGULATION_REFS[equipmentType].description}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Statutory inspection warning for linked equipment */}
+        {selectedEquipmentId &&
+          (() => {
+            const linked = matchingEquipment.find(
+              (e: SafetyEquipment) => e.id === selectedEquipmentId
+            );
+            if (!linked) return null;
+            const inspectionStatus = getStatutoryInspectionStatus(
+              equipmentType,
+              linked.last_inspection
+            );
+            if (!inspectionStatus || inspectionStatus.status === 'ok') return null;
+            return (
+              <div
+                className={`rounded-xl border p-3 flex items-start gap-3 ${
+                  inspectionStatus.status === 'overdue'
+                    ? 'border-red-500/30 bg-red-500/10'
+                    : inspectionStatus.status === 'due_soon'
+                      ? 'border-amber-500/30 bg-amber-500/10'
+                      : 'border-white/10 bg-white/5'
+                }`}
+              >
+                <AlertTriangle
+                  className={`h-4 w-4 flex-shrink-0 mt-0.5 ${
+                    inspectionStatus.status === 'overdue'
+                      ? 'text-red-400'
+                      : inspectionStatus.status === 'due_soon'
+                        ? 'text-amber-400'
+                        : 'text-white'
+                  }`}
+                />
+                <p
+                  className={`text-xs font-medium ${
+                    inspectionStatus.status === 'overdue'
+                      ? 'text-red-400'
+                      : inspectionStatus.status === 'due_soon'
+                        ? 'text-amber-400'
+                        : 'text-white'
+                  }`}
+                >
+                  {inspectionStatus.label}
+                </p>
+              </div>
+            );
+          })()}
+
         {/* All Pass Shortcut */}
         <button
           onClick={handleAllPass}
@@ -89,15 +201,58 @@ export function ChecklistForm({
           All Pass
         </button>
 
+        {/* Equipment Register Picker */}
+        {matchingEquipment.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <Wrench className="w-4 h-4 text-elec-yellow" />
+              Select from Equipment Register
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {matchingEquipment.map((eq: SafetyEquipment) => (
+                <button
+                  key={eq.id}
+                  onClick={() =>
+                    selectedEquipmentId === eq.id ? clearEquipmentSelection() : selectEquipment(eq)
+                  }
+                  className={`h-11 px-3 rounded-xl text-sm font-medium flex items-center gap-2 touch-manipulation active:scale-[0.97] transition-all ${
+                    selectedEquipmentId === eq.id
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/50 text-elec-yellow'
+                      : 'bg-white/5 border border-white/10 text-white'
+                  }`}
+                >
+                  <Wrench className="w-3.5 h-3.5" />
+                  <span className="truncate max-w-[180px]">{eq.name}</span>
+                  {eq.serial_number && (
+                    <Badge className="text-[10px] px-1.5 py-0 bg-white/10 text-white border-white/20">
+                      {eq.serial_number}
+                    </Badge>
+                  )}
+                </button>
+              ))}
+            </div>
+            {selectedEquipmentId && (
+              <p className="text-xs text-green-400 flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" />
+                Linked to equipment register
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Optional Fields */}
         <div className="space-y-3">
           <div>
             <label className="block text-sm font-medium text-white mb-1">
-              Equipment Description (optional)
+              Equipment Description{' '}
+              {matchingEquipment.length > 0 ? '(auto-filled or manual)' : '(optional)'}
             </label>
             <Input
               value={equipmentDescription}
-              onChange={(e) => setEquipmentDescription(e.target.value)}
+              onChange={(e) => {
+                setEquipmentDescription(e.target.value);
+                if (selectedEquipmentId) setSelectedEquipmentId(null);
+              }}
               placeholder="e.g. Fluke 1664 FC, serial #12345"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
             />

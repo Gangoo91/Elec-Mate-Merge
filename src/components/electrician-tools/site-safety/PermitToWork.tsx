@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { AuditTimeline } from './common/AuditTimeline';
+import { ApprovalBadge, ApprovalInfoCard } from './common/ApprovalBadge';
+import { ApprovalSheet } from './common/ApprovalSheet';
+import { useRequestApproval } from '@/hooks/useSupervisorApproval';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
@@ -26,8 +30,11 @@ import {
   useCreatePermit,
   useClosePermit,
   useCancelPermit,
+  useExtendPermit,
   usePermitExpiryCheck,
 } from '@/hooks/usePermitsToWork';
+import { useFireWatchRecords } from '@/hooks/useFireWatchRecords';
+import { useSafeIsolationRecords } from '@/hooks/useSafeIsolationRecords';
 import type { Json } from '@/integrations/supabase/types';
 import {
   ArrowLeft,
@@ -56,6 +63,8 @@ import {
   Loader2,
   Copy,
 } from 'lucide-react';
+import { LoadMoreButton } from './common/LoadMoreButton';
+import { useShowMore } from '@/hooks/useShowMore';
 
 // ─── Types ───
 
@@ -93,6 +102,12 @@ interface Permit {
   emergency_procedures: string;
   additional_notes: string;
   photos: string[];
+  requires_approval: boolean;
+  approval_status: 'not_required' | 'pending' | 'approved' | 'rejected';
+  approved_by: string | null;
+  approved_at: string | null;
+  approval_comments: string | null;
+  approval_signature: string | null;
   created_at: string;
   closed_at?: string;
   closed_by?: string;
@@ -409,12 +424,71 @@ function TimeRemaining({ endTime }: { endTime: string }) {
 // ─── Main Component ───
 
 export function PermitToWork({ onBack }: { onBack: () => void }) {
-  const [permits, setPermits] = useState<Permit[]>([]);
+  // ─── DB hooks ───
+  const { data: dbPermits = [], isLoading: permitsLoading } = usePermits();
+  const createPermitMutation = useCreatePermit();
+  const closePermitMutation = useClosePermit();
+  const cancelPermitMutation = useCancelPermit();
+  const extendPermitMutation = useExtendPermit();
+  usePermitExpiryCheck();
+  const [showExtendSheet, setShowExtendSheet] = useState(false);
+  const [showApprovalSheet, setShowApprovalSheet] = useState(false);
+  const [extensionHours, setExtensionHours] = useState(2);
+  const requestApproval = useRequestApproval();
+
+  // Related records for inter-tool linking
+  const { data: allFireWatchRecords = [] } = useFireWatchRecords();
+  const { data: allIsolationRecords = [] } = useSafeIsolationRecords();
+
+  // Map DB records to local Permit shape
+  const permits: Permit[] = dbPermits.map((p) => ({
+    id: p.id,
+    type: p.type,
+    title: p.title,
+    location: p.location,
+    description: p.description || '',
+    issuer_name: p.issuer_name,
+    issuer_signature: p.issuer_signature || '',
+    receiver_name: p.receiver_name,
+    receiver_signature: p.receiver_signature || '',
+    hazards: Array.isArray(p.hazards) ? (p.hazards as unknown as PermitHazard[]) : [],
+    precautions: p.precautions || [],
+    ppe_required: p.ppe_required || [],
+    start_time: p.start_time,
+    end_time: p.end_time,
+    duration_hours: p.duration_hours,
+    status: p.status,
+    emergency_procedures: p.emergency_procedures || '',
+    additional_notes: p.additional_notes || '',
+    photos: Array.isArray(p.photos) ? (p.photos as unknown as string[]) : [],
+    requires_approval: p.requires_approval,
+    approval_status: p.approval_status,
+    approved_by: p.approved_by,
+    approved_at: p.approved_at,
+    approval_comments: p.approval_comments,
+    approval_signature: p.approval_signature,
+    created_at: p.created_at,
+    closed_at: p.closed_at || undefined,
+    closed_by: p.closed_by || undefined,
+  }));
+
   const [showWizard, setShowWizard] = useState(false);
   const [viewingPermit, setViewingPermit] = useState<Permit | null>(null);
   const [wizardStep, setWizardStep] = useState(0);
   const [filterStatus, setFilterStatus] = useState<PermitStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Related records filtered for the currently-viewed permit
+  const relatedFireWatches = useMemo(
+    () =>
+      viewingPermit ? allFireWatchRecords.filter((fw) => fw.permit_id === viewingPermit.id) : [],
+    [allFireWatchRecords, viewingPermit]
+  );
+  const relatedIsolations = useMemo(
+    () =>
+      viewingPermit ? allIsolationRecords.filter((ir) => ir.permit_id === viewingPermit.id) : [],
+    [allIsolationRecords, viewingPermit]
+  );
 
   // Wizard state
   const [selectedType, setSelectedType] = useState<PermitType | null>(null);
@@ -469,21 +543,6 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
     dismissDraft();
   };
-
-  // Check for expired permits
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPermits((prev) =>
-        prev.map((p) => {
-          if (p.status === 'active' && new Date(p.end_time) < new Date()) {
-            return { ...p, status: 'expired' as PermitStatus };
-          }
-          return p;
-        })
-      );
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
   const typeConfig = selectedType ? PERMIT_TYPES.find((t) => t.id === selectedType) : null;
 
@@ -550,46 +609,55 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     setWizardStep(1);
   };
 
-  const issuePermit = () => {
+  const issuePermit = async () => {
     if (!selectedType) return;
 
     const now = new Date();
     const end = new Date(now.getTime() + formData.duration_hours * 3600000);
 
-    const newPermit: Permit = {
-      id: `ptw-${Date.now()}`,
-      type: selectedType,
-      title: formData.title,
-      location: formData.location,
-      description: formData.description,
-      issuer_name: formData.issuer_name,
-      issuer_signature: formData.issuer_signature,
-      receiver_name: formData.receiver_name,
-      receiver_signature: formData.receiver_signature,
-      hazards,
-      precautions,
-      ppe_required: ppeRequired,
-      start_time: now.toISOString(),
-      end_time: end.toISOString(),
-      duration_hours: formData.duration_hours,
-      status: 'active',
-      emergency_procedures: formData.emergency_procedures,
-      additional_notes: formData.additional_notes,
-      photos: photoUrls,
-      created_at: now.toISOString(),
-    };
-
-    setPermits((prev) => [newPermit, ...prev]);
-    clearDraft();
-    setShowWizard(false);
-    resetWizard();
-    toast.success('Permit to work issued successfully');
+    try {
+      await createPermitMutation.mutateAsync({
+        type: selectedType,
+        title: formData.title,
+        location: formData.location,
+        description: formData.description,
+        issuer_name: formData.issuer_name,
+        issuer_signature: formData.issuer_signature,
+        receiver_name: formData.receiver_name,
+        receiver_signature: formData.receiver_signature,
+        hazards: hazards as unknown as Json,
+        precautions,
+        ppe_required: ppeRequired,
+        start_time: now.toISOString(),
+        end_time: end.toISOString(),
+        duration_hours: formData.duration_hours,
+        status: 'active',
+        emergency_procedures: formData.emergency_procedures,
+        additional_notes: formData.additional_notes,
+        photos: photoUrls as unknown as Json,
+      });
+      clearDraft();
+      setShowWizard(false);
+      resetWizard();
+    } catch {
+      // Error toast handled by the hook
+    }
   };
 
   const closePermit = async (id: string) => {
     try {
       await closePermitMutation.mutateAsync({ id });
       setViewingPermit(null);
+    } catch {
+      // error toast handled by hook
+    }
+  };
+
+  const extendPermit = async (id: string) => {
+    try {
+      await extendPermitMutation.mutateAsync({ id, additionalHours: extensionHours });
+      setShowExtendSheet(false);
+      setExtensionHours(2);
     } catch {
       // error toast handled by hook
     }
@@ -616,6 +684,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       return false;
     return true;
   });
+
+  const {
+    visible: visiblePermits,
+    hasMore: hasMorePermits,
+    remaining: remainingPermits,
+    loadMore: loadMorePermits,
+  } = useShowMore(filteredPermits);
 
   const activeCount = permits.filter((p) => p.status === 'active').length;
 
@@ -821,6 +896,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
                       placeholder="Receiver's full name"
                     />
+                    {formData.issuer_name &&
+                      formData.receiver_name &&
+                      formData.issuer_name.trim().toLowerCase() ===
+                        formData.receiver_name.trim().toLowerCase() && (
+                        <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
+                          <span className="w-1 h-1 bg-red-400 rounded-full" />
+                          Issuer and receiver must be different people
+                        </p>
+                      )}
                   </div>
                   <SignaturePadInline
                     label="Receiver Signature"
@@ -852,13 +936,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       case 1:
         return formData.title && formData.location;
       case 2:
-        return true;
+        return hazards.length > 0 && precautions.length > 0;
       case 3:
         return (
           formData.issuer_name &&
           formData.receiver_name &&
           formData.issuer_signature &&
-          formData.receiver_signature
+          formData.receiver_signature &&
+          formData.issuer_name.trim().toLowerCase() !== formData.receiver_name.trim().toLowerCase()
         );
       default:
         return true;
@@ -958,7 +1043,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           </div>
         ) : (
           <div className="space-y-2 pb-20">
-            {filteredPermits.map((permit) => {
+            {visiblePermits.map((permit) => {
               const typeConf = PERMIT_TYPES.find((t) => t.id === permit.type)!;
               const statusConf = STATUS_CONFIG[permit.status];
               const StatusIcon = statusConf.icon;
@@ -987,7 +1072,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{permit.location}</span>
                       </div>
-                      <div className="flex items-center gap-2 mt-1">
+                      <div className="flex items-center gap-2 flex-wrap mt-1">
                         <Badge
                           className={`${statusConf.bg} ${statusConf.colour} border-none text-[10px]`}
                         >
@@ -995,6 +1080,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           {statusConf.label}
                         </Badge>
                         {permit.status === 'active' && <TimeRemaining endTime={permit.end_time} />}
+                        <ApprovalBadge status={permit.approval_status} />
                       </div>
                     </div>
                     <div className="flex items-center gap-1 flex-shrink-0">
@@ -1016,6 +1102,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </motion.button>
               );
             })}
+            {hasMorePermits && (
+              <LoadMoreButton onLoadMore={loadMorePermits} remaining={remainingPermits} />
+            )}
           </div>
         )}
       </div>
@@ -1224,6 +1313,129 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         )}
                       </div>
                     </div>
+
+                    {/* Related Records */}
+                    {(relatedFireWatches.length > 0 || relatedIsolations.length > 0) && (
+                      <div>
+                        <h4 className="text-sm font-bold text-white mb-2">Related Records</h4>
+                        <div className="space-y-2">
+                          {relatedFireWatches.map((fw) => (
+                            <div
+                              key={fw.id}
+                              className="flex items-center gap-3 p-3 rounded-xl border border-orange-500/20 bg-orange-500/[0.06]"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                                <Flame className="h-4 w-4 text-orange-400" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-white">Fire Watch</p>
+                                <p className="text-xs text-white">
+                                  {fw.duration_minutes} min
+                                  {fw.location ? ` \u00B7 ${fw.location}` : ''}
+                                  {' \u00B7 '}
+                                  {new Date(fw.start_time).toLocaleDateString('en-GB')}
+                                </p>
+                              </div>
+                              <Badge
+                                className={`text-[10px] border-none ${
+                                  fw.status === 'completed'
+                                    ? 'bg-green-500/15 text-green-400'
+                                    : 'bg-amber-500/15 text-amber-400'
+                                }`}
+                              >
+                                {fw.status === 'completed' ? 'Complete' : 'Active'}
+                              </Badge>
+                            </div>
+                          ))}
+                          {relatedIsolations.map((ir) => (
+                            <div
+                              key={ir.id}
+                              className="flex items-center gap-3 p-3 rounded-xl border border-blue-500/20 bg-blue-500/[0.06]"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                <Zap className="h-4 w-4 text-blue-400" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-white">Safe Isolation</p>
+                                <p className="text-xs text-white">
+                                  {ir.circuit_description}
+                                  {ir.distribution_board ? ` \u00B7 ${ir.distribution_board}` : ''}
+                                  {' \u00B7 '}
+                                  {new Date(ir.created_at).toLocaleDateString('en-GB')}
+                                </p>
+                              </div>
+                              <Badge
+                                className={`text-[10px] border-none ${
+                                  ir.status === 'isolated'
+                                    ? 'bg-green-500/15 text-green-400'
+                                    : ir.status === 're_energised'
+                                      ? 'bg-blue-500/15 text-blue-400'
+                                      : ir.status === 'cancelled'
+                                        ? 'bg-red-500/15 text-red-400'
+                                        : 'bg-amber-500/15 text-amber-400'
+                                }`}
+                              >
+                                {ir.status === 'isolated'
+                                  ? 'Isolated'
+                                  : ir.status === 're_energised'
+                                    ? 'Re-energised'
+                                    : ir.status === 'cancelled'
+                                      ? 'Cancelled'
+                                      : 'In Progress'}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Audit Trail */}
+                  <div className="px-4 py-3">
+                    <AuditTimeline recordType="permit" recordId={viewingPermit.id} />
+                  </div>
+
+                  {/* Approval */}
+                  {viewingPermit.approval_status !== 'not_required' && (
+                    <div className="px-4 py-3">
+                      <ApprovalInfoCard
+                        status={viewingPermit.approval_status}
+                        approvedBy={viewingPermit.approved_by}
+                        approvedAt={viewingPermit.approved_at}
+                        comments={viewingPermit.approval_comments}
+                        approvalSignature={viewingPermit.approval_signature}
+                      />
+                    </div>
+                  )}
+
+                  {/* Approval actions */}
+                  <div className="px-4 py-1 space-y-2">
+                    {viewingPermit.status === 'active' &&
+                      viewingPermit.approval_status === 'not_required' && (
+                        <button
+                          onClick={() =>
+                            requestApproval.mutate({
+                              table: 'permits_to_work',
+                              recordId: viewingPermit.id,
+                            })
+                          }
+                          disabled={requestApproval.isPending}
+                          className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+                        >
+                          <Shield className="h-4 w-4" />
+                          Request Supervisor Approval
+                        </button>
+                      )}
+
+                    {viewingPermit.approval_status === 'pending' && (
+                      <button
+                        onClick={() => setShowApprovalSheet(true)}
+                        className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
+                      >
+                        <Shield className="h-4 w-4" />
+                        Review and Approve
+                      </button>
+                    )}
                   </div>
 
                   {/* Actions */}
@@ -1240,14 +1452,32 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       )}
                       Export PDF
                     </Button>
-                    {viewingPermit.status === 'active' && (
+                    {(viewingPermit.status === 'active' || viewingPermit.status === 'expired') && (
                       <>
+                        {viewingPermit.status === 'active' && (
+                          <Button
+                            onClick={() => setShowExtendSheet(true)}
+                            className="h-11 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
+                          >
+                            <Timer className="h-4 w-4 mr-2" />
+                            Extend
+                          </Button>
+                        )}
+                        {viewingPermit.status === 'expired' && (
+                          <Button
+                            onClick={() => setShowExtendSheet(true)}
+                            className="h-11 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
+                          >
+                            <Timer className="h-4 w-4 mr-2" />
+                            Re-activate
+                          </Button>
+                        )}
                         <Button
                           onClick={() => closePermit(viewingPermit.id)}
                           className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
                         >
                           <CheckCircle2 className="h-4 w-4 mr-2" />
-                          Close Permit
+                          Close
                         </Button>
                         <Button
                           onClick={() => cancelPermit(viewingPermit.id)}
@@ -1264,6 +1494,74 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             })()}
         </SheetContent>
       </Sheet>
+      {/* Extend Permit Sheet */}
+      <Sheet open={showExtendSheet} onOpenChange={setShowExtendSheet}>
+        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden">
+          <div className="bg-background p-5 space-y-4">
+            <div className="pt-1 pb-2 flex justify-center">
+              <div className="w-10 h-1 bg-white/20 rounded-full" />
+            </div>
+            <h3 className="text-lg font-bold text-white">Extend Permit Duration</h3>
+            <p className="text-sm text-white">
+              Select additional time. Conditions must remain safe before extending.
+            </p>
+            <div className="grid grid-cols-4 gap-2">
+              {[1, 2, 4, 8].map((hours) => (
+                <button
+                  key={hours}
+                  onClick={() => setExtensionHours(hours)}
+                  className={`h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all ${
+                    extensionHours === hours
+                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-400'
+                      : 'border-white/10 bg-white/5 text-white'
+                  }`}
+                >
+                  {hours}h
+                </button>
+              ))}
+            </div>
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <p className="text-xs text-white font-medium flex items-center gap-2">
+                <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                Confirm that site conditions remain safe and all controls are still in place before
+                extending.
+              </p>
+            </div>
+            <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
+              <Button
+                onClick={() => viewingPermit && extendPermit(viewingPermit.id)}
+                disabled={extendPermitMutation.isPending}
+                className="flex-1 h-12 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl touch-manipulation"
+              >
+                {extendPermitMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Timer className="h-4 w-4 mr-2" />
+                )}
+                Extend by {extensionHours}h
+              </Button>
+              <Button
+                onClick={() => setShowExtendSheet(false)}
+                variant="outline"
+                className="h-12 border-white/20 text-white rounded-xl touch-manipulation"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Supervisor Approval Sheet */}
+      {viewingPermit && (
+        <ApprovalSheet
+          open={showApprovalSheet}
+          onOpenChange={setShowApprovalSheet}
+          table="permits_to_work"
+          recordId={viewingPermit.id}
+          recordTitle={viewingPermit.title}
+        />
+      )}
     </div>
   );
 }

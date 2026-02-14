@@ -22,9 +22,11 @@ import { Input } from '@/components/ui/input';
 import {
   usePreUseChecks,
   CHECK_TEMPLATES,
+  REGULATION_REFS,
   type CheckItem,
   type PreUseCheck,
 } from '@/hooks/usePreUseChecks';
+import { ApprovalBadge } from '../common/ApprovalBadge';
 import { ChecklistForm } from './ChecklistForm';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
@@ -270,6 +272,17 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                         {check.equipment_description && (
                           <p className="text-sm text-white mb-1">{check.equipment_description}</p>
                         )}
+                        <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                          {REGULATION_REFS[check.equipment_type] && (
+                            <Badge className="bg-blue-500/15 text-blue-400 border-blue-500/20 text-[10px]">
+                              {REGULATION_REFS[check.equipment_type].shortName}
+                            </Badge>
+                          )}
+                          <ApprovalBadge
+                            status={check.approval_status}
+                            approvedBy={check.approved_by}
+                          />
+                        </div>
                         <div className="flex items-center gap-3 text-sm text-white mb-3">
                           <div className="flex items-center gap-1">
                             <Clock className="w-3.5 h-3.5" />

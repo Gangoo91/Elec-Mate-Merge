@@ -1,79 +1,184 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
-  ArrowLeft, MapPin, AlertTriangle, Shield,
-  Zap, Flame, HardHat, Users, FileText, Calendar, Sparkles,
-  CloudSun, Wrench, UserCheck, Eye, Download, Loader2
-} from "lucide-react";
+  ArrowLeft,
+  MapPin,
+  AlertTriangle,
+  Shield,
+  Zap,
+  Flame,
+  HardHat,
+  Users,
+  FileText,
+  Calendar,
+  Sparkles,
+  CloudSun,
+  Wrench,
+  UserCheck,
+  Eye,
+  Download,
+  Loader2,
+  CheckCircle2,
+  Clock,
+  CircleDot,
+} from 'lucide-react';
 import { NearMissReport, Witness } from './types';
-import { useSafetyPDFExport } from "@/hooks/useSafetyPDFExport";
+import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { AuditTimeline } from './common/AuditTimeline';
 
 interface NearMissReportDetailProps {
   report: NearMissReport;
   onBack: () => void;
+  onUpdate?: (updated: Partial<NearMissReport>) => void;
 }
 
 const CATEGORIES: Record<string, { label: string; icon: React.ElementType }> = {
-  'electrical_hazard': { label: 'Electrical Hazard', icon: Zap },
-  'fire_risk': { label: 'Fire Risk', icon: Flame },
-  'fall_hazard': { label: 'Fall Hazard', icon: AlertTriangle },
-  'ppe_failure': { label: 'PPE Failure/Issue', icon: HardHat },
-  'worksite_hazard': { label: 'Worksite Hazard', icon: Users },
-  'tool_equipment': { label: 'Tool/Equipment Issue', icon: AlertTriangle },
-  'chemical_exposure': { label: 'Chemical Exposure', icon: AlertTriangle },
-  'manual_handling': { label: 'Manual Handling', icon: AlertTriangle },
-  'vehicle_incident': { label: 'Vehicle Incident', icon: AlertTriangle },
-  'other': { label: 'Other', icon: FileText }
+  electrical_hazard: { label: 'Electrical Hazard', icon: Zap },
+  fire_risk: { label: 'Fire Risk', icon: Flame },
+  fall_hazard: { label: 'Fall Hazard', icon: AlertTriangle },
+  ppe_failure: { label: 'PPE Failure/Issue', icon: HardHat },
+  worksite_hazard: { label: 'Worksite Hazard', icon: Users },
+  tool_equipment: { label: 'Tool/Equipment Issue', icon: AlertTriangle },
+  chemical_exposure: { label: 'Chemical Exposure', icon: AlertTriangle },
+  manual_handling: { label: 'Manual Handling', icon: AlertTriangle },
+  vehicle_incident: { label: 'Vehicle Incident', icon: AlertTriangle },
+  other: { label: 'Other', icon: FileText },
 };
 
 const SEVERITIES: Record<string, { label: string; colour: string; bgColour: string }> = {
-  'low': { label: 'Low', colour: 'text-green-400', bgColour: 'bg-green-500/20 border-green-500/30' },
-  'medium': { label: 'Medium', colour: 'text-yellow-400', bgColour: 'bg-yellow-500/20 border-yellow-500/30' },
-  'high': { label: 'High', colour: 'text-orange-400', bgColour: 'bg-orange-500/20 border-orange-500/30' },
-  'critical': { label: 'Critical', colour: 'text-red-400', bgColour: 'bg-red-500/20 border-red-500/30' }
+  low: { label: 'Low', colour: 'text-green-400', bgColour: 'bg-green-500/20 border-green-500/30' },
+  medium: {
+    label: 'Medium',
+    colour: 'text-yellow-400',
+    bgColour: 'bg-yellow-500/20 border-yellow-500/30',
+  },
+  high: {
+    label: 'High',
+    colour: 'text-orange-400',
+    bgColour: 'bg-orange-500/20 border-orange-500/30',
+  },
+  critical: {
+    label: 'Critical',
+    colour: 'text-red-400',
+    bgColour: 'bg-red-500/20 border-red-500/30',
+  },
 };
 
 const SEVERITY_BORDER: Record<string, string> = {
-  'low': 'border-l-green-500',
-  'medium': 'border-l-yellow-500',
-  'high': 'border-l-orange-500',
-  'critical': 'border-l-red-500'
+  low: 'border-l-green-500',
+  medium: 'border-l-yellow-500',
+  high: 'border-l-orange-500',
+  critical: 'border-l-red-500',
 };
 
 const WEATHER_LABELS: Record<string, string> = {
-  'clear': 'Clear/Sunny',
-  'overcast': 'Overcast',
-  'rain': 'Rain',
-  'wind': 'High Wind',
-  'cold': 'Cold/Frost',
-  'hot': 'Hot',
-  'dark': 'Dark/Night'
+  clear: 'Clear/Sunny',
+  overcast: 'Overcast',
+  rain: 'Rain',
+  wind: 'High Wind',
+  cold: 'Cold/Frost',
+  hot: 'Hot',
+  dark: 'Dark/Night',
 };
 
 const LIGHTING_LABELS: Record<string, string> = {
-  'good': 'Good Natural Light',
-  'adequate': 'Adequate',
-  'poor': 'Poor',
-  'artificial': 'Artificial Only',
-  'dark': 'Very Dark/No Light'
+  good: 'Good Natural Light',
+  adequate: 'Adequate',
+  poor: 'Poor',
+  artificial: 'Artificial Only',
+  dark: 'Very Dark/No Light',
 };
 
-export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ report, onBack }) => {
+const STATUS_CONFIG: Record<
+  string,
+  { label: string; colour: string; bg: string; icon: React.ElementType }
+> = {
+  open: {
+    label: 'Open',
+    colour: 'text-amber-400',
+    bg: 'bg-amber-500/15 border-amber-500/30',
+    icon: CircleDot,
+  },
+  in_progress: {
+    label: 'In Progress',
+    colour: 'text-blue-400',
+    bg: 'bg-blue-500/15 border-blue-500/30',
+    icon: Clock,
+  },
+  closed: {
+    label: 'Closed',
+    colour: 'text-green-400',
+    bg: 'bg-green-500/15 border-green-500/30',
+    icon: CheckCircle2,
+  },
+};
+
+export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
+  report,
+  onBack,
+  onUpdate,
+}) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const category = CATEGORIES[report.category] || CATEGORIES['other'];
   const severity = SEVERITIES[report.severity] || SEVERITIES['low'];
   const CategoryIcon = category.icon;
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const currentStatus = report.status || 'open';
+  const statusConf = STATUS_CONFIG[currentStatus] || STATUS_CONFIG.open;
+  const StatusIcon = statusConf.icon;
+
+  const handleStatusChange = async (newStatus: 'open' | 'in_progress' | 'closed') => {
+    setIsUpdating(true);
+    try {
+      const updates: Record<string, unknown> = { status: newStatus };
+      if (newStatus === 'closed') {
+        updates.completed_date = new Date().toISOString().split('T')[0];
+      }
+      if (newStatus === 'in_progress' && currentStatus === 'open') {
+        updates.completed_date = null;
+      }
+
+      const { error } = await supabase
+        .from('near_miss_reports')
+        .update(updates)
+        .eq('id', report.id);
+
+      if (error) throw error;
+
+      onUpdate?.({
+        ...report,
+        status: newStatus,
+        ...(newStatus === 'closed'
+          ? { completed_date: new Date().toISOString().split('T')[0] }
+          : {}),
+      });
+
+      toast({
+        title: 'Status Updated',
+        description: `Near miss marked as ${STATUS_CONFIG[newStatus].label}.`,
+      });
+    } catch {
+      toast({ title: 'Error', description: 'Could not update status.', variant: 'destructive' });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-GB', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
@@ -101,7 +206,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
       potential_consequences: report.potential_consequences,
       immediate_actions: report.immediate_actions,
       preventive_measures: report.preventive_measures,
-      photo_urls: report.photo_urls,
+      photo_urls: report.photos,
       witnesses: report.witnesses,
       third_party_involved: report.third_party_involved,
       third_party_details: report.third_party_details,
@@ -114,30 +219,42 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
       supervisor_name: report.supervisor_name,
       previous_similar_incidents: report.previous_similar_incidents,
     };
-    
+
     sessionStorage.setItem(`nearMissData_${sessionId}`, JSON.stringify(nearMissData));
     navigate(`/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`);
   };
 
-  const hasWitnesses = report.witnesses && Array.isArray(report.witnesses) && report.witnesses.length > 0;
+  const hasWitnesses =
+    report.witnesses && Array.isArray(report.witnesses) && report.witnesses.length > 0;
   const hasPeopleInfo = hasWitnesses || report.third_party_involved;
-  const hasEnvironmentInfo = report.weather_conditions || report.lighting_conditions || report.equipment_involved || report.equipment_faulty;
+  const hasEnvironmentInfo =
+    report.weather_conditions ||
+    report.lighting_conditions ||
+    report.equipment_involved ||
+    report.equipment_faulty;
   const hasInvestigationInfo = report.supervisor_notified || report.previous_similar_incidents;
 
   return (
     <div className="space-y-4 pb-24">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onBack}
           className="h-11 w-11 touch-manipulation"
         >
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div className="flex-1">
-          <h2 className="text-lg font-semibold text-foreground">Report Details</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground">Report Details</h2>
+            {report.incident_number && (
+              <Badge className="bg-white/10 text-white border-white/20 text-xs font-mono">
+                {report.incident_number}
+              </Badge>
+            )}
+          </div>
           <p className="text-sm text-white">
             Submitted {new Date(report.created_at).toLocaleDateString('en-GB')}
           </p>
@@ -156,6 +273,21 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
               <CategoryIcon className="h-3.5 w-3.5" />
               {category.label}
             </Badge>
+            {report.risk_rating != null && (
+              <Badge
+                className={`border ${
+                  report.risk_rating <= 4
+                    ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                    : report.risk_rating <= 9
+                      ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+                      : report.risk_rating <= 16
+                        ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+                        : 'bg-red-500/20 text-red-400 border-red-500/30'
+                }`}
+              >
+                Risk: {report.risk_rating}
+              </Badge>
+            )}
           </div>
 
           {/* Description */}
@@ -193,7 +325,9 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
       </Card>
 
       {/* Additional Details */}
-      {(report.potential_consequences || report.immediate_actions || report.preventive_measures) && (
+      {(report.potential_consequences ||
+        report.immediate_actions ||
+        report.preventive_measures) && (
         <Card>
           <CardContent className="p-4 space-y-4">
             <div className="flex items-center gap-2">
@@ -226,9 +360,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.preventive_measures && (
                 <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">
-                    Preventive Measures
-                  </p>
+                  <p className="text-xs text-white uppercase tracking-wide">Preventive Measures</p>
                   <p className="text-foreground text-sm leading-relaxed">
                     {report.preventive_measures}
                   </p>
@@ -256,9 +388,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
                     {(report.witnesses as Witness[]).map((witness, index) => (
                       <div key={index} className="bg-muted/50 rounded-lg p-3">
                         <p className="text-foreground text-sm font-medium">{witness.name}</p>
-                        {witness.contact && (
-                          <p className="text-white text-xs">{witness.contact}</p>
-                        )}
+                        {witness.contact && <p className="text-white text-xs">{witness.contact}</p>}
                       </div>
                     ))}
                   </div>
@@ -293,13 +423,17 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
                   {report.weather_conditions && (
                     <div className="space-y-1">
                       <p className="text-xs text-white uppercase tracking-wide">Weather</p>
-                      <p className="text-foreground text-sm">{WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}</p>
+                      <p className="text-foreground text-sm">
+                        {WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}
+                      </p>
                     </div>
                   )}
                   {report.lighting_conditions && (
                     <div className="space-y-1">
                       <p className="text-xs text-white uppercase tracking-wide">Lighting</p>
-                      <p className="text-foreground text-sm">{LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}</p>
+                      <p className="text-foreground text-sm">
+                        {LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -318,7 +452,9 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
                   <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
                     <p className="text-orange-400 text-sm font-medium">Faulty Equipment Reported</p>
                     {report.equipment_fault_details && (
-                      <p className="text-foreground text-sm mt-1">{report.equipment_fault_details}</p>
+                      <p className="text-foreground text-sm mt-1">
+                        {report.equipment_fault_details}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -349,8 +485,12 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
 
               {report.previous_similar_incidents && (
                 <div className="space-y-1">
-                  <p className="text-xs text-white uppercase tracking-wide">Previous Similar Incidents</p>
-                  <p className="text-foreground text-sm capitalize">{report.previous_similar_incidents}</p>
+                  <p className="text-xs text-white uppercase tracking-wide">
+                    Previous Similar Incidents
+                  </p>
+                  <p className="text-foreground text-sm capitalize">
+                    {report.previous_similar_incidents}
+                  </p>
                 </div>
               )}
             </div>
@@ -358,16 +498,117 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
         </Card>
       )}
 
+      {/* Follow-Up & Status */}
+      <Card className="border-l-4 border-l-elec-yellow">
+        <CardContent className="p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-elec-yellow" />
+              <h3 className="font-medium text-foreground">Follow-Up Status</h3>
+            </div>
+            <Badge
+              className={`${statusConf.bg} border ${statusConf.colour} flex items-center gap-1`}
+            >
+              <StatusIcon className="h-3 w-3" />
+              {statusConf.label}
+            </Badge>
+          </div>
+
+          {/* Follow-up required indicator */}
+          {report.follow_up_required && (
+            <div className="flex items-center gap-2 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+              <span className="text-sm text-white font-medium">Follow-up required</span>
+            </div>
+          )}
+
+          {/* Due date & assigned to */}
+          <div className="space-y-2">
+            {report.assigned_to && (
+              <div className="flex items-center gap-2 text-sm">
+                <UserCheck className="h-4 w-4 text-white" />
+                <span className="text-white">Assigned to: {report.assigned_to}</span>
+              </div>
+            )}
+            {report.due_date && (
+              <div className="flex items-center gap-2 text-sm">
+                <Calendar className="h-4 w-4 text-white" />
+                <span className="text-white">
+                  Due: {new Date(report.due_date).toLocaleDateString('en-GB')}
+                </span>
+                {new Date(report.due_date) < new Date() && currentStatus !== 'closed' && (
+                  <Badge className="bg-red-500/15 text-red-400 border-red-500/30 text-[10px]">
+                    Overdue
+                  </Badge>
+                )}
+              </div>
+            )}
+            {report.completed_date && (
+              <div className="flex items-center gap-2 text-sm">
+                <CheckCircle2 className="h-4 w-4 text-green-400" />
+                <span className="text-white">
+                  Completed: {new Date(report.completed_date).toLocaleDateString('en-GB')}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Status action buttons */}
+          {currentStatus !== 'closed' && (
+            <div className="flex gap-2 pt-1">
+              {currentStatus === 'open' && (
+                <Button
+                  onClick={() => handleStatusChange('in_progress')}
+                  disabled={isUpdating}
+                  className="flex-1 h-11 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl touch-manipulation"
+                >
+                  {isUpdating ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Clock className="h-4 w-4 mr-2" />
+                  )}
+                  Start Investigation
+                </Button>
+              )}
+              {currentStatus === 'in_progress' && (
+                <>
+                  <Button
+                    onClick={() => handleStatusChange('closed')}
+                    disabled={isUpdating}
+                    className="flex-1 h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation"
+                  >
+                    {isUpdating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                    )}
+                    Close
+                  </Button>
+                  <Button
+                    onClick={() => handleStatusChange('open')}
+                    disabled={isUpdating}
+                    variant="outline"
+                    className="h-11 border-white/20 text-white rounded-xl touch-manipulation"
+                  >
+                    Reopen
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Photos */}
-      {report.photo_urls && report.photo_urls.length > 0 && (
+      {report.photos && report.photos.length > 0 && (
         <Card>
           <CardContent className="p-4 space-y-3">
             <h3 className="font-medium text-foreground">Photos</h3>
             <div className="grid grid-cols-2 gap-2">
-              {report.photo_urls.map((url, index) => (
+              {report.photos.map((url, index) => (
                 <div key={index} className="aspect-square rounded-lg overflow-hidden bg-muted">
-                  <img 
-                    src={url} 
+                  <img
+                    src={url}
                     alt={`Evidence photo ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
@@ -378,10 +619,13 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
         </Card>
       )}
 
+      {/* Audit Trail */}
+      <AuditTimeline recordType="near_miss" recordId={report.id} />
+
       {/* Fixed Action Buttons */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border space-y-2">
         <button
-          onClick={() => exportPDF("near-miss", report.id)}
+          onClick={() => exportPDF('near-miss', report.id)}
           disabled={isExporting && exportingId === report.id}
           className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
         >

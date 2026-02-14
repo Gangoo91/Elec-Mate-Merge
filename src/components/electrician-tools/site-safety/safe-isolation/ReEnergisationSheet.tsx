@@ -1,38 +1,42 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { Power, AlertTriangle, CheckCircle2 } from "lucide-react";
-import { useUpdateIsolationRecord } from "@/hooks/useSafeIsolationRecords";
-import { toast } from "sonner";
+} from '@/components/ui/sheet';
+import { Power, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { useUpdateIsolationRecord } from '@/hooks/useSafeIsolationRecords';
+import { toast } from 'sonner';
 
 // ─── Checklist Items ───
 
 const CHECKLIST_ITEMS = [
   {
-    id: "work_complete",
-    label: "All work is complete and tested",
+    id: 'work_complete',
+    label: 'All work is complete and tested',
   },
   {
-    id: "tools_removed",
-    label: "All tools and materials removed from work area",
+    id: 'tools_removed',
+    label: 'All tools and materials removed from work area',
   },
   {
-    id: "covers_replaced",
-    label: "All covers, guards, and barriers replaced",
+    id: 'covers_replaced',
+    label: 'All covers, guards, and barriers replaced',
   },
   {
-    id: "lock_off_removed",
-    label: "Lock-off device and warning notices removed",
+    id: 'lock_off_removed',
+    label: 'Lock-off device and warning notices removed',
+  },
+  {
+    id: 'voltage_confirmed',
+    label: 'Voltage indicator tested — circuit confirmed live after re-energisation',
   },
 ] as const;
 
@@ -58,8 +62,9 @@ export function ReEnergisationSheet({
     tools_removed: false,
     covers_replaced: false,
     lock_off_removed: false,
+    voltage_confirmed: false,
   });
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   const allChecked = CHECKLIST_ITEMS.every((item) => checklist[item.id]);
   const canConfirm = allChecked && name.trim().length > 0;
@@ -72,31 +77,29 @@ export function ReEnergisationSheet({
     try {
       await updateMutation.mutateAsync({
         id: recordId,
-        status: "re_energised",
+        status: 're_energised',
         re_energisation_at: new Date().toISOString(),
         re_energisation_by: name.trim(),
       });
-      toast.success("Circuit re-energised successfully");
+      toast.success('Circuit re-energised successfully');
       // Reset form
       setChecklist({
         work_complete: false,
         tools_removed: false,
         covers_replaced: false,
         lock_off_removed: false,
+        voltage_confirmed: false,
       });
-      setName("");
+      setName('');
       onComplete();
     } catch {
-      toast.error("Failed to update record. Please try again.");
+      toast.error('Failed to update record. Please try again.');
     }
   };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <div className="px-4 py-4 border-b border-white/10">
@@ -127,21 +130,17 @@ export function ReEnergisationSheet({
             >
               <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-amber-400">
-                  Safety Warning
-                </p>
+                <p className="text-sm font-bold text-amber-400">Safety Warning</p>
                 <p className="text-xs text-white mt-1 leading-relaxed">
-                  Verify all personnel are clear of the circuit before
-                  re-energising. Ensure all work has been completed and tested.
+                  Verify all personnel are clear of the circuit before re-energising. Ensure all
+                  work has been completed and tested.
                 </p>
               </div>
             </motion.div>
 
             {/* Checklist */}
             <div className="space-y-3">
-              <h3 className="text-sm font-bold text-white">
-                Pre-energisation Checklist
-              </h3>
+              <h3 className="text-sm font-bold text-white">Pre-energisation Checklist</h3>
 
               {CHECKLIST_ITEMS.map((item, index) => (
                 <motion.button
@@ -152,8 +151,8 @@ export function ReEnergisationSheet({
                   onClick={() => handleToggle(item.id)}
                   className={`w-full flex items-center gap-3 p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-colors ${
                     checklist[item.id]
-                      ? "border-green-500/30 bg-green-500/[0.06]"
-                      : "border-white/[0.08] bg-white/[0.03]"
+                      ? 'border-green-500/30 bg-green-500/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.03]'
                   }`}
                 >
                   <Checkbox
@@ -163,7 +162,7 @@ export function ReEnergisationSheet({
                   />
                   <span
                     className={`text-sm font-medium text-left ${
-                      checklist[item.id] ? "text-green-400" : "text-white"
+                      checklist[item.id] ? 'text-green-400' : 'text-white'
                     }`}
                   >
                     {item.label}
@@ -177,9 +176,7 @@ export function ReEnergisationSheet({
 
             {/* Name / Signature */}
             <div className="space-y-3">
-              <h3 className="text-sm font-bold text-white">
-                Re-energised By
-              </h3>
+              <h3 className="text-sm font-bold text-white">Re-energised By</h3>
               <div>
                 <Label className="text-white text-sm">Full Name *</Label>
                 <Input
@@ -214,9 +211,7 @@ export function ReEnergisationSheet({
               className="w-full h-12 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
               <Power className="h-5 w-5 mr-2" />
-              {updateMutation.isPending
-                ? "Updating..."
-                : "Confirm Re-energisation"}
+              {updateMutation.isPending ? 'Updating...' : 'Confirm Re-energisation'}
             </Button>
           </div>
         </div>
