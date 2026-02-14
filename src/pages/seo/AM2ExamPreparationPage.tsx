@@ -26,17 +26,17 @@ const faqs = [
   {
     question: 'How long does the AM2 assessment take?',
     answer:
-      'The AM2 assessment typically takes a full day, approximately 6 hours of practical work plus briefings and breaks. The time is split across the four main tasks: consumer unit installation, ring final circuit, one-way and two-way lighting circuit, and fault finding on a pre-built faulty circuit. Each task has its own time allocation, and you must complete all tasks within the allowed time. Time management is one of the most critical skills — many candidates fail not because of poor workmanship but because they run out of time. Elec-Mate AM2 mock exercises include realistic time limits so you can practise working under pressure.',
+      'The duration depends on which version you are taking. The standard AM2 involves approximately 8.5 hours of practical work. AM2S (for apprentices on the Installation and Maintenance standard) takes approximately 16.5 hours over 2.5 days, as it includes additional containment tasks such as steel and PVC conduit installation. AM2E (for apprentices on the Electrotechnical standard from September 2023) has a similar structure. All versions cover installation, inspection and testing, and fault finding. Each task has its own time allocation, and you must complete all tasks within the allowed time. Time management is one of the most critical skills — many candidates fail not because of poor workmanship but because they run out of time. Elec-Mate AM2 mock exercises include realistic time limits so you can practise working under pressure.',
   },
   {
     question: 'What is the AM2 pass rate?',
     answer:
-      'The AM2 pass rate varies between assessment centres but is generally estimated at around 60-70% on first attempt. The most common reasons for failure are poor terminations (loose connections, incorrect torque, exposed copper), running over time on one or more tasks, incorrect wiring of the two-way lighting circuit, failure to follow safe isolation procedures during fault finding, and incomplete or inaccurate test results. Preparing thoroughly with timed practice exercises significantly improves your chances of passing first time.',
+      "NET does not publish official pass rate figures, but a significant number of candidates do not pass on their first attempt. NET's own survey data shows that 54% of candidates who failed said they were less than fully prepared, with fault finding and inspection/testing being the most challenging areas. The most common reasons for failure are poor terminations (loose connections, incorrect torque, exposed copper), running over time on one or more tasks, incorrect wiring of the two-way lighting circuit, failure to follow safe isolation procedures during fault finding, and incomplete or inaccurate test results. Preparing thoroughly with timed practice exercises significantly improves your chances of passing first time.",
   },
   {
     question: 'What happens if I fail the AM2?',
     answer:
-      'If you fail the AM2, you will receive a report detailing which areas you did not meet the required standard. You can rebook and retake the assessment, though you will need to pay the full assessment fee again (typically between 500 and 700 pounds). There is no mandatory waiting period between attempts, but most candidates benefit from taking time to address the specific areas of weakness identified in their feedback before rebooking. JIB/NET recommend booking your retake promptly while the feedback is fresh.',
+      'If you fail the AM2, you will receive a report detailing which areas you did not meet the required standard. You can rebook and retake the assessment, though you will need to pay the full assessment fee again (£885 for the standard AM2, or £965 for AM2S/AM2E — fees from April 2026). There is no mandatory waiting period between attempts, but most candidates benefit from taking time to address the specific areas of weakness identified in their feedback before rebooking. NET recommend booking your retake promptly while the feedback is fresh.',
   },
   {
     question: 'Do I need to bring my own tools to the AM2?',
@@ -237,12 +237,15 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The AM2 is the Assessment of Competence in Electrical Installation, commonly known as
-              the AM2 or AM2S (the Scottish equivalent). It is a practical assessment that
-              demonstrates you can safely and competently carry out electrical installation work to
-              the standard required of a qualified electrician. Passing the AM2 is the final step in
-              becoming a fully qualified Installation Electrician and is required to obtain the JIB
-              ECS Gold Card.
+              The AM2 is the Assessment of Competence in Electrical Installation. There are three
+              versions: the standard <strong>AM2</strong> (for candidates with a Level 3 NVQ),{' '}
+              <strong>AM2S</strong> (for apprentices on the Installation and Maintenance standard —
+              includes additional conduit tasks and takes approximately 16.5 hours over 2.5 days),
+              and <strong>AM2E</strong> (for apprentices on the Electrotechnical standard from
+              September 2023). All versions are practical assessments that demonstrate you can
+              safely and competently carry out electrical installation work to the standard required
+              of a qualified electrician. Passing the AM2 is the final step in becoming a fully
+              qualified Installation Electrician and is required to obtain the JIB ECS Gold Card.
             </p>
             <p>
               The AM2 is not a classroom exam — it is a hands-on practical assessment carried out in
@@ -272,8 +275,10 @@ export default function AM2ExamPreparationPage() {
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
               The AM2 assessment consists of four main practical tasks, plus testing and inspection
-              of your completed work. The total assessment time is approximately 6 hours. Each task
-              tests different skills, and you must demonstrate competence in all of them to pass.
+              of your completed work. The standard AM2 involves approximately 8.5 hours of practical
+              work, while AM2S takes approximately 16.5 hours over 2.5 days (due to additional
+              containment tasks). Each task tests different skills, and you must demonstrate
+              competence in all of them to pass.
             </p>
           </div>
           <div className="space-y-4">

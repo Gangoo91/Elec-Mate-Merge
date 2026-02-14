@@ -52,12 +52,12 @@ const faqs = [
   {
     question: 'How long is the AM2 assessment?',
     answer:
-      'The AM2 assessment is typically completed over two days at a NET assessment centre. Day one covers the installation task, where you build a working electrical installation to a given specification. Day two covers inspection and testing of your completed installation, plus a separate fault diagnosis exercise on a pre-wired rig. The exact timings vary, but you should expect approximately 6 hours of assessed practical work per day. Time management is critical — the assessors will not extend the clock if you fall behind. Candidates who finish early should use the remaining time to double-check their work, verify connections, and review their test results before submitting.',
+      'The duration depends on which version you take. The standard AM2 involves approximately 8.5 hours of practical work and is typically completed in a single extended session. AM2S (for apprentices on the Installation and Maintenance standard) takes approximately 16.5 hours over 2.5 days, as it includes additional containment tasks such as steel and PVC conduit installation. AM2E (for apprentices on the Electrotechnical standard from September 2023) has a similar extended structure. All versions cover installation, inspection and testing, and fault diagnosis. Time management is critical — the assessors will not extend the clock if you fall behind. Candidates who finish early should use the remaining time to double-check their work, verify connections, and review their test results before submitting.',
   },
   {
     question: 'What happens if I fail the AM2?',
     answer:
-      'If you fail the AM2, you can rebook and retake it. There is no limit on the number of attempts, but each attempt costs money (typically £450 to £550 depending on the assessment centre) and you will need to wait for an available slot. Your assessor will provide feedback on the areas where you did not meet the standard, and you should focus your revision on those specific areas before rebooking. Many training providers offer AM2 preparation courses that include mock assessments on realistic rigs — these are well worth the investment if you have failed previously. Common reasons for failure include poor cable termination quality, incorrect testing sequences, failure to identify all faults in the fault diagnosis exercise, and running out of time.',
+      'If you fail the AM2, you can rebook and retake it. There is no limit on the number of attempts, but each attempt requires the full fee (£885 for the standard AM2, or £965 for AM2S/AM2E — fees from April 2026) and you will need to wait for an available slot. Your assessor will provide feedback on the areas where you did not meet the standard, and you should focus your revision on those specific areas before rebooking. Many training providers offer AM2 preparation courses that include mock assessments on realistic rigs — these are well worth the investment if you have failed previously. Common reasons for failure include poor cable termination quality, incorrect testing sequences, failure to identify all faults in the fault diagnosis exercise, and running out of time.',
   },
   {
     question: 'What tools do I need to bring to the AM2?',
@@ -174,16 +174,18 @@ const sections = [
     content: (
       <>
         <p>
-          The AM2 is split into three assessed components, typically completed over two days at the
-          assessment centre:
+          The AM2 is split into three assessed components. The standard AM2 involves approximately
+          8.5 hours of practical work. AM2S (for apprentices on the Installation and Maintenance
+          standard) takes approximately 16.5 hours over 2.5 days, as it includes additional
+          containment tasks such as steel and PVC conduit installation. The components are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation (Day 1)</strong> — You are given a specification and must build
-                a working electrical installation from scratch. This includes mounting a consumer
+                <strong>Installation</strong> — You are given a specification and must build a
+                working electrical installation from scratch. This includes mounting a consumer
                 unit, running cables to specified routes, terminating at accessories (sockets,
                 switches, light fittings), and ensuring the installation is mechanically sound and
                 electrically correct. The installation must comply with BS 7671 and the given design
@@ -193,23 +195,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection and Testing (Day 2)</strong> — You inspect and test the
-                installation you built on Day 1. This includes visual inspection, dead testing
-                (continuity of protective conductors, continuity of ring final circuit conductors,
-                insulation resistance), and live testing (polarity, earth fault loop impedance,
-                prospective fault current, RCD operation). You must record all results on the
-                correct test forms and determine whether the installation is satisfactory.
+                <strong>Inspection and Testing</strong> — You inspect and test the installation you
+                built. This includes visual inspection, dead testing (continuity of protective
+                conductors, continuity of ring final circuit conductors, insulation resistance), and
+                live testing (polarity, earth fault loop impedance, prospective fault current, RCD
+                operation). You must record all results on the correct test forms and determine
+                whether the installation is satisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fault Diagnosis (Day 2)</strong> — You are presented with a pre-wired rig
-                that has deliberate faults introduced. You must use a systematic approach to
-                identify each fault, diagnose the cause, and state the required remedial action. The
-                faults are realistic: open circuits, short circuits, reversed polarity, missing
-                earths, incorrect connections. You are assessed on your method as much as your
-                answers.
+                <strong>Fault Diagnosis</strong> — You are presented with a pre-wired rig that has
+                deliberate faults introduced. You must use a systematic approach to identify each
+                fault, diagnose the cause, and state the required remedial action. The faults are
+                realistic: open circuits, short circuits, reversed polarity, missing earths,
+                incorrect connections. You are assessed on your method as much as your answers.
               </span>
             </li>
           </ul>

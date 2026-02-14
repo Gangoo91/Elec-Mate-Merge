@@ -34,7 +34,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The AM2 (Achievement Measurement 2) is a full-day practical assessment covering safe isolation, consumer unit build, ring final circuit, lighting circuit wiring, fault finding, and testing. It is the final practical hurdle before you qualify.',
+  'The AM2 (Achievement Measurement 2) is a practical assessment covering safe isolation, consumer unit build, ring final circuit, lighting circuit wiring, fault finding, and testing. The standard AM2 takes approximately 8.5 hours; AM2S (for apprentices) takes approximately 16.5 hours over 2.5 days. It is the final practical hurdle before you qualify.',
   'Time management is the single biggest cause of failure. Practise every task under timed conditions until you can finish with time to spare. Rushing causes mistakes; preparation creates speed.',
   'Safe isolation is an automatic fail if done incorrectly. The prove-test-prove procedure must be second nature — every single time, no shortcuts. Assessors watch this step closely.',
   'Bring your own complete toolkit and calibrated test instruments. Check everything the day before — flat batteries, blown fuses in test leads, or a missing proving unit will cost you on the day.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How long does the AM2 take and how is the time split?',
     answer:
-      'The AM2 assessment is a full-day practical test lasting approximately 6 hours of working time, plus briefings and breaks. The time is allocated across the four tasks, with each task having its own time limit. The consumer unit installation and ring final circuit typically take the longest, with fault finding and testing allocated shorter but still demanding time slots. The exact time allocation can vary slightly between assessment centres, but you should expect approximately 90 minutes for the consumer unit, 90 minutes for the ring final, 60 minutes for the lighting circuit, and 60 minutes for fault finding and testing. These times are tight — most candidates use every available minute. Practising under timed conditions is essential because the time pressure on the day is real.',
+      'The duration depends on which version you take. The standard AM2 involves approximately 8.5 hours of practical work. AM2S (for apprentices on the Installation and Maintenance standard) takes approximately 16.5 hours over 2.5 days, as it includes additional containment tasks such as steel and PVC conduit installation. AM2E (for apprentices on the Electrotechnical standard from September 2023) has a similar extended structure. The time is allocated across the tasks — installation, testing, and fault finding — with each having its own time limit. These times are tight — most candidates use every available minute. Practising under timed conditions is essential because the time pressure on the day is real.',
   },
   {
     question: 'What are the most common reasons people fail the AM2?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'How much does the AM2 assessment cost?',
     answer:
-      'The AM2 assessment fee is typically between 500 and 700 pounds, depending on the assessment centre and whether any additional services (such as a pre-assessment workshop) are included. If you fail and need to retake, you must pay the full fee again — there is no reduced rate for retakes. This is why thorough preparation is so important: a first-time pass saves you both the cost of a retake and the delay in qualifying. Some employers cover the AM2 fee for their apprentices as part of the apprenticeship programme. If you are self-funding, check whether your training provider offers any financial support or payment plans. The assessment must be booked through an approved centre — you can find your nearest centre on the NET (National Electrotechnical Training) website.',
+      'From April 2026, the AM2 assessment fee is £885 for the standard AM2, or £965 for AM2S and AM2E. If you fail and need to retake, you must pay the full fee again — there is no reduced rate for retakes. This is why thorough preparation is so important: a first-time pass saves you both the cost of a retake and the delay in qualifying. Some employers cover the AM2 fee for their apprentices as part of the apprenticeship programme. If you are self-funding, check whether your training provider offers any financial support or payment plans. The assessment must be booked through an approved centre — you can find your nearest centre on the NET (National Electrotechnical Training) website.',
   },
 ];
 
@@ -156,9 +156,10 @@ const sections = [
           circuits, testing and inspecting completed work, and finding faults on existing circuits.
         </p>
         <p>
-          The pass rate for the AM2 is estimated at around 60 to 70 percent on first attempt. The
+          A significant number of candidates do not pass on their first attempt — NET's own data
+          shows that 54% of candidates who failed said they were less than fully prepared. The
           majority of failures are preventable with the right preparation — which is exactly what
-          this guide and Elec-Mate AM2 Simulator are designed to deliver.
+          this guide and Elec-Mate's AM2 Simulator are designed to deliver.
         </p>
       </>
     ),
@@ -170,8 +171,10 @@ const sections = [
       <>
         <p>
           The AM2 assessment consists of four main practical tasks, plus inspection and testing of
-          your completed work. The total assessment time is approximately 6 hours. Each task tests
-          different skills, and you must demonstrate competence in all of them to pass.
+          your completed work. The standard AM2 involves approximately 8.5 hours of practical work;
+          AM2S takes approximately 16.5 hours over 2.5 days due to additional containment tasks.
+          Each task tests different skills, and you must demonstrate competence in all of them to
+          pass.
         </p>
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">

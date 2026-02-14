@@ -65,12 +65,12 @@ const faqs = [
     question:
       'How much does it cost to train as an electrician through the adult retraining route?',
     answer:
-      'The total cost of qualifying through the adult retraining route typically ranges from £8,000 to £15,000, depending on the training provider and location. This breaks down roughly as follows: Level 2 Diploma in Electrical Installations (£2,000-£4,000), Level 3 Diploma in Electrical Installations (£3,000-£6,000), 18th Edition BS 7671 course (£250-£500), AM2 Assessment fee (£550-£700), tools and test equipment (£1,000-£3,000 for a basic professional kit), and textbooks and study materials (£100-£300). Some training providers offer package deals covering Level 2, Level 3, and 18th Edition together for £6,000-£10,000. Government funding may be available through Advanced Learner Loans for adults aged 19 and over, which can significantly reduce upfront costs. If you are studying at a college rather than a private provider, fees are often lower but the course may take longer. Be wary of providers advertising very low prices — check their pass rates, the quality of their practical facilities, and whether their qualifications are recognised by JIB and the competent person schemes.',
+      'The total cost of qualifying through the adult retraining route typically ranges from £8,000 to £15,000, depending on the training provider and location. This breaks down roughly as follows: Level 2 Diploma in Electrical Installations (£2,000-£4,000), Level 3 Diploma in Electrical Installations (£3,000-£6,000), 18th Edition BS 7671 course (£250-£500), AM2 Assessment fee (£885 from April 2026 for the standard AM2, or £965 for AM2S/AM2E), tools and test equipment (£1,000-£3,000 for a basic professional kit), and textbooks and study materials (£100-£300). Some training providers offer package deals covering Level 2, Level 3, and 18th Edition together for £6,000-£10,000. Government funding may be available through Advanced Learner Loans for adults aged 19 and over, which can significantly reduce upfront costs. If you are studying at a college rather than a private provider, fees are often lower but the course may take longer. Be wary of providers advertising very low prices — check their pass rates, the quality of their practical facilities, and whether their qualifications are recognised by JIB and the competent person schemes.',
   },
   {
     question: 'What is the AM2 assessment and how do I prepare for it?',
     answer:
-      'The AM2 (Achievement Measurement 2) is a practical assessment run by NET (National Electrotechnical Training) at their assessment centres across the UK. It is the final hurdle to becoming a qualified electrician and is required for JIB Approved Electrician grading. The assessment takes a full day (typically around 6-8 hours) and tests your ability to install, inspect, and test an electrical installation to a competent standard. You are given a scenario — usually involving a small installation with a consumer unit, ring circuit, radial circuit, lighting circuit, and possibly a shower or cooker circuit — and must complete the installation, carry out initial verification testing (including continuity, insulation resistance, polarity, earth fault loop impedance, and RCD testing), and complete the relevant certification (EIC or Minor Works). The assessment is marked on safety, workmanship, compliance with BS 7671, accuracy of test results, and completion of paperwork. The pass rate is approximately 70-75%. To prepare, practice your installation skills extensively, revise the testing procedures and acceptable values, and familiarise yourself with the certification forms. Elec-Mate includes an AM2 simulator that replicates the assessment scenarios and marking criteria.',
+      'The AM2 (Achievement Measurement 2) is a practical assessment run by NET (National Electrotechnical Training) at their assessment centres across the UK. It is the final hurdle to becoming a qualified electrician and is required for JIB Approved Electrician grading. There are three versions: the standard AM2 (approximately 8.5 hours of practical work), AM2S (for apprentices on the Installation and Maintenance standard — approximately 16.5 hours over 2.5 days, including additional conduit tasks), and AM2E (for apprentices on the Electrotechnical standard from September 2023). All versions test your ability to install, inspect, and test an electrical installation to a competent standard. You are given a scenario involving a small installation with a consumer unit, ring circuit, lighting circuit (including two-way switching), and must complete the installation, carry out initial verification testing (including continuity, insulation resistance, polarity, earth fault loop impedance, and RCD testing), complete the relevant certification, and diagnose faults on a pre-wired circuit. The assessment is marked on safety, workmanship, compliance with BS 7671, accuracy of test results, and completion of paperwork. The current fee is £885 for the standard AM2 or £965 for AM2S/AM2E (from April 2026). To prepare, practise your installation skills extensively, revise the testing procedures and acceptable values, and familiarise yourself with the certification forms. Elec-Mate includes an AM2 simulator that replicates the assessment scenarios and marking criteria.',
   },
   {
     question: 'What is a competent person scheme and do I need to join one?',
@@ -400,9 +400,15 @@ const sections = [
           centres across the UK, it is the final step to achieving JIB Approved Electrician status.
         </p>
         <p>
-          The assessment takes a full working day (approximately 6-8 hours) and is carried out under
-          exam conditions. You are given a realistic installation scenario and must complete the
-          work to a competent standard, including installation, testing, and certification.
+          There are three versions of the AM2. The standard <strong>AM2</strong> is for candidates
+          who hold a Level 3 NVQ and involves approximately 8.5 hours of practical work.{' '}
+          <strong>AM2S</strong> is the version for apprentices on the Installation and Maintenance
+          apprenticeship standard — it includes additional containment tasks (steel and PVC conduit
+          installation) and takes approximately 16.5 hours over 2.5 days. <strong>AM2E</strong> is
+          for apprentices on the newer Electrotechnical apprenticeship standard (from September 2023
+          onwards). All three versions are carried out under exam conditions at a NET assessment
+          centre. You are given a realistic installation scenario and must complete the work to a
+          competent standard, including installation, testing, and certification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">What the AM2 Assessment Covers</h3>
@@ -451,11 +457,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          The AM2 pass rate is approximately 70-75%. The most common reasons for failure are poor
-          safe isolation procedure, inaccurate test results, incomplete certification, and poor
-          workmanship (loose connections, untidy cable runs, incorrect gland sizes). Practice is the
-          key to passing — the more installations you complete before the assessment, the more
-          confident and efficient you will be on the day.
+          A significant number of candidates do not pass on their first attempt. The most common
+          reasons for failure are poor safe isolation procedure, inaccurate test results, incomplete
+          certification, time management, and poor workmanship (loose connections, untidy cable
+          runs, incorrect gland sizes). NET's own data shows that 54% of candidates who failed said
+          they were less than fully prepared, with fault finding and inspection/testing being the
+          most challenging areas. Practice is the key to passing — the more installations you
+          complete before the assessment, the more confident and efficient you will be on the day.
         </p>
         <SEOAppBridge
           title="AM2 Simulator"
