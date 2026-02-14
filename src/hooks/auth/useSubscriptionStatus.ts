@@ -153,7 +153,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           body: {},
         });
         const timeoutPromise = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Subscription check timed out')), 5000)
+          setTimeout(() => reject(new Error('Subscription check timed out')), 10000)
         );
         const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
 
@@ -211,11 +211,23 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           continue;
         }
         console.error('Error in checkSubscriptionStatus:', message);
-        capturePaymentError(error instanceof Error ? error : new Error(message), {
-          userId: profile?.id,
-          context: 'checkSubscriptionStatus',
-          attempt: attempt + 1,
-        });
+        // Timeout/network errors are transient — don't escalate to fatal payment error
+        if (/timed out|fetch|network/i.test(message)) {
+          captureEdgeFunctionError(
+            error instanceof Error ? error : new Error(message),
+            'check-subscription',
+            {
+              userId: profile?.id,
+              attempt: attempt + 1,
+            }
+          );
+        } else {
+          capturePaymentError(error instanceof Error ? error : new Error(message), {
+            userId: profile?.id,
+            context: 'checkSubscriptionStatus',
+            attempt: attempt + 1,
+          });
+        }
         setState((prev) => ({
           ...prev,
           isCheckingStatus: false,

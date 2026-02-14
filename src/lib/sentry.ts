@@ -1,28 +1,28 @@
-import * as Sentry from "@sentry/react";
+import * as Sentry from '@sentry/react';
 
 export function initSentry() {
   // Only initialize in production or if explicitly enabled
-  if (import.meta.env.PROD || import.meta.env.VITE_SENTRY_DEV === "true") {
+  if (import.meta.env.PROD || import.meta.env.VITE_SENTRY_DEV === 'true') {
     const dsn = import.meta.env.VITE_SENTRY_DSN;
 
     if (!dsn) {
-      console.warn("[Sentry] No DSN configured - error tracking disabled");
+      console.warn('[Sentry] No DSN configured - error tracking disabled');
       return;
     }
 
     // Generate release version from build time or use env variable
-    const release = import.meta.env.VITE_SENTRY_RELEASE ||
-      `elec-mate@${new Date().toISOString().split('T')[0]}`;
+    const release =
+      import.meta.env.VITE_SENTRY_RELEASE || `elec-mate@${new Date().toISOString().split('T')[0]}`;
 
     Sentry.init({
       dsn,
-      environment: import.meta.env.PROD ? "production" : "development",
+      environment: import.meta.env.PROD ? 'production' : 'development',
       release,
 
       // Only send errors from your domains
       allowUrls: [
-        "elec-mate.com",
-        "www.elec-mate.com",
+        'elec-mate.com',
+        'www.elec-mate.com',
         /https?:\/\/(www\.)?elec-mate\.com/,
         /localhost/,
       ],
@@ -47,17 +47,17 @@ export function initSentry() {
         /^moz-extension:\/\//,
 
         // User-initiated cancellations
-        "AbortError",
-        "The user aborted a request",
+        'AbortError',
+        'The user aborted a request',
 
         // Expected auth errors - user input issues, not bugs
-        "User already registered",
-        "Invalid login credentials",
-        "New password should be different from the old password",
-        "Email not confirmed",
-        "Invalid email or password",
-        "Password should be at least",
-        "Unable to validate email address",
+        'User already registered',
+        'Invalid login credentials',
+        'New password should be different from the old password',
+        'Email not confirmed',
+        'Invalid email or password',
+        'Password should be at least',
+        'Unable to validate email address',
         /AuthWeakPasswordError/i,
         /weak.*password/i,
         /password.*weak/i,
@@ -65,7 +65,7 @@ export function initSentry() {
         // Network errors - user's connection, not our bug
         /AuthRetryableFetchError/i,
         /Load failed.*supabase/i,
-        "Failed to fetch",
+        'Failed to fetch',
 
         // Chunk loading errors (deployment cache) - handled by auto-refresh
         /dynamically imported module/i,
@@ -73,13 +73,16 @@ export function initSentry() {
         /Loading chunk .* failed/i,
         /Loading CSS chunk .* failed/i,
         /is not a valid JavaScript MIME type/,
-        "ChunkLoadError",
+        'ChunkLoadError',
 
         // Safari-specific noise
         /cancelled/i,
 
         // ResizeObserver noise (browser bug, not actionable)
-        "ResizeObserver loop",
+        'ResizeObserver loop',
+
+        // Capacitor bridge in non-native WebViews (Facebook/Instagram in-app browsers)
+        /webkit\.messageHandlers/i,
       ],
 
       // Process events before sending
@@ -116,11 +119,11 @@ export function initSentry() {
           blockAllMedia: false,
         }),
         // Capture console.error and console.warn automatically
-        Sentry.consoleLoggingIntegration({ levels: ["error", "warn"] }),
+        Sentry.consoleLoggingIntegration({ levels: ['error', 'warn'] }),
       ],
     });
 
-    console.log("[Sentry] Initialized");
+    console.log('[Sentry] Initialized');
   }
 }
 
@@ -151,7 +154,7 @@ export function addBreadcrumb(message: string, category: string, data?: Record<s
     message,
     category,
     data,
-    level: "info",
+    level: 'info',
   });
 }
 
@@ -161,10 +164,7 @@ export function addBreadcrumb(message: string, category: string, data?: Record<s
 
 // Track key user journeys with transactions
 export function startJourney(name: string, data?: Record<string, unknown>) {
-  return Sentry.startSpan(
-    { op: 'user.journey', name, attributes: data },
-    (span) => span
-  );
+  return Sentry.startSpan({ op: 'user.journey', name, attributes: data }, (span) => span);
 }
 
 // Pre-defined journeys for consistency
@@ -172,9 +172,11 @@ export const journeys = {
   signup: () => Sentry.startSpan({ op: 'user.journey', name: 'Signup Flow' }, (span) => span),
   login: () => Sentry.startSpan({ op: 'user.journey', name: 'Login Flow' }, (span) => span),
   createQuote: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Quote' }, (span) => span),
-  createInvoice: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Invoice' }, (span) => span),
+  createInvoice: () =>
+    Sentry.startSpan({ op: 'user.journey', name: 'Create Invoice' }, (span) => span),
   payment: () => Sentry.startSpan({ op: 'user.journey', name: 'Payment Flow' }, (span) => span),
-  aiTool: (toolName: string) => Sentry.startSpan({ op: 'user.journey', name: `AI Tool: ${toolName}` }, (span) => span),
+  aiTool: (toolName: string) =>
+    Sentry.startSpan({ op: 'user.journey', name: `AI Tool: ${toolName}` }, (span) => span),
 };
 
 // ============================================
@@ -209,7 +211,11 @@ export function captureApiError(error: Error, endpoint: string, context?: Record
 }
 
 // Track Edge Function errors
-export function captureEdgeFunctionError(error: Error, functionName: string, context?: Record<string, unknown>) {
+export function captureEdgeFunctionError(
+  error: Error,
+  functionName: string,
+  context?: Record<string, unknown>
+) {
   Sentry.captureException(error, {
     level: 'error',
     tags: { category: 'edge_function', function_name: functionName },
@@ -246,8 +252,13 @@ export function trackMilestone(milestone: string, data?: Record<string, unknown>
 // ============================================
 
 // Track slow operations
-export function trackSlowOperation(operationName: string, durationMs: number, context?: Record<string, unknown>) {
-  if (durationMs > 5000) { // Log operations over 5 seconds
+export function trackSlowOperation(
+  operationName: string,
+  durationMs: number,
+  context?: Record<string, unknown>
+) {
+  if (durationMs > 5000) {
+    // Log operations over 5 seconds
     Sentry.addBreadcrumb({
       message: `Slow operation: ${operationName} (${durationMs}ms)`,
       category: 'performance',
