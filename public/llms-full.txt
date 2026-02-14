@@ -1,6 +1,6 @@
 # Elec-Mate — Full Product Documentation for AI
 
-> The complete digital platform for UK electricians. Training, AI tools, certificates, calculators, and business management.
+> The complete digital platform for UK electricians. Training, AI tools, certificates, calculators, and business management — all in one app.
 
 ## Product Overview
 
@@ -347,11 +347,11 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 
 ### Elec-Mate vs iCertifi
 - iCertifi: Certificates only (EICR, EIC, Minor Works). No calculators. No AI tools. No training. No business management. Native app only (no web version). Priced per certificate.
-- Elec-Mate: 8 certificate types + 70 calculators + 8 Elec-AI agents + 12 AI tools + 36+ training courses + full business management suite + Xero &amp; QuickBooks. Web app + native. Flat monthly subscription with unlimited certificates.
+- Elec-Mate: 8 certificate types + 70 calculators + 8 Elec-AI agents + 12 AI tools + 36+ training courses + full business management suite + Xero & QuickBooks. Web app + native. Flat monthly subscription with unlimited certificates.
 
 ### Elec-Mate vs CertsApp
 - CertsApp: Certificates and basic calculations. No AI tools. No training platform. No business management. Limited to iOS and Android.
-- Elec-Mate: Everything CertsApp offers plus 8 Elec-AI agents, 12 AI tools, 36+ training courses, 70 calculators, employer dashboard, mental health support, Xero &amp; QuickBooks integrations, and works on any device via PWA.
+- Elec-Mate: Everything CertsApp offers plus 8 Elec-AI agents, 12 AI tools, 36+ training courses, 70 calculators, employer dashboard, mental health support, Xero & QuickBooks integrations, and works on any device via PWA.
 
 ### Elec-Mate vs Generic Calculator Apps
 - Generic apps: Usually one or two calculators. No BS 7671 compliance verification. No certificates. No AI. No training.
@@ -383,6 +383,486 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 |------|-------|----------|
 | Free Trial | GBP 0 for 7 days | All features |
 | Monthly | From GBP 4.99/month | All features, unlimited certificates |
+
+---
+
+## Complete Page Directory (401 Pages)
+
+Below is every page on elec-mate.com, grouped by category with descriptions.
+
+---
+
+### Certificates & Compliance
+
+- [EICR Certificate](https://elec-mate.com/tools/eicr-certificate) — Complete guide to Electrical Installation Condition Reports with digital certificate creation
+- [EIC Certificate](https://elec-mate.com/tools/eic-certificate) — Digital Electrical Installation Certificate for new installations and additions
+- [Minor Works Certificate](https://elec-mate.com/tools/minor-works-certificate) — Quick digital Minor Works Certificate for minor electrical work not requiring a new circuit
+- [Emergency Lighting Certificate](https://elec-mate.com/tools/emergency-lighting-certificate) — BS 5266-1 compliant emergency lighting test and certification tool
+- [Fire Alarm Certificate](https://elec-mate.com/tools/fire-alarm-certificate) — BS 5839-1 compliant fire alarm system certification and test records
+- [PAT Testing](https://elec-mate.com/tools/pat-testing) — Portable Appliance Testing records with pass/fail determination per IET Code of Practice
+- [EV Charger Certificate](https://elec-mate.com/tools/ev-charger-certificate) — EV charge point installation certificate compliant with BS 7671 Section 722
+- [Solar PV Certificate](https://elec-mate.com/tools/solar-pv-certificate) — Solar photovoltaic installation certificate with DC/AC documentation and G98/G99 compliance
+- [Digital Certificates App](https://elec-mate.com/tools/digital-certificates-app) — Overview of all digital electrical certificates available in the Elec-Mate app
+- [EICR Cost UK](https://elec-mate.com/guides/eicr-cost-uk) — Guide to typical EICR pricing across the UK for domestic and commercial properties
+- [EICR for Landlords](https://elec-mate.com/guides/eicr-for-landlords) — Landlord obligations for Electrical Installation Condition Reports under UK law
+- [EICR for Commercial Premises](https://elec-mate.com/guides/eicr-for-commercial-premises) — Commercial EICR requirements, intervals, and compliance guide
+- [Commercial EICR Guide](https://elec-mate.com/guides/commercial-eicr-guide) — Comprehensive guide to conducting EICRs on commercial properties
+- [EICR Fail on Rented Property](https://elec-mate.com/guides/eicr-fail-rented-property) — What happens when an EICR fails on a rental property and landlord obligations
+- [EICR Limitations](https://elec-mate.com/guides/eicr-limitations) — Understanding the limitations section of an EICR and how to record them
+- [EICR Observation Codes Explained](https://elec-mate.com/guides/eicr-observation-codes-explained) — Detailed explanation of C1, C2, C3, and FI observation codes
+- [BS 7671 Observation Codes](https://elec-mate.com/guides/bs7671-observation-codes) — Reference guide to BS 7671 observation code classifications
+- [EICR Schedule of Inspections](https://elec-mate.com/guides/eicr-schedule-of-inspections) — How to complete the schedule of inspections section of an EICR
+- [EICR vs EIC Difference](https://elec-mate.com/guides/eicr-vs-eic-difference) — Clear explanation of when to use an EICR versus an EIC
+- [Minor Works vs EIC](https://elec-mate.com/guides/minor-works-vs-eic) — When to issue a Minor Works Certificate versus a full EIC
+- [Unsatisfactory EICR — What Next](https://elec-mate.com/guides/unsatisfactory-eicr-what-next) — Steps to take after an EICR is classified as unsatisfactory
+- [How to Fill in an EICR](https://elec-mate.com/guides/how-to-fill-in-eicr) — Step-by-step guide to correctly completing an EICR form
+- [Electrical Certificate Types UK](https://elec-mate.com/guides/electrical-certificate-types-uk) — Overview of all electrical certificate types used in the UK
+- [Electrical Compliance Certificate](https://elec-mate.com/guides/electrical-compliance-certificate) — Guide to electrical compliance certification requirements
+- [Electrical Certificate Retention](https://elec-mate.com/guides/electrical-certificate-retention) — How long to keep electrical certificates and record retention requirements
+- [Digital vs Paper Certificates](https://elec-mate.com/guides/digital-vs-paper-certificates) — Comparison of digital and paper-based electrical certification
+- [NICEIC Certificate Requirements](https://elec-mate.com/guides/niceic-certificate-requirements) — NICEIC certification requirements and documentation standards
+- [NAPIT Certificate Guide](https://elec-mate.com/guides/napit-certificate-guide) — Guide to NAPIT certification processes and requirements
+- [Emergency Lighting Certificate Guide](https://elec-mate.com/guides/emergency-lighting-certificate-guide) — Complete guide to emergency lighting certification under BS 5266
+- [EV Charger Certificate Requirements](https://elec-mate.com/guides/ev-charger-certificate-requirements) — Certification requirements for EV charger installations in the UK
+- [Fire Alarm Certificate Requirements](https://elec-mate.com/guides/fire-alarm-certificate-requirements) — Fire alarm certification requirements under BS 5839
+- [Solar PV Certificate Requirements](https://elec-mate.com/guides/solar-pv-certificate-requirements) — Certification and documentation requirements for solar PV installations
+- [Electrical Handover Documentation](https://elec-mate.com/guides/electrical-handover-documentation) — What documentation to provide when handing over an electrical installation
+
+### Electrical Calculators
+
+- [Cable Sizing Calculator](https://elec-mate.com/tools/cable-sizing-calculator) — Free BS 7671 cable sizing calculator with correction factors and voltage drop
+- [Voltage Drop Calculator](https://elec-mate.com/tools/voltage-drop-calculator) — Calculate voltage drop using mV/A/m method for single-phase and three-phase circuits
+- [Earth Loop Impedance Calculator](https://elec-mate.com/tools/earth-loop-impedance-calculator) — Calculate Zs values and verify against BS 7671 maximum values
+- [Prospective Fault Current Calculator](https://elec-mate.com/tools/prospective-fault-current-calculator) — Calculate PSCC and PEFC to verify protective device breaking capacity
+- [Adiabatic Equation Calculator](https://elec-mate.com/tools/adiabatic-equation-calculator) — Calculate minimum CPC size using the adiabatic equation per BS 7671
+- [Ring Circuit Calculator](https://elec-mate.com/tools/ring-circuit-calculator) — Ring final circuit continuity testing calculator for r1, rn, and r2 values
+- [Conduit Fill Calculator](https://elec-mate.com/tools/conduit-fill-calculator) — Calculate conduit fill using cable factor method per BS 7671 Appendix 12
+- [Trunking Fill Calculator](https://elec-mate.com/tools/trunking-fill-calculator) — Calculate trunking fill percentage with 45% maximum fill rule
+- [Max Demand Calculator](https://elec-mate.com/tools/max-demand-calculator) — Calculate maximum demand with diversity factors per BS 7671 Table 1B
+- [Power Factor Calculator](https://elec-mate.com/tools/power-factor-calculator) — Calculate true power, apparent power, reactive power and PF correction
+- [Three Phase Power Calculator](https://elec-mate.com/tools/three-phase-power-calculator) — Three-phase power calculations for balanced and unbalanced loads
+- [Cable Volt Drop Three Phase](https://elec-mate.com/tools/cable-volt-drop-three-phase) — Three-phase voltage drop calculation tool
+- [Disconnection Time Calculator](https://elec-mate.com/tools/disconnection-time-calculator) — Calculate and verify automatic disconnection times per BS 7671
+- [Diversity Factor Calculator](https://elec-mate.com/tools/diversity-factor-calculator) — Apply diversity factors to electrical load calculations
+- [Earth Rod Resistance Calculator](https://elec-mate.com/tools/earth-rod-resistance-calculator) — Calculate earth rod resistance for TT earthing arrangements
+- [Motor Starting Current Calculator](https://elec-mate.com/tools/motor-starting-current-calculator) — Calculate motor starting current and inrush for protective device selection
+- [Lighting Lux Calculator](https://elec-mate.com/tools/lighting-lux-calculator) — Calculate lighting levels in lux for different room types and applications
+- [Power Consumption Calculator](https://elec-mate.com/tools/power-consumption-calculator) — Calculate power consumption and energy costs for electrical equipment
+- [Cable Derating Calculator](https://elec-mate.com/tools/cable-derating-calculator) — Apply derating factors for ambient temperature, grouping, and insulation
+- [Cable Tray Sizing Calculator](https://elec-mate.com/tools/cable-tray-sizing-calculator) — Size cable trays based on cable quantity and cross-sectional area
+- [Circuit Breaker Sizing Calculator](https://elec-mate.com/tools/circuit-breaker-sizing-calculator) — Select correct MCB/RCBO rating based on circuit design current
+- [Busbar Sizing Calculator](https://elec-mate.com/tools/busbar-sizing-calculator) — Calculate busbar dimensions based on current carrying requirements
+- [Transformer Sizing Calculator](https://elec-mate.com/tools/transformer-sizing-calculator) — Size transformers based on load requirements and impedance calculations
+- [Solar Panel Sizing Calculator](https://elec-mate.com/tools/solar-panel-sizing-calculator) — Size solar PV arrays based on energy requirements and roof space
+- [Battery Backup Calculator](https://elec-mate.com/tools/battery-backup-calculator) — Calculate battery backup capacity and autonomy for UPS systems
+- [EV Charger Load Calculator](https://elec-mate.com/tools/ev-charger-load-calculator) — Calculate EV charger electrical load and supply requirements
+- [Electrical Load Schedule](https://elec-mate.com/tools/electrical-load-schedule) — Create detailed electrical load schedules for distribution boards
+- [Electrical Testing Calculators](https://elec-mate.com/tools/electrical-testing-calculators) — Suite of calculators for all BS 7671 testing procedures
+- [IP Rating Guide](https://elec-mate.com/tools/ip-rating-guide) — Complete IP (Ingress Protection) rating reference guide for enclosures
+
+### Testing & Inspection
+
+- [RCD Testing Guide](https://elec-mate.com/tools/rcd-testing-guide) — Complete guide to RCD testing procedures with trip time requirements
+- [Board Scanner](https://elec-mate.com/tools/board-scanner) — AI-powered consumer unit scanning and analysis tool
+- [Continuity Testing R1+R2](https://elec-mate.com/guides/continuity-testing-r1-r2) — How to perform continuity testing and record R1+R2 values correctly
+- [Insulation Resistance Testing](https://elec-mate.com/guides/insulation-resistance-testing) — Complete guide to insulation resistance testing procedures
+- [How to Test Insulation Resistance](https://elec-mate.com/guides/how-to-test-insulation-resistance) — Step-by-step insulation resistance testing instructions
+- [Insulation Resistance Minimum Values](https://elec-mate.com/guides/insulation-resistance-minimum-values) — BS 7671 minimum insulation resistance values reference table
+- [RCD Testing Procedure](https://elec-mate.com/guides/rcd-testing-procedure) — Correct procedure for testing RCDs including trip times and test currents
+- [Polarity Testing Guide](https://elec-mate.com/guides/polarity-testing-guide) — How to perform polarity testing on electrical installations
+- [Earth Electrode Testing](https://elec-mate.com/guides/earth-electrode-testing) — Procedures for testing earth electrodes on TT earthing systems
+- [Earth Fault Loop Impedance Explained](https://elec-mate.com/guides/earth-fault-loop-impedance-explained) — Plain-English explanation of earth fault loop impedance and Zs values
+- [Earth Fault Loop Impedance Calculation](https://elec-mate.com/guides/earth-fault-loop-impedance-calculation) — How to calculate Zs values for verification against BS 7671
+- [Earth Fault Loop Impedance Too High](https://elec-mate.com/guides/earth-fault-loop-impedance-too-high) — Troubleshooting high earth fault loop impedance readings
+- [Earth Loop Impedance Too High](https://elec-mate.com/guides/earth-loop-impedance-too-high) — Causes and remedies for excessive earth loop impedance
+- [Maximum Zs Values BS 7671](https://elec-mate.com/guides/maximum-zs-values-bs-7671) — Complete table of maximum Zs values from BS 7671 Tables 41.2-41.4
+- [Ze Values UK](https://elec-mate.com/guides/ze-values-uk) — Typical Ze values for UK earthing arrangements (TN-S, TN-C-S, TT)
+- [Prospective Fault Current Explained](https://elec-mate.com/guides/prospective-fault-current-explained) — Understanding PSCC and PEFC measurement and significance
+- [Testing Sequence Guide](https://elec-mate.com/guides/testing-sequence-guide) — Correct order for performing BS 7671 electrical tests
+- [Testing Three Phase Installation](https://elec-mate.com/guides/testing-three-phase-installation) — How to test three-phase electrical installations
+- [Dead vs Live Testing](https://elec-mate.com/guides/dead-vs-live-testing) — When to use dead testing versus live testing and safety requirements
+- [Functional Testing](https://elec-mate.com/guides/functional-testing) — Guide to functional testing of electrical installations
+- [Initial Verification](https://elec-mate.com/guides/initial-verification) — Complete guide to initial verification of new electrical installations
+- [Periodic Inspection](https://elec-mate.com/guides/periodic-inspection) — Guide to periodic inspection and testing of existing installations
+- [Electrical Inspection Checklist](https://elec-mate.com/guides/electrical-inspection-checklist) — Comprehensive checklist for electrical inspections
+- [Multifunction Tester Guide](https://elec-mate.com/guides/multifunction-tester-guide) — How to use a multifunction tester for BS 7671 testing
+- [Test Instruments Guide](https://elec-mate.com/guides/test-instruments-guide) — Guide to electrical test instruments and their correct use
+- [Electrical Tool Calibration](https://elec-mate.com/guides/electrical-tool-calibration) — Calibration requirements for electrical test instruments
+- [Fluke vs Megger](https://elec-mate.com/guides/fluke-vs-megger) — Comparison of Fluke and Megger test instruments for electricians
+- [Commissioning Electrical Installation](https://elec-mate.com/guides/commissioning-electrical-installation) — How to commission an electrical installation after completion
+- [PAT Testing Frequency](https://elec-mate.com/guides/pat-testing-frequency) — Recommended PAT testing intervals for different environments
+- [Residual Current Monitoring](https://elec-mate.com/guides/residual-current-monitoring) — Guide to residual current monitoring systems and applications
+- [Testing Procedures for Apprentices](https://elec-mate.com/guides/testing-procedures-for-apprentices) — Simplified guide to testing procedures for apprentice electricians
+- [Testing Procedures Apprentices](https://elec-mate.com/guides/testing-procedures-apprentices) — Testing procedures explained for electrical apprentices
+
+### Regulations & Standards
+
+- [BS 7671 18th Edition Guide](https://elec-mate.com/guides/bs-7671-18th-edition-guide) — Comprehensive guide to the 18th Edition IET Wiring Regulations
+- [BS 7671 Amendment 3 Changes](https://elec-mate.com/guides/bs-7671-amendment-3-changes) — Summary of changes introduced by Amendment 3:2024
+- [BS 7671 Amendment 4 2026](https://elec-mate.com/guides/bs-7671-amendment-4-2026) — Preview of expected Amendment 4 changes coming in 2026
+- [Regulation 530.3.201](https://elec-mate.com/guides/regulation-530-3-201) — Detailed explanation of Regulation 530.3.201 on bidirectional and unidirectional devices
+- [Appendix 4 Tables BS 7671](https://elec-mate.com/guides/appendix-4-tables-bs-7671) — Reference guide to Appendix 4 current-carrying capacity tables
+- [Correction Factors BS 7671](https://elec-mate.com/guides/correction-factors-bs-7671) — How to apply correction factors Ca, Cg, Ci, and Cf per BS 7671
+- [Reference Methods Cable Installation](https://elec-mate.com/guides/reference-methods-cable-installation) — Cable installation reference methods A through G explained
+- [Part P Building Regulations](https://elec-mate.com/guides/part-p-building-regulations) — Complete guide to Part P Building Regulations for electrical work
+- [Notifiable Electrical Work](https://elec-mate.com/guides/notifiable-electrical-work) — Which electrical work requires Part P notification to Building Control
+- [Non-Notifiable Electrical Work](https://elec-mate.com/guides/non-notifiable-electrical-work) — Electrical work that does not require Part P notification
+- [Building Regulations Electrical](https://elec-mate.com/guides/building-regulations-electrical) — Overview of all building regulations affecting electrical work
+- [Consumer Unit Regulations](https://elec-mate.com/guides/consumer-unit-regulations) — Regulations governing consumer unit installations including Amendment 3
+- [Spur Socket Regulations](https://elec-mate.com/guides/spur-socket-regulations) — Regulations and best practice for fused spur socket installations
+- [Outdoor Sockets Regulations](https://elec-mate.com/guides/outdoor-sockets-regulations) — Regulations for outdoor socket installations including IP ratings and RCD protection
+- [Garden Lighting Regulations](https://elec-mate.com/guides/garden-lighting-regulations) — Regulations governing garden and outdoor lighting installations
+- [Smoke Alarm Regulations 2022](https://elec-mate.com/guides/smoke-alarm-regulations-2022) — Updated smoke and carbon monoxide alarm regulations for England
+- [Electricity at Work Regulations](https://elec-mate.com/guides/electricity-at-work-regulations) — Guide to the Electricity at Work Regulations 1989
+- [BS 5266 Emergency Lighting Standard](https://elec-mate.com/guides/bs-5266-emergency-lighting-standard) — Overview of BS 5266 emergency lighting requirements
+- [BS 5839 Fire Alarm Standard](https://elec-mate.com/guides/bs-5839-fire-alarm-standard) — Overview of BS 5839 fire detection and alarm standard
+- [Electrical Regulations Timeline UK](https://elec-mate.com/guides/electrical-regulations-timeline-uk) — Timeline of UK electrical regulation changes and editions
+- [Electrical Wiring Regulations History](https://elec-mate.com/guides/electrical-wiring-regulations-history) — History of UK wiring regulations from inception to 18th Edition
+- [SPD Surge Protection Guide](https://elec-mate.com/guides/spd-surge-protection-guide) — Guide to surge protection device requirements under BS 7671
+- [Special Locations Part 7 BS 7671](https://elec-mate.com/guides/special-locations-part-7-bs-7671) — Overview of special location requirements in BS 7671 Part 7
+- [Swimming Pool Electrical Regulations](https://elec-mate.com/guides/swimming-pool-electrical-regulations) — BS 7671 Section 702 requirements for swimming pool installations
+- [Temporary Installations BS 7909](https://elec-mate.com/guides/temporary-installations-bs-7909) — Guide to BS 7909 temporary electrical installations
+- [IET Code of Practice EV](https://elec-mate.com/guides/iet-code-of-practice-ev) — IET Code of Practice for Electric Vehicle Charging Equipment Installation
+- [MCB Types B C D Explained](https://elec-mate.com/guides/mcb-types-b-c-d-explained) — Explanation of Type B, C, and D MCB tripping characteristics
+- [RCBO vs RCD MCB](https://elec-mate.com/guides/rcbo-vs-rcd-mcb) — Comparison of RCBOs versus separate RCD and MCB arrangements
+- [What Is a Circuit Breaker](https://elec-mate.com/guides/what-is-a-circuit-breaker) — Beginner-friendly explanation of how circuit breakers work
+- [What Is an RCD](https://elec-mate.com/guides/what-is-an-rcd) — Plain-English guide to residual current devices and how they protect
+- [What Is Earthing](https://elec-mate.com/guides/what-is-earthing) — Introduction to earthing principles and why they matter
+- [Earthing Arrangements](https://elec-mate.com/guides/earthing-arrangements) — Guide to TN-S, TN-C-S, and TT earthing systems in the UK
+- [Protective Earthing Bonding](https://elec-mate.com/guides/protective-earthing-bonding) — Guide to protective earthing and bonding requirements
+- [Supplementary Bonding](https://elec-mate.com/guides/supplementary-bonding) — When and how to install supplementary bonding conductors
+- [Bonding in Bathroom](https://elec-mate.com/guides/bonding-in-bathroom) — Supplementary bonding requirements in bathrooms under BS 7671
+- [How Electricity Works](https://elec-mate.com/guides/how-electricity-works) — Fundamental explanation of electrical principles for beginners
+- [Cable Colour Codes UK](https://elec-mate.com/guides/cable-colour-codes-uk) — UK cable colour code reference including old and new harmonised colours
+- [Electrical Acronyms Glossary](https://elec-mate.com/guides/electrical-acronyms-glossary) — Comprehensive glossary of electrical acronyms and abbreviations
+- [Electrical Symbols Chart](https://elec-mate.com/guides/electrical-symbols-chart) — Reference chart of standard electrical symbols used in wiring diagrams
+- [Radial Circuit Explained](https://elec-mate.com/guides/radial-circuit-explained) — How radial circuits work and when to use them
+- [Ring Main Explained](https://elec-mate.com/guides/ring-main-explained) — How ring final circuits work, including testing and fault finding
+- [Borrowed Neutral Explained](https://elec-mate.com/guides/borrowed-neutral-explained) — What a borrowed neutral is, how it occurs, and how to resolve it
+- [Max Demand Calculation Guide](https://elec-mate.com/guides/max-demand-calculation-guide) — Step-by-step guide to calculating maximum demand with diversity
+- [How to Size Cables BS 7671](https://elec-mate.com/guides/how-to-size-cables-bs-7671) — Step-by-step cable sizing procedure using BS 7671 tables
+- [Three Phase Calculations](https://elec-mate.com/guides/three-phase-calculations) — How to perform three-phase power and current calculations
+- [Electrical Design Guide](https://elec-mate.com/guides/electrical-design-guide) — Comprehensive guide to designing electrical installations
+- [HMO Electrical Requirements](https://elec-mate.com/guides/hmo-electrical-requirements) — Electrical requirements specific to Houses in Multiple Occupation
+- [New Build Electrical Standards](https://elec-mate.com/guides/new-build-electrical-standards) — Electrical standards and requirements for new build properties
+- [Electrical Quality Assurance](https://elec-mate.com/guides/electrical-quality-assurance) — Quality assurance processes for electrical installations
+
+### AI Tools
+
+- [AI Circuit Designer](https://elec-mate.com/tools/ai-circuit-designer) — AI-powered consumer unit and circuit schedule designer trained on BS 7671
+- [AI Cost Engineer](https://elec-mate.com/tools/ai-cost-engineer) — AI quotation generator using live UK trade pricing and labour benchmarks
+- [AI Installation Specialist](https://elec-mate.com/tools/ai-installation-specialist) — AI-guided step-by-step installation procedures for any electrical task
+- [AI Maintenance Specialist](https://elec-mate.com/tools/ai-maintenance-specialist) — AI agent for periodic inspection intervals and maintenance scheduling
+- [AI Health & Safety Agent](https://elec-mate.com/tools/ai-health-safety-agent) — AI RAMS generator and health & safety risk assessment tool
+- [AI Regulations Lookup](https://elec-mate.com/tools/ai-regulations-lookup) — Instant AI-powered BS 7671 regulation lookup with plain-English interpretations
+- [AI Tutor](https://elec-mate.com/tools/ai-tutor) — AI study coach for electrical exam preparation and personalised learning
+- [AI Electrician](https://elec-mate.com/tools/ai-electrician) — General-purpose AI assistant trained on BS 7671 and electrical best practice
+- [AI Fault Diagnosis](https://elec-mate.com/tools/ai-fault-diagnosis) — AI-powered electrical fault finding and troubleshooting assistance
+- [AI Diagram Builder](https://elec-mate.com/tools/ai-diagram-builder) — Generate circuit diagrams and wiring diagrams using AI
+- [AI Client Explainer](https://elec-mate.com/tools/ai-client-explainer) — Generate plain-English explanations of electrical work for customers
+- [AI Commissioning Specialist](https://elec-mate.com/tools/ai-commissioning-specialist) — AI-guided system commissioning procedures and documentation
+- [AI Component Identification](https://elec-mate.com/tools/ai-component-identification) — Identify electrical components from photos using AI visual analysis
+- [AI Installation Verification](https://elec-mate.com/tools/ai-installation-verification) — AI tool to check electrical installations against BS 7671 requirements
+- [AI Report Writer](https://elec-mate.com/tools/ai-report-writer) — Automated electrical report and documentation generation
+- [AI Wiring Instructions](https://elec-mate.com/tools/ai-wiring-instructions) — AI-generated step-by-step wiring guidance for any circuit type
+- [AI Method Statement Generator](https://elec-mate.com/tools/ai-method-statement-generator) — Automated method statement creation for electrical work
+- [AI Project Manager](https://elec-mate.com/tools/ai-project-manager) — AI-powered electrical project planning and management tool
+- [RAMS Generator](https://elec-mate.com/tools/rams-generator) — AI risk assessment and method statement generator for electrical work
+- [Electrical App with AI](https://elec-mate.com/tools/electrical-app-with-ai) — Overview of Elec-Mate's AI-powered features for electricians
+- [How AI Helps Electricians](https://elec-mate.com/guides/how-ai-helps-electricians) — Guide to how AI tools benefit electrical professionals on site
+- [AI Electrical Fault Finding](https://elec-mate.com/guides/ai-electrical-fault-finding) — How AI assists with electrical fault diagnosis and resolution
+- [AI vs Manual Electrical Design](https://elec-mate.com/guides/ai-vs-manual-electrical-design) — Comparison of AI-assisted and manual electrical circuit design
+- [AI for Electrical Apprentices](https://elec-mate.com/guides/ai-for-electrical-apprentices) — How apprentice electricians can use AI tools for learning and on-site support
+
+### Business Tools & Guides
+
+- [Job Profitability Calculator](https://elec-mate.com/tools/job-profitability-calculator) — Calculate profit margins and job profitability for electrical work
+- [Business Cost Calculator](https://elec-mate.com/tools/business-cost-calculator) — Calculate total business running costs including overheads and expenses
+- [Cash Flow Planner](https://elec-mate.com/tools/cash-flow-planner) — Plan and forecast cash flow for electrical contracting businesses
+- [Pricing Strategy Electrician](https://elec-mate.com/tools/pricing-strategy-electrician) — Develop competitive pricing strategies for electrical services
+- [Equipment ROI Calculator](https://elec-mate.com/tools/equipment-roi-calculator) — Calculate return on investment for electrical tools and equipment
+- [Capacity Planning Calculator](https://elec-mate.com/tools/capacity-planning-calculator) — Plan workforce capacity and job scheduling for electrical businesses
+- [Tax & NI Estimator](https://elec-mate.com/tools/tax-ni-estimator) — Estimate income tax and National Insurance contributions for electricians
+- [Staff Cost Calculator](https://elec-mate.com/tools/staff-cost-calculator) — Calculate fully loaded employment costs including NI, pension, and overheads
+- [VAT Scheme Comparison](https://elec-mate.com/tools/vat-scheme-comparison) — Compare flat rate, standard, and cash accounting VAT schemes
+- [Break Even Calculator](https://elec-mate.com/tools/break-even-calculator) — Calculate business break-even point and margin guard thresholds
+- [Electrical Quoting App](https://elec-mate.com/tools/electrical-quoting-app) — Professional quoting tool for electrical contractors
+- [Electrician Invoice App](https://elec-mate.com/tools/electrician-invoice-app) — Digital invoice creation and payment tracking for electricians
+- [Electrical Project Cost Estimator](https://elec-mate.com/tools/electrical-project-cost-estimator) — Estimate project costs including materials, labour, and overheads
+- [Customer Management Electrician](https://elec-mate.com/tools/customer-management-electrician) — Customer database and property management for electrical businesses
+- [Schedule Manager Electrician](https://elec-mate.com/tools/schedule-manager-electrician) — Job scheduling and calendar management for electrical contractors
+- [Project Management Electrician](https://elec-mate.com/tools/project-management-electrician) — Project management tools designed for electrical contracting businesses
+- [Staff Management Electrician](https://elec-mate.com/tools/staff-management-electrician) — Employee and team management for electrical employers
+- [Employer Electrical Platform](https://elec-mate.com/tools/employer-electrical-platform) — Complete employer dashboard for managing electrical teams and apprentices
+- [Business Analytics Electrician](https://elec-mate.com/tools/business-analytics-electrician) — Business performance analytics and reporting for electrical contractors
+- [Expenses Manager Electrician](https://elec-mate.com/tools/expenses-manager-electrician) — Track and manage business expenses for self-employed electricians
+- [Electrical Work Pricing Guide](https://elec-mate.com/guides/electrical-work-pricing-guide) — Guide to pricing electrical work competitively in the UK market
+- [Hourly Rate Calculator Electrician](https://elec-mate.com/guides/hourly-rate-calculator-electrician) — How to calculate the right hourly rate for your electrical business
+- [Electrician Day Rates UK](https://elec-mate.com/guides/electrician-day-rates-uk) — Current day rates for electricians across the UK
+- [Electrician Rates Per Hour UK](https://elec-mate.com/guides/electrician-rates-per-hour-uk) — Typical hourly rates for electricians by region and specialisation
+- [Electrical Survey Cost](https://elec-mate.com/guides/electrical-survey-cost) — How much electrical surveys cost in the UK
+- [Electrical Testing Cost UK](https://elec-mate.com/guides/electrical-testing-cost-uk) — Typical costs for electrical testing services across the UK
+- [Rewire Cost UK](https://elec-mate.com/guides/rewire-cost-uk) — Guide to house rewiring costs in the UK by property size
+- [Going Self-Employed Electrician](https://elec-mate.com/guides/going-self-employed-electrician) — Step-by-step guide to setting up as a self-employed electrician
+- [Limited Company Electrician](https://elec-mate.com/guides/limited-company-electrician) — Guide to operating as a limited company electrician in the UK
+- [Contractor vs Employee Electrician](https://elec-mate.com/guides/contractor-vs-employee-electrician) — Comparison of working as a contractor versus employee electrician
+- [Electrician Tax Guide UK](https://elec-mate.com/guides/electrician-tax-guide-uk) — Comprehensive tax guide for self-employed and employed electricians
+- [CIS for Electricians](https://elec-mate.com/guides/cis-for-electricians) — Guide to the Construction Industry Scheme for electrical contractors
+- [Electrician Insurance UK](https://elec-mate.com/guides/electrician-insurance-uk) — Guide to public liability, professional indemnity, and employers' liability insurance
+- [Debt Recovery Electricians](https://elec-mate.com/guides/debt-recovery-electricians) — How to recover unpaid invoices as an electrical contractor
+- [Electrical Contractor Guide](https://elec-mate.com/guides/electrical-contractor-guide) — Comprehensive guide to running an electrical contracting business
+- [Electrical Maintenance Contract](https://elec-mate.com/guides/electrical-maintenance-contract) — How to set up and manage electrical maintenance contracts
+- [Electrical Project Planning](https://elec-mate.com/guides/electrical-project-planning) — How to plan electrical projects from quote to completion
+- [Electrical Maintenance Guide](https://elec-mate.com/guides/electrical-maintenance-guide) — Guide to planned preventive maintenance for electrical systems
+- [Electrician Van Setup](https://elec-mate.com/guides/electrician-van-setup) — How to set up and organise an electrician's van for efficiency
+- [Electrician Tool List UK](https://elec-mate.com/guides/electrician-tool-list-uk) — Essential tool list for qualified electricians in the UK
+
+### Training Courses
+
+- [18th Edition Course](https://elec-mate.com/training/18th-edition-course) — Complete BS 7671:2018 18th Edition Wiring Regulations study course
+- [BS 7671 Amendment 3 Course](https://elec-mate.com/training/bs-7671-amendment-3-course) — Focused course on Amendment 3:2024 changes to BS 7671
+- [AM2 Exam Preparation](https://elec-mate.com/training/am2-exam-preparation) — AM2 practical assessment preparation with timed exercises
+- [City & Guilds 2391](https://elec-mate.com/training/city-guilds-2391) — City & Guilds 2391 Inspection and Testing course preparation
+- [Inspection and Testing](https://elec-mate.com/training/inspection-and-testing) — Comprehensive inspection and testing training course
+- [Level 2 Electrical](https://elec-mate.com/training/level-2-electrical) — Level 2 Diploma in Electrical Installations study content
+- [Level 3 Electrical](https://elec-mate.com/training/level-3-electrical) — Level 3 Diploma in Electrical Installations study content
+- [Electrical Apprentice](https://elec-mate.com/training/electrical-apprentice) — Complete apprentice training programme hub
+- [EPA Preparation](https://elec-mate.com/training/epa-preparation) — End Point Assessment preparation and simulation course
+- [Apprentice Portfolio](https://elec-mate.com/training/apprentice-portfolio) — Digital portfolio evidence tracking for apprenticeship completion
+- [HNC Electrical](https://elec-mate.com/training/hnc-electrical) — HNC in Building Services Engineering study material
+- [Electrical Science Fundamentals](https://elec-mate.com/training/electrical-science-fundamentals) — Foundation course in electrical science principles
+- [Domestic Installer](https://elec-mate.com/training/domestic-installer) — Domestic electrical installer qualification preparation
+- [EV Charger Installation](https://elec-mate.com/training/ev-charger-installation) — EV charge point installation training course
+- [Fire Alarm Systems](https://elec-mate.com/training/fire-alarm-systems) — Fire alarm system design and installation training
+- [Smart Home Automation](https://elec-mate.com/training/smart-home-automation) — Smart home wiring and automation systems training
+- [Renewable Energy](https://elec-mate.com/training/renewable-energy) — Renewable energy systems training for electricians
+- [Energy Efficiency](https://elec-mate.com/training/energy-efficiency) — Energy efficiency assessment and improvement training
+- [Data Cabling](https://elec-mate.com/training/data-cabling) — Data cabling and structured wiring installation training
+- [Instrumentation Course](https://elec-mate.com/training/instrumentation-course) — Instrumentation and process control training
+- [Asbestos Awareness](https://elec-mate.com/training/asbestos-awareness) — Asbestos awareness training for electrical workers
+- [BMS Course](https://elec-mate.com/training/bms-course) — Building Management Systems training course
+- [COSHH](https://elec-mate.com/training/coshh) — COSHH awareness training for hazardous substances
+- [CSCS Card](https://elec-mate.com/training/cscs-card) — CSCS card test preparation for construction site access
+- [Confined Spaces](https://elec-mate.com/training/confined-spaces) — Confined spaces awareness and safety training
+- [Fire Safety](https://elec-mate.com/training/fire-safety) — Fire safety awareness training for electrical workers
+- [First Aid Electrical](https://elec-mate.com/training/first-aid-electrical) — First aid training specific to electrical emergencies
+- [Environmental Sustainability](https://elec-mate.com/training/environmental-sustainability) — Environmental sustainability awareness for the electrical trade
+- [IPAF Training](https://elec-mate.com/training/ipaf-training) — IPAF powered access platform safety training
+- [Leadership On Site](https://elec-mate.com/training/leadership-on-site) — Site leadership and supervision skills training
+- [Manual Handling](https://elec-mate.com/training/manual-handling) — Manual handling awareness and safe lifting training
+- [Mental Health Awareness](https://elec-mate.com/training/mental-health-awareness) — Mental health awareness training for construction workers
+- [PASMA Training](https://elec-mate.com/training/pasma-training) — PASMA mobile tower scaffold safety training
+- [Scaffolding Awareness](https://elec-mate.com/training/scaffolding-awareness) — Scaffolding awareness and inspection training
+- [Working at Height](https://elec-mate.com/training/working-at-height) — Working at height safety training for electrical workers
+
+### Career & Salary
+
+- [How to Become an Electrician](https://elec-mate.com/guides/how-to-become-an-electrician) — Step-by-step guide to becoming a qualified electrician in the UK
+- [Become Electrician No Experience](https://elec-mate.com/guides/become-electrician-no-experience) — How to enter the electrical trade with no prior experience
+- [Electrical Careers School Leavers](https://elec-mate.com/guides/electrical-careers-school-leavers) — Electrical career options for school leavers and young people
+- [Electrician Career Progression](https://elec-mate.com/guides/electrician-career-progression) — Career progression pathways from apprentice to master electrician
+- [Electrical Qualifications Pathway](https://elec-mate.com/guides/electrical-qualifications-pathway) — Complete qualifications pathway from Level 2 to HNC and beyond
+- [Electrical Specialisations](https://elec-mate.com/guides/electrical-specialisations) — Overview of specialist areas within the electrical trade
+- [Electrician Salary UK](https://elec-mate.com/guides/electrician-salary-uk) — Current electrician salary ranges across the UK by experience and region
+- [Apprentice Electrician Salary](https://elec-mate.com/guides/apprentice-electrician-salary) — Apprentice electrician pay rates and what to expect
+- [Apprentice Electrician Salary UK](https://elec-mate.com/guides/apprentice-electrician-salary-uk) — Detailed UK apprentice electrician salary data by year and region
+- [Electrician CV Guide](https://elec-mate.com/guides/electrician-cv-guide) — How to write an effective CV as an electrician
+- [CV Builder Electrician](https://elec-mate.com/tools/cv-builder-electrician) — Digital CV builder tool designed for electrical professionals
+- [Electrician Interview Questions](https://elec-mate.com/guides/electrician-interview-questions) — Common electrician interview questions and how to answer them
+- [Electrician Job Vacancies](https://elec-mate.com/guides/electrician-job-vacancies) — How to find and apply for electrician jobs in the UK
+- [Electrician Working Abroad](https://elec-mate.com/guides/electrician-working-abroad) — Guide to working as an electrician outside the UK
+- [Domestic Electrician Guide](https://elec-mate.com/guides/domestic-electrician-guide) — Complete guide to working as a domestic electrician
+- [Commercial Electrician Guide](https://elec-mate.com/guides/commercial-electrician-guide) — Guide to working as a commercial electrician
+- [Industrial Electrician Guide](https://elec-mate.com/guides/industrial-electrician-guide) — Guide to working as an industrial electrician
+- [Domestic vs Commercial Electrician](https://elec-mate.com/guides/domestic-vs-commercial-electrician) — Differences between domestic and commercial electrical work
+- [Electrical Site Manager](https://elec-mate.com/guides/electrical-site-manager) — Role and responsibilities of an electrical site manager
+- [Women in Electrical Trade](https://elec-mate.com/guides/women-in-electrical-trade) — Guide for women entering and working in the electrical trade
+- [Professional Development Electrician](https://elec-mate.com/guides/professional-development-electrician) — Continuing professional development opportunities for electricians
+- [CPD for Electricians](https://elec-mate.com/guides/cpd-for-electricians) — Guide to CPD requirements and opportunities for qualified electricians
+- [ECS Card Types](https://elec-mate.com/guides/ecs-card-types) — Guide to Electrotechnical Certification Scheme card types and eligibility
+- [Competent Person Scheme Electrical](https://elec-mate.com/guides/competent-person-scheme-electrical) — Overview of competent person schemes for electricians
+- [NICEIC Registration](https://elec-mate.com/guides/niceic-registration) — How to register with NICEIC as an approved contractor
+- [NAPIT Registration](https://elec-mate.com/guides/napit-registration) — How to register with NAPIT as an electrical installer
+- [ELECSA Registration](https://elec-mate.com/guides/elecsa-registration) — Guide to ELECSA registration for electrical contractors
+- [NICEIC vs NAPIT](https://elec-mate.com/guides/niceic-vs-napit) — Comparison of NICEIC and NAPIT competent person schemes
+- [Why Choose NICEIC Electrician](https://elec-mate.com/guides/why-choose-niceic-electrician) — Benefits of choosing an NICEIC-registered electrician
+- [How to Find Electrician UK](https://elec-mate.com/guides/how-to-find-electrician-uk) — How homeowners can find a qualified electrician in the UK
+- [Electrical Union Membership](https://elec-mate.com/guides/electrical-union-membership) — Guide to union membership options for electricians
+- [ElecID Professional Card](https://elec-mate.com/tools/elecid-professional-card) — Digital professional ID card for verified electricians
+- [NVQ Level 3 Electrical](https://elec-mate.com/guides/nvq-level-3-electrical) — Guide to the NVQ Level 3 in Electrotechnical Services
+
+### Troubleshooting
+
+- [Circuit Breaker Keeps Tripping](https://elec-mate.com/guides/circuit-breaker-keeps-tripping) — Troubleshooting guide for circuit breakers that keep tripping
+- [Nuisance Tripping](https://elec-mate.com/guides/nuisance-tripping) — Causes and solutions for nuisance RCD and MCB tripping
+- [Lights Flickering Causes](https://elec-mate.com/guides/lights-flickering-causes) — Common causes of flickering lights and how to fix them
+- [No Power to Sockets](https://elec-mate.com/guides/no-power-to-sockets) — Troubleshooting guide when socket outlets have no power
+- [Power Going Off Randomly](https://elec-mate.com/guides/power-going-off-randomly) — Diagnosing and fixing intermittent power loss issues
+- [Power Cut What to Do](https://elec-mate.com/guides/power-cut-what-to-do) — What to do during a power cut and when to call an electrician
+- [Burning Smell from Socket](https://elec-mate.com/guides/burning-smell-from-socket) — Emergency guide for burning smells from electrical sockets
+- [Electric Shock from Tap](https://elec-mate.com/guides/electric-shock-from-tap) — Causes and solutions for electric shocks from taps and pipework
+- [Voltage Too High or Low](https://elec-mate.com/guides/voltage-too-high-or-low) — Diagnosing abnormal supply voltage and remedial action
+- [High Electricity Bill Causes](https://elec-mate.com/guides/high-electricity-bill-causes) — Common causes of unexpectedly high electricity bills
+- [Overloaded Circuit Signs](https://elec-mate.com/guides/overloaded-circuit-signs) — Warning signs of an overloaded electrical circuit
+- [Electrical Fault Finding Guide](https://elec-mate.com/guides/electrical-fault-finding-guide) — Systematic approach to finding electrical faults
+- [Intermittent Electrical Faults](https://elec-mate.com/guides/intermittent-electrical-faults) — How to track down and fix intermittent electrical faults
+- [Ring Circuit Fault Finding](https://elec-mate.com/guides/ring-circuit-fault-finding) — Fault finding procedures for ring final circuits
+- [Earthing Fault Diagnosis](https://elec-mate.com/guides/earthing-fault-diagnosis) — Diagnosing and resolving earthing faults in electrical installations
+- [Loose Neutral Symptoms](https://elec-mate.com/guides/loose-neutral-symptoms) — Symptoms and diagnosis of a loose neutral connection
+- [Low Insulation Resistance](https://elec-mate.com/guides/low-insulation-resistance) — Causes and remedies for low insulation resistance readings
+- [High Earth Resistance](https://elec-mate.com/guides/high-earth-resistance) — Causes and solutions for high earth resistance values
+- [Troubleshooting Electrical Problems](https://elec-mate.com/guides/troubleshooting-electrical-problems) — General guide to troubleshooting common electrical problems
+
+### Installation Guides
+
+- [Consumer Unit Upgrade](https://elec-mate.com/guides/consumer-unit-upgrade) — Guide to upgrading consumer units including Part P requirements
+- [Distribution Board Wiring](https://elec-mate.com/guides/distribution-board-wiring) — How to wire a distribution board correctly per BS 7671
+- [First Fix Electrical](https://elec-mate.com/guides/first-fix-electrical) — Guide to first fix electrical work on new builds and renovations
+- [Second Fix Electrical](https://elec-mate.com/guides/second-fix-electrical) — Guide to second fix electrical work and final connections
+- [Partial Rewire Guide](https://elec-mate.com/guides/partial-rewire-guide) — Guide to partial rewiring of existing electrical installations
+- [New Build Electrical](https://elec-mate.com/guides/new-build-electrical) — Electrical installation guide for new build properties
+- [Loft Conversion Electrics](https://elec-mate.com/guides/loft-conversion-electrics) — Electrical requirements for loft conversions including Part P
+- [Kitchen Wiring Guide](https://elec-mate.com/guides/kitchen-wiring-guide) — Complete guide to kitchen electrical wiring and circuit requirements
+- [Electrical Work in Bathroom](https://elec-mate.com/guides/electrical-work-in-bathroom) — BS 7671 Section 701 requirements for bathroom electrical work
+- [Garage Electrics](https://elec-mate.com/guides/garage-electrics) — Guide to garage electrical installations including Part P requirements
+- [Garden Office Electrics](https://elec-mate.com/guides/garden-office-electrics) — Electrical installation guide for garden offices and outbuildings
+- [Electric Shower Installation](https://elec-mate.com/guides/electric-shower-installation) — How to install an electric shower including circuit requirements
+- [Cooker Circuit Guide](https://elec-mate.com/guides/cooker-circuit-guide) — Guide to cooker circuit design, cable sizing, and installation
+- [LED Downlight Installation](https://elec-mate.com/guides/led-downlight-installation) — How to install LED downlights safely and compliantly
+- [Smoke Detector Wiring](https://elec-mate.com/guides/smoke-detector-wiring) — Guide to wiring interlinked smoke and heat detectors
+- [Smart Home Wiring](https://elec-mate.com/guides/smart-home-wiring) — Guide to wiring for smart home systems and automation
+- [Smart Meter Installation](https://elec-mate.com/guides/smart-meter-installation) — How smart meters are installed and electrical considerations
+- [Data Cabling Installation](https://elec-mate.com/guides/data-cabling-installation) — Guide to structured data cabling installation in buildings
+- [Underfloor Heating Electrical](https://elec-mate.com/guides/underfloor-heating-electrical) — Electrical requirements for underfloor heating systems
+- [Electric Car Charging at Home](https://elec-mate.com/guides/electric-car-charging-at-home) — Guide to installing EV home charging points
+- [Battery Storage Installation](https://elec-mate.com/guides/battery-storage-installation) — Guide to domestic and commercial battery storage system installation
+- [Heat Pump Electrical Requirements](https://elec-mate.com/guides/heat-pump-electrical-requirements) — Electrical supply requirements for air source and ground source heat pumps
+- [Three Phase Installation](https://elec-mate.com/guides/three-phase-installation) — Guide to three-phase electrical installations
+- [How to Wire a Plug](https://elec-mate.com/guides/how-to-wire-a-plug) — Step-by-step guide to wiring a BS 1363 plug correctly
+- [How to Read Electrical Drawings](https://elec-mate.com/guides/how-to-read-electrical-drawings) — How to read and interpret electrical wiring diagrams and schematics
+- [Agricultural Electrical Installations](https://elec-mate.com/guides/agricultural-electrical-installations) — BS 7671 Section 705 requirements for agricultural electrical installations
+- [Caravan Park Electrical](https://elec-mate.com/guides/caravan-park-electrical) — Electrical requirements for caravan parks and camping sites
+- [Marina Electrical Installations](https://elec-mate.com/guides/marina-electrical-installations) — Electrical installation requirements for marinas and boat moorings
+- [Hospital Electrical Systems](https://elec-mate.com/guides/hospital-electrical-systems) — Guide to electrical systems in medical locations
+- [Restaurant Electrical Requirements](https://elec-mate.com/guides/restaurant-electrical-requirements) — Electrical requirements for restaurant and catering premises
+- [Retail Electrical Installation](https://elec-mate.com/guides/retail-electrical-installation) — Guide to electrical installations in retail premises
+- [Commercial Lighting Installation](https://elec-mate.com/guides/commercial-lighting-installation) — Guide to commercial lighting design and installation
+- [Construction Site Temporary Supply](https://elec-mate.com/guides/construction-site-temporary-supply) — Setting up temporary electrical supplies on construction sites
+
+### Safety & Compliance
+
+- [Safe Isolation Procedure](https://elec-mate.com/guides/safe-isolation-procedure) — Complete safe isolation procedure per GS 38 and HSE guidance
+- [How to Do Safe Isolation](https://elec-mate.com/guides/how-to-do-safe-isolation) — Step-by-step guide to safe isolation for electrical work
+- [GS 38 Proving Dead](https://elec-mate.com/guides/gs-38-proving-dead) — GS 38 compliant procedure for proving circuits dead
+- [Lock Off LOTO Procedure](https://elec-mate.com/guides/lock-off-loto-procedure) — Lock out/tag out procedure for electrical isolation
+- [Electrical Safety Tips](https://elec-mate.com/guides/electrical-safety-tips) — Essential electrical safety tips for professionals and homeowners
+- [Electrical Safety at Home](https://elec-mate.com/guides/electrical-safety-at-home) — Home electrical safety guide for consumers
+- [Electrical Safety on Site](https://elec-mate.com/guides/electrical-safety-on-site) — Site-specific electrical safety guidance for construction workers
+- [Electrical Safety Landlord Checklist](https://elec-mate.com/guides/electrical-safety-landlord-checklist) — Electrical safety checklist for landlords and letting agents
+- [Electrical Emergency What to Do](https://elec-mate.com/guides/electrical-emergency-what-to-do) — Emergency procedures for electrical incidents
+- [First Aid Electrical Shock](https://elec-mate.com/guides/first-aid-electrical-shock) — First aid procedures for electric shock injuries
+- [Arc Flash Protection](https://elec-mate.com/guides/arc-flash-protection) — Guide to arc flash risk assessment and protective measures
+- [PPE for Electricians](https://elec-mate.com/guides/ppe-for-electricians) — Required personal protective equipment for electrical work
+- [Construction Site Safety](https://elec-mate.com/guides/construction-site-safety) — General construction site safety guide for electrical workers
+- [Construction Site Electrical Safety](https://elec-mate.com/guides/construction-site-electrical-safety) — Electrical safety requirements specific to construction sites
+- [CDM 2015 Electricians](https://elec-mate.com/guides/cdm-2015-electricians) — CDM Regulations 2015 obligations for electrical contractors
+- [Permit to Work Electrician](https://elec-mate.com/guides/permit-to-work-electrician) — Guide to electrical permit-to-work systems
+- [Risk Assessment Electrical Work](https://elec-mate.com/guides/risk-assessment-electrical-work) — How to create risk assessments for electrical work
+- [Risk Assessment Electricians](https://elec-mate.com/guides/risk-assessment-electricians) — Risk assessment guide specifically for electricians
+- [Method Statement Electrical](https://elec-mate.com/guides/method-statement-electrical) — How to write method statements for electrical work
+- [Method Statement Electricians](https://elec-mate.com/guides/method-statement-electricians) — Method statement templates and guidance for electricians
+- [RAMS Template Electricians](https://elec-mate.com/guides/rams-template-electricians) — RAMS templates and guidance for electrical contractors
+- [HSE Inspections Electrical](https://elec-mate.com/guides/hse-inspections-electrical) — What to expect from HSE inspections of electrical work
+- [Near Miss Reporting](https://elec-mate.com/guides/near-miss-reporting) — Guide to near miss reporting in the electrical trade
+- [Toolbox Talks Electrical](https://elec-mate.com/guides/toolbox-talks-electrical) — Guide to delivering toolbox talks on electrical safety topics
+- [School Electrical Inspection](https://elec-mate.com/guides/school-electrical-inspection) — Electrical inspection requirements for schools and educational premises
+- [Mental Health Hub](https://elec-mate.com/tools/mental-health-hub) — Mental health support and resources for construction workers and electricians
+
+### Apprentice Resources
+
+- [Apprentice Training App](https://elec-mate.com/tools/apprentice-training-app) — Complete apprentice training platform with courses, tracking, and AI support
+- [Study Centre Online Courses](https://elec-mate.com/tools/study-centre-online-courses) — Online study centre with all available training courses
+- [Learning Videos Electrician](https://elec-mate.com/tools/learning-videos-electrician) — Video-based learning content for electricians and apprentices
+- [College Tutor Dashboard](https://elec-mate.com/tools/college-tutor-dashboard) — Dashboard for college tutors to monitor apprentice progress
+- [Electrical Apprenticeship Guide](https://elec-mate.com/guides/electrical-apprenticeship-guide) — Complete guide to electrical apprenticeships in the UK
+- [Electrical Apprenticeship Cost](https://elec-mate.com/guides/electrical-apprenticeship-cost) — Costs involved in completing an electrical apprenticeship
+- [Electrical Apprenticeship Employer Guide](https://elec-mate.com/guides/electrical-apprenticeship-employer-guide) — Guide for employers taking on electrical apprentices
+- [What to Expect Electrical Apprentice](https://elec-mate.com/guides/what-to-expect-electrical-apprentice) — What new apprentices can expect in their first year
+- [Year 1 Apprentice Guide](https://elec-mate.com/guides/year-1-apprentice-guide) — Guide to year one of an electrical apprenticeship
+- [Year 2 Electrical Apprentice](https://elec-mate.com/guides/year-2-electrical-apprentice) — Guide to year two of an electrical apprenticeship
+- [Apprentice Assessment Guide](https://elec-mate.com/guides/apprentice-assessment-guide) — How apprentice assessments work and how to prepare
+- [Apprentice Rights Pay UK](https://elec-mate.com/guides/apprentice-rights-pay-uk) — Apprentice employment rights and minimum pay rates in the UK
+- [Apprentice Workplace Culture](https://elec-mate.com/guides/apprentice-workplace-culture) — Navigating workplace culture as an electrical apprentice
+- [Apprentice Mental Health](https://elec-mate.com/guides/apprentice-mental-health) — Mental health support and resources for electrical apprentices
+- [Apprentice Safety Cases](https://elec-mate.com/guides/apprentice-safety-cases) — Health and safety case studies relevant to apprentice electricians
+- [Apprentice Toolbox Guide](https://elec-mate.com/guides/apprentice-toolbox-guide) — Essential tools every electrical apprentice needs
+- [Apprentice Flashcards Tool](https://elec-mate.com/guides/apprentice-flashcards-tool) — Digital flashcard study tool for apprentice exam preparation
+- [Site Diary Apprentice](https://elec-mate.com/guides/site-diary-apprentice) — How to keep a site diary as an electrical apprentice
+- [Site Diary for Apprentices](https://elec-mate.com/guides/site-diary-for-apprentices) — Site diary templates and guidance for apprentice electricians
+- [OJT Evidence Guide](https://elec-mate.com/guides/ojt-evidence-guide) — Guide to collecting off-the-job training evidence for apprenticeships
+- [Off-the-Job Training Hours](https://elec-mate.com/guides/off-the-job-training-hours) — Understanding the 20% off-the-job training requirement
+- [Off Job Training Hours](https://elec-mate.com/guides/off-job-training-hours) — Tracking and meeting off-the-job training hour requirements
+- [On the Job Training Guide](https://elec-mate.com/guides/on-the-job-training-guide) — Making the most of on-the-job training during your apprenticeship
+- [Calculations for Apprentices](https://elec-mate.com/guides/calculations-for-apprentices) — Key electrical calculations every apprentice needs to know
+- [Flashcards for Electrical Exams](https://elec-mate.com/guides/flashcards-for-electrical-exams) — Using flashcards for effective exam preparation
+- [Electrician Study Tips](https://elec-mate.com/guides/electrician-study-tips) — Study tips and techniques for electrical qualification exams
+- [Mock Exams Electrical](https://elec-mate.com/guides/mock-exams-electrical) — Practice mock exams for electrical qualifications
+- [18th Edition Exam Tips](https://elec-mate.com/guides/18th-edition-exam-tips) — Tips for passing the City & Guilds 2382 18th Edition exam
+- [2391 Exam Tips](https://elec-mate.com/guides/2391-exam-tips) — Tips for passing the City & Guilds 2391 Inspection and Testing exam
+- [AM2 Exam Tips](https://elec-mate.com/guides/am2-exam-tips) — Tips for passing the AM2 practical assessment
+- [AM2 Simulator Guide](https://elec-mate.com/guides/am2-simulator-guide) — How to use the Elec-Mate AM2 simulator for exam practice
+- [EPA Simulator Guide](https://elec-mate.com/guides/epa-simulator-guide) — Guide to using the End Point Assessment simulator
+- [EPA What to Expect](https://elec-mate.com/guides/epa-what-to-expect) — What to expect during your End Point Assessment
+- [Best Electrical Books](https://elec-mate.com/guides/best-electrical-books) — Recommended books for electricians and apprentices
+
+### Comparisons
+
+- [Elec-Mate vs iCertifi](https://elec-mate.com/compare/elec-mate-vs-icertifi) — Detailed comparison of Elec-Mate and iCertifi certificate apps
+- [Elec-Mate vs CertsApp](https://elec-mate.com/compare/elec-mate-vs-certsapp) — Detailed comparison of Elec-Mate and CertsApp
+- [Elec-Mate vs Simply EICR](https://elec-mate.com/compare/elec-mate-vs-simply-eicr) — Detailed comparison of Elec-Mate and Simply EICR
+- [Elec-Mate vs Electrical OM](https://elec-mate.com/compare/elec-mate-vs-electrical-om) — Detailed comparison of Elec-Mate and Electrical OM
+- [Best AI Tool Electricians](https://elec-mate.com/compare/best-ai-tool-electricians) — Comparison of AI tools available for UK electricians
+- [Best Invoice App Electricians](https://elec-mate.com/compare/best-invoice-app-electricians) — Comparison of invoicing apps for electrical contractors
+
+### App Features & General Pages
+
+- [Elec-Mate Home](https://elec-mate.com/) — Main landing page for the Elec-Mate platform
+- [Sign In](https://elec-mate.com/auth/signin) — Sign in to your Elec-Mate account
+- [Sign Up](https://elec-mate.com/auth/signup) — Create a new Elec-Mate account with 7-day free trial
+- [Best Electrician App UK](https://elec-mate.com/tools/best-electrician-app-uk) — Why Elec-Mate is the best all-in-one app for UK electricians
+- [Electrician App iPhone](https://elec-mate.com/tools/electrician-app-iphone) — Elec-Mate app for iPhone and iOS devices
+- [Offline Electrical App](https://elec-mate.com/tools/offline-electrical-app) — Offline-capable electrical tools that work without internet on site
+- [Cookie Policy](https://elec-mate.com/cookie-policy) — Elec-Mate cookie usage policy
+- [Privacy Policy](https://elec-mate.com/privacy-policy) — Elec-Mate privacy policy and data protection
+- [Terms of Service](https://elec-mate.com/terms-of-service) — Elec-Mate terms of service and user agreement
+
+---
+
+## Standards & Compliance
+
+- BS 7671:2018+A2:2022 (18th Edition IET Wiring Regulations)
+- BS 7671:2018+A3:2024 (Amendment 3 — bidirectional/unidirectional devices, Regulation 530.3.201)
+- BS 5839 (Fire detection and fire alarm systems)
+- BS 5266 (Emergency lighting)
+- IET Code of Practice for Electric Vehicle Charging Equipment Installation
+- MCS Standards (Solar PV)
+- GN3: Guidance Note 3 — Inspection & Testing (9th Edition / 18th Edition)
+- Electricity at Work Regulations 1989
+- Health and Safety at Work Act 1974
+- CDM Regulations 2015
+- Part P of the Building Regulations (Approved Document P)
+
+---
+
+## Social Media
+
+- Facebook: https://www.facebook.com/elecmate
+- Instagram: https://www.instagram.com/elec_mate
+- TikTok: https://www.tiktok.com/@elecmate
+- LinkedIn: https://www.linkedin.com/company/elec-mate
+- Telegram: https://t.me/Elec_MateOfficialGroup
+
+---
 
 ## Contact
 

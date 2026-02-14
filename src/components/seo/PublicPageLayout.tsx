@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { Button } from '@/components/ui/button';
 import {
   ArrowRight,
@@ -145,11 +146,75 @@ const socialLinks = [
   },
 ];
 
+const organizationWebsiteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://elec-mate.com/#organization',
+      name: 'Elec-Mate',
+      url: 'https://elec-mate.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://elec-mate.com/logo.jpg',
+      },
+      sameAs: [
+        'https://www.facebook.com/elecmate',
+        'https://www.instagram.com/elec_mate',
+        'https://www.tiktok.com/@elecmate',
+        'https://www.linkedin.com/company/elec-mate',
+        'https://t.me/Elec_MateOfficialGroup',
+      ],
+      description:
+        "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",
+      foundingDate: '2024',
+      areaServed: {
+        '@type': 'Country',
+        name: 'United Kingdom',
+      },
+      knowsAbout: [
+        'BS 7671 Wiring Regulations',
+        'Electrical Installation Condition Reports',
+        'Electrical Installation Certificates',
+        'Cable Sizing',
+        'Electrical Testing',
+        'Electrical Apprenticeships',
+        '18th Edition IET Wiring Regulations',
+        'Electrical Safety',
+        'EICR Certificates',
+        'Minor Works Certificates',
+        'EV Charger Installation',
+        'Fire Alarm Systems',
+        'Emergency Lighting',
+        'Solar PV Installation',
+        'PAT Testing',
+        'Electrical Business Management',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://elec-mate.com/#website',
+      url: 'https://elec-mate.com',
+      name: 'Elec-Mate',
+      publisher: {
+        '@id': 'https://elec-mate.com/#organization',
+      },
+      description:
+        "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",
+      inLanguage: 'en-GB',
+    },
+  ],
+};
+
 export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   const { user } = useAuth();
 
   return (
     <div className="bg-[#0a0a0a] text-white min-h-screen">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(organizationWebsiteSchema)}</script>
+      </Helmet>
+
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80 backdrop-blur-xl" />

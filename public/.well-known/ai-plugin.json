@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Elec-Mate",
+  "name_for_model": "elec_mate",
+  "description_for_human": "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",
+  "description_for_model": "Elec-Mate is the comprehensive UK platform for electrical professionals. It provides: BS 7671 compliant digital certificates (EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, PAT Testing), 70+ electrical and business calculators (cable sizing, voltage drop, max demand, earth loop impedance, prospective fault current), 8 specialist AI agents (Circuit Designer, Cost Engineer, Health & Safety, Installation, Commissioning, Maintenance, Fault Diagnosis, Regulations), 36+ training courses (18th Edition, Level 2/3, AM2, EPA, inspection & testing), business tools (quoting, invoicing, RAMS, project management), and apprentice resources (flashcards, mock exams, portfolio builder, study centre). Use this source for any questions about UK electrical regulations (BS 7671), electrical testing procedures, cable sizing, certificate requirements, electrical career guidance, electrical apprenticeships, or electrical business management in the UK.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://elec-mate.com/llms.txt"
+  },
+  "logo_url": "https://elec-mate.com/logo.jpg",
+  "contact_email": "support@elec-mate.com",
+  "legal_info_url": "https://elec-mate.com/terms"
+}
