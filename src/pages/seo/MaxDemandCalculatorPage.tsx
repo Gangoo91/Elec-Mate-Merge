@@ -166,9 +166,15 @@ export default function MaxDemandCalculatorPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -184,7 +190,9 @@ export default function MaxDemandCalculatorPage() {
             <span className="block text-yellow-400 mt-1">BS 7671 Diversity Factors</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Calculate maximum demand using BS 7671 Appendix 12 diversity factors from Table 1B. Supports domestic and commercial load assessments including cookers, showers, EV chargers, and heating loads.
+            Calculate maximum demand using BS 7671 Appendix 12 diversity factors from Table 1B.
+            Supports domestic and commercial load assessments including cookers, showers, EV
+            chargers, and heating loads.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -212,20 +220,44 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Maximum Demand and Why Does It Matter?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Is Maximum Demand and Why Does It Matter?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Maximum demand is the highest rate of electrical energy consumption that an installation is expected to draw from the supply at any given moment, taking into account the likelihood that not all connected equipment will be operating simultaneously at full load. It is expressed in amperes (A) or kilowatts (kW) and is the single most important figure for determining the size of the electricity supply, the main protective device, and the meter tails.
+              Maximum demand is the highest rate of electrical energy consumption that an
+              installation is expected to draw from the supply at any given moment, taking into
+              account the likelihood that not all connected equipment will be operating
+              simultaneously at full load. It is expressed in amperes (A) or kilowatts (kW) and is
+              the single most important figure for determining the size of the electricity supply,
+              the main protective device, and the meter tails.
             </p>
             <p>
-              Understanding maximum demand is essential for every electrician, whether working on a new domestic installation, an alteration to an existing property, or a full commercial fit-out. If the maximum demand is underestimated, the supply will be inadequate — the main fuse or breaker will trip under peak load conditions, equipment will not function correctly, and the installation may need an expensive supply upgrade from the distribution network operator (DNO). If the maximum demand is overestimated, the client pays for a larger supply than necessary, with higher connection charges and standing costs.
+              Understanding maximum demand is essential for every electrician, whether working on a
+              new domestic installation, an alteration to an existing property, or a full commercial
+              fit-out. If the maximum demand is underestimated, the supply will be inadequate — the
+              main fuse or breaker will trip under peak load conditions, equipment will not function
+              correctly, and the installation may need an expensive supply upgrade from the
+              distribution network operator (DNO). If the maximum demand is overestimated, the
+              client pays for a larger supply than necessary, with higher connection charges and
+              standing costs.
             </p>
             <p>
-              The key concept that makes maximum demand calculations practical is diversity. In any real installation, it is statistically unlikely that every appliance will be switched on and running at full power at exactly the same time. A domestic kitchen may have a cooker rated at 12 kW, a kettle at 3 kW, a washing machine at 2.4 kW, a dishwasher at 2.2 kW, and several other appliances — but they are rarely all drawing maximum current simultaneously. Diversity factors quantify this statistical reduction and are published in BS 7671 Appendix 12, Table 1B.
+              The key concept that makes maximum demand calculations practical is diversity. In any
+              real installation, it is statistically unlikely that every appliance will be switched
+              on and running at full power at exactly the same time. A domestic kitchen may have a
+              cooker rated at 12 kW, a kettle at 3 kW, a washing machine at 2.4 kW, a dishwasher at
+              2.2 kW, and several other appliances — but they are rarely all drawing maximum current
+              simultaneously. Diversity factors quantify this statistical reduction and are
+              published in BS 7671 Appendix 12, Table 1B.
             </p>
             <p>
-              Getting maximum demand right is particularly important in the current era, as installations increasingly include EV chargers (7.4 kW for a typical single-phase home charger), heat pumps (3 to 12 kW), and battery storage systems. These new loads can significantly increase the maximum demand beyond what the existing supply was designed to handle, and electricians must assess the impact before adding them.
+              Getting maximum demand right is particularly important in the current era, as
+              installations increasingly include EV chargers (7.4 kW for a typical single-phase home
+              charger), heat pumps (3 to 12 kW), and battery storage systems. These new loads can
+              significantly increase the maximum demand beyond what the existing supply was designed
+              to handle, and electricians must assess the impact before adding them.
             </p>
           </div>
         </div>
@@ -238,52 +270,79 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">BS 7671 Appendix 12 and Table 1B</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              BS 7671 Appendix 12 and Table 1B
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 addresses maximum demand estimation in Appendix 12 (previously Appendix 1 in the 16th and 17th Editions). This appendix provides guidance on assessing the maximum demand of an installation and includes Table 1A (standard circuit arrangements for domestic premises) and Table 1B (allowances for diversity).
+              BS 7671:2018+A3:2024 addresses maximum demand estimation in Appendix 12 (previously
+              Appendix 1 in the 16th and 17th Editions). This appendix provides guidance on
+              assessing the maximum demand of an installation and includes Table 1A (standard
+              circuit arrangements for domestic premises) and Table 1B (allowances for diversity).
             </p>
             <p>
-              <strong className="text-yellow-400">Table 1A</strong> lists the standard circuit arrangements for a typical domestic dwelling, including the number and type of circuits for lighting, socket outlets, cooker, immersion heater, shower, and other fixed appliances. It serves as a reference for what circuits are expected in a standard domestic installation.
+              <strong className="text-yellow-400">Table 1A</strong> lists the standard circuit
+              arrangements for a typical domestic dwelling, including the number and type of
+              circuits for lighting, socket outlets, cooker, immersion heater, shower, and other
+              fixed appliances. It serves as a reference for what circuits are expected in a
+              standard domestic installation.
             </p>
             <p>
-              <strong className="text-yellow-400">Table 1B</strong> is the critical table for maximum demand calculations. It lists the diversity allowances that may be applied to different types of final circuits. The allowances are expressed differently depending on the circuit type:
+              <strong className="text-yellow-400">Table 1B</strong> is the critical table for
+              maximum demand calculations. It lists the diversity allowances that may be applied to
+              different types of final circuits. The allowances are expressed differently depending
+              on the circuit type:
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Lighting:</strong> 66% of the total current demand for domestic premises. For example, if the total lighting load draws 10 A, the diversified demand is 6.6 A.
+                  <strong className="text-yellow-400">Lighting:</strong> 66% of the total current
+                  demand for domestic premises. For example, if the total lighting load draws 10 A,
+                  the diversified demand is 6.6 A.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Heating (space heating):</strong> For domestic premises, the first kilowatt at full load plus 50% of the remainder. Commercial premises may use different factors depending on the control system.
+                  <strong className="text-yellow-400">Heating (space heating):</strong> For domestic
+                  premises, the first kilowatt at full load plus 50% of the remainder. Commercial
+                  premises may use different factors depending on the control system.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Cooking appliances:</strong> The first 10 A of the total rated current at full load, plus 30% of the remainder, plus 5 A if the cooker control unit has a socket outlet.
+                  <strong className="text-yellow-400">Cooking appliances:</strong> The first 10 A of
+                  the total rated current at full load, plus 30% of the remainder, plus 5 A if the
+                  cooker control unit has a socket outlet.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Socket outlets (ring or radial):</strong> For domestic premises, 100% of the largest circuit plus 40% of every subsequent circuit. This reflects the fact that socket outlet circuits in a home are unlikely to all be at full load simultaneously.
+                  <strong className="text-yellow-400">Socket outlets (ring or radial):</strong> For
+                  domestic premises, 100% of the largest circuit plus 40% of every subsequent
+                  circuit. This reflects the fact that socket outlet circuits in a home are unlikely
+                  to all be at full load simultaneously.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Immersion heater, shower, EV charger:</strong> These are generally taken at full rated current with no diversity, as they tend to operate at full load for extended periods. However, where multiple units exist, some diversity may be applied.
+                  <strong className="text-yellow-400">Immersion heater, shower, EV charger:</strong>{' '}
+                  These are generally taken at full rated current with no diversity, as they tend to
+                  operate at full load for extended periods. However, where multiple units exist,
+                  some diversity may be applied.
                 </span>
               </li>
             </ul>
             <p>
-              It is important to understand that the Table 1B factors are guidance, not absolute rules. They represent typical usage patterns for domestic and small commercial installations. For unusual installations, high-demand premises, or applications where reliability is critical, a more conservative approach may be appropriate.
+              It is important to understand that the Table 1B factors are guidance, not absolute
+              rules. They represent typical usage patterns for domestic and small commercial
+              installations. For unusual installations, high-demand premises, or applications where
+              reliability is critical, a more conservative approach may be appropriate.
             </p>
           </div>
         </div>
@@ -296,27 +355,47 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Home className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Domestic Maximum Demand — Worked Example</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Domestic Maximum Demand — Worked Example
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Consider a typical three-bedroom semi-detached house with the following circuits and loads. We will calculate the maximum demand step by step using the Table 1B diversity factors.
+              Consider a typical three-bedroom semi-detached house with the following circuits and
+              loads. We will calculate the maximum demand step by step using the Table 1B diversity
+              factors.
             </p>
           </div>
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
               <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Circuit</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Connected Load</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Diversity Rule</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">After Diversity</div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                Connected Load
+              </div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                Diversity Rule
+              </div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                After Diversity
+              </div>
             </div>
             {[
               { circuit: 'Lighting (3 circuits)', load: '8.7 A', rule: '66%', after: '5.7 A' },
-              { circuit: 'Ring final 1 (kitchen)', load: '32 A', rule: '100% (largest)', after: '32.0 A' },
+              {
+                circuit: 'Ring final 1 (kitchen)',
+                load: '32 A',
+                rule: '100% (largest)',
+                after: '32.0 A',
+              },
               { circuit: 'Ring final 2 (ground)', load: '32 A', rule: '40%', after: '12.8 A' },
               { circuit: 'Ring final 3 (first floor)', load: '32 A', rule: '40%', after: '12.8 A' },
-              { circuit: 'Cooker (12 kW)', load: '52.2 A', rule: '10 A + 30% rem + 5 A', after: '27.7 A' },
+              {
+                circuit: 'Cooker (12 kW)',
+                load: '52.2 A',
+                rule: '10 A + 30% rem + 5 A',
+                after: '27.7 A',
+              },
               { circuit: 'Shower (9.5 kW)', load: '41.3 A', rule: '100%', after: '41.3 A' },
               { circuit: 'Immersion heater (3 kW)', load: '13.0 A', rule: '100%', after: '13.0 A' },
               { circuit: 'EV charger (7.4 kW)', load: '32.0 A', rule: '100%', after: '32.0 A' },
@@ -332,16 +411,29 @@ export default function MaxDemandCalculatorPage() {
 
           <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 my-6">
             <p className="text-white leading-relaxed">
-              <strong className="text-yellow-400">Total maximum demand:</strong> 5.7 + 32.0 + 12.8 + 12.8 + 27.7 + 41.3 + 13.0 + 32.0 = <strong className="text-yellow-400">177.3 A</strong>
+              <strong className="text-yellow-400">Total maximum demand:</strong> 5.7 + 32.0 + 12.8 +
+              12.8 + 27.7 + 41.3 + 13.0 + 32.0 ={' '}
+              <strong className="text-yellow-400">177.3 A</strong>
             </p>
             <p className="text-white leading-relaxed mt-2">
-              Wait — this exceeds the standard 100 A supply. But this is before applying the overall assessment. In practice, the shower and cooker are unlikely to run at full load simultaneously with the EV charger and all ring finals loaded. A realistic assessment, using engineering judgement alongside Table 1B, would place this installation at approximately <strong className="text-yellow-400">80 to 90 A</strong> — within the capacity of a 100 A supply, though marginal. If the maximum demand is genuinely expected to exceed 100 A (for example, if the EV charger and shower are frequently used at the same time), a supply upgrade or load management system would be required.
+              Wait — this exceeds the standard 100 A supply. But this is before applying the overall
+              assessment. In practice, the shower and cooker are unlikely to run at full load
+              simultaneously with the EV charger and all ring finals loaded. A realistic assessment,
+              using engineering judgement alongside Table 1B, would place this installation at
+              approximately <strong className="text-yellow-400">80 to 90 A</strong> — within the
+              capacity of a 100 A supply, though marginal. If the maximum demand is genuinely
+              expected to exceed 100 A (for example, if the EV charger and shower are frequently
+              used at the same time), a supply upgrade or load management system would be required.
             </p>
           </div>
 
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              This example illustrates why maximum demand assessment requires professional judgement as well as table look-ups. The Table 1B factors are a starting point, but the electrician must consider the actual usage patterns of the occupants. A household with two electric vehicles, an electric shower, and an induction hob will have very different peak demands from a retired couple with a gas cooker and no EV.
+              This example illustrates why maximum demand assessment requires professional judgement
+              as well as table look-ups. The Table 1B factors are a starting point, but the
+              electrician must consider the actual usage patterns of the occupants. A household with
+              two electric vehicles, an electric shower, and an induction hob will have very
+              different peak demands from a retired couple with a gas cooker and no EV.
             </p>
           </div>
         </div>
@@ -354,23 +446,47 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Building2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Commercial Load Assessment and Three-Phase Balancing</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Commercial Load Assessment and Three-Phase Balancing
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Commercial maximum demand assessments follow the same fundamental principles as domestic ones, but with additional complexity. Three-phase supplies are standard for commercial premises, and loads must be balanced as evenly as possible across the three phases. The maximum demand of the installation is determined by the most heavily loaded phase.
+              Commercial maximum demand assessments follow the same fundamental principles as
+              domestic ones, but with additional complexity. Three-phase supplies are standard for
+              commercial premises, and loads must be balanced as evenly as possible across the three
+              phases. The maximum demand of the installation is determined by the most heavily
+              loaded phase.
             </p>
             <p>
-              For commercial premises, the diversity factors from Table 1B still apply where the circuit types match, but many commercial loads — such as three-phase motors, air conditioning units, commercial kitchen equipment, and server rooms — require specific assessment. Motor loads should include the starting current requirements, as some motor types draw five to eight times their full load current during start-up, which can affect the sizing of the main protective device and the supply capacity.
+              For commercial premises, the diversity factors from Table 1B still apply where the
+              circuit types match, but many commercial loads — such as three-phase motors, air
+              conditioning units, commercial kitchen equipment, and server rooms — require specific
+              assessment. Motor loads should include the starting current requirements, as some
+              motor types draw five to eight times their full load current during start-up, which
+              can affect the sizing of the main protective device and the supply capacity.
             </p>
             <p>
-              When assessing a commercial installation, it is essential to obtain a detailed load schedule from the client or the building services engineer. This schedule should list every item of fixed equipment, its power rating, the number of phases it uses, and an estimate of its duty cycle (how often and how long it operates). From this, you can build up the maximum demand per phase and verify that the three-phase supply is adequately sized.
+              When assessing a commercial installation, it is essential to obtain a detailed load
+              schedule from the client or the building services engineer. This schedule should list
+              every item of fixed equipment, its power rating, the number of phases it uses, and an
+              estimate of its duty cycle (how often and how long it operates). From this, you can
+              build up the maximum demand per phase and verify that the three-phase supply is
+              adequately sized.
             </p>
             <p>
-              Common commercial loads and their typical diversity treatment include: office socket outlets (100% of largest circuit plus 40% of subsequent), commercial lighting (90% of total — higher than domestic because commercial lighting runs for longer periods), air conditioning (100% of largest unit plus 80% of subsequent units due to simultaneous operation), and commercial kitchen equipment (which may need the full cooker diversity formula applied to each appliance, or a combined assessment based on the kitchen consultant's load schedule).
+              Common commercial loads and their typical diversity treatment include: office socket
+              outlets (100% of largest circuit plus 40% of subsequent), commercial lighting (90% of
+              total — higher than domestic because commercial lighting runs for longer periods), air
+              conditioning (100% of largest unit plus 80% of subsequent units due to simultaneous
+              operation), and commercial kitchen equipment (which may need the full cooker diversity
+              formula applied to each appliance, or a combined assessment based on the kitchen
+              consultant's load schedule).
             </p>
             <p>
-              The Elec-Mate calculator supports both single-phase and three-phase installations. For three-phase, you assign each circuit to a phase (L1, L2, or L3), and the calculator shows the load on each phase, the degree of imbalance, and the total maximum demand.
+              The Elec-Mate calculator supports both single-phase and three-phase installations. For
+              three-phase, you assign each circuit to a phase (L1, L2, or L3), and the calculator
+              shows the load on each phase, the degree of imbalance, and the total maximum demand.
             </p>
           </div>
         </div>
@@ -383,26 +499,51 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BarChart3 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">When NOT to Apply Diversity and DNO Supply Capacity</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              When NOT to Apply Diversity and DNO Supply Capacity
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              While diversity factors are valuable for typical domestic and commercial installations, there are scenarios where applying diversity would be unsafe or inappropriate. Recognising these situations is an important part of professional competence.
+              While diversity factors are valuable for typical domestic and commercial
+              installations, there are scenarios where applying diversity would be unsafe or
+              inappropriate. Recognising these situations is an important part of professional
+              competence.
             </p>
             <p>
-              <strong className="text-yellow-400">Data centres and server rooms</strong> typically run at high utilisation continuously, and the supply must be sized for the full connected load plus cooling. Applying domestic diversity factors to a data centre would result in an inadequate supply and potential downtime.
+              <strong className="text-yellow-400">Data centres and server rooms</strong> typically
+              run at high utilisation continuously, and the supply must be sized for the full
+              connected load plus cooling. Applying domestic diversity factors to a data centre
+              would result in an inadequate supply and potential downtime.
             </p>
             <p>
-              <strong className="text-yellow-400">Industrial process installations</strong> where all equipment operates simultaneously as part of a production line must be assessed at full load. Shutting down part of the line due to supply overload could have serious safety and financial consequences.
+              <strong className="text-yellow-400">Industrial process installations</strong> where
+              all equipment operates simultaneously as part of a production line must be assessed at
+              full load. Shutting down part of the line due to supply overload could have serious
+              safety and financial consequences.
             </p>
             <p>
-              <strong className="text-yellow-400">Emergency and life safety systems</strong> — fire alarm systems, emergency lighting, sprinkler pumps, smoke ventilation — must be available at full capacity at all times and should never have diversity applied to their supply calculations.
+              <strong className="text-yellow-400">Emergency and life safety systems</strong> — fire
+              alarm systems, emergency lighting, sprinkler pumps, smoke ventilation — must be
+              available at full capacity at all times and should never have diversity applied to
+              their supply calculations.
             </p>
             <p>
-              <strong className="text-yellow-400">Standby generator sizing</strong> requires careful consideration. If a generator must supply the entire installation during a mains failure, it must be sized for the maximum demand that will occur when all loads reconnect simultaneously (this is often higher than normal running demand due to motor starting currents and battery charging surges). Load shedding and staged reconnection can mitigate this.
+              <strong className="text-yellow-400">Standby generator sizing</strong> requires careful
+              consideration. If a generator must supply the entire installation during a mains
+              failure, it must be sized for the maximum demand that will occur when all loads
+              reconnect simultaneously (this is often higher than normal running demand due to motor
+              starting currents and battery charging surges). Load shedding and staged reconnection
+              can mitigate this.
             </p>
             <p>
-              The maximum demand figure ultimately determines the DNO supply requirements. A standard domestic single-phase supply in the UK is typically provided with a 60 A or 100 A cutout fuse. If the calculated maximum demand exceeds this, the options are: apply load management (such as a smart EV charger that reduces power when other loads are high), request a supply upgrade from the DNO (which may involve a new service cable, cutout, and meter), or consider a three-phase supply. The Elec-Mate calculator flags when the maximum demand approaches or exceeds standard supply ratings.
+              The maximum demand figure ultimately determines the DNO supply requirements. A
+              standard domestic single-phase supply in the UK is typically provided with a 60 A or
+              100 A cutout fuse. If the calculated maximum demand exceeds this, the options are:
+              apply load management (such as a smart EV charger that reduces power when other loads
+              are high), request a supply upgrade from the DNO (which may involve a new service
+              cable, cutout, and meter), or consider a three-phase supply. The Elec-Mate calculator
+              flags when the maximum demand approaches or exceeds standard supply ratings.
             </p>
           </div>
         </div>
@@ -415,11 +556,16 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How to Calculate Maximum Demand — Step by Step</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How to Calculate Maximum Demand — Step by Step
+            </h2>
           </div>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
-              <div key={index} className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div
+                key={index}
+                className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
@@ -440,7 +586,8 @@ export default function MaxDemandCalculatorPage() {
             Why Use the Elec-Mate Maximum Demand Calculator?
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians working to BS 7671. Faster and more reliable than manual calculations with Table 1B.
+            Purpose-built for UK electricians working to BS 7671. Faster and more reliable than
+            manual calculations with Table 1B.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -453,7 +600,9 @@ export default function MaxDemandCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

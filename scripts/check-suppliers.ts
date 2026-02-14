@@ -16,8 +16,10 @@ async function check() {
     console.log('Error:', error);
   } else {
     console.log('Suppliers:');
-    data?.forEach(s => {
-      const lastScraped = s.last_scraped_at ? new Date(s.last_scraped_at).toLocaleString() : 'Never';
+    data?.forEach((s) => {
+      const lastScraped = s.last_scraped_at
+        ? new Date(s.last_scraped_at).toLocaleString()
+        : 'Never';
       console.log(`  ${s.slug}: ${lastScraped}`);
     });
   }

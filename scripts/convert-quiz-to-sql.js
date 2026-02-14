@@ -31,7 +31,12 @@ for (let i = 0; i < lines.length; i++) {
   const line = lines[i].trim();
 
   // Skip comments and empty lines
-  if (line.startsWith('//') || line === '' || line.startsWith('import') || line.startsWith('export')) {
+  if (
+    line.startsWith('//') ||
+    line === '' ||
+    line.startsWith('import') ||
+    line.startsWith('export')
+  ) {
     continue;
   }
 
@@ -77,7 +82,7 @@ for (let i = 0; i < lines.length; i++) {
     if (sameLine) {
       const opts = sameLine[1].match(/'[^']+'/g) || sameLine[1].match(/"[^"]+"/g);
       if (opts) {
-        optionsArray = opts.map(o => o.slice(1, -1));
+        optionsArray = opts.map((o) => o.slice(1, -1));
       }
       currentQuestion.options = optionsArray;
       inOptions = false;
@@ -146,15 +151,16 @@ for (let i = 0; i < lines.length; i++) {
 console.log(`Found ${questions.length} valid questions`);
 
 // Validate questions
-const validQuestions = questions.filter(q =>
-  q.id &&
-  q.question &&
-  Array.isArray(q.options) &&
-  q.options.length >= 2 &&
-  typeof q.correctAnswer === 'number' &&
-  q.explanation &&
-  q.category &&
-  q.difficulty
+const validQuestions = questions.filter(
+  (q) =>
+    q.id &&
+    q.question &&
+    Array.isArray(q.options) &&
+    q.options.length >= 2 &&
+    typeof q.correctAnswer === 'number' &&
+    q.explanation &&
+    q.category &&
+    q.difficulty
 );
 
 console.log(`Valid questions after filtering: ${validQuestions.length}`);
@@ -180,7 +186,7 @@ for (let i = 0; i < validQuestions.length; i += batchSize) {
 VALUES
 `;
 
-  const values = batch.map(q => {
+  const values = batch.map((q) => {
     const optionsJson = JSON.stringify(q.options).replace(/'/g, "''");
     return `  (${escapeSql(q.id)}, ${escapeSql(q.question)}, '${optionsJson}'::jsonb, ${q.correctAnswer}, ${escapeSql(q.explanation)}, ${escapeSql(q.category)}, ${escapeSql(q.difficulty)}, ${q.regulation ? escapeSql(q.regulation) : 'NULL'}, ${q.imageUrl ? escapeSql(q.imageUrl) : 'NULL'}, 'inspection-testing')`;
   });

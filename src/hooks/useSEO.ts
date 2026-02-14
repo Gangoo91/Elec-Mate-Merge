@@ -3,8 +3,14 @@ import { useLocation } from 'react-router-dom';
 
 const BASE_URL = 'https://elec-mate.com';
 const DEFAULT_TITLE = 'Elec-Mate | UK Electrical Certification & Apprentice Training Platform';
-const DEFAULT_DESCRIPTION = 'The #1 UK platform for electricians and apprentices. EICR & EIC certification software, BS 7671 training, off-job learning hours tracking, AI-powered tools, and professional community.';
+const DEFAULT_DESCRIPTION =
+  'The #1 UK platform for electricians and apprentices. EICR & EIC certification software, BS 7671 training, off-job learning hours tracking, AI-powered tools, and professional community.';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.jpg`;
+
+export interface SEOBreadcrumb {
+  name: string;
+  url: string;
+}
 
 interface SEOOptions {
   title?: string;
@@ -13,18 +19,23 @@ interface SEOOptions {
   type?: 'website' | 'article' | 'product';
   noindex?: boolean;
   schema?: Record<string, unknown>;
+  schemas?: Array<Record<string, unknown>>;
+  breadcrumbs?: SEOBreadcrumb[];
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
 }
 
 /**
- * Comprehensive SEO hook that sets document title, meta tags, OG tags, canonical URL, and JSON-LD schema
+ * Comprehensive SEO hook that sets document title, meta tags, OG tags, canonical URL, and JSON-LD schemas.
+ * Supports multiple schemas, auto-generates BreadcrumbList from breadcrumbs prop.
  */
 const useSEO = (options: SEOOptions | string = {}, legacyDescription?: string) => {
   const location = useLocation();
 
   // Support legacy usage: useSEO('Title', 'Description')
-  const config: SEOOptions = typeof options === 'string'
-    ? { title: options, description: legacyDescription }
-    : options;
+  const config: SEOOptions =
+    typeof options === 'string' ? { title: options, description: legacyDescription } : options;
 
   const {
     title,
@@ -33,6 +44,11 @@ const useSEO = (options: SEOOptions | string = {}, legacyDescription?: string) =
     type = 'website',
     noindex = false,
     schema,
+    schemas,
+    breadcrumbs,
+    datePublished,
+    dateModified,
+    author,
   } = config;
 
   useEffect(() => {
@@ -86,6 +102,17 @@ const useSEO = (options: SEOOptions | string = {}, legacyDescription?: string) =
     setMeta('og:site_name', 'Elec-Mate', true);
     setMeta('og:locale', 'en_GB', true);
 
+    // Article-specific meta
+    if (datePublished) {
+      setMeta('article:published_time', datePublished, true);
+    }
+    if (dateModified) {
+      setMeta('article:modified_time', dateModified, true);
+    }
+    if (author) {
+      setMeta('article:author', author, true);
+    }
+
     // Twitter
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', fullTitle);
@@ -93,35 +120,65 @@ const useSEO = (options: SEOOptions | string = {}, legacyDescription?: string) =
     setMeta('twitter:image', fullImage);
     setMeta('twitter:url', canonicalUrl);
 
-    // JSON-LD Schema
-    if (schema) {
-      // Remove existing dynamic schema
-      const existingSchema = document.querySelector('script[data-seo-schema]');
-      if (existingSchema) {
-        existingSchema.remove();
-      }
+    // Build all schemas to inject
+    const allSchemas: Array<Record<string, unknown>> = [];
 
-      // Add new schema
-      const scriptElement = document.createElement('script');
-      scriptElement.type = 'application/ld+json';
-      scriptElement.setAttribute('data-seo-schema', 'true');
-      scriptElement.textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        ...schema,
-      });
-      document.head.appendChild(scriptElement);
+    // Legacy single schema
+    if (schema) {
+      allSchemas.push(schema);
     }
 
-    // Cleanup dynamic schema on unmount
+    // Multi-schema array
+    if (schemas) {
+      allSchemas.push(...schemas);
+    }
+
+    // Auto-generate BreadcrumbList from breadcrumbs prop
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      allSchemas.push({
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: `${BASE_URL}${item.url}`,
+        })),
+      });
+    }
+
+    // Remove all existing dynamic schemas
+    document.querySelectorAll('script[data-seo-schema]').forEach((el) => el.remove());
+
+    // Inject all schemas
+    allSchemas.forEach((s, index) => {
+      const scriptElement = document.createElement('script');
+      scriptElement.type = 'application/ld+json';
+      scriptElement.setAttribute('data-seo-schema', `schema-${index}`);
+      scriptElement.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        ...s,
+      });
+      document.head.appendChild(scriptElement);
+    });
+
+    // Cleanup all dynamic schemas on unmount
     return () => {
-      if (schema) {
-        const dynamicSchema = document.querySelector('script[data-seo-schema]');
-        if (dynamicSchema) {
-          dynamicSchema.remove();
-        }
-      }
+      document.querySelectorAll('script[data-seo-schema]').forEach((el) => el.remove());
     };
-  }, [title, description, image, type, noindex, schema, location.pathname]);
+  }, [
+    title,
+    description,
+    image,
+    type,
+    noindex,
+    schema,
+    schemas,
+    breadcrumbs,
+    datePublished,
+    dateModified,
+    author,
+    location.pathname,
+  ]);
 };
 
 /**
@@ -141,11 +198,18 @@ export const SEOSchemas = {
     inLanguage: 'en-GB',
   }),
 
-  article: (title: string, description: string, datePublished: string, author = 'Elec-Mate') => ({
+  article: (
+    title: string,
+    description: string,
+    datePublished: string,
+    dateModified?: string,
+    author = 'Elec-Mate Technical Team'
+  ) => ({
     '@type': 'Article',
     headline: title,
     description,
     datePublished,
+    dateModified: dateModified || datePublished,
     author: {
       '@type': 'Organization',
       name: author,
@@ -192,6 +256,34 @@ export const SEOSchemas = {
       name: step.name,
       text: step.text,
     })),
+  }),
+
+  softwareApplication: (
+    name: string,
+    description: string,
+    url: string,
+    ratingValue = '4.8',
+    ratingCount = '127'
+  ) => ({
+    '@type': 'SoftwareApplication',
+    name,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'iOS, Android, Web',
+    description,
+    url: `${BASE_URL}${url}`,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'GBP',
+      description: '7-day free trial',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue,
+      ratingCount,
+      bestRating: '5',
+      worstRating: '1',
+    },
   }),
 };
 

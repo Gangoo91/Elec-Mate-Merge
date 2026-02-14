@@ -171,9 +171,15 @@ export default function MinorWorksCertificatePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -189,7 +195,8 @@ export default function MinorWorksCertificatePage() {
             <span className="block text-yellow-400 mt-1">Digital EWC Form</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Create Minor Electrical Installation Works Certificates on site in minutes. Auto-fill company details, capture digital signatures, and export professional PDFs instantly.
+            Create Minor Electrical Installation Works Certificates on site in minutes. Auto-fill
+            company details, capture digital signatures, and export professional PDFs instantly.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -217,20 +224,41 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Are Minor Electrical Works?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Are Minor Electrical Works?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Minor electrical installation works are additions or alterations to an existing electrical circuit that do not involve the provision of a new circuit. BS 7671 Regulation 631.2 requires that a Minor Electrical Installation Works Certificate be issued upon completion of such work to confirm that the addition or alteration complies with the current edition of the wiring regulations.
+              Minor electrical installation works are additions or alterations to an existing
+              electrical circuit that do not involve the provision of a new circuit. BS 7671
+              Regulation 631.2 requires that a Minor Electrical Installation Works Certificate be
+              issued upon completion of such work to confirm that the addition or alteration
+              complies with the current edition of the wiring regulations.
             </p>
             <p>
-              Common examples of minor works include adding a socket outlet to an existing ring final circuit, extending a lighting circuit to include an additional light point, replacing a consumer unit where no new circuits are added, installing a fused connection unit (FCU) to supply a fixed appliance from an existing circuit, and repositioning an existing accessory. Each of these involves work on an existing circuit without creating a new one, which is the defining characteristic of minor works.
+              Common examples of minor works include adding a socket outlet to an existing ring
+              final circuit, extending a lighting circuit to include an additional light point,
+              replacing a consumer unit where no new circuits are added, installing a fused
+              connection unit (FCU) to supply a fixed appliance from an existing circuit, and
+              repositioning an existing accessory. Each of these involves work on an existing
+              circuit without creating a new one, which is the defining characteristic of minor
+              works.
             </p>
             <p>
-              The term "minor" can be misleading. It does not mean the work is insignificant or that corners can be cut. The work must still comply fully with BS 7671, the contractor must be competent, and proper inspection and testing must be carried out. The "minor" classification simply refers to the scope of the electrical work (an alteration to an existing circuit) rather than its importance or complexity.
+              The term "minor" can be misleading. It does not mean the work is insignificant or that
+              corners can be cut. The work must still comply fully with BS 7671, the contractor must
+              be competent, and proper inspection and testing must be carried out. The "minor"
+              classification simply refers to the scope of the electrical work (an alteration to an
+              existing circuit) rather than its importance or complexity.
             </p>
             <p>
-              It is worth noting that Regulation 620.3 of BS 7671 states that where the minor work is limited to replacing accessories such as socket outlets, light switches, or ceiling roses in the same location with the same type, no Minor Works certificate is required — provided the circuit protective conductor is verified as continuous and the polarity is confirmed. This is a like-for-like replacement and is not classified as minor works.
+              It is worth noting that Regulation 620.3 of BS 7671 states that where the minor work
+              is limited to replacing accessories such as socket outlets, light switches, or ceiling
+              roses in the same location with the same type, no Minor Works certificate is required
+              — provided the circuit protective conductor is verified as continuous and the polarity
+              is confirmed. This is a like-for-like replacement and is not classified as minor
+              works.
             </p>
           </div>
         </div>
@@ -243,11 +271,16 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Eye className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Minor Works Certificate vs EIC — When to Use Each</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Minor Works Certificate vs EIC — When to Use Each
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The choice between issuing a Minor Electrical Installation Works Certificate and a full Electrical Installation Certificate (EIC) depends on whether new circuits are being installed. Understanding the distinction is essential for compliance and avoiding potential liability issues.
+              The choice between issuing a Minor Electrical Installation Works Certificate and a
+              full Electrical Installation Certificate (EIC) depends on whether new circuits are
+              being installed. Understanding the distinction is essential for compliance and
+              avoiding potential liability issues.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
@@ -308,7 +341,13 @@ export default function MinorWorksCertificatePage() {
               </div>
             </div>
             <p>
-              A useful rule of thumb: if you are running a new cable from the distribution board with a new protective device (MCB or RCBO), you are installing a new circuit and need an EIC. If you are connecting into an existing circuit at any point, it is minor works and requires an EWC. There are edge cases — for instance, replacing a consumer unit is technically an alteration to existing circuits and many contractors issue a Minor Works certificate for each circuit, though some scheme providers require an EIC in this situation. Check with your registration body if in doubt.
+              A useful rule of thumb: if you are running a new cable from the distribution board
+              with a new protective device (MCB or RCBO), you are installing a new circuit and need
+              an EIC. If you are connecting into an existing circuit at any point, it is minor works
+              and requires an EWC. There are edge cases — for instance, replacing a consumer unit is
+              technically an alteration to existing circuits and many contractors issue a Minor
+              Works certificate for each circuit, though some scheme providers require an EIC in
+              this situation. Check with your registration body if in doubt.
             </p>
           </div>
         </div>
@@ -321,20 +360,44 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Shield className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Part P Building Regulations and Minor Works</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Part P Building Regulations and Minor Works
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              In England and Wales, Approved Document P of the Building Regulations governs electrical safety in dwellings. It requires that electrical installation work in dwellings is carried out by a person who is competent, and that certain types of work are notified to the local authority building control body. This notification requirement is separate from the requirement to issue certificates under BS 7671, but the two are closely linked in practice.
+              In England and Wales, Approved Document P of the Building Regulations governs
+              electrical safety in dwellings. It requires that electrical installation work in
+              dwellings is carried out by a person who is competent, and that certain types of work
+              are notified to the local authority building control body. This notification
+              requirement is separate from the requirement to issue certificates under BS 7671, but
+              the two are closely linked in practice.
             </p>
             <p>
-              <strong className="text-yellow-400">Notifiable work</strong> in dwellings includes: the installation of a new circuit; the replacement of a consumer unit; and any electrical work in a special location such as a bathroom, room containing a shower, or swimming pool area. If you are registered with a government-approved competent person scheme — such as NICEIC, NAPIT, ELECSA, STROMA, or BRE — you can self-certify notifiable work by submitting the relevant BS 7671 certificate to your scheme provider, who will issue a Building Regulations Compliance Certificate on your behalf. The cost is typically covered by your annual registration fee.
+              <strong className="text-yellow-400">Notifiable work</strong> in dwellings includes:
+              the installation of a new circuit; the replacement of a consumer unit; and any
+              electrical work in a special location such as a bathroom, room containing a shower, or
+              swimming pool area. If you are registered with a government-approved competent person
+              scheme — such as NICEIC, NAPIT, ELECSA, STROMA, or BRE — you can self-certify
+              notifiable work by submitting the relevant BS 7671 certificate to your scheme
+              provider, who will issue a Building Regulations Compliance Certificate on your behalf.
+              The cost is typically covered by your annual registration fee.
             </p>
             <p>
-              <strong className="text-yellow-400">Non-notifiable work</strong> includes most minor works outside special locations: adding a socket to an existing circuit, extending a lighting circuit, replacing accessories, and similar alterations. These still require a Minor Works certificate under BS 7671, but you do not need to notify building control. The certificate serves as the record of compliance and should be given to the client.
+              <strong className="text-yellow-400">Non-notifiable work</strong> includes most minor
+              works outside special locations: adding a socket to an existing circuit, extending a
+              lighting circuit, replacing accessories, and similar alterations. These still require
+              a Minor Works certificate under BS 7671, but you do not need to notify building
+              control. The certificate serves as the record of compliance and should be given to the
+              client.
             </p>
             <p>
-              In Scotland, the rules differ. The Building (Scotland) Regulations apply, and there is no direct equivalent of Part P. Electrical work must comply with BS 7671 and a building warrant may be required for certain types of work. In Northern Ireland, Part P of the Building Regulations (Northern Ireland) applies, with similar but not identical requirements to England and Wales. Always check the specific regulations for the nation in which you are working.
+              In Scotland, the rules differ. The Building (Scotland) Regulations apply, and there is
+              no direct equivalent of Part P. Electrical work must comply with BS 7671 and a
+              building warrant may be required for certain types of work. In Northern Ireland, Part
+              P of the Building Regulations (Northern Ireland) applies, with similar but not
+              identical requirements to England and Wales. Always check the specific regulations for
+              the nation in which you are working.
             </p>
           </div>
         </div>
@@ -347,41 +410,77 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Goes on a Minor Works Certificate?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Goes on a Minor Works Certificate?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Minor Electrical Installation Works Certificate form, as specified in BS 7671 Appendix 6, is divided into several sections. Each section must be completed in full for the certificate to be valid. Understanding what goes in each section ensures your certificates are complete and stand up to scrutiny from scheme inspectors and building control.
+              The Minor Electrical Installation Works Certificate form, as specified in BS 7671
+              Appendix 6, is divided into several sections. Each section must be completed in full
+              for the certificate to be valid. Understanding what goes in each section ensures your
+              certificates are complete and stand up to scrutiny from scheme inspectors and building
+              control.
             </p>
             <div className="space-y-4 my-6">
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 1: Description of Minor Works</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 1: Description of Minor Works
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The address and details of the installation, the description of the work carried out, the date of completion, and the details of the person ordering the work. The description of works should be specific and clear — for example, "Addition of 1 no. double switched socket outlet to existing ring final circuit in lounge, cable routed under floorboards, Method B reference." Vague descriptions such as "electrical work" are insufficient and will be flagged by scheme inspectors.
+                  The address and details of the installation, the description of the work carried
+                  out, the date of completion, and the details of the person ordering the work. The
+                  description of works should be specific and clear — for example, "Addition of 1
+                  no. double switched socket outlet to existing ring final circuit in lounge, cable
+                  routed under floorboards, Method B reference." Vague descriptions such as
+                  "electrical work" are insufficient and will be flagged by scheme inspectors.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 2: Installation Details</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 2: Installation Details
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The system type (TN-S, TN-C-S, or TT), the method of protection against indirect contact (usually automatic disconnection of supply), the protective device details for the circuit (type, rating, and short-circuit capacity of the MCB, RCBO, or fuse), and the earthing and bonding arrangements. Record the supply characteristics: nominal voltage, prospective fault current at the origin, and the external earth fault loop impedance (Ze).
+                  The system type (TN-S, TN-C-S, or TT), the method of protection against indirect
+                  contact (usually automatic disconnection of supply), the protective device details
+                  for the circuit (type, rating, and short-circuit capacity of the MCB, RCBO, or
+                  fuse), and the earthing and bonding arrangements. Record the supply
+                  characteristics: nominal voltage, prospective fault current at the origin, and the
+                  external earth fault loop impedance (Ze).
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 3: Circuit Details</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The circuit number, the distribution board it is connected to, the cable type and size used, the reference method of installation, the circuit protective device rating, and the maximum permitted disconnection time. For a ring final circuit addition, note that the cable size must match the existing ring cable (typically 2.5 mm² for a 32 A ring).
+                  The circuit number, the distribution board it is connected to, the cable type and
+                  size used, the reference method of installation, the circuit protective device
+                  rating, and the maximum permitted disconnection time. For a ring final circuit
+                  addition, note that the cable size must match the existing ring cable (typically
+                  2.5 mm² for a 32 A ring).
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 4: Test Results</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Record the test instrument serial numbers and calibration dates, then enter the test results: continuity of protective conductors (R1+R2), insulation resistance (must be at least 1 MΩ at 500 V d.c. for standard circuits), correct polarity confirmed, earth fault loop impedance (Zs) at the furthest point of the circuit, and RCD test results (operating time and test current) where applicable. All values must meet the limits in BS 7671.
+                  Record the test instrument serial numbers and calibration dates, then enter the
+                  test results: continuity of protective conductors (R1+R2), insulation resistance
+                  (must be at least 1 MΩ at 500 V d.c. for standard circuits), correct polarity
+                  confirmed, earth fault loop impedance (Zs) at the furthest point of the circuit,
+                  and RCD test results (operating time and test current) where applicable. All
+                  values must meet the limits in BS 7671.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 5: Declaration and Signatures</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 5: Declaration and Signatures
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The certificate must be signed by the person responsible for the design, construction, inspection, and testing of the work. Unlike a full EIC, the Minor Works certificate has a single combined signature block because the same person typically carries out all aspects of the work. Include your name, signature, registration number (e.g. NICEIC enrolment number), company name, address, and date.
+                  The certificate must be signed by the person responsible for the design,
+                  construction, inspection, and testing of the work. Unlike a full EIC, the Minor
+                  Works certificate has a single combined signature block because the same person
+                  typically carries out all aspects of the work. Include your name, signature,
+                  registration number (e.g. NICEIC enrolment number), company name, address, and
+                  date.
                 </p>
               </div>
             </div>
@@ -396,11 +495,16 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How to Create a Minor Works Certificate — Step by Step</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How to Create a Minor Works Certificate — Step by Step
+            </h2>
           </div>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
-              <div key={index} className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div
+                key={index}
+                className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
@@ -421,10 +525,14 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">All 8 Certificate Types in Elec-Mate</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              All 8 Certificate Types in Elec-Mate
+            </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
-            The Minor Works certificate is one of eight electrical certificate types available in Elec-Mate. Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital signatures, and PDF export.
+            The Minor Works certificate is one of eight electrical certificate types available in
+            Elec-Mate. Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital
+            signatures, and PDF export.
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
@@ -478,7 +586,9 @@ export default function MinorWorksCertificatePage() {
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <FileText className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-yellow-400' : 'text-white'}`} />
+                  <FileText
+                    className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-yellow-400' : 'text-white'}`}
+                  />
                   <div>
                     <h3 className="font-bold text-white text-sm mb-1">{cert.name}</h3>
                     <p className="text-white text-sm leading-relaxed">{cert.desc}</p>
@@ -497,7 +607,8 @@ export default function MinorWorksCertificatePage() {
             Why Electricians Choose Elec-Mate for Certificates
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Faster than paper forms, more reliable than generic PDF apps.
+            Purpose-built for UK electricians. Faster than paper forms, more reliable than generic
+            PDF apps.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -510,7 +621,9 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -538,46 +651,64 @@ export default function MinorWorksCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Common Mistakes on Minor Works Certificates</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Common Mistakes on Minor Works Certificates
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Scheme inspectors consistently flag the same issues on Minor Works certificates. Understanding these common mistakes helps you avoid them and ensures your certificates pass inspection first time.
+              Scheme inspectors consistently flag the same issues on Minor Works certificates.
+              Understanding these common mistakes helps you avoid them and ensures your certificates
+              pass inspection first time.
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Vague description of works</strong> — "Fitted extra socket" is insufficient. Include the quantity, type, circuit, cable size, and method of installation. Elec-Mate provides description templates to help.
+                  <strong className="text-yellow-400">Vague description of works</strong> — "Fitted
+                  extra socket" is insufficient. Include the quantity, type, circuit, cable size,
+                  and method of installation. Elec-Mate provides description templates to help.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Missing test results</strong> — All mandatory tests must be recorded. Leaving the insulation resistance or Zs fields blank invalidates the certificate.
+                  <strong className="text-yellow-400">Missing test results</strong> — All mandatory
+                  tests must be recorded. Leaving the insulation resistance or Zs fields blank
+                  invalidates the certificate.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Incorrect Zs values</strong> — Recording the Zs at the distribution board instead of the furthest point of the circuit. The reading must be taken at the most remote accessory.
+                  <strong className="text-yellow-400">Incorrect Zs values</strong> — Recording the
+                  Zs at the distribution board instead of the furthest point of the circuit. The
+                  reading must be taken at the most remote accessory.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Not recording RCD test results</strong> — If the circuit is protected by an RCD (which most circuits now are), the trip time and test current must be recorded.
+                  <strong className="text-yellow-400">Not recording RCD test results</strong> — If
+                  the circuit is protected by an RCD (which most circuits now are), the trip time
+                  and test current must be recorded.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Using an EWC when an EIC is needed</strong> — If a new circuit is being installed (even a simple radial), a full EIC is required. The Minor Works form is only for additions and alterations to existing circuits.
+                  <strong className="text-yellow-400">Using an EWC when an EIC is needed</strong> —
+                  If a new circuit is being installed (even a simple radial), a full EIC is
+                  required. The Minor Works form is only for additions and alterations to existing
+                  circuits.
                 </span>
               </li>
             </ul>
             <p>
-              Elec-Mate helps prevent these mistakes with built-in validation. The app flags incomplete fields, checks test results against BS 7671 limits, and prompts you for RCD results when an RCD protective device is selected. This reduces defects on scheme inspections and gives your clients confidence in your professionalism.
+              Elec-Mate helps prevent these mistakes with built-in validation. The app flags
+              incomplete fields, checks test results against BS 7671 limits, and prompts you for RCD
+              results when an RCD protective device is selected. This reduces defects on scheme
+              inspections and gives your clients confidence in your professionalism.
             </p>
           </div>
         </div>

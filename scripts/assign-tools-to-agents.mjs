@@ -12,37 +12,127 @@ const API_BASE = 'https://api.elevenlabs.io/v1';
 
 // Keywords for Electrician Hub tools
 const ELECTRICIAN_KEYWORDS = [
-  'quote', 'invoice', 'price', 'circuit', 'cert', 'test', 'polarity',
-  'material', 'labour', 'line_item', 'form', 'field', 'step',
-  'preview', 'submit', 'cancel', 'send_quote', 'send_invoice',
-  'create_quote', 'lookup', 'low_stock', 'supplier', 'order', 'received',
-  'price_book', 'labour_rate', 'cash_flow', 'profit', 'revenue',
-  'client_balance', 'supplier_balance', 'outstanding'
+  'quote',
+  'invoice',
+  'price',
+  'circuit',
+  'cert',
+  'test',
+  'polarity',
+  'material',
+  'labour',
+  'line_item',
+  'form',
+  'field',
+  'step',
+  'preview',
+  'submit',
+  'cancel',
+  'send_quote',
+  'send_invoice',
+  'create_quote',
+  'lookup',
+  'low_stock',
+  'supplier',
+  'order',
+  'received',
+  'price_book',
+  'labour_rate',
+  'cash_flow',
+  'profit',
+  'revenue',
+  'client_balance',
+  'supplier_balance',
+  'outstanding',
 ];
 
 // Keywords for Employer Hub tools
 const EMPLOYER_KEYWORDS = [
-  'employee', 'worker', 'job', 'timesheet', 'leave', 'expense', 'tender',
-  'incident', 'rams', 'safety', 'training', 'briefing', 'compliance',
-  'vehicle', 'fleet', 'mileage', 'fuel', 'photo', 'progress', 'snag',
-  'checklist', 'document', 'pack', 'client', 'portal', 'message', 'email',
-  'report', 'generate', 'export', 'summarise', 'expand', 'certification',
-  'elecid', 'interview', 'contract', 'vacancy', 'talent', 'site', 'location',
-  'tracking', 'deadline', 'schedule', 'pending', 'approval', 'urgent',
-  'assign', 'update', 'archive', 'duplicate', 'resolve', 'escalate', 'close',
-  'flag', 'near_miss', 'policy', 'active', 'available', 'expiring'
+  'employee',
+  'worker',
+  'job',
+  'timesheet',
+  'leave',
+  'expense',
+  'tender',
+  'incident',
+  'rams',
+  'safety',
+  'training',
+  'briefing',
+  'compliance',
+  'vehicle',
+  'fleet',
+  'mileage',
+  'fuel',
+  'photo',
+  'progress',
+  'snag',
+  'checklist',
+  'document',
+  'pack',
+  'client',
+  'portal',
+  'message',
+  'email',
+  'report',
+  'generate',
+  'export',
+  'summarise',
+  'expand',
+  'certification',
+  'elecid',
+  'interview',
+  'contract',
+  'vacancy',
+  'talent',
+  'site',
+  'location',
+  'tracking',
+  'deadline',
+  'schedule',
+  'pending',
+  'approval',
+  'urgent',
+  'assign',
+  'update',
+  'archive',
+  'duplicate',
+  'resolve',
+  'escalate',
+  'close',
+  'flag',
+  'near_miss',
+  'policy',
+  'active',
+  'available',
+  'expiring',
 ];
 
 // Shared tools (go to both agents)
 const SHARED_KEYWORDS = [
-  'navigate', 'go_back', 'go_home', 'scroll', 'toggle', 'show_help',
-  'refresh', 'search', 'filter', 'clear', 'dashboard', 'summary',
-  'dialog', 'open_dialog', 'close_dialog', 'sidebar', 'view'
+  'navigate',
+  'go_back',
+  'go_home',
+  'scroll',
+  'toggle',
+  'show_help',
+  'refresh',
+  'search',
+  'filter',
+  'clear',
+  'dashboard',
+  'summary',
+  'dialog',
+  'open_dialog',
+  'close_dialog',
+  'sidebar',
+  'view',
 ];
 
 async function getTools() {
   const response = await fetch(`${API_BASE}/convai/tools`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const data = await response.json();
   return data.tools;
@@ -55,17 +145,17 @@ async function updateAgentTools(agentId, agentName, toolIds) {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       conversation_config: {
         agent: {
           prompt: {
-            tool_ids: toolIds
-          }
-        }
-      }
-    })
+            tool_ids: toolIds,
+          },
+        },
+      },
+    }),
   });
 
   if (!response.ok) {
@@ -86,9 +176,9 @@ function categorizeTools(tools) {
     const name = tool.tool_config.name.toLowerCase();
     const id = tool.id;
 
-    const isElectrician = ELECTRICIAN_KEYWORDS.some(kw => name.includes(kw));
-    const isEmployer = EMPLOYER_KEYWORDS.some(kw => name.includes(kw));
-    const isShared = SHARED_KEYWORDS.some(kw => name.includes(kw));
+    const isElectrician = ELECTRICIAN_KEYWORDS.some((kw) => name.includes(kw));
+    const isEmployer = EMPLOYER_KEYWORDS.some((kw) => name.includes(kw));
+    const isShared = SHARED_KEYWORDS.some((kw) => name.includes(kw));
 
     // Shared tools go to both
     if (isShared) {
@@ -112,7 +202,7 @@ function categorizeTools(tools) {
   // Remove duplicates
   return {
     electrician: [...new Set(electricianTools)],
-    employer: [...new Set(employerTools)]
+    employer: [...new Set(employerTools)],
   };
 }
 

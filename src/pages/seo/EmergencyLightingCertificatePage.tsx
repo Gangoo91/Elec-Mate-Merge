@@ -200,9 +200,15 @@ export default function EmergencyLightingCertificatePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -213,11 +219,13 @@ export default function EmergencyLightingCertificatePage() {
             <span className="text-sm font-medium text-yellow-400">BS 5266-1:2016 Compliant</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Digital <span className="text-yellow-400">Emergency Lighting Certificates</span> on Your Phone
+            Digital <span className="text-yellow-400">Emergency Lighting Certificates</span> on Your
+            Phone
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            The complete emergency lighting testing app for UK electricians. Monthly function tests, annual
-            duration tests, luminaire schedules, and professional PDF certificates — all from your mobile device.
+            The complete emergency lighting testing app for UK electricians. Monthly function tests,
+            annual duration tests, luminaire schedules, and professional PDF certificates — all from
+            your mobile device.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -244,32 +252,36 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Emergency lighting is a critical life-safety system designed to illuminate escape routes and open areas
-              when the normal mains supply fails. In the event of a power cut, fire, or other emergency, occupants
-              must be able to see clearly enough to navigate safely to the nearest exit. Emergency lighting provides
-              this illumination automatically, powered by batteries that charge continuously from the mains and
+              Emergency lighting is a critical life-safety system designed to illuminate escape
+              routes and open areas when the normal mains supply fails. In the event of a power cut,
+              fire, or other emergency, occupants must be able to see clearly enough to navigate
+              safely to the nearest exit. Emergency lighting provides this illumination
+              automatically, powered by batteries that charge continuously from the mains and
               activate the moment the supply is interrupted.
             </p>
             <p>
-              Like any safety-critical system, emergency lighting must be tested regularly to ensure it will function
-              when needed. A luminaire that has been sitting dormant for months may have a failed lamp, a degraded
-              battery, or a faulty charging circuit — none of which would be apparent without testing. The consequences
-              of an untested system failing during a real emergency can be catastrophic, particularly in premises with
-              large numbers of occupants, complex escape routes, or people with mobility impairments.
+              Like any safety-critical system, emergency lighting must be tested regularly to ensure
+              it will function when needed. A luminaire that has been sitting dormant for months may
+              have a failed lamp, a degraded battery, or a faulty charging circuit — none of which
+              would be apparent without testing. The consequences of an untested system failing
+              during a real emergency can be catastrophic, particularly in premises with large
+              numbers of occupants, complex escape routes, or people with mobility impairments.
             </p>
             <p>
-              Emergency lighting testing in the UK is governed by BS 5266-1:2016, the code of practice for the
-              emergency lighting of premises. This standard specifies the types of tests required, the frequencies at
-              which they must be performed, the records that must be kept, and the criteria for acceptable performance.
-              It works alongside BS EN 1838 (which specifies photometric requirements), BS EN 50172 (which covers
-              application and design), and the Regulatory Reform (Fire Safety) Order 2005 (which establishes the legal
-              duty to maintain fire safety systems including emergency lighting).
+              Emergency lighting testing in the UK is governed by BS 5266-1:2016, the code of
+              practice for the emergency lighting of premises. This standard specifies the types of
+              tests required, the frequencies at which they must be performed, the records that must
+              be kept, and the criteria for acceptable performance. It works alongside BS EN 1838
+              (which specifies photometric requirements), BS EN 50172 (which covers application and
+              design), and the Regulatory Reform (Fire Safety) Order 2005 (which establishes the
+              legal duty to maintain fire safety systems including emergency lighting).
             </p>
             <p>
-              An emergency lighting test certificate is the formal document that records the results of these tests.
-              It provides evidence that the system has been inspected and tested by a competent person and documents
-              any deficiencies found. This certificate is a legal record — the Responsible Person for the premises
-              must retain it and make it available for inspection by the fire authority.
+              An emergency lighting test certificate is the formal document that records the results
+              of these tests. It provides evidence that the system has been inspected and tested by
+              a competent person and documents any deficiencies found. This certificate is a legal
+              record — the Responsible Person for the premises must retain it and make it available
+              for inspection by the fire authority.
             </p>
           </div>
         </div>
@@ -283,9 +295,9 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 5266-1:2016 defines a clear testing regime with two primary test types: the monthly function test
-              and the annual full-duration test. Each serves a different purpose and requires different procedures
-              and recording methods.
+              BS 5266-1:2016 defines a clear testing regime with two primary test types: the monthly
+              function test and the annual full-duration test. Each serves a different purpose and
+              requires different procedures and recording methods.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 my-8">
@@ -298,17 +310,19 @@ export default function EmergencyLightingCertificatePage() {
               </div>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  The monthly function test is a brief operational check. The mains supply to the emergency lighting
-                  is interrupted (either by a dedicated test switch, a key-switch on the luminaire, or via an
-                  automatic test system) for long enough to confirm that each luminaire switches on and produces
-                  light. The test duration should be kept as short as practicable — typically a few seconds — to
-                  avoid unnecessarily discharging the batteries.
+                  The monthly function test is a brief operational check. The mains supply to the
+                  emergency lighting is interrupted (either by a dedicated test switch, a key-switch
+                  on the luminaire, or via an automatic test system) for long enough to confirm that
+                  each luminaire switches on and produces light. The test duration should be kept as
+                  short as practicable — typically a few seconds — to avoid unnecessarily
+                  discharging the batteries.
                 </p>
                 <p>
-                  During the test, the engineer checks that each luminaire illuminates, that the light output appears
-                  normal (not dim or flickering), that the luminaire lens or diffuser is undamaged, and that the
-                  charging indicator (if visible) shows normal operation. Any luminaire that fails to illuminate or
-                  shows abnormal behaviour must be recorded and reported for remedial action.
+                  During the test, the engineer checks that each luminaire illuminates, that the
+                  light output appears normal (not dim or flickering), that the luminaire lens or
+                  diffuser is undamaged, and that the charging indicator (if visible) shows normal
+                  operation. Any luminaire that fails to illuminate or shows abnormal behaviour must
+                  be recorded and reported for remedial action.
                 </p>
               </div>
             </div>
@@ -321,33 +335,37 @@ export default function EmergencyLightingCertificatePage() {
               </div>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  The annual full-duration test is the comprehensive check. The emergency lighting system is
-                  operated on battery power for its full rated duration — typically 3 hours for most commercial
-                  premises. This verifies that the batteries can sustain the luminaires for the entire required
-                  period without unacceptable loss of light output.
+                  The annual full-duration test is the comprehensive check. The emergency lighting
+                  system is operated on battery power for its full rated duration — typically 3
+                  hours for most commercial premises. This verifies that the batteries can sustain
+                  the luminaires for the entire required period without unacceptable loss of light
+                  output.
                 </p>
                 <p>
-                  The engineer records the time the test starts, checks each luminaire at intervals during the test
-                  period, and notes the condition at the end of the rated duration. Any luminaire that fails or
-                  dims significantly before the end of the test period has a battery that needs replacing. The annual
-                  test must be followed by a period of recharging (typically 24 hours) during which the system may
-                  have reduced capacity, so the test should be planned to minimise risk.
+                  The engineer records the time the test starts, checks each luminaire at intervals
+                  during the test period, and notes the condition at the end of the rated duration.
+                  Any luminaire that fails or dims significantly before the end of the test period
+                  has a battery that needs replacing. The annual test must be followed by a period
+                  of recharging (typically 24 hours) during which the system may have reduced
+                  capacity, so the test should be planned to minimise risk.
                 </p>
               </div>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              In addition to these two primary tests, BS 5266-1 recommends a daily check of any central system
-              indicators (such as a central battery system status panel) to confirm normal operation. For self-contained
-              luminaires with visible charge indicators, a visual check that the indicator shows the unit is charging
-              normally should be included in routine building maintenance.
+              In addition to these two primary tests, BS 5266-1 recommends a daily check of any
+              central system indicators (such as a central battery system status panel) to confirm
+              normal operation. For self-contained luminaires with visible charge indicators, a
+              visual check that the indicator shows the unit is charging normally should be included
+              in routine building maintenance.
             </p>
             <p>
-              The standard also requires that a completion certificate is issued when a new emergency lighting system
-              is installed, recording the design standard, the system type, and the initial verification test results.
-              Subsequent periodic test certificates then build on this baseline, creating a continuous record of the
-              system performance throughout its life.
+              The standard also requires that a completion certificate is issued when a new
+              emergency lighting system is installed, recording the design standard, the system
+              type, and the initial verification test results. Subsequent periodic test certificates
+              then build on this baseline, creating a continuous record of the system performance
+              throughout its life.
             </p>
           </div>
         </div>
@@ -361,49 +379,55 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Understanding the different types of emergency luminaires is essential for accurate testing and
-              certification. Each type behaves differently during a test and has different maintenance considerations.
+              Understanding the different types of emergency luminaires is essential for accurate
+              testing and certification. Each type behaves differently during a test and has
+              different maintenance considerations.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Non-Maintained</h3>
               <p className="text-white text-sm leading-relaxed">
-                Only illuminates when the mains supply fails. The lamp is off during normal operation. Most common
-                type in offices, schools, shops, and standard commercial premises. During testing, the luminaire
-                should switch on automatically when the test switch is operated.
+                Only illuminates when the mains supply fails. The lamp is off during normal
+                operation. Most common type in offices, schools, shops, and standard commercial
+                premises. During testing, the luminaire should switch on automatically when the test
+                switch is operated.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Maintained</h3>
               <p className="text-white text-sm leading-relaxed">
-                Illuminated at all times — during normal operation and during a power failure. Required in places
-                of entertainment such as cinemas, theatres, and concert venues. The lamp runs from mains during
-                normal operation and switches to battery power during a failure.
+                Illuminated at all times — during normal operation and during a power failure.
+                Required in places of entertainment such as cinemas, theatres, and concert venues.
+                The lamp runs from mains during normal operation and switches to battery power
+                during a failure.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Sustained</h3>
               <p className="text-white text-sm leading-relaxed">
-                Contains two lamps — one for normal lighting (mains-powered) and one for emergency use
-                (battery-powered). The emergency lamp only activates during a mains failure. Used where the fitting
-                serves a dual purpose for both normal and emergency lighting functions.
+                Contains two lamps — one for normal lighting (mains-powered) and one for emergency
+                use (battery-powered). The emergency lamp only activates during a mains failure.
+                Used where the fitting serves a dual purpose for both normal and emergency lighting
+                functions.
               </p>
             </div>
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
-              Self-contained luminaires have their own battery built into or adjacent to the fitting. Central
-              battery systems use a large battery bank (often in a plant room) that powers multiple luminaires via
-              a dedicated circuit. Both types are valid under BS 5266-1, but they have different testing procedures.
-              Self-contained units are tested individually, while central systems are tested as a whole by switching
-              the central supply.
+              Self-contained luminaires have their own battery built into or adjacent to the
+              fitting. Central battery systems use a large battery bank (often in a plant room) that
+              powers multiple luminaires via a dedicated circuit. Both types are valid under BS
+              5266-1, but they have different testing procedures. Self-contained units are tested
+              individually, while central systems are tested as a whole by switching the central
+              supply.
             </p>
             <p>
-              Modern LED emergency luminaires offer significant advantages over older fluorescent types — longer
-              battery life, lower power consumption, faster recharge times, and more consistent light output over
-              the battery discharge cycle. When surveying and testing systems, Elec-Mate allows you to record the
-              lamp type, rated duration, and battery technology for each luminaire in the schedule.
+              Modern LED emergency luminaires offer significant advantages over older fluorescent
+              types — longer battery life, lower power consumption, faster recharge times, and more
+              consistent light output over the battery discharge cycle. When surveying and testing
+              systems, Elec-Mate allows you to record the lamp type, rated duration, and battery
+              technology for each luminaire in the schedule.
             </p>
           </div>
         </div>
@@ -417,24 +441,27 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The rated duration of an emergency lighting system is the minimum time it must remain operational after
-              a mains failure. For most commercial, industrial, and public premises in the UK, BS 5266-1 specifies a
-              3-hour minimum duration. This covers the time needed for a full evacuation, the time for the fire service
-              or building management to carry out a search of the building, and a safety margin.
+              The rated duration of an emergency lighting system is the minimum time it must remain
+              operational after a mains failure. For most commercial, industrial, and public
+              premises in the UK, BS 5266-1 specifies a 3-hour minimum duration. This covers the
+              time needed for a full evacuation, the time for the fire service or building
+              management to carry out a search of the building, and a safety margin.
             </p>
             <p>
-              A 1-hour duration is sometimes acceptable for premises where evacuation can be completed quickly and the
-              building will not be re-entered until mains power is restored. However, 3 hours is the standard default
-              and the most commonly specified duration for new installations. Most self-contained emergency luminaires
-              sold in the UK are rated for 3-hour operation.
+              A 1-hour duration is sometimes acceptable for premises where evacuation can be
+              completed quickly and the building will not be re-entered until mains power is
+              restored. However, 3 hours is the standard default and the most commonly specified
+              duration for new installations. Most self-contained emergency luminaires sold in the
+              UK are rated for 3-hour operation.
             </p>
             <p>
-              During the annual full-duration test, the system must demonstrate it can sustain adequate illumination
-              for the entire rated period. If a luminaire dims significantly or fails before the 3-hour mark, its
-              battery is at end of life and must be replaced. Battery degradation is gradual — a new NiCd or NiMH
-              battery may last 4 to 5 years before its capacity drops below the level needed for the full-duration
-              test. Lithium iron phosphate (LiFePO4) batteries in modern LED luminaires may last longer. Regular annual
-              testing catches battery degradation before it becomes a safety issue.
+              During the annual full-duration test, the system must demonstrate it can sustain
+              adequate illumination for the entire rated period. If a luminaire dims significantly
+              or fails before the 3-hour mark, its battery is at end of life and must be replaced.
+              Battery degradation is gradual — a new NiCd or NiMH battery may last 4 to 5 years
+              before its capacity drops below the level needed for the full-duration test. Lithium
+              iron phosphate (LiFePO4) batteries in modern LED luminaires may last longer. Regular
+              annual testing catches battery degradation before it becomes a safety issue.
             </p>
           </div>
         </div>
@@ -448,27 +475,31 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Traditional emergency lighting testing involves walking the building with a clipboard and paper form,
-              ticking off luminaires one by one, then returning to the office to type the results into a certificate.
-              This double-handling is slow, error-prone, and generates paper records that are easily lost. Elec-Mate
-              eliminates every step of this process.
+              Traditional emergency lighting testing involves walking the building with a clipboard
+              and paper form, ticking off luminaires one by one, then returning to the office to
+              type the results into a certificate. This double-handling is slow, error-prone, and
+              generates paper records that are easily lost. Elec-Mate eliminates every step of this
+              process.
             </p>
             <p>
-              With Elec-Mate, you build the luminaire schedule once and it carries forward to every subsequent test
-              visit. On site, you walk through the building with your phone, tapping each luminaire in the schedule
-              as you test it. The app records the time, result, and any notes for each unit. For annual tests, you
-              can start the timer and the app tracks the elapsed duration automatically.
+              With Elec-Mate, you build the luminaire schedule once and it carries forward to every
+              subsequent test visit. On site, you walk through the building with your phone, tapping
+              each luminaire in the schedule as you test it. The app records the time, result, and
+              any notes for each unit. For annual tests, you can start the timer and the app tracks
+              the elapsed duration automatically.
             </p>
             <p>
-              When you finish, the completed certificate is ready to sign and export as a PDF before you leave site.
-              No office work, no handwriting to decipher, no risk of losing the paperwork. The certificate is stored
-              in the cloud and accessible from any device, creating a permanent digital audit trail for the premises.
+              When you finish, the completed certificate is ready to sign and export as a PDF before
+              you leave site. No office work, no handwriting to decipher, no risk of losing the
+              paperwork. The certificate is stored in the cloud and accessible from any device,
+              creating a permanent digital audit trail for the premises.
             </p>
             <p>
-              Elec-Mate is part of a complete platform for UK electricians that includes 70 electrical calculators,
-              8 Elec-AI agents and 12 AI tools, 36+ training courses, 8 certificate types, and integration with
-              Xero and QuickBooks for invoicing. It replaces the stack of paper forms, the separate calculator app,
-              and the desktop certificate software — all in one mobile-first tool.
+              Elec-Mate is part of a complete platform for UK electricians that includes 70
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              certificate types, and integration with Xero and QuickBooks for invoicing. It replaces
+              the stack of paper forms, the separate calculator app, and the desktop certificate
+              software — all in one mobile-first tool.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -482,8 +513,8 @@ export default function EmergencyLightingCertificatePage() {
             How to Create an Emergency Lighting Certificate Using Elec-Mate
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these steps to complete a BS 5266-1 emergency lighting test certificate using the Elec-Mate app,
-            from opening the form to exporting the finished PDF.
+            Follow these steps to complete a BS 5266-1 emergency lighting test certificate using the
+            Elec-Mate app, from opening the form to exporting the finished PDF.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -512,31 +543,35 @@ export default function EmergencyLightingCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The legal framework for emergency lighting in the UK is established primarily by the Regulatory Reform
-              (Fire Safety) Order 2005 (the FSO), which applies to all non-domestic premises in England and Wales.
-              Similar legislation applies in Scotland under the Fire (Scotland) Act 2005 and in Northern Ireland under
-              the Fire and Rescue Services (Northern Ireland) Order 2006.
+              The legal framework for emergency lighting in the UK is established primarily by the
+              Regulatory Reform (Fire Safety) Order 2005 (the FSO), which applies to all
+              non-domestic premises in England and Wales. Similar legislation applies in Scotland
+              under the Fire (Scotland) Act 2005 and in Northern Ireland under the Fire and Rescue
+              Services (Northern Ireland) Order 2006.
             </p>
             <p>
-              The FSO requires the Responsible Person (typically the employer, building owner, or managing agent) to
-              carry out a fire risk assessment and implement appropriate fire safety measures, which includes the
-              provision and maintenance of emergency lighting. Article 14 specifically requires that emergency routes
-              and exits are provided with adequate emergency lighting. Article 17 requires that fire safety equipment
-              and facilities (including emergency lighting) are maintained in an efficient state, in efficient working
-              order, and in good repair.
+              The FSO requires the Responsible Person (typically the employer, building owner, or
+              managing agent) to carry out a fire risk assessment and implement appropriate fire
+              safety measures, which includes the provision and maintenance of emergency lighting.
+              Article 14 specifically requires that emergency routes and exits are provided with
+              adequate emergency lighting. Article 17 requires that fire safety equipment and
+              facilities (including emergency lighting) are maintained in an efficient state, in
+              efficient working order, and in good repair.
             </p>
             <p>
-              Failure to comply with the FSO can result in enforcement notices, prohibition notices (which can close
-              a building), and criminal prosecution. Fines are unlimited and, where a failure results in death,
-              responsible persons can face imprisonment. The fire authority (usually the local fire and rescue service)
-              has the power to inspect premises and request evidence of maintenance, including emergency lighting test
+              Failure to comply with the FSO can result in enforcement notices, prohibition notices
+              (which can close a building), and criminal prosecution. Fines are unlimited and, where
+              a failure results in death, responsible persons can face imprisonment. The fire
+              authority (usually the local fire and rescue service) has the power to inspect
+              premises and request evidence of maintenance, including emergency lighting test
               records.
             </p>
             <p>
-              Beyond the FSO, the Health and Safety at Work etc. Act 1974 and the Workplace (Health, Safety and
-              Welfare) Regulations 1992 also require adequate emergency lighting in workplaces. Building Regulations
-              Approved Document B (Fire Safety) specifies emergency lighting requirements for new buildings and major
-              refurbishments, referencing BS 5266-1 as the applicable standard.
+              Beyond the FSO, the Health and Safety at Work etc. Act 1974 and the Workplace (Health,
+              Safety and Welfare) Regulations 1992 also require adequate emergency lighting in
+              workplaces. Building Regulations Approved Document B (Fire Safety) specifies emergency
+              lighting requirements for new buildings and major refurbishments, referencing BS
+              5266-1 as the applicable standard.
             </p>
           </div>
         </div>
@@ -553,17 +588,19 @@ export default function EmergencyLightingCertificatePage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is designed by electricians for electricians. Whether you are a sole trader providing
-              emergency lighting testing for small commercial clients, a fire alarm and emergency lighting specialist,
-              or part of a larger facilities management team, the app fits your workflow. The certificate forms follow
-              BS 5266-1 and the test procedures reflect how testing is actually carried out on site.
+              Elec-Mate is designed by electricians for electricians. Whether you are a sole trader
+              providing emergency lighting testing for small commercial clients, a fire alarm and
+              emergency lighting specialist, or part of a larger facilities management team, the app
+              fits your workflow. The certificate forms follow BS 5266-1 and the test procedures
+              reflect how testing is actually carried out on site.
             </p>
             <p>
-              The platform includes 70 electrical calculators covering cable sizing, voltage drop, maximum demand,
-              diversity, conduit and trunking fill, prospective fault current, and more. Combined with 8 certificate
-              types — including EICR, EIC, Minor Works, emergency lighting, fire alarm, and EV charger certificates —
-              plus 8 Elec-AI agents and 12 AI tools, it replaces multiple separate tools with one integrated system.
-              Xero and QuickBooks integration means you can raise invoices directly from completed jobs.
+              The platform includes 70 electrical calculators covering cable sizing, voltage drop,
+              maximum demand, diversity, conduit and trunking fill, prospective fault current, and
+              more. Combined with 8 certificate types — including EICR, EIC, Minor Works, emergency
+              lighting, fire alarm, and EV charger certificates — plus 8 Elec-AI agents and 12 AI
+              tools, it replaces multiple separate tools with one integrated system. Xero and
+              QuickBooks integration means you can raise invoices directly from completed jobs.
             </p>
           </div>
         </div>
@@ -583,11 +620,11 @@ export default function EmergencyLightingCertificatePage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                    +
+                  </span>
                 </summary>
-                <div className="px-5 pb-5 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-5 pb-5 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

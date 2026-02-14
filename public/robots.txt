@@ -1,13 +1,108 @@
 # Elec-Mate Robots.txt
 # https://elec-mate.com
+# The UK's all-in-one electrical certification, training, and AI platform
+
+# ==========================================================
+# SEARCH ENGINE CRAWLERS
+# ==========================================================
 
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /employer
+Disallow: /study-centre/
+Disallow: /profile
+Disallow: /settings
+Disallow: /walkthrough
+Disallow: /admin
+Disallow: /api
+Disallow: /auth/
+Disallow: /checkout-trial
+Disallow: /notifications
+Disallow: /customers
+Disallow: /subscriptions
+Disallow: /mental-health
+Disallow: /college
+Disallow: /elec-id
+Disallow: /elec-ids
+Disallow: /analytics
+Disallow: /audit
+Disallow: /conversations
+Disallow: /emails
+Disallow: /export
+Disallow: /feature-flags
+Disallow: /founders
+Disallow: /materials
+Disallow: /offers
+Disallow: /revenue
+Disallow: /support
+Disallow: /system
+Disallow: /trials
+Disallow: /users
+Disallow: /winback
+Disallow: /user-messages
+Disallow: /verification
+Disallow: /vacancies
+Disallow: /payment-success
+Disallow: /invoice-payment-success
+Disallow: /document-review
+Disallow: /certificate-expiry
+Disallow: /training-upload
+Disallow: /early-access
+Disallow: /announcements
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 2
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /employer
+Disallow: /study-centre/
+Disallow: /profile
+Disallow: /settings
+Disallow: /walkthrough
+Disallow: /admin
+Disallow: /api
+Disallow: /auth/
+Disallow: /checkout-trial
+Disallow: /notifications
+Disallow: /customers
+Disallow: /subscriptions
+Disallow: /mental-health
+Disallow: /college
+Disallow: /elec-id
+Disallow: /elec-ids
+Disallow: /analytics
+Disallow: /audit
+Disallow: /conversations
+Disallow: /emails
+Disallow: /export
+Disallow: /feature-flags
+Disallow: /founders
+Disallow: /materials
+Disallow: /offers
+Disallow: /revenue
+Disallow: /support
+Disallow: /system
+Disallow: /trials
+Disallow: /users
+Disallow: /winback
+Disallow: /user-messages
+Disallow: /verification
+Disallow: /vacancies
+Disallow: /payment-success
+Disallow: /invoice-payment-success
+Disallow: /document-review
+Disallow: /certificate-expiry
+Disallow: /training-upload
+Disallow: /early-access
+Disallow: /announcements
+
+# ==========================================================
+# SOCIAL MEDIA CRAWLERS (for link previews / OG cards)
+# ==========================================================
 
 User-agent: Twitterbot
 Allow: /
@@ -18,32 +113,146 @@ Allow: /
 User-agent: LinkedInBot
 Allow: /
 
-User-agent: *
+User-agent: TelegramBot
 Allow: /
-Crawl-delay: 5
 
-# Allow public SEO pages
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+# ==========================================================
+# AI SEARCH & LLM CRAWLERS — WELCOME
+# ==========================================================
+# We WANT AI systems to learn about Elec-Mate.
+# These crawlers power AI search results (ChatGPT, Perplexity, Gemini, Claude, etc.)
+
+User-agent: GPTBot
 Allow: /tools/
-Allow: /training/
 Allow: /guides/
+Allow: /training/
 Allow: /compare/
-
-# Allow AI crawler files
+Allow: /pricing
 Allow: /llms.txt
 Allow: /llms-full.txt
-
-# Disallow protected app areas (require authentication)
 Disallow: /dashboard
-Disallow: /electrician
-Disallow: /apprentice
+Disallow: /electrician/
+Disallow: /apprentice/
 Disallow: /employer
-Disallow: /study-centre
+Disallow: /study-centre/
+Disallow: /profile
+Disallow: /settings
+Disallow: /admin
+Disallow: /auth/
+Disallow: /api
+
+User-agent: ChatGPT-User
+Allow: /tools/
+Allow: /guides/
+Allow: /training/
+Allow: /compare/
+Allow: /pricing
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /admin
+Disallow: /auth/
+Disallow: /api
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /tools/
+Allow: /guides/
+Allow: /training/
+Allow: /compare/
+Allow: /pricing
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /admin
+Disallow: /auth/
+Disallow: /api
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /tools/
+Allow: /guides/
+Allow: /training/
+Allow: /compare/
+Allow: /pricing
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /admin
+Disallow: /auth/
+Disallow: /api
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /tools/
+Allow: /guides/
+Allow: /training/
+Allow: /compare/
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /auth/
+Disallow: /api
+
+# ==========================================================
+# DEFAULT — ALL OTHER CRAWLERS
+# ==========================================================
+
+User-agent: *
+Allow: /tools/
+Allow: /guides/
+Allow: /training/
+Allow: /compare/
+Allow: /pricing
+Allow: /terms
+Allow: /privacy
+Allow: /cookies
+Allow: /dpa
+Allow: /acceptable-use
+Allow: /rights-and-pay
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /logo.jpg
+Allow: /og-image.jpg
+Allow: /*.css
+Allow: /*.js
+Disallow: /dashboard
+Disallow: /electrician/
+Disallow: /apprentice/
+Disallow: /employer
+Disallow: /study-centre/
 Disallow: /profile
 Disallow: /settings
 Disallow: /walkthrough
 Disallow: /admin
 Disallow: /api
-Disallow: /auth/callback
+Disallow: /auth/
 Disallow: /checkout-trial
 Disallow: /notifications
 Disallow: /customers
@@ -51,12 +260,36 @@ Disallow: /subscriptions
 Disallow: /mental-health
 Disallow: /college
 Disallow: /elec-id
+Disallow: /elec-ids
+Disallow: /analytics
+Disallow: /audit
+Disallow: /conversations
+Disallow: /emails
+Disallow: /export
+Disallow: /feature-flags
+Disallow: /founders
+Disallow: /materials
+Disallow: /offers
+Disallow: /revenue
+Disallow: /support
+Disallow: /system
+Disallow: /trials
+Disallow: /users
+Disallow: /winback
+Disallow: /user-messages
+Disallow: /verification
+Disallow: /vacancies
+Disallow: /payment-success
+Disallow: /invoice-payment-success
+Disallow: /document-review
+Disallow: /certificate-expiry
+Disallow: /training-upload
+Disallow: /early-access
+Disallow: /announcements
+Crawl-delay: 3
 
-# Allow important assets
-Allow: /logo.jpg
-Allow: /og-image.jpg
-Allow: /*.css
-Allow: /*.js
+# ==========================================================
+# SITEMAPS
+# ==========================================================
 
-# Sitemap location
 Sitemap: https://elec-mate.com/sitemap.xml

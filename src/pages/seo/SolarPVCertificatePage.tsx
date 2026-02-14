@@ -200,9 +200,15 @@ export default function SolarPVCertificatePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -210,14 +216,17 @@ export default function SolarPVCertificatePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Sun className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671 Section 712 + G98/G99 Compliant</span>
+            <span className="text-sm font-medium text-yellow-400">
+              BS 7671 Section 712 + G98/G99 Compliant
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Digital <span className="text-yellow-400">Solar PV Certificates</span> on Your Phone
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            The complete solar PV certification app for UK electricians and MCS installers. DC and AC side testing,
-            inverter specs, string configurations, G98/G99 documentation, and professional PDF certificates.
+            The complete solar PV certification app for UK electricians and MCS installers. DC and
+            AC side testing, inverter specs, string configurations, G98/G99 documentation, and
+            professional PDF certificates.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -244,32 +253,36 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A solar PV installation certificate is the formal documentation produced when a photovoltaic system is
-              installed and commissioned. It records the system specification, the test results obtained during
-              commissioning, and provides evidence that the installation complies with BS 7671 (the IET Wiring
-              Regulations), the relevant grid connection engineering recommendation (G98 or G99), and where
-              applicable, MCS requirements.
+              A solar PV installation certificate is the formal documentation produced when a
+              photovoltaic system is installed and commissioned. It records the system
+              specification, the test results obtained during commissioning, and provides evidence
+              that the installation complies with BS 7671 (the IET Wiring Regulations), the relevant
+              grid connection engineering recommendation (G98 or G99), and where applicable, MCS
+              requirements.
             </p>
             <p>
-              Solar PV installations are unique in electrical work because they involve both DC and AC circuits,
-              each with different hazards and testing requirements. The DC side — from the PV panels through to the
-              inverter input — operates at voltages that can exceed 600 V DC in domestic systems and cannot be
-              switched off during daylight hours. The AC side — from the inverter output through to the connection
-              point in the consumer unit or distribution board — follows standard AC installation practices but with
-              additional considerations for the generation source.
+              Solar PV installations are unique in electrical work because they involve both DC and
+              AC circuits, each with different hazards and testing requirements. The DC side — from
+              the PV panels through to the inverter input — operates at voltages that can exceed 600
+              V DC in domestic systems and cannot be switched off during daylight hours. The AC side
+              — from the inverter output through to the connection point in the consumer unit or
+              distribution board — follows standard AC installation practices but with additional
+              considerations for the generation source.
             </p>
             <p>
-              The certificate must therefore document both sides of the installation comprehensively. On the DC side,
-              this means recording string configurations, measured open-circuit voltages, short-circuit currents,
-              insulation resistance values, and earth continuity. On the AC side, standard electrical installation
-              tests apply — earth fault loop impedance, prospective fault current, RCD operation, insulation
-              resistance, and polarity.
+              The certificate must therefore document both sides of the installation
+              comprehensively. On the DC side, this means recording string configurations, measured
+              open-circuit voltages, short-circuit currents, insulation resistance values, and earth
+              continuity. On the AC side, standard electrical installation tests apply — earth fault
+              loop impedance, prospective fault current, RCD operation, insulation resistance, and
+              polarity.
             </p>
             <p>
-              Beyond the electrical testing, the certificate also records the system specification: panel type and
-              quantity, inverter make and model, string configurations, rated system capacity, generation meter
-              details, and the grid connection arrangements. This information is needed for the DNO notification,
-              MCS registration, and building regulations compliance.
+              Beyond the electrical testing, the certificate also records the system specification:
+              panel type and quantity, inverter make and model, string configurations, rated system
+              capacity, generation meter details, and the grid connection arrangements. This
+              information is needed for the DNO notification, MCS registration, and building
+              regulations compliance.
             </p>
           </div>
         </div>
@@ -283,51 +296,57 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              The DC side of a PV installation presents unique testing challenges. Unlike conventional electrical
-              circuits, PV arrays generate voltage whenever they are exposed to light — they cannot be de-energised
-              by switching off a supply. This means all DC testing must be carried out with careful attention to
-              safe working practices and awareness of the voltages present.
+              The DC side of a PV installation presents unique testing challenges. Unlike
+              conventional electrical circuits, PV arrays generate voltage whenever they are exposed
+              to light — they cannot be de-energised by switching off a supply. This means all DC
+              testing must be carried out with careful attention to safe working practices and
+              awareness of the voltages present.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 my-6">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Open-Circuit Voltage (Voc)</h3>
               <p className="text-white text-sm leading-relaxed">
-                The open-circuit voltage of each string is measured with the inverter disconnected (DC isolator open)
-                and compared to the calculated expected value. The expected Voc is the panel rated Voc multiplied by
-                the number of panels in the string, adjusted for temperature using the panel temperature coefficient.
-                A measured value significantly below the expected value indicates a faulty panel, a poor connection,
+                The open-circuit voltage of each string is measured with the inverter disconnected
+                (DC isolator open) and compared to the calculated expected value. The expected Voc
+                is the panel rated Voc multiplied by the number of panels in the string, adjusted
+                for temperature using the panel temperature coefficient. A measured value
+                significantly below the expected value indicates a faulty panel, a poor connection,
                 or a wiring error. The irradiance level should be noted at the time of measurement.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Short-Circuit Current (Isc)</h3>
               <p className="text-white text-sm leading-relaxed">
-                The short-circuit current of each string is measured using a DC clamp meter or by briefly short-circuiting
-                the string through a suitable ammeter (PV modules are designed to withstand short-circuit conditions). The
-                measured Isc is compared to the panel rated Isc adjusted for the actual irradiance level. All strings with
-                the same configuration should produce similar Isc values at the same irradiance — a significant difference
-                between strings indicates a problem.
+                The short-circuit current of each string is measured using a DC clamp meter or by
+                briefly short-circuiting the string through a suitable ammeter (PV modules are
+                designed to withstand short-circuit conditions). The measured Isc is compared to the
+                panel rated Isc adjusted for the actual irradiance level. All strings with the same
+                configuration should produce similar Isc values at the same irradiance — a
+                significant difference between strings indicates a problem.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Insulation Resistance (DC)</h3>
               <p className="text-white text-sm leading-relaxed">
-                Insulation resistance is measured between positive and earth, negative and earth, and positive and
-                negative, with the inverter disconnected and the string cables isolated. The test voltage depends on
-                the system voltage — typically 500 V DC or 1000 V DC. The minimum acceptable insulation resistance
-                depends on the system configuration but must demonstrate adequate isolation between live conductors
-                and earth. Low insulation resistance indicates potential earth faults in the cabling or panels.
+                Insulation resistance is measured between positive and earth, negative and earth,
+                and positive and negative, with the inverter disconnected and the string cables
+                isolated. The test voltage depends on the system voltage — typically 500 V DC or
+                1000 V DC. The minimum acceptable insulation resistance depends on the system
+                configuration but must demonstrate adequate isolation between live conductors and
+                earth. Low insulation resistance indicates potential earth faults in the cabling or
+                panels.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <h3 className="font-bold text-white text-lg mb-3">Earth Continuity & Polarity</h3>
               <p className="text-white text-sm leading-relaxed">
-                The continuity of the protective earth conductor from the PV array frame back to the main earthing
-                terminal is verified. All exposed conductive parts of the array mounting system and any metallic
-                cable containment must be effectively earthed. Polarity of each string must be confirmed — reversing
-                positive and negative connections on a PV string will damage the inverter. The DC isolator polarity
-                is also verified.
+                The continuity of the protective earth conductor from the PV array frame back to the
+                main earthing terminal is verified. All exposed conductive parts of the array
+                mounting system and any metallic cable containment must be effectively earthed.
+                Polarity of each string must be confirmed — reversing positive and negative
+                connections on a PV string will damage the inverter. The DC isolator polarity is
+                also verified.
               </p>
             </div>
           </div>
@@ -342,33 +361,38 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Any electricity-generating installation connected to the public distribution network must comply with
-              the relevant Engineering Recommendation published by the Energy Networks Association (ENA). For solar
-              PV, this means either G98 or G99, depending on the size of the installation.
+              Any electricity-generating installation connected to the public distribution network
+              must comply with the relevant Engineering Recommendation published by the Energy
+              Networks Association (ENA). For solar PV, this means either G98 or G99, depending on
+              the size of the installation.
             </p>
             <p>
-              <strong>G98</strong> (which replaced G83) applies to installations with a rated output up to 16 A per
-              phase. For a single-phase installation at 230 V, this equates to approximately 3.68 kW. For a
-              three-phase installation, the limit is approximately 11.04 kW (3.68 kW per phase). G98 uses a
-              simplified notification process — you notify the Distribution Network Operator (DNO) within 28 days
-              of commissioning using the standard G98 form, and connection is permitted automatically provided the
-              installation meets the technical requirements. No prior approval is needed.
+              <strong>G98</strong> (which replaced G83) applies to installations with a rated output
+              up to 16 A per phase. For a single-phase installation at 230 V, this equates to
+              approximately 3.68 kW. For a three-phase installation, the limit is approximately
+              11.04 kW (3.68 kW per phase). G98 uses a simplified notification process — you notify
+              the Distribution Network Operator (DNO) within 28 days of commissioning using the
+              standard G98 form, and connection is permitted automatically provided the installation
+              meets the technical requirements. No prior approval is needed.
             </p>
             <p>
-              <strong>G99</strong> (which replaced G59) applies to installations with a rated output exceeding the
-              G98 threshold. G99 installations require a formal application to the DNO before installation begins.
-              The DNO carries out a network impact assessment to determine whether the local network can accommodate
-              the generation without voltage regulation problems, fault level issues, or other network constraints.
-              The DNO may approve the connection as applied for, may approve it with conditions (such as export
-              limitation), or may require network reinforcement before connection can proceed. G99 installations also
-              require more detailed commissioning tests and protection settings verification.
+              <strong>G99</strong> (which replaced G59) applies to installations with a rated output
+              exceeding the G98 threshold. G99 installations require a formal application to the DNO
+              before installation begins. The DNO carries out a network impact assessment to
+              determine whether the local network can accommodate the generation without voltage
+              regulation problems, fault level issues, or other network constraints. The DNO may
+              approve the connection as applied for, may approve it with conditions (such as export
+              limitation), or may require network reinforcement before connection can proceed. G99
+              installations also require more detailed commissioning tests and protection settings
+              verification.
             </p>
             <p>
-              Elec-Mate helps you document the grid connection details alongside the electrical certificate. You
-              record whether G98 or G99 applies, the DNO notification or application reference number, the rated
-              export capacity, and the inverter protection settings. This information is included in the exported
-              PDF certificate, providing a complete record of both the electrical installation and the grid
-              connection compliance.
+              Elec-Mate helps you document the grid connection details alongside the electrical
+              certificate. You record whether G98 or G99 applies, the DNO notification or
+              application reference number, the rated export capacity, and the inverter protection
+              settings. This information is included in the exported PDF certificate, providing a
+              complete record of both the electrical installation and the grid connection
+              compliance.
             </p>
           </div>
         </div>
@@ -382,24 +406,27 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Microgeneration Certification Scheme (MCS) is the quality assurance scheme for small-scale
-              renewable energy installations in the UK. MCS certification covers both the products (panels and
-              inverters must be MCS-listed) and the installers (who must be MCS-certified). An MCS-certified
-              installation is eligible for payments under the Smart Export Guarantee (SEG), the government-backed
-              scheme that pays generators for electricity exported to the grid.
+              The Microgeneration Certification Scheme (MCS) is the quality assurance scheme for
+              small-scale renewable energy installations in the UK. MCS certification covers both
+              the products (panels and inverters must be MCS-listed) and the installers (who must be
+              MCS-certified). An MCS-certified installation is eligible for payments under the Smart
+              Export Guarantee (SEG), the government-backed scheme that pays generators for
+              electricity exported to the grid.
             </p>
             <p>
-              Without MCS certification, a solar PV installation cannot be registered for SEG payments. This is a
-              significant financial consideration for homeowners — over the lifetime of a typical domestic PV system,
-              SEG payments can amount to several thousand pounds. MCS certification also provides consumer protection
-              through the MCS Consumer Code, which includes requirements for quotations, installations standards,
-              and a complaints resolution process.
+              Without MCS certification, a solar PV installation cannot be registered for SEG
+              payments. This is a significant financial consideration for homeowners — over the
+              lifetime of a typical domestic PV system, SEG payments can amount to several thousand
+              pounds. MCS certification also provides consumer protection through the MCS Consumer
+              Code, which includes requirements for quotations, installations standards, and a
+              complaints resolution process.
             </p>
             <p>
-              To register a PV installation with MCS, the installer must upload commissioning documentation including
-              the electrical installation certificate, the system specification, a performance estimate (predicting
-              annual energy generation), and photographs of the installation. Elec-Mate generates certificate PDFs
-              that include the detailed system specification and test results needed for MCS registration, reducing
+              To register a PV installation with MCS, the installer must upload commissioning
+              documentation including the electrical installation certificate, the system
+              specification, a performance estimate (predicting annual energy generation), and
+              photographs of the installation. Elec-Mate generates certificate PDFs that include the
+              detailed system specification and test results needed for MCS registration, reducing
               the administrative burden of the registration process.
             </p>
           </div>
@@ -414,26 +441,30 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Solar PV certification involves more documentation than most electrical installations — system specs,
-              DC test results, AC test results, inverter details, string configurations, and grid connection
-              paperwork. Managing all this on paper or across multiple separate documents is inefficient and
-              error-prone. Elec-Mate brings everything together in one structured digital certificate.
+              Solar PV certification involves more documentation than most electrical installations
+              — system specs, DC test results, AC test results, inverter details, string
+              configurations, and grid connection paperwork. Managing all this on paper or across
+              multiple separate documents is inefficient and error-prone. Elec-Mate brings
+              everything together in one structured digital certificate.
             </p>
             <p>
-              You enter the system specification once — panel type, inverter details, string configuration — and the
-              app calculates expected test values automatically. On site, you record test results directly into the
-              app and it compares them to the expected values in real time, flagging any discrepancies. Both DC and
-              AC side results are captured in the same certificate, eliminating the need for separate documents.
+              You enter the system specification once — panel type, inverter details, string
+              configuration — and the app calculates expected test values automatically. On site,
+              you record test results directly into the app and it compares them to the expected
+              values in real time, flagging any discrepancies. Both DC and AC side results are
+              captured in the same certificate, eliminating the need for separate documents.
             </p>
             <p>
-              The completed certificate exports as a professional PDF that includes everything — system spec, string
-              diagrams, DC test results, AC test results, G98/G99 details, and digital signatures. It is ready to
-              send to the client, upload to MCS, or submit to the DNO, all from your phone.
+              The completed certificate exports as a professional PDF that includes everything —
+              system spec, string diagrams, DC test results, AC test results, G98/G99 details, and
+              digital signatures. It is ready to send to the client, upload to MCS, or submit to the
+              DNO, all from your phone.
             </p>
             <p>
-              Elec-Mate is part of a complete platform for UK electricians that includes 70 electrical calculators,
-              8 Elec-AI agents and 12 AI tools, 36+ training courses, 8 certificate types, and integration with
-              Xero and QuickBooks for invoicing. Everything in one mobile-first tool.
+              Elec-Mate is part of a complete platform for UK electricians that includes 70
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              certificate types, and integration with Xero and QuickBooks for invoicing. Everything
+              in one mobile-first tool.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -447,8 +478,8 @@ export default function SolarPVCertificatePage() {
             How to Create a Solar PV Certificate Using Elec-Mate
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these steps to complete a solar PV installation certificate using the Elec-Mate app, from entering
-            the system specification to exporting the finished PDF.
+            Follow these steps to complete a solar PV installation certificate using the Elec-Mate
+            app, from entering the system specification to exporting the finished PDF.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -477,34 +508,39 @@ export default function SolarPVCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Section 712 of BS 7671 sets out the particular requirements for solar photovoltaic power supply systems.
-              It supplements the general requirements of the standard with specific provisions that address the unique
-              characteristics and hazards of PV installations. Understanding these requirements is essential for
-              anyone designing, installing, or certifying PV systems.
+              Section 712 of BS 7671 sets out the particular requirements for solar photovoltaic
+              power supply systems. It supplements the general requirements of the standard with
+              specific provisions that address the unique characteristics and hazards of PV
+              installations. Understanding these requirements is essential for anyone designing,
+              installing, or certifying PV systems.
             </p>
             <p>
-              <strong>Protection against electric shock (712.411):</strong> The standard requires that PV arrays on
-              the DC side use either double insulation, protective separation, or automatic disconnection of supply.
-              Since PV arrays cannot be de-energised during daylight, the emphasis is on preventing contact with
-              live DC conductors through proper insulation, cable protection, and clear labelling.
+              <strong>Protection against electric shock (712.411):</strong> The standard requires
+              that PV arrays on the DC side use either double insulation, protective separation, or
+              automatic disconnection of supply. Since PV arrays cannot be de-energised during
+              daylight, the emphasis is on preventing contact with live DC conductors through proper
+              insulation, cable protection, and clear labelling.
             </p>
             <p>
-              <strong>DC isolator requirements (712.537.2):</strong> A DC isolator (switch-disconnector) must be
-              provided between the PV array and the inverter to allow safe maintenance. It must be rated for DC use
-              at the system voltage and current, be located adjacent to the inverter, and be clearly labelled. The
-              isolator must be capable of interrupting the full DC short-circuit current.
+              <strong>DC isolator requirements (712.537.2):</strong> A DC isolator
+              (switch-disconnector) must be provided between the PV array and the inverter to allow
+              safe maintenance. It must be rated for DC use at the system voltage and current, be
+              located adjacent to the inverter, and be clearly labelled. The isolator must be
+              capable of interrupting the full DC short-circuit current.
             </p>
             <p>
-              <strong>Cable selection (712.522):</strong> DC cables on the PV array side are exposed to UV radiation,
-              temperature extremes, and mechanical stress. Section 712 requires that cables used on the DC side are
-              suitable for the environmental conditions — UV-resistant, rated for the temperature range, and protected
-              against mechanical damage. PV-specific cables (typically H1Z2Z2-K) are designed for these conditions.
+              <strong>Cable selection (712.522):</strong> DC cables on the PV array side are exposed
+              to UV radiation, temperature extremes, and mechanical stress. Section 712 requires
+              that cables used on the DC side are suitable for the environmental conditions —
+              UV-resistant, rated for the temperature range, and protected against mechanical
+              damage. PV-specific cables (typically H1Z2Z2-K) are designed for these conditions.
             </p>
             <p>
-              <strong>Labelling (712.514):</strong> Clear warning labels are required at the main switch, the consumer
-              unit, the inverter, and at any point where PV cabling passes through the building structure. These labels
-              must warn that the PV system is a dual supply, that the PV array remains live during daylight hours even
-              when the inverter is disconnected, and identify the DC isolation point.
+              <strong>Labelling (712.514):</strong> Clear warning labels are required at the main
+              switch, the consumer unit, the inverter, and at any point where PV cabling passes
+              through the building structure. These labels must warn that the PV system is a dual
+              supply, that the PV array remains live during daylight hours even when the inverter is
+              disconnected, and identify the DC isolation point.
             </p>
           </div>
         </div>
@@ -521,17 +557,19 @@ export default function SolarPVCertificatePage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is designed by electricians for electricians and solar PV installers. Whether you are a
-              domestic PV specialist, an electrician adding solar to your services, or part of a larger renewable
-              energy company, the app fits your workflow. The certificate forms cover both domestic and commercial
-              PV installations and follow BS 7671 Section 712 requirements.
+              Elec-Mate is designed by electricians for electricians and solar PV installers.
+              Whether you are a domestic PV specialist, an electrician adding solar to your
+              services, or part of a larger renewable energy company, the app fits your workflow.
+              The certificate forms cover both domestic and commercial PV installations and follow
+              BS 7671 Section 712 requirements.
             </p>
             <p>
-              The platform includes 70 electrical calculators covering cable sizing, voltage drop, maximum demand,
-              prospective fault current, and more — plus specific PV calculators for string sizing and expected
-              generation. Combined with 8 certificate types, 8 Elec-AI agents, 12 AI tools, and 36+ training
-              courses, it replaces multiple separate tools. Xero and QuickBooks integration means you can raise
-              invoices directly from completed installations.
+              The platform includes 70 electrical calculators covering cable sizing, voltage drop,
+              maximum demand, prospective fault current, and more — plus specific PV calculators for
+              string sizing and expected generation. Combined with 8 certificate types, 8 Elec-AI
+              agents, 12 AI tools, and 36+ training courses, it replaces multiple separate tools.
+              Xero and QuickBooks integration means you can raise invoices directly from completed
+              installations.
             </p>
           </div>
         </div>
@@ -551,11 +589,11 @@ export default function SolarPVCertificatePage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                    +
+                  </span>
                 </summary>
-                <div className="px-5 pb-5 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-5 pb-5 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

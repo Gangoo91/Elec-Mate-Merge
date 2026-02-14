@@ -140,8 +140,12 @@ export default function RAMSGeneratorPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -149,15 +153,15 @@ export default function RAMSGeneratorPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
-            <Brain className="w-4 h-4" />
-            8 AI Agents + 12 AI Tools Included
+            <Brain className="w-4 h-4" />8 AI Agents + 12 AI Tools Included
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             AI RAMS Generator
             <span className="block text-yellow-400 mt-1">for Electricians</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Generate professional, site-specific Risk Assessments and Method Statements in under 60 seconds. CDM 2015 compliant. Purpose-built for UK electrical contractors.
+            Generate professional, site-specific Risk Assessments and Method Statements in under 60
+            seconds. CDM 2015 compliant. Purpose-built for UK electrical contractors.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -189,16 +193,37 @@ export default function RAMSGeneratorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              RAMS is the industry abbreviation for Risk Assessment and Method Statement. Despite being referred to as a single document, RAMS actually comprises two distinct but complementary parts that together form a comprehensive safety package for any piece of work.
+              RAMS is the industry abbreviation for Risk Assessment and Method Statement. Despite
+              being referred to as a single document, RAMS actually comprises two distinct but
+              complementary parts that together form a comprehensive safety package for any piece of
+              work.
             </p>
             <p>
-              The <strong className="text-yellow-400">Risk Assessment</strong> identifies the hazards associated with the work, evaluates the likelihood and severity of harm from each hazard, and specifies the control measures that will be implemented to reduce the risk to an acceptable level. A proper risk assessment follows the hierarchy of controls: eliminate the hazard, substitute with something less hazardous, implement engineering controls, use administrative controls (safe systems of work, permits, training), and finally use personal protective equipment (PPE) as a last resort. Each hazard is typically rated using a risk matrix that multiplies likelihood (1-5) by severity (1-5) to produce a risk score before and after controls are applied.
+              The <strong className="text-yellow-400">Risk Assessment</strong> identifies the
+              hazards associated with the work, evaluates the likelihood and severity of harm from
+              each hazard, and specifies the control measures that will be implemented to reduce the
+              risk to an acceptable level. A proper risk assessment follows the hierarchy of
+              controls: eliminate the hazard, substitute with something less hazardous, implement
+              engineering controls, use administrative controls (safe systems of work, permits,
+              training), and finally use personal protective equipment (PPE) as a last resort. Each
+              hazard is typically rated using a risk matrix that multiplies likelihood (1-5) by
+              severity (1-5) to produce a risk score before and after controls are applied.
             </p>
             <p>
-              The <strong className="text-yellow-400">Method Statement</strong> is a step-by-step description of how the work will be carried out safely. It follows the chronological sequence of the job from arrival on site through to completion and describes at each stage what work is being done, who is doing it, what equipment and materials are being used, and what safety precautions are in place. A good method statement is specific enough that someone unfamiliar with the job could read it and understand the safe sequence of work.
+              The <strong className="text-yellow-400">Method Statement</strong> is a step-by-step
+              description of how the work will be carried out safely. It follows the chronological
+              sequence of the job from arrival on site through to completion and describes at each
+              stage what work is being done, who is doing it, what equipment and materials are being
+              used, and what safety precautions are in place. A good method statement is specific
+              enough that someone unfamiliar with the job could read it and understand the safe
+              sequence of work.
             </p>
             <p>
-              Together, these two documents demonstrate that you have thought about the hazards before starting work and have a planned, systematic approach to managing them. This is not just good practice — it is a legal requirement under the Management of Health and Safety at Work Regulations 1999, and for construction work, under the Construction (Design and Management) Regulations 2015.
+              Together, these two documents demonstrate that you have thought about the hazards
+              before starting work and have a planned, systematic approach to managing them. This is
+              not just good practice — it is a legal requirement under the Management of Health and
+              Safety at Work Regulations 1999, and for construction work, under the Construction
+              (Design and Management) Regulations 2015.
             </p>
           </div>
         </div>
@@ -211,39 +236,93 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ShieldCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Legal Requirements for RAMS in Electrical Work</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Legal Requirements for RAMS in Electrical Work
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The legal framework for workplace risk assessment in the UK is established by several overlapping pieces of legislation. Understanding which regulations apply to your electrical work — and what they require — is essential for producing RAMS that are legally compliant and genuinely useful on site.
+              The legal framework for workplace risk assessment in the UK is established by several
+              overlapping pieces of legislation. Understanding which regulations apply to your
+              electrical work — and what they require — is essential for producing RAMS that are
+              legally compliant and genuinely useful on site.
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
               <h3 className="font-bold text-white text-lg mb-4">Key Legislation Requiring RAMS</h3>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Health and Safety at Work etc. Act 1974</strong> — Section 2 places a general duty on every employer to ensure, so far as is reasonably practicable, the health, safety, and welfare of all their employees. Section 3 extends this duty to anyone else affected by the undertaking, including clients, other contractors on site, and members of the public. Risk assessments are the primary mechanism for demonstrating compliance with these duties.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Health and Safety at Work etc. Act 1974
+                    </strong>{' '}
+                    — Section 2 places a general duty on every employer to ensure, so far as is
+                    reasonably practicable, the health, safety, and welfare of all their employees.
+                    Section 3 extends this duty to anyone else affected by the undertaking,
+                    including clients, other contractors on site, and members of the public. Risk
+                    assessments are the primary mechanism for demonstrating compliance with these
+                    duties.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Management of Health and Safety at Work Regulations 1999</strong> — Regulation 3 requires every employer to make a suitable and sufficient assessment of the risks to which employees and others are exposed. Regulation 4 requires the employer to implement the preventive and protective measures identified by the assessment. If you have five or more employees, the significant findings of the assessment must be recorded in writing.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Management of Health and Safety at Work Regulations 1999
+                    </strong>{' '}
+                    — Regulation 3 requires every employer to make a suitable and sufficient
+                    assessment of the risks to which employees and others are exposed. Regulation 4
+                    requires the employer to implement the preventive and protective measures
+                    identified by the assessment. If you have five or more employees, the
+                    significant findings of the assessment must be recorded in writing.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Construction (Design and Management) Regulations 2015</strong> — CDM 2015 applies to all construction work in Great Britain, which includes electrical installation work. Regulation 15 requires contractors to plan, manage, and monitor construction work carried out by them so that it is carried out without risk to health or safety. This means producing task-specific and site-specific risk assessments and method statements for your electrical work.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Construction (Design and Management) Regulations 2015
+                    </strong>{' '}
+                    — CDM 2015 applies to all construction work in Great Britain, which includes
+                    electrical installation work. Regulation 15 requires contractors to plan,
+                    manage, and monitor construction work carried out by them so that it is carried
+                    out without risk to health or safety. This means producing task-specific and
+                    site-specific risk assessments and method statements for your electrical work.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Electricity at Work Regulations 1989</strong> — Regulation 3 requires that all systems are maintained to prevent danger. Regulation 4 requires that all work activities on or near electrical systems are carried out in a manner that prevents danger. These duties apply to electricians specifically and must be reflected in RAMS for electrical work, particularly around live working, isolation procedures, and safe systems of work.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Electricity at Work Regulations 1989
+                    </strong>{' '}
+                    — Regulation 3 requires that all systems are maintained to prevent danger.
+                    Regulation 4 requires that all work activities on or near electrical systems are
+                    carried out in a manner that prevents danger. These duties apply to electricians
+                    specifically and must be reflected in RAMS for electrical work, particularly
+                    around live working, isolation procedures, and safe systems of work.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">COSHH Regulations 2002</strong> — The Control of Substances Hazardous to Health Regulations require a specific assessment of exposure to hazardous substances. For electricians, this covers substances such as PVC fumes from cable stripping, silica dust from chasing masonry, solvents used for cleaning, and adhesives used in cable management. COSHH assessments are typically included within the RAMS document.</span>
+                  <span>
+                    <strong className="text-yellow-400">COSHH Regulations 2002</strong> — The
+                    Control of Substances Hazardous to Health Regulations require a specific
+                    assessment of exposure to hazardous substances. For electricians, this covers
+                    substances such as PVC fumes from cable stripping, silica dust from chasing
+                    masonry, solvents used for cleaning, and adhesives used in cable management.
+                    COSHH assessments are typically included within the RAMS document.
+                  </span>
                 </li>
               </ul>
             </div>
             <p>
-              In practice, even sole traders who are not legally required to record risk assessments in writing will find that written RAMS are required by clients, principal contractors, and building managers before being permitted to start work on site. The commercial expectation now exceeds the legal minimum, and any electrician who cannot produce professional RAMS will struggle to win work on commercial and managed residential sites.
+              In practice, even sole traders who are not legally required to record risk assessments
+              in writing will find that written RAMS are required by clients, principal contractors,
+              and building managers before being permitted to start work on site. The commercial
+              expectation now exceeds the legal minimum, and any electrician who cannot produce
+              professional RAMS will struggle to win work on commercial and managed residential
+              sites.
             </p>
           </div>
         </div>
@@ -256,14 +335,21 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <AlertTriangle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Goes in an Electrical Risk Assessment?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Goes in an Electrical Risk Assessment?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A risk assessment for electrical work must identify all foreseeable hazards, evaluate the risk from each, and specify appropriate control measures. The HSE five-step approach provides a structured framework: identify the hazards, decide who might be harmed and how, evaluate the risks and decide on precautions, record your significant findings, and review and update your assessment.
+              A risk assessment for electrical work must identify all foreseeable hazards, evaluate
+              the risk from each, and specify appropriate control measures. The HSE five-step
+              approach provides a structured framework: identify the hazards, decide who might be
+              harmed and how, evaluate the risks and decide on precautions, record your significant
+              findings, and review and update your assessment.
             </p>
             <p>
-              For electrical installation work, the hazards fall into several categories that must be addressed systematically.
+              For electrical installation work, the hazards fall into several categories that must
+              be addressed systematically.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -273,7 +359,13 @@ export default function RAMSGeneratorPage() {
                 <h3 className="font-bold text-white text-lg">Electrical Hazards</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Electric shock from contact with live conductors during installation, testing, or fault-finding. Arc flash from short circuits, particularly when working in or near consumer units and distribution boards. Burns from overheated conductors or components. These hazards require controls including safe isolation procedures (GS38 compliant test equipment, lock-off devices, proving dead), permits to work for live working where justified under Regulation 14 of the Electricity at Work Regulations, and appropriate insulated tools and PPE.
+                Electric shock from contact with live conductors during installation, testing, or
+                fault-finding. Arc flash from short circuits, particularly when working in or near
+                consumer units and distribution boards. Burns from overheated conductors or
+                components. These hazards require controls including safe isolation procedures (GS38
+                compliant test equipment, lock-off devices, proving dead), permits to work for live
+                working where justified under Regulation 14 of the Electricity at Work Regulations,
+                and appropriate insulated tools and PPE.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -282,7 +374,13 @@ export default function RAMSGeneratorPage() {
                 <h3 className="font-bold text-white text-lg">Working at Height</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Accessing distribution boards mounted at height, running cables through ceiling voids using access platforms, working from ladders to install lighting and accessories. The Work at Height Regulations 2005 require that work at height is properly planned, supervised, and carried out by competent persons. Risk assessments must specify the type of access equipment to be used (step platforms, podium steps, tower scaffolds, or mobile elevating work platforms), and confirm that operatives are trained in its use.
+                Accessing distribution boards mounted at height, running cables through ceiling
+                voids using access platforms, working from ladders to install lighting and
+                accessories. The Work at Height Regulations 2005 require that work at height is
+                properly planned, supervised, and carried out by competent persons. Risk assessments
+                must specify the type of access equipment to be used (step platforms, podium steps,
+                tower scaffolds, or mobile elevating work platforms), and confirm that operatives
+                are trained in its use.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -291,7 +389,12 @@ export default function RAMSGeneratorPage() {
                 <h3 className="font-bold text-white text-lg">Fire and Hot Works</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Soldering, brazing, and heat-shrinking near combustible materials. Using angle grinders or SDS drills near flammable substances. For hot works on managed sites, a hot works permit may be required from the principal contractor or building management. The risk assessment must identify the fire risk, specify fire precautions (fire extinguisher, fire blanket, fire watch period), and confirm that the operative holds the appropriate hot works permit where required.
+                Soldering, brazing, and heat-shrinking near combustible materials. Using angle
+                grinders or SDS drills near flammable substances. For hot works on managed sites, a
+                hot works permit may be required from the principal contractor or building
+                management. The risk assessment must identify the fire risk, specify fire
+                precautions (fire extinguisher, fire blanket, fire watch period), and confirm that
+                the operative holds the appropriate hot works permit where required.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -300,13 +403,26 @@ export default function RAMSGeneratorPage() {
                 <h3 className="font-bold text-white text-lg">Manual Handling</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Lifting and carrying heavy items such as consumer units, cable drums (which can exceed 40 kg for larger sizes), distribution boards, and transformers. The Manual Handling Operations Regulations 1992 require that manual handling is avoided where reasonably practicable, and where it cannot be avoided, a suitable assessment is made. The risk assessment should specify maximum weights, team lifting requirements, and the use of mechanical aids such as drum stands, cable trolleys, and sack trucks.
+                Lifting and carrying heavy items such as consumer units, cable drums (which can
+                exceed 40 kg for larger sizes), distribution boards, and transformers. The Manual
+                Handling Operations Regulations 1992 require that manual handling is avoided where
+                reasonably practicable, and where it cannot be avoided, a suitable assessment is
+                made. The risk assessment should specify maximum weights, team lifting requirements,
+                and the use of mechanical aids such as drum stands, cable trolleys, and sack trucks.
               </p>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Additional hazards that must be considered include: asbestos exposure (particularly in buildings constructed before 2000, where asbestos may be present in flash guards, cable routes, or behind consumer units), noise exposure from drilling and chasing (which may require hearing protection if the daily exposure exceeds the lower exposure action value of 80 dB(A)), dust exposure from cutting chases in masonry (silica dust is a serious health hazard requiring RPE and extraction), lone working (particularly on domestic jobs where the operative may be working alone in an unoccupied property), and the presence of other site workers, members of the public, or building occupants who may be affected by the work.
+              Additional hazards that must be considered include: asbestos exposure (particularly in
+              buildings constructed before 2000, where asbestos may be present in flash guards,
+              cable routes, or behind consumer units), noise exposure from drilling and chasing
+              (which may require hearing protection if the daily exposure exceeds the lower exposure
+              action value of 80 dB(A)), dust exposure from cutting chases in masonry (silica dust
+              is a serious health hazard requiring RPE and extraction), lone working (particularly
+              on domestic jobs where the operative may be working alone in an unoccupied property),
+              and the presence of other site workers, members of the public, or building occupants
+              who may be affected by the work.
             </p>
           </div>
         </div>
@@ -319,11 +435,17 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Method Statement Structure for Electrical Work</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Method Statement Structure for Electrical Work
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A method statement describes the safe sequence of work from start to finish. For electrical installation work, it should follow the natural progression of the job while identifying the safety considerations at each stage. A well-structured method statement for a typical electrical installation project includes the following sections.
+              A method statement describes the safe sequence of work from start to finish. For
+              electrical installation work, it should follow the natural progression of the job
+              while identifying the safety considerations at each stage. A well-structured method
+              statement for a typical electrical installation project includes the following
+              sections.
             </p>
           </div>
           <div className="space-y-4 my-6">
@@ -359,7 +481,10 @@ export default function RAMSGeneratorPage() {
                 text: 'Removing all waste materials and packaging, cleaning the work area, de-rigging any access equipment, removing barriers and signage, completing all certification and documentation, handing over to the client with operating instructions where appropriate, notifying building control where the work is notifiable under Part P.',
               },
             ].map((item) => (
-              <div key={item.step} className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div
+                key={item.step}
+                className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                   <span className="font-bold text-yellow-400">{item.step}</span>
                 </div>
@@ -372,7 +497,12 @@ export default function RAMSGeneratorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The level of detail in the method statement should be proportionate to the complexity and risk of the work. A simple like-for-like socket outlet change requires less detail than a full rewire of a three-storey commercial building. The Elec-Mate AI adjusts the depth and specificity of the generated method statement based on the job description you provide, producing appropriately detailed documents for both simple and complex projects.
+              The level of detail in the method statement should be proportionate to the complexity
+              and risk of the work. A simple like-for-like socket outlet change requires less detail
+              than a full rewire of a three-storey commercial building. The Elec-Mate AI adjusts the
+              depth and specificity of the generated method statement based on the job description
+              you provide, producing appropriately detailed documents for both simple and complex
+              projects.
             </p>
           </div>
         </div>
@@ -385,20 +515,43 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Brain className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How Elec-Mate AI Generates Your RAMS</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How Elec-Mate AI Generates Your RAMS
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Elec-Mate RAMS generator uses a specialist AI agent trained specifically on UK health and safety legislation, electrical installation standards, and real-world site safety practices. Unlike generic AI tools that produce vague, template-style content, the Elec-Mate AI understands the specific hazards and control measures relevant to electrical work and produces genuinely site-specific documents.
+              The Elec-Mate RAMS generator uses a specialist AI agent trained specifically on UK
+              health and safety legislation, electrical installation standards, and real-world site
+              safety practices. Unlike generic AI tools that produce vague, template-style content,
+              the Elec-Mate AI understands the specific hazards and control measures relevant to
+              electrical work and produces genuinely site-specific documents.
             </p>
             <p>
-              The process is straightforward. You provide a job description in plain English — for example, "Full rewire of a 1930s three-bedroom semi-detached house, existing lead-sheathed wiring on a TN-S supply, customer will be living in the property during the work." The AI analyses this description and identifies the specific hazards: working with potentially asbestos-containing materials in a 1930s property, lead cable sheath handling and disposal, working at height to access upstairs ceiling voids, dust and disruption management with occupants present, safe isolation of an ageing TN-S supply, and so on.
+              The process is straightforward. You provide a job description in plain English — for
+              example, "Full rewire of a 1930s three-bedroom semi-detached house, existing
+              lead-sheathed wiring on a TN-S supply, customer will be living in the property during
+              the work." The AI analyses this description and identifies the specific hazards:
+              working with potentially asbestos-containing materials in a 1930s property, lead cable
+              sheath handling and disposal, working at height to access upstairs ceiling voids, dust
+              and disruption management with occupants present, safe isolation of an ageing TN-S
+              supply, and so on.
             </p>
             <p>
-              The AI then generates a complete risk assessment with a risk matrix showing the initial risk score for each hazard, the specific control measures to be implemented, and the residual risk score after controls are in place. It produces a method statement that follows the logical sequence of work for the specific job described, not a generic one-size-fits-all template. COSHH assessments are included where hazardous substances are identified. The entire document is formatted professionally and can be exported as a PDF with your company branding.
+              The AI then generates a complete risk assessment with a risk matrix showing the
+              initial risk score for each hazard, the specific control measures to be implemented,
+              and the residual risk score after controls are in place. It produces a method
+              statement that follows the logical sequence of work for the specific job described,
+              not a generic one-size-fits-all template. COSHH assessments are included where
+              hazardous substances are identified. The entire document is formatted professionally
+              and can be exported as a PDF with your company branding.
             </p>
             <p>
-              You retain full editorial control. After the AI generates the initial draft, you can edit any section, add site-specific details that only you know (such as the specific layout of the property, access restrictions, or client-imposed working hours), and approve the final version before it is issued. The AI provides the structure and content; you provide the site knowledge and professional oversight.
+              You retain full editorial control. After the AI generates the initial draft, you can
+              edit any section, add site-specific details that only you know (such as the specific
+              layout of the property, access restrictions, or client-imposed working hours), and
+              approve the final version before it is issued. The AI provides the structure and
+              content; you provide the site knowledge and professional oversight.
             </p>
           </div>
         </div>
@@ -411,17 +564,35 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">RAMS for Live Working and Restricted Situations</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              RAMS for Live Working and Restricted Situations
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Electricity at Work Regulations 1989, Regulation 14, states that no person shall be engaged in any work activity on or near any live conductor unless it is unreasonable in all the circumstances for it to be dead, it is reasonable in all the circumstances for the person to be at work on or near it while it is live, and suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury.
+              The Electricity at Work Regulations 1989, Regulation 14, states that no person shall
+              be engaged in any work activity on or near any live conductor unless it is
+              unreasonable in all the circumstances for it to be dead, it is reasonable in all the
+              circumstances for the person to be at work on or near it while it is live, and
+              suitable precautions (including where necessary the provision of suitable protective
+              equipment) are taken to prevent injury.
             </p>
             <p>
-              When live working is justified — for example, when fault-finding on a live circuit to diagnose an intermittent fault, or when commissioning equipment that must be energised to test — the RAMS must specifically address the live working element. This includes: the justification for why the circuit cannot be made dead, the specific precautions in place (insulated tools to BS EN 60900, insulating mats, barriers and screens, competent accompaniment, emergency first aid provisions), the competence of the person carrying out the work (appropriate qualifications, training, and experience), and the emergency procedures in the event of an incident.
+              When live working is justified — for example, when fault-finding on a live circuit to
+              diagnose an intermittent fault, or when commissioning equipment that must be energised
+              to test — the RAMS must specifically address the live working element. This includes:
+              the justification for why the circuit cannot be made dead, the specific precautions in
+              place (insulated tools to BS EN 60900, insulating mats, barriers and screens,
+              competent accompaniment, emergency first aid provisions), the competence of the person
+              carrying out the work (appropriate qualifications, training, and experience), and the
+              emergency procedures in the event of an incident.
             </p>
             <p>
-              The Elec-Mate RAMS generator recognises when a job description implies live working and automatically includes the appropriate risk assessment elements, control measures, and method statement sections. It also flags the requirement for a written justification as required by Regulation 14, prompting you to provide the specific reason why the work cannot be carried out dead.
+              The Elec-Mate RAMS generator recognises when a job description implies live working
+              and automatically includes the appropriate risk assessment elements, control measures,
+              and method statement sections. It also flags the requirement for a written
+              justification as required by Regulation 14, prompting you to provide the specific
+              reason why the work cannot be carried out dead.
             </p>
           </div>
         </div>
@@ -434,7 +605,8 @@ export default function RAMSGeneratorPage() {
             Why Electricians Choose Elec-Mate for RAMS
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Generate professional, site-specific RAMS in seconds instead of hours. Part of 70 calculators, 8 AI agents, and 12 AI tools.
+            Purpose-built for UK electricians. Generate professional, site-specific RAMS in seconds
+            instead of hours. Part of 70 calculators, 8 AI agents, and 12 AI tools.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -447,7 +619,9 @@ export default function RAMSGeneratorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

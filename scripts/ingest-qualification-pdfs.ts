@@ -34,8 +34,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // --------------- Config ---------------
-const SUPABASE_URL =
-  process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -53,7 +52,8 @@ if (!DRY_RUN && !JSON_OUT && !SUPABASE_KEY) {
   process.exit(1);
 }
 
-const supabase = !DRY_RUN && !JSON_OUT && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+const supabase =
+  !DRY_RUN && !JSON_OUT && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 const PDF_DIR = path.join(__dirname, '..', 'docs', 'qualification-pdfs');
 
@@ -129,9 +129,10 @@ function findCGContentUnits(
     if (!hasLevelColon && !hasLevelAlone) continue;
 
     // Extract title: text between unit code and "Level:" or "Level N\n"
-    const titleEnd = afterMatch.search(/\bLevel[:\s]+\d/i) !== -1
-      ? afterMatch.search(/\bLevel[:\s]+\d/i)
-      : afterMatch.search(/\bLevel\s+\d+\s*\n/i);
+    const titleEnd =
+      afterMatch.search(/\bLevel[:\s]+\d/i) !== -1
+        ? afterMatch.search(/\bLevel[:\s]+\d/i)
+        : afterMatch.search(/\bLevel\s+\d+\s*\n/i);
     const titleText = afterMatch
       .substring(0, titleEnd)
       .split('\n')
@@ -189,7 +190,8 @@ function extractCGACs(
 
   // Build LO text map: LO number → LO description
   const loTexts = new Map<number, string>();
-  const loPattern = /\bLO\s*(\d+)\s+([\s\S]*?)(?=\bLO\s*\d+\s|\bAC\d+\.\d+|\bSupporting\s+information|$)/gi;
+  const loPattern =
+    /\bLO\s*(\d+)\s+([\s\S]*?)(?=\bLO\s*\d+\s|\bAC\d+\.\d+|\bSupporting\s+information|$)/gi;
   let loMatch;
   while ((loMatch = loPattern.exec(cleaned)) !== null) {
     const num = parseInt(loMatch[1], 10);
@@ -289,11 +291,7 @@ function parseCG2357(text: string): QualificationRow[] {
   return rows;
 }
 
-function extract2357ACs(
-  body: string,
-  unitCode: string,
-  unitTitle: string
-): QualificationRow[] {
+function extract2357ACs(body: string, unitCode: string, unitTitle: string): QualificationRow[] {
   const rows: QualificationRow[] = [];
 
   // Clean page headers/footers
@@ -321,9 +319,7 @@ function extract2357ACs(
     const loText = loTextLines.join(' ').replace(/\s+/g, ' ').trim();
 
     // Find ACs: numbered items "1. text", "2. text" after "Assessment Criteria"
-    const acSection = outcomeBody.substring(
-      outcomeBody.search(/Assessment\s+Criteria/i) || 0
-    );
+    const acSection = outcomeBody.substring(outcomeBody.search(/Assessment\s+Criteria/i) || 0);
 
     // Pattern: "N. text" where N is 1-99 at start of line
     // Use /gi (not /gm) so $ only matches end of string, not end of each line
@@ -378,11 +374,7 @@ function parseCG8202(text: string): QualificationRow[] {
   return rows;
 }
 
-function extract8202ACs(
-  body: string,
-  unitCode: string,
-  unitTitle: string
-): QualificationRow[] {
+function extract8202ACs(body: string, unitCode: string, unitTitle: string): QualificationRow[] {
   const rows: QualificationRow[] = [];
 
   // Clean page headers/footers
@@ -393,15 +385,19 @@ function extract8202ACs(
   // Extract LO texts from the "Learning outcomes" section
   // Format: "N. LO text" in the outcomes list
   const loTexts = new Map<number, string>();
-  const loListSection = cleaned.match(
-    /Learning\s+outcomes[\s\S]*?(?=Scope\s+of\s+content|$)/i
-  );
+  const loListSection = cleaned.match(/Learning\s+outcomes[\s\S]*?(?=Scope\s+of\s+content|$)/i);
   if (loListSection) {
     const loItemPattern = /(?:^|\n)\s*(\d+)\.\s+([\s\S]*?)(?=\n\s*\d+\.\s+|$)/gi;
     let loMatch;
     while ((loMatch = loItemPattern.exec(loListSection[0])) !== null) {
       const num = parseInt(loMatch[1], 10);
-      const text = loMatch[2].split('\n').map((l) => l.trim()).filter((l) => l.length > 3).join(' ').replace(/\s+/g, ' ').trim();
+      const text = loMatch[2]
+        .split('\n')
+        .map((l) => l.trim())
+        .filter((l) => l.length > 3)
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim();
       if (!loTexts.has(num) && text.length > 5) {
         loTexts.set(num, text);
       }
@@ -409,7 +405,8 @@ function extract8202ACs(
   }
 
   // Also extract from "Learning outcome N: Title" headers
-  const loHeaderPattern = /Learning\s+outcome\s+(\d+):\s*([\s\S]*?)(?=Learning\s+outcome\s+\d+:|Topic\s+\d+\.\d+|$)/gi;
+  const loHeaderPattern =
+    /Learning\s+outcome\s+(\d+):\s*([\s\S]*?)(?=Learning\s+outcome\s+\d+:|Topic\s+\d+\.\d+|$)/gi;
   let loHeaderMatch;
   while ((loHeaderMatch = loHeaderPattern.exec(cleaned)) !== null) {
     const num = parseInt(loHeaderMatch[1], 10);
@@ -497,8 +494,15 @@ function parseEALQS(text: string): QualificationRow[] {
 
     // First pass: find LOs (lines matching "N. Uppercase text" where N is single digit)
     // and ACs (lines matching "N.M \t Text")
-    interface ParsedLO { num: number; textLines: string[] }
-    interface ParsedAC { loNum: number; acNum: string; textLines: string[] }
+    interface ParsedLO {
+      num: number;
+      textLines: string[];
+    }
+    interface ParsedAC {
+      loNum: number;
+      acNum: string;
+      textLines: string[];
+    }
 
     const parsedLOs: ParsedLO[] = [];
     const parsedACs: ParsedAC[] = [];
@@ -524,7 +528,10 @@ function parseEALQS(text: string): QualificationRow[] {
         // Save previous AC
         if (currentAC) parsedACs.push(currentAC);
         // Save current LO before switching to AC mode
-        if (currentLO) { parsedLOs.push(currentLO); currentLO = null; }
+        if (currentLO) {
+          parsedLOs.push(currentLO);
+          currentLO = null;
+        }
         currentAC = {
           loNum: parseInt(acMatch[1], 10),
           acNum: acMatch[2],
@@ -537,7 +544,10 @@ function parseEALQS(text: string): QualificationRow[] {
       const loMatch = t.match(/^(\d+)\.\s+([A-Z].+)/);
       if (loMatch) {
         // Save previous AC
-        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        if (currentAC) {
+          parsedACs.push(currentAC);
+          currentAC = null;
+        }
         // Save previous LO
         if (currentLO) parsedLOs.push(currentLO);
         currentLO = {
@@ -549,14 +559,20 @@ function parseEALQS(text: string): QualificationRow[] {
 
       // Check for "Cover:" — marks start of coverage section, stop collecting AC text
       if (/^Cover:/i.test(t)) {
-        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        if (currentAC) {
+          parsedACs.push(currentAC);
+          currentAC = null;
+        }
         currentLO = null;
         continue;
       }
 
       // Bullet points — part of coverage, skip
       if (t.startsWith('•')) {
-        if (currentAC) { parsedACs.push(currentAC); currentAC = null; }
+        if (currentAC) {
+          parsedACs.push(currentAC);
+          currentAC = null;
+        }
         currentLO = null;
         continue;
       }
@@ -612,9 +628,7 @@ async function main() {
   if (DRY_RUN) console.log('DRY RUN MODE - no database changes\n');
   if (ONLY_QUAL) console.log(`Filtering to qualification: ${ONLY_QUAL}\n`);
 
-  const sources = ONLY_QUAL
-    ? PDF_SOURCES.filter((s) => s.qualCode === ONLY_QUAL)
-    : PDF_SOURCES;
+  const sources = ONLY_QUAL ? PDF_SOURCES.filter((s) => s.qualCode === ONLY_QUAL) : PDF_SOURCES;
 
   if (sources.length === 0) {
     console.error(`No sources found for qualification: ${ONLY_QUAL}`);
@@ -727,10 +741,7 @@ async function main() {
         .insert(batch);
 
       if (insertError) {
-        console.error(
-          `  Insert error (batch ${Math.floor(i / 50) + 1}):`,
-          insertError
-        );
+        console.error(`  Insert error (batch ${Math.floor(i / 50) + 1}):`, insertError);
       } else {
         inserted += batch.length;
       }
@@ -747,8 +758,7 @@ async function main() {
     .then(({ data }) => {
       const grouped: Record<string, number> = {};
       for (const row of data || []) {
-        grouped[row.qualification_code] =
-          (grouped[row.qualification_code] || 0) + 1;
+        grouped[row.qualification_code] = (grouped[row.qualification_code] || 0) + 1;
       }
       return { data: grouped };
     });

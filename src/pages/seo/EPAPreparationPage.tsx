@@ -18,8 +18,7 @@ import {
   FileCheck2,
 } from 'lucide-react';
 
-const PAGE_TITLE =
-  'Electrical EPA Preparation | End Point Assessment Simulator | Elec-Mate';
+const PAGE_TITLE = 'Electrical EPA Preparation | End Point Assessment Simulator | Elec-Mate';
 const PAGE_DESCRIPTION =
   'Prepare for the electrical apprenticeship End Point Assessment with AI-graded simulators. Practice knowledge tests, practical assessments, and professional discussions. ST0215 standard. From £4.99/mo.';
 
@@ -52,7 +51,7 @@ const faqs = [
   {
     question: 'Can I practise for the professional discussion component?',
     answer:
-      'Yes, and you should — the professional discussion is the component that many apprentices find most unfamiliar because it is unlike any exam they have taken before. During the discussion, an assessor reviews your portfolio of evidence and asks open-ended questions about your on-the-job experiences, your understanding of technical concepts in context, how you handled challenging situations, and your professional development activities. Elec-Mate\'s EPA simulator includes an AI-powered professional discussion module that asks questions based on your portfolio entries, evaluates the depth and quality of your responses, and provides feedback on how to articulate your competence more clearly. Practising this format multiple times builds the confidence and fluency that assessors are looking for.',
+      "Yes, and you should — the professional discussion is the component that many apprentices find most unfamiliar because it is unlike any exam they have taken before. During the discussion, an assessor reviews your portfolio of evidence and asks open-ended questions about your on-the-job experiences, your understanding of technical concepts in context, how you handled challenging situations, and your professional development activities. Elec-Mate's EPA simulator includes an AI-powered professional discussion module that asks questions based on your portfolio entries, evaluates the depth and quality of your responses, and provides feedback on how to articulate your competence more clearly. Practising this format multiple times builds the confidence and fluency that assessors are looking for.",
   },
 ];
 
@@ -186,9 +185,7 @@ export default function EPAPreparationPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              ST0215 EPA Preparation
-            </span>
+            <span className="text-sm font-medium text-yellow-400">ST0215 EPA Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             End Point Assessment
@@ -196,10 +193,9 @@ export default function EPAPreparationPage() {
             <span className="text-yellow-400">Simulator</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            AI-graded simulators for all three EPA components: practical
-            assessment, knowledge test, and professional discussion. Prepare to
-            pass — or achieve a Distinction — with targeted practice and
-            detailed feedback.
+            AI-graded simulators for all three EPA components: practical assessment, knowledge test,
+            and professional discussion. Prepare to pass — or achieve a Distinction — with targeted
+            practice and detailed feedback.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -226,41 +222,35 @@ export default function EPAPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The End Point Assessment (EPA) is the final stage of the
-              electrical apprenticeship in England. It is an independent
-              assessment carried out by an approved End Point Assessment
-              Organisation (EPAO) — not your training provider or employer.
-              This independence ensures that the assessment is impartial and
-              that all apprentices are measured against the same national
-              standard.
+              The End Point Assessment (EPA) is the final stage of the electrical apprenticeship in
+              England. It is an independent assessment carried out by an approved End Point
+              Assessment Organisation (EPAO) — not your training provider or employer. This
+              independence ensures that the assessment is impartial and that all apprentices are
+              measured against the same national standard.
             </p>
             <p>
-              For the Installation Electrician / Maintenance Electrician
-              apprenticeship standard (ST0215), the EPA is designed to confirm
-              that you have achieved the full range of knowledge, skills, and
-              behaviours defined in the standard. It goes beyond testing
-              individual qualifications (Level 3, AM2, 18th Edition) and
-              assesses your overall occupational competence — your ability to
-              apply everything you have learned in a professional context.
+              For the Installation Electrician / Maintenance Electrician apprenticeship standard
+              (ST0215), the EPA is designed to confirm that you have achieved the full range of
+              knowledge, skills, and behaviours defined in the standard. It goes beyond testing
+              individual qualifications (Level 3, AM2, 18th Edition) and assesses your overall
+              occupational competence — your ability to apply everything you have learned in a
+              professional context.
             </p>
             <p>
-              The EPA was introduced as part of the reformed apprenticeship
-              standards in England. Under the old framework, apprenticeships
-              were assessed through individual qualifications alone. The new
-              standards add the EPA as a holistic, summative assessment that
-              confirms the apprentice is genuinely ready to work as a competent
-              professional. This is a higher bar than simply collecting
-              qualifications, and it is why dedicated EPA preparation is so
-              valuable.
+              The EPA was introduced as part of the reformed apprenticeship standards in England.
+              Under the old framework, apprenticeships were assessed through individual
+              qualifications alone. The new standards add the EPA as a holistic, summative
+              assessment that confirms the apprentice is genuinely ready to work as a competent
+              professional. This is a higher bar than simply collecting qualifications, and it is
+              why dedicated EPA preparation is so valuable.
             </p>
             <p>
-              You cannot attempt the EPA until you have passed through the
-              gateway, which requires completion of all mandatory qualifications
-              (Level 3, AM2, functional skills), a comprehensive portfolio of
-              evidence, and agreement from both your employer and training
-              provider that you are ready. Elec-Mate tracks all of these
-              gateway requirements so you know exactly where you stand at every
-              point in your apprenticeship.
+              You cannot attempt the EPA until you have passed through the gateway, which requires
+              completion of all mandatory qualifications (Level 3, AM2, functional skills), a
+              comprehensive portfolio of evidence, and agreement from both your employer and
+              training provider that you are ready. Elec-Mate tracks all of these gateway
+              requirements so you know exactly where you stand at every point in your
+              apprenticeship.
             </p>
           </div>
         </div>
@@ -274,10 +264,9 @@ export default function EPAPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              The EPA for the electrical apprenticeship standard consists of
-              three distinct components, each assessing different aspects of
-              your competence. You must pass all three to achieve the
-              apprenticeship.
+              The EPA for the electrical apprenticeship standard consists of three distinct
+              components, each assessing different aspects of your competence. You must pass all
+              three to achieve the apprenticeship.
             </p>
           </div>
           <div className="space-y-6">
@@ -288,38 +277,29 @@ export default function EPAPreparationPage() {
                   1
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
-                    Practical Assessment
-                  </h3>
-                  <p className="text-white text-sm">
-                    Approximately 3-4 hours
-                  </p>
+                  <h3 className="text-xl font-bold text-white mb-1">Practical Assessment</h3>
+                  <p className="text-white text-sm">Approximately 3-4 hours</p>
                 </div>
               </div>
               <div className="space-y-3 text-white leading-relaxed">
                 <p>
-                  The practical assessment is similar in format to the AM2 but
-                  is assessed by the EPAO rather than NET/JIB. You demonstrate
-                  your ability to carry out electrical installation work safely,
-                  competently, and in accordance with BS 7671:2018+A3:2024
+                  The practical assessment is similar in format to the AM2 but is assessed by the
+                  EPAO rather than NET/JIB. You demonstrate your ability to carry out electrical
+                  installation work safely, competently, and in accordance with BS 7671:2018+A3:2024
                   under timed conditions.
                 </p>
                 <p>
-                  Typical tasks include installing and wiring a consumer unit,
-                  wiring a ring final circuit, installing a lighting circuit
-                  (one-way and two-way switching), carrying out safe isolation
-                  and fault diagnosis on a pre-built faulty circuit, and
-                  performing inspection and testing on your completed work with
-                  accurate documentation. Assessors evaluate your workmanship,
-                  safety practices, time management, and the accuracy of your
-                  test results and certificates.
+                  Typical tasks include installing and wiring a consumer unit, wiring a ring final
+                  circuit, installing a lighting circuit (one-way and two-way switching), carrying
+                  out safe isolation and fault diagnosis on a pre-built faulty circuit, and
+                  performing inspection and testing on your completed work with accurate
+                  documentation. Assessors evaluate your workmanship, safety practices, time
+                  management, and the accuracy of your test results and certificates.
                 </p>
                 <p>
-                  Elec-Mate's practical assessment simulator presents timed
-                  scenarios that mirror the EPA format. The AI grading system
-                  evaluates your responses against the same criteria used by
-                  real EPAOs, providing detailed feedback on areas for
-                  improvement.
+                  Elec-Mate's practical assessment simulator presents timed scenarios that mirror
+                  the EPA format. The AI grading system evaluates your responses against the same
+                  criteria used by real EPAOs, providing detailed feedback on areas for improvement.
                 </p>
               </div>
             </div>
@@ -331,39 +311,31 @@ export default function EPAPreparationPage() {
                   2
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
-                    Knowledge Test
-                  </h3>
-                  <p className="text-white text-sm">
-                    Approximately 2 hours
-                  </p>
+                  <h3 className="text-xl font-bold text-white mb-1">Knowledge Test</h3>
+                  <p className="text-white text-sm">Approximately 2 hours</p>
                 </div>
               </div>
               <div className="space-y-3 text-white leading-relaxed">
                 <p>
-                  The knowledge test is a written examination covering the
-                  theoretical knowledge requirements of the apprenticeship
-                  standard. Topics include BS 7671:2018+A3:2024 wiring
-                  regulations, electrical science and principles, installation
-                  design calculations, inspection and testing procedures and
-                  documentation, health and safety legislation (Health and
-                  Safety at Work Act 1974, Electricity at Work Regulations
-                  1989, CDM Regulations 2015), and fault diagnosis methodology.
+                  The knowledge test is a written examination covering the theoretical knowledge
+                  requirements of the apprenticeship standard. Topics include BS 7671:2018+A3:2024
+                  wiring regulations, electrical science and principles, installation design
+                  calculations, inspection and testing procedures and documentation, health and
+                  safety legislation (Health and Safety at Work Act 1974, Electricity at Work
+                  Regulations 1989, CDM Regulations 2015), and fault diagnosis methodology.
                 </p>
                 <p>
-                  The test format typically includes multiple-choice questions,
-                  short-answer questions, and scenario-based questions that
-                  require you to apply your knowledge to realistic situations.
-                  Unlike the Level 3 exams, which test individual units in
-                  isolation, the EPA knowledge test can draw on any area of the
-                  standard, so your preparation must be comprehensive.
+                  The test format typically includes multiple-choice questions, short-answer
+                  questions, and scenario-based questions that require you to apply your knowledge
+                  to realistic situations. Unlike the Level 3 exams, which test individual units in
+                  isolation, the EPA knowledge test can draw on any area of the standard, so your
+                  preparation must be comprehensive.
                 </p>
                 <p>
-                  Elec-Mate's knowledge test practice bank includes hundreds of
-                  questions covering the full ST0215 standard. Each question
-                  includes a detailed explanation of the correct answer with
-                  regulation references, and timed mock tests help you build
-                  the speed and confidence needed for the real assessment.
+                  Elec-Mate's knowledge test practice bank includes hundreds of questions covering
+                  the full ST0215 standard. Each question includes a detailed explanation of the
+                  correct answer with regulation references, and timed mock tests help you build the
+                  speed and confidence needed for the real assessment.
                 </p>
               </div>
             </div>
@@ -378,39 +350,32 @@ export default function EPAPreparationPage() {
                   <h3 className="text-xl font-bold text-white mb-1">
                     Professional Discussion with Portfolio
                   </h3>
-                  <p className="text-white text-sm">
-                    Approximately 45-60 minutes
-                  </p>
+                  <p className="text-white text-sm">Approximately 45-60 minutes</p>
                 </div>
               </div>
               <div className="space-y-3 text-white leading-relaxed">
                 <p>
-                  The professional discussion is a structured conversation
-                  between you and the assessor, using your portfolio of evidence
-                  as the basis for questions. This is not a viva or oral exam —
-                  it is a discussion designed to explore the depth of your
-                  understanding, your ability to reflect on your experiences,
-                  and your professional behaviours.
+                  The professional discussion is a structured conversation between you and the
+                  assessor, using your portfolio of evidence as the basis for questions. This is not
+                  a viva or oral exam — it is a discussion designed to explore the depth of your
+                  understanding, your ability to reflect on your experiences, and your professional
+                  behaviours.
                 </p>
                 <p>
-                  The assessor will review your portfolio entries and ask
-                  questions such as: "Describe a challenging installation you
-                  completed and explain how you ensured it complied with BS
-                  7671," "What would you do differently if you encountered this
-                  situation again?" and "How do you keep your technical
-                  knowledge up to date?" The assessor is looking for evidence
-                  of critical thinking, self-awareness, professionalism, and
-                  genuine understanding rather than rote-learned responses.
+                  The assessor will review your portfolio entries and ask questions such as:
+                  "Describe a challenging installation you completed and explain how you ensured it
+                  complied with BS 7671," "What would you do differently if you encountered this
+                  situation again?" and "How do you keep your technical knowledge up to date?" The
+                  assessor is looking for evidence of critical thinking, self-awareness,
+                  professionalism, and genuine understanding rather than rote-learned responses.
                 </p>
                 <p>
-                  This component is often the one that catches apprentices off
-                  guard because it is unlike any exam format they have
-                  experienced before. Elec-Mate's AI-powered professional
-                  discussion simulator replicates the format, asking
-                  portfolio-based questions, evaluating the quality and depth of
-                  your responses, and coaching you to express your competence
-                  clearly. Practising multiple times transforms an unfamiliar
-                  format into a comfortable conversation.
+                  This component is often the one that catches apprentices off guard because it is
+                  unlike any exam format they have experienced before. Elec-Mate's AI-powered
+                  professional discussion simulator replicates the format, asking portfolio-based
+                  questions, evaluating the quality and depth of your responses, and coaching you to
+                  express your competence clearly. Practising multiple times transforms an
+                  unfamiliar format into a comfortable conversation.
                 </p>
               </div>
             </div>
@@ -426,41 +391,35 @@ export default function EPAPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The EPA is graded overall as Distinction, Pass, or Fail. The
-              grading is determined by your performance across all three
-              components, assessed against the criteria published in the EPA
-              assessment plan for the ST0215 standard.
+              The EPA is graded overall as Distinction, Pass, or Fail. The grading is determined by
+              your performance across all three components, assessed against the criteria published
+              in the EPA assessment plan for the ST0215 standard.
             </p>
             <p>
-              <strong>Pass:</strong> To achieve a Pass, you must meet the
-              required standard in all three components. This means demonstrating
-              competent practical skills, accurate knowledge, and appropriate
-              professional behaviours. Your work must be safe, your documentation
-              must be accurate, and your professional discussion must demonstrate
+              <strong>Pass:</strong> To achieve a Pass, you must meet the required standard in all
+              three components. This means demonstrating competent practical skills, accurate
+              knowledge, and appropriate professional behaviours. Your work must be safe, your
+              documentation must be accurate, and your professional discussion must demonstrate
               genuine understanding of your role and responsibilities.
             </p>
             <p>
-              <strong>Distinction:</strong> To achieve a Distinction, you must
-              exceed the standard across all components. In the practical
-              assessment, this means exceptional workmanship, efficient time
-              management, and thorough documentation beyond the minimum required.
-              In the knowledge test, it means demonstrating deeper understanding
-              — not just knowing the correct answer but understanding the
-              reasoning and being able to apply it to unfamiliar scenarios. In
-              the professional discussion, it means articulating your experiences
-              with insight, demonstrating proactive professional development,
-              and showing leadership behaviours such as mentoring others or
-              taking initiative on technical challenges.
+              <strong>Distinction:</strong> To achieve a Distinction, you must exceed the standard
+              across all components. In the practical assessment, this means exceptional
+              workmanship, efficient time management, and thorough documentation beyond the minimum
+              required. In the knowledge test, it means demonstrating deeper understanding — not
+              just knowing the correct answer but understanding the reasoning and being able to
+              apply it to unfamiliar scenarios. In the professional discussion, it means
+              articulating your experiences with insight, demonstrating proactive professional
+              development, and showing leadership behaviours such as mentoring others or taking
+              initiative on technical challenges.
             </p>
             <p>
-              <strong>Fail:</strong> A Fail in any single component means you
-              have not achieved the apprenticeship at this attempt. Most EPAOs
-              allow one resit opportunity for the failed component(s), which
-              must be taken within a specified timeframe. A resit after failing
-              one component can achieve a maximum grade of Pass (Distinction is
-              no longer available). This makes first-time preparation crucial,
-              which is exactly what Elec-Mate's EPA simulator is designed to
-              deliver.
+              <strong>Fail:</strong> A Fail in any single component means you have not achieved the
+              apprenticeship at this attempt. Most EPAOs allow one resit opportunity for the failed
+              component(s), which must be taken within a specified timeframe. A resit after failing
+              one component can achieve a maximum grade of Pass (Distinction is no longer
+              available). This makes first-time preparation crucial, which is exactly what
+              Elec-Mate's EPA simulator is designed to deliver.
             </p>
           </div>
         </div>
@@ -474,10 +433,9 @@ export default function EPAPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Before you can book your EPA, you must pass through the gateway.
-              The gateway is a checkpoint that confirms you have completed all
-              the prerequisites and are genuinely ready for the final
-              assessment. Here are the requirements you must meet.
+              Before you can book your EPA, you must pass through the gateway. The gateway is a
+              checkpoint that confirms you have completed all the prerequisites and are genuinely
+              ready for the final assessment. Here are the requirements you must meet.
             </p>
           </div>
           <div className="space-y-4">
@@ -527,12 +485,8 @@ export default function EPAPreparationPage() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -547,8 +501,8 @@ export default function EPAPreparationPage() {
             Complete EPA Preparation Tools
           </h2>
           <p className="text-white text-center mb-8 max-w-2xl mx-auto">
-            Simulators for all three EPA components, gateway tracking, and
-            AI-powered coaching to help you achieve the best possible grade.
+            Simulators for all three EPA components, gateway tracking, and AI-powered coaching to
+            help you achieve the best possible grade.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -593,9 +547,7 @@ export default function EPAPreparationPage() {
                   <span>{faq.question}</span>
                   <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
-                <div className="px-4 pb-4 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

@@ -195,9 +195,15 @@ export default function CableSizingCalculatorPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -205,14 +211,17 @@ export default function CableSizingCalculatorPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Cable className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671:2018 + A3:2024 Compliant</span>
+            <span className="text-sm font-medium text-yellow-400">
+              BS 7671:2018 + A3:2024 Compliant
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             <span className="text-yellow-400">Cable Sizing Calculator</span> to BS 7671
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            Size cables correctly to the 18th Edition IET Wiring Regulations. Automatic correction factors, voltage
-            drop calculation, fault current verification, and all Appendix 4 tables built in.
+            Size cables correctly to the 18th Edition IET Wiring Regulations. Automatic correction
+            factors, voltage drop calculation, fault current verification, and all Appendix 4 tables
+            built in.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -239,29 +248,34 @@ export default function CableSizingCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Cable sizing is the process of selecting the correct cross-sectional area (CSA) of conductor for an
-              electrical circuit. It is one of the most fundamental design decisions in any electrical installation. Get
-              it wrong, and the consequences range from nuisance tripping and poor equipment performance to cable
-              overheating, insulation failure, and fire.
+              Cable sizing is the process of selecting the correct cross-sectional area (CSA) of
+              conductor for an electrical circuit. It is one of the most fundamental design
+              decisions in any electrical installation. Get it wrong, and the consequences range
+              from nuisance tripping and poor equipment performance to cable overheating, insulation
+              failure, and fire.
             </p>
             <p>
-              BS 7671:2018 (the IET Wiring Regulations, 18th Edition) sets out the methodology for cable sizing in
-              Section 523, with the current carrying capacity tables in Appendix 4 and the voltage drop data in
-              Appendix 12. The process involves calculating the design current, selecting a protective device, determining
-              the installation method, applying correction factors for environmental conditions, selecting a cable with
-              sufficient current carrying capacity, and then verifying voltage drop and fault current withstand.
+              BS 7671:2018 (the IET Wiring Regulations, 18th Edition) sets out the methodology for
+              cable sizing in Section 523, with the current carrying capacity tables in Appendix 4
+              and the voltage drop data in Appendix 12. The process involves calculating the design
+              current, selecting a protective device, determining the installation method, applying
+              correction factors for environmental conditions, selecting a cable with sufficient
+              current carrying capacity, and then verifying voltage drop and fault current
+              withstand.
             </p>
             <p>
-              The cable must be large enough to carry the full load current without its temperature exceeding the rated
-              value for its insulation (70 degrees C for thermoplastic/PVC, 90 degrees C for thermosetting/XLPE). It
-              must also limit voltage drop to within the permitted values, and it must be able to survive the thermal
-              effects of a short circuit for the time it takes the protective device to disconnect.
+              The cable must be large enough to carry the full load current without its temperature
+              exceeding the rated value for its insulation (70 degrees C for thermoplastic/PVC, 90
+              degrees C for thermosetting/XLPE). It must also limit voltage drop to within the
+              permitted values, and it must be able to survive the thermal effects of a short
+              circuit for the time it takes the protective device to disconnect.
             </p>
             <p>
-              For working electricians, cable sizing calculations are a daily requirement. Whether you are wiring a
-              domestic kitchen circuit, running a submain to an outbuilding, or designing a three-phase distribution
-              board for a commercial fit-out, you need to verify the cable size against BS 7671 before you install it.
-              The Elec-Mate cable sizing calculator does this in seconds, right on your phone.
+              For working electricians, cable sizing calculations are a daily requirement. Whether
+              you are wiring a domestic kitchen circuit, running a submain to an outbuilding, or
+              designing a three-phase distribution board for a commercial fit-out, you need to
+              verify the cable size against BS 7671 before you install it. The Elec-Mate cable
+              sizing calculator does this in seconds, right on your phone.
             </p>
           </div>
         </div>
@@ -275,9 +289,10 @@ export default function CableSizingCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              BS 7671 requires you to consider five key factors when selecting a cable size. Each factor can independently
-              determine the minimum cable CSA, so all five must be checked. The governing factor (the one that requires
-              the largest cable) determines the final cable size.
+              BS 7671 requires you to consider five key factors when selecting a cable size. Each
+              factor can independently determine the minimum cable CSA, so all five must be checked.
+              The governing factor (the one that requires the largest cable) determines the final
+              cable size.
             </p>
           </div>
 
@@ -289,10 +304,10 @@ export default function CableSizingCalculatorPage() {
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">Design Current (Ib)</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The maximum sustained current the circuit will carry in normal service. This is your starting point.
-                  For simple resistive loads, Ib = P / V. For motor loads, use the full load current. For discharge
-                  lighting, multiply lamp watts by 1.8. The protective device rating (In) must be equal to or greater
-                  than Ib.
+                  The maximum sustained current the circuit will carry in normal service. This is
+                  your starting point. For simple resistive loads, Ib = P / V. For motor loads, use
+                  the full load current. For discharge lighting, multiply lamp watts by 1.8. The
+                  protective device rating (In) must be equal to or greater than Ib.
                 </p>
               </div>
             </div>
@@ -302,12 +317,15 @@ export default function CableSizingCalculatorPage() {
                 2
               </div>
               <div>
-                <h3 className="font-bold text-white text-lg mb-1">Current Carrying Capacity (Iz)</h3>
+                <h3 className="font-bold text-white text-lg mb-1">
+                  Current Carrying Capacity (Iz)
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The cable must have a tabulated current carrying capacity (Iz) that, after correction factors are
-                  applied, is at least equal to the protective device rating (In). The required tabulated value is
-                  calculated as It = In / (Ca x Cg x Ci x Cf). You then select the smallest cable from the Appendix 4
-                  tables with Iz greater than or equal to It.
+                  The cable must have a tabulated current carrying capacity (Iz) that, after
+                  correction factors are applied, is at least equal to the protective device rating
+                  (In). The required tabulated value is calculated as It = In / (Ca x Cg x Ci x Cf).
+                  You then select the smallest cable from the Appendix 4 tables with Iz greater than
+                  or equal to It.
                 </p>
               </div>
             </div>
@@ -319,10 +337,11 @@ export default function CableSizingCalculatorPage() {
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">Voltage Drop</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Regulation 525.1 requires that the voltage drop from the origin of the installation to any load point
-                  does not impair the functioning of the equipment. The standard limits are 3% for lighting circuits
-                  (6.9V on a 230V supply) and 5% for other circuits (11.5V on a 230V supply). Voltage drop is
-                  calculated using the mV/A/m values from Appendix 12, multiplied by the design current and cable length.
+                  Regulation 525.1 requires that the voltage drop from the origin of the
+                  installation to any load point does not impair the functioning of the equipment.
+                  The standard limits are 3% for lighting circuits (6.9V on a 230V supply) and 5%
+                  for other circuits (11.5V on a 230V supply). Voltage drop is calculated using the
+                  mV/A/m values from Appendix 12, multiplied by the design current and cable length.
                 </p>
               </div>
             </div>
@@ -334,10 +353,11 @@ export default function CableSizingCalculatorPage() {
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">Fault Current Withstand</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Under short circuit conditions, the cable must be able to withstand the heat generated by the fault
-                  current for the duration it takes the protective device to disconnect. This is checked using the
-                  adiabatic equation from Regulation 434: minimum CSA = square root of (I squared t) / k, where I
-                  squared t is the energy let-through of the device and k is a constant for the conductor and insulation
+                  Under short circuit conditions, the cable must be able to withstand the heat
+                  generated by the fault current for the duration it takes the protective device to
+                  disconnect. This is checked using the adiabatic equation from Regulation 434:
+                  minimum CSA = square root of (I squared t) / k, where I squared t is the energy
+                  let-through of the device and k is a constant for the conductor and insulation
                   type (115 for copper/PVC, 143 for copper/XLPE).
                 </p>
               </div>
@@ -350,10 +370,11 @@ export default function CableSizingCalculatorPage() {
               <div>
                 <h3 className="font-bold text-white text-lg mb-1">Earth Fault Loop Impedance</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The total earth fault loop impedance (Zs) must be low enough for the protective device to operate
-                  within the required disconnection time (0.4 seconds for final circuits, 5 seconds for distribution
-                  circuits). A longer cable run increases the circuit impedance, so in some cases you may need to
-                  increase the cable size (or the CPC size) to achieve an acceptable Zs value.
+                  The total earth fault loop impedance (Zs) must be low enough for the protective
+                  device to operate within the required disconnection time (0.4 seconds for final
+                  circuits, 5 seconds for distribution circuits). A longer cable run increases the
+                  circuit impedance, so in some cases you may need to increase the cable size (or
+                  the CPC size) to achieve an acceptable Zs value.
                 </p>
               </div>
             </div>
@@ -369,10 +390,11 @@ export default function CableSizingCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The tabulated current carrying capacities in Appendix 4 of BS 7671 assume a set of reference conditions:
-              an ambient temperature of 30 degrees C (for cables in air), a single circuit with no grouping, and no
-              thermal insulation in contact with the cable. When real-world conditions differ from these reference
-              conditions, correction factors must be applied.
+              The tabulated current carrying capacities in Appendix 4 of BS 7671 assume a set of
+              reference conditions: an ambient temperature of 30 degrees C (for cables in air), a
+              single circuit with no grouping, and no thermal insulation in contact with the cable.
+              When real-world conditions differ from these reference conditions, correction factors
+              must be applied.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 mt-6">
@@ -382,10 +404,11 @@ export default function CableSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg">Ca — Ambient Temperature</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                If the ambient temperature is above 30 degrees C, the cable can carry less current. Tables 4B1 and 4B2
-                provide the correction factors. For example, at 40 degrees C with 70 degree C thermoplastic insulation,
-                Ca = 0.87. At 35 degrees C, Ca = 0.94. For installations below 30 degrees C (e.g., underground at 20
-                degrees C), Ca is greater than 1, slightly increasing the permitted capacity.
+                If the ambient temperature is above 30 degrees C, the cable can carry less current.
+                Tables 4B1 and 4B2 provide the correction factors. For example, at 40 degrees C with
+                70 degree C thermoplastic insulation, Ca = 0.87. At 35 degrees C, Ca = 0.94. For
+                installations below 30 degrees C (e.g., underground at 20 degrees C), Ca is greater
+                than 1, slightly increasing the permitted capacity.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -394,10 +417,11 @@ export default function CableSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg">Cg — Grouping</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                When multiple circuits are grouped together (e.g., in trunking, conduit, or on a cable tray), they share
-                heat and each cable can carry less current. Tables 4C1 through 4C5 provide grouping factors based on
-                the number of circuits and the arrangement. For example, 3 circuits in a single layer on a tray gives
-                Cg = 0.79, while 6 circuits in conduit gives Cg = 0.57.
+                When multiple circuits are grouped together (e.g., in trunking, conduit, or on a
+                cable tray), they share heat and each cable can carry less current. Tables 4C1
+                through 4C5 provide grouping factors based on the number of circuits and the
+                arrangement. For example, 3 circuits in a single layer on a tray gives Cg = 0.79,
+                while 6 circuits in conduit gives Cg = 0.57.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -406,11 +430,12 @@ export default function CableSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg">Ci — Thermal Insulation</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Cables surrounded by thermal insulation cannot dissipate heat effectively. If a cable is totally
-                surrounded by thermally insulating material for more than 0.5 metres, a derating factor of 0.5 applies
-                (Regulation 523.9). For cables touching insulation on one side, reference method 100 (formerly 101/102)
-                applies, which is built into the table values. The calculator selects the correct approach based on your
-                input.
+                Cables surrounded by thermal insulation cannot dissipate heat effectively. If a
+                cable is totally surrounded by thermally insulating material for more than 0.5
+                metres, a derating factor of 0.5 applies (Regulation 523.9). For cables touching
+                insulation on one side, reference method 100 (formerly 101/102) applies, which is
+                built into the table values. The calculator selects the correct approach based on
+                your input.
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -419,10 +444,11 @@ export default function CableSizingCalculatorPage() {
                 <h3 className="font-bold text-white text-lg">Cf — Semi-Enclosed Fuse Factor</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                When the protective device is a BS 3036 semi-enclosed (rewirable) fuse, an additional factor of 0.725
-                must be applied. This is because rewirable fuses have a fusing factor of approximately 2 (they may not
-                blow until the current reaches twice their rated value), so the cable must be rated higher to allow for
-                this. This factor is not applied for MCBs, RCBOs, or cartridge fuses, which have tighter operating
+                When the protective device is a BS 3036 semi-enclosed (rewirable) fuse, an
+                additional factor of 0.725 must be applied. This is because rewirable fuses have a
+                fusing factor of approximately 2 (they may not blow until the current reaches twice
+                their rated value), so the cable must be rated higher to allow for this. This factor
+                is not applied for MCBs, RCBOs, or cartridge fuses, which have tighter operating
                 characteristics.
               </p>
             </div>
@@ -438,46 +464,71 @@ export default function CableSizingCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The way a cable is installed has a significant effect on its ability to dissipate heat, and therefore on
-              its current carrying capacity. BS 7671 Table 4A2 defines a series of reference methods that cover the most
-              common installation arrangements. When you use the cable sizing tables in Appendix 4, you must select the
-              column that corresponds to your reference method.
+              The way a cable is installed has a significant effect on its ability to dissipate
+              heat, and therefore on its current carrying capacity. BS 7671 Table 4A2 defines a
+              series of reference methods that cover the most common installation arrangements. When
+              you use the cable sizing tables in Appendix 4, you must select the column that
+              corresponds to your reference method.
             </p>
             <p>
-              The most common reference methods encountered in UK domestic and commercial installations are:
+              The most common reference methods encountered in UK domestic and commercial
+              installations are:
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Method A:</strong> Enclosed in conduit in a thermally insulated wall. The most restrictive common method, giving the lowest current carrying capacities.</span>
+                  <span>
+                    <strong>Method A:</strong> Enclosed in conduit in a thermally insulated wall.
+                    The most restrictive common method, giving the lowest current carrying
+                    capacities.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Method B:</strong> Enclosed in conduit on a wall, or in trunking on a wall. Slightly better than Method A as heat can escape more easily.</span>
+                  <span>
+                    <strong>Method B:</strong> Enclosed in conduit on a wall, or in trunking on a
+                    wall. Slightly better than Method A as heat can escape more easily.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Method C:</strong> Clipped direct to a surface (e.g., flat twin and earth cable clipped to joists). A common domestic method with good heat dissipation.</span>
+                  <span>
+                    <strong>Method C:</strong> Clipped direct to a surface (e.g., flat twin and
+                    earth cable clipped to joists). A common domestic method with good heat
+                    dissipation.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Method D:</strong> Cables in ducts in the ground. Used for underground supply cables, with different ambient temperature assumptions (20 degrees C reference).</span>
+                  <span>
+                    <strong>Method D:</strong> Cables in ducts in the ground. Used for underground
+                    supply cables, with different ambient temperature assumptions (20 degrees C
+                    reference).
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Methods E/F/G:</strong> Free air methods — cable tray (touching), cable tray (spaced), and cable ladder. These give the highest current carrying capacities as the cable can radiate heat freely.</span>
+                  <span>
+                    <strong>Methods E/F/G:</strong> Free air methods — cable tray (touching), cable
+                    tray (spaced), and cable ladder. These give the highest current carrying
+                    capacities as the cable can radiate heat freely.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Reference Method 100:</strong> Enclosed in a building void where thermal insulation is in contact with one side. Increasingly common with modern energy-efficient building standards.</span>
+                  <span>
+                    <strong>Reference Method 100:</strong> Enclosed in a building void where thermal
+                    insulation is in contact with one side. Increasingly common with modern
+                    energy-efficient building standards.
+                  </span>
                 </li>
               </ul>
             </div>
             <p>
-              Choosing the wrong reference method is one of the most common cable sizing errors. The Elec-Mate calculator
-              presents the reference methods with clear descriptions and illustrations, so you select the right one
-              every time.
+              Choosing the wrong reference method is one of the most common cable sizing errors. The
+              Elec-Mate calculator presents the reference methods with clear descriptions and
+              illustrations, so you select the right one every time.
             </p>
           </div>
         </div>
@@ -490,7 +541,8 @@ export default function CableSizingCalculatorPage() {
             What the Elec-Mate Cable Sizing Calculator Includes
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Everything you need to size cables to BS 7671 on your phone or tablet, with no internet connection required.
+            Everything you need to size cables to BS 7671 on your phone or tablet, with no internet
+            connection required.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -503,9 +555,9 @@ export default function CableSizingCalculatorPage() {
             How to Size a Cable to BS 7671
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these seven steps to select the correct cable size for any circuit, using the methodology set out in
-            BS 7671:2018. The Elec-Mate calculator handles steps 2 through 7 automatically once you enter the circuit
-            parameters.
+            Follow these seven steps to select the correct cable size for any circuit, using the
+            methodology set out in BS 7671:2018. The Elec-Mate calculator handles steps 2 through 7
+            automatically once you enter the circuit parameters.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -534,30 +586,35 @@ export default function CableSizingCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              To illustrate the cable sizing process, consider a common domestic scenario: a ring final circuit supplying
-              socket outlets in a kitchen, protected by a 32A Type B MCB, installed as flat twin and earth cable clipped
-              to joists (Reference Method C), with an ambient temperature of 30 degrees C and no grouping.
+              To illustrate the cable sizing process, consider a common domestic scenario: a ring
+              final circuit supplying socket outlets in a kitchen, protected by a 32A Type B MCB,
+              installed as flat twin and earth cable clipped to joists (Reference Method C), with an
+              ambient temperature of 30 degrees C and no grouping.
             </p>
             <p>
-              Since the ambient temperature is at the reference value (30 degrees C), Ca = 1.0. There is no grouping,
-              so Cg = 1.0. No thermal insulation contact, so Ci = 1.0. The protective device is an MCB, so Cf does not
-              apply. The required tabulated current carrying capacity is It = 32 / (1.0 x 1.0 x 1.0) = 32A. From Table
-              4D5, column 6 (Reference Method C), a 2.5mm squared cable has Iz = 27A, which is less than 32A. However,
-              for a ring final circuit, the cable is effectively in parallel, so 2.5mm squared is the standard and
-              accepted cable size for a domestic ring final circuit — the ring configuration means each conductor only
-              carries approximately half the total current.
+              Since the ambient temperature is at the reference value (30 degrees C), Ca = 1.0.
+              There is no grouping, so Cg = 1.0. No thermal insulation contact, so Ci = 1.0. The
+              protective device is an MCB, so Cf does not apply. The required tabulated current
+              carrying capacity is It = 32 / (1.0 x 1.0 x 1.0) = 32A. From Table 4D5, column 6
+              (Reference Method C), a 2.5mm squared cable has Iz = 27A, which is less than 32A.
+              However, for a ring final circuit, the cable is effectively in parallel, so 2.5mm
+              squared is the standard and accepted cable size for a domestic ring final circuit —
+              the ring configuration means each conductor only carries approximately half the total
+              current.
             </p>
             <p>
-              Now consider a more challenging scenario: a 3-phase submain to a workshop 45 metres from the main
-              distribution board, carrying a design current of 80A, installed as SWA cable clipped direct (Method C),
-              at 35 degrees C ambient, with 2 other circuits grouped on the same tray. The correction factors would
-              be Ca = 0.94, Cg = 0.79, giving It = 80 / (0.94 x 0.79) = 107.7A. You would then select from the
-              appropriate SWA table and verify voltage drop over the 45-metre run does not exceed 5%.
+              Now consider a more challenging scenario: a 3-phase submain to a workshop 45 metres
+              from the main distribution board, carrying a design current of 80A, installed as SWA
+              cable clipped direct (Method C), at 35 degrees C ambient, with 2 other circuits
+              grouped on the same tray. The correction factors would be Ca = 0.94, Cg = 0.79, giving
+              It = 80 / (0.94 x 0.79) = 107.7A. You would then select from the appropriate SWA table
+              and verify voltage drop over the 45-metre run does not exceed 5%.
             </p>
             <p>
-              The Elec-Mate calculator performs these calculations instantly. Enter the circuit parameters, and the app
-              shows the recommended cable size, the voltage drop as both a value in volts and a percentage, and whether
-              the fault current withstand is acceptable.
+              The Elec-Mate calculator performs these calculations instantly. Enter the circuit
+              parameters, and the app shows the recommended cable size, the voltage drop as both a
+              value in volts and a percentage, and whether the fault current withstand is
+              acceptable.
             </p>
           </div>
         </div>
@@ -577,11 +634,11 @@ export default function CableSizingCalculatorPage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                    +
+                  </span>
                 </summary>
-                <div className="px-5 pb-5 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-5 pb-5 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

@@ -18,8 +18,7 @@ import {
   Cable,
 } from 'lucide-react';
 
-const PAGE_TITLE =
-  'Level 2 Electrical Installation Course Online | C&G 2365 | Elec-Mate';
+const PAGE_TITLE = 'Level 2 Electrical Installation Course Online | C&G 2365 | Elec-Mate';
 const PAGE_DESCRIPTION =
   'Study for the City & Guilds 2365-02 Level 2 Diploma in Electrical Installation online. AI study assistant, interactive modules covering electrical science, installation methods, earthing and bonding. From £4.99/mo.';
 
@@ -27,7 +26,7 @@ const faqs = [
   {
     question: 'What is the City & Guilds 2365-02 Level 2 qualification?',
     answer:
-      'The City & Guilds 2365-02 is the Level 2 Diploma in Electrical Installation. It is the foundation qualification for anyone entering the electrical trade, covering the essential knowledge and skills needed before progressing to Level 3. The qualification includes units on electrical science (Ohm\'s law, Kirchhoff\'s laws, power, impedance), health and safety in the electrical industry, electrical installation technology (cable types, containment, wiring systems), and basic installation practice. It is typically studied during the first year of an electrical apprenticeship or as a standalone course for career changers. The 2365-02 maps to the technical knowledge requirements of the Installation Electrician / Maintenance Electrician apprenticeship standard (ST0215).',
+      "The City & Guilds 2365-02 is the Level 2 Diploma in Electrical Installation. It is the foundation qualification for anyone entering the electrical trade, covering the essential knowledge and skills needed before progressing to Level 3. The qualification includes units on electrical science (Ohm's law, Kirchhoff's laws, power, impedance), health and safety in the electrical industry, electrical installation technology (cable types, containment, wiring systems), and basic installation practice. It is typically studied during the first year of an electrical apprenticeship or as a standalone course for career changers. The 2365-02 maps to the technical knowledge requirements of the Installation Electrician / Maintenance Electrician apprenticeship standard (ST0215).",
   },
   {
     question: 'Can I study for Level 2 Electrical Installation online?',
@@ -47,7 +46,7 @@ const faqs = [
   {
     question: 'What maths do I need for the Level 2 Electrical course?',
     answer:
-      'You need a solid grasp of GCSE-level mathematics, particularly algebra (rearranging formulae), working with units and prefixes (milliamps, kilowatts, megohms), fractions and decimals, and basic trigonometry for AC circuit theory. The electrical science units at Level 2 require you to apply Ohm\'s law (V=IR), calculate power (P=IV, P=I squared R, P=V squared /R), work with series and parallel resistor combinations, and understand basic AC concepts including frequency, period, and peak versus RMS values. Elec-Mate\'s AI study assistant is particularly helpful here, breaking down each calculation into step-by-step workings and explaining the practical significance of each formula in the context of real installations.',
+      "You need a solid grasp of GCSE-level mathematics, particularly algebra (rearranging formulae), working with units and prefixes (milliamps, kilowatts, megohms), fractions and decimals, and basic trigonometry for AC circuit theory. The electrical science units at Level 2 require you to apply Ohm's law (V=IR), calculate power (P=IV, P=I squared R, P=V squared /R), work with series and parallel resistor combinations, and understand basic AC concepts including frequency, period, and peak versus RMS values. Elec-Mate's AI study assistant is particularly helpful here, breaking down each calculation into step-by-step workings and explaining the practical significance of each formula in the context of real installations.",
   },
   {
     question: 'Is Level 2 Electrical Installation enough to work as an electrician?',
@@ -67,7 +66,7 @@ const features = [
     icon: Lightbulb,
     title: 'Electrical Science Modules',
     description:
-      'Interactive lessons covering Ohm\'s law, Kirchhoff\'s laws, power calculations, AC theory, impedance, and power factor. Each module includes step-by-step worked examples.',
+      "Interactive lessons covering Ohm's law, Kirchhoff's laws, power calculations, AC theory, impedance, and power factor. Each module includes step-by-step worked examples.",
   },
   {
     icon: Cable,
@@ -189,9 +188,7 @@ export default function Level2ElectricalPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              C&G 2365-02 Level 2
-            </span>
+            <span className="text-sm font-medium text-yellow-400">C&G 2365-02 Level 2</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Level 2 Electrical
@@ -199,10 +196,9 @@ export default function Level2ElectricalPage() {
             <span className="text-yellow-400">Installation Course</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            Build your foundation in electrical installation. AI-powered study
-            materials covering electrical science, health and safety,
-            installation methods, earthing and bonding. Start your career in the
-            electrical trade.
+            Build your foundation in electrical installation. AI-powered study materials covering
+            electrical science, health and safety, installation methods, earthing and bonding. Start
+            your career in the electrical trade.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -229,32 +225,28 @@ export default function Level2ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The City & Guilds 2365-02 Level 2 Diploma in Electrical
-              Installation is the starting qualification for anyone entering the
-              electrical trade. It is the first major stepping stone on the path
-              to becoming a fully qualified electrician, providing the
-              foundational knowledge in electrical science, safety, and
-              installation practice that everything else builds upon.
+              The City & Guilds 2365-02 Level 2 Diploma in Electrical Installation is the starting
+              qualification for anyone entering the electrical trade. It is the first major stepping
+              stone on the path to becoming a fully qualified electrician, providing the
+              foundational knowledge in electrical science, safety, and installation practice that
+              everything else builds upon.
             </p>
             <p>
-              The qualification is designed for electrical apprentices in their
-              first year, career changers entering the electrical industry, and
-              anyone who wants to develop a thorough understanding of how
-              electrical installations work before progressing to more advanced
-              study. It is nationally recognised, maps to the apprenticeship
-              standard for Installation Electrician / Maintenance Electrician
-              (ST0215), and is accepted by employers across the United Kingdom.
+              The qualification is designed for electrical apprentices in their first year, career
+              changers entering the electrical industry, and anyone who wants to develop a thorough
+              understanding of how electrical installations work before progressing to more advanced
+              study. It is nationally recognised, maps to the apprenticeship standard for
+              Installation Electrician / Maintenance Electrician (ST0215), and is accepted by
+              employers across the United Kingdom.
             </p>
             <p>
-              At Level 2, you are not yet expected to design circuits, carry out
-              inspection and testing independently, or work without supervision.
-              Instead, the qualification ensures you understand the fundamental
-              principles that make electrical installations safe: why we earth
-              and bond, how protective devices work, what happens when a fault
-              occurs, how to select the correct cable for a given application,
-              and how to carry out basic installation work competently and
-              safely. This foundation is essential because everything you learn
-              at Level 3 and beyond assumes you have mastered these concepts.
+              At Level 2, you are not yet expected to design circuits, carry out inspection and
+              testing independently, or work without supervision. Instead, the qualification ensures
+              you understand the fundamental principles that make electrical installations safe: why
+              we earth and bond, how protective devices work, what happens when a fault occurs, how
+              to select the correct cable for a given application, and how to carry out basic
+              installation work competently and safely. This foundation is essential because
+              everything you learn at Level 3 and beyond assumes you have mastered these concepts.
             </p>
           </div>
         </div>
@@ -268,9 +260,9 @@ export default function Level2ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              The 2365-02 is divided into several core units, each covering a
-              critical area of knowledge for an electrical installer. Here is
-              what each module covers and why it matters.
+              The 2365-02 is divided into several core units, each covering a critical area of
+              knowledge for an electrical installer. Here is what each module covers and why it
+              matters.
             </p>
           </div>
           <div className="space-y-4">
@@ -285,7 +277,7 @@ export default function Level2ElectricalPage() {
                 step: '2',
                 title: 'Electrical Science and Principles',
                 description:
-                  'Covers atomic theory, electron flow, conductors and insulators, Ohm\'s law, Kirchhoff\'s voltage and current laws, series and parallel circuits, resistance, power and energy calculations, magnetism and electromagnetic induction, AC theory including frequency, period, peak and RMS values, impedance, reactance, and power factor. This is often the most challenging unit for learners without a strong maths background. Elec-Mate\'s AI study assistant breaks every formula down step-by-step and shows how each calculation applies to real installations.',
+                  "Covers atomic theory, electron flow, conductors and insulators, Ohm's law, Kirchhoff's voltage and current laws, series and parallel circuits, resistance, power and energy calculations, magnetism and electromagnetic induction, AC theory including frequency, period, peak and RMS values, impedance, reactance, and power factor. This is often the most challenging unit for learners without a strong maths background. Elec-Mate's AI study assistant breaks every formula down step-by-step and shows how each calculation applies to real installations.",
               },
               {
                 step: '3',
@@ -314,12 +306,8 @@ export default function Level2ElectricalPage() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -335,10 +323,9 @@ export default function Level2ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Level 2 Diploma is suitable for several groups of learners.
-              Whether you are just starting out or looking to formalise existing
-              knowledge, the qualification provides a structured pathway into
-              the electrical industry.
+              The Level 2 Diploma is suitable for several groups of learners. Whether you are just
+              starting out or looking to formalise existing knowledge, the qualification provides a
+              structured pathway into the electrical industry.
             </p>
           </div>
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
@@ -346,45 +333,40 @@ export default function Level2ElectricalPage() {
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>New apprentices:</strong> If you have just started an
-                  electrical apprenticeship, the Level 2 Diploma forms the
-                  theory component of your first year. College attendance covers
-                  the practical elements, while Elec-Mate reinforces the theory
-                  so you understand the principles behind what you practise in
-                  the workshop and on site.
+                  <strong>New apprentices:</strong> If you have just started an electrical
+                  apprenticeship, the Level 2 Diploma forms the theory component of your first year.
+                  College attendance covers the practical elements, while Elec-Mate reinforces the
+                  theory so you understand the principles behind what you practise in the workshop
+                  and on site.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Career changers:</strong> Adults transitioning from
-                  other trades or industries into electrical work often start
-                  with the Level 2 as a full-time or part-time course. It
-                  provides the foundational knowledge needed to work alongside
+                  <strong>Career changers:</strong> Adults transitioning from other trades or
+                  industries into electrical work often start with the Level 2 as a full-time or
+                  part-time course. It provides the foundational knowledge needed to work alongside
                   experienced electricians and begin gaining site experience.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Existing tradespeople:</strong> Plumbers, gas
-                  engineers, and other building services professionals sometimes
-                  study Level 2 to add electrical skills to their offering.
-                  While Level 2 alone does not qualify you to carry out
-                  electrical work independently, it gives you a thorough
-                  understanding of electrical systems in properties where you
-                  already work.
+                  <strong>Existing tradespeople:</strong> Plumbers, gas engineers, and other
+                  building services professionals sometimes study Level 2 to add electrical skills
+                  to their offering. While Level 2 alone does not qualify you to carry out
+                  electrical work independently, it gives you a thorough understanding of electrical
+                  systems in properties where you already work.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>DIY enthusiasts (knowledge only):</strong> Some
-                  individuals study Level 2 to understand the electrical
-                  installations in their own properties, even without intending
-                  to become professional electricians. This knowledge helps you
-                  communicate effectively with electricians and understand the
-                  work being carried out.
+                  <strong>DIY enthusiasts (knowledge only):</strong> Some individuals study Level 2
+                  to understand the electrical installations in their own properties, even without
+                  intending to become professional electricians. This knowledge helps you
+                  communicate effectively with electricians and understand the work being carried
+                  out.
                 </span>
               </li>
             </ul>
@@ -400,52 +382,42 @@ export default function Level2ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The electrical science unit is the most academically demanding
-              part of the Level 2 qualification, and it is also the most
-              important. Every calculation you will perform as an electrician —
-              from sizing cables to verifying earth fault loop impedance — is
+              The electrical science unit is the most academically demanding part of the Level 2
+              qualification, and it is also the most important. Every calculation you will perform
+              as an electrician — from sizing cables to verifying earth fault loop impedance — is
               built on the principles taught in this unit.
             </p>
             <p>
-              <strong>Ohm's law</strong> (V = I x R) is the starting point.
-              You will use it constantly: to calculate the current flowing in a
-              circuit given the voltage and resistance, to determine the voltage
-              drop across a cable run, and to verify test results during
-              inspection and testing. Elec-Mate's AI assistant can generate
-              unlimited practice problems, adjusting the difficulty as your
-              confidence grows.
+              <strong>Ohm's law</strong> (V = I x R) is the starting point. You will use it
+              constantly: to calculate the current flowing in a circuit given the voltage and
+              resistance, to determine the voltage drop across a cable run, and to verify test
+              results during inspection and testing. Elec-Mate's AI assistant can generate unlimited
+              practice problems, adjusting the difficulty as your confidence grows.
             </p>
             <p>
-              <strong>Kirchhoff's laws</strong> extend Ohm's law to complex
-              circuits. Kirchhoff's Current Law states that the total current
-              entering a junction equals the total current leaving it.
-              Kirchhoff's Voltage Law states that the sum of voltage drops
-              around any closed loop equals the supply voltage. These laws
-              explain how current distributes itself in parallel circuits and
-              why adding loads to a ring final circuit affects the current in
-              each leg.
+              <strong>Kirchhoff's laws</strong> extend Ohm's law to complex circuits. Kirchhoff's
+              Current Law states that the total current entering a junction equals the total current
+              leaving it. Kirchhoff's Voltage Law states that the sum of voltage drops around any
+              closed loop equals the supply voltage. These laws explain how current distributes
+              itself in parallel circuits and why adding loads to a ring final circuit affects the
+              current in each leg.
             </p>
             <p>
-              <strong>AC theory</strong> introduces the additional complexity
-              of alternating current. You will learn about frequency (50 Hz in
-              the UK), the relationship between peak and RMS values (V_RMS =
-              V_peak divided by the square root of 2, giving 230V RMS from
-              approximately 325V peak), impedance (the combination of
-              resistance and reactance in AC circuits), and power factor (the
-              ratio of real power to apparent power). While Level 2 introduces
-              these concepts at a foundation level, they become critical at
-              Level 3 when you begin designing circuits and selecting protective
-              devices.
+              <strong>AC theory</strong> introduces the additional complexity of alternating
+              current. You will learn about frequency (50 Hz in the UK), the relationship between
+              peak and RMS values (V_RMS = V_peak divided by the square root of 2, giving 230V RMS
+              from approximately 325V peak), impedance (the combination of resistance and reactance
+              in AC circuits), and power factor (the ratio of real power to apparent power). While
+              Level 2 introduces these concepts at a foundation level, they become critical at Level
+              3 when you begin designing circuits and selecting protective devices.
             </p>
             <p>
-              Elec-Mate delivers each of these topics through bite-sized
-              lessons with animated diagrams, interactive calculators that let
-              you adjust values and see the effect instantly, and practice
-              questions that build from simple to complex. The AI study
-              assistant explains concepts in practical terms: instead of just
-              stating Kirchhoff's Voltage Law as a formula, it shows you a real
-              ring final circuit and demonstrates how voltage drops around the
-              ring, making the abstract concrete.
+              Elec-Mate delivers each of these topics through bite-sized lessons with animated
+              diagrams, interactive calculators that let you adjust values and see the effect
+              instantly, and practice questions that build from simple to complex. The AI study
+              assistant explains concepts in practical terms: instead of just stating Kirchhoff's
+              Voltage Law as a formula, it shows you a real ring final circuit and demonstrates how
+              voltage drops around the ring, making the abstract concrete.
             </p>
           </div>
         </div>
@@ -459,9 +431,9 @@ export default function Level2ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Level 2 is the beginning of a well-defined career pathway.
-              Understanding what comes next helps you plan your training and
-              set realistic goals for your professional development.
+              Level 2 is the beginning of a well-defined career pathway. Understanding what comes
+              next helps you plan your training and set realistic goals for your professional
+              development.
             </p>
           </div>
           <div className="space-y-4">
@@ -505,12 +477,8 @@ export default function Level2ElectricalPage() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -525,8 +493,8 @@ export default function Level2ElectricalPage() {
             How Elec-Mate Delivers Level 2
           </h2>
           <p className="text-white text-center mb-8 max-w-2xl mx-auto">
-            Every tool a Level 2 learner needs to build a rock-solid foundation
-            in electrical installation.
+            Every tool a Level 2 learner needs to build a rock-solid foundation in electrical
+            installation.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -571,9 +539,7 @@ export default function Level2ElectricalPage() {
                   <span>{faq.question}</span>
                   <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
-                <div className="px-4 pb-4 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

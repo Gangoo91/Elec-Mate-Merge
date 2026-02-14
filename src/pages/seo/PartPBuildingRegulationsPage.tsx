@@ -139,7 +139,12 @@ const breadcrumbSchema = {
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
     { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
-    { '@type': 'ListItem', position: 3, name: 'Part P Building Regulations', item: 'https://elec-mate.com/guides/part-p-building-regulations' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Part P Building Regulations',
+      item: 'https://elec-mate.com/guides/part-p-building-regulations',
+    },
   ],
 };
 
@@ -152,9 +157,15 @@ export default function PartPBuildingRegulationsPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -170,7 +181,8 @@ export default function PartPBuildingRegulationsPage() {
             <span className="block text-yellow-400 mt-1">Explained for Electricians</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            The complete guide to Approved Document P. Notifiable vs non-notifiable work, competent person schemes, building control, penalties, and how Part P interacts with BS 7671.
+            The complete guide to Approved Document P. Notifiable vs non-notifiable work, competent
+            person schemes, building control, penalties, and how Part P interacts with BS 7671.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -202,16 +214,37 @@ export default function PartPBuildingRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Part P is one of the Approved Documents that provides practical guidance on how to comply with the Building Regulations 2010 in England. Specifically, Approved Document P covers electrical safety in dwellings. It was first introduced on 1 January 2005, and its purpose is to ensure that electrical installation work in homes is designed and installed to a standard that protects people from fire and injury caused by electric shock.
+              Part P is one of the Approved Documents that provides practical guidance on how to
+              comply with the Building Regulations 2010 in England. Specifically, Approved Document
+              P covers electrical safety in dwellings. It was first introduced on 1 January 2005,
+              and its purpose is to ensure that electrical installation work in homes is designed
+              and installed to a standard that protects people from fire and injury caused by
+              electric shock.
             </p>
             <p>
-              The functional requirement of Part P is deliberately broad. Regulation P1 states: "Reasonable provision shall be made in the design and installation of electrical installations in order to protect persons operating, maintaining or altering the installations from fire or injury." This functional requirement does not specify the technical standard to be used — that is where BS 7671 comes in. Approved Document P states that compliance with BS 7671:2018+A3:2024 (the 18th Edition of the IET Wiring Regulations, as amended) is one way of meeting the functional requirements of Part P.
+              The functional requirement of Part P is deliberately broad. Regulation P1 states:
+              "Reasonable provision shall be made in the design and installation of electrical
+              installations in order to protect persons operating, maintaining or altering the
+              installations from fire or injury." This functional requirement does not specify the
+              technical standard to be used — that is where BS 7671 comes in. Approved Document P
+              states that compliance with BS 7671:2018+A3:2024 (the 18th Edition of the IET Wiring
+              Regulations, as amended) is one way of meeting the functional requirements of Part P.
             </p>
             <p>
-              It is important to understand what Part P is and what it is not. Part P is a building regulation. It is not a British Standard, not a law in itself (it derives its legal force from the Building Act 1984), and it does not replace or override BS 7671. Part P sets the legal framework for when electrical work in dwellings needs to be formally certified and notified; BS 7671 tells you how to design and install the work safely. The two work together: you do the work to BS 7671, and you certify it in accordance with Part P.
+              It is important to understand what Part P is and what it is not. Part P is a building
+              regulation. It is not a British Standard, not a law in itself (it derives its legal
+              force from the Building Act 1984), and it does not replace or override BS 7671. Part P
+              sets the legal framework for when electrical work in dwellings needs to be formally
+              certified and notified; BS 7671 tells you how to design and install the work safely.
+              The two work together: you do the work to BS 7671, and you certify it in accordance
+              with Part P.
             </p>
             <p>
-              Part P applies in England only. Wales has its own version of Part P with similar requirements. Scotland has separate building regulations that cover electrical safety under a different framework. Northern Ireland has its own building regulations. If you work across the UK, you need to be aware that the notification requirements differ between the home nations, even though BS 7671 applies throughout.
+              Part P applies in England only. Wales has its own version of Part P with similar
+              requirements. Scotland has separate building regulations that cover electrical safety
+              under a different framework. Northern Ireland has its own building regulations. If you
+              work across the UK, you need to be aware that the notification requirements differ
+              between the home nations, even though BS 7671 applies throughout.
             </p>
           </div>
         </div>
@@ -224,11 +257,17 @@ export default function PartPBuildingRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Notifiable vs Non-Notifiable Work</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Notifiable vs Non-Notifiable Work
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The most critical distinction in Part P is between notifiable and non-notifiable work. Notifiable work must be either self-certified by an electrician registered with a competent person scheme, or notified to the local authority building control department before it starts. Non-notifiable work does not require formal notification but must still comply with BS 7671.
+              The most critical distinction in Part P is between notifiable and non-notifiable work.
+              Notifiable work must be either self-certified by an electrician registered with a
+              competent person scheme, or notified to the local authority building control
+              department before it starts. Non-notifiable work does not require formal notification
+              but must still comply with BS 7671.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -237,7 +276,10 @@ export default function PartPBuildingRegulationsPage() {
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>Installation of a new circuit (including new circuits added to existing consumer units)</span>
+                  <span>
+                    Installation of a new circuit (including new circuits added to existing consumer
+                    units)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
@@ -245,19 +287,30 @@ export default function PartPBuildingRegulationsPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>Any electrical work in a bathroom or shower room (except like-for-like replacement of accessories)</span>
+                  <span>
+                    Any electrical work in a bathroom or shower room (except like-for-like
+                    replacement of accessories)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>Any electrical work in a special installation or location (swimming pool, sauna, hot tub area)</span>
+                  <span>
+                    Any electrical work in a special installation or location (swimming pool, sauna,
+                    hot tub area)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>Installation of a new outdoor circuit or supply to an outbuilding, shed, or garage</span>
+                  <span>
+                    Installation of a new outdoor circuit or supply to an outbuilding, shed, or
+                    garage
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span>Electrical work as part of a new building extension or loft conversion</span>
+                  <span>
+                    Electrical work as part of a new building extension or loft conversion
+                  </span>
                 </li>
               </ul>
             </div>
@@ -266,7 +319,10 @@ export default function PartPBuildingRegulationsPage() {
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span>Like-for-like replacement of socket outlets, switches, ceiling roses, and light fittings</span>
+                  <span>
+                    Like-for-like replacement of socket outlets, switches, ceiling roses, and light
+                    fittings
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
@@ -278,22 +334,36 @@ export default function PartPBuildingRegulationsPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span>Adding a fused spur to an existing circuit (not in a special location)</span>
+                  <span>
+                    Adding a fused spur to an existing circuit (not in a special location)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span>Work that is not in a dwelling (commercial, industrial, agricultural premises)</span>
+                  <span>
+                    Work that is not in a dwelling (commercial, industrial, agricultural premises)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span>Telephone, data, alarm, and extra-low voltage signal wiring (not connected to mains)</span>
+                  <span>
+                    Telephone, data, alarm, and extra-low voltage signal wiring (not connected to
+                    mains)
+                  </span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A common point of confusion is bathroom work. Under the current Part P, like-for-like replacement of an existing bathroom accessory (such as a pull-cord switch, shaver supply unit, or extractor fan) on an existing circuit is non-notifiable. However, adding a new circuit in a bathroom, or extending an existing circuit to add a new accessory, is notifiable. The reasoning is that the existing circuit has already been certified as safe — replacing a component on it does not change the circuit design. But altering the circuit or adding a new one requires the design to be verified and certified afresh.
+              A common point of confusion is bathroom work. Under the current Part P, like-for-like
+              replacement of an existing bathroom accessory (such as a pull-cord switch, shaver
+              supply unit, or extractor fan) on an existing circuit is non-notifiable. However,
+              adding a new circuit in a bathroom, or extending an existing circuit to add a new
+              accessory, is notifiable. The reasoning is that the existing circuit has already been
+              certified as safe — replacing a component on it does not change the circuit design.
+              But altering the circuit or adding a new one requires the design to be verified and
+              certified afresh.
             </p>
           </div>
         </div>
@@ -310,38 +380,68 @@ export default function PartPBuildingRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Competent person schemes are Government-authorised bodies that allow registered installers to self-certify certain types of building work as complying with building regulations, without the need to involve the local authority building control department. For electrical work in dwellings, several competent person schemes are approved under Part P.
+              Competent person schemes are Government-authorised bodies that allow registered
+              installers to self-certify certain types of building work as complying with building
+              regulations, without the need to involve the local authority building control
+              department. For electrical work in dwellings, several competent person schemes are
+              approved under Part P.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
               <h3 className="font-bold text-white text-lg mb-2">NICEIC</h3>
               <p className="text-white text-sm leading-relaxed">
-                The National Inspection Council for Electrical Installation Contracting is the largest and best-known electrical competent person scheme in the UK. NICEIC-registered contractors are assessed annually to confirm their technical competence, and their work is sampled on a regular basis. Registration provides the ability to self-certify notifiable domestic work and issue Building Regulations Compliance Certificates. NICEIC also operates the Domestic Installer scheme for electricians who only work in domestic premises.
+                The National Inspection Council for Electrical Installation Contracting is the
+                largest and best-known electrical competent person scheme in the UK.
+                NICEIC-registered contractors are assessed annually to confirm their technical
+                competence, and their work is sampled on a regular basis. Registration provides the
+                ability to self-certify notifiable domestic work and issue Building Regulations
+                Compliance Certificates. NICEIC also operates the Domestic Installer scheme for
+                electricians who only work in domestic premises.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-white text-lg mb-2">NAPIT</h3>
               <p className="text-white text-sm leading-relaxed">
-                The National Association of Professional Inspectors and Testers is the second-largest electrical competent person scheme. NAPIT-registered electricians can self-certify domestic electrical work under Part P and issue compliance certificates. NAPIT also covers other building trades (gas, plumbing, building fabric), making it popular with multi-trade contractors. The registration process includes technical assessment, insurance verification, and ongoing compliance monitoring.
+                The National Association of Professional Inspectors and Testers is the
+                second-largest electrical competent person scheme. NAPIT-registered electricians can
+                self-certify domestic electrical work under Part P and issue compliance
+                certificates. NAPIT also covers other building trades (gas, plumbing, building
+                fabric), making it popular with multi-trade contractors. The registration process
+                includes technical assessment, insurance verification, and ongoing compliance
+                monitoring.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-white text-lg mb-2">ELECSA</h3>
               <p className="text-white text-sm leading-relaxed">
-                ELECSA is another Government-approved competent person scheme for electricians. It provides the same self-certification ability as NICEIC and NAPIT. ELECSA is known for being competitively priced and is popular with smaller electrical firms and sole traders. Registered members can self-certify domestic work, issue compliance certificates, and benefit from technical support helplines.
+                ELECSA is another Government-approved competent person scheme for electricians. It
+                provides the same self-certification ability as NICEIC and NAPIT. ELECSA is known
+                for being competitively priced and is popular with smaller electrical firms and sole
+                traders. Registered members can self-certify domestic work, issue compliance
+                certificates, and benefit from technical support helplines.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-white text-lg mb-2">BRE Certification</h3>
               <p className="text-white text-sm leading-relaxed">
-                The Building Research Establishment operates a competent person scheme for domestic electrical installers. BRE Certification provides self-certification ability for Part P notifiable work. While less well-known than NICEIC or NAPIT in the electrical sector, BRE is a highly respected organisation in the broader construction industry and their certification carries significant credibility.
+                The Building Research Establishment operates a competent person scheme for domestic
+                electrical installers. BRE Certification provides self-certification ability for
+                Part P notifiable work. While less well-known than NICEIC or NAPIT in the electrical
+                sector, BRE is a highly respected organisation in the broader construction industry
+                and their certification carries significant credibility.
               </p>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              When a registered installer completes notifiable work, they must notify the relevant scheme within 30 days of completion. The scheme then issues a Building Regulations Compliance Certificate to the homeowner and registers the work with the local authority. This creates a permanent record that the work was carried out to the required standard. The certificate is an important document for property sales — buyers' solicitors will request evidence of compliance for any electrical work done within the property.
+              When a registered installer completes notifiable work, they must notify the relevant
+              scheme within 30 days of completion. The scheme then issues a Building Regulations
+              Compliance Certificate to the homeowner and registers the work with the local
+              authority. This creates a permanent record that the work was carried out to the
+              required standard. The certificate is an important document for property sales —
+              buyers' solicitors will request evidence of compliance for any electrical work done
+              within the property.
             </p>
           </div>
         </div>
@@ -354,17 +454,41 @@ export default function PartPBuildingRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <AlertTriangle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Penalties for Non-Compliance</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Penalties for Non-Compliance
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Non-compliance with Part P can have serious consequences for both the homeowner and the electrician. Under the Building Act 1984, it is an offence to carry out building work that does not comply with building regulations. The maximum penalty for contravening building regulations is a fine of up to 5,000 pounds in a magistrates' court, with an additional daily penalty of 50 pounds for each day the contravention continues after conviction. In more serious cases, the local authority can seek prosecution in the Crown Court, where penalties are unlimited.
+              Non-compliance with Part P can have serious consequences for both the homeowner and
+              the electrician. Under the Building Act 1984, it is an offence to carry out building
+              work that does not comply with building regulations. The maximum penalty for
+              contravening building regulations is a fine of up to 5,000 pounds in a magistrates'
+              court, with an additional daily penalty of 50 pounds for each day the contravention
+              continues after conviction. In more serious cases, the local authority can seek
+              prosecution in the Crown Court, where penalties are unlimited.
             </p>
             <p>
-              In practice, criminal prosecution for Part P breaches is rare. The more common consequences are civil and commercial. Local authorities can issue enforcement notices requiring the homeowner to either have the work inspected and approved retrospectively, or to have non-compliant work removed and redone. Retrospective building control approval typically costs between 400 and 800 pounds (the building control fee plus the cost of having the work inspected and tested by a qualified person), and there is no guarantee the work will pass without remedial work.
+              In practice, criminal prosecution for Part P breaches is rare. The more common
+              consequences are civil and commercial. Local authorities can issue enforcement notices
+              requiring the homeowner to either have the work inspected and approved
+              retrospectively, or to have non-compliant work removed and redone. Retrospective
+              building control approval typically costs between 400 and 800 pounds (the building
+              control fee plus the cost of having the work inspected and tested by a qualified
+              person), and there is no guarantee the work will pass without remedial work.
             </p>
             <p>
-              The most significant practical consequence of non-compliance is the impact on property sales. When selling a property, the buyer's conveyancer will request building regulations completion certificates for any work carried out since the property was last sold. If electrical work has been done without Part P compliance, the seller may need to obtain a regularisation certificate from building control (which requires an inspection, testing, and a fee), obtain an electrical installation condition report from a qualified inspector showing the work is satisfactory, or accept a reduction in the sale price to compensate the buyer for the risk and cost of resolving the compliance gap. In some cases, indemnity insurance may be used to cover the buyer against the risk of enforcement action, but this is seen as a last resort and does not actually resolve the underlying compliance issue.
+              The most significant practical consequence of non-compliance is the impact on property
+              sales. When selling a property, the buyer's conveyancer will request building
+              regulations completion certificates for any work carried out since the property was
+              last sold. If electrical work has been done without Part P compliance, the seller may
+              need to obtain a regularisation certificate from building control (which requires an
+              inspection, testing, and a fee), obtain an electrical installation condition report
+              from a qualified inspector showing the work is satisfactory, or accept a reduction in
+              the sale price to compensate the buyer for the risk and cost of resolving the
+              compliance gap. In some cases, indemnity insurance may be used to cover the buyer
+              against the risk of enforcement action, but this is seen as a last resort and does not
+              actually resolve the underlying compliance issue.
             </p>
           </div>
         </div>
@@ -377,20 +501,46 @@ export default function PartPBuildingRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Bath className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Special Locations Under Part P</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Special Locations Under Part P
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Part P pays particular attention to special locations within dwellings where the risk of electric shock is increased. These are locations where the body's resistance to electric shock is reduced — typically because of the presence of water, damp conditions, or contact with earth potential. Work in these locations is almost always notifiable and must comply with the additional requirements of BS 7671 Section 7.
+              Part P pays particular attention to special locations within dwellings where the risk
+              of electric shock is increased. These are locations where the body's resistance to
+              electric shock is reduced — typically because of the presence of water, damp
+              conditions, or contact with earth potential. Work in these locations is almost always
+              notifiable and must comply with the additional requirements of BS 7671 Section 7.
             </p>
             <p>
-              <strong className="text-yellow-400">Bathrooms and shower rooms</strong> are the most common special locations in domestic properties. BS 7671 Section 701 defines specific zones (Zone 0, Zone 1, and Zone 2) around baths and showers, with restrictions on what equipment can be installed in each zone and the minimum IP ratings required. Any new electrical work in a bathroom — including new circuits for heated towel rails, underfloor heating, ventilation fans, or additional lighting — is notifiable under Part P. Only like-for-like replacement of accessories on existing circuits is non-notifiable.
+              <strong className="text-yellow-400">Bathrooms and shower rooms</strong> are the most
+              common special locations in domestic properties. BS 7671 Section 701 defines specific
+              zones (Zone 0, Zone 1, and Zone 2) around baths and showers, with restrictions on what
+              equipment can be installed in each zone and the minimum IP ratings required. Any new
+              electrical work in a bathroom — including new circuits for heated towel rails,
+              underfloor heating, ventilation fans, or additional lighting — is notifiable under
+              Part P. Only like-for-like replacement of accessories on existing circuits is
+              non-notifiable.
             </p>
             <p>
-              <strong className="text-yellow-400">Swimming pools, saunas, and hot tub installations</strong> are less common but carry the highest risk. BS 7671 Section 702 (swimming pools) and Section 703 (saunas) impose the most restrictive requirements in the standard, including mandatory SELV (Separated Extra-Low Voltage) supplies in certain zones, specific equipment ratings, and supplementary equipotential bonding. All electrical work associated with these installations is notifiable.
+              <strong className="text-yellow-400">
+                Swimming pools, saunas, and hot tub installations
+              </strong>{' '}
+              are less common but carry the highest risk. BS 7671 Section 702 (swimming pools) and
+              Section 703 (saunas) impose the most restrictive requirements in the standard,
+              including mandatory SELV (Separated Extra-Low Voltage) supplies in certain zones,
+              specific equipment ratings, and supplementary equipotential bonding. All electrical
+              work associated with these installations is notifiable.
             </p>
             <p>
-              <strong className="text-yellow-400">Gardens and outbuildings</strong> also require careful attention. Any new outdoor circuit — whether supplying garden lighting, a pond pump, an electric vehicle charger, or an outbuilding — is notifiable under Part P. The outdoor environment introduces hazards including exposure to weather, increased risk of cable damage, contact with earth potential, and the presence of water. BS 7671 Section 714 covers outdoor installations and requires specific measures including RCD protection, suitable cable types, and IP-rated enclosures.
+              <strong className="text-yellow-400">Gardens and outbuildings</strong> also require
+              careful attention. Any new outdoor circuit — whether supplying garden lighting, a pond
+              pump, an electric vehicle charger, or an outbuilding — is notifiable under Part P. The
+              outdoor environment introduces hazards including exposure to weather, increased risk
+              of cable damage, contact with earth potential, and the presence of water. BS 7671
+              Section 714 covers outdoor installations and requires specific measures including RCD
+              protection, suitable cable types, and IP-rated enclosures.
             </p>
           </div>
         </div>
@@ -403,20 +553,42 @@ export default function PartPBuildingRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How Part P Interacts with BS 7671:2018+A3:2024</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How Part P Interacts with BS 7671:2018+A3:2024
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Approved Document P references BS 7671 as the standard that, if followed, demonstrates compliance with the safety requirements of Part P. The current referenced edition is BS 7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment 3, issued in July 2024. Amendment 3 introduced Regulation 530.3.201 covering bidirectional and unidirectional protective devices, as well as other updates and clarifications.
+              Approved Document P references BS 7671 as the standard that, if followed, demonstrates
+              compliance with the safety requirements of Part P. The current referenced edition is
+              BS 7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment
+              3, issued in July 2024. Amendment 3 introduced Regulation 530.3.201 covering
+              bidirectional and unidirectional protective devices, as well as other updates and
+              clarifications.
             </p>
             <p>
-              The practical implication is straightforward: if you design and install electrical work to BS 7671:2018+A3:2024, and you certify the work correctly using the appropriate IET model forms (EIC for new installations, Minor Works Certificate for minor work, EICR for condition reports), you have met the technical requirements of Part P. The certification demonstrates that the work has been designed, installed, inspected, and tested to the required standard.
+              The practical implication is straightforward: if you design and install electrical
+              work to BS 7671:2018+A3:2024, and you certify the work correctly using the appropriate
+              IET model forms (EIC for new installations, Minor Works Certificate for minor work,
+              EICR for condition reports), you have met the technical requirements of Part P. The
+              certification demonstrates that the work has been designed, installed, inspected, and
+              tested to the required standard.
             </p>
             <p>
-              For new installations and alterations that are notifiable under Part P, the Electrical Installation Certificate (EIC) or Minor Works Certificate serves two purposes: it is the BS 7671 certificate confirming compliance with the wiring regulations, and (when issued by a registered competent person) it forms the basis for the Building Regulations Compliance Certificate that the homeowner receives. This dual function means that getting the certification right is doubly important — errors in the EIC or Minor Works Certificate can create both BS 7671 and Part P compliance issues.
+              For new installations and alterations that are notifiable under Part P, the Electrical
+              Installation Certificate (EIC) or Minor Works Certificate serves two purposes: it is
+              the BS 7671 certificate confirming compliance with the wiring regulations, and (when
+              issued by a registered competent person) it forms the basis for the Building
+              Regulations Compliance Certificate that the homeowner receives. This dual function
+              means that getting the certification right is doubly important — errors in the EIC or
+              Minor Works Certificate can create both BS 7671 and Part P compliance issues.
             </p>
             <p>
-              Elec-Mate generates certificates that comply with both BS 7671 and Part P requirements. The app guides you through the correct certificate for each type of work, ensures all mandatory fields are completed, and validates test results against BS 7671 limits. This reduces the risk of certification errors that could lead to building regulations queries or enforcement issues.
+              Elec-Mate generates certificates that comply with both BS 7671 and Part P
+              requirements. The app guides you through the correct certificate for each type of
+              work, ensures all mandatory fields are completed, and validates test results against
+              BS 7671 limits. This reduces the risk of certification errors that could lead to
+              building regulations queries or enforcement issues.
             </p>
           </div>
         </div>
@@ -429,7 +601,8 @@ export default function PartPBuildingRegulationsPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Certificates, calculators, AI tools, and 36+ training courses — all built to BS 7671:2018+A3:2024.
+            Purpose-built for UK electricians. Certificates, calculators, AI tools, and 36+ training
+            courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -442,7 +615,9 @@ export default function PartPBuildingRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

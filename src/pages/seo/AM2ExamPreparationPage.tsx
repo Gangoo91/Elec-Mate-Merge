@@ -18,10 +18,9 @@ import {
   ClipboardCheck,
 } from 'lucide-react';
 
-const PAGE_TITLE =
-  'AM2 Exam Preparation Online | Practice Tests & Mock Exams | Elec-Mate';
+const PAGE_TITLE = 'AM2 Exam Preparation Online | Practice Tests & Mock Exams | Elec-Mate';
 const PAGE_DESCRIPTION =
-  "Prepare for the AM2 practical assessment online. Timed mock exercises, consumer unit build, ring final, lighting circuit, and fault finding practice. From £4.99/mo.";
+  'Prepare for the AM2 practical assessment online. Timed mock exercises, consumer unit build, ring final, lighting circuit, and fault finding practice. From £4.99/mo.';
 
 const faqs = [
   {
@@ -207,13 +206,11 @@ export default function AM2ExamPreparationPage() {
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Prepare for the{' '}
-            <span className="text-yellow-400">AM2 Assessment</span> Online
+            Prepare for the <span className="text-yellow-400">AM2 Assessment</span> Online
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            Timed mock exercises for every AM2 task. Consumer unit build, ring
-            final circuit, lighting circuit, and fault finding practice with
-            AI-powered feedback. Pass first time.
+            Timed mock exercises for every AM2 task. Consumer unit build, ring final circuit,
+            lighting circuit, and fault finding practice with AI-powered feedback. Pass first time.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -240,31 +237,27 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The AM2 is the Assessment of Competence in Electrical Installation,
-              commonly known as the AM2 or AM2S (the Scottish equivalent). It is
-              a practical assessment that demonstrates you can safely and
-              competently carry out electrical installation work to the standard
-              required of a qualified electrician. Passing the AM2 is the final
-              step in becoming a fully qualified Installation Electrician and is
-              required to obtain the JIB ECS Gold Card.
+              The AM2 is the Assessment of Competence in Electrical Installation, commonly known as
+              the AM2 or AM2S (the Scottish equivalent). It is a practical assessment that
+              demonstrates you can safely and competently carry out electrical installation work to
+              the standard required of a qualified electrician. Passing the AM2 is the final step in
+              becoming a fully qualified Installation Electrician and is required to obtain the JIB
+              ECS Gold Card.
             </p>
             <p>
-              The AM2 is not a classroom exam — it is a hands-on practical
-              assessment carried out in a real workshop environment. You are given
-              a set of tasks that replicate everyday electrical installation work,
-              and you must complete them within strict time limits to the required
-              standard of workmanship, safety, and accuracy. The assessment
-              covers the core skills every electrician needs: installing consumer
-              units, wiring power and lighting circuits, testing and inspecting
-              completed work, and finding faults on existing circuits.
+              The AM2 is not a classroom exam — it is a hands-on practical assessment carried out in
+              a real workshop environment. You are given a set of tasks that replicate everyday
+              electrical installation work, and you must complete them within strict time limits to
+              the required standard of workmanship, safety, and accuracy. The assessment covers the
+              core skills every electrician needs: installing consumer units, wiring power and
+              lighting circuits, testing and inspecting completed work, and finding faults on
+              existing circuits.
             </p>
             <p>
-              The AM2 was developed by the Joint Industry Board (JIB) and is
-              administered by National Electrotechnical Training (NET). It is
-              carried out at approved assessment centres across the UK. The
-              assessment is typically booked several weeks in advance, and
-              candidates must bring their own hand tools and calibrated test
-              instruments.
+              The AM2 was developed by the Joint Industry Board (JIB) and is administered by
+              National Electrotechnical Training (NET). It is carried out at approved assessment
+              centres across the UK. The assessment is typically booked several weeks in advance,
+              and candidates must bring their own hand tools and calibrated test instruments.
             </p>
           </div>
         </div>
@@ -278,10 +271,9 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              The AM2 assessment consists of four main practical tasks, plus
-              testing and inspection of your completed work. The total assessment
-              time is approximately 6 hours. Each task tests different skills,
-              and you must demonstrate competence in all of them to pass.
+              The AM2 assessment consists of four main practical tasks, plus testing and inspection
+              of your completed work. The total assessment time is approximately 6 hours. Each task
+              tests different skills, and you must demonstrate competence in all of them to pass.
             </p>
           </div>
           <div className="space-y-4">
@@ -291,18 +283,14 @@ export default function AM2ExamPreparationPage() {
                   1
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-2">
-                    Consumer Unit Installation
-                  </h3>
+                  <h3 className="font-bold text-white text-lg mb-2">Consumer Unit Installation</h3>
                   <p className="text-white text-sm leading-relaxed">
-                    You are provided with a consumer unit (or split-load board)
-                    and a circuit schedule. You must install the appropriate
-                    protective devices (MCBs, RCBOs, or RCDs), connect the
-                    busbars correctly, and terminate the circuit cables neatly
-                    and securely. Assessors check for correct device selection,
-                    proper torque on terminals, neat cable dressing, and correct
-                    labelling of circuits. This task tests your ability to work
-                    methodically and produce a professional finish.
+                    You are provided with a consumer unit (or split-load board) and a circuit
+                    schedule. You must install the appropriate protective devices (MCBs, RCBOs, or
+                    RCDs), connect the busbars correctly, and terminate the circuit cables neatly
+                    and securely. Assessors check for correct device selection, proper torque on
+                    terminals, neat cable dressing, and correct labelling of circuits. This task
+                    tests your ability to work methodically and produce a professional finish.
                   </p>
                 </div>
               </div>
@@ -313,18 +301,14 @@ export default function AM2ExamPreparationPage() {
                   2
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-2">
-                    Ring Final Circuit
-                  </h3>
+                  <h3 className="font-bold text-white text-lg mb-2">Ring Final Circuit</h3>
                   <p className="text-white text-sm leading-relaxed">
-                    You must wire a ring final circuit serving multiple socket
-                    outlets, including at least one spur. The circuit is wired
-                    using the cables and accessories provided, following the
-                    drawing and specification given. Assessors check that the
-                    ring is continuous, connections are correct at every socket,
-                    the spur is taken from the correct point, and all earth
-                    connections are properly made. Sleeving of earth conductors
-                    with green-and-yellow sleeving is required.
+                    You must wire a ring final circuit serving multiple socket outlets, including at
+                    least one spur. The circuit is wired using the cables and accessories provided,
+                    following the drawing and specification given. Assessors check that the ring is
+                    continuous, connections are correct at every socket, the spur is taken from the
+                    correct point, and all earth connections are properly made. Sleeving of earth
+                    conductors with green-and-yellow sleeving is required.
                   </p>
                 </div>
               </div>
@@ -339,15 +323,13 @@ export default function AM2ExamPreparationPage() {
                     Lighting Circuit (One-Way and Two-Way)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    You wire a lighting circuit that includes both one-way and
-                    two-way switching. This is often where candidates make
-                    mistakes, particularly with the strappers (travellers)
-                    between the two-way switches and the common terminal
-                    connections. The circuit must be wired using the plate wiring
-                    method and loop-in method as specified. Assessors check for
-                    correct switch wire identification, proper use of brown
-                    sleeving on switch wires, and neat cable management at the
-                    ceiling rose or light fitting.
+                    You wire a lighting circuit that includes both one-way and two-way switching.
+                    This is often where candidates make mistakes, particularly with the strappers
+                    (travellers) between the two-way switches and the common terminal connections.
+                    The circuit must be wired using the plate wiring method and loop-in method as
+                    specified. Assessors check for correct switch wire identification, proper use of
+                    brown sleeving on switch wires, and neat cable management at the ceiling rose or
+                    light fitting.
                   </p>
                 </div>
               </div>
@@ -358,18 +340,14 @@ export default function AM2ExamPreparationPage() {
                   4
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-2">
-                    Fault Finding
-                  </h3>
+                  <h3 className="font-bold text-white text-lg mb-2">Fault Finding</h3>
                   <p className="text-white text-sm leading-relaxed">
-                    You are presented with a pre-built circuit that has one or
-                    more faults. You must perform safe isolation following the
-                    correct procedure (GS 38 approved voltage indicator, prove
-                    dead, lock off), then systematically test the circuit to
-                    identify the fault. Common faults include open circuits,
-                    reversed polarity, incorrect connections, and earth faults.
-                    Assessors watch your safe isolation procedure closely — any
-                    shortcut or missed step will result in a fail.
+                    You are presented with a pre-built circuit that has one or more faults. You must
+                    perform safe isolation following the correct procedure (GS 38 approved voltage
+                    indicator, prove dead, lock off), then systematically test the circuit to
+                    identify the fault. Common faults include open circuits, reversed polarity,
+                    incorrect connections, and earth faults. Assessors watch your safe isolation
+                    procedure closely — any shortcut or missed step will result in a fail.
                   </p>
                 </div>
               </div>
@@ -377,13 +355,11 @@ export default function AM2ExamPreparationPage() {
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
-              After completing the wiring tasks, you must also carry out
-              inspection and testing of your own work. This includes continuity
-              of protective conductors (R1+R2), insulation resistance, polarity
-              verification, and functional testing. You record your results on a
-              test result schedule and sign off the work. Inaccurate test results
-              or failure to identify your own wiring errors during testing will
-              count against you.
+              After completing the wiring tasks, you must also carry out inspection and testing of
+              your own work. This includes continuity of protective conductors (R1+R2), insulation
+              resistance, polarity verification, and functional testing. You record your results on
+              a test result schedule and sign off the work. Inaccurate test results or failure to
+              identify your own wiring errors during testing will count against you.
             </p>
           </div>
         </div>
@@ -397,9 +373,9 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Understanding why candidates fail the AM2 is just as important as
-              knowing what the assessment covers. The most common reasons for
-              failure are preventable with the right preparation.
+              Understanding why candidates fail the AM2 is just as important as knowing what the
+              assessment covers. The most common reasons for failure are preventable with the right
+              preparation.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -409,10 +385,9 @@ export default function AM2ExamPreparationPage() {
                 <h3 className="font-bold text-white">Time Management</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                The single biggest cause of failure. Candidates spend too long on
-                one task and run out of time on others. Practise with timed
-                exercises until you can comfortably finish each task with time to
-                spare.
+                The single biggest cause of failure. Candidates spend too long on one task and run
+                out of time on others. Practise with timed exercises until you can comfortably
+                finish each task with time to spare.
               </p>
             </div>
             <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -421,24 +396,20 @@ export default function AM2ExamPreparationPage() {
                 <h3 className="font-bold text-white">Loose Terminations</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Connections that are not properly tightened to the correct torque.
-                Exposed copper at terminals, insufficient conductor inserted into
-                the terminal, or over-stripped insulation. Use a torque
-                screwdriver and check every connection.
+                Connections that are not properly tightened to the correct torque. Exposed copper at
+                terminals, insufficient conductor inserted into the terminal, or over-stripped
+                insulation. Use a torque screwdriver and check every connection.
               </p>
             </div>
             <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
-                <h3 className="font-bold text-white">
-                  Two-Way Switching Errors
-                </h3>
+                <h3 className="font-bold text-white">Two-Way Switching Errors</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Wiring the strappers to the wrong terminals, confusing the
-                common terminal with L1 or L2, or failing to identify switch
-                wires with brown sleeving. Draw the circuit diagram from memory
-                before you start wiring.
+                Wiring the strappers to the wrong terminals, confusing the common terminal with L1
+                or L2, or failing to identify switch wires with brown sleeving. Draw the circuit
+                diagram from memory before you start wiring.
               </p>
             </div>
             <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -447,20 +418,18 @@ export default function AM2ExamPreparationPage() {
                 <h3 className="font-bold text-white">Safe Isolation Errors</h3>
               </div>
               <p className="text-white text-sm leading-relaxed">
-                Skipping steps in the safe isolation procedure. You must prove
-                the voltage indicator works (on a known live source or proving
-                unit), test for dead, and prove the indicator again. Any shortcut
-                is an automatic fail.
+                Skipping steps in the safe isolation procedure. You must prove the voltage indicator
+                works (on a known live source or proving unit), test for dead, and prove the
+                indicator again. Any shortcut is an automatic fail.
               </p>
             </div>
           </div>
           <div className="mt-6 space-y-4 text-white leading-relaxed">
             <p>
-              Other common issues include forgetting to sleeve earth conductors,
-              poor cable management (cables not dressed neatly at the consumer
-              unit or accessory plates), and inaccurate test results. The AM2
-              rewards methodical, careful work. Rushing leads to mistakes, and
-              mistakes lead to fails.
+              Other common issues include forgetting to sleeve earth conductors, poor cable
+              management (cables not dressed neatly at the consumer unit or accessory plates), and
+              inaccurate test results. The AM2 rewards methodical, careful work. Rushing leads to
+              mistakes, and mistakes lead to fails.
             </p>
           </div>
         </div>
@@ -474,38 +443,32 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Passing the AM2 is a significant milestone in your career as an
-              electrician. It confirms that you have the practical competence to
-              carry out electrical installation work safely and to the required
-              standard. But passing is not the end of the process — there are
-              important next steps.
+              Passing the AM2 is a significant milestone in your career as an electrician. It
+              confirms that you have the practical competence to carry out electrical installation
+              work safely and to the required standard. But passing is not the end of the process —
+              there are important next steps.
             </p>
             <p>
-              The most immediate step is applying for your JIB ECS
-              (Electrotechnical Certification Scheme) card. If you hold a Level 3
-              NVQ/SVQ in Electrical Installation, a current 18th Edition
-              qualification (C&G 2382), and have now passed the AM2, you are
-              eligible for the Installation Electrician card — commonly known as
-              the Gold Card. This is the standard industry card that demonstrates
-              you are a fully qualified electrician. Employers, contractors, and
-              site managers across the UK recognise the Gold Card as proof of
-              competence.
+              The most immediate step is applying for your JIB ECS (Electrotechnical Certification
+              Scheme) card. If you hold a Level 3 NVQ/SVQ in Electrical Installation, a current 18th
+              Edition qualification (C&G 2382), and have now passed the AM2, you are eligible for
+              the Installation Electrician card — commonly known as the Gold Card. This is the
+              standard industry card that demonstrates you are a fully qualified electrician.
+              Employers, contractors, and site managers across the UK recognise the Gold Card as
+              proof of competence.
             </p>
             <p>
-              The Gold Card is different from the Grade Card (also called the
-              Approved Electrician card), which requires additional experience
-              and qualifications, including an inspection and testing
-              qualification such as C&G 2391. Many electricians work towards the
-              Grade Card after gaining a few years of post-AM2 experience.
+              The Gold Card is different from the Grade Card (also called the Approved Electrician
+              card), which requires additional experience and qualifications, including an
+              inspection and testing qualification such as C&G 2391. Many electricians work towards
+              the Grade Card after gaining a few years of post-AM2 experience.
             </p>
             <p>
-              Beyond the JIB card, passing the AM2 also opens the door to
-              joining a competent person scheme such as NICEIC, NAPIT, or ELECSA.
-              These schemes allow you to self-certify notifiable electrical work
-              under Part P of the Building Regulations, which is essential if you
-              want to work as a self-employed domestic electrician. Most schemes
-              require the AM2 (or equivalent) as part of their membership
-              criteria.
+              Beyond the JIB card, passing the AM2 also opens the door to joining a competent person
+              scheme such as NICEIC, NAPIT, or ELECSA. These schemes allow you to self-certify
+              notifiable electrical work under Part P of the Building Regulations, which is
+              essential if you want to work as a self-employed domestic electrician. Most schemes
+              require the AM2 (or equivalent) as part of their membership criteria.
             </p>
           </div>
         </div>
@@ -519,29 +482,25 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Elec-Mate was built by electricians who have been through the AM2
-              process. We know the pressure, the time constraints, and the common
-              traps that catch candidates out. The AM2 preparation module is
-              designed to replicate the real assessment as closely as possible in
-              a digital format, so you arrive on the day with confidence and
-              muscle memory.
+              Elec-Mate was built by electricians who have been through the AM2 process. We know the
+              pressure, the time constraints, and the common traps that catch candidates out. The
+              AM2 preparation module is designed to replicate the real assessment as closely as
+              possible in a digital format, so you arrive on the day with confidence and muscle
+              memory.
             </p>
             <p>
-              Each exercise in the app mirrors a real AM2 task. The consumer unit
-              build presents you with a circuit schedule and walks you through
-              the installation sequence, timing your progress. The ring final
-              circuit exercise covers correct wiring, spur connections, and
-              testing procedures. The lighting circuit exercise drills one-way
-              and two-way switching until the terminal connections are automatic.
-              The fault finding exercise teaches systematic testing rather than
-              guesswork.
+              Each exercise in the app mirrors a real AM2 task. The consumer unit build presents you
+              with a circuit schedule and walks you through the installation sequence, timing your
+              progress. The ring final circuit exercise covers correct wiring, spur connections, and
+              testing procedures. The lighting circuit exercise drills one-way and two-way switching
+              until the terminal connections are automatic. The fault finding exercise teaches
+              systematic testing rather than guesswork.
             </p>
             <p>
-              The AI feedback system analyses your approach to each exercise and
-              identifies areas for improvement. It tracks your speed, accuracy,
-              and consistency across multiple attempts, showing you exactly where
-              you need more practice. Many users report that working through
-              the exercises three to four times before their AM2 date made a
+              The AI feedback system analyses your approach to each exercise and identifies areas
+              for improvement. It tracks your speed, accuracy, and consistency across multiple
+              attempts, showing you exactly where you need more practice. Many users report that
+              working through the exercises three to four times before their AM2 date made a
               significant difference to their confidence and performance.
             </p>
           </div>
@@ -557,8 +516,8 @@ export default function AM2ExamPreparationPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              We asked qualified electricians in the Elec-Mate community for
-              their top tips for AM2 candidates. Here is what they said.
+              We asked qualified electricians in the Elec-Mate community for their top tips for AM2
+              candidates. Here is what they said.
             </p>
           </div>
           <div className="mt-6 space-y-4">
@@ -566,12 +525,11 @@ export default function AM2ExamPreparationPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <p className="text-white text-sm leading-relaxed">
-                  <strong>"Practise your safe isolation until it is automatic."</strong>{' '}
-                  The assessor watches your safe isolation procedure like a hawk.
-                  Prove your voltage indicator, test for dead on all conductors,
-                  prove the indicator again. Every single time, no shortcuts. If
-                  you have to think about the steps, you have not practised
-                  enough.
+                  <strong>"Practise your safe isolation until it is automatic."</strong> The
+                  assessor watches your safe isolation procedure like a hawk. Prove your voltage
+                  indicator, test for dead on all conductors, prove the indicator again. Every
+                  single time, no shortcuts. If you have to think about the steps, you have not
+                  practised enough.
                 </p>
               </div>
             </div>
@@ -579,11 +537,10 @@ export default function AM2ExamPreparationPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <p className="text-white text-sm leading-relaxed">
-                  <strong>"Read the brief twice, then read it again."</strong>{' '}
-                  Candidates fail because they assume what the task requires
-                  rather than reading the actual specification. The brief tells
-                  you exactly what to do. If it says to use a specific wiring
-                  method or cable type, use it. Do not do what you normally do on
+                  <strong>"Read the brief twice, then read it again."</strong> Candidates fail
+                  because they assume what the task requires rather than reading the actual
+                  specification. The brief tells you exactly what to do. If it says to use a
+                  specific wiring method or cable type, use it. Do not do what you normally do on
                   site — do what the brief asks.
                 </p>
               </div>
@@ -592,12 +549,11 @@ export default function AM2ExamPreparationPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <p className="text-white text-sm leading-relaxed">
-                  <strong>"Do not try to be fast — try to be right."</strong>{' '}
-                  Speed comes from practice, not from rushing. If you rush, you
-                  make mistakes. If you make mistakes, you either fail or waste
-                  time going back to fix them. Work methodically, check each
-                  connection before moving to the next, and the speed will come
-                  naturally with repetition.
+                  <strong>"Do not try to be fast — try to be right."</strong> Speed comes from
+                  practice, not from rushing. If you rush, you make mistakes. If you make mistakes,
+                  you either fail or waste time going back to fix them. Work methodically, check
+                  each connection before moving to the next, and the speed will come naturally with
+                  repetition.
                 </p>
               </div>
             </div>
@@ -605,12 +561,11 @@ export default function AM2ExamPreparationPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <p className="text-white text-sm leading-relaxed">
-                  <strong>"Check your test instruments before the day."</strong>{' '}
-                  Make sure your multifunction tester is calibrated and you have
-                  a valid calibration certificate. Check that all your leads are
-                  in good condition. Bring spare batteries. Bring a proving unit.
-                  There is nothing worse than arriving and discovering your
-                  tester is not working.
+                  <strong>"Check your test instruments before the day."</strong> Make sure your
+                  multifunction tester is calibrated and you have a valid calibration certificate.
+                  Check that all your leads are in good condition. Bring spare batteries. Bring a
+                  proving unit. There is nothing worse than arriving and discovering your tester is
+                  not working.
                 </p>
               </div>
             </div>
@@ -625,8 +580,8 @@ export default function AM2ExamPreparationPage() {
             How to Prepare for the AM2 Using Elec-Mate
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these steps to build your confidence and practical skills
-            before the real AM2 assessment day.
+            Follow these steps to build your confidence and practical skills before the real AM2
+            assessment day.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -638,12 +593,8 @@ export default function AM2ExamPreparationPage() {
                   {index + 1}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {step.name}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {step.text}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{step.name}</h3>
+                  <p className="text-white text-sm leading-relaxed">{step.text}</p>
                 </div>
               </div>
             ))}
@@ -667,9 +618,7 @@ export default function AM2ExamPreparationPage() {
                   <span>{faq.question}</span>
                   <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform" />
                 </summary>
-                <div className="px-4 pb-4 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

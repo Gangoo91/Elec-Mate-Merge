@@ -18,7 +18,13 @@ import { createClient } from '@supabase/supabase-js';
 const MANUFACTURER_IMAGES: Array<{
   manufacturer: string;
   model_series?: string;
-  image_type: 'product_catalogue' | 'in_situ_clean' | 'in_situ_dirty' | 'handwritten' | 'low_light' | 'partial_view';
+  image_type:
+    | 'product_catalogue'
+    | 'in_situ_clean'
+    | 'in_situ_dirty'
+    | 'handwritten'
+    | 'low_light'
+    | 'partial_view';
   source_url: string;
   source_type: 'manufacturer' | 'wholesaler' | 'retailer' | 'forum' | 'user_contributed';
   description: string;
@@ -31,7 +37,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Hager',
     model_series: 'Design 10',
     image_type: 'product_catalogue',
-    source_url: 'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h5e/h6c/9108174946334/VML110-big.png',
+    source_url:
+      'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h5e/h6c/9108174946334/VML110-big.png',
     source_type: 'manufacturer',
     description: 'Hager Design 10 consumer unit - 10 way metal enclosure',
     device_types_shown: ['MCB', 'RCBO', 'RCD'],
@@ -42,7 +49,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Hager',
     model_series: 'Design 18',
     image_type: 'product_catalogue',
-    source_url: 'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h20/h74/9108175142942/VML918-big.png',
+    source_url:
+      'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h20/h74/9108175142942/VML918-big.png',
     source_type: 'manufacturer',
     description: 'Hager Design 18 consumer unit - 18 way metal enclosure',
     device_types_shown: ['MCB', 'RCBO', 'RCD'],
@@ -55,7 +63,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Schneider',
     model_series: 'Easy9',
     image_type: 'product_catalogue',
-    source_url: 'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=EZ9E112S2S_001.JPG',
+    source_url:
+      'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=EZ9E112S2S_001.JPG',
     source_type: 'manufacturer',
     description: 'Schneider Easy9 consumer unit - compact design',
     device_types_shown: ['MCB', 'RCBO'],
@@ -66,7 +75,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Schneider',
     model_series: 'Acti9',
     image_type: 'product_catalogue',
-    source_url: 'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=SEA9BN12_001.JPG',
+    source_url:
+      'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=SEA9BN12_001.JPG',
     source_type: 'manufacturer',
     description: 'Schneider Acti9 distribution board - professional grade',
     device_types_shown: ['MCB', 'RCBO', 'RCD', 'AFDD'],
@@ -194,7 +204,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'ABB',
     model_series: 'System Pro E',
     image_type: 'product_catalogue',
-    source_url: 'https://new.abb.com/images/librariesprovider78/default-album/products-consumer-units-distribution-boards.jpg',
+    source_url:
+      'https://new.abb.com/images/librariesprovider78/default-album/products-consumer-units-distribution-boards.jpg',
     source_type: 'manufacturer',
     description: 'ABB System Pro E distribution board',
     device_types_shown: ['MCB', 'RCBO', 'RCD'],
@@ -311,7 +322,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'NHP',
     model_series: 'DIN-T',
     image_type: 'product_catalogue',
-    source_url: 'https://www.nhp.com.au/files/editor_upload/Image/products/DIN_Rail/DIN_T_Enclosure.jpg',
+    source_url:
+      'https://www.nhp.com.au/files/editor_upload/Image/products/DIN_Rail/DIN_T_Enclosure.jpg',
     source_type: 'manufacturer',
     description: 'NHP DIN-T distribution board',
     device_types_shown: ['MCB', 'RCD'],
@@ -329,7 +341,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'in_situ_dirty',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Consumer_unit_with_cover_removed.jpg/800px-Consumer_unit_with_cover_removed.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Consumer_unit_with_cover_removed.jpg/800px-Consumer_unit_with_cover_removed.jpg',
     source_type: 'forum',
     description: 'Real consumer unit with cover removed - dust visible on DIN rail',
     device_types_shown: ['MCB', 'RCD'],
@@ -340,7 +353,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'in_situ_dirty',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/UK_Consumer_unit.jpg/800px-UK_Consumer_unit.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/UK_Consumer_unit.jpg/800px-UK_Consumer_unit.jpg',
     source_type: 'forum',
     description: 'UK consumer unit in situ - typical domestic installation',
     device_types_shown: ['MCB', 'RCD'],
@@ -351,7 +365,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'in_situ_dirty',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Fuse_box.jpg/800px-Fuse_box.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Fuse_box.jpg/800px-Fuse_box.jpg',
     source_type: 'forum',
     description: 'Older fuse box installation - challenging OCR conditions',
     device_types_shown: ['Fuse', 'MCB'],
@@ -362,7 +377,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'in_situ_dirty',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Electrical_panel_open.jpg/800px-Electrical_panel_open.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Electrical_panel_open.jpg/800px-Electrical_panel_open.jpg',
     source_type: 'forum',
     description: 'Open electrical panel - typical inspection view',
     device_types_shown: ['MCB', 'RCBO'],
@@ -412,7 +428,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Hager',
     model_series: 'VML106',
     image_type: 'product_catalogue',
-    source_url: 'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h5c/h77/9108174880798/VML106-big.png',
+    source_url:
+      'https://hfruk-prod.hfruk.hager.cloud/medias/sys_master/hager_product_media/hager_product_media/h5c/h77/9108174880798/VML106-big.png',
     source_type: 'manufacturer',
     description: 'Hager VML106 consumer unit - 6 way compact',
     device_types_shown: ['MCB', 'RCD'],
@@ -423,7 +440,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Schneider',
     model_series: 'Acti9 isobar',
     image_type: 'product_catalogue',
-    source_url: 'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=A9F44106_001.JPG',
+    source_url:
+      'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=A9F44106_001.JPG',
     source_type: 'manufacturer',
     description: 'Schneider Acti9 iC60 MCB - close up of device markings',
     device_types_shown: ['MCB'],
@@ -461,7 +479,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'handwritten',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Circuit_breaker_panel_labels.jpg/800px-Circuit_breaker_panel_labels.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Circuit_breaker_panel_labels.jpg/800px-Circuit_breaker_panel_labels.jpg',
     source_type: 'forum',
     description: 'Circuit breaker panel with handwritten labels',
     device_types_shown: ['MCB'],
@@ -477,7 +496,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'low_light',
-    source_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Electric_meter_and_fuse_box.jpg/800px-Electric_meter_and_fuse_box.jpg',
+    source_url:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Electric_meter_and_fuse_box.jpg/800px-Electric_meter_and_fuse_box.jpg',
     source_type: 'forum',
     description: 'Electric meter and fuse box in dark cupboard',
     device_types_shown: ['Fuse', 'MCB'],
@@ -504,7 +524,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Schneider',
     model_series: 'Prisma',
     image_type: 'product_catalogue',
-    source_url: 'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=08765_001.JPG',
+    source_url:
+      'https://download.schneider-electric.com/files?p_enDocType=Catalog&p_File_Name=08765_001.JPG',
     source_type: 'manufacturer',
     description: 'Schneider Prisma P industrial panel - 3-phase',
     device_types_shown: ['MCB', 'MCCB', '3-pole MCB'],
@@ -515,7 +536,8 @@ const MANUFACTURER_IMAGES: Array<{
     manufacturer: 'Eaton',
     model_series: 'xEnergy',
     image_type: 'product_catalogue',
-    source_url: 'https://www.eaton.com/content/dam/eaton/products/low-voltage-power-distribution-controls-systems/switchboards-switchgear/xEnergy/xEnergy-switchboard-hero.jpg',
+    source_url:
+      'https://www.eaton.com/content/dam/eaton/products/low-voltage-power-distribution-controls-systems/switchboards-switchgear/xEnergy/xEnergy-switchboard-hero.jpg',
     source_type: 'manufacturer',
     description: 'Eaton xEnergy switchboard - commercial 3-phase',
     device_types_shown: ['MCCB', 'ACB', '3-pole MCB'],
@@ -553,29 +575,32 @@ async function seedBoardImages() {
         .single();
 
       if (existing) {
-        console.log(`⏭️  Skipping ${imageData.manufacturer} ${imageData.model_series || ''} - already exists`);
+        console.log(
+          `⏭️  Skipping ${imageData.manufacturer} ${imageData.model_series || ''} - already exists`
+        );
         continue;
       }
 
       // Insert the reference image
-      const { error } = await supabase
-        .from('board_reference_images')
-        .insert({
-          manufacturer: imageData.manufacturer,
-          model_series: imageData.model_series,
-          image_type: imageData.image_type,
-          image_url: imageData.source_url, // Use source URL directly for now
-          source_url: imageData.source_url,
-          source_type: imageData.source_type,
-          description: imageData.description,
-          device_types_shown: imageData.device_types_shown,
-          ratings_visible: imageData.ratings_visible,
-          lighting_conditions: imageData.lighting_conditions,
-          verified: false,
-        });
+      const { error } = await supabase.from('board_reference_images').insert({
+        manufacturer: imageData.manufacturer,
+        model_series: imageData.model_series,
+        image_type: imageData.image_type,
+        image_url: imageData.source_url, // Use source URL directly for now
+        source_url: imageData.source_url,
+        source_type: imageData.source_type,
+        description: imageData.description,
+        device_types_shown: imageData.device_types_shown,
+        ratings_visible: imageData.ratings_visible,
+        lighting_conditions: imageData.lighting_conditions,
+        verified: false,
+      });
 
       if (error) {
-        console.error(`❌ Error inserting ${imageData.manufacturer} ${imageData.model_series || ''}:`, error.message);
+        console.error(
+          `❌ Error inserting ${imageData.manufacturer} ${imageData.model_series || ''}:`,
+          error.message
+        );
         errorCount++;
       } else {
         console.log(`✅ Inserted ${imageData.manufacturer} ${imageData.model_series || ''}`);
@@ -590,12 +615,14 @@ async function seedBoardImages() {
   console.log('\n--- Seeding Complete ---');
   console.log(`✅ Successfully inserted: ${successCount}`);
   console.log(`❌ Errors: ${errorCount}`);
-  console.log(`⏭️  Skipped (already exist): ${MANUFACTURER_IMAGES.length - successCount - errorCount}`);
+  console.log(
+    `⏭️  Skipped (already exist): ${MANUFACTURER_IMAGES.length - successCount - errorCount}`
+  );
 
   // Update manufacturer knowledge with reference images
   console.log('\nUpdating board_manufacturer_knowledge with reference image links...');
 
-  const manufacturers = [...new Set(MANUFACTURER_IMAGES.map(i => i.manufacturer))];
+  const manufacturers = [...new Set(MANUFACTURER_IMAGES.map((i) => i.manufacturer))];
 
   for (const manufacturer of manufacturers) {
     const { data: images } = await supabase
@@ -604,7 +631,7 @@ async function seedBoardImages() {
       .eq('manufacturer', manufacturer);
 
     if (images && images.length > 0) {
-      const imageUrls = images.map(i => i.image_url);
+      const imageUrls = images.map((i) => i.image_url);
 
       const { error } = await supabase
         .from('board_manufacturer_knowledge')
@@ -622,15 +649,21 @@ async function seedBoardImages() {
 
 // Log image type breakdown
 function logImageBreakdown() {
-  const breakdown = MANUFACTURER_IMAGES.reduce((acc, img) => {
-    acc[img.image_type] = (acc[img.image_type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const breakdown = MANUFACTURER_IMAGES.reduce(
+    (acc, img) => {
+      acc[img.image_type] = (acc[img.image_type] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
-  const lightingBreakdown = MANUFACTURER_IMAGES.reduce((acc, img) => {
-    acc[img.lighting_conditions] = (acc[img.lighting_conditions] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const lightingBreakdown = MANUFACTURER_IMAGES.reduce(
+    (acc, img) => {
+      acc[img.lighting_conditions] = (acc[img.lighting_conditions] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   console.log('\n=== Board Reference Images Breakdown ===');
   console.log(`Total images: ${MANUFACTURER_IMAGES.length}`);

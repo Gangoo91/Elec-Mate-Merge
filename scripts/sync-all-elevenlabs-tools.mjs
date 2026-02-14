@@ -24,15 +24,26 @@ function parseToolsFromRegistry(content) {
   const tools = [];
 
   // Find all tool definitions
-  const toolRegex = /\{\s*name:\s*['"]([^'"]+)['"]\s*,\s*description:\s*['"]([^'"]+)['"]\s*,\s*category:\s*['"]([^'"]+)['"]\s*,\s*parameters:\s*\[([\s\S]*?)\]\s*,\s*waitForResponse:\s*(true|false)\s*,\s*disableInterruptions:\s*(true|false)\s*,\s*executionMode:\s*['"]([^'"]+)['"]\s*\}/g;
+  const toolRegex =
+    /\{\s*name:\s*['"]([^'"]+)['"]\s*,\s*description:\s*['"]([^'"]+)['"]\s*,\s*category:\s*['"]([^'"]+)['"]\s*,\s*parameters:\s*\[([\s\S]*?)\]\s*,\s*waitForResponse:\s*(true|false)\s*,\s*disableInterruptions:\s*(true|false)\s*,\s*executionMode:\s*['"]([^'"]+)['"]\s*\}/g;
 
   let match;
   while ((match = toolRegex.exec(content)) !== null) {
-    const [_, name, description, category, paramsStr, waitForResponse, disableInterruptions, executionMode] = match;
+    const [
+      _,
+      name,
+      description,
+      category,
+      paramsStr,
+      waitForResponse,
+      disableInterruptions,
+      executionMode,
+    ] = match;
 
     // Parse parameters
     const params = [];
-    const paramRegex = /\{\s*name:\s*['"]([^'"]+)['"]\s*,\s*type:\s*['"]([^'"]+)['"]\s*,\s*required:\s*(true|false)\s*,\s*description:\s*['"]([^'"]+)['"](?:\s*,\s*enumValues:\s*\[([^\]]*)\])?\s*\}/g;
+    const paramRegex =
+      /\{\s*name:\s*['"]([^'"]+)['"]\s*,\s*type:\s*['"]([^'"]+)['"]\s*,\s*required:\s*(true|false)\s*,\s*description:\s*['"]([^'"]+)['"](?:\s*,\s*enumValues:\s*\[([^\]]*)\])?\s*\}/g;
     let paramMatch;
     while ((paramMatch = paramRegex.exec(paramsStr)) !== null) {
       params.push({
@@ -40,7 +51,12 @@ function parseToolsFromRegistry(content) {
         type: paramMatch[2],
         required: paramMatch[3] === 'true',
         description: paramMatch[4],
-        enumValues: paramMatch[5] ? paramMatch[5].split(',').map(s => s.trim().replace(/['"]/g, '')).filter(Boolean) : undefined
+        enumValues: paramMatch[5]
+          ? paramMatch[5]
+              .split(',')
+              .map((s) => s.trim().replace(/['"]/g, ''))
+              .filter(Boolean)
+          : undefined,
       });
     }
 
@@ -51,7 +67,7 @@ function parseToolsFromRegistry(content) {
       parameters: params,
       waitForResponse: waitForResponse === 'true',
       disableInterruptions: disableInterruptions === 'true',
-      executionMode
+      executionMode,
     });
   }
 
@@ -66,7 +82,7 @@ function convertToElevenLabsFormat(tool) {
   for (const param of tool.parameters) {
     properties[param.name] = {
       type: param.type === 'array' ? 'array' : param.type,
-      description: param.description
+      description: param.description,
     };
     if (param.enumValues && param.enumValues.length > 0) {
       properties[param.name].enum = param.enumValues;
@@ -84,21 +100,21 @@ function convertToElevenLabsFormat(tool) {
       parameters: {
         type: 'object',
         properties,
-        required
+        required,
       },
       expects_response: tool.waitForResponse,
-      disable_interruptions: tool.disableInterruptions
-    }
+      disable_interruptions: tool.disableInterruptions,
+    },
   };
 }
 
 // Get existing tools
 async function getExistingTools() {
   const response = await fetch(`${API_BASE}/convai/tools`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const data = await response.json();
-  return new Map(data.tools.map(t => [t.tool_config.name, t.id]));
+  return new Map(data.tools.map((t) => [t.tool_config.name, t.id]));
 }
 
 // Create a tool
@@ -108,9 +124,9 @@ async function createTool(tool) {
     method: 'POST',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -129,9 +145,9 @@ async function updateTool(toolId, tool) {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -148,17 +164,17 @@ async function updateAgentTools(agentId, toolIds) {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       conversation_config: {
         agent: {
           prompt: {
-            tool_ids: toolIds
-          }
-        }
-      }
-    })
+            tool_ids: toolIds,
+          },
+        },
+      },
+    }),
   });
 
   if (!response.ok) {
@@ -210,14 +226,16 @@ async function syncAllTools() {
       }
 
       // Rate limit - 100ms between requests
-      await new Promise(r => setTimeout(r, 100));
+      await new Promise((r) => setTimeout(r, 100));
     } catch (error) {
       failed++;
       console.log(`✗ ${error.message}`);
     }
   }
 
-  console.log(`\nCreated: ${created}, Updated: ${updated}, Failed: ${failed}, Total: ${allToolIds.length}\n`);
+  console.log(
+    `\nCreated: ${created}, Updated: ${updated}, Failed: ${failed}, Total: ${allToolIds.length}\n`
+  );
 
   // Update both agents
   console.log('Updating Electrician agent...');

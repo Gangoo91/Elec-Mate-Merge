@@ -136,8 +136,7 @@ export default function EighteenthEditionCoursePage() {
     schema: {
       '@type': 'Course',
       name: '18th Edition Course Online',
-      description:
-        'BS 7671:2018 + Amendment 3:2024 training with AI study assistant',
+      description: 'BS 7671:2018 + Amendment 3:2024 training with AI study assistant',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -196,9 +195,9 @@ export default function EighteenthEditionCoursePage() {
             <span className="text-yellow-400">BS 7671 Training</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Master BS 7671:2018 + Amendment 3:2024 with an AI-powered study
-            platform built specifically for UK electricians. Practice exams,
-            regulation search, progress tracking, and more.
+            Master BS 7671:2018 + Amendment 3:2024 with an AI-powered study platform built
+            specifically for UK electricians. Practice exams, regulation search, progress tracking,
+            and more.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -207,9 +206,7 @@ export default function EighteenthEditionCoursePage() {
             >
               Start 7-Day Free Trial
             </a>
-            <span className="text-white text-sm">
-              From £4.99/mo after trial — cancel anytime
-            </span>
+            <span className="text-white text-sm">From £4.99/mo after trial — cancel anytime</span>
           </div>
         </div>
       </section>
@@ -222,29 +219,24 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The 18th Edition of the IET Wiring Regulations, officially titled
-              BS 7671:2018, is the national standard for electrical installation
-              in the United Kingdom. Published jointly by the Institution of
-              Engineering and Technology (IET) and the British Standards
-              Institution (BSI), it sets out the rules that every electrical
-              installation must follow to ensure safety, reliability, and
-              compliance with UK law.
+              The 18th Edition of the IET Wiring Regulations, officially titled BS 7671:2018, is the
+              national standard for electrical installation in the United Kingdom. Published jointly
+              by the Institution of Engineering and Technology (IET) and the British Standards
+              Institution (BSI), it sets out the rules that every electrical installation must
+              follow to ensure safety, reliability, and compliance with UK law.
             </p>
             <p>
-              BS 7671 is often referred to as the "brown book" due to its
-              distinctive cover. It replaced the 17th Edition (BS 7671:2008) on
-              1 January 2019 and has since been amended twice in its main cycle:
-              Amendment 1 (2020), Amendment 2 (2022), and most recently
-              Amendment 3 (2024). Every practising electrician, electrical
-              engineer, and installation designer in the UK needs a thorough
-              working knowledge of this standard.
+              BS 7671 is often referred to as the "brown book" due to its distinctive cover. It
+              replaced the 17th Edition (BS 7671:2008) on 1 January 2019 and has since been amended
+              twice in its main cycle: Amendment 1 (2020), Amendment 2 (2022), and most recently
+              Amendment 3 (2024). Every practising electrician, electrical engineer, and
+              installation designer in the UK needs a thorough working knowledge of this standard.
             </p>
             <p>
-              The standard is divided into seven parts covering general rules,
-              definitions, assessment of general characteristics, protection for
-              safety, selection and erection of equipment, inspection and
-              testing, and special installations or locations. Together, these
-              parts form a comprehensive framework that governs everything from
+              The standard is divided into seven parts covering general rules, definitions,
+              assessment of general characteristics, protection for safety, selection and erection
+              of equipment, inspection and testing, and special installations or locations.
+              Together, these parts form a comprehensive framework that governs everything from
               domestic rewires to large commercial installations.
             </p>
           </div>
@@ -259,38 +251,32 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF
-              supplement to the existing standard. Unlike previous amendments
-              that required purchasing a new edition, A3:2024 is a focused
-              update that adds a single but significant new regulation:
+              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the
+              existing standard. Unlike previous amendments that required purchasing a new edition,
+              A3:2024 is a focused update that adds a single but significant new regulation:
               Regulation 530.3.201.
             </p>
             <p>
-              Regulation 530.3.201 introduces requirements for the selection and
-              erection of bidirectional and unidirectional switching and
-              protective devices. This is directly relevant to the growing
-              number of installations that involve energy generation and storage,
-              particularly solar photovoltaic (PV) systems and battery energy
-              storage systems (BESS). As more homes and businesses install solar
-              panels and battery storage, the flow of electricity is no longer
-              simply one-directional from the grid to the consumer. Current can
-              now flow in both directions, and protective devices must be
+              Regulation 530.3.201 introduces requirements for the selection and erection of
+              bidirectional and unidirectional switching and protective devices. This is directly
+              relevant to the growing number of installations that involve energy generation and
+              storage, particularly solar photovoltaic (PV) systems and battery energy storage
+              systems (BESS). As more homes and businesses install solar panels and battery storage,
+              the flow of electricity is no longer simply one-directional from the grid to the
+              consumer. Current can now flow in both directions, and protective devices must be
               suitable for this scenario.
             </p>
             <p>
-              The amendment clarifies that where a protective device may carry
-              current in both directions, it must be rated and suitable for
-              bidirectional operation, or alternatively, separate unidirectional
-              devices must be installed for each direction of current flow.
-              Electricians working on solar PV, battery storage, electric
-              vehicle charging with vehicle-to-grid (V2G) capability, or any
-              installation with embedded generation need to understand these
-              requirements thoroughly.
+              The amendment clarifies that where a protective device may carry current in both
+              directions, it must be rated and suitable for bidirectional operation, or
+              alternatively, separate unidirectional devices must be installed for each direction of
+              current flow. Electricians working on solar PV, battery storage, electric vehicle
+              charging with vehicle-to-grid (V2G) capability, or any installation with embedded
+              generation need to understand these requirements thoroughly.
             </p>
             <p>
-              A further amendment, Amendment 4, is expected in 2026 and will
-              likely address additional areas related to emerging technologies
-              and installation practices.
+              A further amendment, Amendment 4, is expected in 2026 and will likely address
+              additional areas related to emerging technologies and installation practices.
             </p>
           </div>
         </div>
@@ -304,29 +290,25 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Every electrician working in the UK needs to hold the 18th Edition
-              qualification, formally known as the City & Guilds 2382-22 (or
-              equivalent awards from EAL and other awarding bodies). This
-              qualification is a prerequisite for joining a competent person
-              scheme such as NICEIC, NAPIT, ELECSA, or BRE, and is required for
-              Part P compliance when carrying out notifiable electrical work in
-              domestic properties in England and Wales.
+              Every electrician working in the UK needs to hold the 18th Edition qualification,
+              formally known as the City & Guilds 2382-22 (or equivalent awards from EAL and other
+              awarding bodies). This qualification is a prerequisite for joining a competent person
+              scheme such as NICEIC, NAPIT, ELECSA, or BRE, and is required for Part P compliance
+              when carrying out notifiable electrical work in domestic properties in England and
+              Wales.
             </p>
             <p>
-              Beyond qualified electricians, the 18th Edition is also essential
-              for electrical designers, consulting engineers, electrical
-              contractors managing installation teams, building control
-              officers, and anyone involved in the specification or approval of
-              electrical installations. Apprentices working towards their Level 3
-              Diploma in Electrical Installation will study BS 7671 as a core
-              part of their training.
+              Beyond qualified electricians, the 18th Edition is also essential for electrical
+              designers, consulting engineers, electrical contractors managing installation teams,
+              building control officers, and anyone involved in the specification or approval of
+              electrical installations. Apprentices working towards their Level 3 Diploma in
+              Electrical Installation will study BS 7671 as a core part of their training.
             </p>
             <p>
-              If you hold a 17th Edition certificate, you must update to the
-              18th Edition to maintain your competent person scheme membership.
-              Most schemes require the update within a set timeframe of a new
-              edition being published. Studying online allows you to prepare at
-              your own pace without losing days on site.
+              If you hold a 17th Edition certificate, you must update to the 18th Edition to
+              maintain your competent person scheme membership. Most schemes require the update
+              within a set timeframe of a new edition being published. Studying online allows you to
+              prepare at your own pace without losing days on site.
             </p>
           </div>
         </div>
@@ -340,10 +322,9 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Elec-Mate 18th Edition course covers all seven parts of
-              BS 7671:2018+A3:2024 in structured, easy-to-follow modules. Each
-              module breaks down the regulation text into plain English
-              explanations with practical examples drawn from real-world
+              The Elec-Mate 18th Edition course covers all seven parts of BS 7671:2018+A3:2024 in
+              structured, easy-to-follow modules. Each module breaks down the regulation text into
+              plain English explanations with practical examples drawn from real-world
               installations.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -376,23 +357,20 @@ export default function EighteenthEditionCoursePage() {
                     <BookOpen className="w-5 h-5 text-yellow-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-yellow-400 text-sm">
-                      {item.part}
-                    </p>
+                    <p className="font-semibold text-yellow-400 text-sm">{item.part}</p>
                     <p className="text-white text-sm">{item.title}</p>
                   </div>
                 </div>
               ))}
             </div>
             <p>
-              Part 4 (Protection for Safety) and Part 5 (Selection & Erection)
-              typically form the bulk of exam questions, so our content goes
-              deeper here with worked examples covering earth fault loop
-              impedance calculations, disconnection times, RCD selection, cable
-              sizing considerations, and the application of diversity factors.
-              Part 7 covers special locations including bathrooms, swimming
-              pools, construction sites, agricultural premises, marinas, solar
-              PV installations (Section 712), and EV charging (Section 722).
+              Part 4 (Protection for Safety) and Part 5 (Selection & Erection) typically form the
+              bulk of exam questions, so our content goes deeper here with worked examples covering
+              earth fault loop impedance calculations, disconnection times, RCD selection, cable
+              sizing considerations, and the application of diversity factors. Part 7 covers special
+              locations including bathrooms, swimming pools, construction sites, agricultural
+              premises, marinas, solar PV installations (Section 712), and EV charging (Section
+              722).
             </p>
           </div>
         </div>
@@ -406,36 +384,32 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Traditional classroom-based 18th Edition courses typically run
-              over three to five days and cost between £250 and £400, plus travel
-              and time off work. While classroom training offers face-to-face
-              interaction with a tutor, it forces you into a fixed schedule and
-              pace that may not suit everyone.
+              Traditional classroom-based 18th Edition courses typically run over three to five days
+              and cost between £250 and £400, plus travel and time off work. While classroom
+              training offers face-to-face interaction with a tutor, it forces you into a fixed
+              schedule and pace that may not suit everyone.
             </p>
             <p>
-              Studying online with Elec-Mate offers several distinct advantages.
-              You study at your own pace, revisiting difficult sections as many
-              times as needed. Our AI study assistant is available around the
-              clock to answer questions instantly, something no classroom tutor
-              can match. You can study on your phone during breaks on site, on a
-              tablet at home, or on a desktop when you have a longer session.
-              Your progress is tracked and synced across all devices.
+              Studying online with Elec-Mate offers several distinct advantages. You study at your
+              own pace, revisiting difficult sections as many times as needed. Our AI study
+              assistant is available around the clock to answer questions instantly, something no
+              classroom tutor can match. You can study on your phone during breaks on site, on a
+              tablet at home, or on a desktop when you have a longer session. Your progress is
+              tracked and synced across all devices.
             </p>
             <p>
-              The cost difference is substantial. At just £4.99 per month with a
-              7-day free trial, you get access to the full course plus all of
-              Elec-Mate's other tools including EICR certification software,
-              cable sizing calculators, and the electrician's AI assistant. Most
-              users complete their 18th Edition preparation within one to two
-              months, making the total cost a fraction of a classroom course.
+              The cost difference is substantial. At just £4.99 per month with a 7-day free trial,
+              you get access to the full course plus all of Elec-Mate's other tools including EICR
+              certification software, cable sizing calculators, and the electrician's AI assistant.
+              Most users complete their 18th Edition preparation within one to two months, making
+              the total cost a fraction of a classroom course.
             </p>
             <p>
-              Remember that whether you study online or in a classroom, you will
-              still need to sit the formal exam (such as City & Guilds 2382-22)
-              at an approved test centre. What matters is how well prepared you
-              are when you walk into that exam room, and that is where
-              Elec-Mate's targeted revision tools, spaced repetition system, and
-              realistic mock exams give you a genuine edge.
+              Remember that whether you study online or in a classroom, you will still need to sit
+              the formal exam (such as City & Guilds 2382-22) at an approved test centre. What
+              matters is how well prepared you are when you walk into that exam room, and that is
+              where Elec-Mate's targeted revision tools, spaced repetition system, and realistic
+              mock exams give you a genuine edge.
             </p>
           </div>
         </div>
@@ -449,30 +423,26 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate's AI study assistant is purpose-built for BS 7671
-              training. Unlike generic AI chatbots, it has been trained on the
-              full text of BS 7671:2018+A3:2024, Guidance Notes 1 through 8,
-              the IET On-Site Guide, and thousands of exam-style questions with
+              Elec-Mate's AI study assistant is purpose-built for BS 7671 training. Unlike generic
+              AI chatbots, it has been trained on the full text of BS 7671:2018+A3:2024, Guidance
+              Notes 1 through 8, the IET On-Site Guide, and thousands of exam-style questions with
               detailed explanations.
             </p>
             <p>
-              When you ask a question like "What size RCD do I need for a
-              bathroom circuit?", the AI does not just give you a number. It
-              explains the relevant regulations (Regulation 701.411.3.3 for
-              additional protection, Section 411 for automatic disconnection),
-              the reasoning behind the requirement, and common installation
-              scenarios where the answer might differ. It references the exact
-              regulation numbers so you can look them up in your copy of
-              BS 7671.
+              When you ask a question like "What size RCD do I need for a bathroom circuit?", the AI
+              does not just give you a number. It explains the relevant regulations (Regulation
+              701.411.3.3 for additional protection, Section 411 for automatic disconnection), the
+              reasoning behind the requirement, and common installation scenarios where the answer
+              might differ. It references the exact regulation numbers so you can look them up in
+              your copy of BS 7671.
             </p>
             <p>
-              The AI also adapts to your learning level. If you are an
-              experienced electrician updating from the 17th Edition, it focuses
-              on what has changed. If you are an apprentice encountering these
-              regulations for the first time, it provides more foundational
-              context. This personalised approach means you spend your study time
-              efficiently, covering ground you actually need rather than sitting
-              through material you already know.
+              The AI also adapts to your learning level. If you are an experienced electrician
+              updating from the 17th Edition, it focuses on what has changed. If you are an
+              apprentice encountering these regulations for the first time, it provides more
+              foundational context. This personalised approach means you spend your study time
+              efficiently, covering ground you actually need rather than sitting through material
+              you already know.
             </p>
           </div>
         </div>
@@ -485,8 +455,7 @@ export default function EighteenthEditionCoursePage() {
             Everything You Need to Pass
           </h2>
           <p className="text-white text-center mb-8 max-w-2xl mx-auto">
-            A complete study toolkit designed around how electricians actually
-            learn and revise.
+            A complete study toolkit designed around how electricians actually learn and revise.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -505,14 +474,10 @@ export default function EighteenthEditionCoursePage() {
                 className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden"
               >
                 <button
-                  onClick={() =>
-                    setOpenFaq(openFaq === index ? null : index)
-                  }
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between p-5 text-left touch-manipulation h-auto min-h-[44px]"
                 >
-                  <span className="font-semibold text-white pr-4">
-                    {faq.question}
-                  </span>
+                  <span className="font-semibold text-white pr-4">{faq.question}</span>
                   <ChevronDown
                     className={`w-5 h-5 text-yellow-400 shrink-0 transition-transform ${
                       openFaq === index ? 'rotate-180' : ''

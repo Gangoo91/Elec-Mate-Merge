@@ -18,8 +18,7 @@ import {
   FileCheck2,
 } from 'lucide-react';
 
-const PAGE_TITLE =
-  'Electrical Apprentice Portfolio Guide | Evidence Tracking | Elec-Mate';
+const PAGE_TITLE = 'Electrical Apprentice Portfolio Guide | Evidence Tracking | Elec-Mate';
 const PAGE_DESCRIPTION =
   'Complete guide to building your electrical apprentice portfolio. Digital evidence tracking, photo documentation, criteria mapping, employer review, and EPAO submission. From £4.99/mo.';
 
@@ -184,9 +183,7 @@ export default function ApprenticePortfolioGuidePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              Apprentice Portfolio
-            </span>
+            <span className="text-sm font-medium text-yellow-400">Apprentice Portfolio</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Apprentice Portfolio
@@ -194,9 +191,9 @@ export default function ApprenticePortfolioGuidePage() {
             <span className="text-yellow-400">Evidence Guide</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            Build a comprehensive portfolio of evidence from day one. Digital
-            capture, AI-powered criteria mapping, employer review, and
-            EPAO-ready export. Never scramble for evidence again.
+            Build a comprehensive portfolio of evidence from day one. Digital capture, AI-powered
+            criteria mapping, employer review, and EPAO-ready export. Never scramble for evidence
+            again.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -223,37 +220,31 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Your portfolio of evidence is one of the most important
-              components of your electrical apprenticeship, yet it is often the
-              most neglected. Many apprentices treat it as an afterthought — a
-              box to tick before the End Point Assessment — and end up
-              scrambling to produce evidence at the last minute. This approach
-              results in thin, generic portfolios that do not reflect the
-              genuine depth of experience gained over three to four years of
-              training.
+              Your portfolio of evidence is one of the most important components of your electrical
+              apprenticeship, yet it is often the most neglected. Many apprentices treat it as an
+              afterthought — a box to tick before the End Point Assessment — and end up scrambling
+              to produce evidence at the last minute. This approach results in thin, generic
+              portfolios that do not reflect the genuine depth of experience gained over three to
+              four years of training.
             </p>
             <p>
-              A well-built portfolio serves multiple purposes. It is a gateway
-              requirement for the EPA — without it, you cannot be put forward
-              for your final assessment. It forms the basis of the professional
-              discussion, where an EPAO assessor will review your entries and
-              ask detailed questions about your experiences. It provides your
-              employer and training provider with evidence that you are meeting
-              the apprenticeship standard criteria throughout your programme,
-              not just at the end. And it becomes a valuable professional
-              record that you can reference throughout your career — evidence
-              of the installations you have worked on, the skills you have
-              developed, and the progression from novice to competent
-              professional.
+              A well-built portfolio serves multiple purposes. It is a gateway requirement for the
+              EPA — without it, you cannot be put forward for your final assessment. It forms the
+              basis of the professional discussion, where an EPAO assessor will review your entries
+              and ask detailed questions about your experiences. It provides your employer and
+              training provider with evidence that you are meeting the apprenticeship standard
+              criteria throughout your programme, not just at the end. And it becomes a valuable
+              professional record that you can reference throughout your career — evidence of the
+              installations you have worked on, the skills you have developed, and the progression
+              from novice to competent professional.
             </p>
             <p>
-              The key insight is that portfolio building should start on day
-              one of your apprenticeship and continue throughout. Every
-              installation you work on, every new skill you develop, every
-              challenging situation you navigate, and every training activity
-              you complete is potential portfolio evidence. The difference
-              between a strong portfolio and a weak one is not the amount of
-              work you have done — it is how well you have documented it.
+              The key insight is that portfolio building should start on day one of your
+              apprenticeship and continue throughout. Every installation you work on, every new
+              skill you develop, every challenging situation you navigate, and every training
+              activity you complete is potential portfolio evidence. The difference between a strong
+              portfolio and a weak one is not the amount of work you have done — it is how well you
+              have documented it.
             </p>
           </div>
         </div>
@@ -267,10 +258,9 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              The apprenticeship standard (ST0215) defines three categories of
-              requirements: knowledge, skills, and behaviours. Your portfolio
-              must include evidence across all three. Here are the key evidence
-              types and how they map to the standard.
+              The apprenticeship standard (ST0215) defines three categories of requirements:
+              knowledge, skills, and behaviours. Your portfolio must include evidence across all
+              three. Here are the key evidence types and how they map to the standard.
             </p>
           </div>
           <div className="space-y-4">
@@ -320,12 +310,8 @@ export default function ApprenticePortfolioGuidePage() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -341,42 +327,35 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Every piece of portfolio evidence should be mapped to one or more
-              criteria in the apprenticeship standard. This mapping serves two
-              purposes: it ensures you have comprehensive coverage of the
-              standard (no gaps), and it makes it easy for the EPAO assessor to
-              find evidence relevant to each criterion during the professional
+              Every piece of portfolio evidence should be mapped to one or more criteria in the
+              apprenticeship standard. This mapping serves two purposes: it ensures you have
+              comprehensive coverage of the standard (no gaps), and it makes it easy for the EPAO
+              assessor to find evidence relevant to each criterion during the professional
               discussion.
             </p>
             <p>
-              The ST0215 standard for Installation Electrician / Maintenance
-              Electrician defines knowledge criteria covering areas such as
-              electrical science, BS 7671:2018+A3:2024 wiring regulations,
-              health and safety legislation, installation design, inspection
-              and testing, and fault diagnosis. Skills criteria cover practical
-              installation, safe isolation, testing, fault finding,
-              certification, and communication. Behaviour criteria cover
-              professionalism, teamwork, taking responsibility, and commitment
-              to CPD.
+              The ST0215 standard for Installation Electrician / Maintenance Electrician defines
+              knowledge criteria covering areas such as electrical science, BS 7671:2018+A3:2024
+              wiring regulations, health and safety legislation, installation design, inspection and
+              testing, and fault diagnosis. Skills criteria cover practical installation, safe
+              isolation, testing, fault finding, certification, and communication. Behaviour
+              criteria cover professionalism, teamwork, taking responsibility, and commitment to
+              CPD.
             </p>
             <p>
-              Without a mapping system, you risk having strong evidence in some
-              areas and no evidence in others. For example, you might have
-              dozens of photographs of installation work (covering the
-              installation skills criterion well) but no evidence of fault
-              diagnosis experience, no reflective accounts demonstrating
-              professional behaviours, and no documentation of your health and
-              safety knowledge.
+              Without a mapping system, you risk having strong evidence in some areas and no
+              evidence in others. For example, you might have dozens of photographs of installation
+              work (covering the installation skills criterion well) but no evidence of fault
+              diagnosis experience, no reflective accounts demonstrating professional behaviours,
+              and no documentation of your health and safety knowledge.
             </p>
             <p>
-              Elec-Mate's AI-powered criteria mapping solves this problem. When
-              you add a portfolio entry, the AI analyses the description and
-              suggests which criteria it covers. A visual dashboard shows your
-              coverage across all criteria, using a traffic-light system: green
-              indicates strong coverage, amber indicates partial coverage, and
-              red indicates criteria with no evidence. Weekly reminders prompt
-              you to add evidence in areas where coverage is weak, ensuring
-              that by the time you reach the EPA gateway, your portfolio
+              Elec-Mate's AI-powered criteria mapping solves this problem. When you add a portfolio
+              entry, the AI analyses the description and suggests which criteria it covers. A visual
+              dashboard shows your coverage across all criteria, using a traffic-light system: green
+              indicates strong coverage, amber indicates partial coverage, and red indicates
+              criteria with no evidence. Weekly reminders prompt you to add evidence in areas where
+              coverage is weak, ensuring that by the time you reach the EPA gateway, your portfolio
               comprehensively covers the entire standard.
             </p>
           </div>
@@ -391,52 +370,44 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Traditionally, apprentice portfolios were maintained as physical
-              folders — ring binders filled with printed photographs, handwritten
-              work logs, and signed paper forms. While this approach still
-              exists, digital portfolios have become the standard for several
-              compelling reasons.
+              Traditionally, apprentice portfolios were maintained as physical folders — ring
+              binders filled with printed photographs, handwritten work logs, and signed paper
+              forms. While this approach still exists, digital portfolios have become the standard
+              for several compelling reasons.
             </p>
             <p>
-              <strong>Convenience:</strong> A digital portfolio lives on your
-              phone. You can add evidence on site in seconds — snap a
-              photograph, type a quick description, and the entry is saved. No
-              need to print photographs, write out logs by hand, or carry a
-              heavy binder to and from site. This convenience means you are far
-              more likely to capture evidence regularly rather than leaving it
-              until "later" (which often means "never").
+              <strong>Convenience:</strong> A digital portfolio lives on your phone. You can add
+              evidence on site in seconds — snap a photograph, type a quick description, and the
+              entry is saved. No need to print photographs, write out logs by hand, or carry a heavy
+              binder to and from site. This convenience means you are far more likely to capture
+              evidence regularly rather than leaving it until "later" (which often means "never").
             </p>
             <p>
-              <strong>Security:</strong> Paper portfolios can be damaged,
-              lost, or destroyed. A coffee spill, a van break-in, or a house
-              move can wipe out years of carefully collected evidence. Digital
-              portfolios are backed up to the cloud automatically, so your
-              evidence is safe regardless of what happens to your phone or
-              physical belongings.
+              <strong>Security:</strong> Paper portfolios can be damaged, lost, or destroyed. A
+              coffee spill, a van break-in, or a house move can wipe out years of carefully
+              collected evidence. Digital portfolios are backed up to the cloud automatically, so
+              your evidence is safe regardless of what happens to your phone or physical belongings.
             </p>
             <p>
-              <strong>Organisation:</strong> Finding a specific piece of
-              evidence in a paper portfolio means flipping through pages and
-              hoping it is filed in the right section. A digital portfolio is
-              searchable — find any entry by date, type, criteria mapping, or
-              keyword in seconds. During the professional discussion, when an
-              assessor asks about a specific type of work, you can locate the
-              evidence instantly rather than fumbling through a binder.
+              <strong>Organisation:</strong> Finding a specific piece of evidence in a paper
+              portfolio means flipping through pages and hoping it is filed in the right section. A
+              digital portfolio is searchable — find any entry by date, type, criteria mapping, or
+              keyword in seconds. During the professional discussion, when an assessor asks about a
+              specific type of work, you can locate the evidence instantly rather than fumbling
+              through a binder.
             </p>
             <p>
-              <strong>Shareability:</strong> Digital portfolios can be shared
-              with your employer, training provider, and EPAO without
-              photocopying or posting physical documents. Your employer can
-              review and add witness testimonies remotely. Your EPAO can review
-              your portfolio before the assessment day, making the professional
-              discussion more focused and efficient.
+              <strong>Shareability:</strong> Digital portfolios can be shared with your employer,
+              training provider, and EPAO without photocopying or posting physical documents. Your
+              employer can review and add witness testimonies remotely. Your EPAO can review your
+              portfolio before the assessment day, making the professional discussion more focused
+              and efficient.
             </p>
             <p>
-              <strong>EPAO acceptance:</strong> All major EPAOs now accept
-              digital portfolios, and many actively prefer them. Elec-Mate
-              exports your portfolio in a formatted submission package that
-              meets the requirements of all the major assessment organisations
-              active in the electrical sector.
+              <strong>EPAO acceptance:</strong> All major EPAOs now accept digital portfolios, and
+              many actively prefer them. Elec-Mate exports your portfolio in a formatted submission
+              package that meets the requirements of all the major assessment organisations active
+              in the electrical sector.
             </p>
           </div>
         </div>
@@ -450,54 +421,44 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Building a portfolio manually — even a digital one — still
-              requires discipline and effort. Elec-Mate goes further by
-              automating much of the process, reducing the effort required and
-              ensuring nothing falls through the cracks.
+              Building a portfolio manually — even a digital one — still requires discipline and
+              effort. Elec-Mate goes further by automating much of the process, reducing the effort
+              required and ensuring nothing falls through the cracks.
             </p>
             <p>
-              <strong>Automatic OJT logging:</strong> Every minute you spend
-              studying on Elec-Mate is automatically logged as off-the-job
-              training hours. These hours are linked to the relevant
-              apprenticeship criteria and appear in your portfolio as training
-              evidence. No need to manually track study time or fill in a
-              separate hours log.
+              <strong>Automatic OJT logging:</strong> Every minute you spend studying on Elec-Mate
+              is automatically logged as off-the-job training hours. These hours are linked to the
+              relevant apprenticeship criteria and appear in your portfolio as training evidence. No
+              need to manually track study time or fill in a separate hours log.
             </p>
             <p>
-              <strong>Study activity as evidence:</strong> Quiz completions,
-              course module progress, mock exam results, and AI study assistant
-              interactions are all recorded as evidence of your knowledge
-              development. When you complete the Level 3 circuit design module
-              and score 85% on the practice assessment, that result
-              automatically appears in your portfolio mapped to the
-              "installation design" knowledge criterion.
+              <strong>Study activity as evidence:</strong> Quiz completions, course module progress,
+              mock exam results, and AI study assistant interactions are all recorded as evidence of
+              your knowledge development. When you complete the Level 3 circuit design module and
+              score 85% on the practice assessment, that result automatically appears in your
+              portfolio mapped to the "installation design" knowledge criterion.
             </p>
             <p>
-              <strong>AI criteria suggestions:</strong> When you add a manual
-              portfolio entry (a work photograph, a reflective account, a
-              witness testimony), the AI analyses the content and suggests
-              which apprenticeship criteria it covers. You can accept, modify,
-              or reject the suggestions. This ensures consistent and accurate
-              mapping without requiring you to memorise the full standard.
+              <strong>AI criteria suggestions:</strong> When you add a manual portfolio entry (a
+              work photograph, a reflective account, a witness testimony), the AI analyses the
+              content and suggests which apprenticeship criteria it covers. You can accept, modify,
+              or reject the suggestions. This ensures consistent and accurate mapping without
+              requiring you to memorise the full standard.
             </p>
             <p>
-              <strong>Gap analysis:</strong> The portfolio dashboard shows a
-              visual map of your evidence coverage across all ST0215 criteria.
-              Red areas need evidence, amber areas have some coverage, and green
-              areas are well-documented. Weekly reports highlight which criteria
-              need attention, so you can proactively seek opportunities to
-              generate evidence in those areas — for example, asking your
-              supervisor to let you observe or assist with fault diagnosis if
-              that criterion is underrepresented.
+              <strong>Gap analysis:</strong> The portfolio dashboard shows a visual map of your
+              evidence coverage across all ST0215 criteria. Red areas need evidence, amber areas
+              have some coverage, and green areas are well-documented. Weekly reports highlight
+              which criteria need attention, so you can proactively seek opportunities to generate
+              evidence in those areas — for example, asking your supervisor to let you observe or
+              assist with fault diagnosis if that criterion is underrepresented.
             </p>
             <p>
-              <strong>Employer and tutor integration:</strong> Your employer
-              and training provider can access your portfolio through their own
-              Elec-Mate accounts. They can review entries, leave comments, add
-              digital signatures to witness testimonies, and track your overall
-              progress. This transparency means no surprises at the gateway
-              review — everyone knows exactly where you stand throughout the
-              apprenticeship.
+              <strong>Employer and tutor integration:</strong> Your employer and training provider
+              can access your portfolio through their own Elec-Mate accounts. They can review
+              entries, leave comments, add digital signatures to witness testimonies, and track your
+              overall progress. This transparency means no surprises at the gateway review —
+              everyone knows exactly where you stand throughout the apprenticeship.
             </p>
           </div>
         </div>
@@ -511,32 +472,27 @@ export default function ApprenticePortfolioGuidePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              When you reach the EPA gateway and your employer and training
-              provider confirm you are ready, your portfolio must be submitted
-              to the End Point Assessment Organisation. The format and method
-              of submission varies between EPAOs, but most now accept electronic
+              When you reach the EPA gateway and your employer and training provider confirm you are
+              ready, your portfolio must be submitted to the End Point Assessment Organisation. The
+              format and method of submission varies between EPAOs, but most now accept electronic
               submissions.
             </p>
             <p>
-              Elec-Mate's portfolio export feature generates a formatted
-              submission package that includes: a summary page listing all
-              entries with dates and criteria mappings, the full evidence
-              entries with photographs and descriptions, signed witness
-              testimonies, an evidence coverage matrix showing which criteria
-              are demonstrated by which entries, your off-the-job training
-              hours summary, and your study activity records. The package is
-              generated as a PDF document and a structured digital file that
-              can be uploaded to most EPAO portals or emailed directly.
+              Elec-Mate's portfolio export feature generates a formatted submission package that
+              includes: a summary page listing all entries with dates and criteria mappings, the
+              full evidence entries with photographs and descriptions, signed witness testimonies,
+              an evidence coverage matrix showing which criteria are demonstrated by which entries,
+              your off-the-job training hours summary, and your study activity records. The package
+              is generated as a PDF document and a structured digital file that can be uploaded to
+              most EPAO portals or emailed directly.
             </p>
             <p>
-              The EPAO assessor will review your portfolio before the
-              professional discussion. A well-organised, comprehensive portfolio
-              creates a strong first impression and gives the assessor confidence
-              in your competence before the discussion even begins. Conversely,
-              a disorganised or thin portfolio raises concerns and can lead to
-              more challenging questions during the discussion as the assessor
-              tries to establish whether the apprentice genuinely has the
-              required breadth of experience.
+              The EPAO assessor will review your portfolio before the professional discussion. A
+              well-organised, comprehensive portfolio creates a strong first impression and gives
+              the assessor confidence in your competence before the discussion even begins.
+              Conversely, a disorganised or thin portfolio raises concerns and can lead to more
+              challenging questions during the discussion as the assessor tries to establish whether
+              the apprentice genuinely has the required breadth of experience.
             </p>
           </div>
         </div>
@@ -549,8 +505,8 @@ export default function ApprenticePortfolioGuidePage() {
             Complete Portfolio Management
           </h2>
           <p className="text-white text-center mb-8 max-w-2xl mx-auto">
-            Every tool you need to build, manage, review, and submit a
-            professional apprentice portfolio.
+            Every tool you need to build, manage, review, and submit a professional apprentice
+            portfolio.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -595,9 +551,7 @@ export default function ApprenticePortfolioGuidePage() {
                   <span>{faq.question}</span>
                   <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
-                <div className="px-4 pb-4 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

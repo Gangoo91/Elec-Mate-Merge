@@ -6,7 +6,8 @@
 import fs from 'fs';
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
+const SUPABASE_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
 
 const QUAL_CODES = ['5357', '2357', '2346-03', '8202', '610/3907/X'];
 
@@ -14,7 +15,7 @@ async function callEdgeFunction(body) {
   const res = await fetch(`${SUPABASE_URL}/functions/v1/insert-qualification-data`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),

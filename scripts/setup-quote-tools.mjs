@@ -16,7 +16,8 @@ const API_BASE = 'https://api.elevenlabs.io/v1';
 const QUOTE_TOOLS = [
   {
     name: 'create_quote',
-    description: 'Create a quote and save it as a draft. Does NOT send an email - the user can review and send later from their dashboard. Use this when the user wants to create a quote but not send it yet.',
+    description:
+      'Create a quote and save it as a draft. Does NOT send an email - the user can review and send later from their dashboard. Use this when the user wants to create a quote but not send it yet.',
     parameters: {
       type: 'object',
       properties: {
@@ -25,21 +26,40 @@ const QUOTE_TOOLS = [
         clientPhone: { type: 'string', description: 'Client phone number (optional)' },
         clientAddress: { type: 'string', description: 'Client address (optional)' },
         clientPostcode: { type: 'string', description: 'Client postcode (optional)' },
-        jobTitle: { type: 'string', description: 'Short title for the job, e.g. Kitchen Rewire, Consumer Unit Upgrade' },
-        jobDescription: { type: 'string', description: 'Detailed description of the work to be done (optional)' },
-        itemDescription: { type: 'string', description: 'Description of the line item, e.g. Full kitchen rewire including materials' },
+        jobTitle: {
+          type: 'string',
+          description: 'Short title for the job, e.g. Kitchen Rewire, Consumer Unit Upgrade',
+        },
+        jobDescription: {
+          type: 'string',
+          description: 'Detailed description of the work to be done (optional)',
+        },
+        itemDescription: {
+          type: 'string',
+          description: 'Description of the line item, e.g. Full kitchen rewire including materials',
+        },
         itemUnitPrice: { type: 'number', description: 'Price in pounds for this item' },
         itemQuantity: { type: 'number', description: 'Quantity of this item (defaults to 1)' },
-        vatRate: { type: 'number', description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.' },
-        notes: { type: 'string', description: 'Additional notes to include on the quote (optional)' },
-        expiryDays: { type: 'number', description: 'Number of days until quote expires (defaults to 30)' }
+        vatRate: {
+          type: 'number',
+          description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.',
+        },
+        notes: {
+          type: 'string',
+          description: 'Additional notes to include on the quote (optional)',
+        },
+        expiryDays: {
+          type: 'number',
+          description: 'Number of days until quote expires (defaults to 30)',
+        },
       },
-      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice']
-    }
+      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice'],
+    },
   },
   {
     name: 'create_invoice',
-    description: 'Create an invoice and save it as a draft. Does NOT send an email - the user can review and send later. Use this when the user wants to create an invoice but not send it yet.',
+    description:
+      'Create an invoice and save it as a draft. Does NOT send an email - the user can review and send later. Use this when the user wants to create an invoice but not send it yet.',
     parameters: {
       type: 'object',
       properties: {
@@ -49,44 +69,56 @@ const QUOTE_TOOLS = [
         clientAddress: { type: 'string', description: 'Client address (optional)' },
         clientPostcode: { type: 'string', description: 'Client postcode (optional)' },
         jobTitle: { type: 'string', description: 'Short title for the job' },
-        jobDescription: { type: 'string', description: 'Detailed description of the work (optional)' },
+        jobDescription: {
+          type: 'string',
+          description: 'Detailed description of the work (optional)',
+        },
         itemDescription: { type: 'string', description: 'Description of the work completed' },
         itemUnitPrice: { type: 'number', description: 'Amount in pounds' },
         itemQuantity: { type: 'number', description: 'Quantity (defaults to 1)' },
-        vatRate: { type: 'number', description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.' },
-        paymentDays: { type: 'number', description: 'Number of days until payment is due (defaults to 30)' },
-        notes: { type: 'string', description: 'Additional notes (optional)' }
+        vatRate: {
+          type: 'number',
+          description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.',
+        },
+        paymentDays: {
+          type: 'number',
+          description: 'Number of days until payment is due (defaults to 30)',
+        },
+        notes: { type: 'string', description: 'Additional notes (optional)' },
       },
-      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice']
-    }
+      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice'],
+    },
   },
   {
     name: 'send_quote',
-    description: 'Send an existing quote to the client by email. Find the quote by client name or quote number. Use this when the user wants to send a quote that was already created.',
+    description:
+      'Send an existing quote to the client by email. Find the quote by client name or quote number. Use this when the user wants to send a quote that was already created.',
     parameters: {
       type: 'object',
       properties: {
         clientName: { type: 'string', description: 'Client name to search for' },
-        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' }
+        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'send_invoice',
-    description: 'Send an existing invoice to the client by email. Find the invoice by client name or invoice number. Use this when the user wants to send an invoice that was already created.',
+    description:
+      'Send an existing invoice to the client by email. Find the invoice by client name or invoice number. Use this when the user wants to send an invoice that was already created.',
     parameters: {
       type: 'object',
       properties: {
         clientName: { type: 'string', description: 'Client name to search for' },
-        invoiceNumber: { type: 'string', description: 'Invoice number e.g. INV-2501-123' }
+        invoiceNumber: { type: 'string', description: 'Invoice number e.g. INV-2501-123' },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'create_and_send_quote',
-    description: 'Create a quote AND send it immediately to the client by email. Use this when the user wants to create and send a quote in one step.',
+    description:
+      'Create a quote AND send it immediately to the client by email. Use this when the user wants to create and send a quote in one step.',
     parameters: {
       type: 'object',
       properties: {
@@ -96,110 +128,160 @@ const QUOTE_TOOLS = [
         clientAddress: { type: 'string', description: 'Client address (optional)' },
         clientPostcode: { type: 'string', description: 'Client postcode (optional)' },
         jobTitle: { type: 'string', description: 'Short title for the job' },
-        jobDescription: { type: 'string', description: 'Detailed description of the work (optional)' },
+        jobDescription: {
+          type: 'string',
+          description: 'Detailed description of the work (optional)',
+        },
         itemDescription: { type: 'string', description: 'Description of the line item' },
         itemUnitPrice: { type: 'number', description: 'Price in pounds' },
         itemQuantity: { type: 'number', description: 'Quantity (defaults to 1)' },
-        vatRate: { type: 'number', description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.' },
+        vatRate: {
+          type: 'number',
+          description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.',
+        },
         notes: { type: 'string', description: 'Additional notes (optional)' },
-        expiryDays: { type: 'number', description: 'Number of days until quote expires (defaults to 30)' }
+        expiryDays: {
+          type: 'number',
+          description: 'Number of days until quote expires (defaults to 30)',
+        },
       },
-      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice']
-    }
+      required: ['clientName', 'clientEmail', 'jobTitle', 'itemDescription', 'itemUnitPrice'],
+    },
   },
   {
     name: 'create_and_send_invoice',
-    description: 'Create an invoice AND send it immediately to the client by email. Can also convert an existing quote to an invoice and send it.',
+    description:
+      'Create an invoice AND send it immediately to the client by email. Can also convert an existing quote to an invoice and send it.',
     parameters: {
       type: 'object',
       properties: {
-        quoteNumber: { type: 'string', description: 'Quote number to convert to invoice (optional - if provided, converts existing quote)' },
-        clientName: { type: 'string', description: 'Full name of the client (required if not converting quote)' },
-        clientEmail: { type: 'string', description: 'Client email address (required if not converting quote)' },
+        quoteNumber: {
+          type: 'string',
+          description:
+            'Quote number to convert to invoice (optional - if provided, converts existing quote)',
+        },
+        clientName: {
+          type: 'string',
+          description: 'Full name of the client (required if not converting quote)',
+        },
+        clientEmail: {
+          type: 'string',
+          description: 'Client email address (required if not converting quote)',
+        },
         clientPhone: { type: 'string', description: 'Client phone number (optional)' },
         clientAddress: { type: 'string', description: 'Client address (optional)' },
         clientPostcode: { type: 'string', description: 'Client postcode (optional)' },
-        jobTitle: { type: 'string', description: 'Short title for the job (required if not converting quote)' },
-        jobDescription: { type: 'string', description: 'Detailed description of the work (optional)' },
-        itemDescription: { type: 'string', description: 'Description of the work completed (required if not converting quote)' },
-        itemUnitPrice: { type: 'number', description: 'Amount in pounds (required if not converting quote)' },
+        jobTitle: {
+          type: 'string',
+          description: 'Short title for the job (required if not converting quote)',
+        },
+        jobDescription: {
+          type: 'string',
+          description: 'Detailed description of the work (optional)',
+        },
+        itemDescription: {
+          type: 'string',
+          description: 'Description of the work completed (required if not converting quote)',
+        },
+        itemUnitPrice: {
+          type: 'number',
+          description: 'Amount in pounds (required if not converting quote)',
+        },
         itemQuantity: { type: 'number', description: 'Quantity (defaults to 1)' },
-        vatRate: { type: 'number', description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.' },
+        vatRate: {
+          type: 'number',
+          description: 'VAT rate percentage (defaults to 20). Set to 0 for no VAT.',
+        },
         paymentDays: { type: 'number', description: 'Days until payment due (defaults to 30)' },
-        invoiceNotes: { type: 'string', description: 'Additional notes for the invoice (optional)' }
+        invoiceNotes: {
+          type: 'string',
+          description: 'Additional notes for the invoice (optional)',
+        },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'delete_quote',
-    description: 'Delete an existing quote. Find the quote by client name or quote number. Cannot delete quotes that have been converted to invoices.',
+    description:
+      'Delete an existing quote. Find the quote by client name or quote number. Cannot delete quotes that have been converted to invoices.',
     parameters: {
       type: 'object',
       properties: {
         clientName: { type: 'string', description: 'Client name to search for' },
-        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' }
+        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'delete_invoice',
-    description: 'Delete an existing invoice. Find the invoice by client name or invoice number. Cannot delete invoices that have been marked as paid.',
+    description:
+      'Delete an existing invoice. Find the invoice by client name or invoice number. Cannot delete invoices that have been marked as paid.',
     parameters: {
       type: 'object',
       properties: {
         clientName: { type: 'string', description: 'Client name to search for' },
-        invoiceNumber: { type: 'string', description: 'Invoice number e.g. INV-2501-123' }
+        invoiceNumber: { type: 'string', description: 'Invoice number e.g. INV-2501-123' },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'convert_quote_to_invoice',
-    description: 'Convert an existing quote to an invoice. Find the quote by client name or quote number. The invoice will be created as a draft.',
+    description:
+      'Convert an existing quote to an invoice. Find the quote by client name or quote number. The invoice will be created as a draft.',
     parameters: {
       type: 'object',
       properties: {
         clientName: { type: 'string', description: 'Client name to search for' },
-        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' }
+        quoteNumber: { type: 'string', description: 'Quote number e.g. QTE-2501-123' },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'get_quote_info',
-    description: 'Get information about quotes. Can filter by client name or status. Returns a list of recent quotes.',
+    description:
+      'Get information about quotes. Can filter by client name or status. Returns a list of recent quotes.',
     parameters: {
       type: 'object',
       properties: {
         client: { type: 'string', description: 'Client name to filter by (optional)' },
-        status: { type: 'string', description: 'Quote status to filter by: draft, sent, accepted, declined (optional)' }
+        status: {
+          type: 'string',
+          description: 'Quote status to filter by: draft, sent, accepted, declined (optional)',
+        },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'get_invoice_info',
-    description: 'Get information about invoices. Can filter by client name or status. Returns a list of recent invoices.',
+    description:
+      'Get information about invoices. Can filter by client name or status. Returns a list of recent invoices.',
     parameters: {
       type: 'object',
       properties: {
         client: { type: 'string', description: 'Client name to filter by (optional)' },
-        status: { type: 'string', description: 'Invoice status to filter by: draft, sent, paid, overdue (optional)' }
+        status: {
+          type: 'string',
+          description: 'Invoice status to filter by: draft, sent, paid, overdue (optional)',
+        },
       },
-      required: []
-    }
+      required: [],
+    },
   },
   {
     name: 'get_overdue_invoices',
-    description: 'Get a list of all overdue invoices. Returns invoices that are past their due date and not yet paid.',
+    description:
+      'Get a list of all overdue invoices. Returns invoices that are past their due date and not yet paid.',
     parameters: {
       type: 'object',
       properties: {},
-      required: []
-    }
-  }
+      required: [],
+    },
+  },
 ];
 
 // Updated prompt for the agent
@@ -297,7 +379,7 @@ User: "Any overdue invoices?"
 
 async function getExistingTools() {
   const response = await fetch(`${API_BASE}/convai/tools`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const data = await response.json();
   return data.tools || [];
@@ -306,7 +388,7 @@ async function getExistingTools() {
 async function deleteTool(toolId) {
   const response = await fetch(`${API_BASE}/convai/tools/${toolId}`, {
     method: 'DELETE',
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   return response.ok;
 }
@@ -318,7 +400,7 @@ async function createTool(tool) {
   for (const [key, value] of Object.entries(tool.parameters.properties)) {
     properties[key] = {
       type: value.type,
-      description: value.description
+      description: value.description,
     };
   }
 
@@ -326,7 +408,7 @@ async function createTool(tool) {
     method: 'POST',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       tool_config: {
@@ -336,10 +418,10 @@ async function createTool(tool) {
         parameters: {
           type: 'object',
           properties: properties,
-          required: tool.parameters.required || []
-        }
-      }
-    })
+          required: tool.parameters.required || [],
+        },
+      },
+    }),
   });
 
   if (!response.ok) {
@@ -362,7 +444,7 @@ async function updateAgent(toolIds) {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       conversation_config: {
@@ -370,11 +452,11 @@ async function updateAgent(toolIds) {
           prompt: {
             prompt: AGENT_PROMPT,
             tool_ids: toolIds,
-            tools: []  // Clear embedded webhook tools
-          }
-        }
-      }
-    })
+            tools: [], // Clear embedded webhook tools
+          },
+        },
+      },
+    }),
   });
 
   if (!response.ok) {
@@ -395,7 +477,7 @@ async function main() {
   // Step 1: Delete ALL existing tools with matching names
   console.log('Step 1: Cleaning up existing tools...');
   const existingTools = await getExistingTools();
-  const toolNames = QUOTE_TOOLS.map(t => t.name);
+  const toolNames = QUOTE_TOOLS.map((t) => t.name);
 
   for (const existing of existingTools) {
     if (toolNames.includes(existing.tool_config?.name)) {

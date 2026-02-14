@@ -10,23 +10,46 @@ const API_BASE = 'https://api.elevenlabs.io/v1';
 
 // Tools to ALWAYS include (high priority)
 const HIGH_PRIORITY_KEYWORDS = [
-  'quote', 'invoice', 'employee', 'worker', 'job', 'timesheet',
-  'navigate', 'dashboard', 'search', 'filter', 'dialog',
-  'approval', 'pending', 'create', 'send', 'assign'
+  'quote',
+  'invoice',
+  'employee',
+  'worker',
+  'job',
+  'timesheet',
+  'navigate',
+  'dashboard',
+  'search',
+  'filter',
+  'dialog',
+  'approval',
+  'pending',
+  'create',
+  'send',
+  'assign',
 ];
 
 // Tools to deprioritize (can be dropped if needed)
 const LOW_PRIORITY_KEYWORDS = [
-  'generate_', 'export_', 'compare_', 'archive_', 'duplicate_',
-  'get_profit', 'get_cash_flow', 'get_tender_win', 'get_tender_pipeline',
-  'get_photo', 'share_photo', 'get_fleet', 'get_mileage'
+  'generate_',
+  'export_',
+  'compare_',
+  'archive_',
+  'duplicate_',
+  'get_profit',
+  'get_cash_flow',
+  'get_tender_win',
+  'get_tender_pipeline',
+  'get_photo',
+  'share_photo',
+  'get_fleet',
+  'get_mileage',
 ];
 
 async function main() {
   // Get all tools
   console.log('Fetching all tools...');
   const toolsRes = await fetch(`${API_BASE}/convai/tools`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const toolsData = await toolsRes.json();
   const allTools = toolsData.tools;
@@ -40,9 +63,9 @@ async function main() {
   for (const tool of allTools) {
     const name = tool.tool_config.name.toLowerCase();
 
-    if (HIGH_PRIORITY_KEYWORDS.some(kw => name.includes(kw))) {
+    if (HIGH_PRIORITY_KEYWORDS.some((kw) => name.includes(kw))) {
       highPriority.push(tool.id);
-    } else if (LOW_PRIORITY_KEYWORDS.some(kw => name.includes(kw))) {
+    } else if (LOW_PRIORITY_KEYWORDS.some((kw) => name.includes(kw))) {
       lowPriority.push(tool.id);
     } else {
       mediumPriority.push(tool.id);
@@ -65,12 +88,12 @@ async function main() {
   console.log(`\nFinal tool count: ${finalTools.length}`);
 
   // Verify all quote tools are included
-  const quoteTools = allTools.filter(t => {
+  const quoteTools = allTools.filter((t) => {
     const name = t.tool_config.name.toLowerCase();
     return name.includes('quote') || name.includes('invoice');
   });
 
-  const quoteToolsIncluded = quoteTools.filter(t => finalTools.includes(t.id));
+  const quoteToolsIncluded = quoteTools.filter((t) => finalTools.includes(t.id));
   console.log(`Quote/Invoice tools included: ${quoteToolsIncluded.length}/${quoteTools.length}`);
 
   // Update agent
@@ -79,17 +102,17 @@ async function main() {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       conversation_config: {
         agent: {
           prompt: {
-            tool_ids: finalTools.slice(0, 200)
-          }
-        }
-      }
-    })
+            tool_ids: finalTools.slice(0, 200),
+          },
+        },
+      },
+    }),
   });
 
   if (!updateRes.ok) {

@@ -35,7 +35,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Contactum',
     model_series: 'Defender',
     image_type: 'in_situ_dirty',
-    description: 'Contactum board with handwritten labels - COOKER, SOCKETS, SHOWER, EXTENTION SPOT LIGHTS. Dusty real-world installation.',
+    description:
+      'Contactum board with handwritten labels - COOKER, SOCKETS, SHOWER, EXTENTION SPOT LIGHTS. Dusty real-world installation.',
     device_types_shown: ['MCB', 'RCBO', 'RCD'],
     ratings_visible: ['B16', 'B32', '80A'],
     lighting_conditions: 'moderate',
@@ -48,7 +49,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Unknown',
     model_series: null,
     image_type: 'in_situ_dirty',
-    description: 'Three-phase commercial distribution board with handwritten L1/L2/L3 phase labels. Grey enclosure, 100A main switch.',
+    description:
+      'Three-phase commercial distribution board with handwritten L1/L2/L3 phase labels. Grey enclosure, 100A main switch.',
     device_types_shown: ['MCB', '3-pole MCB'],
     ratings_visible: ['100A'],
     lighting_conditions: 'moderate',
@@ -61,7 +63,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Siemens',
     model_series: '5SX21',
     image_type: 'in_situ_dirty',
-    description: 'Siemens 12-way board with handwritten label chart. B6, B16, B20, B32 ratings visible. Main switch on right.',
+    description:
+      'Siemens 12-way board with handwritten label chart. B6, B16, B20, B32 ratings visible. Main switch on right.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['B6', 'B16', 'B20', 'B32'],
     lighting_conditions: 'good',
@@ -74,7 +77,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Eaton',
     model_series: null,
     image_type: 'in_situ_clean',
-    description: 'Three-phase commercial board "Distribution Board 2" with typed labels. L1/L2/L3 phase markings, detailed circuit descriptions.',
+    description:
+      'Three-phase commercial board "Distribution Board 2" with typed labels. L1/L2/L3 phase markings, detailed circuit descriptions.',
     device_types_shown: ['MCB', '3-pole MCB'],
     ratings_visible: ['100A'],
     lighting_conditions: 'good',
@@ -87,7 +91,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Unknown',
     model_series: 'LN5500',
     image_type: 'low_light',
-    description: 'Very old dirty board in dark cupboard. Yellowed plastic, visible old wiring colours (red/black). Handwritten labels barely visible.',
+    description:
+      'Very old dirty board in dark cupboard. Yellowed plastic, visible old wiring colours (red/black). Handwritten labels barely visible.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['5A', '15A', '20A', '30A'],
     lighting_conditions: 'poor',
@@ -100,7 +105,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'MEM',
     model_series: 'Memera 2000',
     image_type: 'in_situ_dirty',
-    description: 'MEM Memera 2000 legacy board. Yellowed/aged plastic, faded labels. Mix of MEM and Sector MCBs. 100A main switch.',
+    description:
+      'MEM Memera 2000 legacy board. Yellowed/aged plastic, faded labels. Mix of MEM and Sector MCBs. 100A main switch.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['B6', '100A'],
     lighting_conditions: 'poor',
@@ -113,7 +119,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Wylex',
     model_series: 'NHRS504',
     image_type: 'in_situ_clean',
-    description: 'Wylex NHRS504 split load board. Clean installation with RCD and MCBs visible. Important safety notice label.',
+    description:
+      'Wylex NHRS504 split load board. Clean installation with RCD and MCBs visible. Important safety notice label.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['6A', '16A', '32A'],
     lighting_conditions: 'good',
@@ -126,7 +133,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Contactum',
     model_series: 'Defender',
     image_type: 'in_situ_clean',
-    description: 'Contactum 11-way with pictogram labels (socket, light bulb, cooker icons). Clean new installation.',
+    description:
+      'Contactum 11-way with pictogram labels (socket, light bulb, cooker icons). Clean new installation.',
     device_types_shown: ['MCB', 'RCBO', 'RCD'],
     ratings_visible: ['B6', 'B16', 'B32'],
     lighting_conditions: 'good',
@@ -139,7 +147,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Hager',
     model_series: 'Design',
     image_type: 'in_situ_clean',
-    description: 'Hager board with mains smoke/heat alarm info sticker. Grey RCDs, dual RCD split load design.',
+    description:
+      'Hager board with mains smoke/heat alarm info sticker. Grey RCDs, dual RCD split load design.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['B6', 'B16', 'B32', '63A'],
     lighting_conditions: 'good',
@@ -152,7 +161,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Chint',
     model_series: 'NX3',
     image_type: 'in_situ_dirty',
-    description: 'Chint board in dusty cupboard with multiple warning stickers. Faded/aged labels. Blue RCDs visible.',
+    description:
+      'Chint board in dusty cupboard with multiple warning stickers. Faded/aged labels. Blue RCDs visible.',
     device_types_shown: ['MCB', 'RCD'],
     ratings_visible: ['B6', 'B16', 'B32', '63A'],
     lighting_conditions: 'moderate',
@@ -165,7 +175,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Contactum',
     model_series: 'Defender',
     image_type: 'in_situ_clean',
-    description: 'Contactum 16-way with pictograms and printed labels. SPD visible at position 1. Sockets, Oven/Cooker, Lighting icons.',
+    description:
+      'Contactum 16-way with pictograms and printed labels. SPD visible at position 1. Sockets, Oven/Cooker, Lighting icons.',
     device_types_shown: ['MCB', 'RCBO', 'RCD', 'SPD'],
     ratings_visible: ['B6', 'B16', 'B32', 'C63'],
     lighting_conditions: 'good',
@@ -178,7 +189,8 @@ const DIRTY_BOARD_PHOTOS: Array<{
     manufacturer: 'Contactum',
     model_series: 'Defender',
     image_type: 'in_situ_clean',
-    description: 'Contactum with pictograms - CCTV camera, garage, socket, heat/smoke alarm icons. Yellow test buttons on RCBOs.',
+    description:
+      'Contactum with pictograms - CCTV camera, garage, socket, heat/smoke alarm icons. Yellow test buttons on RCBOs.',
     device_types_shown: ['MCB', 'RCBO', 'RCD', 'SPD'],
     ratings_visible: ['B6', 'B16', 'B32'],
     lighting_conditions: 'good',
@@ -238,7 +250,9 @@ async function uploadDirtyBoards() {
       }
 
       // Upload to storage
-      console.log(`📤 Uploading ${photo.manufacturer} ${photo.model_series || ''} (${photo.image_type})...`);
+      console.log(
+        `📤 Uploading ${photo.manufacturer} ${photo.model_series || ''} (${photo.image_type})...`
+      );
 
       const { error: uploadError } = await supabase.storage
         .from('board-reference-images')
@@ -252,31 +266,29 @@ async function uploadDirtyBoards() {
       }
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('board-reference-images')
-        .getPublicUrl(storagePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('board-reference-images').getPublicUrl(storagePath);
 
       // Insert metadata into board_reference_images table
-      const { error: dbError } = await supabase
-        .from('board_reference_images')
-        .insert({
-          manufacturer: photo.manufacturer,
-          model_series: photo.model_series,
-          image_type: photo.image_type,
-          image_url: publicUrl,
-          source_url: `file://${filePath}`,
-          source_type: 'user_contributed',
-          description: photo.description,
-          device_types_shown: photo.device_types_shown,
-          ratings_visible: photo.ratings_visible,
-          lighting_conditions: photo.lighting_conditions,
-          verified: true, // These are manually verified
-          metadata: {
-            has_handwritten_labels: photo.has_handwritten_labels,
-            is_three_phase: photo.is_three_phase,
-            has_pictograms: photo.has_pictograms,
-          },
-        });
+      const { error: dbError } = await supabase.from('board_reference_images').insert({
+        manufacturer: photo.manufacturer,
+        model_series: photo.model_series,
+        image_type: photo.image_type,
+        image_url: publicUrl,
+        source_url: `file://${filePath}`,
+        source_type: 'user_contributed',
+        description: photo.description,
+        device_types_shown: photo.device_types_shown,
+        ratings_visible: photo.ratings_visible,
+        lighting_conditions: photo.lighting_conditions,
+        verified: true, // These are manually verified
+        metadata: {
+          has_handwritten_labels: photo.has_handwritten_labels,
+          is_three_phase: photo.is_three_phase,
+          has_pictograms: photo.has_pictograms,
+        },
+      });
 
       if (dbError) {
         console.error(`⚠️  Uploaded but failed to save metadata: ${dbError.message}`);
@@ -284,7 +296,6 @@ async function uploadDirtyBoards() {
         console.log(`✅ Uploaded ${photo.manufacturer} ${photo.model_series || ''}`);
         successCount++;
       }
-
     } catch (error) {
       console.error(`❌ Error with ${photo.filename}:`, error);
       errorCount++;
@@ -298,18 +309,21 @@ async function uploadDirtyBoards() {
 
   // Log summary by type
   console.log('\n=== Photos by Type ===');
-  const byType = DIRTY_BOARD_PHOTOS.reduce((acc, p) => {
-    acc[p.image_type] = (acc[p.image_type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const byType = DIRTY_BOARD_PHOTOS.reduce(
+    (acc, p) => {
+      acc[p.image_type] = (acc[p.image_type] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
   Object.entries(byType).forEach(([type, count]) => {
     console.log(`  ${type}: ${count}`);
   });
 
   // Log special features
-  const handwritten = DIRTY_BOARD_PHOTOS.filter(p => p.has_handwritten_labels).length;
-  const threePhase = DIRTY_BOARD_PHOTOS.filter(p => p.is_three_phase).length;
-  const pictograms = DIRTY_BOARD_PHOTOS.filter(p => p.has_pictograms).length;
+  const handwritten = DIRTY_BOARD_PHOTOS.filter((p) => p.has_handwritten_labels).length;
+  const threePhase = DIRTY_BOARD_PHOTOS.filter((p) => p.is_three_phase).length;
+  const pictograms = DIRTY_BOARD_PHOTOS.filter((p) => p.has_pictograms).length;
 
   console.log('\n=== Special Features ===');
   console.log(`  Handwritten labels: ${handwritten}`);

@@ -24,7 +24,7 @@ const faqs = [
   {
     question: 'Why should electricians use digital invoicing instead of paper?',
     answer:
-      'Paper invoices are slow, easy to lose, difficult to track, and impossible to automate. A paper invoice takes days to arrive by post, can be misplaced by the client, and gives you no visibility into whether it has been received or read. If the client does not pay on time, you have no automated reminder system — you have to pick up the phone and chase payment manually. Digital invoicing solves all of these problems. Invoices are delivered instantly by email, with read receipts so you know when the client has opened them. Automatic payment reminders are sent on your schedule — 7 days, 14 days, 21 days — without any effort from you. Clients can pay by card with a single click, improving your cash flow. And every invoice is stored digitally, searchable, and backed up — no more rummaging through filing cabinets to find last year\'s invoice for a particular job.',
+      "Paper invoices are slow, easy to lose, difficult to track, and impossible to automate. A paper invoice takes days to arrive by post, can be misplaced by the client, and gives you no visibility into whether it has been received or read. If the client does not pay on time, you have no automated reminder system — you have to pick up the phone and chase payment manually. Digital invoicing solves all of these problems. Invoices are delivered instantly by email, with read receipts so you know when the client has opened them. Automatic payment reminders are sent on your schedule — 7 days, 14 days, 21 days — without any effort from you. Clients can pay by card with a single click, improving your cash flow. And every invoice is stored digitally, searchable, and backed up — no more rummaging through filing cabinets to find last year's invoice for a particular job.",
   },
   {
     question: 'How does Stripe payment integration work?',
@@ -141,8 +141,12 @@ export default function ElectricianInvoiceAppPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -155,10 +159,14 @@ export default function ElectricianInvoiceAppPage() {
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Electrician Invoice App
-            <span className="block text-yellow-400 mt-1">Digital Invoicing and Payments for UK Electricians</span>
+            <span className="block text-yellow-400 mt-1">
+              Digital Invoicing and Payments for UK Electricians
+            </span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Create professional invoices in seconds, get paid by card or bank transfer, and sync everything to your accounts. Stop chasing payments manually — let Elec-Mate do it for you.
+            Create professional invoices in seconds, get paid by card or bank transfer, and sync
+            everything to your accounts. Stop chasing payments manually — let Elec-Mate do it for
+            you.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -186,20 +194,43 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Why Digital Invoicing Matters for Electricians</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Why Digital Invoicing Matters for Electricians
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Cash flow is the lifeblood of any electrical business. You cannot buy materials for the next job if the client from the last job has not paid you yet. You cannot pay your VAT bill if half your invoices are overdue. You cannot grow your business if you are spending your evenings writing invoices and chasing payments instead of quoting new work.
+              Cash flow is the lifeblood of any electrical business. You cannot buy materials for
+              the next job if the client from the last job has not paid you yet. You cannot pay your
+              VAT bill if half your invoices are overdue. You cannot grow your business if you are
+              spending your evenings writing invoices and chasing payments instead of quoting new
+              work.
             </p>
             <p>
-              The average UK small business is owed over £8,500 in late payments at any given time. For electricians, who typically invoice between £200 and £5,000 per job, just three or four overdue invoices can create a serious cash flow problem. The root cause is usually not that clients refuse to pay — it is that the invoicing process is slow and manual, reminders are not sent consistently, and payment is inconvenient (bank transfer requires the client to log into their banking app, copy your details, and set up a payment).
+              The average UK small business is owed over £8,500 in late payments at any given time.
+              For electricians, who typically invoice between £200 and £5,000 per job, just three or
+              four overdue invoices can create a serious cash flow problem. The root cause is
+              usually not that clients refuse to pay — it is that the invoicing process is slow and
+              manual, reminders are not sent consistently, and payment is inconvenient (bank
+              transfer requires the client to log into their banking app, copy your details, and set
+              up a payment).
             </p>
             <p>
-              <strong className="text-yellow-400">Digital invoicing fixes every part of this chain.</strong> The invoice is created in seconds (not hours), delivered instantly (not days), includes a "Pay Now" button for instant card payment (not bank transfer), and overdue reminders are sent automatically (not forgotten). The result is faster payment, better cash flow, and less time spent on administration.
+              <strong className="text-yellow-400">
+                Digital invoicing fixes every part of this chain.
+              </strong>{' '}
+              The invoice is created in seconds (not hours), delivered instantly (not days),
+              includes a "Pay Now" button for instant card payment (not bank transfer), and overdue
+              reminders are sent automatically (not forgotten). The result is faster payment, better
+              cash flow, and less time spent on administration.
             </p>
             <p>
-              Elec-Mate's invoicing system is designed specifically for UK electricians. It understands the structure of electrical work — certificates, testing, materials, labour — and produces invoices that reflect this. It handles VAT (standard rate, flat-rate scheme, and non-VAT-registered), CIS deductions for subcontractors, and integrates with the quoting system so you never have to enter the same information twice.
+              Elec-Mate's invoicing system is designed specifically for UK electricians. It
+              understands the structure of electrical work — certificates, testing, materials,
+              labour — and produces invoices that reflect this. It handles VAT (standard rate,
+              flat-rate scheme, and non-VAT-registered), CIS deductions for subcontractors, and
+              integrates with the quoting system so you never have to enter the same information
+              twice.
             </p>
           </div>
         </div>
@@ -212,23 +243,43 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CreditCard className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Stripe Payment Integration</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Stripe Payment Integration
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Stripe is the world's leading online payment platform, trusted by millions of businesses from startups to Fortune 500 companies. Elec-Mate uses Stripe to process card payments on your invoices, giving your clients a fast, secure, and familiar payment experience.
+              Stripe is the world's leading online payment platform, trusted by millions of
+              businesses from startups to Fortune 500 companies. Elec-Mate uses Stripe to process
+              card payments on your invoices, giving your clients a fast, secure, and familiar
+              payment experience.
             </p>
             <p>
-              <strong className="text-yellow-400">How it works:</strong> When you create an invoice in Elec-Mate, a unique Stripe payment link is generated automatically. The client receives the invoice by email, with a prominent "Pay Now" button. Clicking the button takes them to a Stripe-hosted checkout page — fully PCI-DSS compliant and secured with SSL — where they enter their card details. The payment is processed in seconds, and you receive a confirmation notification immediately.
+              <strong className="text-yellow-400">How it works:</strong> When you create an invoice
+              in Elec-Mate, a unique Stripe payment link is generated automatically. The client
+              receives the invoice by email, with a prominent "Pay Now" button. Clicking the button
+              takes them to a Stripe-hosted checkout page — fully PCI-DSS compliant and secured with
+              SSL — where they enter their card details. The payment is processed in seconds, and
+              you receive a confirmation notification immediately.
             </p>
             <p>
-              Stripe supports all major card types — Visa, Mastercard, American Express — as well as Apple Pay and Google Pay on mobile devices. The funds are transferred to your nominated UK bank account within 2 working days. For a £1,000 invoice, the Stripe fee is £14.20 (1.4% + 20p for UK cards), which most electricians consider a worthwhile cost for getting paid immediately instead of waiting 14 to 30 days.
+              Stripe supports all major card types — Visa, Mastercard, American Express — as well as
+              Apple Pay and Google Pay on mobile devices. The funds are transferred to your
+              nominated UK bank account within 2 working days. For a £1,000 invoice, the Stripe fee
+              is £14.20 (1.4% + 20p for UK cards), which most electricians consider a worthwhile
+              cost for getting paid immediately instead of waiting 14 to 30 days.
             </p>
             <p>
-              <strong className="text-yellow-400">The payment is automatically reconciled</strong> in Elec-Mate — the invoice status changes from "Sent" to "Paid", and the payment record is synced to your Xero or QuickBooks account. No manual reconciliation, no checking bank statements, no matching payments to invoices. It just works.
+              <strong className="text-yellow-400">The payment is automatically reconciled</strong>{' '}
+              in Elec-Mate — the invoice status changes from "Sent" to "Paid", and the payment
+              record is synced to your Xero or QuickBooks account. No manual reconciliation, no
+              checking bank statements, no matching payments to invoices. It just works.
             </p>
             <p>
-              You can also accept bank transfer payments alongside Stripe. If a client prefers to pay by bank transfer, your bank details are displayed on the invoice. When the transfer clears, you mark the invoice as paid in Elec-Mate (or it is matched automatically if your accounting software bank feed detects the payment).
+              You can also accept bank transfer payments alongside Stripe. If a client prefers to
+              pay by bank transfer, your bank details are displayed on the invoice. When the
+              transfer clears, you mark the invoice as paid in Elec-Mate (or it is matched
+              automatically if your accounting software bank feed detects the payment).
             </p>
           </div>
         </div>
@@ -245,19 +296,38 @@ export default function ElectricianInvoiceAppPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is designed to integrate with Xero and QuickBooks, the two most popular accounting platforms used by UK electricians and their accountants. The integration eliminates the need to manually re-enter invoices, payments, and expenses into your accounting software — everything syncs automatically.
+              Elec-Mate is designed to integrate with Xero and QuickBooks, the two most popular
+              accounting platforms used by UK electricians and their accountants. The integration
+              eliminates the need to manually re-enter invoices, payments, and expenses into your
+              accounting software — everything syncs automatically.
             </p>
             <p>
-              <strong className="text-yellow-400">Invoices:</strong> When you create and send an invoice in Elec-Mate, it appears in your Xero or QuickBooks account as a new sales invoice. The client name, address, line items, amounts, VAT, and payment terms are all transferred correctly. When the invoice is paid, the payment is recorded and reconciled against the invoice in your accounting software.
+              <strong className="text-yellow-400">Invoices:</strong> When you create and send an
+              invoice in Elec-Mate, it appears in your Xero or QuickBooks account as a new sales
+              invoice. The client name, address, line items, amounts, VAT, and payment terms are all
+              transferred correctly. When the invoice is paid, the payment is recorded and
+              reconciled against the invoice in your accounting software.
             </p>
             <p>
-              <strong className="text-yellow-400">Expenses:</strong> Material purchases, tool costs, sub-contractor payments, and other expenses recorded in Elec-Mate are synced to your accounting software as purchase transactions. They are categorised correctly (cost of sales, overheads, etc.) and linked to the relevant job, giving you accurate profit-and-loss figures by job and by period.
+              <strong className="text-yellow-400">Expenses:</strong> Material purchases, tool costs,
+              sub-contractor payments, and other expenses recorded in Elec-Mate are synced to your
+              accounting software as purchase transactions. They are categorised correctly (cost of
+              sales, overheads, etc.) and linked to the relevant job, giving you accurate
+              profit-and-loss figures by job and by period.
             </p>
             <p>
-              <strong className="text-yellow-400">VAT:</strong> All VAT calculations are synced, whether you are on the standard VAT scheme, the flat-rate scheme, or the cash accounting scheme. Your quarterly VAT return can be prepared directly from your accounting software, with no manual adjustments needed for invoices created in Elec-Mate.
+              <strong className="text-yellow-400">VAT:</strong> All VAT calculations are synced,
+              whether you are on the standard VAT scheme, the flat-rate scheme, or the cash
+              accounting scheme. Your quarterly VAT return can be prepared directly from your
+              accounting software, with no manual adjustments needed for invoices created in
+              Elec-Mate.
             </p>
             <p>
-              <strong className="text-yellow-400">Bank reconciliation:</strong> Stripe payments appear in your Xero or QuickBooks bank feed and are automatically matched to the corresponding invoice. Bank transfer payments are also matched if the bank feed detects them. The result is a set of accounts that is always up to date, always balanced, and always ready for your accountant to review.
+              <strong className="text-yellow-400">Bank reconciliation:</strong> Stripe payments
+              appear in your Xero or QuickBooks bank feed and are automatically matched to the
+              corresponding invoice. Bank transfer payments are also matched if the bank feed
+              detects them. The result is a set of accounts that is always up to date, always
+              balanced, and always ready for your accountant to review.
             </p>
           </div>
         </div>
@@ -270,20 +340,39 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Shield className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">VAT Handling and CIS Compliance</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              VAT Handling and CIS Compliance
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              <strong className="text-yellow-400">VAT:</strong> If you are VAT-registered (mandatory once your turnover exceeds £90,000, voluntary below that), every invoice you issue must show the net amount, the VAT amount, and the gross total. Your VAT registration number must also be displayed. Elec-Mate handles all of this automatically — you set your VAT scheme (standard, flat-rate, or cash accounting) and your VAT registration number in your profile, and every invoice is produced with the correct VAT treatment.
+              <strong className="text-yellow-400">VAT:</strong> If you are VAT-registered (mandatory
+              once your turnover exceeds £90,000, voluntary below that), every invoice you issue
+              must show the net amount, the VAT amount, and the gross total. Your VAT registration
+              number must also be displayed. Elec-Mate handles all of this automatically — you set
+              your VAT scheme (standard, flat-rate, or cash accounting) and your VAT registration
+              number in your profile, and every invoice is produced with the correct VAT treatment.
             </p>
             <p>
-              For the flat-rate VAT scheme, the invoice shows the full 20% VAT to the client (as required by HMRC), but Elec-Mate tracks the flat-rate percentage internally (typically 14.5% for electrical installation services in the first year, 16.5% thereafter). This ensures your VAT return is correct regardless of which scheme you use.
+              For the flat-rate VAT scheme, the invoice shows the full 20% VAT to the client (as
+              required by HMRC), but Elec-Mate tracks the flat-rate percentage internally (typically
+              14.5% for electrical installation services in the first year, 16.5% thereafter). This
+              ensures your VAT return is correct regardless of which scheme you use.
             </p>
             <p>
-              <strong className="text-yellow-400">CIS:</strong> The Construction Industry Scheme applies to electricians who work as subcontractors under a main contractor. The main contractor is required to deduct CIS tax from the subcontractor's invoice and pay it to HMRC. Elec-Mate produces CIS-compliant invoices that show the gross payment, the CIS deduction (20% for verified subcontractors, 30% for unverified), and the net payment due.
+              <strong className="text-yellow-400">CIS:</strong> The Construction Industry Scheme
+              applies to electricians who work as subcontractors under a main contractor. The main
+              contractor is required to deduct CIS tax from the subcontractor's invoice and pay it
+              to HMRC. Elec-Mate produces CIS-compliant invoices that show the gross payment, the
+              CIS deduction (20% for verified subcontractors, 30% for unverified), and the net
+              payment due.
             </p>
             <p>
-              The CIS deduction is a payment on account of your income tax — it is credited against your self-assessment tax bill at the end of the year. If your CIS deductions exceed your tax liability, HMRC will refund the difference. Elec-Mate tracks all CIS deductions throughout the year and provides a summary report for your accountant, making the self-assessment process straightforward.
+              The CIS deduction is a payment on account of your income tax — it is credited against
+              your self-assessment tax bill at the end of the year. If your CIS deductions exceed
+              your tax liability, HMRC will refund the difference. Elec-Mate tracks all CIS
+              deductions throughout the year and provides a summary report for your accountant,
+              making the self-assessment process straightforward.
             </p>
           </div>
         </div>
@@ -296,23 +385,45 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Clock className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Chasing Overdue Payments and Cash Flow Management</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Chasing Overdue Payments and Cash Flow Management
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Chasing late payments is one of the most frustrating parts of running an electrical business. It is time-consuming, uncomfortable, and takes you away from productive work. Elec-Mate automates this process entirely, so you never have to make an awkward phone call about an unpaid invoice again.
+              Chasing late payments is one of the most frustrating parts of running an electrical
+              business. It is time-consuming, uncomfortable, and takes you away from productive
+              work. Elec-Mate automates this process entirely, so you never have to make an awkward
+              phone call about an unpaid invoice again.
             </p>
             <p>
-              <strong className="text-yellow-400">Automatic reminders:</strong> You set your reminder schedule once — for example, a polite reminder on the due date, a follow-up 7 days later, and a firmer reminder at 14 days. Elec-Mate sends the emails automatically on your behalf, branded with your company details, including a direct link to pay the invoice. Each reminder is worded professionally and can be customised to match your tone and style.
+              <strong className="text-yellow-400">Automatic reminders:</strong> You set your
+              reminder schedule once — for example, a polite reminder on the due date, a follow-up 7
+              days later, and a firmer reminder at 14 days. Elec-Mate sends the emails automatically
+              on your behalf, branded with your company details, including a direct link to pay the
+              invoice. Each reminder is worded professionally and can be customised to match your
+              tone and style.
             </p>
             <p>
-              <strong className="text-yellow-400">Overdue dashboard:</strong> The invoice dashboard shows all outstanding invoices sorted by age — current, 1 to 7 days overdue, 8 to 14 days overdue, 15 to 30 days overdue, and 30+ days overdue. The total amount owed is displayed prominently, along with the average days to payment. This gives you a clear picture of your cash flow position at any moment.
+              <strong className="text-yellow-400">Overdue dashboard:</strong> The invoice dashboard
+              shows all outstanding invoices sorted by age — current, 1 to 7 days overdue, 8 to 14
+              days overdue, 15 to 30 days overdue, and 30+ days overdue. The total amount owed is
+              displayed prominently, along with the average days to payment. This gives you a clear
+              picture of your cash flow position at any moment.
             </p>
             <p>
-              <strong className="text-yellow-400">Cash flow forecasting:</strong> Based on your outstanding invoices, upcoming jobs, and historical payment patterns, Elec-Mate can project your cash flow for the next 30, 60, and 90 days. This helps you plan major purchases (new van, new tools, stock), manage VAT and tax payments, and decide whether to take on additional work or focus on collecting outstanding payments.
+              <strong className="text-yellow-400">Cash flow forecasting:</strong> Based on your
+              outstanding invoices, upcoming jobs, and historical payment patterns, Elec-Mate can
+              project your cash flow for the next 30, 60, and 90 days. This helps you plan major
+              purchases (new van, new tools, stock), manage VAT and tax payments, and decide whether
+              to take on additional work or focus on collecting outstanding payments.
             </p>
             <p>
-              For electricians who struggle with late-paying clients, the single biggest improvement is offering card payment. When the client can pay with a single click (Apple Pay, Google Pay, or entering card details), the friction of payment is reduced to almost zero. Many Elec-Mate users report that enabling Stripe payment links reduced their average payment time from 21 days to 3 days.
+              For electricians who struggle with late-paying clients, the single biggest improvement
+              is offering card payment. When the client can pay with a single click (Apple Pay,
+              Google Pay, or entering card details), the friction of payment is reduced to almost
+              zero. Many Elec-Mate users report that enabling Stripe payment links reduced their
+              average payment time from 21 days to 3 days.
             </p>
           </div>
         </div>
@@ -325,20 +436,38 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <TrendingUp className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Expense Tracking and Job Profitability</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Expense Tracking and Job Profitability
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Knowing your overall business profit is important, but knowing the profit on each individual job is transformative. It tells you which types of work are worth pursuing and which are eating into your margins. It shows you whether your quoting is accurate or whether you are consistently underestimating certain job types.
+              Knowing your overall business profit is important, but knowing the profit on each
+              individual job is transformative. It tells you which types of work are worth pursuing
+              and which are eating into your margins. It shows you whether your quoting is accurate
+              or whether you are consistently underestimating certain job types.
             </p>
             <p>
-              Elec-Mate allows you to record expenses against each job as they occur. When you buy materials from the wholesaler, photograph the receipt and log the amount against the job. When you hire a specialist tool, record the hire cost. When you pay a sub-contractor, log the payment. At the end of the job, Elec-Mate shows you the complete picture: invoice total minus materials minus labour cost minus overheads equals profit.
+              Elec-Mate allows you to record expenses against each job as they occur. When you buy
+              materials from the wholesaler, photograph the receipt and log the amount against the
+              job. When you hire a specialist tool, record the hire cost. When you pay a
+              sub-contractor, log the payment. At the end of the job, Elec-Mate shows you the
+              complete picture: invoice total minus materials minus labour cost minus overheads
+              equals profit.
             </p>
             <p>
-              Over time, this data builds up to give you powerful insights. You might discover that consumer unit upgrades are your most profitable job type (high value, predictable scope, fast to complete), while partial rewires are your least profitable (unpredictable scope, frequent variations, more time spent on making good). Armed with this data, you can focus your marketing on the most profitable work and price the less profitable work higher to compensate for the additional risk.
+              Over time, this data builds up to give you powerful insights. You might discover that
+              consumer unit upgrades are your most profitable job type (high value, predictable
+              scope, fast to complete), while partial rewires are your least profitable
+              (unpredictable scope, frequent variations, more time spent on making good). Armed with
+              this data, you can focus your marketing on the most profitable work and price the less
+              profitable work higher to compensate for the additional risk.
             </p>
             <p>
-              All expenses are synced to your accounting software, correctly categorised, and available for your accountant at year-end. No more shoeboxes full of crumpled receipts. No more trying to remember what that £47.50 Visa payment was for three months ago.
+              All expenses are synced to your accounting software, correctly categorised, and
+              available for your accountant at year-end. No more shoeboxes full of crumpled
+              receipts. No more trying to remember what that £47.50 Visa payment was for three
+              months ago.
             </p>
           </div>
         </div>
@@ -351,14 +480,24 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What You Get with Elec-Mate</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What You Get with Elec-Mate
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is not just an invoicing app — it is the complete platform for running an electrical business. Your subscription includes 70 calculators (56 technical + 14 business), 8 Elec-AI agents and 12 AI tools, 36+ training courses with 8 certificate types, digital EICR and EIC certification, quoting with AI cost estimation, invoicing with Stripe payments, and accounting integration.
+              Elec-Mate is not just an invoicing app — it is the complete platform for running an
+              electrical business. Your subscription includes 70 calculators (56 technical + 14
+              business), 8 Elec-AI agents and 12 AI tools, 36+ training courses with 8 certificate
+              types, digital EICR and EIC certification, quoting with AI cost estimation, invoicing
+              with Stripe payments, and accounting integration.
             </p>
             <p>
-              The quoting and invoicing system is part of the 14 business calculators that complement the 56 technical calculators. Together with the AI tools and training courses, Elec-Mate covers every aspect of electrical work — from design and calculation, through installation and testing, to certification, invoicing, and payment. One platform, one subscription, no gaps.
+              The quoting and invoicing system is part of the 14 business calculators that
+              complement the 56 technical calculators. Together with the AI tools and training
+              courses, Elec-Mate covers every aspect of electrical work — from design and
+              calculation, through installation and testing, to certification, invoicing, and
+              payment. One platform, one subscription, no gaps.
             </p>
           </div>
         </div>
@@ -371,7 +510,8 @@ export default function ElectricianInvoiceAppPage() {
             Why Use Elec-Mate for Invoicing?
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Get paid faster, spend less time on admin, and keep your accounts in order.
+            Purpose-built for UK electricians. Get paid faster, spend less time on admin, and keep
+            your accounts in order.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -384,7 +524,9 @@ export default function ElectricianInvoiceAppPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

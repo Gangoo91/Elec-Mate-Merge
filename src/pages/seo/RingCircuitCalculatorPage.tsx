@@ -171,9 +171,15 @@ export default function RingCircuitCalculatorPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -189,7 +195,9 @@ export default function RingCircuitCalculatorPage() {
             <span className="block text-yellow-400 mt-1">R1 R2 Rn Testing to GN3 and BS 7671</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Validate ring circuit continuity test results on site. Enter your r1, rn, and r2 readings, check cross-connection measurements, and instantly identify spurs, breaks, and wiring faults.
+            Validate ring circuit continuity test results on site. Enter your r1, rn, and r2
+            readings, check cross-connection measurements, and instantly identify spurs, breaks, and
+            wiring faults.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -217,20 +225,42 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CircleDot className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is a Ring Final Circuit?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Is a Ring Final Circuit?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A ring final circuit is a wiring arrangement where a single cable leaves the distribution board, loops through a number of socket outlets, and returns to the same terminals in the distribution board. The cable forms a continuous loop — a ring — with both ends connected in parallel at the consumer unit. This arrangement is specific to the UK wiring system and is one of the defining characteristics of BS 7671 installations.
+              A ring final circuit is a wiring arrangement where a single cable leaves the
+              distribution board, loops through a number of socket outlets, and returns to the same
+              terminals in the distribution board. The cable forms a continuous loop — a ring — with
+              both ends connected in parallel at the consumer unit. This arrangement is specific to
+              the UK wiring system and is one of the defining characteristics of BS 7671
+              installations.
             </p>
             <p>
-              The principle behind the ring is parallel paths for current flow. When a load is plugged into a socket, current can reach it from both directions around the ring. For a socket at the midpoint of the ring, the current splits approximately equally between the two halves. This means the maximum current in any section of the cable is roughly half the total load current, allowing smaller cable to be used. A ring final circuit protected by a 32 A MCB can be wired in 2.5 mm² cable, whereas a radial circuit of the same rating would need 4 mm² cable.
+              The principle behind the ring is parallel paths for current flow. When a load is
+              plugged into a socket, current can reach it from both directions around the ring. For
+              a socket at the midpoint of the ring, the current splits approximately equally between
+              the two halves. This means the maximum current in any section of the cable is roughly
+              half the total load current, allowing smaller cable to be used. A ring final circuit
+              protected by a 32 A MCB can be wired in 2.5 mm² cable, whereas a radial circuit of the
+              same rating would need 4 mm² cable.
             </p>
             <p>
-              BS 7671 permits a ring final circuit to serve a floor area of up to 100 m². There is no limit on the number of socket outlets, but the total load should not exceed the rating of the protective device (32 A). Spurs — branch circuits that extend from the ring to additional sockets — are permitted but must follow specific rules: a non-fused spur may serve only one single or one double socket, and the total number of non-fused spurs must not exceed the number of sockets on the ring itself.
+              BS 7671 permits a ring final circuit to serve a floor area of up to 100 m². There is
+              no limit on the number of socket outlets, but the total load should not exceed the
+              rating of the protective device (32 A). Spurs — branch circuits that extend from the
+              ring to additional sockets — are permitted but must follow specific rules: a non-fused
+              spur may serve only one single or one double socket, and the total number of non-fused
+              spurs must not exceed the number of sockets on the ring itself.
             </p>
             <p>
-              The ring arrangement introduces a unique testing requirement: the continuity of the ring must be verified to confirm that the cable forms a complete loop and that no interconnections have been made incorrectly. This is where the cross-connection method comes in — the standard testing procedure described in GN3 (Guidance Note 3: Inspection and Testing) and BS 7671:2018+A3:2024.
+              The ring arrangement introduces a unique testing requirement: the continuity of the
+              ring must be verified to confirm that the cable forms a complete loop and that no
+              interconnections have been made incorrectly. This is where the cross-connection method
+              comes in — the standard testing procedure described in GN3 (Guidance Note 3:
+              Inspection and Testing) and BS 7671:2018+A3:2024.
             </p>
           </div>
         </div>
@@ -243,26 +273,47 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Calculator className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">The Cross-Connection Method Explained</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              The Cross-Connection Method Explained
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The cross-connection method is the definitive test for ring final circuit integrity. It serves three purposes simultaneously: confirming that the ring is continuous (no breaks), verifying that there are no cross-connections or wiring errors, and providing the R1+R2 value needed for earth fault loop impedance calculations.
+              The cross-connection method is the definitive test for ring final circuit integrity.
+              It serves three purposes simultaneously: confirming that the ring is continuous (no
+              breaks), verifying that there are no cross-connections or wiring errors, and providing
+              the R1+R2 value needed for earth fault loop impedance calculations.
             </p>
             <p>
-              The method works by deliberately creating a figure-of-eight path through the ring. When you cross-connect the line conductors of one end to the neutral conductor of the other end, and vice versa, you create a circuit where current must travel through both the line and neutral conductors in series. At the midpoint of the ring, the resistance measured between line and neutral is exactly (r1 + rn) / 4 — because you are measuring two parallel paths, each consisting of half the line conductor plus half the neutral conductor in series.
+              The method works by deliberately creating a figure-of-eight path through the ring.
+              When you cross-connect the line conductors of one end to the neutral conductor of the
+              other end, and vice versa, you create a circuit where current must travel through both
+              the line and neutral conductors in series. At the midpoint of the ring, the resistance
+              measured between line and neutral is exactly (r1 + rn) / 4 — because you are measuring
+              two parallel paths, each consisting of half the line conductor plus half the neutral
+              conductor in series.
             </p>
             <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 Midpoint reading = (r1 + rn) / 4
               </p>
-              <p className="mt-3 text-sm text-white">For the line-neutral cross-connection. For line-earth: (r1 + r2) / 4</p>
+              <p className="mt-3 text-sm text-white">
+                For the line-neutral cross-connection. For line-earth: (r1 + r2) / 4
+              </p>
             </div>
             <p>
-              The second cross-connection — line to CPC — works on the same principle but provides the R1+R2 value. The highest reading at any socket during this test is the worst-case R1+R2 for the circuit, which occurs at the socket electrically furthest from the consumer unit (the midpoint). This R1+R2 value is essential for verifying that the earth fault loop impedance (Zs = Ze + R1+R2) does not exceed the maximum permitted by BS 7671 for the protective device rating.
+              The second cross-connection — line to CPC — works on the same principle but provides
+              the R1+R2 value. The highest reading at any socket during this test is the worst-case
+              R1+R2 for the circuit, which occurs at the socket electrically furthest from the
+              consumer unit (the midpoint). This R1+R2 value is essential for verifying that the
+              earth fault loop impedance (Zs = Ze + R1+R2) does not exceed the maximum permitted by
+              BS 7671 for the protective device rating.
             </p>
             <p>
-              Any deviation from the expected pattern of readings indicates a fault. A reading significantly higher than expected at one socket suggests a spur. A reading of infinity indicates a break. Readings that are all lower than expected suggest a bridged ring. Erratic readings point to cross-polarity or loose connections.
+              Any deviation from the expected pattern of readings indicates a fault. A reading
+              significantly higher than expected at one socket suggests a spur. A reading of
+              infinity indicates a break. Readings that are all lower than expected suggest a
+              bridged ring. Erratic readings point to cross-polarity or loose connections.
             </p>
           </div>
         </div>
@@ -275,15 +326,25 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Expected Readings for Common Cable Types</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Expected Readings for Common Cable Types
+            </h2>
           </div>
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Cable Type</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">r1 (per 100m)</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">r2 (per 100m)</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">r2/r1 Ratio</div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                Cable Type
+              </div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                r1 (per 100m)
+              </div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                r2 (per 100m)
+              </div>
+              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                r2/r1 Ratio
+              </div>
             </div>
             {[
               { type: '2.5/1.5 mm² T&E', r1: '7.41 ohms', r2: '12.10 ohms', ratio: '1.63' },
@@ -301,10 +362,20 @@ export default function RingCircuitCalculatorPage() {
 
           <div className="space-y-4 text-white leading-relaxed mt-6">
             <p>
-              The values above are resistance per 100 metres of conductor at 20 degrees Celsius. In practice, the actual reading depends on the total length of the ring cable. For a ring using 40 metres of 2.5/1.5 mm² T&E cable, the expected end-to-end readings would be: r1 = 40/100 x 7.41 = 0.30 ohms, rn = 0.30 ohms, r2 = 40/100 x 12.10 = 0.48 ohms. The r2/r1 ratio should be approximately 1.63 for 2.5/1.5 mm² cable. If the ratio is significantly different, it may indicate that different cable sizes have been mixed in the ring — a wiring error.
+              The values above are resistance per 100 metres of conductor at 20 degrees Celsius. In
+              practice, the actual reading depends on the total length of the ring cable. For a ring
+              using 40 metres of 2.5/1.5 mm² T&E cable, the expected end-to-end readings would be:
+              r1 = 40/100 x 7.41 = 0.30 ohms, rn = 0.30 ohms, r2 = 40/100 x 12.10 = 0.48 ohms. The
+              r2/r1 ratio should be approximately 1.63 for 2.5/1.5 mm² cable. If the ratio is
+              significantly different, it may indicate that different cable sizes have been mixed in
+              the ring — a wiring error.
             </p>
             <p>
-              Temperature affects resistance. If the cable is warm (after carrying load, or in a hot loft space), the readings will be higher. BS 7671 specifies resistance values at 20 degrees Celsius. For accurate comparisons, either test the cable when cold or apply a temperature correction factor. The operating temperature resistance (at 70 degrees Celsius for thermoplastic cable) is approximately 1.24 times the 20 degree value.
+              Temperature affects resistance. If the cable is warm (after carrying load, or in a hot
+              loft space), the readings will be higher. BS 7671 specifies resistance values at 20
+              degrees Celsius. For accurate comparisons, either test the cable when cold or apply a
+              temperature correction factor. The operating temperature resistance (at 70 degrees
+              Celsius for thermoplastic cable) is approximately 1.24 times the 20 degree value.
             </p>
           </div>
         </div>
@@ -317,31 +388,58 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <AlertTriangle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Common Faults and How to Identify Them</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Common Faults and How to Identify Them
+            </h2>
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">Broken Ring</h3>
               <p className="text-white leading-relaxed text-sm">
-                A broken ring occurs when the cable is disconnected or damaged at some point, so the ring no longer forms a complete loop. The end-to-end measurement for the affected conductor shows a very high resistance or open circuit. During cross-connection testing, sockets beyond the break show readings of infinity or very high values. The most common causes are a cable that has been cut (perhaps during building work), a termination that has come loose, or a connector that was never made. The fix is to trace the ring to find the break and restore the connection.
+                A broken ring occurs when the cable is disconnected or damaged at some point, so the
+                ring no longer forms a complete loop. The end-to-end measurement for the affected
+                conductor shows a very high resistance or open circuit. During cross-connection
+                testing, sockets beyond the break show readings of infinity or very high values. The
+                most common causes are a cable that has been cut (perhaps during building work), a
+                termination that has come loose, or a connector that was never made. The fix is to
+                trace the ring to find the break and restore the connection.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">Bridged Ring</h3>
               <p className="text-white leading-relaxed text-sm">
-                A bridged ring occurs when two points on the ring are connected together, creating a shortcut. This reduces the end-to-end resistance because the current has a shorter parallel path. During cross-connection testing, readings are lower than expected, and the pattern does not show the expected gradual increase towards the midpoint. A bridged ring can occur when an extra cable has been run between two sockets, sometimes during alterations, without disconnecting it from the ring. While a bridged ring still functions electrically, it conceals the true cable lengths and makes fault diagnosis unreliable.
+                A bridged ring occurs when two points on the ring are connected together, creating a
+                shortcut. This reduces the end-to-end resistance because the current has a shorter
+                parallel path. During cross-connection testing, readings are lower than expected,
+                and the pattern does not show the expected gradual increase towards the midpoint. A
+                bridged ring can occur when an extra cable has been run between two sockets,
+                sometimes during alterations, without disconnecting it from the ring. While a
+                bridged ring still functions electrically, it conceals the true cable lengths and
+                makes fault diagnosis unreliable.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">Cross-Polarity</h3>
               <p className="text-white leading-relaxed text-sm">
-                Cross-polarity at one or more sockets means the line and neutral conductors have been swapped. During the cross-connection test, this produces readings that do not follow the expected pattern — some readings may be very low (near zero) while others are very high. The line-neutral cross-connection effectively creates a short circuit at the point of cross-polarity. This fault is dangerous because it means the neutral is switched by the MCB rather than the line, leaving live parts energised even when the MCB is off.
+                Cross-polarity at one or more sockets means the line and neutral conductors have
+                been swapped. During the cross-connection test, this produces readings that do not
+                follow the expected pattern — some readings may be very low (near zero) while others
+                are very high. The line-neutral cross-connection effectively creates a short circuit
+                at the point of cross-polarity. This fault is dangerous because it means the neutral
+                is switched by the MCB rather than the line, leaving live parts energised even when
+                the MCB is off.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">Interconnected Rings</h3>
               <p className="text-white leading-relaxed text-sm">
-                Interconnected rings occur when two separate ring circuits share a common cable section — typically because a previous electrician ran a cable from one ring to another, perhaps to add a socket. The end-to-end readings for the affected ring are lower than expected (because there is a parallel path through the other ring), and the cross-connection readings are unpredictable. This is a dangerous fault because a single cable section is now carrying current from two circuits, potentially exceeding its rating. The fix is to separate the rings completely.
+                Interconnected rings occur when two separate ring circuits share a common cable
+                section — typically because a previous electrician ran a cable from one ring to
+                another, perhaps to add a socket. The end-to-end readings for the affected ring are
+                lower than expected (because there is a parallel path through the other ring), and
+                the cross-connection readings are unpredictable. This is a dangerous fault because a
+                single cable section is now carrying current from two circuits, potentially
+                exceeding its rating. The fix is to separate the rings completely.
               </p>
             </div>
           </div>
@@ -359,42 +457,60 @@ export default function RingCircuitCalculatorPage() {
           </div>
           <div className="space-y-6">
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Example 1: Healthy Ring — 35 Metres of 2.5/1.5 mm² T&E</h3>
+              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                Example 1: Healthy Ring — 35 Metres of 2.5/1.5 mm² T&E
+              </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
                 <p>End-to-end readings:</p>
                 <p className="font-mono text-white">
-                  r1 (line, 2.5 mm²) = 35/100 x 7.41 = <strong className="text-yellow-400">0.26 ohms</strong>
+                  r1 (line, 2.5 mm²) = 35/100 x 7.41 ={' '}
+                  <strong className="text-yellow-400">0.26 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
-                  rn (neutral, 2.5 mm²) = <strong className="text-yellow-400">0.26 ohms</strong> (should match r1)
+                  rn (neutral, 2.5 mm²) = <strong className="text-yellow-400">0.26 ohms</strong>{' '}
+                  (should match r1)
                 </p>
                 <p className="font-mono text-white">
-                  r2 (CPC, 1.5 mm²) = 35/100 x 12.10 = <strong className="text-yellow-400">0.42 ohms</strong>
+                  r2 (CPC, 1.5 mm²) = 35/100 x 12.10 ={' '}
+                  <strong className="text-yellow-400">0.42 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
-                  r2/r1 ratio = 0.42 / 0.26 = <strong className="text-green-400">1.62 — correct for 2.5/1.5 mm²</strong>
+                  r2/r1 ratio = 0.42 / 0.26 ={' '}
+                  <strong className="text-green-400">1.62 — correct for 2.5/1.5 mm²</strong>
                 </p>
                 <p>Cross-connection expected midpoint readings:</p>
                 <p className="font-mono text-white">
-                  Line-neutral midpoint = (0.26 + 0.26) / 4 = <strong className="text-yellow-400">0.13 ohms</strong>
+                  Line-neutral midpoint = (0.26 + 0.26) / 4 ={' '}
+                  <strong className="text-yellow-400">0.13 ohms</strong>
                 </p>
                 <p className="font-mono text-white">
-                  Line-earth midpoint (R1+R2) = (0.26 + 0.42) / 4 = <strong className="text-yellow-400">0.17 ohms</strong>
+                  Line-earth midpoint (R1+R2) = (0.26 + 0.42) / 4 ={' '}
+                  <strong className="text-yellow-400">0.17 ohms</strong>
                 </p>
               </div>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Example 2: Detecting a Spur</h3>
+              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                Example 2: Detecting a Spur
+              </h3>
               <div className="space-y-2 text-white leading-relaxed text-sm">
                 <p>
-                  During cross-connection testing, 8 sockets on a ring give readings between 0.10 and 0.17 ohms (line-neutral). One socket gives a reading of 0.24 ohms — significantly higher than the midpoint value of 0.13 ohms.
+                  During cross-connection testing, 8 sockets on a ring give readings between 0.10
+                  and 0.17 ohms (line-neutral). One socket gives a reading of 0.24 ohms —
+                  significantly higher than the midpoint value of 0.13 ohms.
                 </p>
                 <p>
-                  This socket is on a spur. The excess resistance (0.24 - 0.13 = 0.11 ohms) represents the additional cable length of the spur. For 2.5 mm² cable at 7.41 ohms per 100m, the spur length is approximately 0.11 / 7.41 x 100 = <strong className="text-yellow-400">1.5 metres</strong> (single length, not return).
+                  This socket is on a spur. The excess resistance (0.24 - 0.13 = 0.11 ohms)
+                  represents the additional cable length of the spur. For 2.5 mm² cable at 7.41 ohms
+                  per 100m, the spur length is approximately 0.11 / 7.41 x 100 ={' '}
+                  <strong className="text-yellow-400">1.5 metres</strong> (single length, not
+                  return).
                 </p>
                 <p>
-                  Result: <strong className="text-green-400">Spur identified</strong>. Verify that the spur complies with BS 7671 — it should serve only one single or twin socket and be taken from a socket on the ring, a junction box, or the consumer unit.
+                  Result: <strong className="text-green-400">Spur identified</strong>. Verify that
+                  the spur complies with BS 7671 — it should serve only one single or twin socket
+                  and be taken from a socket on the ring, a junction box, or the consumer unit.
                 </p>
               </div>
             </div>
@@ -409,11 +525,16 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How to Test a Ring Final Circuit — Step by Step</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How to Test a Ring Final Circuit — Step by Step
+            </h2>
           </div>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
-              <div key={index} className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div
+                key={index}
+                className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
@@ -434,7 +555,8 @@ export default function RingCircuitCalculatorPage() {
             Why Use the Elec-Mate Ring Circuit Calculator?
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians testing ring final circuits to GN3 and BS 7671. Validates readings, identifies faults, and provides R1+R2 values instantly.
+            Purpose-built for UK electricians testing ring final circuits to GN3 and BS 7671.
+            Validates readings, identifies faults, and provides R1+R2 values instantly.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -447,7 +569,9 @@ export default function RingCircuitCalculatorPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

@@ -140,7 +140,12 @@ const breadcrumbSchema = {
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
     { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
-    { '@type': 'ListItem', position: 3, name: 'Consumer Unit Regulations', item: 'https://elec-mate.com/guides/consumer-unit-regulations' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Consumer Unit Regulations',
+      item: 'https://elec-mate.com/guides/consumer-unit-regulations',
+    },
   ],
 };
 
@@ -153,9 +158,15 @@ export default function ConsumerUnitRegulationsPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -171,7 +182,9 @@ export default function ConsumerUnitRegulationsPage() {
             <span className="block text-yellow-400 mt-1">Amendment 3 Guide (2024)</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            The definitive guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation 530.3.201.
+            The definitive guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal
+            enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation
+            530.3.201.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -199,17 +212,34 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Layers className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Current Consumer Unit Regulations</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Current Consumer Unit Regulations
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The consumer unit (or distribution board in commercial terminology) is the central point of every electrical installation. It houses the main switch, the protective devices for each circuit (MCBs, RCBOs, or RCDs with MCBs), and increasingly, surge protection devices (SPDs). The regulations governing consumer units have evolved significantly over the past decade, driven primarily by fire safety concerns and the increasing complexity of domestic electrical installations.
+              The consumer unit (or distribution board in commercial terminology) is the central
+              point of every electrical installation. It houses the main switch, the protective
+              devices for each circuit (MCBs, RCBOs, or RCDs with MCBs), and increasingly, surge
+              protection devices (SPDs). The regulations governing consumer units have evolved
+              significantly over the past decade, driven primarily by fire safety concerns and the
+              increasing complexity of domestic electrical installations.
             </p>
             <p>
-              The current standard for consumer units in domestic premises is set by BS 7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment 3, issued in July 2024. This standard, together with the product standard BS EN 61439-3 (which specifies construction and performance requirements for distribution boards), defines what a consumer unit must be made of, what protection it must contain, and how it must be installed.
+              The current standard for consumer units in domestic premises is set by BS
+              7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment 3,
+              issued in July 2024. This standard, together with the product standard BS EN 61439-3
+              (which specifies construction and performance requirements for distribution boards),
+              defines what a consumer unit must be made of, what protection it must contain, and how
+              it must be installed.
             </p>
             <p>
-              For electricians, the consumer unit replacement is one of the most common jobs in domestic work. It is also one of the most regulation-intensive: it is notifiable under Part P, requires a full Electrical Installation Certificate (EIC), involves decisions about RCD architecture, SPD provision, circuit labelling, and (since Amendment 3) the suitability of protective devices for bidirectional current flow. Getting it right requires a thorough understanding of the current regulations.
+              For electricians, the consumer unit replacement is one of the most common jobs in
+              domestic work. It is also one of the most regulation-intensive: it is notifiable under
+              Part P, requires a full Electrical Installation Certificate (EIC), involves decisions
+              about RCD architecture, SPD provision, circuit labelling, and (since Amendment 3) the
+              suitability of protective devices for bidirectional current flow. Getting it right
+              requires a thorough understanding of the current regulations.
             </p>
           </div>
         </div>
@@ -222,20 +252,43 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ShieldCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Metal Consumer Unit Requirement (Regulation 421.1.201)</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Metal Consumer Unit Requirement (Regulation 421.1.201)
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Regulation 421.1.201 states that in domestic (household) premises, consumer units and similar switchgear assemblies shall comply with BS EN 61439-3 and shall have their enclosure manufactured from non-combustible material. This regulation was first introduced as part of Amendment 3 to the 17th Edition (BS 7671:2008+A3:2015) and carried forward into the 18th Edition.
+              Regulation 421.1.201 states that in domestic (household) premises, consumer units and
+              similar switchgear assemblies shall comply with BS EN 61439-3 and shall have their
+              enclosure manufactured from non-combustible material. This regulation was first
+              introduced as part of Amendment 3 to the 17th Edition (BS 7671:2008+A3:2015) and
+              carried forward into the 18th Edition.
             </p>
             <p>
-              The background to this requirement was a series of investigations by the Electrical Safety First charity (formerly the Electrical Safety Council) and the London Fire Brigade, which identified that a significant number of domestic fires originated at or near the consumer unit. In many cases, plastic consumer unit enclosures contributed to the spread of fire by melting and dripping burning plastic onto materials below. A metal enclosure, while it cannot prevent the initial fault, contains the fire within the enclosure and prevents the spread of burning material.
+              The background to this requirement was a series of investigations by the Electrical
+              Safety First charity (formerly the Electrical Safety Council) and the London Fire
+              Brigade, which identified that a significant number of domestic fires originated at or
+              near the consumer unit. In many cases, plastic consumer unit enclosures contributed to
+              the spread of fire by melting and dripping burning plastic onto materials below. A
+              metal enclosure, while it cannot prevent the initial fault, contains the fire within
+              the enclosure and prevents the spread of burning material.
             </p>
             <p>
-              The practical implications are clear. Every new consumer unit installed in a domestic premises must have a metal enclosure. Every consumer unit replacement — whether upgrading from an old rewirable fuse board or replacing a relatively modern plastic board — must use a metal enclosure. The only exception is where the consumer unit is installed within a purpose-built, non-combustible enclosure that provides equivalent fire containment — but in practice, this is rare, and metal consumer units are the universal solution.
+              The practical implications are clear. Every new consumer unit installed in a domestic
+              premises must have a metal enclosure. Every consumer unit replacement — whether
+              upgrading from an old rewirable fuse board or replacing a relatively modern plastic
+              board — must use a metal enclosure. The only exception is where the consumer unit is
+              installed within a purpose-built, non-combustible enclosure that provides equivalent
+              fire containment — but in practice, this is rare, and metal consumer units are the
+              universal solution.
             </p>
             <p>
-              It is important to note that this regulation does not require the retrospective replacement of existing plastic consumer units. If a plastic consumer unit was installed when it was compliant (before the regulation change), it does not need to be replaced solely because of this regulation. However, if any work is done that requires the consumer unit to be replaced or significantly modified, the new installation must comply with the current regulations, including the metal enclosure requirement.
+              It is important to note that this regulation does not require the retrospective
+              replacement of existing plastic consumer units. If a plastic consumer unit was
+              installed when it was compliant (before the regulation change), it does not need to be
+              replaced solely because of this regulation. However, if any work is done that requires
+              the consumer unit to be replaced or significantly modified, the new installation must
+              comply with the current regulations, including the metal enclosure requirement.
             </p>
           </div>
         </div>
@@ -248,39 +301,78 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">RCD Protection Requirements (Regulation 411.3.4)</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              RCD Protection Requirements (Regulation 411.3.4)
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Regulation 411.3.4 sets out the circumstances where additional protection by a 30 mA RCD is required. The requirements have expanded with each edition of the standard, and in the current 18th Edition, almost every circuit in a domestic consumer unit requires RCD protection.
+              BS 7671 Regulation 411.3.4 sets out the circumstances where additional protection by a
+              30 mA RCD is required. The requirements have expanded with each edition of the
+              standard, and in the current 18th Edition, almost every circuit in a domestic consumer
+              unit requires RCD protection.
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
-              <h3 className="font-bold text-white text-lg mb-4">Circuits Requiring 30 mA RCD Protection</h3>
+              <h3 className="font-bold text-white text-lg mb-4">
+                Circuits Requiring 30 mA RCD Protection
+              </h3>
               <ul className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">All socket outlets rated up to 32 A</strong> — This covers every standard 13 A socket, 16 A industrial socket, and 32 A socket in the installation. There are no exceptions based on location or use — all socket outlets up to 32 A must be RCD-protected.</span>
+                  <span>
+                    <strong className="text-yellow-400">All socket outlets rated up to 32 A</strong>{' '}
+                    — This covers every standard 13 A socket, 16 A industrial socket, and 32 A
+                    socket in the installation. There are no exceptions based on location or use —
+                    all socket outlets up to 32 A must be RCD-protected.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Mobile equipment outdoors up to 32 A</strong> — Any circuit supplying equipment intended for outdoor use, including garden lighting supplies, external sockets, and circuits to outbuildings.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Mobile equipment outdoors up to 32 A
+                    </strong>{' '}
+                    — Any circuit supplying equipment intended for outdoor use, including garden
+                    lighting supplies, external sockets, and circuits to outbuildings.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Cables in walls at less than 50 mm depth</strong> — Unless the cable has an earthed metallic covering (SWA, MICC) or is in earthed metallic conduit or trunking, cables at shallow depth in walls must be RCD-protected.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Cables in walls at less than 50 mm depth
+                    </strong>{' '}
+                    — Unless the cable has an earthed metallic covering (SWA, MICC) or is in earthed
+                    metallic conduit or trunking, cables at shallow depth in walls must be
+                    RCD-protected.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Cables in walls with metallic parts</strong> — Cables in metal-stud partitions, steelwork, or other walls containing metallic elements must be RCD-protected regardless of depth.</span>
+                  <span>
+                    <strong className="text-yellow-400">Cables in walls with metallic parts</strong>{' '}
+                    — Cables in metal-stud partitions, steelwork, or other walls containing metallic
+                    elements must be RCD-protected regardless of depth.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Lighting circuits in domestic premises</strong> — Most lighting circuits in homes are wired in cable concealed in walls at less than 50 mm depth, bringing them within the RCD requirement.</span>
+                  <span>
+                    <strong className="text-yellow-400">
+                      Lighting circuits in domestic premises
+                    </strong>{' '}
+                    — Most lighting circuits in homes are wired in cable concealed in walls at less
+                    than 50 mm depth, bringing them within the RCD requirement.
+                  </span>
                 </li>
               </ul>
             </div>
             <p>
-              The practical effect is that almost every circuit in a domestic consumer unit now requires 30 mA RCD protection. The main exceptions are circuits supplying fixed equipment with cables that are either clipped to the surface (not concealed in walls), run in metallic containment, or routed at a depth exceeding 50 mm. Even for these circuits, many designers provide RCD protection as a matter of good practice.
+              The practical effect is that almost every circuit in a domestic consumer unit now
+              requires 30 mA RCD protection. The main exceptions are circuits supplying fixed
+              equipment with cables that are either clipped to the surface (not concealed in walls),
+              run in metallic containment, or routed at a depth exceeding 50 mm. Even for these
+              circuits, many designers provide RCD protection as a matter of good practice.
             </p>
           </div>
         </div>
@@ -293,11 +385,16 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Settings className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">RCBO Board vs Dual RCD Split-Load Design</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              RCBO Board vs Dual RCD Split-Load Design
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              When designing a domestic consumer unit, the electrician must choose between two main RCD architectures: a dual RCD split-load board (two RCDs each protecting a group of circuits via MCBs) or a full RCBO board (individual RCBOs providing combined RCD and overcurrent protection for each circuit).
+              When designing a domestic consumer unit, the electrician must choose between two main
+              RCD architectures: a dual RCD split-load board (two RCDs each protecting a group of
+              circuits via MCBs) or a full RCBO board (individual RCBOs providing combined RCD and
+              overcurrent protection for each circuit).
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -306,15 +403,30 @@ export default function ConsumerUnitRegulationsPage() {
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Lower cost</strong> — Two RCDs plus MCBs cost less than individual RCBOs for every circuit. A typical 10-way split-load board with two RCDs costs approximately 60-100 pounds less than the equivalent RCBO board.</span>
+                  <span>
+                    <strong className="text-yellow-400">Lower cost</strong> — Two RCDs plus MCBs
+                    cost less than individual RCBOs for every circuit. A typical 10-way split-load
+                    board with two RCDs costs approximately 60-100 pounds less than the equivalent
+                    RCBO board.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Poor discrimination</strong> — A fault on any single circuit trips the RCD for that entire group, disconnecting all circuits on that side. This can mean losing the cooker, lighting, and sockets on one side of the house due to a single fault.</span>
+                  <span>
+                    <strong className="text-white">Poor discrimination</strong> — A fault on any
+                    single circuit trips the RCD for that entire group, disconnecting all circuits
+                    on that side. This can mean losing the cooker, lighting, and sockets on one side
+                    of the house due to a single fault.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Cumulative leakage</strong> — The standing earth leakage from all circuits on one RCD side adds up. If the cumulative leakage exceeds 30% of the RCD rating (approximately 10 mA), nuisance tripping becomes likely.</span>
+                  <span>
+                    <strong className="text-white">Cumulative leakage</strong> — The standing earth
+                    leakage from all circuits on one RCD side adds up. If the cumulative leakage
+                    exceeds 30% of the RCD rating (approximately 10 mA), nuisance tripping becomes
+                    likely.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -323,22 +435,39 @@ export default function ConsumerUnitRegulationsPage() {
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Excellent discrimination</strong> — A fault on any circuit trips only that circuit. Every other circuit remains live, minimising disruption to the household.</span>
+                  <span>
+                    <strong className="text-yellow-400">Excellent discrimination</strong> — A fault
+                    on any circuit trips only that circuit. Every other circuit remains live,
+                    minimising disruption to the household.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">No cumulative leakage</strong> — Each RCBO monitors only its own circuit, so standing earth leakage from other circuits does not affect it. This virtually eliminates nuisance tripping.</span>
+                  <span>
+                    <strong className="text-yellow-400">No cumulative leakage</strong> — Each RCBO
+                    monitors only its own circuit, so standing earth leakage from other circuits
+                    does not affect it. This virtually eliminates nuisance tripping.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-yellow-400">Easier fault diagnosis</strong> — When a single RCBO trips, you know immediately which circuit has the fault. No need to isolate circuits one by one to identify the problematic one.</span>
+                  <span>
+                    <strong className="text-yellow-400">Easier fault diagnosis</strong> — When a
+                    single RCBO trips, you know immediately which circuit has the fault. No need to
+                    isolate circuits one by one to identify the problematic one.
+                  </span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              For most new domestic installations and consumer unit replacements, full RCBO boards are now the preferred choice among professional electricians. The additional cost (typically 60-150 pounds depending on the number of circuits) is easily justified by the improved discrimination, reduced nuisance tripping, and better fault diagnosis. The time saved in call-backs for nuisance tripping alone often pays for the cost difference.
+              For most new domestic installations and consumer unit replacements, full RCBO boards
+              are now the preferred choice among professional electricians. The additional cost
+              (typically 60-150 pounds depending on the number of circuits) is easily justified by
+              the improved discrimination, reduced nuisance tripping, and better fault diagnosis.
+              The time saved in call-backs for nuisance tripping alone often pays for the cost
+              difference.
             </p>
           </div>
         </div>
@@ -351,28 +480,58 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Amendment 3 (A3:2024) — Key Changes</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Amendment 3 (A3:2024) — Key Changes
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the main standard. It is not a new book — it is an amendment document that modifies and adds to the existing 18th Edition. The most significant change for consumer unit design is the introduction of Regulation 530.3.201.
+              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the main
+              standard. It is not a new book — it is an amendment document that modifies and adds to
+              the existing 18th Edition. The most significant change for consumer unit design is the
+              introduction of Regulation 530.3.201.
             </p>
             <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
-              <h3 className="font-bold text-yellow-400 text-lg mb-3">Regulation 530.3.201 — Bidirectional and Unidirectional Devices</h3>
+              <h3 className="font-bold text-yellow-400 text-lg mb-3">
+                Regulation 530.3.201 — Bidirectional and Unidirectional Devices
+              </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  This new regulation addresses a growing concern in modern electrical installations: the presence of power sources that can feed energy in both directions through the consumer unit. Traditional installations have a single source of supply (the DNO mains), and all fault current flows in one direction — from the supply, through the fault, and back to the source. Standard MCBs, RCDs, and RCBOs are designed for this unidirectional fault current.
+                  This new regulation addresses a growing concern in modern electrical
+                  installations: the presence of power sources that can feed energy in both
+                  directions through the consumer unit. Traditional installations have a single
+                  source of supply (the DNO mains), and all fault current flows in one direction —
+                  from the supply, through the fault, and back to the source. Standard MCBs, RCDs,
+                  and RCBOs are designed for this unidirectional fault current.
                 </p>
                 <p>
-                  However, with the rapid growth of domestic battery storage systems, solar PV with battery backup, and vehicle-to-grid (V2G) EV chargers, many installations now have local generation or storage that can supply fault current in the reverse direction — from the battery or generator, through the consumer unit, into the fault. If the protective devices are only rated for unidirectional fault current, they may not operate correctly under a reverse fault condition, potentially failing to clear the fault and allowing it to persist.
+                  However, with the rapid growth of domestic battery storage systems, solar PV with
+                  battery backup, and vehicle-to-grid (V2G) EV chargers, many installations now have
+                  local generation or storage that can supply fault current in the reverse direction
+                  — from the battery or generator, through the consumer unit, into the fault. If the
+                  protective devices are only rated for unidirectional fault current, they may not
+                  operate correctly under a reverse fault condition, potentially failing to clear
+                  the fault and allowing it to persist.
                 </p>
                 <p>
-                  Regulation 530.3.201 requires that where bidirectional current flow is possible, the protective devices must be suitable for operation in both directions, or additional measures must be taken to ensure correct fault clearance regardless of the direction of current flow. For consumer unit design, this means checking with the device manufacturer whether their MCBs and RCBOs are rated for bidirectional fault current, and if not, implementing appropriate measures such as dedicated protection for the battery or generator circuit that prevents reverse fault current from reaching the main distribution.
+                  Regulation 530.3.201 requires that where bidirectional current flow is possible,
+                  the protective devices must be suitable for operation in both directions, or
+                  additional measures must be taken to ensure correct fault clearance regardless of
+                  the direction of current flow. For consumer unit design, this means checking with
+                  the device manufacturer whether their MCBs and RCBOs are rated for bidirectional
+                  fault current, and if not, implementing appropriate measures such as dedicated
+                  protection for the battery or generator circuit that prevents reverse fault
+                  current from reaching the main distribution.
                 </p>
               </div>
             </div>
             <p>
-              Beyond Regulation 530.3.201, Amendment 3 includes various corrections, clarifications, and editorial amendments to the standard. It is important to note that Amendment 3 does not change the fundamental requirements for consumer unit design — metal enclosures, RCD protection, circuit protection, and labelling requirements all remain as per the main 18th Edition text. The amendment adds to the requirements rather than replacing them.
+              Beyond Regulation 530.3.201, Amendment 3 includes various corrections, clarifications,
+              and editorial amendments to the standard. It is important to note that Amendment 3
+              does not change the fundamental requirements for consumer unit design — metal
+              enclosures, RCD protection, circuit protection, and labelling requirements all remain
+              as per the main 18th Edition text. The amendment adds to the requirements rather than
+              replacing them.
             </p>
           </div>
         </div>
@@ -385,20 +544,43 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Activity className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Surge Protection Device (SPD) Requirements</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Surge Protection Device (SPD) Requirements
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Section 443 covers protection against transient overvoltages — voltage spikes caused by lightning strikes (direct or nearby) and switching events on the supply network. Regulation 443.4.1 requires a risk assessment to determine whether SPDs are necessary. Where the risk assessment identifies that the consequences of an overvoltage event would include risk to human life, risk to a public service or cultural heritage site, disruption to a commercial or industrial activity, or damage to a large number of co-located individuals, SPD protection must be provided.
+              BS 7671 Section 443 covers protection against transient overvoltages — voltage spikes
+              caused by lightning strikes (direct or nearby) and switching events on the supply
+              network. Regulation 443.4.1 requires a risk assessment to determine whether SPDs are
+              necessary. Where the risk assessment identifies that the consequences of an
+              overvoltage event would include risk to human life, risk to a public service or
+              cultural heritage site, disruption to a commercial or industrial activity, or damage
+              to a large number of co-located individuals, SPD protection must be provided.
             </p>
             <p>
-              In practice, the risk assessment almost always concludes that SPDs should be installed in modern domestic installations. The average UK home now contains thousands of pounds worth of electronic equipment — smart TVs, computers, broadband routers, smart home devices, LED lighting drivers, heating controls, and appliances with electronic controllers. A single transient overvoltage event can damage multiple items simultaneously. The cost of a Type 2 SPD (suitable for most domestic installations) is typically 30-60 pounds — a fraction of the potential damage cost.
+              In practice, the risk assessment almost always concludes that SPDs should be installed
+              in modern domestic installations. The average UK home now contains thousands of pounds
+              worth of electronic equipment — smart TVs, computers, broadband routers, smart home
+              devices, LED lighting drivers, heating controls, and appliances with electronic
+              controllers. A single transient overvoltage event can damage multiple items
+              simultaneously. The cost of a Type 2 SPD (suitable for most domestic installations) is
+              typically 30-60 pounds — a fraction of the potential damage cost.
             </p>
             <p>
-              SPDs are installed at the origin of the installation, either within the consumer unit (many modern consumer units have dedicated SPD modules) or in a separate enclosure adjacent to the consumer unit. The SPD requires a dedicated MCB or fuse for its supply, sized according to the manufacturer's instructions (typically 32A or 40A). A green indicator on the SPD confirms it is operational — when the indicator turns red or disappears, the SPD has operated and expended its protection capacity and must be replaced.
+              SPDs are installed at the origin of the installation, either within the consumer unit
+              (many modern consumer units have dedicated SPD modules) or in a separate enclosure
+              adjacent to the consumer unit. The SPD requires a dedicated MCB or fuse for its
+              supply, sized according to the manufacturer's instructions (typically 32A or 40A). A
+              green indicator on the SPD confirms it is operational — when the indicator turns red
+              or disappears, the SPD has operated and expended its protection capacity and must be
+              replaced.
             </p>
             <p>
-              For installations on overhead supply lines, the risk of lightning-induced transient overvoltages is significantly higher than for underground supplies, and SPDs are almost always required. The DNO supply arrangement should be considered during the design stage and documented on the Electrical Installation Certificate.
+              For installations on overhead supply lines, the risk of lightning-induced transient
+              overvoltages is significantly higher than for underground supplies, and SPDs are
+              almost always required. The DNO supply arrangement should be considered during the
+              design stage and documented on the Electrical Installation Certificate.
             </p>
           </div>
         </div>
@@ -411,17 +593,37 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Labelling, Certification, and Documentation</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Labelling, Certification, and Documentation
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 requires comprehensive labelling of the consumer unit and its contents. Regulation 514.9.1 requires that every circuit be identified by a durable label at the distribution board. The label must identify the circuit (for example, "Upstairs Sockets," "Kitchen Ring," "Immersion Heater") and must be accurate, legible, and durable. The regulation specifically notes that labels depending on the position of the device within the board are not sufficient on their own — each device must be individually labelled.
+              BS 7671 requires comprehensive labelling of the consumer unit and its contents.
+              Regulation 514.9.1 requires that every circuit be identified by a durable label at the
+              distribution board. The label must identify the circuit (for example, "Upstairs
+              Sockets," "Kitchen Ring," "Immersion Heater") and must be accurate, legible, and
+              durable. The regulation specifically notes that labels depending on the position of
+              the device within the board are not sufficient on their own — each device must be
+              individually labelled.
             </p>
             <p>
-              Additional labelling requirements include: a warning notice at the origin of the installation stating the type and rating of the main protective device (Regulation 514.12.1), a warning notice identifying that the installation has more than one source of supply where applicable (Regulation 514.15.1), the earthing arrangement (TN-S, TN-C-S, or TT), and a notice advising that the RCDs fitted should be tested at quarterly intervals by pressing the test button.
+              Additional labelling requirements include: a warning notice at the origin of the
+              installation stating the type and rating of the main protective device (Regulation
+              514.12.1), a warning notice identifying that the installation has more than one source
+              of supply where applicable (Regulation 514.15.1), the earthing arrangement (TN-S,
+              TN-C-S, or TT), and a notice advising that the RCDs fitted should be tested at
+              quarterly intervals by pressing the test button.
             </p>
             <p>
-              A consumer unit replacement requires a full Electrical Installation Certificate (EIC) — not a Minor Works Certificate. The EIC must include the design, construction, and inspection and testing sections completed in full, together with a schedule of test results for every circuit. The schedule must include continuity of protective conductors (R1+R2), insulation resistance, polarity, earth fault loop impedance (Zs), prospective fault current (Ipf), and RCD test results. Elec-Mate generates all of these forms digitally, validates test results against BS 7671 limits, and produces professional PDF output ready to hand to the client.
+              A consumer unit replacement requires a full Electrical Installation Certificate (EIC)
+              — not a Minor Works Certificate. The EIC must include the design, construction, and
+              inspection and testing sections completed in full, together with a schedule of test
+              results for every circuit. The schedule must include continuity of protective
+              conductors (R1+R2), insulation resistance, polarity, earth fault loop impedance (Zs),
+              prospective fault current (Ipf), and RCD test results. Elec-Mate generates all of
+              these forms digitally, validates test results against BS 7671 limits, and produces
+              professional PDF output ready to hand to the client.
             </p>
           </div>
         </div>
@@ -434,7 +636,8 @@ export default function ConsumerUnitRegulationsPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. 70 calculators, 8 AI agents, 8 certificate types, and 36+ training courses — all built to BS 7671:2018+A3:2024.
+            Purpose-built for UK electricians. 70 calculators, 8 AI agents, 8 certificate types, and
+            36+ training courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -447,7 +650,9 @@ export default function ConsumerUnitRegulationsPage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

@@ -43,8 +43,16 @@ const STATIC_PAGES = [
   { url: '/study-centre/apprentice/level-2', changefreq: 'monthly', priority: PRIORITY.COURSE },
   { url: '/study-centre/apprentice/level-3', changefreq: 'monthly', priority: PRIORITY.COURSE },
   { url: '/study-centre/upskilling', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/study-centre/upskilling/18th-edition', changefreq: 'monthly', priority: PRIORITY.COURSE },
-  { url: '/study-centre/upskilling/inspection-testing', changefreq: 'monthly', priority: PRIORITY.COURSE },
+  {
+    url: '/study-centre/upskilling/18th-edition',
+    changefreq: 'monthly',
+    priority: PRIORITY.COURSE,
+  },
+  {
+    url: '/study-centre/upskilling/inspection-testing',
+    changefreq: 'monthly',
+    priority: PRIORITY.COURSE,
+  },
   { url: '/study-centre/upskilling/pat-testing', changefreq: 'monthly', priority: PRIORITY.COURSE },
   { url: '/study-centre/upskilling/ev-charging', changefreq: 'monthly', priority: PRIORITY.COURSE },
   { url: '/study-centre/upskilling/solar-pv', changefreq: 'monthly', priority: PRIORITY.COURSE },
@@ -96,7 +104,7 @@ function generateLevel2Routes() {
     { num: 7, sections: 4, name: 'Legislation & Regulations' },
   ];
 
-  modules.forEach(mod => {
+  modules.forEach((mod) => {
     // Module page
     routes.push({
       url: `/study-centre/apprentice/level-2/module${mod.num}`,
@@ -131,7 +139,7 @@ function generateLevel3Routes() {
     { num: 8, sections: 4 },
   ];
 
-  modules.forEach(mod => {
+  modules.forEach((mod) => {
     routes.push({
       url: `/study-centre/apprentice/level-3/module${mod.num}`,
       changefreq: 'monthly',
@@ -170,7 +178,7 @@ function generateAM2Routes() {
     priority: PRIORITY.COURSE,
   });
 
-  modules.forEach(mod => {
+  modules.forEach((mod) => {
     routes.push({
       url: `/study-centre/apprentice/am2/module${mod.num}`,
       changefreq: 'monthly',
@@ -194,7 +202,7 @@ function generate18thEditionRoutes() {
   const routes = [];
   const chapters = [1, 2, 3, 4, 5, 6, 7];
 
-  chapters.forEach(ch => {
+  chapters.forEach((ch) => {
     routes.push({
       url: `/study-centre/upskilling/18th-edition/chapter${ch}`,
       changefreq: 'monthly',
@@ -220,7 +228,7 @@ function generateInspectionTestingRoutes() {
   const routes = [];
   const modules = [1, 2, 3, 4, 5, 6];
 
-  modules.forEach(mod => {
+  modules.forEach((mod) => {
     routes.push({
       url: `/study-centre/upskilling/inspection-testing/module${mod}`,
       changefreq: 'monthly',
@@ -255,13 +263,17 @@ function getAllRoutes() {
 function generateSitemapXML(routes) {
   const today = new Date().toISOString().split('T')[0];
 
-  const urlEntries = routes.map(route => `
+  const urlEntries = routes
+    .map(
+      (route) => `
   <url>
     <loc>${SITE_URL}${route.url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
-  </url>`).join('');
+  </url>`
+    )
+    .join('');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

@@ -18,21 +18,18 @@ import {
   Target,
 } from 'lucide-react';
 
-const PAGE_TITLE =
-  '2391 Inspection and Testing Course Online | C&G 2391-52 | Elec-Mate';
+const PAGE_TITLE = '2391 Inspection and Testing Course Online | C&G 2391-52 | Elec-Mate';
 const PAGE_DESCRIPTION =
   'Study for the City & Guilds 2391-52 Inspection and Testing qualification online. AI-powered quiz prep, GN3 testing sequence walkthroughs, mock exams, and practical assessment guidance. From £4.99/mo.';
 
 const faqs = [
   {
-    question:
-      'What is the difference between 2391-52, 2391-51, and the older 2394/2395?',
+    question: 'What is the difference between 2391-52, 2391-51, and the older 2394/2395?',
     answer:
       'The C&G 2391-52 (Inspection, Testing and Certification of Electrical Installations) is the current combined qualification that covers both initial verification and periodic inspection. It replaced the 2391-51, which itself replaced the older separate qualifications: C&G 2394 (Initial Verification) and C&G 2395 (Periodic Inspection and Testing). The key difference is that the 2391-52 includes a stronger focus on certification and documentation, requiring candidates to demonstrate competence in completing EICs, EICRs, and Minor Works certificates accurately. If you hold both the 2394 and 2395, this is generally considered equivalent to the 2391, though some employers and scheme providers may prefer the newer qualification. All new candidates should take the 2391-52.',
   },
   {
-    question:
-      'What are the prerequisites for enrolling on the C&G 2391-52 course?',
+    question: 'What are the prerequisites for enrolling on the C&G 2391-52 course?',
     answer:
       'To enrol on the 2391-52, you should hold the C&G 2382 (18th Edition IET Wiring Regulations) or equivalent, and ideally have practical experience of electrical installation work. Most training providers also recommend a Level 3 qualification in Electrical Installation (such as the C&G 2365-03 or 2357) or equivalent experience. A solid understanding of BS 7671:2018+A3:2024 is essential, as the 2391-52 builds directly on the regulations covered in the 18th Edition course. Some providers may accept significant industry experience in lieu of formal Level 3 qualifications, but this varies. The written examination and practical assessment both assume familiarity with installation design, cable selection, and protective device coordination.',
   },
@@ -42,8 +39,7 @@ const faqs = [
       'The 2391-52 assessment consists of two main components. The first is a written examination (online multiple-choice and short-answer questions) lasting approximately two hours, covering the theory of inspection and testing, BS 7671 regulation references, safe isolation procedures, testing instrument operation, the GN3 testing sequence, documentation requirements, and observation code assignment. The second component is a practical assessment, typically lasting three to four hours, where you carry out inspection and testing on a real or simulated installation and complete the relevant certification (EIC for initial verification, EICR for periodic inspection). Both components must be passed to achieve the qualification.',
   },
   {
-    question:
-      'What is the GN3 testing sequence and why does the order of tests matter?',
+    question: 'What is the GN3 testing sequence and why does the order of tests matter?',
     answer:
       'GN3 (Guidance Note 3: Inspection & Testing, published by the IET) specifies the correct sequence of electrical tests: continuity of protective conductors, continuity of ring final circuit conductors, insulation resistance, polarity, earth fault loop impedance, prospective fault current, and RCD testing. The order matters because each test validates the safety conditions required for the next. For example, you confirm the earth path is continuous (continuity) before applying high-voltage insulation resistance tests, and you confirm insulation is sound before energising the circuit for live tests like earth loop impedance and RCD testing. Performing tests out of sequence could damage equipment, produce misleading results, or create a safety hazard. Understanding the rationale behind the sequence is heavily tested in both the written and practical components of the 2391-52.',
   },
@@ -53,8 +49,7 @@ const faqs = [
       'Elec-Mate provides interactive scenario walkthroughs that simulate both initial verification and periodic inspection scenarios. Each scenario guides you through the visual inspection, the correct testing sequence from GN3, instrument selection and operation, recording test results, identifying defects, assigning observation codes (C1, C2, C3, FI), and completing the relevant certification. The AI study assistant can answer questions about any regulation or procedure in real time, and the mock exam feature includes hundreds of questions covering the full 2391-52 syllabus. The app also includes a pre-assessment checklist covering instrument calibration, GS 38 lead compliance, and documentation preparation so you arrive at the practical fully ready.',
   },
   {
-    question:
-      'What observation codes are used on an EICR and what do they mean?',
+    question: 'What observation codes are used on an EICR and what do they mean?',
     answer:
       'Observation codes on an Electrical Installation Condition Report (EICR) classify the severity of defects found during periodic inspection. C1 (Danger Present) means there is an immediate risk of injury and the defect requires urgent remedial action. C2 (Potentially Dangerous) means the defect could become dangerous and should be remedied as soon as possible. C3 (Improvement Recommended) identifies areas where the installation does not comply with the current edition of BS 7671 but does not present an immediate danger. FI (Further Investigation) means that a potential defect has been identified but further investigation is needed to determine its nature and severity. The overall assessment of the installation is Satisfactory only if there are no C1 or C2 observations. Correct observation code assignment is a key assessment criterion in the 2391-52 practical.',
   },
@@ -190,18 +185,15 @@ export default function CityGuilds2391Page() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              C&G 2391-52 Preparation
-            </span>
+            <span className="text-sm font-medium text-yellow-400">C&G 2391-52 Preparation</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            Study for the{' '}
-            <span className="text-yellow-400">C&G 2391-52</span> Online
+            Study for the <span className="text-yellow-400">C&G 2391-52</span> Online
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            AI-powered quiz prep, GN3 testing sequence walkthroughs, scenario
-            simulations, and certificate practice. Everything you need to pass
-            the Inspection and Testing qualification first time.
+            AI-powered quiz prep, GN3 testing sequence walkthroughs, scenario simulations, and
+            certificate practice. Everything you need to pass the Inspection and Testing
+            qualification first time.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -228,45 +220,37 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The City & Guilds 2391-52, officially titled "Inspection, Testing
-              and Certification of Electrical Installations," is the current
-              industry-standard qualification for electricians who carry out
-              inspection and testing of electrical installations in the United
-              Kingdom. It replaced the earlier 2391-51 and, before that, the
-              separate 2394 (Initial Verification) and 2395 (Periodic Inspection
-              and Testing) qualifications.
+              The City & Guilds 2391-52, officially titled "Inspection, Testing and Certification of
+              Electrical Installations," is the current industry-standard qualification for
+              electricians who carry out inspection and testing of electrical installations in the
+              United Kingdom. It replaced the earlier 2391-51 and, before that, the separate 2394
+              (Initial Verification) and 2395 (Periodic Inspection and Testing) qualifications.
             </p>
             <p>
-              The 2391-52 demonstrates that you have the knowledge and practical
-              skills to carry out two distinct types of inspection and testing.
-              The first is initial verification — the inspection and testing of
-              new installations or alterations before they are energised and
-              handed over to the client. The second is periodic inspection and
-              testing — the assessment of existing installations that are already
-              in service, to identify deterioration, damage, defects, and
-              departures from the current edition of BS 7671:2018+A3:2024.
+              The 2391-52 demonstrates that you have the knowledge and practical skills to carry out
+              two distinct types of inspection and testing. The first is initial verification — the
+              inspection and testing of new installations or alterations before they are energised
+              and handed over to the client. The second is periodic inspection and testing — the
+              assessment of existing installations that are already in service, to identify
+              deterioration, damage, defects, and departures from the current edition of BS
+              7671:2018+A3:2024.
             </p>
             <p>
-              The qualification is essential for any electrician who wants to
-              work independently and certify their own installations. Without
-              the 2391-52 (or its predecessor equivalents), you cannot join a
-              competent person scheme such as NICEIC, NAPIT, or ELECSA as a
-              qualified supervisor. Without scheme membership, you cannot
-              self-certify notifiable electrical work under Part P of the
-              Building Regulations in England and Wales, meaning your clients
-              would need to involve their local authority building control for
-              every job — an additional cost and delay that most clients will
-              not accept.
+              The qualification is essential for any electrician who wants to work independently and
+              certify their own installations. Without the 2391-52 (or its predecessor equivalents),
+              you cannot join a competent person scheme such as NICEIC, NAPIT, or ELECSA as a
+              qualified supervisor. Without scheme membership, you cannot self-certify notifiable
+              electrical work under Part P of the Building Regulations in England and Wales, meaning
+              your clients would need to involve their local authority building control for every
+              job — an additional cost and delay that most clients will not accept.
             </p>
             <p>
-              The 2391-52 also underpins your ability to issue Electrical
-              Installation Certificates (EICs) for new work and Electrical
-              Installation Condition Reports (EICRs) for periodic inspections.
-              Since the Electrical Safety Standards in the Private Rented Sector
-              (England) Regulations 2020 made five-yearly EICRs mandatory for
-              all rented properties, the demand for qualified inspection and
-              testing professionals has increased significantly. Holding the
-              2391-52 opens a lucrative revenue stream for self-employed
+              The 2391-52 also underpins your ability to issue Electrical Installation Certificates
+              (EICs) for new work and Electrical Installation Condition Reports (EICRs) for periodic
+              inspections. Since the Electrical Safety Standards in the Private Rented Sector
+              (England) Regulations 2020 made five-yearly EICRs mandatory for all rented properties,
+              the demand for qualified inspection and testing professionals has increased
+              significantly. Holding the 2391-52 opens a lucrative revenue stream for self-employed
               electricians and small contractors.
             </p>
           </div>
@@ -276,14 +260,12 @@ export default function CityGuilds2391Page() {
       {/* Who Needs the 2391-52 */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            Who Needs the 2391-52?
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Who Needs the 2391-52?</h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The 2391-52 is relevant to several groups within the electrical
-              industry. Understanding whether you need it helps you plan your
-              career development and training investment effectively.
+              The 2391-52 is relevant to several groups within the electrical industry.
+              Understanding whether you need it helps you plan your career development and training
+              investment effectively.
             </p>
           </div>
           <div className="mt-6 rounded-2xl bg-white/[0.04] border border-white/10 p-6">
@@ -291,45 +273,38 @@ export default function CityGuilds2391Page() {
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Electricians seeking scheme registration:</strong> All
-                  major competent person schemes (NICEIC, NAPIT, ELECSA, STROMA)
-                  require the 2391-52 or equivalent for their Qualified
-                  Supervisor role. This is the person who takes technical
-                  responsibility for the quality of electrical work carried out
-                  by the business.
+                  <strong>Electricians seeking scheme registration:</strong> All major competent
+                  person schemes (NICEIC, NAPIT, ELECSA, STROMA) require the 2391-52 or equivalent
+                  for their Qualified Supervisor role. This is the person who takes technical
+                  responsibility for the quality of electrical work carried out by the business.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Electricians wanting to carry out EICRs:</strong> The
-                  landlord EICR market is substantial and growing. To carry out
-                  periodic inspections professionally and issue EICRs, you must
-                  demonstrate competence through the 2391-52. This is both a
-                  regulatory expectation and a practical requirement — insurers
-                  and letting agents will typically only accept EICRs from
-                  2391-52 qualified electricians.
+                  <strong>Electricians wanting to carry out EICRs:</strong> The landlord EICR market
+                  is substantial and growing. To carry out periodic inspections professionally and
+                  issue EICRs, you must demonstrate competence through the 2391-52. This is both a
+                  regulatory expectation and a practical requirement — insurers and letting agents
+                  will typically only accept EICRs from 2391-52 qualified electricians.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Apprentices completing their training:</strong> Many
-                  apprentices take the 2391-52 shortly after completing their
-                  Level 3 qualification and AM2 assessment. It is the natural
-                  next step to becoming fully independent and is often required
-                  by employers before they will allow an electrician to sign off
-                  their own work.
+                  <strong>Apprentices completing their training:</strong> Many apprentices take the
+                  2391-52 shortly after completing their Level 3 qualification and AM2 assessment.
+                  It is the natural next step to becoming fully independent and is often required by
+                  employers before they will allow an electrician to sign off their own work.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>Electricians pursuing the JIB Approved Electrician card:</strong> The
-                  JIB Approved Electrician grading (often called the Grade Card)
-                  requires the 2391-52 in addition to the Gold Card qualifications.
-                  It demonstrates a higher level of competence and is increasingly
-                  requested on commercial and industrial contracts.
+                  <strong>Electricians pursuing the JIB Approved Electrician card:</strong> The JIB
+                  Approved Electrician grading (often called the Grade Card) requires the 2391-52 in
+                  addition to the Gold Card qualifications. It demonstrates a higher level of
+                  competence and is increasingly requested on commercial and industrial contracts.
                 </span>
               </li>
             </ul>
@@ -345,47 +320,40 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The 2391-52 assessment is divided into two components, both of
-              which must be passed to achieve the full qualification. Understanding
-              the structure and marking criteria gives you a significant advantage
-              in your preparation.
+              The 2391-52 assessment is divided into two components, both of which must be passed to
+              achieve the full qualification. Understanding the structure and marking criteria gives
+              you a significant advantage in your preparation.
             </p>
             <p>
-              <strong>Component 1: Written Examination.</strong> The written paper
-              is a closed-book examination lasting approximately two hours. It
-              includes a mixture of multiple-choice questions and short-answer
-              questions. Topics covered include safe isolation procedures and
-              their regulatory basis (HSE Guidance Note GS 38 and the Electricity
-              at Work Regulations 1989), the full GN3 testing sequence with
-              rationale for the test order, BS 7671:2018+A3:2024 regulation
-              references relevant to inspection and testing (particularly Chapter
-              61 for initial verification and Chapter 62 for periodic inspection),
-              testing instrument selection, operation, and calibration requirements,
-              documentation requirements for EICs, EICRs, Minor Electrical
-              Installation Works Certificates, and Schedule of Inspections and
-              Test Results, and observation code assignment and overall condition
-              assessment.
+              <strong>Component 1: Written Examination.</strong> The written paper is a closed-book
+              examination lasting approximately two hours. It includes a mixture of multiple-choice
+              questions and short-answer questions. Topics covered include safe isolation procedures
+              and their regulatory basis (HSE Guidance Note GS 38 and the Electricity at Work
+              Regulations 1989), the full GN3 testing sequence with rationale for the test order, BS
+              7671:2018+A3:2024 regulation references relevant to inspection and testing
+              (particularly Chapter 61 for initial verification and Chapter 62 for periodic
+              inspection), testing instrument selection, operation, and calibration requirements,
+              documentation requirements for EICs, EICRs, Minor Electrical Installation Works
+              Certificates, and Schedule of Inspections and Test Results, and observation code
+              assignment and overall condition assessment.
             </p>
             <p>
-              <strong>Component 2: Practical Assessment.</strong> The practical
-              assessment lasts approximately three to four hours and is carried
-              out at an approved assessment centre. You are presented with one or
-              two installations (one for initial verification, one for periodic
-              inspection) and must carry out a thorough inspection and testing
-              procedure, record your findings accurately, and produce the correct
-              certification. Assessors evaluate your safe isolation technique,
-              adherence to the GN3 testing sequence, accuracy of instrument
-              readings, identification of defects, correct observation code
+              <strong>Component 2: Practical Assessment.</strong> The practical assessment lasts
+              approximately three to four hours and is carried out at an approved assessment centre.
+              You are presented with one or two installations (one for initial verification, one for
+              periodic inspection) and must carry out a thorough inspection and testing procedure,
+              record your findings accurately, and produce the correct certification. Assessors
+              evaluate your safe isolation technique, adherence to the GN3 testing sequence,
+              accuracy of instrument readings, identification of defects, correct observation code
               assignment, and completeness of documentation.
             </p>
             <p>
-              The practical assessment is where many candidates struggle, often
-              not because of a lack of knowledge but because of nerves, poor
-              time management, or unfamiliarity with the documentation format.
-              Elec-Mate addresses all three issues: the scenario walkthroughs
-              build confidence through repetition, the timed practice sessions
-              develop your pace, and the certificate practice forms ensure you
-              can complete every section of every document without hesitation.
+              The practical assessment is where many candidates struggle, often not because of a
+              lack of knowledge but because of nerves, poor time management, or unfamiliarity with
+              the documentation format. Elec-Mate addresses all three issues: the scenario
+              walkthroughs build confidence through repetition, the timed practice sessions develop
+              your pace, and the certificate practice forms ensure you can complete every section of
+              every document without hesitation.
             </p>
           </div>
         </div>
@@ -399,51 +367,42 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A clear understanding of the differences between initial
-              verification and periodic inspection is fundamental to the 2391-52.
-              While both involve inspection and testing, their purpose, scope,
-              and documentation differ significantly.
+              A clear understanding of the differences between initial verification and periodic
+              inspection is fundamental to the 2391-52. While both involve inspection and testing,
+              their purpose, scope, and documentation differ significantly.
             </p>
             <p>
-              <strong>Initial verification</strong> is carried out on new
-              installations or alterations before they are energised and handed
-              over to the client. It confirms that the installation has been
-              designed, constructed, inspected, and tested in accordance with BS
-              7671:2018+A3:2024. The process includes a detailed visual inspection
-              against the design documentation (checking cable types, containment,
-              accessory ratings, protective device coordination, and general
-              workmanship), followed by the full GN3 testing sequence. The
-              documentation produced is an Electrical Installation Certificate
-              (EIC), which includes the design, construction, and inspection and
-              testing sections, plus a Schedule of Inspections and a Schedule of
-              Test Results.
+              <strong>Initial verification</strong> is carried out on new installations or
+              alterations before they are energised and handed over to the client. It confirms that
+              the installation has been designed, constructed, inspected, and tested in accordance
+              with BS 7671:2018+A3:2024. The process includes a detailed visual inspection against
+              the design documentation (checking cable types, containment, accessory ratings,
+              protective device coordination, and general workmanship), followed by the full GN3
+              testing sequence. The documentation produced is an Electrical Installation Certificate
+              (EIC), which includes the design, construction, and inspection and testing sections,
+              plus a Schedule of Inspections and a Schedule of Test Results.
             </p>
             <p>
-              <strong>Periodic inspection and testing</strong> is carried out on
-              existing installations that are already in service. Its purpose is
-              to assess the condition of the installation by identifying any
-              deterioration, damage, defects, or non-compliance with the current
-              edition of BS 7671. This is particularly important because
-              installations degrade over time — cable insulation deteriorates,
-              connections become loose, accessories suffer wear, and previous
-              alterations may not have been carried out competently. The process
-              includes a visual inspection (as far as reasonably practicable
-              without dismantling the installation beyond what is necessary),
-              followed by testing, followed by the identification and coding of
-              any observations. The documentation produced is an Electrical
-              Installation Condition Report (EICR), which includes observation
-              codes (C1, C2, C3, FI) and an overall condition assessment of
+              <strong>Periodic inspection and testing</strong> is carried out on existing
+              installations that are already in service. Its purpose is to assess the condition of
+              the installation by identifying any deterioration, damage, defects, or non-compliance
+              with the current edition of BS 7671. This is particularly important because
+              installations degrade over time — cable insulation deteriorates, connections become
+              loose, accessories suffer wear, and previous alterations may not have been carried out
+              competently. The process includes a visual inspection (as far as reasonably
+              practicable without dismantling the installation beyond what is necessary), followed
+              by testing, followed by the identification and coding of any observations. The
+              documentation produced is an Electrical Installation Condition Report (EICR), which
+              includes observation codes (C1, C2, C3, FI) and an overall condition assessment of
               Satisfactory or Unsatisfactory.
             </p>
             <p>
-              A key difference in the testing is that periodic inspection may
-              involve testing circuits that are already in service, which requires
-              careful planning to minimise disruption to the occupants. The extent
-              and limitations of the inspection must be agreed with the client
-              beforehand and documented on the EICR. Initial verification, by
-              contrast, is always carried out before the installation is energised,
-              giving the inspector full access to all circuits without concern
-              about disruption.
+              A key difference in the testing is that periodic inspection may involve testing
+              circuits that are already in service, which requires careful planning to minimise
+              disruption to the occupants. The extent and limitations of the inspection must be
+              agreed with the client beforehand and documented on the EICR. Initial verification, by
+              contrast, is always carried out before the installation is energised, giving the
+              inspector full access to all circuits without concern about disruption.
             </p>
           </div>
         </div>
@@ -457,12 +416,11 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Guidance Note 3: Inspection & Testing (9th Edition, aligned with
-              the 18th Edition of BS 7671) specifies the correct sequence of
-              electrical tests. This sequence is not arbitrary — each test
-              depends on the results of the previous test to ensure safety and
-              accuracy. The 2391-52 exam tests your understanding of both the
-              sequence itself and the reasoning behind it.
+              Guidance Note 3: Inspection & Testing (9th Edition, aligned with the 18th Edition of
+              BS 7671) specifies the correct sequence of electrical tests. This sequence is not
+              arbitrary — each test depends on the results of the previous test to ensure safety and
+              accuracy. The 2391-52 exam tests your understanding of both the sequence itself and
+              the reasoning behind it.
             </p>
           </div>
           <div className="space-y-4">
@@ -518,12 +476,8 @@ export default function CityGuilds2391Page() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-bold text-white text-lg mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -539,44 +493,37 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Studying for the 2391-52 while working full time is the reality
-              for most electricians. You need a study method that fits around
-              your schedule, delivers targeted content, and builds genuine
-              confidence rather than just surface-level familiarity. Elec-Mate
-              is designed specifically for this.
+              Studying for the 2391-52 while working full time is the reality for most electricians.
+              You need a study method that fits around your schedule, delivers targeted content, and
+              builds genuine confidence rather than just surface-level familiarity. Elec-Mate is
+              designed specifically for this.
             </p>
             <p>
-              The AI quiz preparation system generates questions covering the
-              entire 2391-52 syllabus, adapting to your performance. When you
-              answer incorrectly, the AI does not just tell you the right answer
-              — it explains the underlying principle, cites the relevant BS 7671
-              regulation, cross-references GN3, and offers a practical example
-              to cement your understanding. Over time, the system identifies
-              your weak areas and presents more questions in those topics,
-              ensuring you spend your limited study time where it has the
-              greatest impact.
+              The AI quiz preparation system generates questions covering the entire 2391-52
+              syllabus, adapting to your performance. When you answer incorrectly, the AI does not
+              just tell you the right answer — it explains the underlying principle, cites the
+              relevant BS 7671 regulation, cross-references GN3, and offers a practical example to
+              cement your understanding. Over time, the system identifies your weak areas and
+              presents more questions in those topics, ensuring you spend your limited study time
+              where it has the greatest impact.
             </p>
             <p>
-              The scenario walkthroughs simulate the practical assessment
-              experience. You are presented with a description of an
-              installation, photographs of the consumer unit and distribution
-              boards, a list of circuits, and a set of test results. You must
-              identify which results are acceptable and which indicate a defect,
-              assign the correct observation code, determine the overall
-              condition assessment, and complete the certification accurately.
-              This builds the decision-making skills that separate a confident
-              pass from a nervous fail.
+              The scenario walkthroughs simulate the practical assessment experience. You are
+              presented with a description of an installation, photographs of the consumer unit and
+              distribution boards, a list of circuits, and a set of test results. You must identify
+              which results are acceptable and which indicate a defect, assign the correct
+              observation code, determine the overall condition assessment, and complete the
+              certification accurately. This builds the decision-making skills that separate a
+              confident pass from a nervous fail.
             </p>
             <p>
-              Elec-Mate includes access to 70 electrical calculators, 8 Elec-AI
-              agents plus 12 AI tools, 36 or more training courses, and 8
-              certificate types. Whether you need to verify a Zs calculation,
-              look up a maximum permitted earth fault loop impedance value, or
-              practise completing an EIC from scratch, everything is in one
-              platform. The app integrates with Xero and QuickBooks for
-              electricians who are already managing their business through
-              Elec-Mate, making it a single hub for both professional
-              development and daily operations.
+              Elec-Mate includes access to 70 electrical calculators, 8 Elec-AI agents plus 12 AI
+              tools, 36 or more training courses, and 8 certificate types. Whether you need to
+              verify a Zs calculation, look up a maximum permitted earth fault loop impedance value,
+              or practise completing an EIC from scratch, everything is in one platform. The app
+              integrates with Xero and QuickBooks for electricians who are already managing their
+              business through Elec-Mate, making it a single hub for both professional development
+              and daily operations.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -591,40 +538,34 @@ export default function CityGuilds2391Page() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              If you are new to inspection and testing qualifications, the
-              landscape of qualification numbers can be confusing. Here is a
-              clear summary of how they relate to each other and which one you
-              should pursue.
+              If you are new to inspection and testing qualifications, the landscape of
+              qualification numbers can be confusing. Here is a clear summary of how they relate to
+              each other and which one you should pursue.
             </p>
             <p>
-              The <strong>C&G 2394</strong> (Initial Verification of Electrical
-              Installations) was a standalone qualification covering the
-              inspection and testing of new installations before they were
-              energised. It taught candidates how to carry out initial
-              verification and complete Electrical Installation Certificates.
-              It has been withdrawn and is no longer available to new candidates.
+              The <strong>C&G 2394</strong> (Initial Verification of Electrical Installations) was a
+              standalone qualification covering the inspection and testing of new installations
+              before they were energised. It taught candidates how to carry out initial verification
+              and complete Electrical Installation Certificates. It has been withdrawn and is no
+              longer available to new candidates.
             </p>
             <p>
-              The <strong>C&G 2395</strong> (Periodic Inspection and Testing of
-              Electrical Installations) was the companion qualification covering
-              the inspection and testing of existing installations already in
-              service. It taught candidates how to carry out periodic inspections
-              and complete Electrical Installation Condition Reports. Like the
+              The <strong>C&G 2395</strong> (Periodic Inspection and Testing of Electrical
+              Installations) was the companion qualification covering the inspection and testing of
+              existing installations already in service. It taught candidates how to carry out
+              periodic inspections and complete Electrical Installation Condition Reports. Like the
               2394, it has been withdrawn.
             </p>
             <p>
-              The <strong>C&G 2391-51</strong> combined both areas into a single
-              qualification. It was the transitional replacement for the 2394 and
-              2395.
+              The <strong>C&G 2391-51</strong> combined both areas into a single qualification. It
+              was the transitional replacement for the 2394 and 2395.
             </p>
             <p>
-              The <strong>C&G 2391-52</strong> is the current version, with
-              enhanced emphasis on certification and documentation accuracy. It
-              is the only version available to new candidates. If you hold both
-              the 2394 and 2395, most scheme providers consider this equivalent
-              to the 2391. However, if you only hold one of the pair, you should
-              take the 2391-52 to cover both areas. All new candidates should
-              take the 2391-52.
+              The <strong>C&G 2391-52</strong> is the current version, with enhanced emphasis on
+              certification and documentation accuracy. It is the only version available to new
+              candidates. If you hold both the 2394 and 2395, most scheme providers consider this
+              equivalent to the 2391. However, if you only hold one of the pair, you should take the
+              2391-52 to cover both areas. All new candidates should take the 2391-52.
             </p>
           </div>
         </div>
@@ -669,9 +610,7 @@ export default function CityGuilds2391Page() {
                   <span>{faq.question}</span>
                   <ChevronDown className="w-5 h-5 text-yellow-400 group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
-                <div className="px-4 pb-4 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-4 pb-4 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

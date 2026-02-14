@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { LazyRoute } from '@/components/LazyRoute';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { getSEORoutes } from '@/routes/SEORoutes';
 
 // Core components that should load immediately (small, critical path)
 import Layout from '@/components/layout/Layout';
@@ -128,6 +129,10 @@ const BS7671ObservationCodesPage = lazy(() => import('@/pages/seo/BS7671Observat
 const BestElectricianAppPage = lazy(() => import('@/pages/seo/BestElectricianAppPage'));
 const ElecMateVsICertifiPage = lazy(() => import('@/pages/seo/ElecMateVsICertifiPage'));
 const ElecMateVsCertsAppPage = lazy(() => import('@/pages/seo/ElecMateVsCertsAppPage'));
+const ElecMateVsSimplyEICRPage = lazy(() => import('@/pages/seo/ElecMateVsSimplyEICRPage'));
+const BestInvoiceAppPage = lazy(() => import('@/pages/seo/BestInvoiceAppPage'));
+const BestAIToolElectriciansPage = lazy(() => import('@/pages/seo/BestAIToolElectriciansPage'));
+const ElecMateVsElectricalOMPage = lazy(() => import('@/pages/seo/ElecMateVsElectricalOMPage'));
 
 // SEO Landing Pages — Batch 2 (20 new pages)
 const EmergencyLightingCertificatePage = lazy(
@@ -179,6 +184,37 @@ const PASMATrainingPage = lazy(() => import('@/pages/seo/PASMATrainingPage'));
 const ThreePhasePowerCalculatorPage = lazy(
   () => import('@/pages/seo/ThreePhasePowerCalculatorPage')
 );
+const LoftConversionElectricsPage = lazy(() => import('@/pages/seo/LoftConversionElectricsPage'));
+const GarageElectricsGuidePage = lazy(() => import('@/pages/seo/GarageElectricsGuidePage'));
+const GardenOfficeElectricsPage = lazy(() => import('@/pages/seo/GardenOfficeElectricsPage'));
+const BatteryStorageGuidePage = lazy(() => import('@/pages/seo/BatteryStorageGuidePage'));
+const SmartHomeWiringPage = lazy(() => import('@/pages/seo/SmartHomeWiringPage'));
+const OutdoorSocketsGuidePage = lazy(() => import('@/pages/seo/OutdoorSocketsGuidePage'));
+const AIComponentIdentificationPage = lazy(
+  () => import('@/pages/seo/AIComponentIdentificationPage')
+);
+const AIInstallationVerificationPage = lazy(
+  () => import('@/pages/seo/AIInstallationVerificationPage')
+);
+const AIForElectricalApprenticesPage = lazy(
+  () => import('@/pages/seo/AIForElectricalApprenticesPage')
+);
+const AIvsManualDesignPage = lazy(() => import('@/pages/seo/AIvsManualDesignPage'));
+const AIElectricalFaultFindingPage = lazy(() => import('@/pages/seo/AIElectricalFaultFindingPage'));
+const ExpensesManagerPage = lazy(() => import('@/pages/seo/ExpensesManagerPage'));
+const StaffManagementToolPage = lazy(() => import('@/pages/seo/StaffManagementToolPage'));
+const ScheduleManagerPage = lazy(() => import('@/pages/seo/ScheduleManagerPage'));
+const EquipmentROICalculatorPage = lazy(() => import('@/pages/seo/EquipmentROICalculatorPage'));
+const ElectricianVanSetupPage = lazy(() => import('@/pages/seo/ElectricianVanSetupPage'));
+const ElectricianToolListPage = lazy(() => import('@/pages/seo/ElectricianToolListPage'));
+const ElectricalSurveyCostPage = lazy(() => import('@/pages/seo/ElectricalSurveyCostPage'));
+const ElectricalComplianceCertificatePage = lazy(
+  () => import('@/pages/seo/ElectricalComplianceCertificatePage')
+);
+const PartialRewireGuidePage = lazy(() => import('@/pages/seo/PartialRewireGuidePage'));
+const ElectricalWorkInBathroomPage = lazy(() => import('@/pages/seo/ElectricalWorkInBathroomPage'));
+const HowToWireAPlugPage = lazy(() => import('@/pages/seo/HowToWireAPlugPage'));
+const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymbolsChartPage'));
 
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
@@ -630,6 +666,38 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
+        <Route
+          path="/compare/elec-mate-vs-simply-eicr"
+          element={
+            <LazyRoute>
+              <ElecMateVsSimplyEICRPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/compare/best-invoice-app-electricians"
+          element={
+            <LazyRoute>
+              <BestInvoiceAppPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/compare/best-ai-tool-electricians"
+          element={
+            <LazyRoute>
+              <BestAIToolElectriciansPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/compare/elec-mate-vs-electrical-om"
+          element={
+            <LazyRoute>
+              <ElecMateVsElectricalOMPage />
+            </LazyRoute>
+          }
+        />
 
         {/* SEO Pages — Certificates */}
         <Route
@@ -858,6 +926,46 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
+        <Route
+          path="/tools/ai-component-identification"
+          element={
+            <LazyRoute>
+              <AIComponentIdentificationPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/tools/ai-installation-verification"
+          element={
+            <LazyRoute>
+              <AIInstallationVerificationPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/ai-for-electrical-apprentices"
+          element={
+            <LazyRoute>
+              <AIForElectricalApprenticesPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/ai-vs-manual-electrical-design"
+          element={
+            <LazyRoute>
+              <AIvsManualDesignPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/ai-electrical-fault-finding"
+          element={
+            <LazyRoute>
+              <AIElectricalFaultFindingPage />
+            </LazyRoute>
+          }
+        />
 
         {/* SEO Pages — Additional Training */}
         <Route
@@ -928,6 +1036,157 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
+        <Route
+          path="/tools/expenses-manager-electrician"
+          element={
+            <LazyRoute>
+              <ExpensesManagerPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/tools/staff-management-electrician"
+          element={
+            <LazyRoute>
+              <StaffManagementToolPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/tools/schedule-manager-electrician"
+          element={
+            <LazyRoute>
+              <ScheduleManagerPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/tools/equipment-roi-calculator"
+          element={
+            <LazyRoute>
+              <EquipmentROICalculatorPage />
+            </LazyRoute>
+          }
+        />
+
+        {/* SEO Pages — Installation Guides */}
+        <Route
+          path="/guides/loft-conversion-electrics"
+          element={
+            <LazyRoute>
+              <LoftConversionElectricsPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/garage-electrics"
+          element={
+            <LazyRoute>
+              <GarageElectricsGuidePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/garden-office-electrics"
+          element={
+            <LazyRoute>
+              <GardenOfficeElectricsPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/battery-storage-installation"
+          element={
+            <LazyRoute>
+              <BatteryStorageGuidePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/smart-home-wiring"
+          element={
+            <LazyRoute>
+              <SmartHomeWiringPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/outdoor-sockets-regulations"
+          element={
+            <LazyRoute>
+              <OutdoorSocketsGuidePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/electrician-van-setup"
+          element={
+            <LazyRoute>
+              <ElectricianVanSetupPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/electrician-tool-list-uk"
+          element={
+            <LazyRoute>
+              <ElectricianToolListPage />
+            </LazyRoute>
+          }
+        />
+
+        {/* SEO Pages — New Guides */}
+        <Route
+          path="/guides/electrical-survey-cost"
+          element={
+            <LazyRoute>
+              <ElectricalSurveyCostPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/electrical-compliance-certificate"
+          element={
+            <LazyRoute>
+              <ElectricalComplianceCertificatePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/partial-rewire-guide"
+          element={
+            <LazyRoute>
+              <PartialRewireGuidePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/electrical-work-in-bathroom"
+          element={
+            <LazyRoute>
+              <ElectricalWorkInBathroomPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/how-to-wire-a-plug"
+          element={
+            <LazyRoute>
+              <HowToWireAPlugPage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/guides/electrical-symbols-chart"
+          element={
+            <LazyRoute>
+              <ElectricalSymbolsChartPage />
+            </LazyRoute>
+          }
+        />
+
+        {/* SEO Pages — Additional (from SEORoutes.tsx) */}
+        {getSEORoutes()}
 
         {/* Legacy/Direct Access Routes - Redirect to proper paths */}
         <Route

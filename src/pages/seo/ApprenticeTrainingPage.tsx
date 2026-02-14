@@ -33,12 +33,12 @@ const faqs = [
   {
     question: 'What is the 20% Off-the-Job Training requirement?',
     answer:
-      'Under the apprenticeship funding rules in England, at least 20% of an apprentice\'s paid working hours must be spent on off-the-job training (OJT). This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the 20% minimum.',
+      "Under the apprenticeship funding rules in England, at least 20% of an apprentice's paid working hours must be spent on off-the-job training (OJT). This includes college attendance, online learning, study time, workshops, and any training that develops knowledge, skills, and behaviours required by the apprenticeship standard but is not part of normal day-to-day duties. Elec-Mate includes a built-in OJT hours tracker that logs your learning time automatically, generates reports for your employer and training provider, and ensures you meet the 20% minimum.",
   },
   {
     question: 'How does the EPA (End Point Assessment) work for electrical apprentices?',
     answer:
-      'The End Point Assessment is the final stage of your apprenticeship, carried out by an independent assessment organisation. For the Installation Electrician / Maintenance Electrician standard, the EPA typically consists of a practical assessment (similar to the AM2), a knowledge test covering BS 7671 and electrical science, and a professional discussion based on your portfolio of evidence. Elec-Mate\'s EPA simulator uses AI grading to give you realistic practice across all three components, with detailed feedback on areas for improvement.',
+      "The End Point Assessment is the final stage of your apprenticeship, carried out by an independent assessment organisation. For the Installation Electrician / Maintenance Electrician standard, the EPA typically consists of a practical assessment (similar to the AM2), a knowledge test covering BS 7671 and electrical science, and a professional discussion based on your portfolio of evidence. Elec-Mate's EPA simulator uses AI grading to give you realistic practice across all three components, with detailed feedback on areas for improvement.",
   },
   {
     question: 'Can I use Elec-Mate alongside my college course?',
@@ -138,8 +138,7 @@ export default function ApprenticeTrainingPage() {
     schema: {
       '@type': 'Course',
       name: 'Electrical Apprentice Training Online',
-      description:
-        'Level 2 & 3 Diploma courses, AM2 preparation, EPA simulator with AI grading',
+      description: 'Level 2 & 3 Diploma courses, AM2 preparation, EPA simulator with AI grading',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -188,9 +187,7 @@ export default function ApprenticeTrainingPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              Level 2, Level 3 & AM2
-            </span>
+            <span className="text-sm font-medium text-yellow-400">Level 2, Level 3 & AM2</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
             Electrical Apprentice
@@ -198,9 +195,9 @@ export default function ApprenticeTrainingPage() {
             <span className="text-yellow-400">Training Online</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            The complete training platform for electrical apprentices. Level 2
-            and Level 3 courses, AM2 preparation, AI-graded EPA simulator,
-            portfolio tracking, and off-the-job training hours management.
+            The complete training platform for electrical apprentices. Level 2 and Level 3 courses,
+            AM2 preparation, AI-graded EPA simulator, portfolio tracking, and off-the-job training
+            hours management.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -209,9 +206,7 @@ export default function ApprenticeTrainingPage() {
             >
               Start 7-Day Free Trial
             </a>
-            <span className="text-white text-sm">
-              From £4.99/mo after trial — cancel anytime
-            </span>
+            <span className="text-white text-sm">From £4.99/mo after trial — cancel anytime</span>
           </div>
         </div>
       </section>
@@ -224,21 +219,19 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Becoming a qualified electrician through an apprenticeship is the
-              most established route into the trade in the United Kingdom. The
-              pathway is structured to take you from complete beginner to
-              competent professional over three to four years, combining
-              practical on-site experience with theoretical knowledge gained
-              through college or online study.
+              Becoming a qualified electrician through an apprenticeship is the most established
+              route into the trade in the United Kingdom. The pathway is structured to take you from
+              complete beginner to competent professional over three to four years, combining
+              practical on-site experience with theoretical knowledge gained through college or
+              online study.
             </p>
             <p>
-              The standard apprenticeship pathway follows a clear progression:
-              you begin with the Level 2 Diploma in Electrical Installation,
-              advance to the Level 3 Diploma, complete the AM2 practical
-              assessment, pass your End Point Assessment (EPA), and achieve your
-              JIB grading as a qualified Installation Electrician or Maintenance
-              Electrician. Each stage builds on the last, and Elec-Mate supports
-              you through every step of this journey.
+              The standard apprenticeship pathway follows a clear progression: you begin with the
+              Level 2 Diploma in Electrical Installation, advance to the Level 3 Diploma, complete
+              the AM2 practical assessment, pass your End Point Assessment (EPA), and achieve your
+              JIB grading as a qualified Installation Electrician or Maintenance Electrician. Each
+              stage builds on the last, and Elec-Mate supports you through every step of this
+              journey.
             </p>
           </div>
 
@@ -284,12 +277,8 @@ export default function ApprenticeTrainingPage() {
                   <span className="text-yellow-400 font-bold">{item.step}</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                  <p className="text-white text-sm leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -305,30 +294,26 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Level 2 Diploma in Electrical Installation (often the City &
-              Guilds 2365-02 or equivalent) is your starting point. This
-              qualification covers the fundamental knowledge and skills every
-              electrician needs before progressing to more advanced work. It is
-              typically studied during the first year of your apprenticeship
-              alongside practical experience on site.
+              The Level 2 Diploma in Electrical Installation (often the City & Guilds 2365-02 or
+              equivalent) is your starting point. This qualification covers the fundamental
+              knowledge and skills every electrician needs before progressing to more advanced work.
+              It is typically studied during the first year of your apprenticeship alongside
+              practical experience on site.
             </p>
             <p>
-              Core units include electrical science and principles (Ohm's law,
-              Kirchhoff's laws, power factor, impedance), health and safety in
-              electrical installation (risk assessment, safe working practices,
-              PPE requirements), electrical installation technology (cable types,
-              containment systems, wiring methods), and basic installation
+              Core units include electrical science and principles (Ohm's law, Kirchhoff's laws,
+              power factor, impedance), health and safety in electrical installation (risk
+              assessment, safe working practices, PPE requirements), electrical installation
+              technology (cable types, containment systems, wiring methods), and basic installation
               practice (terminations, connections, circuit testing).
             </p>
             <p>
-              Elec-Mate's Level 2 content breaks each unit into bite-sized
-              lessons with worked examples, interactive diagrams, and practice
-              questions. The AI study assistant helps you understand difficult
-              concepts like AC circuit theory by explaining them in practical
-              terms related to real installations you will encounter on site. You
-              can study on your phone during quiet moments at work or at home in
-              the evening, building your knowledge steadily without falling
-              behind.
+              Elec-Mate's Level 2 content breaks each unit into bite-sized lessons with worked
+              examples, interactive diagrams, and practice questions. The AI study assistant helps
+              you understand difficult concepts like AC circuit theory by explaining them in
+              practical terms related to real installations you will encounter on site. You can
+              study on your phone during quiet moments at work or at home in the evening, building
+              your knowledge steadily without falling behind.
             </p>
           </div>
         </div>
@@ -342,40 +327,33 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Level 3 Diploma in Electrical Installation (City & Guilds
-              2365-03 or equivalent) builds significantly on your Level 2
-              foundation. This is where you develop the depth of knowledge and
-              practical competence required to work independently and take
-              responsibility for the quality and compliance of your own
-              installations.
+              The Level 3 Diploma in Electrical Installation (City & Guilds 2365-03 or equivalent)
+              builds significantly on your Level 2 foundation. This is where you develop the depth
+              of knowledge and practical competence required to work independently and take
+              responsibility for the quality and compliance of your own installations.
             </p>
             <p>
-              Key areas at Level 3 include electrical installation design
-              (calculating cable sizes, applying correction factors, determining
-              protective device ratings), inspection and testing of electrical
-              installations (initial verification, periodic inspection, test
-              sequences and expected results), fault diagnosis and rectification
-              (systematic approaches to identifying and repairing faults), and
-              the full application of BS 7671:2018+A3:2024 wiring regulations.
+              Key areas at Level 3 include electrical installation design (calculating cable sizes,
+              applying correction factors, determining protective device ratings), inspection and
+              testing of electrical installations (initial verification, periodic inspection, test
+              sequences and expected results), fault diagnosis and rectification (systematic
+              approaches to identifying and repairing faults), and the full application of BS
+              7671:2018+A3:2024 wiring regulations.
             </p>
             <p>
-              Level 3 also introduces special installations and locations
-              covered by Part 7 of BS 7671, including bathrooms (Section 701),
-              swimming pools (Section 702), construction sites (Section 704),
-              agricultural premises (Section 705), solar PV systems (Section
-              712), and electric vehicle charging (Section 722). Elec-Mate
-              provides dedicated modules for each special location with
-              regulation references, installation diagrams, and scenario-based
-              practice questions.
+              Level 3 also introduces special installations and locations covered by Part 7 of BS
+              7671, including bathrooms (Section 701), swimming pools (Section 702), construction
+              sites (Section 704), agricultural premises (Section 705), solar PV systems (Section
+              712), and electric vehicle charging (Section 722). Elec-Mate provides dedicated
+              modules for each special location with regulation references, installation diagrams,
+              and scenario-based practice questions.
             </p>
             <p>
-              At this stage, the AI study assistant becomes particularly
-              valuable for working through design calculations. You can input a
-              scenario such as "I need to size a cable for a 32A ring final
-              circuit in a domestic property with 30 metres of cable run and
-              thermal insulation at one cross point" and receive a step-by-step
-              calculation following the adiabatic equation and the tabulated
-              values from BS 7671 Appendix 4.
+              At this stage, the AI study assistant becomes particularly valuable for working
+              through design calculations. You can input a scenario such as "I need to size a cable
+              for a 32A ring final circuit in a domestic property with 30 metres of cable run and
+              thermal insulation at one cross point" and receive a step-by-step calculation
+              following the adiabatic equation and the tabulated values from BS 7671 Appendix 4.
             </p>
           </div>
         </div>
@@ -389,34 +367,29 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The End Point Assessment (EPA) is the final gateway of your
-              apprenticeship. It is carried out by an independent End Point
-              Assessment Organisation (EPAO) and is designed to confirm that you
-              have achieved the knowledge, skills, and behaviours defined in the
-              apprenticeship standard. For the Installation Electrician /
-              Maintenance Electrician standard (ST0215), the EPA typically
-              comprises three components.
+              The End Point Assessment (EPA) is the final gateway of your apprenticeship. It is
+              carried out by an independent End Point Assessment Organisation (EPAO) and is designed
+              to confirm that you have achieved the knowledge, skills, and behaviours defined in the
+              apprenticeship standard. For the Installation Electrician / Maintenance Electrician
+              standard (ST0215), the EPA typically comprises three components.
             </p>
             <p>
-              The first component is a practical assessment, similar in format
-              to the AM2, where you demonstrate your ability to install, test,
-              and commission electrical circuits under timed conditions. The
-              second is a knowledge test covering BS 7671, electrical science,
-              installation design principles, and health and safety legislation.
-              The third is a professional discussion, where an assessor reviews
-              your portfolio of evidence and asks questions about your
-              on-the-job experiences, problem-solving approaches, and
+              The first component is a practical assessment, similar in format to the AM2, where you
+              demonstrate your ability to install, test, and commission electrical circuits under
+              timed conditions. The second is a knowledge test covering BS 7671, electrical science,
+              installation design principles, and health and safety legislation. The third is a
+              professional discussion, where an assessor reviews your portfolio of evidence and asks
+              questions about your on-the-job experiences, problem-solving approaches, and
               professional development.
             </p>
             <p>
-              Elec-Mate's EPA simulator replicates all three components. The AI
-              grading system assesses your practical scenario responses against
-              the same criteria used by real EPAOs, provides detailed feedback on
-              each knowledge question with regulation references, and conducts a
-              simulated professional discussion that challenges you to articulate
-              your competence clearly. This means you arrive at your real EPA
-              having practised the exact format multiple times, with a clear
-              understanding of what the assessors are looking for.
+              Elec-Mate's EPA simulator replicates all three components. The AI grading system
+              assesses your practical scenario responses against the same criteria used by real
+              EPAOs, provides detailed feedback on each knowledge question with regulation
+              references, and conducts a simulated professional discussion that challenges you to
+              articulate your competence clearly. This means you arrive at your real EPA having
+              practised the exact format multiple times, with a clear understanding of what the
+              assessors are looking for.
             </p>
           </div>
         </div>
@@ -430,33 +403,27 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Under the apprenticeship funding rules set by the Education and
-              Skills Funding Agency (ESFA), every apprentice must spend a
-              minimum of 20% of their paid working hours on off-the-job training
-              (OJT). This is a mandatory requirement, and failure to meet it can
-              result in funding being withdrawn from your employer and training
-              provider.
+              Under the apprenticeship funding rules set by the Education and Skills Funding Agency
+              (ESFA), every apprentice must spend a minimum of 20% of their paid working hours on
+              off-the-job training (OJT). This is a mandatory requirement, and failure to meet it
+              can result in funding being withdrawn from your employer and training provider.
             </p>
             <p>
-              Off-the-job training includes any learning activity that
-              contributes to achieving the apprenticeship standard but takes
-              place away from your normal day-to-day work duties. This
-              encompasses college or training centre attendance, online study
-              sessions, workshops, shadowing experienced electricians in a
-              learning context, attending trade shows or CPD events, and
-              structured self-study using approved resources.
+              Off-the-job training includes any learning activity that contributes to achieving the
+              apprenticeship standard but takes place away from your normal day-to-day work duties.
+              This encompasses college or training centre attendance, online study sessions,
+              workshops, shadowing experienced electricians in a learning context, attending trade
+              shows or CPD events, and structured self-study using approved resources.
             </p>
             <p>
-              Keeping accurate records of OJT hours is essential but often
-              overlooked until it becomes a problem at progress reviews.
-              Elec-Mate's OJT hours management feature solves this by
-              automatically logging your study time on the platform, allowing you
-              to manually add hours from college attendance or other training
-              activities, calculating your running total against the 20% target
-              based on your contracted hours, generating formatted reports for
-              your employer and training provider, and sending alerts when you
-              are at risk of falling below the minimum. This means no more
-              scrambling to fill in a paper logbook before your quarterly review.
+              Keeping accurate records of OJT hours is essential but often overlooked until it
+              becomes a problem at progress reviews. Elec-Mate's OJT hours management feature solves
+              this by automatically logging your study time on the platform, allowing you to
+              manually add hours from college attendance or other training activities, calculating
+              your running total against the 20% target based on your contracted hours, generating
+              formatted reports for your employer and training provider, and sending alerts when you
+              are at risk of falling below the minimum. This means no more scrambling to fill in a
+              paper logbook before your quarterly review.
             </p>
           </div>
         </div>
@@ -470,31 +437,26 @@ export default function ApprenticeTrainingPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Your portfolio of evidence is a critical part of the apprenticeship
-              and EPA process. It demonstrates the breadth and depth of your
-              practical experience, linking real work activities to the
-              knowledge, skills, and behaviour requirements of the apprenticeship
-              standard. A well-organised portfolio makes a strong impression
-              during the professional discussion component of your EPA.
+              Your portfolio of evidence is a critical part of the apprenticeship and EPA process.
+              It demonstrates the breadth and depth of your practical experience, linking real work
+              activities to the knowledge, skills, and behaviour requirements of the apprenticeship
+              standard. A well-organised portfolio makes a strong impression during the professional
+              discussion component of your EPA.
             </p>
             <p>
-              Elec-Mate's portfolio tracker lets you capture evidence directly
-              from your phone on site. Photograph completed work, log the
-              details of each installation or task, tag the evidence against
-              specific criteria from the apprenticeship standard, and add
-              reflective notes about what you learned. Over time, the platform
-              builds a comprehensive, well-structured portfolio that clearly
-              demonstrates your progression from novice to competent
-              professional.
+              Elec-Mate's portfolio tracker lets you capture evidence directly from your phone on
+              site. Photograph completed work, log the details of each installation or task, tag the
+              evidence against specific criteria from the apprenticeship standard, and add
+              reflective notes about what you learned. Over time, the platform builds a
+              comprehensive, well-structured portfolio that clearly demonstrates your progression
+              from novice to competent professional.
             </p>
             <p>
-              The AI assistant can review your portfolio entries and suggest
-              areas where you might be missing evidence, ensuring you have
-              coverage across all the required criteria before your EPA. It can
-              also help you write better reflective statements by prompting you
-              with questions like "What specific regulation did this work comply
-              with?" or "What would you do differently if you encountered this
-              scenario again?"
+              The AI assistant can review your portfolio entries and suggest areas where you might
+              be missing evidence, ensuring you have coverage across all the required criteria
+              before your EPA. It can also help you write better reflective statements by prompting
+              you with questions like "What specific regulation did this work comply with?" or "What
+              would you do differently if you encountered this scenario again?"
             </p>
           </div>
         </div>
@@ -507,8 +469,8 @@ export default function ApprenticeTrainingPage() {
             Built for Apprentices
           </h2>
           <p className="text-white text-center mb-8 max-w-2xl mx-auto">
-            Every tool an electrical apprentice needs, from day one of Level 2
-            through to EPA and JIB grading.
+            Every tool an electrical apprentice needs, from day one of Level 2 through to EPA and
+            JIB grading.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -527,14 +489,10 @@ export default function ApprenticeTrainingPage() {
                 className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden"
               >
                 <button
-                  onClick={() =>
-                    setOpenFaq(openFaq === index ? null : index)
-                  }
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="w-full flex items-center justify-between p-5 text-left touch-manipulation h-auto min-h-[44px]"
                 >
-                  <span className="font-semibold text-white pr-4">
-                    {faq.question}
-                  </span>
+                  <span className="font-semibold text-white pr-4">{faq.question}</span>
                   <ChevronDown
                     className={`w-5 h-5 text-yellow-400 shrink-0 transition-transform ${
                       openFaq === index ? 'rotate-180' : ''

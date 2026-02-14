@@ -43,17 +43,90 @@ All tools and certificates comply with:
 - Progressive Web App (PWA) — install from browser, works offline
 - Also available as native iOS and Android app via Capacitor
 
-## Links
+## Standards Compliance
+
+- BS 7671:2018+A2:2022 (18th Edition IET Wiring Regulations — the "brown book")
+- BS 7671:2018+A3:2024 (Amendment 3 — adds Regulation 530.3.201, bidirectional/unidirectional devices)
+- BS 5839 (Fire detection and fire alarm systems)
+- BS 5266 (Emergency lighting)
+- IET Code of Practice for Electric Vehicle Charging Equipment Installation
+- MCS Standards (Microgeneration Certification Scheme — Solar PV)
+- GN3: Guidance Note 3 — Inspection & Testing (9th Edition / 18th Edition)
+
+## Key Links
 
 - Website: https://elec-mate.com
-- EICR Certificate Tool: https://elec-mate.com/tools/eicr-certificate
+- Pricing: https://elec-mate.com/pricing
+- EICR Certificate: https://elec-mate.com/tools/eicr-certificate
+- EIC Certificate: https://elec-mate.com/tools/eic-certificate
+- Minor Works Certificate: https://elec-mate.com/tools/minor-works-certificate
 - Cable Sizing Calculator: https://elec-mate.com/tools/cable-sizing-calculator
 - Voltage Drop Calculator: https://elec-mate.com/tools/voltage-drop-calculator
-- Minor Works Certificate: https://elec-mate.com/tools/minor-works-certificate
 - Electrical Testing Calculators: https://elec-mate.com/tools/electrical-testing-calculators
 - AI Electrician Tools: https://elec-mate.com/tools/ai-electrician
 - 18th Edition Course: https://elec-mate.com/training/18th-edition-course
 - Apprentice Training: https://elec-mate.com/training/electrical-apprentice
+- How to Become an Electrician: https://elec-mate.com/guides/how-to-become-electrician
+- BS 7671 18th Edition Guide: https://elec-mate.com/guides/bs-7671-18th-edition-guide
+- Testing Sequence Guide: https://elec-mate.com/guides/testing-sequence-guide
+- Electrician Salary UK: https://elec-mate.com/guides/electrician-salary-uk
+- Safe Isolation Procedure: https://elec-mate.com/guides/safe-isolation-procedure
+- EICR for Landlords: https://elec-mate.com/guides/eicr-for-landlords
+
+## 400+ Free Guides & Resources
+
+Elec-Mate publishes over 400 free guides, calculators, and training resources:
+
+### Certificates & Compliance
+- EICR guides (landlords, commercial, observation codes, schedule of inspections, limitations, unsatisfactory results)
+- EIC guides (when required, how to fill in, vs minor works)
+- Minor works, EV charger, fire alarm, emergency lighting, solar PV, PAT testing guides
+- Digital vs paper certificates, certificate retention, NICEIC/NAPIT requirements
+
+### Calculators & Technical Tools
+- Cable sizing, voltage drop, earth loop impedance, max demand, PFC, adiabatic equation
+- Conduit fill, trunking fill, cable tray, busbar, ring circuit, three phase, power factor
+- Disconnection time, cable derating, motor starting current, earth rod resistance
+- Lighting lux, transformer sizing, battery backup, solar panel sizing, EV charger load
+- IP rating guide, load schedule, power consumption
+
+### Testing & Inspection
+- Testing sequence, safe isolation, insulation resistance, continuity R1+R2, polarity
+- RCD testing, earth electrode, loop impedance, functional testing, dead vs live testing
+- Test instruments guide, Fluke vs Megger, Ze values, maximum Zs values
+- Periodic inspection, initial verification, commissioning, three phase testing
+
+### Regulations & Standards
+- BS 7671 18th Edition complete guide, Amendment 3 changes
+- Part P, building regulations, Electricity at Work Regulations
+- Wiring colours UK, special locations Part 7, bathroom/kitchen/outdoor regs
+- AFDDs, SPDs, residual current monitoring, protective earthing & bonding
+- Notifiable vs non-notifiable work, competent person schemes
+
+### Career & Business
+- Electrician salary UK, apprentice salary, day rates, career progression
+- How to become an electrician, CV guide, interview questions
+- Starting a business, tax guide, CIS, insurance, going self-employed
+- Pricing jobs, hourly rates, van setup, tool lists
+
+### Training & Apprentice
+- 18th Edition exam tips, AM2 preparation, 2391 exam tips
+- Apprentice rights & pay, off-job training, EPA preparation, portfolio building
+- Study tips, flashcards, mock exams, site diary guide
+- Fire alarm, EV charging, renewable energy, smart home courses
+
+### Troubleshooting
+- RCD keeps tripping, earth fault loop too high, low insulation resistance
+- Circuit breaker tripping, power going off, flickering lights, burning smell
+- Voltage too high/low, overloaded circuit, borrowed neutral, ring circuit faults
+
+## Social Media
+
+- Facebook: https://www.facebook.com/elecmate
+- Instagram: https://www.instagram.com/elec_mate
+- TikTok: https://www.tiktok.com/@elecmate
+- LinkedIn: https://www.linkedin.com/company/elec-mate
+- Telegram: https://t.me/Elec_MateOfficialGroup
 
 ## Full documentation
 

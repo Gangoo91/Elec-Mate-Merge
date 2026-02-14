@@ -13,7 +13,7 @@ async function main() {
   // Get all tools
   console.log('Fetching all tools...');
   const toolsRes = await fetch(`${API_BASE}/convai/tools`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const toolsData = await toolsRes.json();
   const allTools = toolsData.tools;
@@ -22,29 +22,29 @@ async function main() {
   // Get current employer agent
   console.log('\nFetching Employer agent...');
   const agentRes = await fetch(`${API_BASE}/convai/agents/${EMPLOYER_AGENT_ID}`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const agentData = await agentRes.json();
   const currentToolIds = agentData.conversation_config?.agent?.prompt?.tool_ids || [];
   console.log(`Current Employer tools: ${currentToolIds.length}`);
 
   // Find all quote/invoice related tools
-  const quoteTools = allTools.filter(t => {
+  const quoteTools = allTools.filter((t) => {
     const name = t.tool_config.name.toLowerCase();
     return name.includes('quote') || name.includes('invoice');
   });
 
   console.log('\nQuote/Invoice tools found:');
-  quoteTools.forEach(t => {
+  quoteTools.forEach((t) => {
     const isOnAgent = currentToolIds.includes(t.id);
     console.log(`  ${isOnAgent ? '✓' : '✗'} ${t.tool_config.name}`);
   });
 
   // Get quote tool IDs
-  const quoteToolIds = quoteTools.map(t => t.id);
+  const quoteToolIds = quoteTools.map((t) => t.id);
 
   // Find missing
-  const missingIds = quoteToolIds.filter(id => !currentToolIds.includes(id));
+  const missingIds = quoteToolIds.filter((id) => !currentToolIds.includes(id));
   console.log(`\nMissing from Employer: ${missingIds.length} tools`);
 
   if (missingIds.length === 0) {
@@ -62,17 +62,17 @@ async function main() {
     method: 'PATCH',
     headers: {
       'xi-api-key': API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       conversation_config: {
         agent: {
           prompt: {
-            tool_ids: finalTools
-          }
-        }
-      }
-    })
+            tool_ids: finalTools,
+          },
+        },
+      },
+    }),
   });
 
   if (!updateRes.ok) {
@@ -85,7 +85,7 @@ async function main() {
 
   // Verify
   const verifyRes = await fetch(`${API_BASE}/convai/agents/${EMPLOYER_AGENT_ID}`, {
-    headers: { 'xi-api-key': API_KEY }
+    headers: { 'xi-api-key': API_KEY },
   });
   const verifyData = await verifyRes.json();
   const newToolIds = verifyData.conversation_config?.agent?.prompt?.tool_ids || [];
@@ -93,7 +93,7 @@ async function main() {
   console.log(`\nVerification: Employer now has ${newToolIds.length} tools`);
 
   // Check quote tools
-  const quoteToolsOnAgent = quoteTools.filter(t => newToolIds.includes(t.id));
+  const quoteToolsOnAgent = quoteTools.filter((t) => newToolIds.includes(t.id));
   console.log(`Quote/Invoice tools on Employer: ${quoteToolsOnAgent.length}/${quoteTools.length}`);
 }
 

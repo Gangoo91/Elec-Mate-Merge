@@ -200,9 +200,15 @@ export default function FireAlarmCertificatePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -210,14 +216,17 @@ export default function FireAlarmCertificatePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Bell className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 5839-1:2017 + A2:2019 Compliant</span>
+            <span className="text-sm font-medium text-yellow-400">
+              BS 5839-1:2017 + A2:2019 Compliant
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Digital <span className="text-yellow-400">Fire Alarm Certificates</span> on Your Phone
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            The complete fire alarm certification app for UK electricians and fire alarm engineers. Zone schedules,
-            cause-and-effect matrices, weekly tests, six-monthly servicing, and professional PDF certificates.
+            The complete fire alarm certification app for UK electricians and fire alarm engineers.
+            Zone schedules, cause-and-effect matrices, weekly tests, six-monthly servicing, and
+            professional PDF certificates.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -244,32 +253,36 @@ export default function FireAlarmCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              A fire detection and alarm system is a critical life-safety installation designed to detect fire at the
-              earliest possible stage and alert building occupants so they can evacuate safely. The system typically
-              consists of a central control panel, automatic fire detectors (smoke detectors, heat detectors, or
-              multi-sensor detectors), manual call points (break-glass units), audible and visual alarm devices
-              (sounders and beacons), and the interconnecting cabling.
+              A fire detection and alarm system is a critical life-safety installation designed to
+              detect fire at the earliest possible stage and alert building occupants so they can
+              evacuate safely. The system typically consists of a central control panel, automatic
+              fire detectors (smoke detectors, heat detectors, or multi-sensor detectors), manual
+              call points (break-glass units), audible and visual alarm devices (sounders and
+              beacons), and the interconnecting cabling.
             </p>
             <p>
-              In the UK, the design, installation, commissioning, and maintenance of fire alarm systems in non-domestic
-              premises is governed by BS 5839-1:2017 + A2:2019, the code of practice for the design, installation,
-              commissioning, and maintenance of systems in non-domestic premises. For domestic premises, BS 5839-6
-              applies. These standards are referenced by the fire safety legislation and by insurers as the benchmark
-              for competent fire alarm practice.
+              In the UK, the design, installation, commissioning, and maintenance of fire alarm
+              systems in non-domestic premises is governed by BS 5839-1:2017 + A2:2019, the code of
+              practice for the design, installation, commissioning, and maintenance of systems in
+              non-domestic premises. For domestic premises, BS 5839-6 applies. These standards are
+              referenced by the fire safety legislation and by insurers as the benchmark for
+              competent fire alarm practice.
             </p>
             <p>
-              A fire alarm certificate is the formal document that records the details of the system, the results of
-              testing and inspection, and any defects or recommendations. It provides evidence that the system has been
-              maintained by a competent person and is in a satisfactory condition. The Responsible Person for the
-              premises is legally required to maintain fire safety systems and keep records of maintenance — the fire
-              alarm certificate is the primary evidence of compliance.
+              A fire alarm certificate is the formal document that records the details of the
+              system, the results of testing and inspection, and any defects or recommendations. It
+              provides evidence that the system has been maintained by a competent person and is in
+              a satisfactory condition. The Responsible Person for the premises is legally required
+              to maintain fire safety systems and keep records of maintenance — the fire alarm
+              certificate is the primary evidence of compliance.
             </p>
             <p>
-              Fire alarm systems are not install-and-forget. Detectors accumulate dust and drift in sensitivity over
-              time. Batteries degrade. Sounders can be obstructed or damaged. Wiring connections can loosen. Without
-              regular testing and servicing, a fire alarm system that was fully functional when installed can become
-              unreliable within a few years. The testing regime defined in BS 5839-1 exists to catch these issues
-              before they become dangerous.
+              Fire alarm systems are not install-and-forget. Detectors accumulate dust and drift in
+              sensitivity over time. Batteries degrade. Sounders can be obstructed or damaged.
+              Wiring connections can loosen. Without regular testing and servicing, a fire alarm
+              system that was fully functional when installed can become unreliable within a few
+              years. The testing regime defined in BS 5839-1 exists to catch these issues before
+              they become dangerous.
             </p>
           </div>
         </div>
@@ -283,9 +296,9 @@ export default function FireAlarmCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              BS 5839-1 categorises fire alarm systems according to their primary purpose and the extent of detection
-              coverage. Understanding these categories is essential for specifying, testing, and certifying systems
-              correctly.
+              BS 5839-1 categorises fire alarm systems according to their primary purpose and the
+              extent of detection coverage. Understanding these categories is essential for
+              specifying, testing, and certifying systems correctly.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
@@ -293,39 +306,61 @@ export default function FireAlarmCertificatePage() {
             <ul className="space-y-3 text-white">
               <li className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <span><strong>L1:</strong> Detection throughout the entire building. The highest level of automatic life protection. Used in premises where early detection everywhere is critical — care homes, hospitals, high-rise residential buildings.</span>
+                <span>
+                  <strong>L1:</strong> Detection throughout the entire building. The highest level
+                  of automatic life protection. Used in premises where early detection everywhere is
+                  critical — care homes, hospitals, high-rise residential buildings.
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <span><strong>L2:</strong> Detection in defined areas — all escape routes, all rooms opening onto escape routes, and all high-risk rooms (plant rooms, kitchens, store rooms). The most commonly specified category for commercial premises.</span>
+                <span>
+                  <strong>L2:</strong> Detection in defined areas — all escape routes, all rooms
+                  opening onto escape routes, and all high-risk rooms (plant rooms, kitchens, store
+                  rooms). The most commonly specified category for commercial premises.
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <span><strong>L3:</strong> Detection in escape routes only — corridors, stairways, and the areas immediately adjacent to exits. Provides warning of fire in the escape route itself but does not detect fire in occupied rooms.</span>
+                <span>
+                  <strong>L3:</strong> Detection in escape routes only — corridors, stairways, and
+                  the areas immediately adjacent to exits. Provides warning of fire in the escape
+                  route itself but does not detect fire in occupied rooms.
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <span><strong>L4:</strong> Detection in escape routes forming part of accommodation — typically corridors and landings in flats and HMOs. The system alerts residents that the shared escape route may be compromised.</span>
+                <span>
+                  <strong>L4:</strong> Detection in escape routes forming part of accommodation —
+                  typically corridors and landings in flats and HMOs. The system alerts residents
+                  that the shared escape route may be compromised.
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                <span><strong>L5:</strong> Detection in specified rooms or areas only, as defined by the fire risk assessment. A bespoke category that provides targeted protection where the risk assessment identifies a need.</span>
+                <span>
+                  <strong>L5:</strong> Detection in specified rooms or areas only, as defined by the
+                  fire risk assessment. A bespoke category that provides targeted protection where
+                  the risk assessment identifies a need.
+                </span>
               </li>
             </ul>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 my-6">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <h3 className="font-bold text-white text-lg mb-3">Category P — Property Protection</h3>
+              <h3 className="font-bold text-white text-lg mb-3">
+                Category P — Property Protection
+              </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  <strong>P1:</strong> Detection throughout the building for the purpose of protecting property.
-                  Designed to detect fire at the earliest stage before significant damage occurs. Typically required
-                  by insurers for high-value premises.
+                  <strong>P1:</strong> Detection throughout the building for the purpose of
+                  protecting property. Designed to detect fire at the earliest stage before
+                  significant damage occurs. Typically required by insurers for high-value premises.
                 </p>
                 <p>
-                  <strong>P2:</strong> Detection in defined high-risk areas only. Provides targeted property
-                  protection for rooms or zones identified as having a higher fire risk, such as server rooms,
-                  archives, or chemical stores.
+                  <strong>P2:</strong> Detection in defined high-risk areas only. Provides targeted
+                  property protection for rooms or zones identified as having a higher fire risk,
+                  such as server rooms, archives, or chemical stores.
                 </p>
               </div>
             </div>
@@ -333,25 +368,26 @@ export default function FireAlarmCertificatePage() {
               <h3 className="font-bold text-white text-lg mb-3">Category M — Manual</h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
-                  Category M systems have manual call points only — no automatic detection. Occupants must discover
-                  the fire themselves and operate the nearest call point to raise the alarm. This is the most basic
-                  category and is only suitable for premises where occupants are alert, mobile, and familiar with the
-                  building layout.
+                  Category M systems have manual call points only — no automatic detection.
+                  Occupants must discover the fire themselves and operate the nearest call point to
+                  raise the alarm. This is the most basic category and is only suitable for premises
+                  where occupants are alert, mobile, and familiar with the building layout.
                 </p>
                 <p>
-                  A Category M system is often combined with a higher detection category in specific areas — for
-                  example, M throughout the building with L2 detection in high-risk rooms. The fire risk assessment
-                  determines the appropriate combination.
+                  A Category M system is often combined with a higher detection category in specific
+                  areas — for example, M throughout the building with L2 detection in high-risk
+                  rooms. The fire risk assessment determines the appropriate combination.
                 </p>
               </div>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The system category must be recorded on the fire alarm certificate. It defines the expected extent of
-              detection and forms the baseline for testing — the engineer checks that the installed system still
-              matches the designed category and that no areas of coverage have been lost through detector removal,
-              building alterations, or device failures.
+              The system category must be recorded on the fire alarm certificate. It defines the
+              expected extent of detection and forms the baseline for testing — the engineer checks
+              that the installed system still matches the designed category and that no areas of
+              coverage have been lost through detector removal, building alterations, or device
+              failures.
             </p>
           </div>
         </div>
@@ -365,29 +401,33 @@ export default function FireAlarmCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 5839-1 defines a structured testing and maintenance regime that includes weekly, monthly,
-              six-monthly, and annual activities. Each level of testing checks different aspects of the system
-              and builds on the previous level.
+              BS 5839-1 defines a structured testing and maintenance regime that includes weekly,
+              monthly, six-monthly, and annual activities. Each level of testing checks different
+              aspects of the system and builds on the previous level.
             </p>
             <p>
-              <strong>Weekly testing</strong> is the Responsible Person's duty. Each week, a different manual call
-              point is activated to confirm that the control panel responds, the sounders operate, and the system
-              resets correctly. The call point used is rotated weekly so that every call point in the building is
-              tested at least once per year. The result (date, time, call point tested, and result) must be recorded
-              in the fire safety logbook.
+              <strong>Weekly testing</strong> is the Responsible Person's duty. Each week, a
+              different manual call point is activated to confirm that the control panel responds,
+              the sounders operate, and the system resets correctly. The call point used is rotated
+              weekly so that every call point in the building is tested at least once per year. The
+              result (date, time, call point tested, and result) must be recorded in the fire safety
+              logbook.
             </p>
             <p>
-              <strong>Six-monthly servicing</strong> is carried out by a competent fire alarm engineer. This visit
-              includes a visual inspection of all devices, a check of the control panel functions, a check of the
-              standby battery condition and voltage, verification that a sample of detectors are responding correctly,
-              and a review of the logbook for any reported faults since the last visit.
+              <strong>Six-monthly servicing</strong> is carried out by a competent fire alarm
+              engineer. This visit includes a visual inspection of all devices, a check of the
+              control panel functions, a check of the standby battery condition and voltage,
+              verification that a sample of detectors are responding correctly, and a review of the
+              logbook for any reported faults since the last visit.
             </p>
             <p>
-              <strong>Annual comprehensive inspection</strong> includes everything in the six-monthly service plus
-              a full test of every detector in the system (using appropriate test equipment), verification of sounder
-              output levels in all areas, a check of all cause-and-effect programming, and confirmation that the
-              system still matches the as-installed design (checking for building alterations that may have affected
-              coverage). This is the most detailed level of inspection and generates the annual fire alarm certificate.
+              <strong>Annual comprehensive inspection</strong> includes everything in the
+              six-monthly service plus a full test of every detector in the system (using
+              appropriate test equipment), verification of sounder output levels in all areas, a
+              check of all cause-and-effect programming, and confirmation that the system still
+              matches the as-installed design (checking for building alterations that may have
+              affected coverage). This is the most detailed level of inspection and generates the
+              annual fire alarm certificate.
             </p>
           </div>
         </div>
@@ -401,26 +441,30 @@ export default function FireAlarmCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              Fire alarm certification involves complex data — zone schedules with dozens of devices, cause-and-effect
-              programming, detector sensitivity readings, battery test results, and defect records. Managing this on
-              paper is cumbersome and error-prone. Elec-Mate brings the entire process onto your phone or tablet.
+              Fire alarm certification involves complex data — zone schedules with dozens of
+              devices, cause-and-effect programming, detector sensitivity readings, battery test
+              results, and defect records. Managing this on paper is cumbersome and error-prone.
+              Elec-Mate brings the entire process onto your phone or tablet.
             </p>
             <p>
-              You build the zone schedule and device list once, and it carries forward to every subsequent visit. On
-              site, you work through the system zone by zone, recording test results as you go. The app tracks which
-              devices have been tested and which remain, so you never accidentally miss one. Detector sensitivity
-              readings, battery voltages, and sounder levels are all recorded in structured fields that can be compared
-              to previous visits to identify trends.
+              You build the zone schedule and device list once, and it carries forward to every
+              subsequent visit. On site, you work through the system zone by zone, recording test
+              results as you go. The app tracks which devices have been tested and which remain, so
+              you never accidentally miss one. Detector sensitivity readings, battery voltages, and
+              sounder levels are all recorded in structured fields that can be compared to previous
+              visits to identify trends.
             </p>
             <p>
-              When you finish, the completed certificate is ready to sign and export as a PDF before you leave site.
-              The cause-and-effect matrix, zone schedule, and device list are all included in the document. Defects are
-              listed with recommended actions and categorised by severity.
+              When you finish, the completed certificate is ready to sign and export as a PDF before
+              you leave site. The cause-and-effect matrix, zone schedule, and device list are all
+              included in the document. Defects are listed with recommended actions and categorised
+              by severity.
             </p>
             <p>
-              Elec-Mate is part of a complete platform for UK electricians that includes 70 electrical calculators,
-              8 Elec-AI agents and 12 AI tools, 36+ training courses, 8 certificate types, and integration with
-              Xero and QuickBooks for invoicing. Everything you need in one mobile-first tool.
+              Elec-Mate is part of a complete platform for UK electricians that includes 70
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              certificate types, and integration with Xero and QuickBooks for invoicing. Everything
+              you need in one mobile-first tool.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -434,8 +478,8 @@ export default function FireAlarmCertificatePage() {
             How to Create a Fire Alarm Certificate Using Elec-Mate
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these steps to complete a BS 5839-1 fire alarm test and inspection certificate using the Elec-Mate
-            app, from opening the form to exporting the finished PDF.
+            Follow these steps to complete a BS 5839-1 fire alarm test and inspection certificate
+            using the Elec-Mate app, from opening the form to exporting the finished PDF.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -464,30 +508,32 @@ export default function FireAlarmCertificatePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Regulatory Reform (Fire Safety) Order 2005 (the FSO) places a legal duty on the Responsible Person
-              to ensure that fire safety systems — including fire alarm systems — are properly maintained and tested.
-              Article 17 of the FSO specifically requires that fire-fighting equipment, fire detectors, and fire
-              alarms are maintained in an efficient state, in efficient working order, and in good repair by a
-              competent person.
+              The Regulatory Reform (Fire Safety) Order 2005 (the FSO) places a legal duty on the
+              Responsible Person to ensure that fire safety systems — including fire alarm systems —
+              are properly maintained and tested. Article 17 of the FSO specifically requires that
+              fire-fighting equipment, fire detectors, and fire alarms are maintained in an
+              efficient state, in efficient working order, and in good repair by a competent person.
             </p>
             <p>
-              The standard of maintenance expected is defined by BS 5839-1, which the FSO references as the appropriate
-              code of practice. Failure to maintain a fire alarm system can result in enforcement action by the fire
-              authority, including improvement notices, prohibition notices (which can close premises), and criminal
-              prosecution with unlimited fines. In cases where failure contributes to a death, responsible persons can
-              face imprisonment.
+              The standard of maintenance expected is defined by BS 5839-1, which the FSO references
+              as the appropriate code of practice. Failure to maintain a fire alarm system can
+              result in enforcement action by the fire authority, including improvement notices,
+              prohibition notices (which can close premises), and criminal prosecution with
+              unlimited fines. In cases where failure contributes to a death, responsible persons
+              can face imprisonment.
             </p>
             <p>
-              Insurance policies also commonly require evidence of regular fire alarm maintenance in accordance with
-              BS 5839-1. A failure to maintain can invalidate fire insurance, leaving the property owner exposed to
-              uninsured losses. Many commercial leases include obligations on the tenant or landlord to maintain fire
-              safety systems and produce certificates on request.
+              Insurance policies also commonly require evidence of regular fire alarm maintenance in
+              accordance with BS 5839-1. A failure to maintain can invalidate fire insurance,
+              leaving the property owner exposed to uninsured losses. Many commercial leases include
+              obligations on the tenant or landlord to maintain fire safety systems and produce
+              certificates on request.
             </p>
             <p>
-              The fire alarm certificate produced by Elec-Mate provides the documentary evidence that the Responsible
-              Person needs to demonstrate compliance. It records the system details, the tests carried out, the results
-              obtained, any defects found, and the recommended remedial actions — a complete audit trail for fire
-              safety compliance.
+              The fire alarm certificate produced by Elec-Mate provides the documentary evidence
+              that the Responsible Person needs to demonstrate compliance. It records the system
+              details, the tests carried out, the results obtained, any defects found, and the
+              recommended remedial actions — a complete audit trail for fire safety compliance.
             </p>
           </div>
         </div>
@@ -504,17 +550,18 @@ export default function FireAlarmCertificatePage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is designed by electricians for electricians and fire alarm engineers. Whether you are a
-              sole trader providing fire alarm servicing for small commercial clients, a specialist fire alarm company
-              servicing hundreds of systems, or an electrician who also covers fire alarm work, the app fits your
-              workflow. The certificate forms follow BS 5839-1 and the test procedures reflect how servicing is
+              Elec-Mate is designed by electricians for electricians and fire alarm engineers.
+              Whether you are a sole trader providing fire alarm servicing for small commercial
+              clients, a specialist fire alarm company servicing hundreds of systems, or an
+              electrician who also covers fire alarm work, the app fits your workflow. The
+              certificate forms follow BS 5839-1 and the test procedures reflect how servicing is
               actually carried out on site.
             </p>
             <p>
-              The platform includes 70 electrical calculators, 8 certificate types (EICR, EIC, Minor Works,
-              emergency lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI tools,
-              and 36+ training courses. Xero and QuickBooks integration means you can raise invoices directly from
-              completed jobs without re-entering data.
+              The platform includes 70 electrical calculators, 8 certificate types (EICR, EIC, Minor
+              Works, emergency lighting, fire alarm, EV charger, PAT testing, and solar PV), 8
+              Elec-AI agents, 12 AI tools, and 36+ training courses. Xero and QuickBooks integration
+              means you can raise invoices directly from completed jobs without re-entering data.
             </p>
           </div>
         </div>
@@ -534,11 +581,11 @@ export default function FireAlarmCertificatePage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                    +
+                  </span>
                 </summary>
-                <div className="px-5 pb-5 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-5 pb-5 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

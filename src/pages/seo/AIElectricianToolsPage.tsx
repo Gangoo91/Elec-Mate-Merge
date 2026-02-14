@@ -194,9 +194,15 @@ export default function AIElectricianToolsPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareApplicationSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqPageSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareApplicationSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqPageSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -204,17 +210,19 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Brain className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">8 Elec-AI Specialists Trained on BS 7671</span>
+            <span className="text-sm font-medium text-yellow-400">
+              8 Elec-AI Specialists Trained on BS 7671
+            </span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5 leading-tight">
-            AI Tools Built for{' '}
-            <span className="text-yellow-400">UK Electricians</span>
+            AI Tools Built for <span className="text-yellow-400">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A3:2024 (Amendment 3:2024), plus 12
-            AI-powered tools. Design circuits, quote jobs, get installation guidance, commission installations, plan
-            maintenance, generate health and safety documents, diagnose faults, and look up regulations — all with
-            regulation references you can verify.
+            Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A3:2024 (Amendment
+            3:2024), plus 12 AI-powered tools. Design circuits, quote jobs, get installation
+            guidance, commission installations, plan maintenance, generate health and safety
+            documents, diagnose faults, and look up regulations — all with regulation references you
+            can verify.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -248,35 +256,40 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Circuit Designer is the most technically advanced of the eight specialists. It takes a plain-English
-              description of an installation and produces a complete electrical design that you can take straight to site.
-              Describe a property — "four-bedroom detached house, electric vehicle charger in the garage, 10.8kW
-              electric shower, induction hob, gas boiler, combination of LED downlights and pendant lights throughout"
-              — and the AI generates a full consumer unit schedule, circuit-by-circuit.
+              The Circuit Designer is the most technically advanced of the eight specialists. It
+              takes a plain-English description of an installation and produces a complete
+              electrical design that you can take straight to site. Describe a property —
+              "four-bedroom detached house, electric vehicle charger in the garage, 10.8kW electric
+              shower, induction hob, gas boiler, combination of LED downlights and pendant lights
+              throughout" — and the AI generates a full consumer unit schedule, circuit-by-circuit.
             </p>
             <p>
-              For each circuit, the designer specifies the protective device type and rating (MCB or RCBO, with the
-              correct type — Type B for resistive loads, Type C for small motor loads, Type D for large inductive loads),
-              the cable type and size calculated using the full adiabatic method from BS 7671 Appendix 4, the maximum
-              Zs value for the chosen protective device rating, and whether additional RCD protection is required under
-              Regulation 411.3.3. The calculations account for all correction factors: ambient temperature (Ca),
-              grouping (Cg), thermal insulation (Ci), and the semi-enclosed fuse factor (Cc) where applicable.
+              For each circuit, the designer specifies the protective device type and rating (MCB or
+              RCBO, with the correct type — Type B for resistive loads, Type C for small motor
+              loads, Type D for large inductive loads), the cable type and size calculated using the
+              full adiabatic method from BS 7671 Appendix 4, the maximum Zs value for the chosen
+              protective device rating, and whether additional RCD protection is required under
+              Regulation 411.3.3. The calculations account for all correction factors: ambient
+              temperature (Ca), grouping (Cg), thermal insulation (Ci), and the semi-enclosed fuse
+              factor (Cc) where applicable.
             </p>
             <p>
-              The designer also handles the newer requirements of BS 7671. For EV charger circuits, it specifies Type A
-              RCD protection (or Type B where required by the charger manufacturer), applies the correct cable sizing
-              for continuous load (the charger draws rated current for hours at a time, so a 0.94 continuous load factor
-              applies for 32A devices), and ensures the cable route from the consumer unit to the garage accounts for
-              any derating due to thermal insulation in walls or lofts. For electric shower circuits, it checks whether
-              the incoming supply can handle the additional load and recommends a main switch upgrade or supply
-              application if necessary.
+              The designer also handles the newer requirements of BS 7671. For EV charger circuits,
+              it specifies Type A RCD protection (or Type B where required by the charger
+              manufacturer), applies the correct cable sizing for continuous load (the charger draws
+              rated current for hours at a time, so a 0.94 continuous load factor applies for 32A
+              devices), and ensures the cable route from the consumer unit to the garage accounts
+              for any derating due to thermal insulation in walls or lofts. For electric shower
+              circuits, it checks whether the incoming supply can handle the additional load and
+              recommends a main switch upgrade or supply application if necessary.
             </p>
             <p>
-              What makes this tool genuinely useful on the job is that it explains its reasoning. If you ask why it
-              chose a 6mm cable instead of 4mm for a particular circuit, it walks you through the calculation step by
-              step, citing the specific BS 7671 tables used at each stage. This is not a black box — it is a design
-              assistant that shows its working, so you can verify every decision and take professional responsibility
-              for the final design with confidence.
+              What makes this tool genuinely useful on the job is that it explains its reasoning. If
+              you ask why it chose a 6mm cable instead of 4mm for a particular circuit, it walks you
+              through the calculation step by step, citing the specific BS 7671 tables used at each
+              stage. This is not a black box — it is a design assistant that shows its working, so
+              you can verify every decision and take professional responsibility for the final
+              design with confidence.
             </p>
           </div>
         </div>
@@ -295,27 +308,31 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Quoting is the part of the job most electricians dread. Underquote and you lose money. Overquote and you
-              lose the job. The Cost Engineer removes the guesswork by combining live trade pricing data with real-world
-              labour timing benchmarks to produce accurate, professional quotes in minutes.
+              Quoting is the part of the job most electricians dread. Underquote and you lose money.
+              Overquote and you lose the job. The Cost Engineer removes the guesswork by combining
+              live trade pricing data with real-world labour timing benchmarks to produce accurate,
+              professional quotes in minutes.
             </p>
             <p>
-              The system works on a simple principle: you describe the job in plain English. "Consumer unit change in a
-              1970s three-bed semi, existing rewireable fuses, 8 circuits, supply is TN-C-S, meter in the hallway
-              cupboard." The Cost Engineer breaks the job down into materials and labour. For materials, it generates a
-              full bill of quantities with actual product names and trade prices from major UK wholesalers — not list
-              prices, but the prices you actually pay with a trade account. For labour, it uses timing data from
-              thousands of completed jobs to estimate how long each task takes: isolating the existing supply, removing
-              the old board, installing the new consumer unit, connecting circuits, testing and commissioning, and
-              completing the paperwork.
+              The system works on a simple principle: you describe the job in plain English.
+              "Consumer unit change in a 1970s three-bed semi, existing rewireable fuses, 8
+              circuits, supply is TN-C-S, meter in the hallway cupboard." The Cost Engineer breaks
+              the job down into materials and labour. For materials, it generates a full bill of
+              quantities with actual product names and trade prices from major UK wholesalers — not
+              list prices, but the prices you actually pay with a trade account. For labour, it uses
+              timing data from thousands of completed jobs to estimate how long each task takes:
+              isolating the existing supply, removing the old board, installing the new consumer
+              unit, connecting circuits, testing and commissioning, and completing the paperwork.
             </p>
             <p>
-              The Cost Engineer also handles the business side. You set your labour rate, overhead percentage, and target
-              profit margin. The AI applies these to produce a final price with a clear breakdown you can present to the
-              customer. If the customer queries a specific line item, you can explain exactly what it covers. The system
-              also generates a professional quote document with your company details, a description of works, terms and
-              conditions, and a validity period. Over time, the Cost Engineer learns from jobs you mark as completed,
-              comparing estimates to actual costs and adjusting its models to match your working speed and local pricing.
+              The Cost Engineer also handles the business side. You set your labour rate, overhead
+              percentage, and target profit margin. The AI applies these to produce a final price
+              with a clear breakdown you can present to the customer. If the customer queries a
+              specific line item, you can explain exactly what it covers. The system also generates
+              a professional quote document with your company details, a description of works, terms
+              and conditions, and a validity period. Over time, the Cost Engineer learns from jobs
+              you mark as completed, comparing estimates to actual costs and adjusting its models to
+              match your working speed and local pricing.
             </p>
           </div>
         </div>
@@ -334,33 +351,38 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Installation Guide is built for electricians who want clear, step-by-step procedures for any type of
-              electrical work. Whether you are installing a new lighting circuit, adding an EV charger, fitting a
-              bathroom extractor fan on a timer, or wiring a three-phase distribution board, the guide walks you through
-              every step from isolation to testing and commissioning.
+              The Installation Guide is built for electricians who want clear, step-by-step
+              procedures for any type of electrical work. Whether you are installing a new lighting
+              circuit, adding an EV charger, fitting a bathroom extractor fan on a timer, or wiring
+              a three-phase distribution board, the guide walks you through every step from
+              isolation to testing and commissioning.
             </p>
             <p>
-              Each guide starts with the prerequisites: the tools and materials you need, the regulations that apply to
-              this specific type of work, and any notifications or certifications required (for example, Part P
-              notification for a new circuit in a dwelling). It then provides a numbered sequence of steps, each with
-              enough detail to follow without ambiguity. Steps reference specific BS 7671 regulations — for example,
-              when wiring a bathroom circuit, the guide explains the zone requirements from Section 701, the IP ratings
-              needed for equipment in each zone, and the requirement for supplementary bonding under Regulation 701.415.2
-              (unless all circuits are RCD-protected and the main bonding is verified).
+              Each guide starts with the prerequisites: the tools and materials you need, the
+              regulations that apply to this specific type of work, and any notifications or
+              certifications required (for example, Part P notification for a new circuit in a
+              dwelling). It then provides a numbered sequence of steps, each with enough detail to
+              follow without ambiguity. Steps reference specific BS 7671 regulations — for example,
+              when wiring a bathroom circuit, the guide explains the zone requirements from Section
+              701, the IP ratings needed for equipment in each zone, and the requirement for
+              supplementary bonding under Regulation 701.415.2 (unless all circuits are
+              RCD-protected and the main bonding is verified).
             </p>
             <p>
-              The testing and commissioning section of each guide lists the specific tests required for that circuit
-              type, in the correct order per GN3 (IET Guidance Note 3: Inspection and Testing). For a new circuit, this
-              means continuity of protective conductors (R1+R2), continuity of ring final circuit conductors (for ring
-              circuits), insulation resistance, polarity, earth fault loop impedance, prospective fault current, and
-              RCD operation. The guide provides the expected values and pass/fail criteria for each test, so you know
-              immediately whether the installation is compliant.
+              The testing and commissioning section of each guide lists the specific tests required
+              for that circuit type, in the correct order per GN3 (IET Guidance Note 3: Inspection
+              and Testing). For a new circuit, this means continuity of protective conductors
+              (R1+R2), continuity of ring final circuit conductors (for ring circuits), insulation
+              resistance, polarity, earth fault loop impedance, prospective fault current, and RCD
+              operation. The guide provides the expected values and pass/fail criteria for each
+              test, so you know immediately whether the installation is compliant.
             </p>
             <p>
-              Apprentices find this tool particularly valuable because it bridges the gap between theory and practice.
-              You learn the regulations in college, but the Installation Guide shows you how those regulations translate
-              into physical actions on site. Qualified electricians use it for less common work — not everyone installs
-              three-phase supplies or commercial kitchen extracts every week, and having a regulation-referenced
+              Apprentices find this tool particularly valuable because it bridges the gap between
+              theory and practice. You learn the regulations in college, but the Installation Guide
+              shows you how those regulations translate into physical actions on site. Qualified
+              electricians use it for less common work — not everyone installs three-phase supplies
+              or commercial kitchen extracts every week, and having a regulation-referenced
               step-by-step guide eliminates the risk of missing a requirement.
             </p>
           </div>
@@ -380,38 +402,45 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Maintenance Agent helps you create and manage maintenance schedules for electrical installations. BS
-              7671 Section 341 requires that every installation is maintained to keep it in a safe condition, and the
-              frequency of periodic inspection depends on the type of installation and its use. The Maintenance Agent
-              knows the recommended inspection intervals from Table 3A of the IET Guidance Note 3: five years for
-              domestic premises, three years for commercial, one year for construction sites and swimming pools, and
-              specific intervals for other installation types.
+              The Maintenance Agent helps you create and manage maintenance schedules for electrical
+              installations. BS 7671 Section 341 requires that every installation is maintained to
+              keep it in a safe condition, and the frequency of periodic inspection depends on the
+              type of installation and its use. The Maintenance Agent knows the recommended
+              inspection intervals from Table 3A of the IET Guidance Note 3: five years for domestic
+              premises, three years for commercial, one year for construction sites and swimming
+              pools, and specific intervals for other installation types.
             </p>
             <p>
-              For commercial and industrial clients, the Maintenance Agent generates a complete maintenance programme
-              covering periodic inspection and testing, thermographic surveys, RCD testing (the six-monthly functional
-              test by pressing the test button, plus the full instrument test at the periodic inspection interval),
-              emergency lighting testing (monthly short-duration and annual three-hour discharge tests per BS 5266),
-              and fire alarm testing (weekly call point tests and six-monthly full system tests per BS 5839). The agent
-              produces a calendar of all required maintenance activities, sends reminders to both the electrician and the
-              client, and tracks compliance status so nothing falls through the cracks.
+              For commercial and industrial clients, the Maintenance Agent generates a complete
+              maintenance programme covering periodic inspection and testing, thermographic surveys,
+              RCD testing (the six-monthly functional test by pressing the test button, plus the
+              full instrument test at the periodic inspection interval), emergency lighting testing
+              (monthly short-duration and annual three-hour discharge tests per BS 5266), and fire
+              alarm testing (weekly call point tests and six-monthly full system tests per BS 5839).
+              The agent produces a calendar of all required maintenance activities, sends reminders
+              to both the electrician and the client, and tracks compliance status so nothing falls
+              through the cracks.
             </p>
             <p>
-              The Health and Safety specialist is purpose-built for the documentation that electricians need on every
-              job. In the real world, principal contractors, local authorities, and commercial clients increasingly
-              require formal RAMS (Risk Assessment and Method Statement) documents before you are allowed on site.
-              Writing these from scratch is tedious and time-consuming. Our Health and Safety AI generates complete,
-              site-specific RAMS documents from a brief description of the work and the site conditions.
+              The Health and Safety specialist is purpose-built for the documentation that
+              electricians need on every job. In the real world, principal contractors, local
+              authorities, and commercial clients increasingly require formal RAMS (Risk Assessment
+              and Method Statement) documents before you are allowed on site. Writing these from
+              scratch is tedious and time-consuming. Our Health and Safety AI generates complete,
+              site-specific RAMS documents from a brief description of the work and the site
+              conditions.
             </p>
             <p>
-              Describe the job — "second fix in a new-build primary school, working at height on scaffolding in the
-              assembly hall, chasing walls for containment, dust and noise considerations, occupied adjacent classrooms"
-              — and the AI produces a risk assessment covering every identified hazard with likelihood and severity
-              ratings, control measures, residual risk scores, and responsible persons. The method statement provides a
-              step-by-step procedure for the work, PPE requirements at each stage, permits required, emergency
-              procedures, and environmental considerations. All documents reference current legislation including the
-              Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, the Work at Height
-              Regulations 2005, and the Construction (Design and Management) Regulations 2015.
+              Describe the job — "second fix in a new-build primary school, working at height on
+              scaffolding in the assembly hall, chasing walls for containment, dust and noise
+              considerations, occupied adjacent classrooms" — and the AI produces a risk assessment
+              covering every identified hazard with likelihood and severity ratings, control
+              measures, residual risk scores, and responsible persons. The method statement provides
+              a step-by-step procedure for the work, PPE requirements at each stage, permits
+              required, emergency procedures, and environmental considerations. All documents
+              reference current legislation including the Health and Safety at Work Act 1974, the
+              Electricity at Work Regulations 1989, the Work at Height Regulations 2005, and the
+              Construction (Design and Management) Regulations 2015.
             </p>
           </div>
         </div>
@@ -472,24 +501,28 @@ export default function AIElectricianToolsPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The accuracy of any AI tool depends entirely on the quality of its training data. That is why we have
-              invested heavily in building a comprehensive knowledge base that covers the full scope of the IET Wiring
-              Regulations and supporting guidance documents.
+              The accuracy of any AI tool depends entirely on the quality of its training data. That
+              is why we have invested heavily in building a comprehensive knowledge base that covers
+              the full scope of the IET Wiring Regulations and supporting guidance documents.
             </p>
             <p>
-              The core training data includes BS 7671:2018+A3:2024, which is the current 18th Edition of the IET Wiring
-              Regulations — the standard that governs every electrical installation in the United Kingdom. It also
-              includes Amendment 3:2024 (A3:2024), issued on 31 July 2024, which adds Regulation 530.3.201 covering
-              the requirements for bidirectional and unidirectional protective devices. This amendment is particularly
-              relevant for installations with battery storage systems, solar PV, and other sources of reverse power flow,
-              where standard unidirectional devices may not provide adequate protection.
+              The core training data includes BS 7671:2018+A3:2024, which is the current 18th
+              Edition of the IET Wiring Regulations — the standard that governs every electrical
+              installation in the United Kingdom. It also includes Amendment 3:2024 (A3:2024),
+              issued on 31 July 2024, which adds Regulation 530.3.201 covering the requirements for
+              bidirectional and unidirectional protective devices. This amendment is particularly
+              relevant for installations with battery storage systems, solar PV, and other sources
+              of reverse power flow, where standard unidirectional devices may not provide adequate
+              protection.
             </p>
             <p>
-              Beyond the core regulations, the AI draws on the IET On-Site Guide, which provides simplified tables and
-              procedures for common installation work; all eight IET Guidance Notes covering selection and erection,
-              inspection and testing, protection against overcurrent, protection against fire, protection against
-              electric shock, protection against electromagnetic disturbances, special installations and locations, and
-              earthing and bonding; and a curated library of real-world installation case studies and worked examples.
+              Beyond the core regulations, the AI draws on the IET On-Site Guide, which provides
+              simplified tables and procedures for common installation work; all eight IET Guidance
+              Notes covering selection and erection, inspection and testing, protection against
+              overcurrent, protection against fire, protection against electric shock, protection
+              against electromagnetic disturbances, special installations and locations, and
+              earthing and bonding; and a curated library of real-world installation case studies
+              and worked examples.
             </p>
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
@@ -501,7 +534,10 @@ export default function AIElectricianToolsPage() {
               'GN3: Inspection & Testing (9th Edition)',
               'Real-world installation case studies',
             ].map((item) => (
-              <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
+              <div
+                key={item}
+                className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
+              >
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0" />
                 <span className="text-white text-sm font-medium">{item}</span>
               </div>

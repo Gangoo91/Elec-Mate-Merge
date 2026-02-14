@@ -198,9 +198,15 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -208,14 +214,18 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671:2018+A3:2024 Regulation 434.5.1</span>
+            <span className="text-sm font-medium text-yellow-400">
+              BS 7671:2018+A3:2024 Regulation 434.5.1
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            <span className="text-yellow-400">Prospective Fault Current</span> Calculator for Electricians
+            <span className="text-yellow-400">Prospective Fault Current</span> Calculator for
+            Electricians
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            Calculate PSCC and PEFC instantly on your phone. Verify protective device breaking capacity, check
-            compliance with BS 7671, and access 70 electrical calculators — all in one app.
+            Calculate PSCC and PEFC instantly on your phone. Verify protective device breaking
+            capacity, check compliance with BS 7671, and access 70 electrical calculators — all in
+            one app.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -242,32 +252,36 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Prospective fault current (PFC) is the maximum current that would flow at a given point in an electrical
-              installation if a fault of negligible impedance occurred at that point. It is a theoretical maximum —
-              the worst-case fault current that the installation could produce if everything went wrong. Understanding
-              and calculating this value is fundamental to safe electrical installation design because it determines
+              Prospective fault current (PFC) is the maximum current that would flow at a given
+              point in an electrical installation if a fault of negligible impedance occurred at
+              that point. It is a theoretical maximum — the worst-case fault current that the
+              installation could produce if everything went wrong. Understanding and calculating
+              this value is fundamental to safe electrical installation design because it determines
               what the protective devices must be capable of handling.
             </p>
             <p>
-              There are two types of prospective fault current that electricians need to consider. Prospective
-              short-circuit current (PSCC) is the fault current that would flow between line and neutral conductors
-              if they were short-circuited. Prospective earth fault current (PEFC) is the fault current that would
-              flow between a line conductor and earth if a fault to earth occurred. PSCC is always the higher of
-              the two because the line-neutral loop has lower impedance than the earth fault loop (the earth path
+              There are two types of prospective fault current that electricians need to consider.
+              Prospective short-circuit current (PSCC) is the fault current that would flow between
+              line and neutral conductors if they were short-circuited. Prospective earth fault
+              current (PEFC) is the fault current that would flow between a line conductor and earth
+              if a fault to earth occurred. PSCC is always the higher of the two because the
+              line-neutral loop has lower impedance than the earth fault loop (the earth path
               includes the resistance of the protective conductors, which adds impedance).
             </p>
             <p>
-              The value of prospective fault current at any point in an installation depends on the source impedance
-              (how stiff the supply is), the impedance of the cables between the supply and the point of interest,
-              and the nominal voltage. A property close to a distribution transformer on thick cables will have a
-              high prospective fault current. A property at the end of a long overhead line on thin conductors will
-              have a low prospective fault current.
+              The value of prospective fault current at any point in an installation depends on the
+              source impedance (how stiff the supply is), the impedance of the cables between the
+              supply and the point of interest, and the nominal voltage. A property close to a
+              distribution transformer on thick cables will have a high prospective fault current. A
+              property at the end of a long overhead line on thin conductors will have a low
+              prospective fault current.
             </p>
             <p>
-              BS 7671 requires that prospective fault current is determined at the origin of every installation and at
-              other relevant points (Regulation 434.5.1 and Regulation 643.7). This measurement or calculation is a
-              mandatory part of initial verification and periodic inspection, and the values must be recorded on the
-              electrical installation certificate or condition report.
+              BS 7671 requires that prospective fault current is determined at the origin of every
+              installation and at other relevant points (Regulation 434.5.1 and Regulation 643.7).
+              This measurement or calculation is a mandatory part of initial verification and
+              periodic inspection, and the values must be recorded on the electrical installation
+              certificate or condition report.
             </p>
           </div>
         </div>
@@ -281,9 +295,9 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The calculation is based on a simple application of Ohm's law. For a fault of negligible impedance,
-              the fault current is limited only by the impedance of the supply and the conductors in the fault loop.
-              The formula is:
+              The calculation is based on a simple application of Ohm's law. For a fault of
+              negligible impedance, the fault current is limited only by the impedance of the supply
+              and the conductors in the fault loop. The formula is:
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-yellow-500/20 p-6 my-6 text-center">
@@ -291,25 +305,32 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               Ipf = Uo / Zloop
             </p>
             <div className="space-y-1 text-white text-sm">
-              <p><strong>Ipf</strong> = Prospective fault current (amperes)</p>
-              <p><strong>Uo</strong> = Nominal voltage to earth (230 V in the UK)</p>
-              <p><strong>Zloop</strong> = Total loop impedance of the fault path (ohms)</p>
+              <p>
+                <strong>Ipf</strong> = Prospective fault current (amperes)
+              </p>
+              <p>
+                <strong>Uo</strong> = Nominal voltage to earth (230 V in the UK)
+              </p>
+              <p>
+                <strong>Zloop</strong> = Total loop impedance of the fault path (ohms)
+              </p>
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              For <strong>prospective earth fault current (PEFC)</strong>, Zloop is the earth fault loop impedance
-              (Zs), which consists of the impedance of the source (transformer winding), the line conductor from
-              the source to the point of the fault, and the return path through the protective conductor and the
-              earthing arrangement back to the source. This is the impedance measured by a loop impedance tester
-              connected between line and earth.
+              For <strong>prospective earth fault current (PEFC)</strong>, Zloop is the earth fault
+              loop impedance (Zs), which consists of the impedance of the source (transformer
+              winding), the line conductor from the source to the point of the fault, and the return
+              path through the protective conductor and the earthing arrangement back to the source.
+              This is the impedance measured by a loop impedance tester connected between line and
+              earth.
             </p>
             <p>
-              For <strong>prospective short-circuit current (PSCC)</strong>, Zloop is the impedance of the
-              line-neutral fault loop, which consists of the source impedance, the line conductor to the fault
-              point, and the neutral conductor back to the source. This impedance is lower than the earth fault
-              loop because the neutral conductor typically has lower resistance than the earth return path, so
-              PSCC is always higher than PEFC.
+              For <strong>prospective short-circuit current (PSCC)</strong>, Zloop is the impedance
+              of the line-neutral fault loop, which consists of the source impedance, the line
+              conductor to the fault point, and the neutral conductor back to the source. This
+              impedance is lower than the earth fault loop because the neutral conductor typically
+              has lower resistance than the earth return path, so PSCC is always higher than PEFC.
             </p>
           </div>
 
@@ -322,9 +343,16 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 <p>A typical domestic property with a TN-C-S (PME) supply:</p>
                 <p>Ze (external earth fault loop impedance) = 0.20 ohms</p>
                 <p>Ze measured at the consumer unit.</p>
-                <p><strong>PEFC = 230 V / 0.20 ohms = 1,150 A (1.15 kA)</strong></p>
-                <p>The line-neutral impedance is typically lower. If the supply impedance line-neutral is 0.12 ohms:</p>
-                <p><strong>PSCC = 230 V / 0.12 ohms = 1,917 A (1.92 kA)</strong></p>
+                <p>
+                  <strong>PEFC = 230 V / 0.20 ohms = 1,150 A (1.15 kA)</strong>
+                </p>
+                <p>
+                  The line-neutral impedance is typically lower. If the supply impedance
+                  line-neutral is 0.12 ohms:
+                </p>
+                <p>
+                  <strong>PSCC = 230 V / 0.12 ohms = 1,917 A (1.92 kA)</strong>
+                </p>
                 <p>A standard 6 kA MCB is more than adequate for this installation.</p>
               </div>
             </div>
@@ -334,10 +362,17 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 <p>A commercial unit close to a distribution transformer:</p>
                 <p>Ze (external earth fault loop impedance) = 0.08 ohms</p>
                 <p>This is a stiffer supply with lower impedance.</p>
-                <p><strong>PEFC = 230 V / 0.08 ohms = 2,875 A (2.88 kA)</strong></p>
+                <p>
+                  <strong>PEFC = 230 V / 0.08 ohms = 2,875 A (2.88 kA)</strong>
+                </p>
                 <p>If the line-neutral impedance is 0.03 ohms:</p>
-                <p><strong>PSCC = 230 V / 0.03 ohms = 7,667 A (7.67 kA)</strong></p>
-                <p>A standard 6 kA MCB would NOT be adequate. 10 kA rated devices are required, or backup protection must be verified.</p>
+                <p>
+                  <strong>PSCC = 230 V / 0.03 ohms = 7,667 A (7.67 kA)</strong>
+                </p>
+                <p>
+                  A standard 6 kA MCB would NOT be adequate. 10 kA rated devices are required, or
+                  backup protection must be verified.
+                </p>
               </div>
             </div>
           </div>
@@ -352,31 +387,35 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Prospective fault current is not an abstract theoretical concept — it has direct, practical consequences
-              for the safety of every electrical installation. The primary reason it matters is the selection of
-              protective devices with adequate breaking capacity.
+              Prospective fault current is not an abstract theoretical concept — it has direct,
+              practical consequences for the safety of every electrical installation. The primary
+              reason it matters is the selection of protective devices with adequate breaking
+              capacity.
             </p>
             <p>
-              Every circuit breaker, fuse, and RCBO has a rated breaking capacity — the maximum fault current it can
-              safely interrupt. If a fault occurs and the prospective fault current exceeds the device's breaking
-              capacity, the device may not be able to clear the fault. The consequences can be severe: the contacts
-              may weld together, the arc may not be extinguished, and the device may rupture, potentially causing an
-              arc flash, fire, or explosion. This is not a theoretical risk — it happens in practice when
+              Every circuit breaker, fuse, and RCBO has a rated breaking capacity — the maximum
+              fault current it can safely interrupt. If a fault occurs and the prospective fault
+              current exceeds the device's breaking capacity, the device may not be able to clear
+              the fault. The consequences can be severe: the contacts may weld together, the arc may
+              not be extinguished, and the device may rupture, potentially causing an arc flash,
+              fire, or explosion. This is not a theoretical risk — it happens in practice when
               installations are designed without properly considering the prospective fault current.
             </p>
             <p>
-              BS 7671 Regulation 434.5.1 states: "The prospective fault current shall be determined at every
-              relevant point of the installation. The breaking capacity of each protective device shall be not less
-              than the prospective fault current at the point at which the device is installed." This is a
-              fundamental safety requirement, and verifying it is a mandatory part of both initial verification
-              (when a new installation is commissioned) and periodic inspection (EICR).
+              BS 7671 Regulation 434.5.1 states: "The prospective fault current shall be determined
+              at every relevant point of the installation. The breaking capacity of each protective
+              device shall be not less than the prospective fault current at the point at which the
+              device is installed." This is a fundamental safety requirement, and verifying it is a
+              mandatory part of both initial verification (when a new installation is commissioned)
+              and periodic inspection (EICR).
             </p>
             <p>
-              In domestic installations, the prospective fault current at the consumer unit rarely exceeds 6 kA,
-              so standard domestic MCBs (rated 6 kA) are usually adequate. But in commercial and industrial
-              installations, or in domestic properties very close to a transformer, the PFC can exceed 6 kA. In
-              these cases, MCBs with higher breaking capacities (10 kA, 16 kA, or even 25 kA) or moulded-case
-              circuit breakers (MCCBs) are required.
+              In domestic installations, the prospective fault current at the consumer unit rarely
+              exceeds 6 kA, so standard domestic MCBs (rated 6 kA) are usually adequate. But in
+              commercial and industrial installations, or in domestic properties very close to a
+              transformer, the PFC can exceed 6 kA. In these cases, MCBs with higher breaking
+              capacities (10 kA, 16 kA, or even 25 kA) or moulded-case circuit breakers (MCCBs) are
+              required.
             </p>
           </div>
         </div>
@@ -390,26 +429,29 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-8">
             <p>
-              While the PFC formula is simple, getting the input values right and checking the results against
-              protective device specifications requires attention to detail. Elec-Mate's prospective fault current
-              calculator handles the arithmetic and the compliance check in one step.
+              While the PFC formula is simple, getting the input values right and checking the
+              results against protective device specifications requires attention to detail.
+              Elec-Mate's prospective fault current calculator handles the arithmetic and the
+              compliance check in one step.
             </p>
             <p>
-              Enter the measured impedance (or Ze plus conductor impedances if you prefer to calculate from
-              components), and the calculator gives you both PSCC and PEFC instantly. It compares the results
-              against standard MCB breaking capacities and flags any devices that would be under-rated. The
-              calculated values can be carried directly into your EICR, EIC, or Minor Works certificate without
-              re-keying.
+              Enter the measured impedance (or Ze plus conductor impedances if you prefer to
+              calculate from components), and the calculator gives you both PSCC and PEFC instantly.
+              It compares the results against standard MCB breaking capacities and flags any devices
+              that would be under-rated. The calculated values can be carried directly into your
+              EICR, EIC, or Minor Works certificate without re-keying.
             </p>
             <p>
-              The PFC calculator is one of 70 electrical calculators available in Elec-Mate — 56 technical
-              calculators covering cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking
-              fill, adiabatic equation, disconnection times, and more, plus 14 business calculators for quoting,
-              pricing, and job costing. All work offline on your phone or tablet.
+              The PFC calculator is one of 70 electrical calculators available in Elec-Mate — 56
+              technical calculators covering cable sizing, voltage drop, maximum demand, diversity,
+              conduit fill, trunking fill, adiabatic equation, disconnection times, and more, plus
+              14 business calculators for quoting, pricing, and job costing. All work offline on
+              your phone or tablet.
             </p>
             <p>
-              Combined with 8 certificate types, 8 Elec-AI agents, 12 AI tools, 36+ training courses, and
-              integration with Xero and QuickBooks, Elec-Mate is the complete platform for UK electricians.
+              Combined with 8 certificate types, 8 Elec-AI agents, 12 AI tools, 36+ training
+              courses, and integration with Xero and QuickBooks, Elec-Mate is the complete platform
+              for UK electricians.
             </p>
           </div>
           <SEOFeatureGrid features={features} columns={3} />
@@ -423,8 +465,8 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             How to Calculate Prospective Fault Current Using Elec-Mate
           </h2>
           <p className="text-white mb-8 leading-relaxed">
-            Follow these steps to calculate prospective fault current and verify protective device breaking
-            capacity using the Elec-Mate app.
+            Follow these steps to calculate prospective fault current and verify protective device
+            breaking capacity using the Elec-Mate app.
           </p>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
@@ -453,33 +495,37 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The prospective fault current varies enormously between different types of installation, and this
-              variation has direct implications for protective device selection and installation design.
+              The prospective fault current varies enormously between different types of
+              installation, and this variation has direct implications for protective device
+              selection and installation design.
             </p>
             <p>
-              In <strong>domestic installations</strong>, the supply is typically a 100 A single-phase supply via a
-              service cable from the nearest substation. The impedance of this service cable, combined with the
-              transformer impedance, usually results in a prospective fault current between 2 kA and 6 kA at the
-              consumer unit. Standard domestic MCBs with a 6 kA breaking capacity are adequate for the vast majority
-              of domestic installations. The main areas of concern are properties very close to substations (where
-              PFC can exceed 6 kA) and properties at the end of very long service cables (where PFC may be low
-              enough to affect disconnection times).
+              In <strong>domestic installations</strong>, the supply is typically a 100 A
+              single-phase supply via a service cable from the nearest substation. The impedance of
+              this service cable, combined with the transformer impedance, usually results in a
+              prospective fault current between 2 kA and 6 kA at the consumer unit. Standard
+              domestic MCBs with a 6 kA breaking capacity are adequate for the vast majority of
+              domestic installations. The main areas of concern are properties very close to
+              substations (where PFC can exceed 6 kA) and properties at the end of very long service
+              cables (where PFC may be low enough to affect disconnection times).
             </p>
             <p>
-              In <strong>commercial installations</strong>, the picture is different. Three-phase supplies with
-              larger transformer capacities and shorter, thicker cables to the transformer can produce prospective
-              fault currents of 10 kA to 25 kA or more at the main distribution board. Sub-distribution boards
-              further from the origin will have lower PFC due to the impedance of the submain cables. In these
-              installations, the designer must carefully select protective devices at each level of distribution,
-              considering both the prospective fault current at that point and the coordination with upstream and
-              downstream devices.
+              In <strong>commercial installations</strong>, the picture is different. Three-phase
+              supplies with larger transformer capacities and shorter, thicker cables to the
+              transformer can produce prospective fault currents of 10 kA to 25 kA or more at the
+              main distribution board. Sub-distribution boards further from the origin will have
+              lower PFC due to the impedance of the submain cables. In these installations, the
+              designer must carefully select protective devices at each level of distribution,
+              considering both the prospective fault current at that point and the coordination with
+              upstream and downstream devices.
             </p>
             <p>
-              In <strong>industrial installations</strong>, particularly those with large motor loads or connection
-              to high-voltage supplies via dedicated transformers, prospective fault currents can reach 50 kA or
-              more. These installations require specialist design and the use of MCCBs, ACBs, or HRC fuses with
-              appropriately high breaking capacities. Fault level studies are often carried out as part of the design
-              process to ensure all equipment is rated correctly.
+              In <strong>industrial installations</strong>, particularly those with large motor
+              loads or connection to high-voltage supplies via dedicated transformers, prospective
+              fault currents can reach 50 kA or more. These installations require specialist design
+              and the use of MCCBs, ACBs, or HRC fuses with appropriately high breaking capacities.
+              Fault level studies are often carried out as part of the design process to ensure all
+              equipment is rated correctly.
             </p>
           </div>
         </div>
@@ -496,15 +542,16 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is designed by electricians for electricians. The prospective fault current calculator
-              is one of 70 calculators that work the way you actually need them to on site — fast, accurate, and
-              available on your phone even without a signal. Enter your measured values, get the answer, move on.
+              Elec-Mate is designed by electricians for electricians. The prospective fault current
+              calculator is one of 70 calculators that work the way you actually need them to on
+              site — fast, accurate, and available on your phone even without a signal. Enter your
+              measured values, get the answer, move on.
             </p>
             <p>
-              The platform also includes 8 certificate types (EICR, EIC, Minor Works, emergency lighting, fire
-              alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI tools, and 36+ training
-              courses. Xero and QuickBooks integration means you can manage your jobs, certificates, and invoicing
-              all from one app.
+              The platform also includes 8 certificate types (EICR, EIC, Minor Works, emergency
+              lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI
+              tools, and 36+ training courses. Xero and QuickBooks integration means you can manage
+              your jobs, certificates, and invoicing all from one app.
             </p>
           </div>
         </div>
@@ -524,11 +571,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               >
                 <summary className="flex items-center justify-between cursor-pointer p-5 text-white font-semibold text-left touch-manipulation min-h-[44px]">
                   <span>{faq.question}</span>
-                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">+</span>
+                  <span className="ml-4 shrink-0 text-yellow-400 text-xl group-open:rotate-45 transition-transform">
+                    +
+                  </span>
                 </summary>
-                <div className="px-5 pb-5 text-white text-sm leading-relaxed">
-                  {faq.answer}
-                </div>
+                <div className="px-5 pb-5 text-white text-sm leading-relaxed">{faq.answer}</div>
               </details>
             ))}
           </div>

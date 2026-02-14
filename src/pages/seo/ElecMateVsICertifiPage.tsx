@@ -62,7 +62,7 @@ const features = [
     icon: Calculator,
     title: '70 BS 7671 Calculators',
     description:
-      'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more. Far beyond iCertifi\'s basic calculator set.',
+      "Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more. Far beyond iCertifi's basic calculator set.",
   },
   {
     icon: Brain,
@@ -95,7 +95,8 @@ const softwareAppSchema = {
   name: 'Elec-Mate',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
-  description: 'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
+  description:
+    'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
   url: 'https://elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
@@ -134,8 +135,12 @@ export default function ElecMateVsICertifiPage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
       </Helmet>
 
       {/* Hero */}
@@ -143,13 +148,18 @@ export default function ElecMateVsICertifiPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">2026 Head-to-Head Comparison</span>
+            <span className="text-sm font-medium text-yellow-400">
+              2026 Head-to-Head Comparison
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            <span className="text-yellow-400">Elec-Mate</span> vs <span className="text-yellow-400">iCertifi</span>
+            <span className="text-yellow-400">Elec-Mate</span> vs{' '}
+            <span className="text-yellow-400">iCertifi</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            An honest, detailed comparison of two popular apps for UK electricians. We will cover certificates, calculators, AI tools, training, business features, pricing, and platform support — so you can make an informed choice.
+            An honest, detailed comparison of two popular apps for UK electricians. We will cover
+            certificates, calculators, AI tools, training, business features, pricing, and platform
+            support — so you can make an informed choice.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -171,21 +181,33 @@ export default function ElecMateVsICertifiPage() {
       {/* What is iCertifi */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            What Is iCertifi?
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">What Is iCertifi?</h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              iCertifi is a well-established mobile app designed for UK electricians to create electrical certificates on their phones and tablets. It has been available on both iOS and Android for several years and has built a loyal user base in the UK electrical industry.
+              iCertifi is a well-established mobile app designed for UK electricians to create
+              electrical certificates on their phones and tablets. It has been available on both iOS
+              and Android for several years and has built a loyal user base in the UK electrical
+              industry.
             </p>
             <p>
-              The app focuses primarily on certification — allowing electricians to complete EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works certificates, and some additional certificate types directly on their mobile devices. It includes digital signature capture, PDF export, and a straightforward interface designed for on-site use.
+              The app focuses primarily on certification — allowing electricians to complete EICR
+              (Electrical Installation Condition Report), EIC (Electrical Installation Certificate),
+              Minor Works certificates, and some additional certificate types directly on their
+              mobile devices. It includes digital signature capture, PDF export, and a
+              straightforward interface designed for on-site use.
             </p>
             <p>
-              iCertifi includes some basic calculators and has added features over time, but its core strength remains certification. For electricians who need a reliable, focused tool to produce certificates on site, iCertifi has earned its reputation as a dependable option. It is a well-known name in the trade and many electricians have used it for years.
+              iCertifi includes some basic calculators and has added features over time, but its
+              core strength remains certification. For electricians who need a reliable, focused
+              tool to produce certificates on site, iCertifi has earned its reputation as a
+              dependable option. It is a well-known name in the trade and many electricians have
+              used it for years.
             </p>
             <p>
-              <strong>iCertifi's strengths:</strong> Established track record, focused certificate workflow, reliable performance, familiar to many UK electricians, available on both major mobile platforms. It does what it sets out to do — certificates — and it does it well.
+              <strong>iCertifi's strengths:</strong> Established track record, focused certificate
+              workflow, reliable performance, familiar to many UK electricians, available on both
+              major mobile platforms. It does what it sets out to do — certificates — and it does it
+              well.
             </p>
           </div>
         </div>
@@ -194,18 +216,29 @@ export default function ElecMateVsICertifiPage() {
       {/* What is Elec-Mate */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            What Is Elec-Mate?
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">What Is Elec-Mate?</h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Elec-Mate is a comprehensive, all-in-one platform built for UK electricians. Rather than focusing on a single aspect of the job, it combines electrical certification, BS 7671 calculators, AI-powered tools, professional training courses, and business management into a single mobile-first app.
+              Elec-Mate is a comprehensive, all-in-one platform built for UK electricians. Rather
+              than focusing on a single aspect of the job, it combines electrical certification, BS
+              7671 calculators, AI-powered tools, professional training courses, and business
+              management into a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical Installation, AM2, EPA simulator), and business management features (job scheduling, quoting, invoicing, Stripe payments, Xero integration).
+              The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar
+              PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
+              calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide,
+              Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
+              Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical
+              Installation, AM2, EPA simulator), and business management features (job scheduling,
+              quoting, invoicing, Stripe payments, Xero integration).
             </p>
             <p>
-              Elec-Mate is a newer platform than iCertifi but was designed with the advantage of building on the lessons learned from existing tools in the market. It works on iOS, Android, and desktop via a Progressive Web App, with full offline support and automatic syncing. Pricing starts from £4.99 per month with unlimited usage across all features and a 7-day free trial.
+              Elec-Mate is a newer platform than iCertifi but was designed with the advantage of
+              building on the lessons learned from existing tools in the market. It works on iOS,
+              Android, and desktop via a Progressive Web App, with full offline support and
+              automatic syncing. Pricing starts from £4.99 per month with unlimited usage across all
+              features and a 7-day free trial.
             </p>
           </div>
         </div>
@@ -226,20 +259,39 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed mb-6">
               <p>
-                Both Elec-Mate and iCertifi support the core certificate types that UK electricians use regularly: EICR, EIC, and Minor Works. Both apps provide digital signature capture, observation coding, and PDF export. For these standard certificates, both platforms deliver a professional result.
+                Both Elec-Mate and iCertifi support the core certificate types that UK electricians
+                use regularly: EICR, EIC, and Minor Works. Both apps provide digital signature
+                capture, observation coding, and PDF export. For these standard certificates, both
+                platforms deliver a professional result.
               </p>
               <p>
-                Where they differ is in scope. Elec-Mate includes 8 certificate types in total, adding EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing certificates. As the electrical industry expands into EV charging, renewable energy, and fire safety, having these specialist certificate types available in your app saves time and eliminates the need for separate tools or paper forms.
+                Where they differ is in scope. Elec-Mate includes 8 certificate types in total,
+                adding EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency
+                Lighting, and PAT Testing certificates. As the electrical industry expands into EV
+                charging, renewable energy, and fire safety, having these specialist certificate
+                types available in your app saves time and eliminates the need for separate tools or
+                paper forms.
               </p>
               <p>
-                iCertifi offers EICR, EIC, Minor Works, and some additional certificate types. The exact offering may vary as the app continues to develop. For the standard domestic and commercial certificates, iCertifi provides a proven, reliable workflow.
+                iCertifi offers EICR, EIC, Minor Works, and some additional certificate types. The
+                exact offering may vary as the app continues to develop. For the standard domestic
+                and commercial certificates, iCertifi provides a proven, reliable workflow.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
                 <h4 className="font-bold text-white mb-3">Elec-Mate</h4>
                 <ul className="space-y-2 text-white text-sm">
-                  {['EICR', 'EIC', 'Minor Works', 'EV Charger Installation', 'Solar PV', 'Fire Alarm Commissioning', 'Emergency Lighting', 'PAT Testing'].map((cert) => (
+                  {[
+                    'EICR',
+                    'EIC',
+                    'Minor Works',
+                    'EV Charger Installation',
+                    'Solar PV',
+                    'Fire Alarm Commissioning',
+                    'Emergency Lighting',
+                    'PAT Testing',
+                  ].map((cert) => (
                     <li key={cert} className="flex items-center gap-2">
                       <Check className="w-4 h-4 text-green-400 shrink-0" />
                       <span>{cert}</span>
@@ -260,7 +312,12 @@ export default function ElecMateVsICertifiPage() {
                     <Minus className="w-4 h-4 text-yellow-400 shrink-0" />
                     <span>Additional types (varies)</span>
                   </li>
-                  {['EV Charger Installation', 'Solar PV', 'Fire Alarm Commissioning', 'Emergency Lighting'].map((cert) => (
+                  {[
+                    'EV Charger Installation',
+                    'Solar PV',
+                    'Fire Alarm Commissioning',
+                    'Emergency Lighting',
+                  ].map((cert) => (
                     <li key={cert} className="flex items-center gap-2">
                       <X className="w-4 h-4 text-red-400 shrink-0" />
                       <span>{cert}</span>
@@ -279,13 +336,27 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                This is an area of significant difference between the two platforms. Elec-Mate includes over 70 specialist electrical calculators that reference BS 7671:2018+A3:2024 tables directly. These cover cable sizing (Appendix 4 method), voltage drop verification, maximum demand calculations, diversity factors, conduit and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault current, disconnection time verification, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more.
+                This is an area of significant difference between the two platforms. Elec-Mate
+                includes over 70 specialist electrical calculators that reference BS
+                7671:2018+A3:2024 tables directly. These cover cable sizing (Appendix 4 method),
+                voltage drop verification, maximum demand calculations, diversity factors, conduit
+                and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault
+                current, disconnection time verification, cable derating for grouping and ambient
+                temperature, adiabatic equation for protective conductor sizing, and many more.
               </p>
               <p>
-                iCertifi includes a more limited selection of calculators. The available calculations may be sufficient for basic domestic work, but electricians who regularly perform complex calculations — commercial installations, industrial work, or any project requiring detailed cable sizing and verification — will find Elec-Mate's calculator suite significantly more comprehensive.
+                iCertifi includes a more limited selection of calculators. The available
+                calculations may be sufficient for basic domestic work, but electricians who
+                regularly perform complex calculations — commercial installations, industrial work,
+                or any project requiring detailed cable sizing and verification — will find
+                Elec-Mate's calculator suite significantly more comprehensive.
               </p>
               <p>
-                For context, having the right calculator to hand on site can save 15 to 20 minutes per calculation compared to looking up tables in the book and working through the maths manually. Across a week of work, comprehensive calculators easily save hours of time and reduce the risk of calculation errors that could lead to non-compliant installations.
+                For context, having the right calculator to hand on site can save 15 to 20 minutes
+                per calculation compared to looking up tables in the book and working through the
+                maths manually. Across a week of work, comprehensive calculators easily save hours
+                of time and reduce the risk of calculation errors that could lead to non-compliant
+                installations.
               </p>
             </div>
           </div>
@@ -298,32 +369,55 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                This is the clearest differentiator. iCertifi does not include any AI tools. Elec-Mate includes eight Elec-AI specialist agents and 12 AI-powered tools, each designed for a specific aspect of electrical work:
+                This is the clearest differentiator. iCertifi does not include any AI tools.
+                Elec-Mate includes eight Elec-AI specialist agents and 12 AI-powered tools, each
+                designed for a specific aspect of electrical work:
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Circuit Designer:</strong> Helps plan circuit layouts, checks against BS 7671 requirements, considers diversity, cable grouping, and protective device coordination.</span>
+                  <span>
+                    <strong>Circuit Designer:</strong> Helps plan circuit layouts, checks against BS
+                    7671 requirements, considers diversity, cable grouping, and protective device
+                    coordination.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Cost Engineer:</strong> Uses real trade pricing data and labour timing intelligence to produce accurate job estimates. Helps you quote competitively without undercharging.</span>
+                  <span>
+                    <strong>Cost Engineer:</strong> Uses real trade pricing data and labour timing
+                    intelligence to produce accurate job estimates. Helps you quote competitively
+                    without undercharging.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Installation Guide:</strong> Provides step-by-step guidance for specific installation scenarios, referencing relevant regulations and best practices.</span>
+                  <span>
+                    <strong>Installation Guide:</strong> Provides step-by-step guidance for specific
+                    installation scenarios, referencing relevant regulations and best practices.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Maintenance Agent:</strong> Helps diagnose faults and plan maintenance schedules based on installation characteristics and manufacturer recommendations.</span>
+                  <span>
+                    <strong>Maintenance Agent:</strong> Helps diagnose faults and plan maintenance
+                    schedules based on installation characteristics and manufacturer
+                    recommendations.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-                  <span><strong>Health & Safety:</strong> Generates site-specific RAMS tailored to your electrical work, rather than generic templates.</span>
+                  <span>
+                    <strong>Health & Safety:</strong> Generates site-specific RAMS tailored to your
+                    electrical work, rather than generic templates.
+                  </span>
                 </li>
               </ul>
               <p>
-                If you are an electrician who occasionally needs to estimate job costs, plan circuits, or produce RAMS for commercial work, these AI tools can save significant time. If you never need these capabilities, this difference may not matter to you — and that is perfectly fine. Not every electrician needs AI tools.
+                If you are an electrician who occasionally needs to estimate job costs, plan
+                circuits, or produce RAMS for commercial work, these AI tools can save significant
+                time. If you never need these capabilities, this difference may not matter to you —
+                and that is perfectly fine. Not every electrician needs AI tools.
               </p>
             </div>
           </div>
@@ -336,13 +430,22 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                iCertifi does not include a training platform. It is a tool for working electricians, not a learning resource. This is a reasonable design decision — not every app needs to be everything to everyone.
+                iCertifi does not include a training platform. It is a tool for working
+                electricians, not a learning resource. This is a reasonable design decision — not
+                every app needs to be everything to everyone.
               </p>
               <p>
-                Elec-Mate, by contrast, includes a full training platform with courses covering the 18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, and an End Point Assessment (EPA) simulator. These courses are built into the app and accessible on any device.
+                Elec-Mate, by contrast, includes a full training platform with courses covering the
+                18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3 Electrical
+                Installation, AM2 assessment preparation, and an End Point Assessment (EPA)
+                simulator. These courses are built into the app and accessible on any device.
               </p>
               <p>
-                This matters most for apprentices and electricians who are studying for qualifications or revising for regulation updates. Having training material in the same app you use for work means you can study between jobs or during quiet periods without needing a separate platform. It also means employers can provide their apprentices with a single app that covers both training and practical tools.
+                This matters most for apprentices and electricians who are studying for
+                qualifications or revising for regulation updates. Having training material in the
+                same app you use for work means you can study between jobs or during quiet periods
+                without needing a separate platform. It also means employers can provide their
+                apprentices with a single app that covers both training and practical tools.
               </p>
             </div>
           </div>
@@ -355,13 +458,23 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                iCertifi includes some basic business features, but its primary focus is certification. For full business management — quoting, invoicing, job scheduling, client management, payment collection, and accounting integration — you would typically need separate software.
+                iCertifi includes some basic business features, but its primary focus is
+                certification. For full business management — quoting, invoicing, job scheduling,
+                client management, payment collection, and accounting integration — you would
+                typically need separate software.
               </p>
               <p>
-                Elec-Mate includes business management features as part of the platform. You can create professional quotes, convert them to jobs, schedule work, generate invoices, collect payments via Stripe, and sync with Xero for accounting — all from the same app. For sole traders and small contractors, this eliminates the need for separate invoicing software, project management tools, and payment platforms.
+                Elec-Mate includes business management features as part of the platform. You can
+                create professional quotes, convert them to jobs, schedule work, generate invoices,
+                collect payments via Stripe, and sync with Xero for accounting — all from the same
+                app. For sole traders and small contractors, this eliminates the need for separate
+                invoicing software, project management tools, and payment platforms.
               </p>
               <p>
-                The ability to complete a certificate on site, generate an invoice from the job details, and send both to the client via email before leaving the property is a workflow that saves time every single day. It also improves cash flow, because you are invoicing immediately rather than waiting until you are back at a desk.
+                The ability to complete a certificate on site, generate an invoice from the job
+                details, and send both to the client via email before leaving the property is a
+                workflow that saves time every single day. It also improves cash flow, because you
+                are invoicing immediately rather than waiting until you are back at a desk.
               </p>
             </div>
           </div>
@@ -374,13 +487,24 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                iCertifi uses a subscription model with various tiers. Pricing may include per-certificate charges or tiered feature access depending on the plan you choose. Check their current pricing on their website for the latest figures, as pricing structures can change.
+                iCertifi uses a subscription model with various tiers. Pricing may include
+                per-certificate charges or tiered feature access depending on the plan you choose.
+                Check their current pricing on their website for the latest figures, as pricing
+                structures can change.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All features are included at every tier — all 8 certificate types, all 70 calculators, all 8 Elec-AI tools, all training courses, and all business management features. There are no per-certificate charges and no feature gating. Every plan includes a 7-day free trial with full access.
+                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All
+                features are included at every tier — all 8 certificate types, all 70 calculators,
+                all 8 Elec-AI tools, all training courses, and all business management features.
+                There are no per-certificate charges and no feature gating. Every plan includes a
+                7-day free trial with full access.
               </p>
               <p>
-                The value calculation is straightforward: if you use certificates, calculators, and any of the additional features (AI tools, training, or business management), Elec-Mate provides significantly more value per pound spent. If you only need basic certificates and nothing else, iCertifi may be sufficient — and you should choose the tool that matches your actual needs.
+                The value calculation is straightforward: if you use certificates, calculators, and
+                any of the additional features (AI tools, training, or business management),
+                Elec-Mate provides significantly more value per pound spent. If you only need basic
+                certificates and nothing else, iCertifi may be sufficient — and you should choose
+                the tool that matches your actual needs.
               </p>
             </div>
           </div>
@@ -393,10 +517,18 @@ export default function ElecMateVsICertifiPage() {
             </h3>
             <div className="space-y-4 text-white leading-relaxed">
               <p>
-                Both iCertifi and Elec-Mate work on iOS and Android, the two major mobile platforms. Elec-Mate additionally works on desktop computers via a Progressive Web App (PWA), which is useful for office-based tasks like reviewing certificates, managing quotes, or studying training material on a larger screen.
+                Both iCertifi and Elec-Mate work on iOS and Android, the two major mobile platforms.
+                Elec-Mate additionally works on desktop computers via a Progressive Web App (PWA),
+                which is useful for office-based tasks like reviewing certificates, managing quotes,
+                or studying training material on a larger screen.
               </p>
               <p>
-                Offline support is critical for electricians who work in locations without mobile signal. Elec-Mate provides full offline support with automatic local saves every 10 seconds and cloud syncing every 30 seconds when connectivity returns. This means you can complete certificates, run calculations, and work normally even in basements, plant rooms, or remote locations. iCertifi's offline capabilities may vary by feature — check their latest documentation for specifics.
+                Offline support is critical for electricians who work in locations without mobile
+                signal. Elec-Mate provides full offline support with automatic local saves every 10
+                seconds and cloud syncing every 30 seconds when connectivity returns. This means you
+                can complete certificates, run calculations, and work normally even in basements,
+                plant rooms, or remote locations. iCertifi's offline capabilities may vary by
+                feature — check their latest documentation for specifics.
               </p>
             </div>
           </div>
@@ -415,7 +547,10 @@ export default function ElecMateVsICertifiPage() {
               <ul className="space-y-3 text-white text-sm">
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-white mt-0.5 shrink-0" />
-                  <span>You only need to produce standard electrical certificates (EICR, EIC, Minor Works)</span>
+                  <span>
+                    You only need to produce standard electrical certificates (EICR, EIC, Minor
+                    Works)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-white mt-0.5 shrink-0" />
@@ -423,11 +558,16 @@ export default function ElecMateVsICertifiPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-white mt-0.5 shrink-0" />
-                  <span>You do not need extensive calculators, AI tools, training, or business management</span>
+                  <span>
+                    You do not need extensive calculators, AI tools, training, or business
+                    management
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-white mt-0.5 shrink-0" />
-                  <span>You already use and are comfortable with iCertifi and have no unmet needs</span>
+                  <span>
+                    You already use and are comfortable with iCertifi and have no unmet needs
+                  </span>
                 </li>
               </ul>
             </div>
@@ -436,23 +576,37 @@ export default function ElecMateVsICertifiPage() {
               <ul className="space-y-3 text-white text-sm">
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You want certificates, calculators, AI tools, training, and business management in one app</span>
+                  <span>
+                    You want certificates, calculators, AI tools, training, and business management
+                    in one app
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You need specialist certificates (EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT)</span>
+                  <span>
+                    You need specialist certificates (EV Charger, Solar PV, Fire Alarm, Emergency
+                    Lighting, PAT)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You regularly perform BS 7671 calculations and want 70 calculators at your fingertips</span>
+                  <span>
+                    You regularly perform BS 7671 calculations and want 70 calculators at your
+                    fingertips
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You want to quote, invoice, and collect payments from the same app you use for certificates</span>
+                  <span>
+                    You want to quote, invoice, and collect payments from the same app you use for
+                    certificates
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                  <span>You are an apprentice who needs both training material and professional tools</span>
+                  <span>
+                    You are an apprentice who needs both training material and professional tools
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -467,18 +621,25 @@ export default function ElecMateVsICertifiPage() {
       {/* The Bottom Line */}
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            The Bottom Line
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">The Bottom Line</h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              iCertifi is a solid, established app that does certificates well. It has earned its place in the market and continues to serve UK electricians reliably. If certificates are your only need, it is a perfectly reasonable choice.
+              iCertifi is a solid, established app that does certificates well. It has earned its
+              place in the market and continues to serve UK electricians reliably. If certificates
+              are your only need, it is a perfectly reasonable choice.
             </p>
             <p>
-              Elec-Mate offers significantly more. By combining certificates with 70 calculators, 8 Elec-AI specialist tools, full training courses, and business management features, it eliminates the need for multiple separate apps and subscriptions. For the majority of UK electricians — whether sole traders, small contractors, or apprentices — the all-in-one approach saves both time and money.
+              Elec-Mate offers significantly more. By combining certificates with 70 calculators, 8
+              Elec-AI specialist tools, full training courses, and business management features, it
+              eliminates the need for multiple separate apps and subscriptions. For the majority of
+              UK electricians — whether sole traders, small contractors, or apprentices — the
+              all-in-one approach saves both time and money.
             </p>
             <p>
-              The best way to decide is to try both. Elec-Mate offers a 7-day free trial with full access to every feature, so you can compare the experience directly with whatever you are currently using. There is no commitment and no payment details required upfront for the trial period.
+              The best way to decide is to try both. Elec-Mate offers a 7-day free trial with full
+              access to every feature, so you can compare the experience directly with whatever you
+              are currently using. There is no commitment and no payment details required upfront
+              for the trial period.
             </p>
           </div>
         </div>

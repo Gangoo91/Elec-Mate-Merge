@@ -173,9 +173,15 @@ export default function EICCertificatePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...softwareAppSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...howToSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -191,7 +197,9 @@ export default function EICCertificatePage() {
             <span className="block text-yellow-400 mt-1">Electrical Installation Certificate</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Create Electrical Installation Certificates on site in minutes. Design, construction, inspection, and testing sections with digital signatures, test result validation, and instant PDF export.
+            Create Electrical Installation Certificates on site in minutes. Design, construction,
+            inspection, and testing sections with digital signatures, test result validation, and
+            instant PDF export.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -219,20 +227,44 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is an Electrical Installation Certificate (EIC)?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              What Is an Electrical Installation Certificate (EIC)?
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              An Electrical Installation Certificate (EIC) is the formal document issued upon completion of a new electrical installation or the installation of new circuits. It is required by BS 7671 Regulation 631.1, which states that upon completion of the verification of a new installation or an addition or alteration to an existing installation which includes new circuits, an Electrical Installation Certificate shall be provided.
+              An Electrical Installation Certificate (EIC) is the formal document issued upon
+              completion of a new electrical installation or the installation of new circuits. It is
+              required by BS 7671 Regulation 631.1, which states that upon completion of the
+              verification of a new installation or an addition or alteration to an existing
+              installation which includes new circuits, an Electrical Installation Certificate shall
+              be provided.
             </p>
             <p>
-              The EIC serves as a declaration that the electrical installation work has been designed, constructed, inspected, and tested in accordance with BS 7671 (the IET Wiring Regulations). It is the most comprehensive of the three main electrical certificates — the others being the Minor Electrical Installation Works Certificate (for additions and alterations to existing circuits) and the Electrical Installation Condition Report (EICR, for periodic inspection and testing of existing installations).
+              The EIC serves as a declaration that the electrical installation work has been
+              designed, constructed, inspected, and tested in accordance with BS 7671 (the IET
+              Wiring Regulations). It is the most comprehensive of the three main electrical
+              certificates — the others being the Minor Electrical Installation Works Certificate
+              (for additions and alterations to existing circuits) and the Electrical Installation
+              Condition Report (EICR, for periodic inspection and testing of existing
+              installations).
             </p>
             <p>
-              The certificate is not just a formality. It carries legal significance. The person or persons signing the EIC are making a declaration that the work complies with the current edition of BS 7671. If the work is subsequently found to be non-compliant and causes damage or injury, the signatories may be held legally liable. For this reason, the EIC requires careful completion, accurate test results, and genuine competence in all three areas covered by the certificate: design, construction, and inspection and testing.
+              The certificate is not just a formality. It carries legal significance. The person or
+              persons signing the EIC are making a declaration that the work complies with the
+              current edition of BS 7671. If the work is subsequently found to be non-compliant and
+              causes damage or injury, the signatories may be held legally liable. For this reason,
+              the EIC requires careful completion, accurate test results, and genuine competence in
+              all three areas covered by the certificate: design, construction, and inspection and
+              testing.
             </p>
             <p>
-              An EIC should be issued for all new installations including complete rewires, new-build properties, and commercial fit-outs. It must also be issued for any work on an existing installation that involves the creation of new circuits — for example, installing a new radial circuit for an electric shower, a new dedicated cooker circuit, a new ring final circuit for an extension, or an EV charger installation requiring a new circuit from the consumer unit.
+              An EIC should be issued for all new installations including complete rewires,
+              new-build properties, and commercial fit-outs. It must also be issued for any work on
+              an existing installation that involves the creation of new circuits — for example,
+              installing a new radial circuit for an electric shower, a new dedicated cooker
+              circuit, a new ring final circuit for an extension, or an EV charger installation
+              requiring a new circuit from the consumer unit.
             </p>
           </div>
         </div>
@@ -245,11 +277,17 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Eye className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">EIC vs Minor Works — When to Use Each Certificate</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              EIC vs Minor Works — When to Use Each Certificate
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The distinction between an EIC and a Minor Works certificate is straightforward in principle: if you are installing a new circuit, you need an EIC. If you are making an addition or alteration to an existing circuit without creating a new one, you need a Minor Works certificate. In practice, however, there are grey areas that cause confusion.
+              The distinction between an EIC and a Minor Works certificate is straightforward in
+              principle: if you are installing a new circuit, you need an EIC. If you are making an
+              addition or alteration to an existing circuit without creating a new one, you need a
+              Minor Works certificate. In practice, however, there are grey areas that cause
+              confusion.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
@@ -318,7 +356,14 @@ export default function EICCertificatePage() {
               </div>
             </div>
             <p>
-              A useful rule of thumb: if you are running a new cable from the distribution board with a new protective device (MCB or RCBO), you are installing a new circuit and need an EIC. If you are connecting into an existing circuit at any point without adding a new protective device at the board, it is minor works and requires a Minor Works certificate. Consumer unit replacement is an edge case — since it involves alterations to existing circuits rather than new circuit installation, many contractors issue a Minor Works certificate for each circuit, though some scheme providers prefer an EIC. Always check with your registration body if in doubt.
+              A useful rule of thumb: if you are running a new cable from the distribution board
+              with a new protective device (MCB or RCBO), you are installing a new circuit and need
+              an EIC. If you are connecting into an existing circuit at any point without adding a
+              new protective device at the board, it is minor works and requires a Minor Works
+              certificate. Consumer unit replacement is an edge case — since it involves alterations
+              to existing circuits rather than new circuit installation, many contractors issue a
+              Minor Works certificate for each circuit, though some scheme providers prefer an EIC.
+              Always check with your registration body if in doubt.
             </p>
           </div>
         </div>
@@ -331,34 +376,70 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Users className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">The Three Responsible Persons on an EIC</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              The Three Responsible Persons on an EIC
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Unlike the Minor Works certificate (which has a single combined signature), the EIC has three distinct signature blocks for three different roles. Each signatory is making a separate declaration of competence and responsibility for their part of the work. Understanding these roles is essential for correct completion of the certificate.
+              Unlike the Minor Works certificate (which has a single combined signature), the EIC
+              has three distinct signature blocks for three different roles. Each signatory is
+              making a separate declaration of competence and responsibility for their part of the
+              work. Understanding these roles is essential for correct completion of the
+              certificate.
             </p>
             <div className="space-y-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">The Designer</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The designer is responsible for the design of the electrical installation. By signing, they declare that the design complies with BS 7671 and that they have taken into account all relevant factors including the maximum demand, diversity, cable sizing, voltage drop, protective device selection, earthing arrangements, and external influences. The design must ensure that the installation will be safe and will function correctly throughout its intended life. The designer must be competent in electrical design — holding appropriate qualifications and having sufficient experience for the complexity of the installation.
+                  The designer is responsible for the design of the electrical installation. By
+                  signing, they declare that the design complies with BS 7671 and that they have
+                  taken into account all relevant factors including the maximum demand, diversity,
+                  cable sizing, voltage drop, protective device selection, earthing arrangements,
+                  and external influences. The design must ensure that the installation will be safe
+                  and will function correctly throughout its intended life. The designer must be
+                  competent in electrical design — holding appropriate qualifications and having
+                  sufficient experience for the complexity of the installation.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">The Constructor (Installer)</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  The Constructor (Installer)
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The constructor is responsible for the physical construction of the electrical installation. By signing, they declare that the installation has been constructed in accordance with the design and in compliance with BS 7671. This covers all aspects of the physical work: cable routing, cable support and fixings, terminations, connections, accessory mounting, distribution board wiring, earthing and bonding connections, labelling, and all other elements of the physical installation. The constructor must be competent in electrical installation work.
+                  The constructor is responsible for the physical construction of the electrical
+                  installation. By signing, they declare that the installation has been constructed
+                  in accordance with the design and in compliance with BS 7671. This covers all
+                  aspects of the physical work: cable routing, cable support and fixings,
+                  terminations, connections, accessory mounting, distribution board wiring, earthing
+                  and bonding connections, labelling, and all other elements of the physical
+                  installation. The constructor must be competent in electrical installation work.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">The Inspector (and Tester)</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  The Inspector (and Tester)
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The inspector is responsible for the inspection and testing of the completed installation. By signing, they declare that the installation has been inspected and tested in accordance with BS 7671 Chapter 6 and that the results confirm compliance with the standard. The inspector must carry out a detailed visual inspection using the schedule of inspections, then perform the full suite of tests including continuity, insulation resistance, polarity, earth fault loop impedance, prospective fault current, and RCD operation. The inspector must hold an appropriate inspection and testing qualification (such as C&G 2391) and be competent in the use of test instruments.
+                  The inspector is responsible for the inspection and testing of the completed
+                  installation. By signing, they declare that the installation has been inspected
+                  and tested in accordance with BS 7671 Chapter 6 and that the results confirm
+                  compliance with the standard. The inspector must carry out a detailed visual
+                  inspection using the schedule of inspections, then perform the full suite of tests
+                  including continuity, insulation resistance, polarity, earth fault loop impedance,
+                  prospective fault current, and RCD operation. The inspector must hold an
+                  appropriate inspection and testing qualification (such as C&G 2391) and be
+                  competent in the use of test instruments.
                 </p>
               </div>
             </div>
             <p>
-              On most domestic jobs carried out by a sole trader or small firm, the same person fulfils all three roles. This is perfectly acceptable under BS 7671, provided the person is competent in all three areas. The person signs the certificate three times — once as designer, once as constructor, and once as inspector. On larger commercial or industrial projects, these roles are frequently split between different individuals or firms, each signing only for the work they have carried out.
+              On most domestic jobs carried out by a sole trader or small firm, the same person
+              fulfils all three roles. This is perfectly acceptable under BS 7671, provided the
+              person is competent in all three areas. The person signs the certificate three times —
+              once as designer, once as constructor, and once as inspector. On larger commercial or
+              industrial projects, these roles are frequently split between different individuals or
+              firms, each signing only for the work they have carried out.
             </p>
           </div>
         </div>
@@ -371,47 +452,86 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Sections of the EIC Form Explained</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Sections of the EIC Form Explained
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The EIC form, as specified in BS 7671 Appendix 6, is divided into several parts. Each must be completed accurately for the certificate to be valid. Understanding the purpose and content of each section ensures your certificates are thorough, compliant, and capable of withstanding scrutiny from scheme inspectors and building control officers.
+              The EIC form, as specified in BS 7671 Appendix 6, is divided into several parts. Each
+              must be completed accurately for the certificate to be valid. Understanding the
+              purpose and content of each section ensures your certificates are thorough, compliant,
+              and capable of withstanding scrutiny from scheme inspectors and building control
+              officers.
             </p>
             <div className="space-y-4 my-6">
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 1: Details of the Contractor</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 1: Details of the Contractor
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The trading title, address, telephone number, and registration details of the contractor responsible for the work. If different firms are responsible for design, construction, and inspection, the details of each firm must be recorded. Include your competent person scheme membership number (e.g. NICEIC, NAPIT, ELECSA enrolment number).
+                  The trading title, address, telephone number, and registration details of the
+                  contractor responsible for the work. If different firms are responsible for
+                  design, construction, and inspection, the details of each firm must be recorded.
+                  Include your competent person scheme membership number (e.g. NICEIC, NAPIT, ELECSA
+                  enrolment number).
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 2: Details of the Installation</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 2: Details of the Installation
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The address and occupier of the installation, a description of the installation (e.g. "Complete rewire of three-bedroom semi-detached dwelling" or "New circuit for electric vehicle charge point"), and the extent of the work covered by this certificate. Also record whether the installation is new or an addition/alteration to an existing installation.
+                  The address and occupier of the installation, a description of the installation
+                  (e.g. "Complete rewire of three-bedroom semi-detached dwelling" or "New circuit
+                  for electric vehicle charge point"), and the extent of the work covered by this
+                  certificate. Also record whether the installation is new or an addition/alteration
+                  to an existing installation.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 3: Design</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The supply characteristics (earthing system, number of phases, nominal voltage, prospective fault current, external earth fault loop impedance Ze), the means of earthing, the characteristics of the overcurrent protective devices, and any departures from BS 7671 with reasons. The designer signs this section to confirm the design complies with the standard.
+                  The supply characteristics (earthing system, number of phases, nominal voltage,
+                  prospective fault current, external earth fault loop impedance Ze), the means of
+                  earthing, the characteristics of the overcurrent protective devices, and any
+                  departures from BS 7671 with reasons. The designer signs this section to confirm
+                  the design complies with the standard.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 4: Construction</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Confirmation that the construction follows the design, details of the wiring systems used, and the signature of the constructor. Any deviations from the original design that were agreed during construction should be noted and the design section updated accordingly.
+                  Confirmation that the construction follows the design, details of the wiring
+                  systems used, and the signature of the constructor. Any deviations from the
+                  original design that were agreed during construction should be noted and the
+                  design section updated accordingly.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 5: Inspection (Schedule of Inspections)</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 5: Inspection (Schedule of Inspections)
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  A comprehensive visual inspection checklist covering: connections at accessories and equipment, correct identification of conductors, routing of cables in safe zones, presence and condition of fire barriers, protective devices correctly rated and selected, RCD types correct for the loads served, earthing and bonding connections secure, labels and warning notices in place, IP ratings appropriate for the environment, and all other items listed in the BS 7671 model form.
+                  A comprehensive visual inspection checklist covering: connections at accessories
+                  and equipment, correct identification of conductors, routing of cables in safe
+                  zones, presence and condition of fire barriers, protective devices correctly rated
+                  and selected, RCD types correct for the loads served, earthing and bonding
+                  connections secure, labels and warning notices in place, IP ratings appropriate
+                  for the environment, and all other items listed in the BS 7671 model form.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                <h3 className="font-bold text-yellow-400 text-lg mb-2">Part 6: Testing (Schedule of Test Results)</h3>
+                <h3 className="font-bold text-yellow-400 text-lg mb-2">
+                  Part 6: Testing (Schedule of Test Results)
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The complete schedule of test results for every circuit in the installation. For each circuit, record: circuit designation, protective device type and rating, cable type and size, reference method, continuity of protective conductors (R1+R2), ring final circuit continuity readings, insulation resistance, polarity, earth fault loop impedance (Zs), prospective short-circuit current (PSCC), and RCD test results (type, IΔn, and measured operating time).
+                  The complete schedule of test results for every circuit in the installation. For
+                  each circuit, record: circuit designation, protective device type and rating,
+                  cable type and size, reference method, continuity of protective conductors
+                  (R1+R2), ring final circuit continuity readings, insulation resistance, polarity,
+                  earth fault loop impedance (Zs), prospective short-circuit current (PSCC), and RCD
+                  test results (type, IΔn, and measured operating time).
                 </p>
               </div>
             </div>
@@ -426,20 +546,41 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Shield className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Part P Notification and the EIC</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Part P Notification and the EIC
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              In England and Wales, Approved Document P of the Building Regulations governs electrical safety in dwellings. Since the EIC is issued when new circuits are installed, and new circuit installation in a dwelling is always notifiable under Part P, the EIC and Part P notification go hand in hand for domestic work.
+              In England and Wales, Approved Document P of the Building Regulations governs
+              electrical safety in dwellings. Since the EIC is issued when new circuits are
+              installed, and new circuit installation in a dwelling is always notifiable under Part
+              P, the EIC and Part P notification go hand in hand for domestic work.
             </p>
             <p>
-              <strong className="text-yellow-400">Notifiable work</strong> in dwellings includes: the installation of a new circuit; the replacement of a consumer unit; any electrical work in a special location such as a bathroom or room containing a shower; and work in a kitchen that involves a new circuit. All of these situations require an EIC (or in the case of consumer unit replacement, at minimum a Minor Works certificate, depending on your scheme provider's requirements).
+              <strong className="text-yellow-400">Notifiable work</strong> in dwellings includes:
+              the installation of a new circuit; the replacement of a consumer unit; any electrical
+              work in a special location such as a bathroom or room containing a shower; and work in
+              a kitchen that involves a new circuit. All of these situations require an EIC (or in
+              the case of consumer unit replacement, at minimum a Minor Works certificate, depending
+              on your scheme provider's requirements).
             </p>
             <p>
-              If you are registered with a government-approved competent person scheme (NICEIC, NAPIT, ELECSA, STROMA, or BRE), you can self-certify notifiable work. This means you submit the completed EIC to your scheme provider within the required timeframe (typically 5 working days of completion). Your scheme provider then issues a Building Regulations Compliance Certificate and notifies the local authority on your behalf. The homeowner receives this compliance certificate as proof that the work has been properly certified and notified.
+              If you are registered with a government-approved competent person scheme (NICEIC,
+              NAPIT, ELECSA, STROMA, or BRE), you can self-certify notifiable work. This means you
+              submit the completed EIC to your scheme provider within the required timeframe
+              (typically 5 working days of completion). Your scheme provider then issues a Building
+              Regulations Compliance Certificate and notifies the local authority on your behalf.
+              The homeowner receives this compliance certificate as proof that the work has been
+              properly certified and notified.
             </p>
             <p>
-              If you are not registered with a competent person scheme, you must notify the local authority building control BEFORE starting any notifiable work. Building control will then arrange an inspection of the completed work. This route is slower, more expensive (building control fees typically range from £200 to £400), and less convenient for both you and the client. This is one of the key reasons most professional electricians maintain membership of a competent person scheme.
+              If you are not registered with a competent person scheme, you must notify the local
+              authority building control BEFORE starting any notifiable work. Building control will
+              then arrange an inspection of the completed work. This route is slower, more expensive
+              (building control fees typically range from £200 to £400), and less convenient for
+              both you and the client. This is one of the key reasons most professional electricians
+              maintain membership of a competent person scheme.
             </p>
           </div>
         </div>
@@ -452,11 +593,16 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">How to Create an EIC — Step by Step</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              How to Create an EIC — Step by Step
+            </h2>
           </div>
           <div className="space-y-4">
             {howToSteps.map((step, index) => (
-              <div key={index} className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div
+                key={index}
+                className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
+              >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
@@ -477,10 +623,14 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">All 8 Certificate Types in Elec-Mate</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              All 8 Certificate Types in Elec-Mate
+            </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
-            The EIC is one of eight electrical certificate types available in Elec-Mate. Each follows BS 7671 Appendix 6 model forms and includes auto-fill, digital signatures, and PDF export.
+            The EIC is one of eight electrical certificate types available in Elec-Mate. Each
+            follows BS 7671 Appendix 6 model forms and includes auto-fill, digital signatures, and
+            PDF export.
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
@@ -534,7 +684,9 @@ export default function EICCertificatePage() {
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <FileText className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-yellow-400' : 'text-white'}`} />
+                  <FileText
+                    className={`w-5 h-5 mt-0.5 flex-shrink-0 ${cert.highlight ? 'text-yellow-400' : 'text-white'}`}
+                  />
                   <div>
                     <h3 className="font-bold text-white text-sm mb-1">{cert.name}</h3>
                     <p className="text-white text-sm leading-relaxed">{cert.desc}</p>
@@ -553,7 +705,8 @@ export default function EICCertificatePage() {
             Why Electricians Choose Elec-Mate for Certificates
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Faster than paper forms, more reliable than generic PDF apps.
+            Purpose-built for UK electricians. Faster than paper forms, more reliable than generic
+            PDF apps.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -566,7 +719,9 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -594,46 +749,72 @@ export default function EICCertificatePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Common Mistakes on EIC Certificates</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Common Mistakes on EIC Certificates
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Scheme inspectors regularly identify the same errors on EIC certificates. Understanding these common mistakes helps you produce certificates that pass inspection first time and demonstrate your professionalism to clients.
+              Scheme inspectors regularly identify the same errors on EIC certificates.
+              Understanding these common mistakes helps you produce certificates that pass
+              inspection first time and demonstrate your professionalism to clients.
             </p>
             <ul className="space-y-3 my-4">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Missing or incomplete schedule of inspections</strong> — Every item on the schedule must be ticked as satisfactory, not applicable, or limited. Leaving items blank is a common deficiency that suggests the inspection was not thorough.
+                  <strong className="text-yellow-400">
+                    Missing or incomplete schedule of inspections
+                  </strong>{' '}
+                  — Every item on the schedule must be ticked as satisfactory, not applicable, or
+                  limited. Leaving items blank is a common deficiency that suggests the inspection
+                  was not thorough.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Test results missing for some circuits</strong> — Every circuit must have test results recorded. Missing R1+R2, insulation resistance, or Zs values for any circuit invalidates the certificate.
+                  <strong className="text-yellow-400">
+                    Test results missing for some circuits
+                  </strong>{' '}
+                  — Every circuit must have test results recorded. Missing R1+R2, insulation
+                  resistance, or Zs values for any circuit invalidates the certificate.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Signatures missing for one or more roles</strong> — All three signature blocks must be completed. If one person fulfils all roles, they must still sign in all three places.
+                  <strong className="text-yellow-400">
+                    Signatures missing for one or more roles
+                  </strong>{' '}
+                  — All three signature blocks must be completed. If one person fulfils all roles,
+                  they must still sign in all three places.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Supply characteristics not recorded</strong> — Ze, PSCC at the origin, and the earthing system must be recorded. These values are essential for verifying that the design is correct.
+                  <strong className="text-yellow-400">Supply characteristics not recorded</strong> —
+                  Ze, PSCC at the origin, and the earthing system must be recorded. These values are
+                  essential for verifying that the design is correct.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
-                  <strong className="text-yellow-400">Using a Minor Works form when an EIC is needed</strong> — If a new circuit has been installed, a full EIC is required. Issuing a Minor Works certificate for new circuit work is non-compliant and may result in scheme sanctions.
+                  <strong className="text-yellow-400">
+                    Using a Minor Works form when an EIC is needed
+                  </strong>{' '}
+                  — If a new circuit has been installed, a full EIC is required. Issuing a Minor
+                  Works certificate for new circuit work is non-compliant and may result in scheme
+                  sanctions.
                 </span>
               </li>
             </ul>
             <p>
-              Elec-Mate helps prevent these mistakes with built-in validation. The app flags incomplete sections, missing signatures, and test results that fall outside BS 7671 limits before you export the certificate, reducing defects on scheme inspections.
+              Elec-Mate helps prevent these mistakes with built-in validation. The app flags
+              incomplete sections, missing signatures, and test results that fall outside BS 7671
+              limits before you export the certificate, reducing defects on scheme inspections.
             </p>
           </div>
         </div>

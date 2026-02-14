@@ -139,7 +139,12 @@ const breadcrumbSchema = {
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
     { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
-    { '@type': 'ListItem', position: 3, name: 'Testing Sequence Guide', item: 'https://elec-mate.com/guides/testing-sequence-guide' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Testing Sequence Guide',
+      item: 'https://elec-mate.com/guides/testing-sequence-guide',
+    },
   ],
 };
 
@@ -152,9 +157,15 @@ export default function TestingSequenceGuidePage() {
   return (
     <PublicPageLayout>
       <Helmet>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}</script>
-        <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}</script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...articleSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...faqSchema })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...breadcrumbSchema })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
@@ -170,7 +181,9 @@ export default function TestingSequenceGuidePage() {
             <span className="block text-yellow-400 mt-1">The GN3 Order Explained</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            The complete guide to the correct testing sequence from IET Guidance Note 3. Why the order matters, what each test proves, pass/fail criteria, common mistakes, and equipment needed.
+            The complete guide to the correct testing sequence from IET Guidance Note 3. Why the
+            order matters, what each test proves, pass/fail criteria, common mistakes, and equipment
+            needed.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -198,17 +211,34 @@ export default function TestingSequenceGuidePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <ListOrdered className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Why the Testing Order Matters</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Why the Testing Order Matters
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The electrical testing sequence is not arbitrary — it follows a logical and safety-critical order defined in IET Guidance Note 3: Inspection and Testing (currently the 9th Edition, aligned with the 18th Edition of BS 7671). Each test in the sequence serves a specific purpose, and many tests depend on the satisfactory completion of previous tests to be both safe and meaningful.
+              The electrical testing sequence is not arbitrary — it follows a logical and
+              safety-critical order defined in IET Guidance Note 3: Inspection and Testing
+              (currently the 9th Edition, aligned with the 18th Edition of BS 7671). Each test in
+              the sequence serves a specific purpose, and many tests depend on the satisfactory
+              completion of previous tests to be both safe and meaningful.
             </p>
             <p>
-              The fundamental principle is that dead tests (carried out with the installation de-energised) must be completed before live tests (carried out with the installation energised). This is because the dead tests verify the basic integrity of the wiring — continuity, insulation, and polarity — before you apply mains voltage to the circuits. If you energised a circuit without first checking its insulation resistance, you could be applying 230V to a circuit with a short-circuit or earth fault, with potentially catastrophic results.
+              The fundamental principle is that dead tests (carried out with the installation
+              de-energised) must be completed before live tests (carried out with the installation
+              energised). This is because the dead tests verify the basic integrity of the wiring —
+              continuity, insulation, and polarity — before you apply mains voltage to the circuits.
+              If you energised a circuit without first checking its insulation resistance, you could
+              be applying 230V to a circuit with a short-circuit or earth fault, with potentially
+              catastrophic results.
             </p>
             <p>
-              The sequence also follows a logical progression from the simplest tests to the most complex. Continuity testing requires only a low-voltage ohmmeter. Insulation resistance testing requires a 500V DC test voltage. Earth fault loop impedance testing requires the circuit to be energised at mains voltage. RCD testing requires both mains voltage and a specific test current. Each step introduces more energy into the system, and the preceding tests ensure that the system is safe to receive that energy.
+              The sequence also follows a logical progression from the simplest tests to the most
+              complex. Continuity testing requires only a low-voltage ohmmeter. Insulation
+              resistance testing requires a 500V DC test voltage. Earth fault loop impedance testing
+              requires the circuit to be energised at mains voltage. RCD testing requires both mains
+              voltage and a specific test current. Each step introduces more energy into the system,
+              and the preceding tests ensure that the system is safe to receive that energy.
             </p>
           </div>
         </div>
@@ -234,16 +264,33 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the circuit protective conductor (CPC) — the earth wire — is continuous from the distribution board to the furthest point of every circuit. This confirms that in the event of an earth fault, there is a complete low-impedance path for fault current to flow back to the source, allowing the protective device to operate.
+                <strong className="text-yellow-400">What it proves:</strong> That the circuit
+                protective conductor (CPC) — the earth wire — is continuous from the distribution
+                board to the furthest point of every circuit. This confirms that in the event of an
+                earth fault, there is a complete low-impedance path for fault current to flow back
+                to the source, allowing the protective device to operate.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using a low-reading ohmmeter (the continuity function on a multifunction tester), measure the resistance between the earth terminal at the distribution board and the earth terminal at each point on the circuit. For radial circuits, the measurement is made at the last accessory. For ring circuits, an end-to-end test is carried out first. The test is carried out with the circuit de-energised and all loads disconnected.
+                <strong className="text-yellow-400">Method:</strong> Using a low-reading ohmmeter
+                (the continuity function on a multifunction tester), measure the resistance between
+                the earth terminal at the distribution board and the earth terminal at each point on
+                the circuit. For radial circuits, the measurement is made at the last accessory. For
+                ring circuits, an end-to-end test is carried out first. The test is carried out with
+                the circuit de-energised and all loads disconnected.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The measured resistance must be consistent with the expected value based on the cable length, conductor size, and conductor material. There is no single pass/fail value — the reading must make sense for the circuit. A reading of infinity (open circuit) indicates a break in the CPC. An unexpectedly high reading may indicate a loose connection or damaged conductor. The measured R1+R2 value is recorded and used later to verify the earth fault loop impedance (Zs).
+                <strong className="text-yellow-400">Pass/fail:</strong> The measured resistance must
+                be consistent with the expected value based on the cable length, conductor size, and
+                conductor material. There is no single pass/fail value — the reading must make sense
+                for the circuit. A reading of infinity (open circuit) indicates a break in the CPC.
+                An unexpectedly high reading may indicate a loose connection or damaged conductor.
+                The measured R1+R2 value is recorded and used later to verify the earth fault loop
+                impedance (Zs).
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is first:</strong> The earth path must be confirmed before any other test because the earth path is the primary safety mechanism. If the earth path is broken, the installation is immediately dangerous.
+                <strong className="text-yellow-400">Why it is first:</strong> The earth path must be
+                confirmed before any other test because the earth path is the primary safety
+                mechanism. If the earth path is broken, the installation is immediately dangerous.
               </p>
             </div>
           </div>
@@ -254,20 +301,39 @@ export default function TestingSequenceGuidePage() {
               <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
                 <span className="font-bold text-yellow-400">2</span>
               </div>
-              <h3 className="font-bold text-white text-xl">Continuity of Ring Final Circuit Conductors</h3>
+              <h3 className="font-bold text-white text-xl">
+                Continuity of Ring Final Circuit Conductors
+              </h3>
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the ring final circuit is a complete ring — that is, all three conductors (line, neutral, and CPC) leave the distribution board, travel around the ring, and return to the distribution board without any breaks. It also identifies any cross-connections (interconnections or spurs incorrectly tapping into the ring at more than one point) and confirms that the ring is correctly wired.
+                <strong className="text-yellow-400">What it proves:</strong> That the ring final
+                circuit is a complete ring — that is, all three conductors (line, neutral, and CPC)
+                leave the distribution board, travel around the ring, and return to the distribution
+                board without any breaks. It also identifies any cross-connections (interconnections
+                or spurs incorrectly tapping into the ring at more than one point) and confirms that
+                the ring is correctly wired.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> The three-step method: (1) Measure end-to-end resistance of each conductor (r1, rn, r2). (2) Cross-connect line and neutral at one end, measure at each socket — readings should form a consistent pattern with a maximum of approximately (r1+rn)/4. (3) Cross-connect line and CPC at one end, measure at each socket — the maximum reading gives the R1+R2 value at the furthest point. Anomalous readings indicate breaks, cross-connections, or spurs.
+                <strong className="text-yellow-400">Method:</strong> The three-step method: (1)
+                Measure end-to-end resistance of each conductor (r1, rn, r2). (2) Cross-connect line
+                and neutral at one end, measure at each socket — readings should form a consistent
+                pattern with a maximum of approximately (r1+rn)/4. (3) Cross-connect line and CPC at
+                one end, measure at each socket — the maximum reading gives the R1+R2 value at the
+                furthest point. Anomalous readings indicate breaks, cross-connections, or spurs.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> r1 and rn should be approximately equal (same conductor size). r2 may differ if the CPC is a different size. Cross-connected readings should follow a predictable pattern. Any readings that deviate significantly from the expected pattern require investigation.
+                <strong className="text-yellow-400">Pass/fail:</strong> r1 and rn should be
+                approximately equal (same conductor size). r2 may differ if the CPC is a different
+                size. Cross-connected readings should follow a predictable pattern. Any readings
+                that deviate significantly from the expected pattern require investigation.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is second:</strong> Ring circuit testing is an extension of protective conductor continuity testing and is still a dead test. It must be completed before insulation resistance testing because a break in the ring could be masked by insulation that appears satisfactory when tested from one end only.
+                <strong className="text-yellow-400">Why it is second:</strong> Ring circuit testing
+                is an extension of protective conductor continuity testing and is still a dead test.
+                It must be completed before insulation resistance testing because a break in the
+                ring could be masked by insulation that appears satisfactory when tested from one
+                end only.
               </p>
             </div>
           </div>
@@ -282,16 +348,36 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the insulation between live conductors and between live conductors and earth is in good condition and can withstand the normal operating voltage without allowing leakage current to flow. Poor insulation can cause earth leakage (tripping RCDs), short circuits (tripping MCBs), electric shock hazards, and fire risk from tracking currents through damp or damaged insulation.
+                <strong className="text-yellow-400">What it proves:</strong> That the insulation
+                between live conductors and between live conductors and earth is in good condition
+                and can withstand the normal operating voltage without allowing leakage current to
+                flow. Poor insulation can cause earth leakage (tripping RCDs), short circuits
+                (tripping MCBs), electric shock hazards, and fire risk from tracking currents
+                through damp or damaged insulation.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using an insulation resistance tester set to 500V DC (for circuits up to 500V), measure the insulation resistance between all live conductors connected together and earth (Line+Neutral to Earth), and between live conductors (Line to Neutral). All switches should be closed (ON position), all loads disconnected, and all lamps removed. Electronic equipment, SPDs, and RCDs may need to be disconnected or bypassed to prevent damage from the 500V test voltage.
+                <strong className="text-yellow-400">Method:</strong> Using an insulation resistance
+                tester set to 500V DC (for circuits up to 500V), measure the insulation resistance
+                between all live conductors connected together and earth (Line+Neutral to Earth),
+                and between live conductors (Line to Neutral). All switches should be closed (ON
+                position), all loads disconnected, and all lamps removed. Electronic equipment,
+                SPDs, and RCDs may need to be disconnected or bypassed to prevent damage from the
+                500V test voltage.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> Minimum acceptable value: 1.0 MΩ (megohm) for circuits up to 500V. Typical values for healthy circuits: 50 MΩ to 200+ MΩ. Values between 1 MΩ and 2 MΩ pass but indicate deteriorating insulation that should be monitored. Values below 1 MΩ are failures requiring investigation and remediation.
+                <strong className="text-yellow-400">Pass/fail:</strong> Minimum acceptable value:
+                1.0 MΩ (megohm) for circuits up to 500V. Typical values for healthy circuits: 50 MΩ
+                to 200+ MΩ. Values between 1 MΩ and 2 MΩ pass but indicate deteriorating insulation
+                that should be monitored. Values below 1 MΩ are failures requiring investigation and
+                remediation.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is third:</strong> Insulation resistance must be verified before any live tests are carried out. If insulation is compromised and you energise the circuit, fault current will flow — potentially damaging equipment, tripping devices unexpectedly, or creating a shock hazard. The 500V DC test voltage is safe to apply to a circuit whose conductors have been confirmed continuous by the previous tests.
+                <strong className="text-yellow-400">Why it is third:</strong> Insulation resistance
+                must be verified before any live tests are carried out. If insulation is compromised
+                and you energise the circuit, fault current will flow — potentially damaging
+                equipment, tripping devices unexpectedly, or creating a shock hazard. The 500V DC
+                test voltage is safe to apply to a circuit whose conductors have been confirmed
+                continuous by the previous tests.
               </p>
             </div>
           </div>
@@ -306,16 +392,34 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That all single-pole switching devices (light switches, MCBs, fuse carriers) are connected in the line conductor only, that socket outlets are correctly wired (line to the right terminal, neutral to the left, earth to the top), and that the centre contact of Edison-screw lampholders is connected to the line conductor. Incorrect polarity can leave metalwork live when a switch is turned off, or make an MCB ineffective because it is in the neutral rather than the line.
+                <strong className="text-yellow-400">What it proves:</strong> That all single-pole
+                switching devices (light switches, MCBs, fuse carriers) are connected in the line
+                conductor only, that socket outlets are correctly wired (line to the right terminal,
+                neutral to the left, earth to the top), and that the centre contact of Edison-screw
+                lampholders is connected to the line conductor. Incorrect polarity can leave
+                metalwork live when a switch is turned off, or make an MCB ineffective because it is
+                in the neutral rather than the line.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Polarity is largely verified as part of the continuity tests — by measuring the continuity between specific conductors, you confirm which conductor is connected to which terminal. It is also confirmed by visual inspection (checking wiring at accessories) and, on energised circuits, by using a voltage indicator to verify that the line terminal is live and the neutral terminal is at earth potential.
+                <strong className="text-yellow-400">Method:</strong> Polarity is largely verified as
+                part of the continuity tests — by measuring the continuity between specific
+                conductors, you confirm which conductor is connected to which terminal. It is also
+                confirmed by visual inspection (checking wiring at accessories) and, on energised
+                circuits, by using a voltage indicator to verify that the line terminal is live and
+                the neutral terminal is at earth potential.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> All single-pole devices must be in the line conductor. All socket outlets must have correct L-N-E connections. All Edison-screw lampholders must have line to centre contact. Any incorrect polarity is a failure that must be corrected.
+                <strong className="text-yellow-400">Pass/fail:</strong> All single-pole devices must
+                be in the line conductor. All socket outlets must have correct L-N-E connections.
+                All Edison-screw lampholders must have line to centre contact. Any incorrect
+                polarity is a failure that must be corrected.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is fourth:</strong> Polarity verification bridges the dead tests and the live tests. Much of the polarity confirmation comes from the continuity tests already completed, but final verification may require energising the circuit briefly — which is safe to do because insulation resistance has already been confirmed satisfactory.
+                <strong className="text-yellow-400">Why it is fourth:</strong> Polarity verification
+                bridges the dead tests and the live tests. Much of the polarity confirmation comes
+                from the continuity tests already completed, but final verification may require
+                energising the circuit briefly — which is safe to do because insulation resistance
+                has already been confirmed satisfactory.
               </p>
             </div>
           </div>
@@ -330,16 +434,38 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the total impedance of the earth fault loop (from the point of the fault, through the CPC, through the main earthing terminal, through the external earth path back to the transformer, and through the transformer winding back to the point of the fault) is low enough for the protective device to operate within the required disconnection time. This is the Zs test — the single most important electrical safety verification.
+                <strong className="text-yellow-400">What it proves:</strong> That the total
+                impedance of the earth fault loop (from the point of the fault, through the CPC,
+                through the main earthing terminal, through the external earth path back to the
+                transformer, and through the transformer winding back to the point of the fault) is
+                low enough for the protective device to operate within the required disconnection
+                time. This is the Zs test — the single most important electrical safety
+                verification.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Using a loop impedance tester (the Zs function on a multifunction tester), connect to the circuit at the furthest point from the distribution board (the point with the highest expected impedance). The instrument applies a brief test current and measures the voltage drop to calculate the impedance. The measured Zs is compared against the maximum permitted value from BS 7671 tables for the type and rating of the protective device on that circuit. The external earth fault loop impedance (Ze) is measured at the origin with the main earthing conductor disconnected from the main earthing terminal.
+                <strong className="text-yellow-400">Method:</strong> Using a loop impedance tester
+                (the Zs function on a multifunction tester), connect to the circuit at the furthest
+                point from the distribution board (the point with the highest expected impedance).
+                The instrument applies a brief test current and measures the voltage drop to
+                calculate the impedance. The measured Zs is compared against the maximum permitted
+                value from BS 7671 tables for the type and rating of the protective device on that
+                circuit. The external earth fault loop impedance (Ze) is measured at the origin with
+                the main earthing conductor disconnected from the main earthing terminal.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The measured Zs must not exceed the maximum value tabulated in BS 7671 for the protective device. For example, a B32 MCB has a maximum Zs of 1.37 ohms at the design stage. In practice, the rule of thumb is that the measured Zs should not exceed 80% of the tabulated maximum (to allow for temperature rise during normal operation). Values exceeding the tabulated maximum are failures.
+                <strong className="text-yellow-400">Pass/fail:</strong> The measured Zs must not
+                exceed the maximum value tabulated in BS 7671 for the protective device. For
+                example, a B32 MCB has a maximum Zs of 1.37 ohms at the design stage. In practice,
+                the rule of thumb is that the measured Zs should not exceed 80% of the tabulated
+                maximum (to allow for temperature rise during normal operation). Values exceeding
+                the tabulated maximum are failures.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is fifth:</strong> This is a live test — the circuit must be energised. It can only be performed safely after continuity (confirming the earth path exists), insulation resistance (confirming there are no faults), and polarity (confirming the circuit is correctly wired) have all been verified satisfactory.
+                <strong className="text-yellow-400">Why it is fifth:</strong> This is a live test —
+                the circuit must be energised. It can only be performed safely after continuity
+                (confirming the earth path exists), insulation resistance (confirming there are no
+                faults), and polarity (confirming the circuit is correctly wired) have all been
+                verified satisfactory.
               </p>
             </div>
           </div>
@@ -354,16 +480,33 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That the maximum fault current that could flow under a short-circuit or earth fault condition does not exceed the rated breaking capacity (kA rating) of the protective devices installed. If the prospective fault current exceeds the device rating, the device may not be able to safely interrupt the fault, potentially causing the device to explode or catch fire.
+                <strong className="text-yellow-400">What it proves:</strong> That the maximum fault
+                current that could flow under a short-circuit or earth fault condition does not
+                exceed the rated breaking capacity (kA rating) of the protective devices installed.
+                If the prospective fault current exceeds the device rating, the device may not be
+                able to safely interrupt the fault, potentially causing the device to explode or
+                catch fire.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> Prospective fault current (Ipf) is measured or calculated at the origin of the installation (typically at the consumer unit). Many multifunction testers calculate Ipf automatically from the loop impedance measurement. Ipf is derived from the supply voltage divided by the loop impedance: for a line-earth fault, Ipf = Uo/Zs; for a line-neutral short circuit, Ipf = Uo/Zline-neutral. The highest value (typically the line-neutral short circuit) is the one that must not exceed the device breaking capacity.
+                <strong className="text-yellow-400">Method:</strong> Prospective fault current (Ipf)
+                is measured or calculated at the origin of the installation (typically at the
+                consumer unit). Many multifunction testers calculate Ipf automatically from the loop
+                impedance measurement. Ipf is derived from the supply voltage divided by the loop
+                impedance: for a line-earth fault, Ipf = Uo/Zs; for a line-neutral short circuit,
+                Ipf = Uo/Zline-neutral. The highest value (typically the line-neutral short circuit)
+                is the one that must not exceed the device breaking capacity.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> The prospective fault current must not exceed the rated breaking capacity of the protective device. Standard domestic MCBs have a minimum breaking capacity of 6 kA. If the measured Ipf exceeds 6 kA, higher-rated devices must be installed. This is recorded on the EIC or EICR.
+                <strong className="text-yellow-400">Pass/fail:</strong> The prospective fault
+                current must not exceed the rated breaking capacity of the protective device.
+                Standard domestic MCBs have a minimum breaking capacity of 6 kA. If the measured Ipf
+                exceeds 6 kA, higher-rated devices must be installed. This is recorded on the EIC or
+                EICR.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is sixth:</strong> It follows naturally from the loop impedance test — in many cases, the Ipf is calculated from the same measurements. It is a live test and requires the circuit to be energised.
+                <strong className="text-yellow-400">Why it is sixth:</strong> It follows naturally
+                from the loop impedance test — in many cases, the Ipf is calculated from the same
+                measurements. It is a live test and requires the circuit to be energised.
               </p>
             </div>
           </div>
@@ -378,16 +521,36 @@ export default function TestingSequenceGuidePage() {
             </div>
             <div className="space-y-3 text-white text-sm leading-relaxed pl-13">
               <p>
-                <strong className="text-yellow-400">What it proves:</strong> That every RCD in the installation (RCCBs, RCBOs, and socket-outlet RCDs) operates correctly — tripping at the correct current and within the required time. This is the final safety verification, confirming that the additional protection against electric shock provided by RCDs is functional.
+                <strong className="text-yellow-400">What it proves:</strong> That every RCD in the
+                installation (RCCBs, RCBOs, and socket-outlet RCDs) operates correctly — tripping at
+                the correct current and within the required time. This is the final safety
+                verification, confirming that the additional protection against electric shock
+                provided by RCDs is functional.
               </p>
               <p>
-                <strong className="text-yellow-400">Method:</strong> For each RCD, carry out the following tests using the RCD test function on the multifunction tester: Push-button test (mechanical function check), half-rated current test at 0.5x IΔn on both half-cycles (must NOT trip), full rated current test at 1x IΔn on both half-cycles (must trip within 300 ms for general type, 130-500 ms for Type S), and five-times rated current test at 5x IΔn on both half-cycles (must trip within 40 ms for general type, 50-200 ms for Type S). Record the worst-case trip time from both half-cycles for each test.
+                <strong className="text-yellow-400">Method:</strong> For each RCD, carry out the
+                following tests using the RCD test function on the multifunction tester: Push-button
+                test (mechanical function check), half-rated current test at 0.5x IΔn on both
+                half-cycles (must NOT trip), full rated current test at 1x IΔn on both half-cycles
+                (must trip within 300 ms for general type, 130-500 ms for Type S), and five-times
+                rated current test at 5x IΔn on both half-cycles (must trip within 40 ms for general
+                type, 50-200 ms for Type S). Record the worst-case trip time from both half-cycles
+                for each test.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail:</strong> At 0.5x IΔn — must NOT trip. At 1x IΔn — must trip within 300 ms (general type) or 130-500 ms (Type S). At 5x IΔn — must trip within 40 ms (general type) or 50-200 ms (Type S). Failure at any stage requires investigation and may require device replacement.
+                <strong className="text-yellow-400">Pass/fail:</strong> At 0.5x IΔn — must NOT trip.
+                At 1x IΔn — must trip within 300 ms (general type) or 130-500 ms (Type S). At 5x IΔn
+                — must trip within 40 ms (general type) or 50-200 ms (Type S). Failure at any stage
+                requires investigation and may require device replacement.
               </p>
               <p>
-                <strong className="text-yellow-400">Why it is last:</strong> RCD testing is the final test because it requires the circuit to be energised and draws a significant test current through the earth path. All previous tests must have confirmed that the earth path is continuous (test 1), the ring is complete (test 2), the insulation is sound (test 3), the polarity is correct (test 4), the loop impedance is acceptable (test 5), and the fault current is within device ratings (test 6). Only then is it safe to deliberately inject a fault current to test the RCD.
+                <strong className="text-yellow-400">Why it is last:</strong> RCD testing is the
+                final test because it requires the circuit to be energised and draws a significant
+                test current through the earth path. All previous tests must have confirmed that the
+                earth path is continuous (test 1), the ring is complete (test 2), the insulation is
+                sound (test 3), the polarity is correct (test 4), the loop impedance is acceptable
+                (test 5), and the fault current is within device ratings (test 6). Only then is it
+                safe to deliberately inject a fault current to test the RCD.
               </p>
             </div>
           </div>
@@ -410,7 +573,10 @@ export default function TestingSequenceGuidePage() {
                 <div>
                   <h3 className="font-bold text-white mb-1">Skipping the half-rated RCD test</h3>
                   <p className="text-white text-sm leading-relaxed">
-                    Some electricians skip the 0.5x IΔn test and go straight to the 1x test. This means an overly sensitive RCD (one that trips below its rated current) would not be detected. An overly sensitive RCD is a nuisance tripping risk — the occupant may disable it in frustration, leaving the circuit unprotected.
+                    Some electricians skip the 0.5x IΔn test and go straight to the 1x test. This
+                    means an overly sensitive RCD (one that trips below its rated current) would not
+                    be detected. An overly sensitive RCD is a nuisance tripping risk — the occupant
+                    may disable it in frustration, leaving the circuit unprotected.
                   </p>
                 </div>
               </div>
@@ -419,9 +585,14 @@ export default function TestingSequenceGuidePage() {
               <div className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-bold text-white mb-1">Testing loop impedance before insulation resistance</h3>
+                  <h3 className="font-bold text-white mb-1">
+                    Testing loop impedance before insulation resistance
+                  </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    Performing the Zs test before verifying insulation resistance means energising a circuit that may have a fault to earth. This could cause a short circuit, trip protective devices, damage the test instrument, or — in the worst case — cause an electric shock or arc flash.
+                    Performing the Zs test before verifying insulation resistance means energising a
+                    circuit that may have a fault to earth. This could cause a short circuit, trip
+                    protective devices, damage the test instrument, or — in the worst case — cause
+                    an electric shock or arc flash.
                   </p>
                 </div>
               </div>
@@ -430,9 +601,15 @@ export default function TestingSequenceGuidePage() {
               <div className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-bold text-white mb-1">Not disconnecting loads for insulation resistance testing</h3>
+                  <h3 className="font-bold text-white mb-1">
+                    Not disconnecting loads for insulation resistance testing
+                  </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    Leaving appliances connected during insulation resistance testing can give misleadingly low readings (the appliance impedance is in parallel with the cable insulation). It can also damage sensitive electronic equipment — the 500V DC test voltage can destroy electronic controllers, LED drivers, and other electronic loads.
+                    Leaving appliances connected during insulation resistance testing can give
+                    misleadingly low readings (the appliance impedance is in parallel with the cable
+                    insulation). It can also damage sensitive electronic equipment — the 500V DC
+                    test voltage can destroy electronic controllers, LED drivers, and other
+                    electronic loads.
                   </p>
                 </div>
               </div>
@@ -441,9 +618,15 @@ export default function TestingSequenceGuidePage() {
               <div className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-bold text-white mb-1">Using an uncalibrated test instrument</h3>
+                  <h3 className="font-bold text-white mb-1">
+                    Using an uncalibrated test instrument
+                  </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    All test instruments must be calibrated and within their calibration date. Using an uncalibrated instrument means your test results cannot be relied upon — they may pass circuits that should fail, or fail circuits that should pass. Calibration is typically required annually. The calibration date should be recorded on the EIC or EICR.
+                    All test instruments must be calibrated and within their calibration date. Using
+                    an uncalibrated instrument means your test results cannot be relied upon — they
+                    may pass circuits that should fail, or fail circuits that should pass.
+                    Calibration is typically required annually. The calibration date should be
+                    recorded on the EIC or EICR.
                   </p>
                 </div>
               </div>
@@ -452,9 +635,15 @@ export default function TestingSequenceGuidePage() {
               <div className="flex items-start gap-3">
                 <Zap className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="font-bold text-white mb-1">Not testing RCDs on both half-cycles</h3>
+                  <h3 className="font-bold text-white mb-1">
+                    Not testing RCDs on both half-cycles
+                  </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    RCDs must be tested on both positive (0 degrees) and negative (180 degrees) half-cycles of the supply waveform. An RCD that passes on one half-cycle but fails on the other has failed the test and must be replaced. The worst-case (longest) trip time from either half-cycle is the value that should be recorded on the certificate.
+                    RCDs must be tested on both positive (0 degrees) and negative (180 degrees)
+                    half-cycles of the supply waveform. An RCD that passes on one half-cycle but
+                    fails on the other has failed the test and must be replaced. The worst-case
+                    (longest) trip time from either half-cycle is the value that should be recorded
+                    on the certificate.
                   </p>
                 </div>
               </div>
@@ -470,35 +659,55 @@ export default function TestingSequenceGuidePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <Gauge className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Equipment Needed for the Full Test Sequence</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Equipment Needed for the Full Test Sequence
+            </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              To carry out the complete GN3 testing sequence, you need the following equipment at minimum.
+              To carry out the complete GN3 testing sequence, you need the following equipment at
+              minimum.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
                 <h3 className="font-bold text-white text-lg mb-2">Multifunction Tester (MFT)</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  The primary test instrument for all seven tests. Must be capable of: low-reading ohmmeter function for continuity (4-24V DC), insulation resistance testing at 250V and 500V DC, earth fault loop impedance (both Ze and Zs), prospective fault current measurement or calculation, and RCD testing at 0.5x, 1x, and 5x IΔn on both half-cycles. Major brands include Megger, Metrel, Fluke, Kewtech, and Seaward. Must be calibrated annually.
+                  The primary test instrument for all seven tests. Must be capable of: low-reading
+                  ohmmeter function for continuity (4-24V DC), insulation resistance testing at 250V
+                  and 500V DC, earth fault loop impedance (both Ze and Zs), prospective fault
+                  current measurement or calculation, and RCD testing at 0.5x, 1x, and 5x IΔn on
+                  both half-cycles. Major brands include Megger, Metrel, Fluke, Kewtech, and
+                  Seaward. Must be calibrated annually.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-white text-lg mb-2">GS38 Voltage Indicator</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  A dedicated voltage indicator (not a multimeter) that complies with HSE Guidance Note GS38. Used for safe isolation — proving that circuits are dead before beginning work and testing. Must have: clearly marked voltage ratings, integral test probes with finger guards, fused test leads, and a proving unit or known live source to verify the indicator works correctly before and after use. This is a safety-critical instrument that protects your life.
+                  A dedicated voltage indicator (not a multimeter) that complies with HSE Guidance
+                  Note GS38. Used for safe isolation — proving that circuits are dead before
+                  beginning work and testing. Must have: clearly marked voltage ratings, integral
+                  test probes with finger guards, fused test leads, and a proving unit or known live
+                  source to verify the indicator works correctly before and after use. This is a
+                  safety-critical instrument that protects your life.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-white text-lg mb-2">Test Leads and Accessories</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  GS38-compliant test leads with fused probes, crocodile clips for continuity testing, a wander lead for testing at remote points, and a distribution board test adaptor (plug-in device that connects to the busbar and allows testing of all circuits from one point). Spare fuses for test leads are essential — a blown fuse in a test lead can give a false open-circuit reading.
+                  GS38-compliant test leads with fused probes, crocodile clips for continuity
+                  testing, a wander lead for testing at remote points, and a distribution board test
+                  adaptor (plug-in device that connects to the busbar and allows testing of all
+                  circuits from one point). Spare fuses for test leads are essential — a blown fuse
+                  in a test lead can give a false open-circuit reading.
                 </p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
                 <h3 className="font-bold text-white text-lg mb-2">Safe Isolation Kit</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Padlocks and lock-off devices for securing isolation points, warning labels ("Danger — Do Not Switch On"), and a personal padlock with a unique key. Safe isolation is a prerequisite for all dead tests and must be carried out before any work begins on the installation.
+                  Padlocks and lock-off devices for securing isolation points, warning labels
+                  ("Danger — Do Not Switch On"), and a personal padlock with a unique key. Safe
+                  isolation is a prerequisite for all dead tests and must be carried out before any
+                  work begins on the installation.
                 </p>
               </div>
             </div>
@@ -513,7 +722,8 @@ export default function TestingSequenceGuidePage() {
             Why Electricians Choose Elec-Mate for Testing
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. Record test results digitally, validate against BS 7671 limits, and produce professional certificates — all from your phone.
+            Purpose-built for UK electricians. Record test results digitally, validate against BS
+            7671 limits, and produce professional certificates — all from your phone.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -526,7 +736,9 @@ export default function TestingSequenceGuidePage() {
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Frequently Asked Questions
+            </h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
