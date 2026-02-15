@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { useCollege } from "@/contexts/CollegeContext";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 import {
   Search,
   Plus,
@@ -18,64 +19,74 @@ import {
   Filter,
   GraduationCap,
   Layers,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 export function CoursesSection() {
-  const { courses, cohorts, students } = useCollege();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterLevel, setFilterLevel] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const { courses, cohorts, students } = useCollegeSupabase();
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterLevel, setFilterLevel] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
 
-  const filteredCourses = courses.filter(course => {
-    const matchesSearch = course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.awardingBody.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredCourses = courses.filter((course) => {
+    const matchesSearch =
+      course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (course.code || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (course.awarding_body || '').toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesLevel = filterLevel === "all" || course.level.toString() === filterLevel;
-    const matchesStatus = filterStatus === "all" || course.status === filterStatus;
+    const matchesLevel = filterLevel === 'all' || (course.level || '') === filterLevel;
+    const matchesStatus = filterStatus === 'all' || course.status === filterStatus;
 
     return matchesSearch && matchesLevel && matchesStatus;
   });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Active': return 'bg-success/10 text-success border-success/20';
-      case 'Draft': return 'bg-warning/10 text-warning border-warning/20';
-      case 'Archived': return 'bg-muted text-muted-foreground';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Active':
+        return 'bg-success/10 text-success border-success/20';
+      case 'Draft':
+        return 'bg-warning/10 text-warning border-warning/20';
+      case 'Archived':
+        return 'bg-muted text-white';
+      default:
+        return 'bg-muted text-white';
     }
   };
 
-  const getLevelColor = (level: number) => {
+  const getLevelColor = (level: string | null) => {
     switch (level) {
-      case 2: return 'bg-info/10 text-info';
-      case 3: return 'bg-primary/10 text-primary';
-      case 4: return 'bg-purple-500/10 text-purple-500';
-      default: return 'bg-muted text-muted-foreground';
+      case '2':
+        return 'bg-info/10 text-info';
+      case '3':
+        return 'bg-primary/10 text-primary';
+      case '4':
+        return 'bg-purple-500/10 text-purple-500';
+      default:
+        return 'bg-muted text-white';
     }
   };
 
   const getCohortCount = (courseId: string) => {
-    return cohorts.filter(c => c.courseId === courseId && c.status === 'Active').length;
+    return cohorts.filter((c) => c.course_id === courseId && c.status === 'Active').length;
   };
 
   const getStudentCount = (courseId: string) => {
-    const courseCohorts = cohorts.filter(c => c.courseId === courseId);
-    return students.filter(s =>
-      s.cohortId && courseCohorts.some(c => c.id === s.cohortId) && s.status === 'Active'
+    const courseCohorts = cohorts.filter((c) => c.course_id === courseId);
+    return students.filter(
+      (s) => s.cohort_id && courseCohorts.some((c) => c.id === s.cohort_id) && s.status === 'Active'
     ).length;
   };
 
@@ -83,9 +94,14 @@ export function CoursesSection() {
     <div className="space-y-4 md:space-y-6 animate-fade-in">
       <CollegeSectionHeader
         title="Courses"
-        description={`${courses.filter(c => c.status === 'Active').length} active courses`}
+        description={`${courses.filter((c) => c.status === 'Active').length} active courses`}
         actions={
-          <Button className="gap-2">
+          <Button
+            className="gap-2 h-11 touch-manipulation"
+            onClick={() =>
+              toast({ title: 'Add Course', description: 'Course creation dialog is coming soon.' })
+            }
+          >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Course</span>
           </Button>
@@ -96,17 +112,17 @@ export function CoursesSection() {
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search courses..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(!searchQuery && "pl-9")}
+            className={cn(!searchQuery && 'pl-9')}
           />
         </div>
         <Select value={filterLevel} onValueChange={setFilterLevel}>
-          <SelectTrigger className="w-full sm:w-[140px]">
+          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
             <GraduationCap className="h-4 w-4 mr-2" />
             <SelectValue placeholder="Level" />
           </SelectTrigger>
@@ -118,7 +134,7 @@ export function CoursesSection() {
           </SelectContent>
         </Select>
         <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[140px]">
+          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
             <Filter className="h-4 w-4 mr-2" />
             <SelectValue placeholder="Status" />
           </SelectTrigger>
@@ -138,7 +154,7 @@ export function CoursesSection() {
           const studentCount = getStudentCount(course.id);
 
           return (
-            <Card key={course.id} className="hover:shadow-md transition-shadow">
+            <Card key={course.id} className="hover:shadow-md transition-shadow touch-manipulation">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex items-start gap-3">
@@ -146,22 +162,66 @@ export function CoursesSection() {
                       <BookOpen className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground">{course.name}</h3>
-                      <p className="text-sm text-muted-foreground">{course.code}</p>
+                      <h3 className="font-semibold text-white">{course.name}</h3>
+                      <p className="text-sm text-white">{course.code || ''}</p>
                     </div>
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button variant="ghost" size="icon" className="h-11 w-11 touch-manipulation">
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View Details</DropdownMenuItem>
-                      <DropdownMenuItem>Edit Course</DropdownMenuItem>
-                      <DropdownMenuItem>View Cohorts</DropdownMenuItem>
-                      <DropdownMenuItem>Scheme of Work</DropdownMenuItem>
-                      <DropdownMenuItem>Assessment Plan</DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 touch-manipulation"
+                        onClick={() =>
+                          toast({
+                            title: course.name,
+                            description: `${course.awarding_body || 'Unknown'} - Level ${course.level || '?'} - ${course.duration_months} months`,
+                          })
+                        }
+                      >
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 touch-manipulation"
+                        onClick={() =>
+                          toast({
+                            title: 'Edit Course',
+                            description: 'Course editing is coming soon.',
+                          })
+                        }
+                      >
+                        Edit Course
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 touch-manipulation"
+                        onClick={() =>
+                          toast({
+                            title: 'View Cohorts',
+                            description: `${cohortCount} active cohort${cohortCount !== 1 ? 's' : ''} for ${course.name}`,
+                          })
+                        }
+                      >
+                        View Cohorts
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 touch-manipulation"
+                        onClick={() =>
+                          toast({ title: 'Scheme of Work', description: 'Coming soon.' })
+                        }
+                      >
+                        Scheme of Work
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="h-11 touch-manipulation"
+                        onClick={() =>
+                          toast({ title: 'Assessment Plan', description: 'Coming soon.' })
+                        }
+                      >
+                        Assessment Plan
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -171,47 +231,31 @@ export function CoursesSection() {
                     {course.status}
                   </Badge>
                   <Badge variant="secondary" className={getLevelColor(course.level)}>
-                    Level {course.level}
+                    Level {course.level || ''}
                   </Badge>
-                  {course.isApprenticeship && (
-                    <Badge variant="outline" className="bg-info/5 text-info border-info/20">
-                      Apprenticeship
-                    </Badge>
-                  )}
                 </div>
 
                 <div className="space-y-2 mb-3">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-sm text-white">
                     <Award className="h-3.5 w-3.5" />
-                    <span>{course.awardingBody}</span>
+                    <span>{course.awarding_body || ''}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-sm text-white">
                     <Clock className="h-3.5 w-3.5" />
-                    <span>{course.totalGlh} GLH • {course.durationMonths} months</span>
+                    <span>{course.duration_months} months</span>
                   </div>
                 </div>
 
-                {course.fundingBand && (
-                  <div className="mb-3">
-                    <Badge variant="outline" className="text-xs">
-                      Funding Band: £{course.fundingBand.toLocaleString()}
-                    </Badge>
-                  </div>
-                )}
-
                 <div className="flex items-center justify-between pt-3 border-t">
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1 text-muted-foreground">
+                    <div className="flex items-center gap-1 text-white">
                       <Layers className="h-3.5 w-3.5" />
                       <span>{cohortCount} cohorts</span>
                     </div>
-                    <div className="flex items-center gap-1 text-muted-foreground">
+                    <div className="flex items-center gap-1 text-white">
                       <Users className="h-3.5 w-3.5" />
                       <span>{studentCount} students</span>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <span>{course.units.length} units</span>
                   </div>
                 </div>
               </CardContent>
@@ -222,7 +266,7 @@ export function CoursesSection() {
         {filteredCourses.length === 0 && (
           <Card className="col-span-full">
             <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">No courses found matching your criteria.</p>
+              <p className="text-white">No courses found matching your criteria.</p>
             </CardContent>
           </Card>
         )}

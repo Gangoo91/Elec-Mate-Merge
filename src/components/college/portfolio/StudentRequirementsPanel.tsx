@@ -49,11 +49,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { useEvidenceRequirements } from '@/hooks/useEvidenceRequirements';
 import { useTutorRequirements } from '@/hooks/useTutorRequirements';
@@ -87,8 +83,12 @@ export function StudentRequirementsPanel({
 }: StudentRequirementsPanelProps) {
   const [activeTab, setActiveTab] = useState<'unit' | 'tutor'>('tutor');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingRequirement, setEditingRequirement] = useState<TutorPortfolioRequirement | null>(null);
-  const [deletingRequirement, setDeletingRequirement] = useState<TutorPortfolioRequirement | null>(null);
+  const [editingRequirement, setEditingRequirement] = useState<TutorPortfolioRequirement | null>(
+    null
+  );
+  const [deletingRequirement, setDeletingRequirement] = useState<TutorPortfolioRequirement | null>(
+    null
+  );
 
   // Get unit-level requirements (read-only view)
   const {
@@ -201,9 +201,7 @@ export function StudentRequirementsPanel({
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Evidence Requirements</h3>
-          <p className="text-sm text-white/60">
-            Manage custom requirements for this student
-          </p>
+          <p className="text-sm text-white">Manage custom requirements for this student</p>
         </div>
         <Button onClick={() => setIsAddDialogOpen(true)} className="gap-2">
           <Plus className="h-4 w-4" />
@@ -220,7 +218,7 @@ export function StudentRequirementsPanel({
                 <AlertCircle className="h-4 w-4 text-amber-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Active</p>
+                <p className="text-xs text-white">Active</p>
                 <p className="text-lg font-semibold">{activeCount}</p>
               </div>
             </div>
@@ -233,7 +231,7 @@ export function StudentRequirementsPanel({
                 <CheckCircle2 className="h-4 w-4 text-green-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Completed</p>
+                <p className="text-xs text-white">Completed</p>
                 <p className="text-lg font-semibold">{completedCount}</p>
               </div>
             </div>
@@ -246,7 +244,7 @@ export function StudentRequirementsPanel({
                 <FileText className="h-4 w-4 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Unit Reqs</p>
+                <p className="text-xs text-white">Unit Reqs</p>
                 <p className="text-lg font-semibold">{unitRequirements.length}</p>
               </div>
             </div>
@@ -271,15 +269,15 @@ export function StudentRequirementsPanel({
           {isLoading ? (
             <Card className="bg-white/5 border-elec-gray/40 animate-pulse">
               <CardContent className="py-12 text-center">
-                <p className="text-white/50">Loading requirements...</p>
+                <p className="text-white">Loading requirements...</p>
               </CardContent>
             </Card>
           ) : tutorRequirements.length === 0 ? (
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="py-12 text-center">
                 <UserCheck className="h-12 w-12 text-white/30 mx-auto mb-4" />
-                <p className="text-white/70 mb-2">No custom requirements assigned</p>
-                <p className="text-sm text-white/50 mb-4">
+                <p className="text-white mb-2">No custom requirements assigned</p>
+                <p className="text-sm text-white mb-4">
                   Add specific evidence requirements for this student
                 </p>
                 <Button onClick={() => setIsAddDialogOpen(true)} variant="outline">
@@ -293,7 +291,7 @@ export function StudentRequirementsPanel({
               {/* Active Requirements */}
               {activeRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-white/70">Active</h4>
+                  <h4 className="text-sm font-medium text-white">Active</h4>
                   {activeRequirements.map((req) => (
                     <RequirementCard
                       key={req.id}
@@ -310,7 +308,7 @@ export function StudentRequirementsPanel({
               {/* Completed Requirements */}
               {completedRequirements.length > 0 && (
                 <div className="space-y-2 mt-6">
-                  <h4 className="text-sm font-medium text-white/70">Completed</h4>
+                  <h4 className="text-sm font-medium text-white">Completed</h4>
                   {completedRequirements.map((req) => (
                     <RequirementCard
                       key={req.id}
@@ -332,16 +330,14 @@ export function StudentRequirementsPanel({
           {unitLoading ? (
             <Card className="bg-white/5 border-elec-gray/40 animate-pulse">
               <CardContent className="py-12 text-center">
-                <p className="text-white/50">Loading unit requirements...</p>
+                <p className="text-white">Loading unit requirements...</p>
               </CardContent>
             </Card>
           ) : unitRequirements.length === 0 ? (
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="py-12 text-center">
                 <FileText className="h-12 w-12 text-white/30 mx-auto mb-4" />
-                <p className="text-white/50">
-                  No unit-level evidence requirements defined
-                </p>
+                <p className="text-white">No unit-level evidence requirements defined</p>
               </CardContent>
             </Card>
           ) : (
@@ -375,20 +371,14 @@ export function StudentRequirementsPanel({
                           {req.is_mandatory && (
                             <Badge className="bg-amber-500/20 text-amber-400">Required</Badge>
                           )}
-                          <span className="text-sm text-white/60">
-                            {req.quantity_required}x
-                          </span>
+                          <span className="text-sm text-white">{req.quantity_required}x</span>
                         </div>
                       </div>
                       {req.assessment_criterion_text && (
-                        <p className="text-sm text-white/70 mt-2">
-                          {req.assessment_criterion_text}
-                        </p>
+                        <p className="text-sm text-white mt-2">{req.assessment_criterion_text}</p>
                       )}
                       {req.guidance && (
-                        <p className="text-xs text-white/50 mt-1 italic">
-                          {req.guidance}
-                        </p>
+                        <p className="text-xs text-white mt-1 italic">{req.guidance}</p>
                       )}
                     </div>
                   ))}
@@ -426,12 +416,16 @@ export function StudentRequirementsPanel({
       />
 
       {/* Delete Confirmation */}
-      <AlertDialog open={!!deletingRequirement} onOpenChange={(open) => !open && setDeletingRequirement(null)}>
+      <AlertDialog
+        open={!!deletingRequirement}
+        onOpenChange={(open) => !open && setDeletingRequirement(null)}
+      >
         <AlertDialogContent className="bg-elec-dark border-elec-gray/40">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Requirement</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{deletingRequirement?.title}"? This action cannot be undone.
+              Are you sure you want to delete "{deletingRequirement?.title}"? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -474,9 +468,7 @@ function RequirementCard({
       return due <= weekFromNow && due >= now;
     })();
   const isOverdue =
-    requirement.due_date &&
-    !isCompleted &&
-    new Date(requirement.due_date) < new Date();
+    requirement.due_date && !isCompleted && new Date(requirement.due_date) < new Date();
 
   return (
     <Card
@@ -496,15 +488,10 @@ function RequirementCard({
                 {isCompleted ? (
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
                 ) : (
-                  <Circle className="h-5 w-5 text-white/40" />
+                  <Circle className="h-5 w-5 text-white" />
                 )}
               </button>
-              <h4
-                className={cn(
-                  'font-medium truncate',
-                  isCompleted && 'line-through text-white/60'
-                )}
-              >
+              <h4 className={cn('font-medium truncate', isCompleted && 'line-through text-white')}>
                 {requirement.title}
               </h4>
               {requirement.is_mandatory && (
@@ -513,22 +500,18 @@ function RequirementCard({
             </div>
 
             {requirement.description && (
-              <p className="text-sm text-white/60 mt-1 line-clamp-2">
-                {requirement.description}
-              </p>
+              <p className="text-sm text-white mt-1 line-clamp-2">{requirement.description}</p>
             )}
 
             <div className="flex items-center gap-3 mt-2">
               <div className="flex items-center gap-1">
                 {requirement.evidence_type_codes.map((code) => (
-                  <span key={code} className="text-white/60">
+                  <span key={code} className="text-white">
                     {EVIDENCE_ICONS[code as EvidenceTypeCode]}
                   </span>
                 ))}
               </div>
-              <span className="text-xs text-white/50">
-                {requirement.quantity_required}x required
-              </span>
+              <span className="text-xs text-white">{requirement.quantity_required}x required</span>
               {requirement.due_date && (
                 <Badge
                   variant={isOverdue ? 'destructive' : isDueSoon ? 'outline' : 'secondary'}

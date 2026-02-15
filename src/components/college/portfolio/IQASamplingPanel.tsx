@@ -37,7 +37,7 @@ import {
   FileCheck,
   Loader2,
   Eye,
-  RefreshCw
+  RefreshCw,
 } from 'lucide-react';
 import { useIQASampling, SamplingCandidate, SamplingRecord } from '@/hooks/college/useIQASampling';
 
@@ -54,7 +54,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
     sampleSubmission,
     completeVerification,
     refetchCandidates,
-    refetchRecords
+    refetchRecords,
   } = useIQASampling();
 
   const [activeTab, setActiveTab] = useState('candidates');
@@ -80,7 +80,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
         notes: iqaNotes,
         feedbackQuality,
         gradingAccuracy,
-        actionRequired
+        actionRequired,
       });
       setSelectedRecord(null);
       resetForm();
@@ -101,18 +101,24 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
     return new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'verified':
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Verified</Badge>;
+        return (
+          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Verified</Badge>
+        );
       case 'concerns_raised':
-        return <Badge className="bg-red-500/10 text-red-500 border-red-500/20">Concerns Raised</Badge>;
+        return (
+          <Badge className="bg-red-500/10 text-red-500 border-red-500/20">Concerns Raised</Badge>
+        );
       default:
-        return <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Pending</Badge>;
+        return (
+          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Pending</Badge>
+        );
     }
   };
 
@@ -135,7 +141,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
             <div className="flex items-center gap-2">
               <Search className="h-5 w-5 text-blue-400" />
               <div>
-                <p className="text-xs text-white/60">To Sample</p>
+                <p className="text-xs text-white">To Sample</p>
                 <p className="text-xl font-bold">{stats.pendingCandidates}</p>
               </div>
             </div>
@@ -147,7 +153,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-amber-400" />
               <div>
-                <p className="text-xs text-white/60">Pending Review</p>
+                <p className="text-xs text-white">Pending Review</p>
                 <p className="text-xl font-bold">{stats.pendingVerification}</p>
               </div>
             </div>
@@ -159,7 +165,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-400" />
               <div>
-                <p className="text-xs text-white/60">Verified</p>
+                <p className="text-xs text-white">Verified</p>
                 <p className="text-xl font-bold">{stats.verified}</p>
               </div>
             </div>
@@ -171,7 +177,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-400" />
               <div>
-                <p className="text-xs text-white/60">Concerns</p>
+                <p className="text-xs text-white">Concerns</p>
                 <p className="text-xl font-bold">{stats.concernsRaised}</p>
               </div>
             </div>
@@ -183,7 +189,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
             <div className="flex items-center gap-2">
               <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
               <div>
-                <p className="text-xs text-white/60">Total Sampled</p>
+                <p className="text-xs text-white">Total Sampled</p>
                 <p className="text-xl font-bold">{stats.totalSampled}</p>
               </div>
             </div>
@@ -224,27 +230,29 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
               <Table>
                 <TableHeader>
                   <TableRow className="border-elec-gray/40">
-                    <TableHead className="text-white/70">Student</TableHead>
-                    <TableHead className="text-white/70">Category</TableHead>
-                    <TableHead className="text-white/70">Assessor</TableHead>
-                    <TableHead className="text-white/70 text-center">Grade</TableHead>
-                    <TableHead className="text-white/70 text-center">Signed Off</TableHead>
-                    <TableHead className="text-white/70 w-24"></TableHead>
+                    <TableHead className="text-white">Student</TableHead>
+                    <TableHead className="text-white">Category</TableHead>
+                    <TableHead className="text-white">Assessor</TableHead>
+                    <TableHead className="text-white text-center">Grade</TableHead>
+                    <TableHead className="text-white text-center">Signed Off</TableHead>
+                    <TableHead className="text-white w-24"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {candidates.map(candidate => (
+                  {candidates.map((candidate) => (
                     <TableRow key={candidate.id} className="border-elec-gray/40">
                       <TableCell>
                         <div>
                           <p className="font-medium">{candidate.studentName}</p>
-                          <p className="text-xs text-white/50">{candidate.qualificationTitle}</p>
+                          <p className="text-xs text-white">{candidate.qualificationTitle}</p>
                         </div>
                       </TableCell>
                       <TableCell>{candidate.categoryName}</TableCell>
-                      <TableCell className="text-white/60">{candidate.assessorName}</TableCell>
+                      <TableCell className="text-white">{candidate.assessorName}</TableCell>
                       <TableCell className="text-center">
-                        <Badge variant="outline" className="capitalize">{candidate.grade}</Badge>
+                        <Badge variant="outline" className="capitalize">
+                          {candidate.grade}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-center text-sm">
                         {formatDate(candidate.signedOffAt)}
@@ -273,7 +281,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                   ))}
                   {candidates.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center text-white/50 py-12">
+                      <TableCell colSpan={6} className="text-center text-white py-12">
                         No submissions available for sampling
                       </TableCell>
                     </TableRow>
@@ -288,23 +296,21 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
           <Card className="bg-white/5 border-elec-gray/40">
             <CardHeader>
               <CardTitle className="text-base">Sampling Records</CardTitle>
-              <CardDescription>
-                Review and verify sampled submissions
-              </CardDescription>
+              <CardDescription>Review and verify sampled submissions</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow className="border-elec-gray/40">
-                    <TableHead className="text-white/70">Student</TableHead>
-                    <TableHead className="text-white/70">Category</TableHead>
-                    <TableHead className="text-white/70 text-center">Sampled</TableHead>
-                    <TableHead className="text-white/70 text-center">Status</TableHead>
-                    <TableHead className="text-white/70 w-24"></TableHead>
+                    <TableHead className="text-white">Student</TableHead>
+                    <TableHead className="text-white">Category</TableHead>
+                    <TableHead className="text-white text-center">Sampled</TableHead>
+                    <TableHead className="text-white text-center">Status</TableHead>
+                    <TableHead className="text-white w-24"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {samplingRecords.map(record => (
+                  {samplingRecords.map((record) => (
                     <TableRow key={record.id} className="border-elec-gray/40">
                       <TableCell>
                         <p className="font-medium">{record.studentName}</p>
@@ -339,7 +345,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                   ))}
                   {samplingRecords.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center text-white/50 py-12">
+                      <TableCell colSpan={5} className="text-center text-white py-12">
                         No sampling records yet
                       </TableCell>
                     </TableRow>
@@ -430,12 +436,12 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
           ) : (
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/60">Status</p>
+                <p className="text-sm text-white">Status</p>
                 <p className="font-medium capitalize">{selectedRecord?.verificationStatus}</p>
               </div>
               {selectedRecord?.iqaNotes && (
                 <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm text-white/60">IQA Notes</p>
+                  <p className="text-sm text-white">IQA Notes</p>
                   <p>{selectedRecord.iqaNotes}</p>
                 </div>
               )}

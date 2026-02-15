@@ -29,7 +29,7 @@ import {
   MessageSquare,
   FileCheck,
   RefreshCw,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSubmissionQueue, SubmissionQueueItem } from '@/hooks/college/usePortfolioSubmissions';
@@ -41,14 +41,15 @@ interface PortfolioReviewQueueProps {
 
 const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
   onViewSubmission,
-  onStartReview
+  onStartReview,
 }) => {
   const { submissions, stats, isLoading, refetch } = useSubmissionQueue();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterPriority, setFilterPriority] = useState<string | null>(null);
 
-  const filteredSubmissions = submissions.filter(sub => {
-    const matchesSearch = searchTerm === '' ||
+  const filteredSubmissions = submissions.filter((sub) => {
+    const matchesSearch =
+      searchTerm === '' ||
       sub.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       sub.categoryName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPriority = !filterPriority || sub.priority === filterPriority;
@@ -69,24 +70,39 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'submitted':
-        return <Badge variant="outline" className="border-blue-500/30 text-blue-400">New</Badge>;
+        return (
+          <Badge variant="outline" className="border-blue-500/30 text-blue-400">
+            New
+          </Badge>
+        );
       case 'under_review':
-        return <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Under Review</Badge>;
+        return (
+          <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
+            Under Review
+          </Badge>
+        );
       case 'resubmitted':
-        return <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">Resubmitted</Badge>;
+        return (
+          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">Resubmitted</Badge>
+        );
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
   };
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
-      month: 'short'
+      month: 'short',
     });
   };
 
@@ -109,7 +125,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <div className="flex items-center gap-2">
               <FileCheck className="h-5 w-5 text-blue-400" />
               <div>
-                <p className="text-xs text-white/60">Total Queue</p>
+                <p className="text-xs text-white">Total Queue</p>
                 <p className="text-xl font-bold">{stats.total}</p>
               </div>
             </div>
@@ -121,7 +137,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-400" />
               <div>
-                <p className="text-xs text-white/60">High Priority</p>
+                <p className="text-xs text-white">High Priority</p>
                 <p className="text-xl font-bold">{stats.highPriority}</p>
               </div>
             </div>
@@ -133,7 +149,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-amber-400" />
               <div>
-                <p className="text-xs text-white/60">Medium</p>
+                <p className="text-xs text-white">Medium</p>
                 <p className="text-xl font-bold">{stats.mediumPriority}</p>
               </div>
             </div>
@@ -145,7 +161,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-green-400" />
               <div>
-                <p className="text-xs text-white/60">Low</p>
+                <p className="text-xs text-white">Low</p>
                 <p className="text-xl font-bold">{stats.lowPriority}</p>
               </div>
             </div>
@@ -155,9 +171,9 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
         <Card className="bg-white/5 border-elec-gray/40">
           <CardContent className="p-3">
             <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-white/60" />
+              <Clock className="h-5 w-5 text-white" />
               <div>
-                <p className="text-xs text-white/60">Avg Wait</p>
+                <p className="text-xs text-white">Avg Wait</p>
                 <p className="text-xl font-bold">{stats.avgDaysWaiting}d</p>
               </div>
             </div>
@@ -176,13 +192,13 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <div className="flex items-center gap-2">
               <div className="relative flex-1 sm:w-64">
                 {!searchTerm && (
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40 pointer-events-none" />
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search student or category..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn("bg-white/5 border-elec-gray/40", !searchTerm && "pl-8")}
+                  className={cn('bg-white/5 border-elec-gray/40', !searchTerm && 'pl-8')}
                 />
               </div>
               <DropdownMenu>
@@ -222,18 +238,18 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             <Table>
               <TableHeader>
                 <TableRow className="border-elec-gray/40">
-                  <TableHead className="text-white/70">Student</TableHead>
-                  <TableHead className="text-white/70">Category</TableHead>
-                  <TableHead className="text-white/70 text-center">Submitted</TableHead>
-                  <TableHead className="text-white/70 text-center">Attempt</TableHead>
-                  <TableHead className="text-white/70 text-center">Wait</TableHead>
-                  <TableHead className="text-white/70 text-center">Priority</TableHead>
-                  <TableHead className="text-white/70 text-center">Status</TableHead>
-                  <TableHead className="text-white/70 w-10"></TableHead>
+                  <TableHead className="text-white">Student</TableHead>
+                  <TableHead className="text-white">Category</TableHead>
+                  <TableHead className="text-white text-center">Submitted</TableHead>
+                  <TableHead className="text-white text-center">Attempt</TableHead>
+                  <TableHead className="text-white text-center">Wait</TableHead>
+                  <TableHead className="text-white text-center">Priority</TableHead>
+                  <TableHead className="text-white text-center">Status</TableHead>
+                  <TableHead className="text-white w-10"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredSubmissions.map(submission => (
+                {filteredSubmissions.map((submission) => (
                   <TableRow
                     key={submission.id}
                     className="border-elec-gray/40 hover:bg-white/5 cursor-pointer"
@@ -248,7 +264,9 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                         </Avatar>
                         <div className="min-w-0">
                           <p className="font-medium truncate">{submission.studentName}</p>
-                          <p className="text-xs text-white/50 truncate">{submission.qualificationTitle}</p>
+                          <p className="text-xs text-white truncate">
+                            {submission.qualificationTitle}
+                          </p>
                         </div>
                       </div>
                     </TableCell>
@@ -264,7 +282,9 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                       </Badge>
                     </TableCell>
                     <TableCell className="text-center">
-                      <span className={`text-sm ${submission.daysAwaitingReview > 7 ? 'text-red-400' : submission.daysAwaitingReview > 3 ? 'text-amber-400' : ''}`}>
+                      <span
+                        className={`text-sm ${submission.daysAwaitingReview > 7 ? 'text-red-400' : submission.daysAwaitingReview > 3 ? 'text-amber-400' : ''}`}
+                      >
                         {submission.daysAwaitingReview}d
                       </span>
                     </TableCell>
@@ -276,12 +296,15 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild onClick={e => e.stopPropagation()}>
+                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-elec-dark border-elec-gray/40">
+                        <DropdownMenuContent
+                          align="end"
+                          className="bg-elec-dark border-elec-gray/40"
+                        >
                           <DropdownMenuItem onClick={() => onViewSubmission(submission.id)}>
                             <Eye className="h-4 w-4 mr-2" />
                             View Details
@@ -299,7 +322,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                 ))}
                 {filteredSubmissions.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={8} className="text-center text-white/50 py-12">
+                    <TableCell colSpan={8} className="text-center text-white py-12">
                       {submissions.length === 0
                         ? 'No submissions awaiting review'
                         : 'No submissions match your search'}

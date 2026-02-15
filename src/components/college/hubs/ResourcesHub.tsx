@@ -1,191 +1,178 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { CollegeFeatureTile } from "@/components/college/CollegeFeatureTile";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { Button } from "@/components/ui/button";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
-import { useCollege } from "@/contexts/CollegeContext";
-import {
-  FolderOpen,
-  Library,
-  Shield,
-  Plug,
-  Settings,
-  Upload,
-  FileCheck,
-  AlertTriangle,
-  Plus,
-} from "lucide-react";
+import { motion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
+import { CollegeFeatureTile } from '@/components/college/CollegeFeatureTile';
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
+import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { Shield, Plug, Settings, FileCheck, Users, FileText, Link } from 'lucide-react';
 
 interface ResourcesHubProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
 export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
-  const { teachingResources, staff } = useCollege();
+  const { staff } = useCollegeSupabase();
+  const { staggerContainer, staggerItem } = useHapticFeedback();
 
-  const totalResources = teachingResources.length;
+  const activeStaff = staff.filter((s) => s.status === 'Active').length;
 
-  // Mock compliance data (would come from context in full implementation)
-  const expiringCompliance = staff.filter(s => {
-    if (!s.dbsExpiry) return false;
-    const expiry = new Date(s.dbsExpiry);
-    const threeMonths = new Date();
-    threeMonths.setMonth(threeMonths.getMonth() + 3);
-    return expiry <= threeMonths;
-  }).length;
-
-  const ltiPlatformsConnected = 0; // Would come from LTI state
+  const handleRefresh = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  };
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Resources Hub"
-        description="Document library, compliance and system settings"
-        action={
-          <Button className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black">
-            <Plus className="h-4 w-4" />
-            Upload File
-          </Button>
-        }
-      />
+    <PullToRefresh onRefresh={handleRefresh}>
+      <motion.div
+        className="space-y-4 md:space-y-6"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        <CollegeSectionHeader
+          title="Resources Hub"
+          description="Compliance, integrations and system settings"
+        />
 
-      {/* Quick Stats */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Library className="h-4 w-4 text-elec-yellow" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{totalResources}</p>
-              <p className="text-xs text-muted-foreground">Resources</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-info/10 border-info/20 shrink-0">
-          <CardContent className="p-3 flex items-center gap-2">
-            <Plug className="h-4 w-4 text-info" />
-            <div>
-              <p className="text-lg font-bold text-foreground">{ltiPlatformsConnected}</p>
-              <p className="text-xs text-muted-foreground">VLE Connected</p>
-            </div>
-          </CardContent>
-        </Card>
-        {expiringCompliance > 0 && (
-          <Card className="bg-warning/10 border-warning/20 shrink-0">
+        {/* Quick Stats */}
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
+          <Card className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-success via-green-400 to-success/50" />
             <CardContent className="p-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-warning" />
+              <div className="p-2 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5 group-hover:scale-110 transition-transform duration-300">
+                <Users className="h-4 w-4 text-success" />
+              </div>
               <div>
-                <p className="text-lg font-bold text-foreground">{expiringCompliance}</p>
-                <p className="text-xs text-muted-foreground">Expiring</p>
+                <p className="text-lg font-bold text-white">{activeStaff}</p>
+                <p className="text-xs text-white">Active Staff</p>
               </div>
             </CardContent>
           </Card>
-        )}
-      </div>
-
-      {/* Documents & Files */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-          Documents & Files
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <CollegeFeatureTile
-            icon={Library}
-            title="Document Library"
-            description="Teaching resources & files"
-            onClick={() => onNavigate("documentlibrary")}
-            badge={`${totalResources} files`}
-          />
-          <CollegeFeatureTile
-            icon={Shield}
-            title="Compliance"
-            description="Policies & staff documents"
-            onClick={() => onNavigate("compliancedocs")}
-            badge={expiringCompliance > 0 ? `${expiringCompliance} expiring` : 'All current'}
-            badgeVariant={expiringCompliance > 0 ? "warning" : "success"}
-          />
+          <Card className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-info/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-info via-blue-400 to-info/50" />
+            <CardContent className="p-3 flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-info/20 to-info/5 border border-info/20 shadow-lg shadow-info/5 group-hover:scale-110 transition-transform duration-300">
+                <Plug className="h-4 w-4 text-info" />
+              </div>
+              <div>
+                <p className="text-lg font-bold text-white">0</p>
+                <p className="text-xs text-white">VLE Connected</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow/50" />
+            <CardContent className="p-3 flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5 group-hover:scale-110 transition-transform duration-300">
+                <Shield className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <div>
+                <p className="text-lg font-bold text-white">0</p>
+                <p className="text-xs text-white">Compliance Docs</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
 
-      {/* Settings & Integration */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-info rounded-full"></span>
-          Settings & Integration
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <CollegeFeatureTile
-            icon={Plug}
-            title="VLE Integration"
-            description="Canvas, Moodle & more"
-            onClick={() => onNavigate("ltisettings")}
-            badge={ltiPlatformsConnected > 0 ? `${ltiPlatformsConnected} connected` : 'Not connected'}
-            badgeVariant={ltiPlatformsConnected > 0 ? "success" : "info"}
-          />
-          <CollegeFeatureTile
-            icon={Settings}
-            title="Settings"
-            description="Institution preferences"
-            onClick={() => onNavigate("collegesettings")}
-          />
-        </div>
-      </div>
+        {/* Compliance & Documents */}
+        <motion.div variants={staggerItem}>
+          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
+            Compliance & Documents
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <CollegeFeatureTile
+              icon={Shield}
+              title="Compliance"
+              description="Policies, DBS checks & staff documents"
+              onClick={() => onNavigate('compliancedocs')}
+            />
+            <CollegeFeatureTile
+              icon={FileText}
+              title="Teaching Resources"
+              description="Shared materials & uploads"
+              onClick={() => onNavigate('teachingresources')}
+            />
+          </div>
+        </motion.div>
 
-      {/* Compliance Alert */}
-      {expiringCompliance > 0 && (
-        <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-warning rounded-full"></span>
-            Needs Attention
+        {/* Integrations */}
+        <motion.div variants={staggerItem}>
+          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
+            Integrations
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <CollegeFeatureTile
+              icon={Plug}
+              title="VLE Integration"
+              description="Canvas, Moodle & LTI 1.3"
+              onClick={() => onNavigate('ltisettings')}
+              badge="Not connected"
+              badgeVariant="info"
+            />
+            <CollegeFeatureTile
+              icon={Link}
+              title="Employer Portal"
+              description="Apprentice progress & employer engagement"
+              onClick={() => onNavigate('employerportal')}
+            />
+          </div>
+        </motion.div>
+
+        {/* Settings */}
+        <motion.div variants={staggerItem}>
+          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
+            Administration
           </h2>
           <CollegeFeatureTile
-            icon={AlertTriangle}
-            title="Compliance Attention Needed"
-            description="DBS checks or documents expiring within 3 months"
-            onClick={() => onNavigate("compliancedocs")}
-            badge={`${expiringCompliance} expiring`}
-            badgeVariant="warning"
-          />
-        </div>
-      )}
-
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <CollegeFeatureTile
-            icon={Upload}
-            title="Upload File"
-            description="Add resource"
-            onClick={() => onNavigate("documentlibrary")}
-            compact
-          />
-          <CollegeFeatureTile
-            icon={FileCheck}
-            title="Check Compliance"
-            description="Review docs"
-            onClick={() => onNavigate("compliancedocs")}
-            compact
-          />
-          <CollegeFeatureTile
-            icon={Plug}
-            title="Connect VLE"
-            description="LTI setup"
-            onClick={() => onNavigate("ltisettings")}
-            compact
-          />
-          <CollegeFeatureTile
             icon={Settings}
-            title="Settings"
-            description="Configure"
-            onClick={() => onNavigate("collegesettings")}
-            compact
+            title="College Settings"
+            description="Institution preferences & configuration"
+            onClick={() => onNavigate('collegesettings')}
           />
-        </div>
-      </div>
-    </div>
+        </motion.div>
+
+        {/* Quick Actions */}
+        <motion.div variants={staggerItem}>
+          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <CollegeFeatureTile
+              icon={FileCheck}
+              title="Check Compliance"
+              description="Review docs"
+              onClick={() => onNavigate('compliancedocs')}
+              compact
+            />
+            <CollegeFeatureTile
+              icon={Plug}
+              title="Connect VLE"
+              description="LTI setup"
+              onClick={() => onNavigate('ltisettings')}
+              compact
+            />
+            <CollegeFeatureTile
+              icon={FileText}
+              title="Resources"
+              description="View materials"
+              onClick={() => onNavigate('teachingresources')}
+              compact
+            />
+            <CollegeFeatureTile
+              icon={Settings}
+              title="Settings"
+              description="Configure"
+              onClick={() => onNavigate('collegesettings')}
+              compact
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </PullToRefresh>
   );
 }

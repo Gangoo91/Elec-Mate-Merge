@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { useToast } from '@/hooks/use-toast';
 import {
   Plus,
   Plug,
@@ -30,14 +30,14 @@ import {
   HelpCircle,
   Zap,
   Check,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Dialog,
   DialogContent,
@@ -45,26 +45,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+} from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 interface LTIPlatform {
   id: string;
@@ -87,39 +82,17 @@ interface LTIPlatform {
   };
 }
 
-// Mock LTI platform data
-const initialPlatforms: LTIPlatform[] = [
-  {
-    id: 'lti-1',
-    name: 'Canvas LMS',
-    type: 'canvas',
-    status: 'Connected',
-    url: 'https://college.instructure.com',
-    clientId: 'canvas_client_12345',
-    deploymentId: '1:abc123',
-    lastSync: '2024-01-15T10:30:00Z',
-    features: {
-      deepLinking: true,
-      gradeSync: true,
-      rosterSync: true,
-    },
-    stats: {
-      launches: 1234,
-      courses: 8,
-      users: 156,
-    },
-  },
-];
+const initialPlatforms: LTIPlatform[] = [];
 
 // Real LTI 1.3 backend (Supabase Edge Functions)
 const LTI_BASE = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1';
 
 const ltiConfig = {
-  toolUrl: LTI_BASE + "/lti-launch",
-  jwksUrl: LTI_BASE + "/lti-jwks",
-  deepLinkUrl: LTI_BASE + "/lti-deep-link",
-  redirectUris: [LTI_BASE + "/lti-launch"],
-  oidcInitUrl: LTI_BASE + "/lti-oidc-init",
+  toolUrl: LTI_BASE + '/lti-launch',
+  jwksUrl: LTI_BASE + '/lti-jwks',
+  deepLinkUrl: LTI_BASE + '/lti-deep-link',
+  redirectUris: [LTI_BASE + '/lti-launch'],
+  oidcInitUrl: LTI_BASE + '/lti-oidc-init',
 };
 
 export function LTISettingsSection() {
@@ -127,7 +100,9 @@ export function LTISettingsSection() {
   const [platforms, setPlatforms] = useState<LTIPlatform[]>(initialPlatforms);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isSetupGuideOpen, setIsSetupGuideOpen] = useState(false);
-  const [selectedGuide, setSelectedGuide] = useState<'canvas' | 'moodle' | 'blackboard' | null>(null);
+  const [selectedGuide, setSelectedGuide] = useState<'canvas' | 'moodle' | 'blackboard' | null>(
+    null
+  );
   const [isConfigureDialogOpen, setIsConfigureDialogOpen] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<LTIPlatform | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -146,8 +121,8 @@ export function LTISettingsSection() {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     toast({
-      title: "Copied to clipboard",
-      description: "Value has been copied successfully",
+      title: 'Copied to clipboard',
+      description: 'Value has been copied successfully',
     });
     setTimeout(() => setCopiedField(null), 2000);
   };
@@ -155,9 +130,9 @@ export function LTISettingsSection() {
   const handleAddPlatform = () => {
     if (!newPlatform.name || !newPlatform.url || !newPlatform.clientId) {
       toast({
-        title: "Missing required fields",
-        description: "Please fill in all required fields",
-        variant: "destructive",
+        title: 'Missing required fields',
+        description: 'Please fill in all required fields',
+        variant: 'destructive',
       });
       return;
     }
@@ -187,44 +162,38 @@ export function LTISettingsSection() {
     setNewPlatform({ name: '', type: 'canvas', url: '', clientId: '', deploymentId: '' });
     setIsAddDialogOpen(false);
     toast({
-      title: "Platform added",
-      description: "Complete the setup in your LMS to finish connection",
+      title: 'Platform added',
+      description: 'Complete the setup in your LMS to finish connection',
     });
   };
 
   const handleSync = async (platformId: string) => {
-    setIsSyncing(platformId);
-    // Simulate sync
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setPlatforms(platforms.map(p =>
-      p.id === platformId
-        ? { ...p, lastSync: new Date().toISOString(), status: 'Connected' as const }
-        : p
-    ));
-    setIsSyncing(null);
     toast({
-      title: "Sync complete",
-      description: "Platform data has been synchronized",
+      title: 'Sync unavailable',
+      description:
+        'LTI edge functions are not yet deployed. Deploy lti-launch, lti-jwks, lti-deep-link, and lti-oidc-init first.',
     });
   };
 
   const handleDisconnect = (platformId: string) => {
-    setPlatforms(platforms.filter(p => p.id !== platformId));
+    setPlatforms(platforms.filter((p) => p.id !== platformId));
     toast({
-      title: "Platform disconnected",
-      description: "The LTI connection has been removed",
+      title: 'Platform disconnected',
+      description: 'The LTI connection has been removed',
     });
   };
 
   const handleToggleFeature = (platformId: string, feature: keyof LTIPlatform['features']) => {
-    setPlatforms(platforms.map(p =>
-      p.id === platformId
-        ? { ...p, features: { ...p.features, [feature]: !p.features[feature] } }
-        : p
-    ));
+    setPlatforms(
+      platforms.map((p) =>
+        p.id === platformId
+          ? { ...p, features: { ...p.features, [feature]: !p.features[feature] } }
+          : p
+      )
+    );
     toast({
-      title: "Feature updated",
-      description: "Changes will take effect on next launch",
+      title: 'Feature updated',
+      description: 'Changes will take effect on next launch',
     });
   };
 
@@ -235,19 +204,27 @@ export function LTISettingsSection() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Connected': return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'Disconnected': return 'bg-red-500/10 text-red-500 border-red-500/20';
-      case 'Pending': return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Connected':
+        return 'bg-green-500/10 text-green-500 border-green-500/20';
+      case 'Disconnected':
+        return 'bg-red-500/10 text-red-500 border-red-500/20';
+      case 'Pending':
+        return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+      default:
+        return 'bg-muted text-white';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'Connected': return <CheckCircle2 className="h-3.5 w-3.5" />;
-      case 'Disconnected': return <XCircle className="h-3.5 w-3.5" />;
-      case 'Pending': return <AlertTriangle className="h-3.5 w-3.5" />;
-      default: return <Plug className="h-3.5 w-3.5" />;
+      case 'Connected':
+        return <CheckCircle2 className="h-3.5 w-3.5" />;
+      case 'Disconnected':
+        return <XCircle className="h-3.5 w-3.5" />;
+      case 'Pending':
+        return <AlertTriangle className="h-3.5 w-3.5" />;
+      default:
+        return <Plug className="h-3.5 w-3.5" />;
     }
   };
 
@@ -283,9 +260,9 @@ export function LTISettingsSection() {
         <Card className="bg-green-500/10 border-green-500/20">
           <CardContent className="p-4 text-center">
             <p className="text-2xl font-bold text-green-500">
-              {platforms.filter(p => p.status === 'Connected').length}
+              {platforms.filter((p) => p.status === 'Connected').length}
             </p>
-            <p className="text-xs text-muted-foreground">Connected</p>
+            <p className="text-xs text-white">Connected</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-yellow/10 border-elec-yellow/20">
@@ -293,7 +270,7 @@ export function LTISettingsSection() {
             <p className="text-2xl font-bold text-elec-yellow">
               {platforms.reduce((sum, p) => sum + p.stats.launches, 0).toLocaleString()}
             </p>
-            <p className="text-xs text-muted-foreground">Total Launches</p>
+            <p className="text-xs text-white">Total Launches</p>
           </CardContent>
         </Card>
         <Card className="bg-blue-500/10 border-blue-500/20">
@@ -301,7 +278,7 @@ export function LTISettingsSection() {
             <p className="text-2xl font-bold text-blue-500">
               {platforms.reduce((sum, p) => sum + p.stats.users, 0)}
             </p>
-            <p className="text-xs text-muted-foreground">Linked Users</p>
+            <p className="text-xs text-white">Linked Users</p>
           </CardContent>
         </Card>
       </div>
@@ -321,11 +298,14 @@ export function LTISettingsSection() {
                   <Plug className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">No platforms connected</h3>
-                <p className="text-muted-foreground mb-4 max-w-md mx-auto">
+                <p className="text-white mb-4 max-w-md mx-auto">
                   Connect your VLE to enable single sign-on, grade sync, and roster import.
                 </p>
                 <div className="flex gap-3 justify-center">
-                  <Button onClick={() => setIsAddDialogOpen(true)} className="bg-elec-yellow hover:bg-elec-yellow/90 text-black">
+                  <Button
+                    onClick={() => setIsAddDialogOpen(true)}
+                    className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                  >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Platform
                   </Button>
@@ -339,49 +319,75 @@ export function LTISettingsSection() {
           ) : (
             <div className="space-y-4">
               {platforms.map((platform) => (
-                <Card key={platform.id} className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+                <Card
+                  key={platform.id}
+                  className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
+                >
                   <CardContent className="p-5">
                     <div className="flex items-start gap-4">
-                      <div className={`h-12 w-12 rounded-lg ${getPlatformColor(platform.type)} flex items-center justify-center shrink-0`}>
-                        <Plug className="h-6 w-6 text-foreground" />
+                      <div
+                        className={`h-12 w-12 rounded-lg ${getPlatformColor(platform.type)} flex items-center justify-center shrink-0`}
+                      >
+                        <Plug className="h-6 w-6 text-white" />
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <h3 className="font-semibold text-foreground">{platform.name}</h3>
-                            <p className="text-sm text-muted-foreground">{platform.url}</p>
+                            <h3 className="font-semibold text-white">{platform.name}</h3>
+                            <p className="text-sm text-white">{platform.url}</p>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline" className={`${getStatusColor(platform.status)} flex items-center gap-1`}>
+                            <Badge
+                              variant="outline"
+                              className={`${getStatusColor(platform.status)} flex items-center gap-1`}
+                            >
                               {getStatusIcon(platform.status)}
                               {platform.status}
                             </Badge>
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-11 w-11 touch-manipulation"
+                                >
                                   <MoreVertical className="h-4 w-4" />
                                 </Button>
                               </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end" className="bg-elec-dark border-elec-yellow/20">
-                                <DropdownMenuItem onClick={() => {
-                                  setSelectedPlatform(platform);
-                                  setIsConfigureDialogOpen(true);
-                                }}>
+                              <DropdownMenuContent
+                                align="end"
+                                className="bg-elec-dark border-elec-yellow/20"
+                              >
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => {
+                                    setSelectedPlatform(platform);
+                                    setIsConfigureDialogOpen(true);
+                                  }}
+                                >
                                   <Settings className="h-4 w-4 mr-2" />
                                   Configure
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleSync(platform.id)}>
-                                  <RefreshCw className={`h-4 w-4 mr-2 ${isSyncing === platform.id ? 'animate-spin' : ''}`} />
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => handleSync(platform.id)}
+                                >
+                                  <RefreshCw
+                                    className={`h-4 w-4 mr-2 ${isSyncing === platform.id ? 'animate-spin' : ''}`}
+                                  />
                                   Sync Now
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => window.open(platform.url, '_blank')}>
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => window.open(platform.url, '_blank')}
+                                >
                                   <ExternalLink className="h-4 w-4 mr-2" />
                                   Open LMS
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                  className="text-red-500 focus:text-red-500"
+                                  className="h-11 touch-manipulation text-red-500 focus:text-red-500"
                                   onClick={() => handleDisconnect(platform.id)}
                                 >
                                   <Trash2 className="h-4 w-4 mr-2" />
@@ -398,9 +404,18 @@ export function LTISettingsSection() {
                             onClick={() => handleToggleFeature(platform.id, 'deepLinking')}
                             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                           >
-                            <Link2 className={`h-4 w-4 ${platform.features.deepLinking ? 'text-green-500' : 'text-muted-foreground'}`} />
+                            <Link2
+                              className={`h-4 w-4 ${platform.features.deepLinking ? 'text-green-500' : 'text-white'}`}
+                            />
                             <span className="text-xs">Deep Linking</span>
-                            <Badge variant="outline" className={platform.features.deepLinking ? 'bg-green-500/10 text-green-500 border-green-500/20' : ''}>
+                            <Badge
+                              variant="outline"
+                              className={
+                                platform.features.deepLinking
+                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                                  : ''
+                              }
+                            >
                               {platform.features.deepLinking ? 'On' : 'Off'}
                             </Badge>
                           </button>
@@ -408,9 +423,18 @@ export function LTISettingsSection() {
                             onClick={() => handleToggleFeature(platform.id, 'gradeSync')}
                             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                           >
-                            <FileCheck className={`h-4 w-4 ${platform.features.gradeSync ? 'text-green-500' : 'text-muted-foreground'}`} />
+                            <FileCheck
+                              className={`h-4 w-4 ${platform.features.gradeSync ? 'text-green-500' : 'text-white'}`}
+                            />
                             <span className="text-xs">Grade Sync</span>
-                            <Badge variant="outline" className={platform.features.gradeSync ? 'bg-green-500/10 text-green-500 border-green-500/20' : ''}>
+                            <Badge
+                              variant="outline"
+                              className={
+                                platform.features.gradeSync
+                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                                  : ''
+                              }
+                            >
                               {platform.features.gradeSync ? 'On' : 'Off'}
                             </Badge>
                           </button>
@@ -418,26 +442,36 @@ export function LTISettingsSection() {
                             onClick={() => handleToggleFeature(platform.id, 'rosterSync')}
                             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
                           >
-                            <Users className={`h-4 w-4 ${platform.features.rosterSync ? 'text-green-500' : 'text-muted-foreground'}`} />
+                            <Users
+                              className={`h-4 w-4 ${platform.features.rosterSync ? 'text-green-500' : 'text-white'}`}
+                            />
                             <span className="text-xs">Roster Sync</span>
-                            <Badge variant="outline" className={platform.features.rosterSync ? 'bg-green-500/10 text-green-500 border-green-500/20' : ''}>
+                            <Badge
+                              variant="outline"
+                              className={
+                                platform.features.rosterSync
+                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                                  : ''
+                              }
+                            >
                               {platform.features.rosterSync ? 'On' : 'Off'}
                             </Badge>
                           </button>
                         </div>
 
                         {/* Stats */}
-                        <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-elec-yellow/10 text-xs text-muted-foreground">
+                        <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-elec-yellow/10 text-xs text-white">
                           <span>{platform.stats.launches.toLocaleString()} launches</span>
                           <span>{platform.stats.courses} courses</span>
                           <span>{platform.stats.users} users</span>
                           {platform.lastSync && (
                             <span>
-                              Last sync: {new Date(platform.lastSync).toLocaleDateString('en-GB', {
+                              Last sync:{' '}
+                              {new Date(platform.lastSync).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',
                                 hour: '2-digit',
-                                minute: '2-digit'
+                                minute: '2-digit',
                               })}
                             </span>
                           )}
@@ -469,19 +503,31 @@ export function LTISettingsSection() {
                 { label: 'OIDC Initiation URL', value: ltiConfig.oidcInitUrl, key: 'oidcInitUrl' },
                 { label: 'JWKS URL (Public Key Set)', value: ltiConfig.jwksUrl, key: 'jwksUrl' },
                 { label: 'Deep Linking URL', value: ltiConfig.deepLinkUrl, key: 'deepLinkUrl' },
-                { label: 'Redirect URIs', value: ltiConfig.redirectUris.join(', '), key: 'redirectUris' },
+                {
+                  label: 'Redirect URIs',
+                  value: ltiConfig.redirectUris.join(', '),
+                  key: 'redirectUris',
+                },
               ].map((item) => (
                 <div key={item.key} className="space-y-2">
-                  <Label className="text-xs text-muted-foreground">{item.label}</Label>
+                  <Label className="text-xs text-white">{item.label}</Label>
                   <div className="flex gap-2">
-                    <Input value={item.value} readOnly className="font-mono text-sm bg-elec-gray border-elec-yellow/20" />
+                    <Input
+                      value={item.value}
+                      readOnly
+                      className="font-mono text-sm bg-elec-gray border-elec-yellow/20"
+                    />
                     <Button
                       variant="outline"
                       size="icon"
                       className="border-elec-yellow/20 hover:bg-elec-yellow/10"
                       onClick={() => copyToClipboard(item.value, item.key)}
                     >
-                      {copiedField === item.key ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                      {copiedField === item.key ? (
+                        <Check className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -499,15 +545,27 @@ export function LTISettingsSection() {
             </CardHeader>
             <CardContent className="space-y-4">
               {[
-                { label: 'Require State Parameter', desc: 'Enforce state validation for OIDC flow', default: true },
+                {
+                  label: 'Require State Parameter',
+                  desc: 'Enforce state validation for OIDC flow',
+                  default: true,
+                },
                 { label: 'Validate Nonce', desc: 'Prevent replay attacks', default: true },
-                { label: 'Auto-provision Users', desc: 'Create accounts on first LTI launch', default: true },
-                { label: 'Sync Grades Automatically', desc: 'Push grades to LMS when recorded', default: false },
+                {
+                  label: 'Auto-provision Users',
+                  desc: 'Create accounts on first LTI launch',
+                  default: true,
+                },
+                {
+                  label: 'Sync Grades Automatically',
+                  desc: 'Push grades to LMS when recorded',
+                  default: false,
+                },
               ].map((setting, idx) => (
                 <div key={idx} className="flex items-center justify-between">
                   <div>
                     <Label>{setting.label}</Label>
-                    <p className="text-xs text-muted-foreground">{setting.desc}</p>
+                    <p className="text-xs text-white">{setting.desc}</p>
                   </div>
                   <Switch defaultChecked={setting.default} />
                 </div>
@@ -525,11 +583,14 @@ export function LTISettingsSection() {
             >
               <CardContent className="p-6 text-center">
                 <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-red-500 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-foreground" />
+                  <Plug className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Canvas LMS</h3>
-                <p className="text-sm text-muted-foreground mb-4">Instructure Canvas setup guide</p>
-                <Button variant="outline" className="w-full group-hover:border-red-500/50 group-hover:text-red-500">
+                <p className="text-sm text-white mb-4">Instructure Canvas setup guide</p>
+                <Button
+                  variant="outline"
+                  className="w-full group-hover:border-red-500/50 group-hover:text-red-500"
+                >
                   View Guide
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -543,11 +604,14 @@ export function LTISettingsSection() {
             >
               <CardContent className="p-6 text-center">
                 <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-orange-500 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-foreground" />
+                  <Plug className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Moodle</h3>
-                <p className="text-sm text-muted-foreground mb-4">Moodle LMS setup guide</p>
-                <Button variant="outline" className="w-full group-hover:border-orange-500/50 group-hover:text-orange-500">
+                <p className="text-sm text-white mb-4">Moodle LMS setup guide</p>
+                <Button
+                  variant="outline"
+                  className="w-full group-hover:border-orange-500/50 group-hover:text-orange-500"
+                >
                   View Guide
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -561,11 +625,14 @@ export function LTISettingsSection() {
             >
               <CardContent className="p-6 text-center">
                 <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-gray-700 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-foreground" />
+                  <Plug className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Blackboard</h3>
-                <p className="text-sm text-muted-foreground mb-4">Blackboard Learn setup guide</p>
-                <Button variant="outline" className="w-full group-hover:border-gray-500/50 group-hover:text-gray-400">
+                <p className="text-sm text-white mb-4">Blackboard Learn setup guide</p>
+                <Button
+                  variant="outline"
+                  className="w-full group-hover:border-gray-500/50 group-hover:text-gray-400"
+                >
                   View Guide
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -584,10 +651,26 @@ export function LTISettingsSection() {
             <CardContent>
               <div className="grid gap-4 md:grid-cols-4">
                 {[
-                  { step: '1', title: 'Register Tool', desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel' },
-                  { step: '2', title: 'Copy Config', desc: 'Use the Tool Configuration values from the Config tab' },
-                  { step: '3', title: 'Add Platform', desc: 'Enter your LMS details using the Add Platform button' },
-                  { step: '4', title: 'Test Launch', desc: 'Create a test assignment and verify the connection' },
+                  {
+                    step: '1',
+                    title: 'Register Tool',
+                    desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel',
+                  },
+                  {
+                    step: '2',
+                    title: 'Copy Config',
+                    desc: 'Use the Tool Configuration values from the Config tab',
+                  },
+                  {
+                    step: '3',
+                    title: 'Add Platform',
+                    desc: 'Enter your LMS details using the Add Platform button',
+                  },
+                  {
+                    step: '4',
+                    title: 'Test Launch',
+                    desc: 'Create a test assignment and verify the connection',
+                  },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-3">
                     <div className="h-8 w-8 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0 text-elec-yellow font-bold">
@@ -595,7 +678,7 @@ export function LTISettingsSection() {
                     </div>
                     <div>
                       <h4 className="font-medium text-sm">{item.title}</h4>
-                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                      <p className="text-xs text-white">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -660,7 +743,7 @@ export function LTISettingsSection() {
                 onChange={(e) => setNewPlatform({ ...newPlatform, clientId: e.target.value })}
                 className="bg-elec-gray border-elec-yellow/20"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Found in your LMS after registering Elec-Mate as an LTI tool
               </p>
             </div>
@@ -693,11 +776,16 @@ export function LTISettingsSection() {
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-elec-dark border-elec-yellow/20">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-3">
-              <div className={`h-8 w-8 rounded-lg ${
-                selectedGuide === 'canvas' ? 'bg-red-500' :
-                selectedGuide === 'moodle' ? 'bg-orange-500' : 'bg-gray-700'
-              } flex items-center justify-center`}>
-                <Plug className="h-4 w-4 text-foreground" />
+              <div
+                className={`h-8 w-8 rounded-lg ${
+                  selectedGuide === 'canvas'
+                    ? 'bg-red-500'
+                    : selectedGuide === 'moodle'
+                      ? 'bg-orange-500'
+                      : 'bg-gray-700'
+                } flex items-center justify-center`}
+              >
+                <Plug className="h-4 w-4 text-white" />
               </div>
               {selectedGuide === 'canvas' && 'Canvas LMS Setup Guide'}
               {selectedGuide === 'moodle' && 'Moodle Setup Guide'}
@@ -714,44 +802,68 @@ export function LTISettingsSection() {
                 <AccordionItem value="step1">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">1</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        1
+                      </div>
                       Access Developer Keys
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>1. Log in to Canvas as an admin</p>
-                    <p>2. Go to <strong>Admin → Developer Keys</strong></p>
-                    <p>3. Click <strong>+ Developer Key → + LTI Key</strong></p>
+                    <p>
+                      2. Go to <strong>Admin → Developer Keys</strong>
+                    </p>
+                    <p>
+                      3. Click <strong>+ Developer Key → + LTI Key</strong>
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">2</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        2
+                      </div>
                       Configure LTI Key
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>Enter the following values:</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Key Name:</strong> Elec-Mate</li>
-                      <li><strong>Redirect URIs:</strong> {ltiConfig.redirectUris[0]}</li>
-                      <li><strong>Method:</strong> Manual Entry</li>
-                      <li><strong>Target Link URI:</strong> {ltiConfig.toolUrl}</li>
-                      <li><strong>OpenID Connect Initiation URL:</strong> {ltiConfig.oidcInitUrl}</li>
-                      <li><strong>JWK Method:</strong> Public JWK URL</li>
-                      <li><strong>Public JWK URL:</strong> {ltiConfig.jwksUrl}</li>
+                      <li>
+                        <strong>Key Name:</strong> Elec-Mate
+                      </li>
+                      <li>
+                        <strong>Redirect URIs:</strong> {ltiConfig.redirectUris[0]}
+                      </li>
+                      <li>
+                        <strong>Method:</strong> Manual Entry
+                      </li>
+                      <li>
+                        <strong>Target Link URI:</strong> {ltiConfig.toolUrl}
+                      </li>
+                      <li>
+                        <strong>OpenID Connect Initiation URL:</strong> {ltiConfig.oidcInitUrl}
+                      </li>
+                      <li>
+                        <strong>JWK Method:</strong> Public JWK URL
+                      </li>
+                      <li>
+                        <strong>Public JWK URL:</strong> {ltiConfig.jwksUrl}
+                      </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">3</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        3
+                      </div>
                       Enable Additional Features
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>Under LTI Advantage Services, enable:</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Can create and view assignment data in the gradebook</li>
@@ -764,14 +876,22 @@ export function LTISettingsSection() {
                 <AccordionItem value="step4">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">4</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        4
+                      </div>
                       Save and Copy Client ID
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
-                    <p>1. Click <strong>Save</strong></p>
-                    <p>2. Set the key state to <strong>ON</strong></p>
-                    <p>3. Copy the <strong>Client ID</strong> (shown in Details column)</p>
+                  <AccordionContent className="text-white space-y-2 pl-9">
+                    <p>
+                      1. Click <strong>Save</strong>
+                    </p>
+                    <p>
+                      2. Set the key state to <strong>ON</strong>
+                    </p>
+                    <p>
+                      3. Copy the <strong>Client ID</strong> (shown in Details column)
+                    </p>
                     <p>4. Add this platform in Elec-Mate using the Client ID</p>
                   </AccordionContent>
                 </AccordionItem>
@@ -783,44 +903,72 @@ export function LTISettingsSection() {
                 <AccordionItem value="step1">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">1</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        1
+                      </div>
                       Access External Tools
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>1. Log in to Moodle as an admin</p>
-                    <p>2. Go to <strong>Site Administration → Plugins → Activity modules → External tool → Manage tools</strong></p>
-                    <p>3. Click <strong>configure a tool manually</strong></p>
+                    <p>
+                      2. Go to{' '}
+                      <strong>
+                        Site Administration → Plugins → Activity modules → External tool → Manage
+                        tools
+                      </strong>
+                    </p>
+                    <p>
+                      3. Click <strong>configure a tool manually</strong>
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">2</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        2
+                      </div>
                       Configure Tool Settings
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>Enter the following values:</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Tool name:</strong> Elec-Mate</li>
-                      <li><strong>Tool URL:</strong> {ltiConfig.toolUrl}</li>
-                      <li><strong>LTI version:</strong> LTI 1.3</li>
-                      <li><strong>Public key type:</strong> Keyset URL</li>
-                      <li><strong>Public keyset:</strong> {ltiConfig.jwksUrl}</li>
-                      <li><strong>Initiate login URL:</strong> {ltiConfig.oidcInitUrl}</li>
-                      <li><strong>Redirection URI(s):</strong> {ltiConfig.redirectUris[0]}</li>
+                      <li>
+                        <strong>Tool name:</strong> Elec-Mate
+                      </li>
+                      <li>
+                        <strong>Tool URL:</strong> {ltiConfig.toolUrl}
+                      </li>
+                      <li>
+                        <strong>LTI version:</strong> LTI 1.3
+                      </li>
+                      <li>
+                        <strong>Public key type:</strong> Keyset URL
+                      </li>
+                      <li>
+                        <strong>Public keyset:</strong> {ltiConfig.jwksUrl}
+                      </li>
+                      <li>
+                        <strong>Initiate login URL:</strong> {ltiConfig.oidcInitUrl}
+                      </li>
+                      <li>
+                        <strong>Redirection URI(s):</strong> {ltiConfig.redirectUris[0]}
+                      </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">3</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        3
+                      </div>
                       Enable Services
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>Under Services, set these to "Use this service":</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>IMS LTI Assignment and Grade Services</li>
@@ -836,14 +984,22 @@ export function LTISettingsSection() {
                 <AccordionItem value="step4">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">4</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        4
+                      </div>
                       Save and Get Credentials
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
-                    <p>1. Click <strong>Save changes</strong></p>
-                    <p>2. Click on <strong>View configuration details</strong></p>
-                    <p>3. Copy the <strong>Client ID</strong></p>
+                  <AccordionContent className="text-white space-y-2 pl-9">
+                    <p>
+                      1. Click <strong>Save changes</strong>
+                    </p>
+                    <p>
+                      2. Click on <strong>View configuration details</strong>
+                    </p>
+                    <p>
+                      3. Copy the <strong>Client ID</strong>
+                    </p>
                     <p>4. Add this platform in Elec-Mate using the Client ID</p>
                   </AccordionContent>
                 </AccordionItem>
@@ -855,61 +1011,95 @@ export function LTISettingsSection() {
                 <AccordionItem value="step1">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">1</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        1
+                      </div>
                       Access LTI Tool Providers
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>1. Log in to Blackboard as an admin</p>
-                    <p>2. Go to <strong>System Admin → Integrations → LTI Tool Providers</strong></p>
-                    <p>3. Click <strong>Register LTI 1.3/Advantage Tool</strong></p>
+                    <p>
+                      2. Go to <strong>System Admin → Integrations → LTI Tool Providers</strong>
+                    </p>
+                    <p>
+                      3. Click <strong>Register LTI 1.3/Advantage Tool</strong>
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">2</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        2
+                      </div>
                       Register the Tool
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>Enter the following values:</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Client ID:</strong> (generated by Blackboard)</li>
-                      <li><strong>Tool Provider Key:</strong> {ltiConfig.toolUrl}</li>
-                      <li><strong>Tool Provider Secret:</strong> (leave blank for LTI 1.3)</li>
-                      <li><strong>Tool Provider Domain:</strong> jtwygbeceundfgnkirof.supabase.co</li>
+                      <li>
+                        <strong>Client ID:</strong> (generated by Blackboard)
+                      </li>
+                      <li>
+                        <strong>Tool Provider Key:</strong> {ltiConfig.toolUrl}
+                      </li>
+                      <li>
+                        <strong>Tool Provider Secret:</strong> (leave blank for LTI 1.3)
+                      </li>
+                      <li>
+                        <strong>Tool Provider Domain:</strong> jtwygbeceundfgnkirof.supabase.co
+                      </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">3</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        3
+                      </div>
                       Configure LTI 1.3 Settings
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
+                  <AccordionContent className="text-white space-y-2 pl-9">
                     <p>In the LTI 1.3 configuration:</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li><strong>Login Initiation URL:</strong> {ltiConfig.oidcInitUrl}</li>
-                      <li><strong>Tool Redirect URL:</strong> {ltiConfig.redirectUris[0]}</li>
-                      <li><strong>Tool JWKS URL:</strong> {ltiConfig.jwksUrl}</li>
+                      <li>
+                        <strong>Login Initiation URL:</strong> {ltiConfig.oidcInitUrl}
+                      </li>
+                      <li>
+                        <strong>Tool Redirect URL:</strong> {ltiConfig.redirectUris[0]}
+                      </li>
+                      <li>
+                        <strong>Tool JWKS URL:</strong> {ltiConfig.jwksUrl}
+                      </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step4">
                   <AccordionTrigger className="text-left">
                     <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">4</div>
+                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
+                        4
+                      </div>
                       Complete Registration
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground space-y-2 pl-9">
-                    <p>1. Enable <strong>Course Memberships Service</strong></p>
-                    <p>2. Enable <strong>Assignment and Grades Service</strong></p>
-                    <p>3. Click <strong>Submit</strong></p>
-                    <p>4. Copy the generated <strong>Application ID</strong> (Client ID)</p>
+                  <AccordionContent className="text-white space-y-2 pl-9">
+                    <p>
+                      1. Enable <strong>Course Memberships Service</strong>
+                    </p>
+                    <p>
+                      2. Enable <strong>Assignment and Grades Service</strong>
+                    </p>
+                    <p>
+                      3. Click <strong>Submit</strong>
+                    </p>
+                    <p>
+                      4. Copy the generated <strong>Application ID</strong> (Client ID)
+                    </p>
                     <p>5. Add this platform in Elec-Mate</p>
                   </AccordionContent>
                 </AccordionItem>
@@ -940,9 +1130,7 @@ export function LTISettingsSection() {
         <DialogContent className="max-w-lg bg-elec-dark border-elec-yellow/20">
           <DialogHeader>
             <DialogTitle>Configure {selectedPlatform?.name}</DialogTitle>
-            <DialogDescription>
-              Update platform settings and features
-            </DialogDescription>
+            <DialogDescription>Update platform settings and features</DialogDescription>
           </DialogHeader>
           {selectedPlatform && (
             <div className="space-y-4 py-4">
@@ -995,8 +1183,8 @@ export function LTISettingsSection() {
               onClick={() => {
                 setIsConfigureDialogOpen(false);
                 toast({
-                  title: "Settings saved",
-                  description: "Platform configuration has been updated",
+                  title: 'Settings saved',
+                  description: 'Platform configuration has been updated',
                 });
               }}
             >

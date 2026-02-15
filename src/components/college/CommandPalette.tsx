@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { useCollege } from "@/contexts/CollegeContext";
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import {
   CommandDialog,
   CommandEmpty,
@@ -9,9 +9,9 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@/components/ui/command";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+} from '@/components/ui/command';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Search,
   Users,
@@ -30,8 +30,8 @@ import {
   LayoutDashboard,
   UsersRound,
   Building2,
-} from "lucide-react";
-import type { CollegeSection } from "@/pages/college/CollegeDashboard";
+} from 'lucide-react';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface CommandPaletteProps {
   open: boolean;
@@ -40,43 +40,64 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPaletteProps) {
-  const { students, staff, courses, cohorts, assessments, portfolios } = useCollege();
-  const [search, setSearch] = useState("");
+  const { students, staff, courses, cohorts, grades: assessments } = useCollegeSupabase();
+  const [search, setSearch] = useState('');
 
   // Reset search when dialog closes
   useEffect(() => {
-    if (!open) setSearch("");
+    if (!open) setSearch('');
   }, [open]);
 
   // Navigation items
   const navigationItems = [
-    { label: "Overview", section: "overview" as CollegeSection, icon: LayoutDashboard, shortcut: "G O" },
-    { label: "People Hub", section: "peoplehub" as CollegeSection, icon: Users, shortcut: "G P" },
-    { label: "Curriculum Hub", section: "curriculumhub" as CollegeSection, icon: BookOpen, shortcut: "G C" },
-    { label: "Assessment Hub", section: "assessmenthub" as CollegeSection, icon: ClipboardCheck, shortcut: "G A" },
-    { label: "Resources Hub", section: "resourceshub" as CollegeSection, icon: FolderOpen, shortcut: "G R" },
+    {
+      label: 'Overview',
+      section: 'overview' as CollegeSection,
+      icon: LayoutDashboard,
+      shortcut: 'G O',
+    },
+    { label: 'People Hub', section: 'peoplehub' as CollegeSection, icon: Users, shortcut: 'G P' },
+    {
+      label: 'Curriculum Hub',
+      section: 'curriculumhub' as CollegeSection,
+      icon: BookOpen,
+      shortcut: 'G C',
+    },
+    {
+      label: 'Assessment Hub',
+      section: 'assessmenthub' as CollegeSection,
+      icon: ClipboardCheck,
+      shortcut: 'G A',
+    },
+    {
+      label: 'Resources Hub',
+      section: 'resourceshub' as CollegeSection,
+      icon: FolderOpen,
+      shortcut: 'G R',
+    },
   ];
 
   const sectionItems = [
-    { label: "Students", section: "students" as CollegeSection, icon: GraduationCap },
-    { label: "Tutors", section: "tutors" as CollegeSection, icon: UserCog },
-    { label: "Cohorts", section: "cohorts" as CollegeSection, icon: UsersRound },
-    { label: "Courses", section: "courses" as CollegeSection, icon: BookOpen },
-    { label: "Grading", section: "grading" as CollegeSection, icon: ClipboardCheck },
-    { label: "Portfolios", section: "portfolio" as CollegeSection, icon: FolderOpen },
-    { label: "Attendance", section: "attendance" as CollegeSection, icon: Calendar },
-    { label: "ILP Management", section: "ilpmanagement" as CollegeSection, icon: FileText },
-    { label: "EPA Tracking", section: "epatracking" as CollegeSection, icon: Zap },
-    { label: "Employer Portal", section: "employerportal" as CollegeSection, icon: Building2 },
-    { label: "Settings", section: "collegesettings" as CollegeSection, icon: Settings },
+    { label: 'Students', section: 'students' as CollegeSection, icon: GraduationCap },
+    { label: 'Tutors', section: 'tutors' as CollegeSection, icon: UserCog },
+    { label: 'Cohorts', section: 'cohorts' as CollegeSection, icon: UsersRound },
+    { label: 'Courses', section: 'courses' as CollegeSection, icon: BookOpen },
+    { label: 'Grading', section: 'grading' as CollegeSection, icon: ClipboardCheck },
+    { label: 'Portfolios', section: 'portfolio' as CollegeSection, icon: FolderOpen },
+    { label: 'Attendance', section: 'attendance' as CollegeSection, icon: Calendar },
+    { label: 'ILP Management', section: 'ilpmanagement' as CollegeSection, icon: FileText },
+    { label: 'EPA Tracking', section: 'epatracking' as CollegeSection, icon: Zap },
+    { label: 'Employer Portal', section: 'employerportal' as CollegeSection, icon: Building2 },
+    { label: 'LTI Settings', section: 'ltisettings' as CollegeSection, icon: Settings },
+    { label: 'College Settings', section: 'collegesettings' as CollegeSection, icon: Settings },
   ];
 
   // Quick actions
   const quickActions = [
-    { label: "Record Grade", action: "grading", icon: ClipboardCheck },
-    { label: "Add Student", action: "students", icon: Plus },
-    { label: "New Lesson Plan", action: "lessonplans", icon: Plus },
-    { label: "Take Attendance", action: "attendance", icon: Calendar },
+    { label: 'Record Grade', action: 'grading', icon: ClipboardCheck },
+    { label: 'Add Student', action: 'students', icon: Plus },
+    { label: 'New Lesson Plan', action: 'lessonplans', icon: Plus },
+    { label: 'Take Attendance', action: 'attendance', icon: Calendar },
   ];
 
   // Filter search results
@@ -84,10 +105,11 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     if (!search || search.length < 2) return [];
     const query = search.toLowerCase();
     return students
-      .filter(s =>
-        s.name.toLowerCase().includes(query) ||
-        s.email.toLowerCase().includes(query) ||
-        s.apprenticeshipStandard?.toLowerCase().includes(query)
+      .filter(
+        (s) =>
+          (s.full_name || '').toLowerCase().includes(query) ||
+          (s.email || '').toLowerCase().includes(query) ||
+          (s.apprenticeship_standard || '').toLowerCase().includes(query)
       )
       .slice(0, 5);
   }, [students, search]);
@@ -96,10 +118,11 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     if (!search || search.length < 2) return [];
     const query = search.toLowerCase();
     return staff
-      .filter(s =>
-        s.name.toLowerCase().includes(query) ||
-        s.email.toLowerCase().includes(query) ||
-        s.role.toLowerCase().includes(query)
+      .filter(
+        (s) =>
+          (s.full_name || '').toLowerCase().includes(query) ||
+          (s.email || '').toLowerCase().includes(query) ||
+          (s.role || '').toLowerCase().includes(query)
       )
       .slice(0, 5);
   }, [staff, search]);
@@ -108,9 +131,10 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     if (!search || search.length < 2) return [];
     const query = search.toLowerCase();
     return courses
-      .filter(c =>
-        c.name.toLowerCase().includes(query) ||
-        c.code.toLowerCase().includes(query)
+      .filter(
+        (c) =>
+          (c.name || '').toLowerCase().includes(query) ||
+          (c.code || '').toLowerCase().includes(query)
       )
       .slice(0, 3);
   }, [courses, search]);
@@ -119,40 +143,56 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     if (!search || search.length < 2) return [];
     const query = search.toLowerCase();
     return assessments
-      .filter(a =>
-        a.unitTitle.toLowerCase().includes(query) ||
-        a.assessmentType.toLowerCase().includes(query)
+      .filter(
+        (a) =>
+          (a.unit_name || '').toLowerCase().includes(query) ||
+          (a.assessment_type || '').toLowerCase().includes(query)
       )
       .slice(0, 3);
   }, [assessments, search]);
 
-  const handleSelect = useCallback((section: CollegeSection) => {
-    onNavigate(section);
-    onOpenChange(false);
-  }, [onNavigate, onOpenChange]);
+  const handleSelect = useCallback(
+    (section: CollegeSection) => {
+      onNavigate(section);
+      onOpenChange(false);
+    },
+    [onNavigate, onOpenChange]
+  );
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case "tutor": return "bg-info/10 text-info";
-      case "assessor": return "bg-success/10 text-success";
-      case "iqa": return "bg-warning/10 text-warning";
-      case "head_of_department": return "bg-purple-500/10 text-purple-500";
-      default: return "bg-muted text-muted-foreground";
+      case 'tutor':
+        return 'bg-info/10 text-info';
+      case 'assessor':
+        return 'bg-success/10 text-success';
+      case 'iqa':
+        return 'bg-warning/10 text-warning';
+      case 'head_of_department':
+        return 'bg-purple-500/10 text-purple-500';
+      default:
+        return 'bg-muted text-white';
     }
   };
 
   const formatRole = (role: string) => {
     switch (role) {
-      case "tutor": return "Tutor";
-      case "assessor": return "Assessor";
-      case "iqa": return "IQA";
-      case "head_of_department": return "HoD";
-      case "admin": return "Admin";
-      default: return role;
+      case 'tutor':
+        return 'Tutor';
+      case 'assessor':
+        return 'Assessor';
+      case 'iqa':
+        return 'IQA';
+      case 'head_of_department':
+        return 'HoD';
+      case 'admin':
+        return 'Admin';
+      default:
+        return role;
     }
   };
 
-  const hasSearchResults = filteredStudents.length > 0 ||
+  const hasSearchResults =
+    filteredStudents.length > 0 ||
     filteredStaff.length > 0 ||
     filteredCourses.length > 0 ||
     filteredAssessments.length > 0;
@@ -167,57 +207,73 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
       <CommandList>
         <CommandEmpty>
           <div className="py-6 text-center">
-            <Search className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-50" />
-            <p className="text-sm text-muted-foreground">No results found</p>
-            <p className="text-xs text-muted-foreground mt-1">Try searching for students, staff, or courses</p>
+            <Search className="h-8 w-8 text-white mx-auto mb-2 opacity-50" />
+            <p className="text-sm text-white">No results found</p>
+            <p className="text-xs text-white mt-1">Try searching for students, staff, or courses</p>
           </div>
         </CommandEmpty>
 
         {/* Search Results */}
         {filteredStudents.length > 0 && (
           <CommandGroup heading="Students">
-            {filteredStudents.map((student) => (
-              <CommandItem
-                key={student.id}
-                onSelect={() => handleSelect("students")}
-                className="flex items-center gap-3"
-              >
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
-                    {student.avatarInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{student.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{student.apprenticeshipStandard}</p>
-                </div>
-                <Badge variant="outline" className="text-xs">
-                  {student.status}
-                </Badge>
-              </CommandItem>
-            ))}
+            {filteredStudents.map((student) => {
+              const initials = (student.full_name || '')
+                .split(' ')
+                .map((n: string) => n[0])
+                .join('')
+                .toUpperCase()
+                .slice(0, 2);
+              return (
+                <CommandItem
+                  key={student.id}
+                  onSelect={() => handleSelect('students')}
+                  className="flex items-center gap-3"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium">{student.full_name}</p>
+                    <p className="text-xs text-white truncate">{student.apprenticeship_standard}</p>
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    {student.status}
+                  </Badge>
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
         )}
 
         {filteredStaff.length > 0 && (
           <CommandGroup heading="Staff">
-            {filteredStaff.map((member) => (
-              <CommandItem
-                key={member.id}
-                onSelect={() => handleSelect("tutors")}
-                className="flex items-center gap-3"
-              >
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className={`text-xs ${getRoleColor(member.role)}`}>
-                    {member.avatarInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{member.name}</p>
-                  <p className="text-xs text-muted-foreground">{formatRole(member.role)}</p>
-                </div>
-              </CommandItem>
-            ))}
+            {filteredStaff.map((member) => {
+              const initials = (member.full_name || '')
+                .split(' ')
+                .map((n: string) => n[0])
+                .join('')
+                .toUpperCase()
+                .slice(0, 2);
+              return (
+                <CommandItem
+                  key={member.id}
+                  onSelect={() => handleSelect('tutors')}
+                  className="flex items-center gap-3"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className={`text-xs ${getRoleColor(member.role)}`}>
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium">{member.full_name}</p>
+                    <p className="text-xs text-white">{formatRole(member.role)}</p>
+                  </div>
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
         )}
 
@@ -226,7 +282,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
             {filteredCourses.map((course) => (
               <CommandItem
                 key={course.id}
-                onSelect={() => handleSelect("courses")}
+                onSelect={() => handleSelect('courses')}
                 className="flex items-center gap-3"
               >
                 <div className="h-8 w-8 rounded bg-muted flex items-center justify-center">
@@ -234,7 +290,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium">{course.name}</p>
-                  <p className="text-xs text-muted-foreground">{course.code}</p>
+                  <p className="text-xs text-white">{course.code}</p>
                 </div>
               </CommandItem>
             ))}
@@ -246,15 +302,15 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
             {filteredAssessments.map((assessment) => (
               <CommandItem
                 key={assessment.id}
-                onSelect={() => handleSelect("grading")}
+                onSelect={() => handleSelect('grading')}
                 className="flex items-center gap-3"
               >
                 <div className="h-8 w-8 rounded bg-muted flex items-center justify-center">
                   <ClipboardCheck className="h-4 w-4" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{assessment.unitTitle}</p>
-                  <p className="text-xs text-muted-foreground">{assessment.assessmentType}</p>
+                  <p className="text-sm font-medium">{assessment.unit_name || 'Assessment'}</p>
+                  <p className="text-xs text-white">{assessment.assessment_type}</p>
                 </div>
                 <Badge variant="outline" className="text-xs">
                   {assessment.status}
@@ -280,7 +336,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                     <action.icon className="h-4 w-4 text-elec-yellow" />
                   </div>
                   <span>{action.label}</span>
-                  <ArrowRight className="h-3 w-3 text-muted-foreground ml-auto" />
+                  <ArrowRight className="h-3 w-3 text-white ml-auto" />
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -319,7 +375,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
       </CommandList>
 
-      <div className="border-t p-2 flex items-center justify-between text-xs text-muted-foreground">
+      <div className="border-t p-2 flex items-center justify-between text-xs text-white">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
             <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↵</kbd>

@@ -12,7 +12,7 @@ import {
   ChevronRight,
   Eye,
   MessageSquare,
-  Calendar
+  Calendar,
 } from 'lucide-react';
 import { StudentPortfolio } from '@/hooks/college/useCollegePortfolios';
 
@@ -27,7 +27,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
   portfolio,
   onViewDetails,
   onReviewSubmissions,
-  showActions = true
+  showActions = true,
 }) => {
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -36,7 +36,9 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
       case 'at_risk':
         return <Badge className="bg-red-500/10 text-red-500 border-red-500/20">At Risk</Badge>;
       case 'on_break':
-        return <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">On Break</Badge>;
+        return (
+          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">On Break</Badge>
+        );
       case 'completed':
         return <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20">Completed</Badge>;
       default:
@@ -47,14 +49,16 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map(n => n[0])
+      .map((n) => n[0])
       .join('')
       .toUpperCase()
       .slice(0, 2);
   };
 
   const daysSinceActivity = portfolio.lastActivityDate
-    ? Math.floor((Date.now() - new Date(portfolio.lastActivityDate).getTime()) / (1000 * 60 * 60 * 24))
+    ? Math.floor(
+        (Date.now() - new Date(portfolio.lastActivityDate).getTime()) / (1000 * 60 * 60 * 24)
+      )
     : null;
 
   return (
@@ -69,7 +73,9 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
             </Avatar>
             <div className="min-w-0">
               <CardTitle className="text-base truncate">{portfolio.studentName}</CardTitle>
-              <CardDescription className="text-xs truncate">{portfolio.qualificationTitle}</CardDescription>
+              <CardDescription className="text-xs truncate">
+                {portfolio.qualificationTitle}
+              </CardDescription>
             </div>
           </div>
           {getStatusBadge(portfolio.status)}
@@ -80,7 +86,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
         {/* Progress Bar */}
         <div>
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-white/70">Portfolio Progress</span>
+            <span className="text-white">Portfolio Progress</span>
             <span className="font-medium">{portfolio.completionPercentage}%</span>
           </div>
           <Progress value={portfolio.completionPercentage} className="h-2" />
@@ -90,15 +96,15 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
         <div className="grid grid-cols-3 gap-2">
           <div className="text-center p-2 rounded-lg bg-white/5">
             <p className="text-lg font-bold">{portfolio.completedEntries}</p>
-            <p className="text-xs text-white/50">Complete</p>
+            <p className="text-xs text-white">Complete</p>
           </div>
           <div className="text-center p-2 rounded-lg bg-white/5">
             <p className="text-lg font-bold">{portfolio.draftEntries}</p>
-            <p className="text-xs text-white/50">Drafts</p>
+            <p className="text-xs text-white">Drafts</p>
           </div>
           <div className="text-center p-2 rounded-lg bg-white/5">
             <p className="text-lg font-bold">{portfolio.submissionsAwaitingReview}</p>
-            <p className="text-xs text-white/50">To Review</p>
+            <p className="text-xs text-white">To Review</p>
           </div>
         </div>
 
@@ -107,7 +113,8 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
           <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
             <MessageSquare className="h-4 w-4 text-amber-400 shrink-0" />
             <span className="text-sm text-amber-300">
-              {portfolio.submissionsAwaitingReview} submission{portfolio.submissionsAwaitingReview > 1 ? 's' : ''} awaiting review
+              {portfolio.submissionsAwaitingReview} submission
+              {portfolio.submissionsAwaitingReview > 1 ? 's' : ''} awaiting review
             </span>
           </div>
         )}
@@ -115,28 +122,32 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
         {daysSinceActivity !== null && daysSinceActivity > 14 && (
           <div className="flex items-center gap-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20">
             <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
-            <span className="text-sm text-red-300">
-              No activity for {daysSinceActivity} days
-            </span>
+            <span className="text-sm text-red-300">No activity for {daysSinceActivity} days</span>
           </div>
         )}
 
         {/* Additional Info */}
         <div className="grid grid-cols-2 gap-3 text-sm">
-          <div className="flex items-center gap-2 text-white/60">
+          <div className="flex items-center gap-2 text-white">
             <CheckCircle2 className="h-4 w-4" />
-            <span>{portfolio.categoriesComplete}/{portfolio.categoriesTotal} units</span>
+            <span>
+              {portfolio.categoriesComplete}/{portfolio.categoriesTotal} units
+            </span>
           </div>
-          <div className="flex items-center gap-2 text-white/60">
+          <div className="flex items-center gap-2 text-white">
             <FileText className="h-4 w-4" />
-            <span>{portfolio.ksbsCovered}/{portfolio.ksbsTotal} KSBs</span>
+            <span>
+              {portfolio.ksbsCovered}/{portfolio.ksbsTotal} KSBs
+            </span>
           </div>
-          <div className="flex items-center gap-2 text-white/60">
+          <div className="flex items-center gap-2 text-white">
             <Clock className="h-4 w-4" />
-            <span>{portfolio.ojtHoursCompleted}/{portfolio.ojtHoursRequired}h OJT</span>
+            <span>
+              {portfolio.ojtHoursCompleted}/{portfolio.ojtHoursRequired}h OJT
+            </span>
           </div>
           {portfolio.cohortName && (
-            <div className="flex items-center gap-2 text-white/60">
+            <div className="flex items-center gap-2 text-white">
               <Calendar className="h-4 w-4" />
               <span className="truncate">{portfolio.cohortName}</span>
             </div>

@@ -16,6 +16,7 @@ import {
   FileText,
   Award,
   Users,
+  School,
   LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -78,29 +79,29 @@ const hubsConfig: HubConfig[] = [
             icon: FileText,
           }
         : data.certificates.total > 0
-        ? {
-            label: 'Certificates',
-            value: String(data.certificates.total),
-            icon: Award,
-          }
-        : null,
+          ? {
+              label: 'Certificates',
+              value: String(data.certificates.total),
+              icon: Award,
+            }
+          : null,
   },
   {
-    id: 'employer',
-    title: 'Employer Hub',
-    subtitle: 'Manage',
-    description: 'Employees, jobs, timesheets, and business management.',
-    icon: Briefcase,
-    path: '/employer',
-    accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
-    iconColor: 'text-purple-400',
-    iconBg: 'bg-purple-500/10 border border-purple-500/20',
-    roles: ['electrician', 'employer', 'admin'],
+    id: 'college',
+    title: 'College Hub',
+    subtitle: 'Tutor',
+    description: 'Manage students, cohorts, assessments and curriculum.',
+    icon: School,
+    path: '/college',
+    accentGradient: 'from-emerald-500 via-teal-400 to-cyan-400',
+    iconColor: 'text-emerald-400',
+    iconBg: 'bg-emerald-500/10 border border-emerald-500/20',
+    roles: ['electrician', 'employer', 'admin', 'college'],
     allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
-    getStat: (data) => ({
-      label: 'Active jobs',
-      value: String(data.business.activeJobs),
-      icon: Briefcase,
+    getStat: () => ({
+      label: 'Dashboard',
+      value: 'Active',
+      icon: School,
     }),
   },
 ];
@@ -128,7 +129,13 @@ const cardVariants = {
   },
 };
 
-function PremiumHubCard({ hub, data }: { hub: HubConfig; data: ReturnType<typeof useDashboardData> }) {
+function PremiumHubCard({
+  hub,
+  data,
+}: {
+  hub: HubConfig;
+  data: ReturnType<typeof useDashboardData>;
+}) {
   const navigate = useNavigate();
   const Icon = hub.icon;
   const stat = hub.getStat(data);
@@ -228,9 +235,7 @@ function PremiumHubCard({ hub, data }: { hub: HubConfig; data: ReturnType<typeof
             )}
           >
             <stat.icon className="h-3 w-3 text-white/60" />
-            <span className="text-[10px] sm:text-xs text-white/80">
-              {stat.label}:
-            </span>
+            <span className="text-[10px] sm:text-xs text-white/80">{stat.label}:</span>
             <span className={cn('text-[10px] sm:text-xs font-semibold', hub.iconColor)}>
               {stat.value}
             </span>
@@ -279,7 +284,7 @@ export function PremiumHubGrid() {
 
   // Filter hubs based on user role and allowed emails
   // If no role set or still loading, show all hubs so user can explore (except email-restricted ones)
-  const filteredHubs = hubsConfig.filter(hub => {
+  const filteredHubs = hubsConfig.filter((hub) => {
     // Check email restriction first
     if (hub.allowedEmails && hub.allowedEmails.length > 0) {
       if (!userEmail || !hub.allowedEmails.includes(userEmail)) {
@@ -294,11 +299,12 @@ export function PremiumHubGrid() {
   });
 
   // Determine grid columns based on number of hubs
-  const gridCols = filteredHubs.length === 1
-    ? 'grid-cols-1'
-    : filteredHubs.length === 2
-    ? 'grid-cols-1 sm:grid-cols-2'
-    : 'grid-cols-1 sm:grid-cols-3';
+  const gridCols =
+    filteredHubs.length === 1
+      ? 'grid-cols-1'
+      : filteredHubs.length === 2
+        ? 'grid-cols-1 sm:grid-cols-2'
+        : 'grid-cols-1 sm:grid-cols-3';
 
   // Show loading skeleton while profile loads
   if (isLoading) {

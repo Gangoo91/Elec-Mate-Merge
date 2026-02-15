@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { TakeAttendanceDialog } from "@/components/college/dialogs/TakeAttendanceDialog";
-import { useCollege } from "@/contexts/CollegeContext";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useToast } from '@/hooks/use-toast';
+import { getInitials } from '@/utils/collegeHelpers';
+import { cn } from '@/lib/utils';
 import {
   Search,
   Plus,
@@ -21,29 +23,33 @@ import {
   AlertTriangle,
   UserCheck,
   CalendarDays,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 export function AttendanceSection() {
-  const { attendance, students, cohorts, getStudentAttendanceRate, getCohortAttendanceRate } = useCollege();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterCohort, setFilterCohort] = useState<string>("all");
-  const [dateFilter, setDateFilter] = useState<string>("week");
+  const { attendance, students, cohorts, updateAttendance } = useCollegeSupabase();
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCohort, setFilterCohort] = useState<string>('all');
+  const [dateFilter, setDateFilter] = useState<string>('week');
   const [takeAttendanceOpen, setTakeAttendanceOpen] = useState(false);
+  const [editingRecordId, setEditingRecordId] = useState<string | null>(null);
+  const [editStatus, setEditStatus] = useState<string>('');
+  const [noteRecordId, setNoteRecordId] = useState<string | null>(null);
+  const [noteText, setNoteText] = useState('');
 
-  // Get recent attendance records
   const getFilteredAttendance = () => {
     const now = new Date();
     let startDate = new Date();
@@ -62,14 +68,14 @@ export function AttendanceSection() {
         startDate.setDate(startDate.getDate() - 7);
     }
 
-    return attendance.filter(record => {
+    return attendance.filter((record) => {
       const recordDate = new Date(record.date);
-      const student = students.find(s => s.id === record.studentId);
+      const student = students.find((s) => s.id === record.student_id);
 
       const matchesDate = recordDate >= startDate;
-      const matchesCohort = filterCohort === "all" || student?.cohortId === filterCohort;
-      const matchesSearch = searchQuery === "" ||
-        student?.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
+      const matchesSearch =
+        searchQuery === '' || student?.name.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesDate && matchesCohort && matchesSearch;
     });
@@ -77,60 +83,77 @@ export function AttendanceSection() {
 
   const filteredAttendance = getFilteredAttendance();
 
-  // Calculate summary stats
   const totalRecords = filteredAttendance.length;
-  const presentCount = filteredAttendance.filter(a => a.status === 'Present').length;
-  const absentCount = filteredAttendance.filter(a => a.status === 'Absent').length;
-  const lateCount = filteredAttendance.filter(a => a.status === 'Late').length;
-  const authorisedAbsent = filteredAttendance.filter(a => a.status === 'Authorised Absence').length;
+  const presentCount = filteredAttendance.filter((a) => a.status === 'Present').length;
+  const absentCount = filteredAttendance.filter((a) => a.status === 'Absent').length;
+  const lateCount = filteredAttendance.filter((a) => a.status === 'Late').length;
+  const authorisedAbsent = filteredAttendance.filter((a) => a.status === 'Authorised').length;
 
-  const overallAttendanceRate = totalRecords > 0
-    ? Math.round(((presentCount + lateCount + authorisedAbsent) / totalRecords) * 100)
-    : 0;
+  const overallAttendanceRate =
+    totalRecords > 0
+      ? Math.round(((presentCount + lateCount + authorisedAbsent) / totalRecords) * 100)
+      : 0;
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string | null) => {
     switch (status) {
-      case 'Present': return 'bg-success/10 text-success border-success/20';
-      case 'Absent': return 'bg-destructive/10 text-destructive border-destructive/20';
-      case 'Late': return 'bg-warning/10 text-warning border-warning/20';
-      case 'Authorised Absence': return 'bg-info/10 text-info border-info/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Present':
+        return 'bg-success/10 text-success border-success/20';
+      case 'Absent':
+        return 'bg-destructive/10 text-destructive border-destructive/20';
+      case 'Late':
+        return 'bg-warning/10 text-warning border-warning/20';
+      case 'Authorised':
+        return 'bg-info/10 text-info border-info/20';
+      default:
+        return 'bg-muted text-white';
     }
   };
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: string | null) => {
     switch (status) {
-      case 'Present': return <CheckCircle2 className="h-3.5 w-3.5" />;
-      case 'Absent': return <XCircle className="h-3.5 w-3.5" />;
-      case 'Late': return <AlertTriangle className="h-3.5 w-3.5" />;
-      case 'Authorised Absence': return <Calendar className="h-3.5 w-3.5" />;
-      default: return <Clock className="h-3.5 w-3.5" />;
+      case 'Present':
+        return <CheckCircle2 className="h-3.5 w-3.5" />;
+      case 'Absent':
+        return <XCircle className="h-3.5 w-3.5" />;
+      case 'Late':
+        return <AlertTriangle className="h-3.5 w-3.5" />;
+      case 'Authorised':
+        return <Calendar className="h-3.5 w-3.5" />;
+      default:
+        return <Clock className="h-3.5 w-3.5" />;
     }
   };
 
-  const getStudentInfo = (studentId: string) => {
-    const student = students.find(s => s.id === studentId);
+  const getStudentInfo = (studentId: string | null) => {
+    const student = students.find((s) => s.id === studentId);
     return {
       name: student?.name || 'Unknown',
-      initials: student?.avatarInitials || '?',
-      photoUrl: student?.photoUrl,
-      cohortId: student?.cohortId,
+      initials: student ? getInitials(student.name) : '?',
+      photoUrl: student?.photo_url ?? undefined,
+      cohortId: student?.cohort_id,
     };
   };
 
-  const getCohortName = (cohortId?: string) => {
+  const getCohortName = (cohortId: string | null) => {
     if (!cohortId) return 'Unassigned';
-    return cohorts.find(c => c.id === cohortId)?.name || 'Unknown';
+    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
   };
 
   // Get students with low attendance
+  const getStudentAttendanceRate = (studentId: string): number => {
+    const records = attendance.filter((a) => a.student_id === studentId);
+    if (records.length === 0) return 100;
+    const present = records.filter((a) => a.status === 'Present' || a.status === 'Late').length;
+    return Math.round((present / records.length) * 100);
+  };
+
   const studentsWithLowAttendance = students
-    .filter(s => s.status === 'Active')
-    .map(s => ({
+    .filter((s) => s.status === 'Active')
+    .map((s) => ({
       ...s,
       attendanceRate: getStudentAttendanceRate(s.id),
     }))
-    .filter(s => s.attendanceRate < 85)
+    .filter((s) => s.attendanceRate < 85)
     .sort((a, b) => a.attendanceRate - b.attendanceRate)
     .slice(0, 5);
 
@@ -154,8 +177,8 @@ export function AttendanceSection() {
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
               <div>
-                <p className="text-lg font-bold text-foreground">{presentCount}</p>
-                <p className="text-xs text-muted-foreground">Present</p>
+                <p className="text-lg font-bold text-white">{presentCount}</p>
+                <p className="text-xs text-white">Present</p>
               </div>
             </div>
           </CardContent>
@@ -165,8 +188,8 @@ export function AttendanceSection() {
             <div className="flex items-center gap-2">
               <XCircle className="h-4 w-4 text-elec-yellow" />
               <div>
-                <p className="text-lg font-bold text-foreground">{absentCount}</p>
-                <p className="text-xs text-muted-foreground">Absent</p>
+                <p className="text-lg font-bold text-white">{absentCount}</p>
+                <p className="text-xs text-white">Absent</p>
               </div>
             </div>
           </CardContent>
@@ -176,8 +199,8 @@ export function AttendanceSection() {
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-elec-yellow" />
               <div>
-                <p className="text-lg font-bold text-foreground">{lateCount}</p>
-                <p className="text-xs text-muted-foreground">Late</p>
+                <p className="text-lg font-bold text-white">{lateCount}</p>
+                <p className="text-xs text-white">Late</p>
               </div>
             </div>
           </CardContent>
@@ -187,8 +210,8 @@ export function AttendanceSection() {
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-elec-yellow" />
               <div>
-                <p className="text-lg font-bold text-foreground">{authorisedAbsent}</p>
-                <p className="text-xs text-muted-foreground">Authorised</p>
+                <p className="text-lg font-bold text-white">{authorisedAbsent}</p>
+                <p className="text-xs text-white">Authorised</p>
               </div>
             </div>
           </CardContent>
@@ -198,8 +221,8 @@ export function AttendanceSection() {
             <div className="flex items-center gap-2">
               <UserCheck className="h-4 w-4 text-elec-yellow" />
               <div>
-                <p className="text-lg font-bold text-foreground">{overallAttendanceRate}%</p>
-                <p className="text-xs text-muted-foreground">Rate</p>
+                <p className="text-lg font-bold text-white">{overallAttendanceRate}%</p>
+                <p className="text-xs text-white">Rate</p>
               </div>
             </div>
           </CardContent>
@@ -217,7 +240,7 @@ export function AttendanceSection() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {studentsWithLowAttendance.map(student => (
+              {studentsWithLowAttendance.map((student) => (
                 <Badge
                   key={student.id}
                   variant="outline"
@@ -235,17 +258,17 @@ export function AttendanceSection() {
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search by student..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(!searchQuery && "pl-9")}
+            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
           />
         </div>
         <Select value={dateFilter} onValueChange={setDateFilter}>
-          <SelectTrigger className="w-full sm:w-[140px]">
+          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
             <CalendarDays className="h-4 w-4 mr-2" />
             <SelectValue placeholder="Period" />
           </SelectTrigger>
@@ -256,15 +279,19 @@ export function AttendanceSection() {
           </SelectContent>
         </Select>
         <Select value={filterCohort} onValueChange={setFilterCohort}>
-          <SelectTrigger className="w-full sm:w-[180px]">
+          <SelectTrigger className="w-full sm:w-[180px] h-11 touch-manipulation">
             <Users className="h-4 w-4 mr-2" />
             <SelectValue placeholder="Cohort" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Cohorts</SelectItem>
-            {cohorts.filter(c => c.status === 'Active').map(cohort => (
-              <SelectItem key={cohort.id} value={cohort.id}>{cohort.name}</SelectItem>
-            ))}
+            {cohorts
+              .filter((c) => c.status === 'Active')
+              .map((cohort) => (
+                <SelectItem key={cohort.id} value={cohort.id}>
+                  {cohort.name}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
       </div>
@@ -272,10 +299,13 @@ export function AttendanceSection() {
       {/* Attendance Records */}
       <div className="grid gap-2">
         {filteredAttendance.map((record) => {
-          const studentInfo = getStudentInfo(record.studentId);
+          const studentInfo = getStudentInfo(record.student_id);
 
           return (
-            <Card key={record.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300">
+            <Card
+              key={record.id}
+              className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300"
+            >
               <CardContent className="p-3">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-9 w-9 shrink-0">
@@ -288,43 +318,140 @@ export function AttendanceSection() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <div>
-                        <p className="font-medium text-sm text-foreground">{studentInfo.name}</p>
-                        <p className="text-xs text-muted-foreground">{getCohortName(studentInfo.cohortId)}</p>
+                        <p className="font-medium text-sm text-white">{studentInfo.name}</p>
+                        <p className="text-xs text-white">{getCohortName(studentInfo.cohortId)}</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={`${getStatusColor(record.status)} flex items-center gap-1 text-xs`}>
+                        <Badge
+                          variant="outline"
+                          className={`${getStatusColor(record.status)} flex items-center gap-1 text-xs`}
+                        >
                           {getStatusIcon(record.status)}
                           {record.status}
                         </Badge>
-                        <span className="text-xs text-muted-foreground hidden sm:block">
+                        <span className="text-xs text-white hidden sm:block">
                           {new Date(record.date).toLocaleDateString('en-GB', {
                             weekday: 'short',
                             day: 'numeric',
-                            month: 'short'
+                            month: 'short',
                           })}
                         </span>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-11 w-11 touch-manipulation"
+                            >
                               <MoreVertical className="h-3.5 w-3.5" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem>Edit Record</DropdownMenuItem>
-                            <DropdownMenuItem>Add Note</DropdownMenuItem>
-                            <DropdownMenuItem>View Student</DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="h-11 touch-manipulation"
+                              onClick={() => {
+                                setEditingRecordId(record.id);
+                                setEditStatus(record.status || 'Present');
+                              }}
+                            >
+                              Edit Record
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="h-11 touch-manipulation"
+                              onClick={() => {
+                                setNoteRecordId(noteRecordId === record.id ? null : record.id);
+                                setNoteText(record.notes || '');
+                              }}
+                            >
+                              Add Note
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="h-11 touch-manipulation"
+                              onClick={() =>
+                                toast({
+                                  title: studentInfo.name,
+                                  description: 'Student detail view coming soon.',
+                                })
+                              }
+                            >
+                              View Student
+                            </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
                     </div>
                     {record.notes && (
-                      <p className="text-xs text-muted-foreground mt-1 truncate">
-                        Note: {record.notes}
-                      </p>
+                      <p className="text-xs text-white mt-1 truncate">Note: {record.notes}</p>
                     )}
                   </div>
                 </div>
               </CardContent>
+              {editingRecordId === record.id && (
+                <div className="flex items-center gap-2 mt-2 px-3 pb-3">
+                  <Select value={editStatus} onValueChange={setEditStatus}>
+                    <SelectTrigger className="h-11 touch-manipulation flex-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Present">Present</SelectItem>
+                      <SelectItem value="Absent">Absent</SelectItem>
+                      <SelectItem value="Late">Late</SelectItem>
+                      <SelectItem value="Authorised">Authorised</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    size="sm"
+                    className="h-11 touch-manipulation"
+                    onClick={async () => {
+                      await updateAttendance(record.id, { status: editStatus });
+                      setEditingRecordId(null);
+                      toast({
+                        title: 'Record updated',
+                        description: `Status changed to ${editStatus}`,
+                      });
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-11 touch-manipulation"
+                    onClick={() => setEditingRecordId(null)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              )}
+              {noteRecordId === record.id && (
+                <div className="flex items-center gap-2 mt-2 px-3 pb-3">
+                  <Input
+                    placeholder="Add a note..."
+                    value={noteText}
+                    onChange={(e) => setNoteText(e.target.value)}
+                    className="h-11 touch-manipulation flex-1"
+                  />
+                  <Button
+                    size="sm"
+                    className="h-11 touch-manipulation"
+                    onClick={async () => {
+                      await updateAttendance(record.id, { notes: noteText });
+                      setNoteRecordId(null);
+                      toast({ title: 'Note saved' });
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-11 touch-manipulation"
+                    onClick={() => setNoteRecordId(null)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              )}
             </Card>
           );
         })}
@@ -332,7 +459,7 @@ export function AttendanceSection() {
         {filteredAttendance.length === 0 && (
           <Card>
             <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">No attendance records found for this period.</p>
+              <p className="text-white">No attendance records found for this period.</p>
             </CardContent>
           </Card>
         )}

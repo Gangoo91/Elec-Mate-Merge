@@ -27,7 +27,7 @@ import {
   Users,
   Calendar,
   Loader2,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 import { useEPAGateway, GatewayStatus } from '@/hooks/college/useEPAGateway';
 
@@ -40,16 +40,10 @@ interface EPAGatewayChecklistProps {
 const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
   studentId,
   qualificationId,
-  readOnly = false
+  readOnly = false,
 }) => {
-  const {
-    gatewayStatus,
-    checklistItems,
-    isLoading,
-    updateChecklistItem,
-    updateOJTHours,
-    bookEPA
-  } = useEPAGateway(studentId, qualificationId);
+  const { gatewayStatus, checklistItems, isLoading, updateChecklistItem, updateOJTHours, bookEPA } =
+    useEPAGateway(studentId, qualificationId);
 
   const [showBookEPA, setShowBookEPA] = useState(false);
   const [epaDate, setEpaDate] = useState('');
@@ -72,7 +66,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <Card className="bg-white/5 border-elec-gray/40">
         <CardContent className="py-12 text-center">
           <AlertCircle className="h-12 w-12 text-white/30 mx-auto mb-4" />
-          <p className="text-white/50">No gateway data available</p>
+          <p className="text-white">No gateway data available</p>
         </CardContent>
       </Card>
     );
@@ -81,11 +75,21 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
   const getStatusBadge = (readiness: string) => {
     switch (readiness) {
       case 'gateway_passed':
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Gateway Passed</Badge>;
+        return (
+          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">
+            Gateway Passed
+          </Badge>
+        );
       case 'ready':
-        return <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20">Ready for Gateway</Badge>;
+        return (
+          <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/20">
+            Ready for Gateway
+          </Badge>
+        );
       case 'nearly_ready':
-        return <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Nearly Ready</Badge>;
+        return (
+          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Nearly Ready</Badge>
+        );
       default:
         return <Badge className="bg-red-500/10 text-red-500 border-red-500/20">Not Ready</Badge>;
     }
@@ -118,7 +122,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       studentId,
       qualificationId,
       field: key,
-      value: completed
+      value: completed,
     });
   };
 
@@ -128,7 +132,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       await updateOJTHours.mutateAsync({
         studentId,
         qualificationId,
-        hours
+        hours,
       });
       setShowOJTDialog(false);
       setOjtHoursInput('');
@@ -140,7 +144,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       await bookEPA.mutateAsync({
         studentId,
         qualificationId,
-        epaDate
+        epaDate,
       });
       setShowBookEPA(false);
       setEpaDate('');
@@ -168,7 +172,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         <CardContent>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-white/70">Gateway Progress</span>
+              <span className="text-white">Gateway Progress</span>
               <span className="font-medium">{status.overallProgress}%</span>
             </div>
             <Progress value={status.overallProgress} className="h-3" />
@@ -209,9 +213,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                         className="bg-white/5 border-elec-gray/40"
                       />
                     </div>
-                    <p className="text-sm text-white/60">
-                      Required: {status.ojtHoursRequired} hours
-                    </p>
+                    <p className="text-sm text-white">Required: {status.ojtHoursRequired} hours</p>
                   </div>
                   <DialogFooter>
                     <Button variant="outline" onClick={() => setShowOJTDialog(false)}>
@@ -229,8 +231,10 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         <CardContent>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>{status.ojtHoursCompleted} / {status.ojtHoursRequired} hours</span>
-              <span className="text-white/60">
+              <span>
+                {status.ojtHoursCompleted} / {status.ojtHoursRequired} hours
+              </span>
+              <span className="text-white">
                 {Math.round((status.ojtHoursCompleted / status.ojtHoursRequired) * 100)}%
               </span>
             </div>
@@ -255,7 +259,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
           <CardDescription>All items must be completed before EPA</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {checklistItems.map(item => (
+          {checklistItems.map((item) => (
             <div
               key={item.key}
               className={`flex items-center gap-4 p-4 rounded-lg border transition-colors ${
@@ -265,39 +269,41 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               }`}
             >
               {readOnly ? (
-                <div className={`p-2 rounded-lg ${item.completed ? 'bg-green-500/10' : 'bg-white/5'}`}>
+                <div
+                  className={`p-2 rounded-lg ${item.completed ? 'bg-green-500/10' : 'bg-white/5'}`}
+                >
                   {item.completed ? (
                     <CheckCircle2 className="h-5 w-5 text-green-400" />
                   ) : (
-                    <AlertCircle className="h-5 w-5 text-white/40" />
+                    <AlertCircle className="h-5 w-5 text-white" />
                   )}
                 </div>
               ) : (
                 <Checkbox
                   checked={item.completed}
-                  onCheckedChange={(checked) =>
-                    handleChecklistUpdate(item.key, checked as boolean)
-                  }
+                  onCheckedChange={(checked) => handleChecklistUpdate(item.key, checked as boolean)}
                   className="h-5 w-5 border-elec-gray/40"
                 />
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <div className={item.completed ? 'text-green-400' : 'text-white/60'}>
+                  <div className={item.completed ? 'text-green-400' : 'text-white'}>
                     {getIcon(item.key)}
                   </div>
                   <span className="font-medium">{item.label}</span>
                   {item.required && (
-                    <Badge variant="outline" className="text-xs">Required</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Required
+                    </Badge>
                   )}
                 </div>
-                <p className="text-sm text-white/60 mt-1">{item.description}</p>
+                <p className="text-sm text-white mt-1">{item.description}</p>
               </div>
               {item.completedDate && (
-                <div className="text-right text-sm text-white/50">
+                <div className="text-right text-sm text-white">
                   {new Date(item.completedDate).toLocaleDateString('en-GB', {
                     day: 'numeric',
-                    month: 'short'
+                    month: 'short',
                   })}
                 </div>
               )}
@@ -308,7 +314,9 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
 
       {/* EPA Booking */}
       {status.gatewayPassed && (
-        <Card className={`border ${status.epaBookedDate ? 'bg-green-500/10 border-green-500/20' : 'bg-blue-500/10 border-blue-500/20'}`}>
+        <Card
+          className={`border ${status.epaBookedDate ? 'bg-green-500/10 border-green-500/20' : 'bg-blue-500/10 border-blue-500/20'}`}
+        >
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
               <Calendar className="h-5 w-5" />
@@ -320,12 +328,12 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">EPA Scheduled</p>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     {new Date(status.epaBookedDate).toLocaleDateString('en-GB', {
                       weekday: 'long',
                       day: 'numeric',
                       month: 'long',
-                      year: 'numeric'
+                      year: 'numeric',
                     })}
                   </p>
                 </div>
@@ -342,9 +350,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 <DialogContent className="bg-elec-dark border-elec-gray/40">
                   <DialogHeader>
                     <DialogTitle>Book End Point Assessment</DialogTitle>
-                    <DialogDescription>
-                      Schedule the EPA date for this apprentice
-                    </DialogDescription>
+                    <DialogDescription>Schedule the EPA date for this apprentice</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
@@ -385,7 +391,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               <AlertCircle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
               <div>
                 <p className="font-medium text-amber-300">Gateway Requirements Incomplete</p>
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-white mt-1">
                   Complete all required checklist items before the apprentice can progress to EPA.
                 </p>
               </div>
