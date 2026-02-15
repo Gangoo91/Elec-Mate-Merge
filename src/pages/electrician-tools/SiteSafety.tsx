@@ -25,9 +25,12 @@ import {
   ArrowUpDown,
   Bell,
   FolderArchive,
+  ChevronDown,
+  BarChart3,
 } from 'lucide-react';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { SafetyDashboard } from '@/components/electrician-tools/site-safety/SafetyDashboard';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
@@ -43,6 +46,7 @@ import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
 import { useCOSHHOverdueReviews, useCOSHHUpcomingReviews } from '@/hooks/useCOSHH';
 import { WeeklyReportCard } from '@/components/electrician-tools/site-safety/WeeklyReportCard';
 import { useWeeklySafetySummary } from '@/hooks/useWeeklySafetySummary';
+import { SignatureTrackingDashboard } from '@/components/electrician-tools/site-safety/SignatureTrackingDashboard';
 
 // Lazy-loaded tool components for code splitting
 const RAMSGenerator = lazy(
@@ -84,6 +88,11 @@ const AIRAMSGenerator = lazy(() =>
 const SavedRAMSLibrary = lazy(() =>
   import('@/components/electrician-tools/site-safety/SavedRAMSLibrary').then((m) => ({
     default: m.SavedRAMSLibrary,
+  }))
+);
+const DocumentHub = lazy(() =>
+  import('@/components/electrician-tools/site-safety/DocumentHub').then((m) => ({
+    default: m.DocumentHub,
   }))
 );
 const PermitToWork = lazy(() =>
@@ -181,6 +190,7 @@ const ToolLoader = SectionSkeleton;
 // Tool color mapping
 const toolColors: Record<string, string> = {
   'ai-rams': 'from-orange-400 to-red-500',
+  documents: 'from-amber-400 to-yellow-500',
   'saved-rams': 'from-amber-400 to-yellow-500',
   'hazard-database': 'from-blue-400 to-blue-500',
   'photo-docs': 'from-emerald-400 to-green-500',
@@ -206,6 +216,8 @@ const SiteSafety = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<string | null>(null);
+  const [alertsOpen, setAlertsOpen] = useState(false);
+  const [analyticsOpen, setAnalyticsOpen] = useState(false);
 
   // Data for dashboard
   const { stats: dashboardStats, isLoading: dashboardLoading } = useSafetyDashboardStats();
@@ -233,11 +245,11 @@ const SiteSafety = () => {
       badge: 'AI',
     },
     {
-      id: 'saved-rams',
-      title: 'Saved Documents',
-      description: 'Access your previously generated RAMS documentation',
+      id: 'documents',
+      title: 'Documents',
+      description: 'All safety documents in one place',
       icon: FolderOpen,
-      badge: 'Library',
+      badge: 'Hub',
     },
     {
       id: 'safety-templates',
@@ -470,6 +482,8 @@ const SiteSafety = () => {
         return <SafetyAlertsFeed onBack={() => setActiveView(null)} />;
       case 'safety-resources':
         return <SafetyResourceLibrary onBack={() => setActiveView(null)} />;
+      case 'documents':
+        return <DocumentHub onBack={() => setActiveView(null)} />;
       default:
         return null;
     }
@@ -493,7 +507,8 @@ const SiteSafety = () => {
       activeView === 'site-diary' ||
       activeView === 'fire-watch' ||
       activeView === 'safety-alerts' ||
-      activeView === 'safety-resources';
+      activeView === 'safety-resources' ||
+      activeView === 'documents';
 
     return (
       <RAMSProvider>
@@ -554,76 +569,7 @@ const SiteSafety = () => {
             </div>
           </motion.div>
 
-          {/* Safety Dashboard */}
-          <motion.section variants={itemVariants}>
-            <SafetyDashboard
-              stats={dashboardStats}
-              isLoading={dashboardLoading}
-              onCardTap={(section) => setActiveView(section)}
-              recentDocuments={recentDocuments}
-              isLoadingDocuments={isLoadingDocuments}
-              overrideScore={
-                trendsData?.scoreBreakdown
-                  ? trendsData.scoreBreakdown.reduce((sum, b) => sum + b.score, 0)
-                  : undefined
-              }
-            />
-          </motion.section>
-
-          {/* Safety Streak */}
-          {streakData && (
-            <motion.section variants={itemVariants}>
-              <SafetyStreakCard streak={streakData} />
-            </motion.section>
-          )}
-
-          {/* Weekly Summary */}
-          <motion.section variants={itemVariants}>
-            <WeeklySummaryCard
-              stats={dashboardStats}
-              weekOverWeekChange={trendsData?.weekOverWeekChange}
-            />
-          </motion.section>
-
-          {/* Weekly Report (Edge Function) */}
-          <motion.section variants={itemVariants}>
-            <WeeklyReportCard summary={weeklySummary} isLoading={weeklyLoading} />
-          </motion.section>
-
-          {/* Trends & Charts */}
-          {trendsData && (
-            <motion.section variants={itemVariants}>
-              <SafetyTrendsCard trends={trendsData} />
-            </motion.section>
-          )}
-
-          {/* Score Breakdown */}
-          {trendsData?.scoreBreakdown && (
-            <motion.section variants={itemVariants}>
-              <ScoreBreakdownCard breakdown={trendsData.scoreBreakdown} />
-            </motion.section>
-          )}
-
-          {/* Equipment Alerts */}
-          <motion.section variants={itemVariants}>
-            <EquipmentAlertsCard
-              overdueItems={equipmentOverdue}
-              dueSoonItems={equipmentDueSoon}
-              onTap={() => setActiveView('equipment')}
-            />
-          </motion.section>
-
-          {/* COSHH Review Alerts */}
-          <motion.section variants={itemVariants}>
-            <COSHHAlertsCard
-              overdueAssessments={coshhOverdue}
-              upcomingAssessments={coshhUpcoming}
-              onTap={() => setActiveView('coshh')}
-              onRenew={() => setActiveView('coshh')}
-            />
-          </motion.section>
-
-          {/* Quick Actions */}
+          {/* Quick Actions — moved up for immediate access */}
           <motion.section variants={itemVariants}>
             <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
               {[
@@ -856,6 +802,119 @@ const SiteSafety = () => {
                 );
               })}
             </motion.div>
+          </motion.section>
+
+          {/* Collapsible Alerts Section */}
+          <motion.section variants={itemVariants}>
+            <Collapsible open={alertsOpen} onOpenChange={setAlertsOpen}>
+              <CollapsibleTrigger asChild>
+                <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    <h2 className="text-base font-bold text-white">Alerts</h2>
+                    {equipmentOverdue.length + coshhOverdue.length > 0 && (
+                      <Badge
+                        variant="secondary"
+                        className="bg-red-500/20 text-red-400 border-red-500/30 text-xs"
+                      >
+                        {equipmentOverdue.length + coshhOverdue.length} Overdue
+                      </Badge>
+                    )}
+                  </div>
+                  <motion.div
+                    animate={{ rotate: alertsOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  </motion.div>
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="mt-3 space-y-3">
+                  <EquipmentAlertsCard
+                    overdueItems={equipmentOverdue}
+                    dueSoonItems={equipmentDueSoon}
+                    onTap={() => setActiveView('equipment')}
+                  />
+                  <COSHHAlertsCard
+                    overdueAssessments={coshhOverdue}
+                    upcomingAssessments={coshhUpcoming}
+                    onTap={() => setActiveView('coshh')}
+                    onRenew={() => setActiveView('coshh')}
+                  />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </motion.section>
+
+          {/* Collapsible Analytics & Insights Section */}
+          <motion.section variants={itemVariants}>
+            <Collapsible open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
+              <CollapsibleTrigger asChild>
+                <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
+                    <h2 className="text-base font-bold text-white">Analytics & Insights</h2>
+                    {weeklySummary?.safetyScore != null && (
+                      <Badge
+                        variant="secondary"
+                        className={`text-xs ${
+                          weeklySummary.safetyScore >= 80
+                            ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                            : weeklySummary.safetyScore >= 60
+                              ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                              : 'bg-red-500/20 text-red-400 border-red-500/30'
+                        }`}
+                      >
+                        Score: {weeklySummary.safetyScore}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <BarChart3 className="h-4 w-4 text-white" />
+                    <motion.div
+                      animate={{ rotate: analyticsOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-4 w-4 text-white" />
+                    </motion.div>
+                  </div>
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="mt-3 space-y-3">
+                  <SafetyDashboard
+                    stats={dashboardStats}
+                    isLoading={dashboardLoading}
+                    onCardTap={(section) => setActiveView(section)}
+                    recentDocuments={recentDocuments}
+                    isLoadingDocuments={isLoadingDocuments}
+                    overrideScore={
+                      trendsData?.scoreBreakdown
+                        ? trendsData.scoreBreakdown.reduce((sum, b) => sum + b.score, 0)
+                        : undefined
+                    }
+                  />
+
+                  {streakData && <SafetyStreakCard streak={streakData} />}
+
+                  <WeeklySummaryCard
+                    stats={dashboardStats}
+                    weekOverWeekChange={trendsData?.weekOverWeekChange}
+                  />
+
+                  <WeeklyReportCard summary={weeklySummary} isLoading={weeklyLoading} />
+
+                  {trendsData && <SafetyTrendsCard trends={trendsData} />}
+
+                  {trendsData?.scoreBreakdown && (
+                    <ScoreBreakdownCard breakdown={trendsData.scoreBreakdown} />
+                  )}
+
+                  <SignatureTrackingDashboard onTap={(docType) => setActiveView(docType)} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </motion.section>
         </motion.main>
       </div>
