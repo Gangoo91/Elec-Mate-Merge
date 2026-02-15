@@ -29,15 +29,25 @@ export type QuizTrend = 'improving' | 'declining' | 'stable' | 'no-data';
 export function useUnifiedProgress() {
   const { user } = useAuth();
   const { stats, isLoading: dataLoading } = useApprenticeData();
-  const { results: quizResults, getPerformanceByCategory, getOverallStats, isLoading: quizLoading } = useQuizResults();
+  const {
+    results: quizResults,
+    getPerformanceByCategory,
+    getOverallStats,
+    isLoading: quizLoading,
+  } = useQuizResults();
   const { getSetProgress, loading: flashcardLoading } = useFlashcardProgress();
   const xp = useLearningXP();
   const { streak, loading: streakLoading } = useStudyStreak();
 
   // New data sources
   const { qualificationCode, qualificationId, isLoading: qualLoading } = useStudentQualification();
-  const { getOverallCompletion, isLoading: ksbLoading } = useKSBTracking({ qualificationId: qualificationId ?? undefined });
-  const { data: epaData, isLoading: epaLoading } = useEPAReadiness(qualificationCode ?? undefined, qualificationId);
+  const { getOverallCompletion, isLoading: ksbLoading } = useKSBTracking({
+    qualificationId: qualificationId ?? undefined,
+  });
+  const { data: epaData, isLoading: epaLoading } = useEPAReadiness(
+    qualificationCode ?? undefined,
+    qualificationId
+  );
 
   // Portfolio AC coverage
   const [portfolioACCoverage, setPortfolioACCoverage] = useState(0);
@@ -52,14 +62,13 @@ export function useUnifiedProgress() {
       try {
         // Get total ACs for this qualification
         const { data: reqData } = await supabase
-          .from('qualification_requirements' as any)
-          .select('assessment_criteria')
+          .from('qualification_requirements')
+          .select('ac_code')
           .eq('qualification_code', qualificationCode);
 
         const allACs = new Set<string>();
-        (reqData as any[] ?? []).forEach((row: any) => {
-          const criteria = row.assessment_criteria as string[] | null;
-          criteria?.forEach((ac: string) => allACs.add(ac));
+        (reqData ?? []).forEach((row) => {
+          if (row.ac_code) allACs.add(row.ac_code);
         });
 
         if (allACs.size === 0) {
@@ -91,7 +100,15 @@ export function useUnifiedProgress() {
   const ksbCompletion = useMemo(() => getOverallCompletion(), [getOverallCompletion]);
   const epaReadiness = useMemo(() => epaData?.overallScore ?? 0, [epaData]);
 
-  const loading = dataLoading || quizLoading || flashcardLoading || xp.loading || streakLoading || qualLoading || ksbLoading || epaLoading;
+  const loading =
+    dataLoading ||
+    quizLoading ||
+    flashcardLoading ||
+    xp.loading ||
+    streakLoading ||
+    qualLoading ||
+    ksbLoading ||
+    epaLoading;
 
   // ─── Quiz stats ────────────────────────────────────────────
   const quizCategories = useMemo(() => getPerformanceByCategory(), [getPerformanceByCategory]);
@@ -113,13 +130,13 @@ export function useUnifiedProgress() {
 
   // ─── Strongest / weakest categories ────────────────────────
   const strongestCategory = useMemo(() => {
-    const attempted = quizCategories.filter(c => c.score > 0);
+    const attempted = quizCategories.filter((c) => c.score > 0);
     if (attempted.length === 0) return null;
     return [...attempted].sort((a, b) => b.score - a.score)[0];
   }, [quizCategories]);
 
   const weakestCategory = useMemo(() => {
-    const attempted = quizCategories.filter(c => c.score > 0);
+    const attempted = quizCategories.filter((c) => c.score > 0);
     if (attempted.length < 2) return null;
     return [...attempted].sort((a, b) => a.score - b.score)[0];
   }, [quizCategories]);
@@ -138,13 +155,17 @@ export function useUnifiedProgress() {
       insights.push('Your quiz scores are improving — your hard work is paying off.');
     }
     if (strongestCategory && strongestCategory.score >= 80) {
-      insights.push(`${strongestCategory.subject} is your strongest area at ${strongestCategory.score}%.`);
+      insights.push(
+        `${strongestCategory.subject} is your strongest area at ${strongestCategory.score}%.`
+      );
     }
     if (quizTrend === 'declining') {
       insights.push('Your recent quiz scores have dipped. A revision session could help.');
     }
     if (daysSinceLastQuiz !== null && daysSinceLastQuiz >= 7) {
-      insights.push(`It's been ${daysSinceLastQuiz} days since your last quiz. Time for a refresher?`);
+      insights.push(
+        `It's been ${daysSinceLastQuiz} days since your last quiz. Time for a refresher?`
+      );
     }
     return insights[0] || null;
   }, [quizTrend, strongestCategory, daysSinceLastQuiz]);
@@ -176,14 +197,20 @@ export function useUnifiedProgress() {
   // ─── Skill radar (6 axes) ─────────────────────────────────
   const skillRadar = useMemo((): SkillAxis[] => {
     const catMap: Record<string, number> = {};
-    quizCategories.forEach((c) => { catMap[c.subject] = c.score; });
+    quizCategories.forEach((c) => {
+      catMap[c.subject] = c.score;
+    });
 
     return [
       { subject: 'Regulations', score: catMap['Regulations'] ?? 0, fullMark: 100 },
       { subject: 'Safety', score: catMap['Safety'] ?? 0, fullMark: 100 },
       { subject: 'Testing', score: catMap['Testing'] ?? 0, fullMark: 100 },
       { subject: 'Design', score: catMap['Design'] ?? 0, fullMark: 100 },
-      { subject: 'Theory', score: Math.round((totalMasteredCards / Math.max(totalFlashcards, 1)) * 100), fullMark: 100 },
+      {
+        subject: 'Theory',
+        score: Math.round((totalMasteredCards / Math.max(totalFlashcards, 1)) * 100),
+        fullMark: 100,
+      },
       { subject: 'Practical', score: Math.min(stats.ojtHours.percentComplete, 100), fullMark: 100 },
     ];
   }, [quizCategories, totalMasteredCards, totalFlashcards, stats.ojtHours]);
@@ -196,9 +223,8 @@ export function useUnifiedProgress() {
 
     // Flashcard mastery: 15%
     const masteredSets = flashcardInsights.filter((s) => s.progressPercent >= 80).length;
-    const flashcardScore = flashcardSets.length > 0
-      ? (masteredSets / flashcardSets.length) * 100
-      : 0;
+    const flashcardScore =
+      flashcardSets.length > 0 ? (masteredSets / flashcardSets.length) * 100 : 0;
 
     // OJT hours: 15%
     const ojtScore = Math.min(stats.ojtHours.percentComplete, 100);
@@ -216,18 +242,27 @@ export function useUnifiedProgress() {
     const epaScore = epaReadiness;
 
     return { quizScore, flashcardScore, ojtScore, portfolioScore, ksbScore, streakScore, epaScore };
-  }, [quizStats, flashcardInsights, stats.ojtHours, portfolioACCoverage, ksbCompletion, streak, epaReadiness]);
+  }, [
+    quizStats,
+    flashcardInsights,
+    stats.ojtHours,
+    portfolioACCoverage,
+    ksbCompletion,
+    streak,
+    epaReadiness,
+  ]);
 
   const overallPercent = useMemo(() => {
-    const { quizScore, flashcardScore, ojtScore, portfolioScore, ksbScore, streakScore, epaScore } = componentScores;
+    const { quizScore, flashcardScore, ojtScore, portfolioScore, ksbScore, streakScore, epaScore } =
+      componentScores;
     return Math.round(
       quizScore * 0.25 +
-      flashcardScore * 0.15 +
-      ojtScore * 0.15 +
-      portfolioScore * 0.15 +
-      ksbScore * 0.10 +
-      streakScore * 0.10 +
-      epaScore * 0.10
+        flashcardScore * 0.15 +
+        ojtScore * 0.15 +
+        portfolioScore * 0.15 +
+        ksbScore * 0.1 +
+        streakScore * 0.1 +
+        epaScore * 0.1
     );
   }, [componentScores]);
 
