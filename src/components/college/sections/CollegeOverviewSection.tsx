@@ -57,7 +57,13 @@ const itemVariants = {
 };
 
 // Premium Hero Component
-function CollegeHero({ studentCount, pendingCount }: { studentCount: number; pendingCount: number }) {
+function CollegeHero({
+  studentCount,
+  pendingCount,
+}: {
+  studentCount: number;
+  pendingCount: number;
+}) {
   const { profile } = useAuth();
 
   const getGreeting = () => {
@@ -103,9 +109,7 @@ function CollegeHero({ studentCount, pendingCount }: { studentCount: number; pen
               <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
-            <p className="text-sm text-white/70 mt-1">
-              Manage your apprenticeship programme
-            </p>
+            <p className="text-sm text-white mt-1">Manage your apprenticeship programme</p>
 
             {/* Status badges */}
             <div className="flex items-center gap-2 mt-3 flex-wrap">
@@ -196,17 +200,28 @@ function CollegeStatsBar({
           >
             <button
               onClick={stat.onClick}
-              className="w-full glass-premium rounded-xl p-4 h-[100px] text-left touch-manipulation hover:bg-white/[0.05] transition-colors"
+              className="relative overflow-hidden w-full glass-premium rounded-xl p-4 h-[100px] text-left touch-manipulation hover:bg-white/[0.05] transition-colors"
             >
-              <div className="flex items-start justify-between gap-2">
+              {/* Gradient accent line */}
+              <div
+                className={cn(
+                  'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r',
+                  isWarning
+                    ? 'from-amber-500 via-amber-400 to-amber-500'
+                    : isSuccess
+                      ? 'from-green-500 via-green-400 to-green-500'
+                      : 'from-elec-yellow via-amber-400 to-elec-yellow'
+                )}
+              />
+              <div className="relative z-10 flex items-start justify-between gap-2">
                 <div
                   className={cn(
-                    'p-2 rounded-lg',
+                    'p-2 rounded-lg border',
                     isWarning
-                      ? 'bg-amber-500/10'
+                      ? 'bg-amber-500/10 border-amber-500/20'
                       : isSuccess
-                      ? 'bg-green-500/10'
-                      : 'bg-elec-yellow/10'
+                        ? 'bg-green-500/10 border-green-500/20'
+                        : 'bg-elec-yellow/10 border-elec-yellow/20'
                   )}
                 >
                   <Icon
@@ -215,8 +230,8 @@ function CollegeStatsBar({
                       isWarning
                         ? 'text-amber-500'
                         : isSuccess
-                        ? 'text-green-500'
-                        : 'text-elec-yellow'
+                          ? 'text-green-500'
+                          : 'text-elec-yellow'
                     )}
                   />
                 </div>
@@ -227,13 +242,13 @@ function CollegeStatsBar({
                       isWarning
                         ? 'text-amber-500'
                         : isSuccess
-                        ? 'text-green-500'
-                        : 'text-elec-yellow'
+                          ? 'text-green-500'
+                          : 'text-elec-yellow'
                     )}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                  <p className="text-xs text-white mt-0.5">{stat.label}</p>
                 </div>
               </div>
             </button>
@@ -262,6 +277,7 @@ function HubCard({
   onClick,
   badge,
   badgeVariant,
+  accentColor = 'elec-yellow',
 }: {
   title: string;
   description: string;
@@ -269,22 +285,108 @@ function HubCard({
   onClick: () => void;
   badge?: string;
   badgeVariant?: 'default' | 'warning';
+  accentColor?: string;
 }) {
+  const colorMap: Record<
+    string,
+    {
+      gradient: string;
+      bg: string;
+      bgHover: string;
+      border: string;
+      text: string;
+      blob: string;
+      blobHover: string;
+    }
+  > = {
+    'blue-500': {
+      gradient: 'from-blue-500 via-blue-400 to-blue-500',
+      bg: 'bg-blue-500/10',
+      bgHover: 'group-hover:bg-blue-500/20',
+      border: 'border-blue-500/20',
+      text: 'text-blue-400',
+      blob: 'bg-blue-500/[0.03]',
+      blobHover: 'group-hover:bg-blue-500/[0.08]',
+    },
+    'green-500': {
+      gradient: 'from-green-500 via-green-400 to-green-500',
+      bg: 'bg-green-500/10',
+      bgHover: 'group-hover:bg-green-500/20',
+      border: 'border-green-500/20',
+      text: 'text-green-400',
+      blob: 'bg-green-500/[0.03]',
+      blobHover: 'group-hover:bg-green-500/[0.08]',
+    },
+    'amber-500': {
+      gradient: 'from-amber-500 via-amber-400 to-amber-500',
+      bg: 'bg-amber-500/10',
+      bgHover: 'group-hover:bg-amber-500/20',
+      border: 'border-amber-500/20',
+      text: 'text-amber-400',
+      blob: 'bg-amber-500/[0.03]',
+      blobHover: 'group-hover:bg-amber-500/[0.08]',
+    },
+    'purple-500': {
+      gradient: 'from-purple-500 via-purple-400 to-purple-500',
+      bg: 'bg-purple-500/10',
+      bgHover: 'group-hover:bg-purple-500/20',
+      border: 'border-purple-500/20',
+      text: 'text-purple-400',
+      blob: 'bg-purple-500/[0.03]',
+      blobHover: 'group-hover:bg-purple-500/[0.08]',
+    },
+    'elec-yellow': {
+      gradient: 'from-elec-yellow via-amber-400 to-elec-yellow',
+      bg: 'bg-elec-yellow/10',
+      bgHover: 'group-hover:bg-elec-yellow/20',
+      border: 'border-elec-yellow/20',
+      text: 'text-elec-yellow',
+      blob: 'bg-elec-yellow/[0.03]',
+      blobHover: 'group-hover:bg-elec-yellow/[0.08]',
+    },
+  };
+
+  const c = colorMap[accentColor] || colorMap['elec-yellow'];
+
   return (
     <button onClick={onClick} className="block w-full text-left group touch-manipulation">
       <motion.div
         whileHover={{ y: -2, scale: 1.01 }}
         whileTap={{ scale: 0.98 }}
-        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]"
+        className="relative overflow-hidden glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]"
       >
-        <div className="p-4 flex flex-col items-center justify-center text-center h-full">
-          <div className="p-2.5 rounded-xl bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors">
-            <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+        {/* Gradient accent line */}
+        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r', c.gradient)} />
+
+        {/* Decorative blob */}
+        <div
+          className={cn(
+            'absolute -top-8 -right-8 w-24 h-24 rounded-full blur-2xl transition-colors pointer-events-none',
+            c.blob,
+            c.blobHover
+          )}
+        />
+
+        <div className="relative z-10 p-4 flex flex-col items-center justify-center text-center h-full">
+          <div
+            className={cn(
+              'p-2.5 rounded-xl border mb-3 transition-colors',
+              c.bg,
+              c.bgHover,
+              c.border
+            )}
+          >
+            <Icon className={cn('h-6 w-6 sm:h-7 sm:w-7', c.text)} />
           </div>
-          <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
+          <h3
+            className={cn(
+              'text-sm sm:text-base font-semibold text-white mb-1 transition-colors',
+              `group-hover:${c.text}`
+            )}
+          >
             {title}
           </h3>
-          <p className="text-xs text-white/60 line-clamp-1">{description}</p>
+          <p className="text-xs text-white line-clamp-1">{description}</p>
           {badge && (
             <Badge
               variant="outline"
@@ -292,7 +394,7 @@ function HubCard({
                 'mt-2 text-[10px]',
                 badgeVariant === 'warning'
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                  : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
+                  : cn(c.bg, c.border, c.text)
               )}
             >
               {badge}
@@ -323,17 +425,23 @@ function QuickActionCard({
       <motion.div
         whileHover={{ y: -2, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="glass-premium rounded-xl p-3 sm:p-4"
+        className="relative overflow-hidden glass-premium rounded-xl p-3 sm:p-4"
       >
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+        {/* Gradient accent line */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+
+        {/* Decorative blob */}
+        <div className="absolute -top-6 -right-6 w-20 h-20 bg-elec-yellow/[0.03] rounded-full blur-2xl group-hover:bg-elec-yellow/[0.08] transition-colors pointer-events-none" />
+
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 group-hover:bg-elec-yellow/20 transition-colors">
             <Icon className="h-5 w-5 text-elec-yellow" />
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-medium text-white group-hover:text-elec-yellow transition-colors">
               {title}
             </h3>
-            <p className="text-xs text-white/60 truncate">{description}</p>
+            <p className="text-xs text-white truncate">{description}</p>
           </div>
           {badge !== undefined && badge > 0 && (
             <Badge
@@ -343,7 +451,7 @@ function QuickActionCard({
               {badge}
             </Badge>
           )}
-          <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-elec-yellow transition-colors" />
+          <ChevronRight className="h-4 w-4 text-white group-hover:text-elec-yellow transition-colors" />
         </div>
       </motion.div>
     </button>
@@ -361,14 +469,22 @@ function InfoCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="glass-premium rounded-xl p-4 sm:p-5">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-white text-sm sm:text-base">{title}</h3>
-        <div className="p-2 rounded-lg bg-elec-yellow/10">
-          <Icon className="h-4 w-4 text-elec-yellow" />
+    <div className="relative overflow-hidden glass-premium rounded-xl p-4 sm:p-5">
+      {/* Gradient accent line */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+
+      {/* Decorative blob */}
+      <div className="absolute -top-8 -right-8 w-24 h-24 bg-elec-yellow/[0.04] rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-white text-sm sm:text-base">{title}</h3>
+          <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+            <Icon className="h-4 w-4 text-elec-yellow" />
+          </div>
         </div>
+        {children}
       </div>
-      {children}
     </div>
   );
 }
@@ -427,12 +543,14 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
             description="Staff, students & cohorts"
             onClick={() => onNavigate('peoplehub')}
             badge={`${activeStudents} students`}
+            accentColor="blue-500"
           />
           <HubCard
             icon={BookOpen}
             title="Curriculum"
             description="Courses & resources"
             onClick={() => onNavigate('curriculumhub')}
+            accentColor="green-500"
           />
           <HubCard
             icon={ClipboardCheck}
@@ -441,12 +559,14 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
             onClick={() => onNavigate('assessmenthub')}
             badge={pendingAssessments > 0 ? `${pendingAssessments} pending` : undefined}
             badgeVariant="warning"
+            accentColor="amber-500"
           />
           <HubCard
             icon={FolderOpen}
             title="Resources"
             description="Documents & settings"
             onClick={() => onNavigate('resourceshub')}
+            accentColor="purple-500"
           />
         </div>
       </motion.section>
@@ -515,14 +635,12 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                     onClick={() => onNavigate('lessonplans')}
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white/90 truncate">
-                        {lesson.title}
-                      </p>
-                      <p className="text-xs text-white/50 truncate">{lesson.cohortName}</p>
+                      <p className="text-sm font-medium text-white truncate">{lesson.title}</p>
+                      <p className="text-xs text-white truncate">{lesson.cohortName}</p>
                     </div>
                     <Badge
                       variant="outline"
-                      className="shrink-0 text-[10px] bg-white/[0.05] border-white/10 text-white/70"
+                      className="shrink-0 text-[10px] bg-white/[0.05] border-white/10 text-white"
                     >
                       {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
                         weekday: 'short',
@@ -532,7 +650,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   </button>
                 ))
               ) : (
-                <p className="text-sm text-white/50">No upcoming lessons this week</p>
+                <p className="text-sm text-white">No upcoming lessons this week</p>
               )}
             </div>
           </InfoCard>
@@ -545,8 +663,8 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 onClick={() => onNavigate('epatracking')}
               >
                 <div>
-                  <p className="text-sm font-medium text-white/90">At Gateway</p>
-                  <p className="text-xs text-white/50">Ready for assessment</p>
+                  <p className="text-sm font-medium text-white">At Gateway</p>
+                  <p className="text-xs text-white">Ready for assessment</p>
                 </div>
                 <Badge
                   variant="outline"
@@ -560,12 +678,12 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 onClick={() => onNavigate('epatracking')}
               >
                 <div>
-                  <p className="text-sm font-medium text-white/90">In Progress</p>
-                  <p className="text-xs text-white/50">Working towards gateway</p>
+                  <p className="text-sm font-medium text-white">In Progress</p>
+                  <p className="text-xs text-white">Working towards gateway</p>
                 </div>
                 <Badge
                   variant="outline"
-                  className="bg-white/[0.05] border-white/10 text-white/70 text-[10px]"
+                  className="bg-white/[0.05] border-white/10 text-white text-[10px]"
                 >
                   {epaRecords.filter((e) => e.status === 'In Progress').length}
                 </Badge>
@@ -575,8 +693,8 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 onClick={() => onNavigate('epatracking')}
               >
                 <div>
-                  <p className="text-sm font-medium text-white/90">Completed</p>
-                  <p className="text-xs text-white/50">EPA passed</p>
+                  <p className="text-sm font-medium text-white">Completed</p>
+                  <p className="text-xs text-white">EPA passed</p>
                 </div>
                 <Badge
                   variant="outline"
