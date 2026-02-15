@@ -312,19 +312,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     is_archived: r.is_archived ?? false,
     created_at: r.created_at,
   }));
+
+  // These three must be declared before useLocalDraft which references them
   const [showForm, setShowForm] = useState(false);
-  const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
   const [formStep, setFormStep] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showArchived, setShowArchived] = useState(false);
-  const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
-
-  const [reporterSigName, setReporterSigName] = useState('');
-  const [reporterSigDate, setReporterSigDate] = useState(new Date().toISOString().split('T')[0]);
-  const [reporterSigData, setReporterSigData] = useState('');
-  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
-
-  // Form state (must be declared before useLocalDraft which references it)
   const [form, setForm] = useState<Partial<AccidentRecord>>({
     injured_name: '',
     injured_role: '',
@@ -381,6 +372,15 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     if (recoveredDraft.formStep !== undefined) setFormStep(recoveredDraft.formStep);
     dismissDraft();
   };
+
+  const [viewingRecord, setViewingRecord] = useState<AccidentRecord | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showArchived, setShowArchived] = useState(false);
+  const [showRIDDORGuide, setShowRIDDORGuide] = useState(false);
+  const [reporterSigName, setReporterSigName] = useState('');
+  const [reporterSigDate, setReporterSigDate] = useState(new Date().toISOString().split('T')[0]);
+  const [reporterSigData, setReporterSigData] = useState('');
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
   const updateForm = (updates: Partial<AccidentRecord>) => {
     setForm((prev) => ({ ...prev, ...updates }));
