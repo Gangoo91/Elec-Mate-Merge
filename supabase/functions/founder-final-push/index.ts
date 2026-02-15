@@ -223,7 +223,7 @@ Deno.serve(async (req) => {
     switch (action) {
       case 'get_prospects': {
         // Get the 52 clean prospects - no account, not bounced, excludes family/test
-        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
         const existingEmails = new Set(
           existingUsers?.users?.map((u) => u.email?.toLowerCase()) || []
         );
@@ -333,7 +333,7 @@ Deno.serve(async (req) => {
         // Get prospects that haven't received the final push campaign yet
         // We'll use a specific campaign marker in metadata or track via last_campaign_sent_at
 
-        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
         const existingEmails = new Set(
           existingUsers?.users?.map((u) => u.email?.toLowerCase()) || []
         );
@@ -456,7 +456,7 @@ Deno.serve(async (req) => {
 
       case 'get_status': {
         // Get campaign status - how many sent, how many remaining
-        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
         const existingEmails = new Set(
           existingUsers?.users?.map((u) => u.email?.toLowerCase()) || []
         );

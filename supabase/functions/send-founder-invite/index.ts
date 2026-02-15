@@ -1,18 +1,19 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Generate unique invite token
 function generateToken(): string {
-  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let token = "FND-";
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let token = 'FND-';
   for (let i = 0; i < 16; i++) {
     token += chars.charAt(Math.floor(Math.random() * chars.length));
   }
@@ -20,15 +21,22 @@ function generateToken(): string {
 }
 
 // Generate custom campaign email HTML with custom message
-function generateCustomCampaignHTML(email: string, inviteToken: string, customMessage: string): string {
-  const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
+function generateCustomCampaignHTML(
+  email: string,
+  inviteToken: string,
+  customMessage: string
+): string {
+  const siteUrl = Deno.env.get('SITE_URL') || 'https://elec-mate.com';
   const claimUrl = `${siteUrl}/founder/signup?token=${inviteToken}`;
 
   // Convert line breaks to HTML paragraphs
   const messageHtml = customMessage
     .split('\n')
-    .filter(line => line.trim())
-    .map(line => `<p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">${line}</p>`)
+    .filter((line) => line.trim())
+    .map(
+      (line) =>
+        `<p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">${line}</p>`
+    )
     .join('');
 
   return `
@@ -141,10 +149,10 @@ function generateCustomCampaignHTML(email: string, inviteToken: string, customMe
 
 // Generate founder invite email HTML
 function generateInviteEmailHTML(email: string, inviteToken: string): string {
-  const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
+  const siteUrl = Deno.env.get('SITE_URL') || 'https://elec-mate.com';
   // Direct to signup page instead of claim page
   const claimUrl = `${siteUrl}/founder/signup?token=${inviteToken}`;
-  const logoUrl = "https://elec-mate.com/logo.jpg";
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
 
   return `
 <!DOCTYPE html>
@@ -314,111 +322,122 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      throw new Error("No authorization header");
+      throw new Error('No authorization header');
     }
 
     // Create Supabase client with user's token
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: authHeader } } }
     );
 
     // Verify the caller is an admin
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser();
     if (userError || !user) {
-      throw new Error("Unauthorized: Could not get user");
+      throw new Error('Unauthorized: Could not get user');
     }
 
     const { data: callerProfile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("admin_role, full_name")
-      .eq("id", user.id)
+      .from('profiles')
+      .select('admin_role, full_name')
+      .eq('id', user.id)
       .single();
 
     if (profileError || !callerProfile?.admin_role) {
-      throw new Error("Unauthorized: Admin access required");
+      throw new Error('Unauthorized: Admin access required');
     }
 
     const { action, emails, inviteId, cohort, token, subject, message } = await req.json();
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
     let result;
 
     switch (action) {
-      case "list": {
+      case 'list': {
         const { data, error } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .order("created_at", { ascending: false });
+          .from('founder_invites')
+          .select('*')
+          .order('created_at', { ascending: false });
         if (error) throw error;
         result = { invites: data };
         break;
       }
 
-      case "stats": {
+      case 'stats': {
         const { data, error } = await supabaseAdmin
-          .from("founder_invites")
-          .select("status, sent_at, delivered_at, opened_at, clicked_at, bounced_at");
+          .from('founder_invites')
+          .select('status, sent_at, delivered_at, opened_at, clicked_at, bounced_at');
         if (error) throw error;
 
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
-        const sentInvites = data?.filter(i => i.status === "sent") || [];
+        const sentInvites = data?.filter((i) => i.status === 'sent') || [];
 
         const stats = {
           total: data?.length || 0,
-          pending: data?.filter(i => i.status === "pending").length || 0,
+          pending: data?.filter((i) => i.status === 'pending').length || 0,
           sent: sentInvites.length,
-          claimed: data?.filter(i => i.status === "claimed").length || 0,
-          expired: data?.filter(i => i.status === "expired").length || 0,
+          claimed: data?.filter((i) => i.status === 'claimed').length || 0,
+          expired: data?.filter((i) => i.status === 'expired').length || 0,
           // Needs reminder: sent but sent_at is null or older than 30 mins
-          needsReminder: sentInvites.filter(i => !i.sent_at || new Date(i.sent_at) < thirtyMinutesAgo).length,
+          needsReminder: sentInvites.filter(
+            (i) => !i.sent_at || new Date(i.sent_at) < thirtyMinutesAgo
+          ).length,
           // Recently resent: sent_at within last 30 mins
-          recentlyResent: sentInvites.filter(i => i.sent_at && new Date(i.sent_at) >= thirtyMinutesAgo).length,
+          recentlyResent: sentInvites.filter(
+            (i) => i.sent_at && new Date(i.sent_at) >= thirtyMinutesAgo
+          ).length,
           // Email tracking stats
-          delivered: data?.filter(i => i.delivered_at).length || 0,
-          opened: data?.filter(i => i.opened_at).length || 0,
-          clicked: data?.filter(i => i.clicked_at).length || 0,
-          bounced: data?.filter(i => i.bounced_at).length || 0,
+          delivered: data?.filter((i) => i.delivered_at).length || 0,
+          opened: data?.filter((i) => i.opened_at).length || 0,
+          clicked: data?.filter((i) => i.clicked_at).length || 0,
+          bounced: data?.filter((i) => i.bounced_at).length || 0,
         };
         result = { stats };
         break;
       }
 
-      case "bulk_create": {
+      case 'bulk_create': {
         if (!emails || !Array.isArray(emails) || emails.length === 0) {
-          throw new Error("Email list is required");
+          throw new Error('Email list is required');
         }
 
         // Clean and validate emails
         const cleanEmails = emails
           .map((e: string) => e.trim().toLowerCase())
-          .filter((e: string) => e && e.includes("@"));
+          .filter((e: string) => e && e.includes('@'));
 
         // Check for existing invites
         const { data: existing } = await supabaseAdmin
-          .from("founder_invites")
-          .select("email")
-          .in("email", cleanEmails);
+          .from('founder_invites')
+          .select('email')
+          .in('email', cleanEmails);
 
-        const existingEmails = new Set(existing?.map(e => e.email) || []);
+        const existingEmails = new Set(existing?.map((e) => e.email) || []);
         const newEmails = cleanEmails.filter((e: string) => !existingEmails.has(e));
 
         if (newEmails.length === 0) {
-          result = { created: 0, skipped: cleanEmails.length, message: "All emails already have invites" };
+          result = {
+            created: 0,
+            skipped: cleanEmails.length,
+            message: 'All emails already have invites',
+          };
           break;
         }
 
@@ -426,11 +445,11 @@ Deno.serve(async (req) => {
         const invites = newEmails.map((email: string) => ({
           email,
           invite_token: generateToken(),
-          status: "pending",
+          status: 'pending',
         }));
 
         const { data, error } = await supabaseAdmin
-          .from("founder_invites")
+          .from('founder_invites')
           .insert(invites)
           .select();
 
@@ -440,74 +459,74 @@ Deno.serve(async (req) => {
         result = {
           created: data?.length || 0,
           skipped: existingEmails.size,
-          message: `Created ${data?.length} invites`
+          message: `Created ${data?.length} invites`,
         };
         break;
       }
 
-      case "send_invite": {
+      case 'send_invite': {
         if (!inviteId) {
-          throw new Error("Invite ID is required");
+          throw new Error('Invite ID is required');
         }
 
         // Get the invite
         const { data: invite, error: inviteError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("id", inviteId)
+          .from('founder_invites')
+          .select('*')
+          .eq('id', inviteId)
           .single();
 
         if (inviteError || !invite) {
-          throw new Error("Invite not found");
+          throw new Error('Invite not found');
         }
 
-        if (invite.status === "claimed") {
-          throw new Error("This invite has already been claimed");
+        if (invite.status === 'claimed') {
+          throw new Error('This invite has already been claimed');
         }
 
         // Send the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
         const { data: emailData, error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <founder@elec-mate.com>",
+          from: 'Elec-Mate <founder@elec-mate.com>',
           to: [invite.email],
-          subject: "Your Elec-Mate Founder Subscription is Ready - £3.99/month",
+          subject: 'Your Elec-Mate Founder Subscription is Ready - £3.99/month',
           html: emailHtml,
         });
 
         if (emailError) {
-          console.error("Email send error:", emailError);
-          throw new Error("Failed to send email");
+          console.error('Email send error:', emailError);
+          throw new Error('Failed to send email');
         }
 
         // Update invite status with resend_email_id for webhook tracking
         await supabaseAdmin
-          .from("founder_invites")
+          .from('founder_invites')
           .update({
-            status: "sent",
+            status: 'sent',
             sent_at: new Date().toISOString(),
             resend_email_id: emailData?.id,
             last_send_attempt_at: new Date().toISOString(),
             send_count: (invite.send_count || 0) + 1,
           })
-          .eq("id", inviteId);
+          .eq('id', inviteId);
 
         console.log(`Founder invite sent to ${invite.email} by admin ${user.id}`);
         result = { success: true, email: invite.email };
         break;
       }
 
-      case "send_all_pending": {
+      case 'send_all_pending': {
         // Get all pending invites
         const { data: pendingInvites, error: pendingError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("status", "pending");
+          .from('founder_invites')
+          .select('*')
+          .eq('status', 'pending');
 
         if (pendingError) throw pendingError;
 
         if (!pendingInvites || pendingInvites.length === 0) {
-          result = { sent: 0, message: "No pending invites to send" };
+          result = { sent: 0, message: 'No pending invites to send' };
           break;
         }
 
@@ -519,9 +538,9 @@ Deno.serve(async (req) => {
             const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
             const { data: emailData, error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <founder@elec-mate.com>",
+              from: 'Elec-Mate <founder@elec-mate.com>',
               to: [invite.email],
-              subject: "Your Elec-Mate Founder Subscription is Ready - £3.99/month",
+              subject: 'Your Elec-Mate Founder Subscription is Ready - £3.99/month',
               html: emailHtml,
             });
 
@@ -531,19 +550,19 @@ Deno.serve(async (req) => {
             }
 
             await supabaseAdmin
-              .from("founder_invites")
+              .from('founder_invites')
               .update({
-                status: "sent",
+                status: 'sent',
                 sent_at: new Date().toISOString(),
                 resend_email_id: emailData?.id,
                 last_send_attempt_at: new Date().toISOString(),
                 send_count: (invite.send_count || 0) + 1,
               })
-              .eq("id", invite.id);
+              .eq('id', invite.id);
 
             sentCount++;
-          } catch (err: any) {
-            errors.push(`${invite.email}: ${err.message}`);
+          } catch (err: unknown) {
+            errors.push(`${invite.email}: ${err instanceof Error ? err.message : String(err)}`);
           }
         }
 
@@ -552,29 +571,29 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "validate_token": {
+      case 'validate_token': {
         if (!token) {
-          throw new Error("Token is required");
+          throw new Error('Token is required');
         }
 
         const { data: invite, error: inviteError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("invite_token", token)
+          .from('founder_invites')
+          .select('*')
+          .eq('invite_token', token)
           .single();
 
         if (inviteError || !invite) {
-          result = { valid: false, reason: "Invalid token" };
+          result = { valid: false, reason: 'Invalid token' };
           break;
         }
 
-        if (invite.status === "claimed") {
-          result = { valid: false, reason: "This invite has already been claimed" };
+        if (invite.status === 'claimed') {
+          result = { valid: false, reason: 'This invite has already been claimed' };
           break;
         }
 
         if (invite.expires_at && new Date(invite.expires_at) < new Date()) {
-          result = { valid: false, reason: "This invite has expired" };
+          result = { valid: false, reason: 'This invite has expired' };
           break;
         }
 
@@ -582,98 +601,98 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "resend": {
+      case 'resend': {
         if (!inviteId) {
-          throw new Error("Invite ID is required");
+          throw new Error('Invite ID is required');
         }
 
         // Get the invite
         const { data: invite, error: inviteError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("id", inviteId)
+          .from('founder_invites')
+          .select('*')
+          .eq('id', inviteId)
           .single();
 
         if (inviteError || !invite) {
-          throw new Error("Invite not found");
+          throw new Error('Invite not found');
         }
 
-        if (invite.status === "claimed") {
-          throw new Error("This invite has already been claimed");
+        if (invite.status === 'claimed') {
+          throw new Error('This invite has already been claimed');
         }
 
         // Resend the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
         const { data: emailData, error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <founder@elec-mate.com>",
+          from: 'Elec-Mate <founder@elec-mate.com>',
           to: [invite.email],
-          subject: "Reminder: Your Elec-Mate Founder Subscription is Waiting - £3.99/month",
+          subject: 'Reminder: Your Elec-Mate Founder Subscription is Waiting - £3.99/month',
           html: emailHtml,
         });
 
         if (emailError) {
-          throw new Error("Failed to resend email");
+          throw new Error('Failed to resend email');
         }
 
         // Update sent_at with resend_email_id for webhook tracking
         await supabaseAdmin
-          .from("founder_invites")
+          .from('founder_invites')
           .update({
             sent_at: new Date().toISOString(),
             resend_email_id: emailData?.id,
             last_send_attempt_at: new Date().toISOString(),
             send_count: (invite.send_count || 0) + 1,
           })
-          .eq("id", inviteId);
+          .eq('id', inviteId);
 
         console.log(`Founder invite resent to ${invite.email} by admin ${user.id}`);
         result = { success: true, email: invite.email };
         break;
       }
 
-      case "delete": {
+      case 'delete': {
         if (!inviteId) {
-          throw new Error("Invite ID is required");
+          throw new Error('Invite ID is required');
         }
 
-        const { error } = await supabaseAdmin
-          .from("founder_invites")
-          .delete()
-          .eq("id", inviteId);
+        const { error } = await supabaseAdmin.from('founder_invites').delete().eq('id', inviteId);
 
         if (error) throw error;
         result = { success: true };
         break;
       }
 
-      case "send_to_cohort": {
-        if (!cohort || !["trial", "churned"].includes(cohort)) {
+      case 'send_to_cohort': {
+        if (!cohort || !['trial', 'churned'].includes(cohort)) {
           throw new Error("Invalid cohort. Must be 'trial' or 'churned'");
         }
 
         const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
         // Get all users with their auth emails via admin API
-        const { data: { users: authUsers }, error: authError } = await supabaseAdmin.auth.admin.listUsers();
+        const {
+          data: { users: authUsers },
+          error: authError,
+        } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
         if (authError) throw authError;
 
         // Create email lookup map
-        const emailMap = new Map(authUsers.map(u => [u.id, u.email]));
+        const emailMap = new Map(authUsers.map((u) => [u.id, u.email]));
 
         // Get profiles based on cohort (trial vs churned)
         // Trial users: signed up within last 7 days, not subscribed, no free access
         // Churned users: signed up more than 7 days ago, not subscribed, no free access
         let query = supabaseAdmin
-          .from("profiles")
-          .select("id, created_at")
-          .or("subscribed.is.null,subscribed.eq.false")
-          .or("free_access_granted.is.null,free_access_granted.eq.false");
+          .from('profiles')
+          .select('id, created_at')
+          .or('subscribed.is.null,subscribed.eq.false')
+          .or('free_access_granted.is.null,free_access_granted.eq.false');
 
-        if (cohort === "trial") {
-          query = query.gte("created_at", weekAgo.toISOString());
-        } else if (cohort === "churned") {
-          query = query.lt("created_at", weekAgo.toISOString());
+        if (cohort === 'trial') {
+          query = query.gte('created_at', weekAgo.toISOString());
+        } else if (cohort === 'churned') {
+          query = query.lt('created_at', weekAgo.toISOString());
         }
 
         const { data: profiles, error: profilesError } = await query;
@@ -681,33 +700,36 @@ Deno.serve(async (req) => {
 
         // Map profile IDs to emails
         const userEmails = (profiles || [])
-          .map(p => emailMap.get(p.id))
+          .map((p) => emailMap.get(p.id))
           .filter((email): email is string => !!email);
 
         // Get existing invites to skip duplicates
         const { data: existingInvites } = await supabaseAdmin
-          .from("founder_invites")
-          .select("email");
-        const existingEmails = new Set((existingInvites || []).map(i => i.email.toLowerCase()));
+          .from('founder_invites')
+          .select('email');
+        const existingEmails = new Set((existingInvites || []).map((i) => i.email.toLowerCase()));
 
         // Filter to users without existing invites
-        const newEmails = userEmails.filter(email =>
-          !existingEmails.has(email.toLowerCase())
-        );
+        const newEmails = userEmails.filter((email) => !existingEmails.has(email.toLowerCase()));
 
         if (newEmails.length === 0) {
-          result = { sent: 0, skipped: userEmails.length, total: userEmails.length, message: "All users already have invites" };
+          result = {
+            sent: 0,
+            skipped: userEmails.length,
+            total: userEmails.length,
+            message: 'All users already have invites',
+          };
           break;
         }
 
         // Create invites for new emails
-        const invites = newEmails.map(email => ({
+        const invites = newEmails.map((email) => ({
           email: email.toLowerCase(),
           invite_token: generateToken(),
-          status: "pending",
+          status: 'pending',
         }));
 
-        const { error: insertError } = await supabaseAdmin.from("founder_invites").insert(invites);
+        const { error: insertError } = await supabaseAdmin.from('founder_invites').insert(invites);
         if (insertError) throw insertError;
 
         // Send emails to all new invites
@@ -715,16 +737,17 @@ Deno.serve(async (req) => {
         const errors: string[] = [];
 
         // Choose subject line based on cohort
-        const subjectLine = cohort === "trial"
-          ? "🎁 Special Founder Offer - Lock in £3.99/month for Life!"
-          : "We miss you! Exclusive Founder Rate - £3.99/month Forever";
+        const subjectLine =
+          cohort === 'trial'
+            ? '🎁 Special Founder Offer - Lock in £3.99/month for Life!'
+            : 'We miss you! Exclusive Founder Rate - £3.99/month Forever';
 
         for (const email of newEmails) {
           try {
             const { data: invite, error: inviteError } = await supabaseAdmin
-              .from("founder_invites")
-              .select("*")
-              .eq("email", email.toLowerCase())
+              .from('founder_invites')
+              .select('*')
+              .eq('email', email.toLowerCase())
               .single();
 
             if (inviteError || !invite) {
@@ -735,7 +758,7 @@ Deno.serve(async (req) => {
             const emailHtml = generateInviteEmailHTML(email, invite.invite_token);
 
             const { data: emailData, error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <founder@elec-mate.com>",
+              from: 'Elec-Mate <founder@elec-mate.com>',
               to: [email],
               subject: subjectLine,
               html: emailHtml,
@@ -747,19 +770,19 @@ Deno.serve(async (req) => {
             }
 
             await supabaseAdmin
-              .from("founder_invites")
+              .from('founder_invites')
               .update({
-                status: "sent",
+                status: 'sent',
                 sent_at: new Date().toISOString(),
                 resend_email_id: emailData?.id,
                 last_send_attempt_at: new Date().toISOString(),
                 send_count: (invite.send_count || 0) + 1,
               })
-              .eq("id", invite.id);
+              .eq('id', invite.id);
 
             sentCount++;
-          } catch (err: any) {
-            errors.push(`${email}: ${err.message}`);
+          } catch (err: unknown) {
+            errors.push(`${email}: ${err instanceof Error ? err.message : String(err)}`);
           }
         }
 
@@ -773,23 +796,27 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "resend_all_unclaimed": {
+      case 'resend_all_unclaimed': {
         // Get all sent invites that haven't been claimed
         // Skip any sent in the last 30 minutes (already processed in a recent batch)
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
 
         const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("status", "sent")
-          .is("bounced_at", null)  // Skip bounced emails
+          .from('founder_invites')
+          .select('*')
+          .eq('status', 'sent')
+          .is('bounced_at', null) // Skip bounced emails
           .or(`sent_at.is.null,sent_at.lt.${thirtyMinutesAgo}`)
-          .order("sent_at", { ascending: true, nullsFirst: true });
+          .order('sent_at', { ascending: true, nullsFirst: true });
 
         if (unclaimedError) throw unclaimedError;
 
         if (!unclaimedInvites || unclaimedInvites.length === 0) {
-          result = { sent: 0, remaining: 0, message: "All unclaimed invites have been sent recently" };
+          result = {
+            sent: 0,
+            remaining: 0,
+            message: 'All unclaimed invites have been sent recently',
+          };
           break;
         }
 
@@ -802,9 +829,9 @@ Deno.serve(async (req) => {
             const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
             const { data: emailData, error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <founder@elec-mate.com>",
+              from: 'Elec-Mate <founder@elec-mate.com>',
               to: [invite.email],
-              subject: "⏰ Reminder: Your £3.99/month Founder Rate is Still Waiting!",
+              subject: '⏰ Reminder: Your £3.99/month Founder Rate is Still Waiting!',
               html: emailHtml,
             });
 
@@ -815,25 +842,25 @@ Deno.serve(async (req) => {
 
             // Update sent_at timestamp with resend_email_id for webhook tracking
             await supabaseAdmin
-              .from("founder_invites")
+              .from('founder_invites')
               .update({
                 sent_at: new Date().toISOString(),
                 resend_email_id: emailData?.id,
                 last_send_attempt_at: new Date().toISOString(),
                 send_count: (invite.send_count || 0) + 1,
               })
-              .eq("id", invite.id);
+              .eq('id', invite.id);
 
             sentCount++;
             sentEmails.push(invite.email);
 
             // Pace emails to stay within Resend rate limits
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             if (sentCount > 0 && sentCount % 8 === 0) {
-              await new Promise(resolve => setTimeout(resolve, 2000));
+              await new Promise((resolve) => setTimeout(resolve, 2000));
             }
-          } catch (err: any) {
-            errors.push(`${invite.email}: ${err.message}`);
+          } catch (err: unknown) {
+            errors.push(`${invite.email}: ${err instanceof Error ? err.message : String(err)}`);
           }
         }
 
@@ -852,29 +879,29 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "test_custom_campaign": {
+      case 'test_custom_campaign': {
         // Send a TEST email to a specific address (for previewing before bulk send)
-        const testEmail = emails?.[0] || "founder@elec-mate.com";
+        const testEmail = emails?.[0] || 'founder@elec-mate.com';
 
         if (!subject || !message) {
-          throw new Error("Subject and message are required for test campaigns");
+          throw new Error('Subject and message are required for test campaigns');
         }
 
         // Find or create a test invite for this email
         let { data: testInvite } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("email", testEmail)
+          .from('founder_invites')
+          .select('*')
+          .eq('email', testEmail)
           .single();
 
         if (!testInvite) {
           // Create a temporary test invite
           const { data: newInvite, error: createError } = await supabaseAdmin
-            .from("founder_invites")
+            .from('founder_invites')
             .insert({
               email: testEmail,
               invite_token: generateToken(),
-              status: "sent",
+              status: 'sent',
             })
             .select()
             .single();
@@ -883,10 +910,14 @@ Deno.serve(async (req) => {
           testInvite = newInvite;
         }
 
-        const testEmailHtml = generateCustomCampaignHTML(testEmail, testInvite.invite_token, message);
+        const testEmailHtml = generateCustomCampaignHTML(
+          testEmail,
+          testInvite.invite_token,
+          message
+        );
 
         const { data: emailData, error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <founder@elec-mate.com>",
+          from: 'Elec-Mate <founder@elec-mate.com>',
           to: [testEmail],
           subject: `[TEST] ${subject}`,
           html: testEmailHtml,
@@ -898,14 +929,14 @@ Deno.serve(async (req) => {
 
         // Update tracking
         await supabaseAdmin
-          .from("founder_invites")
+          .from('founder_invites')
           .update({
             sent_at: new Date().toISOString(),
             resend_email_id: emailData?.id,
             last_send_attempt_at: new Date().toISOString(),
             send_count: (testInvite.send_count || 0) + 1,
           })
-          .eq("id", testInvite.id);
+          .eq('id', testInvite.id);
 
         console.log(`Test campaign email sent to ${testEmail} by admin ${user.id}`);
         result = {
@@ -917,28 +948,33 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "send_custom_campaign": {
+      case 'send_custom_campaign': {
         // Send a custom email campaign to all unclaimed invites
         // Uses last_campaign_sent_at to track who already got the campaign
         if (!subject || !message) {
-          throw new Error("Subject and message are required for custom campaigns");
+          throw new Error('Subject and message are required for custom campaigns');
         }
 
         // Get all sent invites that haven't been claimed AND haven't received this campaign yet
         // We use last_campaign_sent_at to track campaign sends separately from regular sends
         // Exclude bounced emails to avoid wasting sends and hurting sender reputation
         const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
-          .from("founder_invites")
-          .select("*")
-          .eq("status", "sent")
-          .is("last_campaign_sent_at", null)  // Only people who haven't received a campaign yet
-          .is("bounced_at", null)             // Skip bounced emails
-          .order("created_at", { ascending: true });
+          .from('founder_invites')
+          .select('*')
+          .eq('status', 'sent')
+          .is('last_campaign_sent_at', null) // Only people who haven't received a campaign yet
+          .is('bounced_at', null) // Skip bounced emails
+          .order('created_at', { ascending: true });
 
         if (unclaimedError) throw unclaimedError;
 
         if (!unclaimedInvites || unclaimedInvites.length === 0) {
-          result = { sent: 0, total: 0, failed: 0, message: "All unclaimed invites have already received the campaign" };
+          result = {
+            sent: 0,
+            total: 0,
+            failed: 0,
+            message: 'All unclaimed invites have already received the campaign',
+          };
           break;
         }
 
@@ -951,10 +987,14 @@ Deno.serve(async (req) => {
           const invite = unclaimedInvites[i];
 
           try {
-            const emailHtml = generateCustomCampaignHTML(invite.email, invite.invite_token, message);
+            const emailHtml = generateCustomCampaignHTML(
+              invite.email,
+              invite.invite_token,
+              message
+            );
 
             const { data: emailData, error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <founder@elec-mate.com>",
+              from: 'Elec-Mate <founder@elec-mate.com>',
               to: [invite.email],
               subject: subject,
               html: emailHtml,
@@ -967,27 +1007,27 @@ Deno.serve(async (req) => {
 
             // Update with resend_email_id AND mark campaign as sent
             await supabaseAdmin
-              .from("founder_invites")
+              .from('founder_invites')
               .update({
                 sent_at: new Date().toISOString(),
                 resend_email_id: emailData?.id,
                 last_send_attempt_at: new Date().toISOString(),
-                last_campaign_sent_at: new Date().toISOString(),  // Track campaign separately
+                last_campaign_sent_at: new Date().toISOString(), // Track campaign separately
                 send_count: (invite.send_count || 0) + 1,
               })
-              .eq("id", invite.id);
+              .eq('id', invite.id);
 
             sentCount++;
             sentEmails.push(invite.email);
 
             // Pace emails to stay well within Resend rate limits (10/second)
             // 500ms between each email + extra 2s pause every 8 emails
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             if (i > 0 && i % 8 === 0) {
-              await new Promise(resolve => setTimeout(resolve, 2000));
+              await new Promise((resolve) => setTimeout(resolve, 2000));
             }
-          } catch (err: any) {
-            errors.push(`${invite.email}: ${err.message}`);
+          } catch (err: unknown) {
+            errors.push(`${invite.email}: ${err instanceof Error ? err.message : String(err)}`);
           }
         }
 
@@ -1002,26 +1042,26 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "get_cohort_stats": {
+      case 'get_cohort_stats': {
         const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
         // Get trial count (within 7 days, not subscribed, no free access)
         const { count: trialCount, error: trialError } = await supabaseAdmin
-          .from("profiles")
-          .select("id", { count: "exact", head: true })
-          .gte("created_at", weekAgo.toISOString())
-          .or("subscribed.is.null,subscribed.eq.false")
-          .or("free_access_granted.is.null,free_access_granted.eq.false");
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .gte('created_at', weekAgo.toISOString())
+          .or('subscribed.is.null,subscribed.eq.false')
+          .or('free_access_granted.is.null,free_access_granted.eq.false');
 
         if (trialError) throw trialError;
 
         // Get churned count (more than 7 days, not subscribed, no free access)
         const { count: churnedCount, error: churnedError } = await supabaseAdmin
-          .from("profiles")
-          .select("id", { count: "exact", head: true })
-          .lt("created_at", weekAgo.toISOString())
-          .or("subscribed.is.null,subscribed.eq.false")
-          .or("free_access_granted.is.null,free_access_granted.eq.false");
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .lt('created_at', weekAgo.toISOString())
+          .or('subscribed.is.null,subscribed.eq.false')
+          .or('free_access_granted.is.null,free_access_granted.eq.false');
 
         if (churnedError) throw churnedError;
 
@@ -1037,14 +1077,17 @@ Deno.serve(async (req) => {
     }
 
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
-  } catch (error: any) {
-    console.error("Error in send-founder-invite:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 400,
-    });
+  } catch (error: unknown) {
+    console.error('Error in send-founder-invite:', error);
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : String(error) }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      }
+    );
   }
 });
