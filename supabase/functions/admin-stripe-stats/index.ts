@@ -5,30 +5,35 @@
  */
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 
 // Known price IDs and their tiers - ACTUAL STRIPE PRICES
 const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
   // Founder pricing (£3.99/mo) - MAIN PRICE USED BY ALL REAL USERS
-  'price_1SPK8c2RKw5t5RAmRGJxXfjc': { tier: 'founder', amount: 3.99 },
-  'price_1RL1wd2RKw5t5RAms8S0sLAt': { tier: 'founder', amount: 3.99 },
+  price_1SPK8c2RKw5t5RAmRGJxXfjc: { tier: 'founder', amount: 3.99 },
+  price_1RL1wd2RKw5t5RAms8S0sLAt: { tier: 'founder', amount: 3.99 },
   // Apprentice pricing (£4.99/mo, £49.99/yr) - FUTURE
-  'price_1SmUef2RKw5t5RAmRIMTWTqU': { tier: 'apprentice', amount: 4.99 },
-  'price_1SmUfK2RKw5t5RAml6bj1I77': { tier: 'apprentice', amount: 49.99 / 12 },
+  price_1SmUef2RKw5t5RAmRIMTWTqU: { tier: 'apprentice', amount: 4.99 },
+  price_1SmUfK2RKw5t5RAml6bj1I77: { tier: 'apprentice', amount: 49.99 / 12 },
   // Electrician pricing (£9.99/mo, £99.99/yr) - FUTURE
-  'price_1SqJVr2RKw5t5RAmaiTGelLN': { tier: 'electrician', amount: 9.99 },
-  'price_1SqJVs2RKw5t5RAmVeD2QVsb': { tier: 'electrician', amount: 99.99 / 12 },
-  'price_1RhteS2RKw5t5RAmzRbaTE8U': { tier: 'electrician', amount: 9.99 },
-  'price_1Rhti2RKw5t5RAmha0s6PJA': { tier: 'electrician', amount: 99.99 / 12 },
-  // Employer pricing (£29.99/mo, £299.99/yr) - FUTURE
-  'price_1SlyAT2RKw5t5RAmUmTRGimH': { tier: 'employer', amount: 29.99 },
-  'price_1SlyB82RKw5t5RAmN447YJUW': { tier: 'employer', amount: 299.99 / 12 },
+  price_1SqJVr2RKw5t5RAmaiTGelLN: { tier: 'electrician', amount: 9.99 },
+  price_1SqJVs2RKw5t5RAmVeD2QVsb: { tier: 'electrician', amount: 99.99 / 12 },
+  price_1RhteS2RKw5t5RAmzRbaTE8U: { tier: 'electrician', amount: 9.99 },
+  price_1Rhti2RKw5t5RAmha0s6PJA: { tier: 'electrician', amount: 99.99 / 12 },
+  // Win-Back pricing (£7.99/mo, £79.99/yr) - expired trial re-engagement
+  price_1SvggR2RKw5t5RAmDN29FBzx: { tier: 'electrician', amount: 7.99 },
+  price_1SvggR2RKw5t5RAmsrerSmdG: { tier: 'electrician', amount: 79.99 / 12 },
+  // Employer pricing (£29.99/mo, £39.99/mo, £299.99/yr, £399.99/yr)
+  price_1SlyAT2RKw5t5RAmUmTRGimH: { tier: 'employer', amount: 29.99 },
+  price_1SlyB82RKw5t5RAmN447YJUW: { tier: 'employer', amount: 299.99 / 12 },
+  price_1Svgmx2RKw5t5RAmALVu3vkn: { tier: 'employer', amount: 39.99 },
+  price_1Svgmx2RKw5t5RAm6Q4KMCdG: { tier: 'employer', amount: 399.99 / 12 },
   // LEGACY TEST PRICES (Andrew's old test subscriptions) - count as founder
-  'price_1RhtdT2RKw5t5RAmv6b2xE6p': { tier: 'founder', amount: 6.99 },  // Desktop £6.99 - ANDREW TEST
-  'price_1Rhtgl2RKw5t5RAmkQVKVnKn': { tier: 'founder', amount: 69.99 / 12 },
-  'price_1RL1zR2RKw5t5RAmVABR93Zy': { tier: 'founder', amount: 5.99 },  // Legacy £5.99 - ANDREW TEST
-  'price_1RL25t2RKw5t5RAmXYxxJivo': { tier: 'founder', amount: 59.99 / 12 },
-  'price_1RL2582RKw5t5RAm2qG45wK0': { tier: 'founder', amount: 39.99 / 12 },
+  price_1RhtdT2RKw5t5RAmv6b2xE6p: { tier: 'founder', amount: 6.99 }, // Desktop £6.99 - ANDREW TEST
+  price_1Rhtgl2RKw5t5RAmkQVKVnKn: { tier: 'founder', amount: 69.99 / 12 },
+  price_1RL1zR2RKw5t5RAmVABR93Zy: { tier: 'founder', amount: 5.99 }, // Legacy £5.99 - ANDREW TEST
+  price_1RL25t2RKw5t5RAmXYxxJivo: { tier: 'founder', amount: 59.99 / 12 },
+  price_1RL2582RKw5t5RAm2qG45wK0: { tier: 'founder', amount: 39.99 / 12 },
 };
 
 serve(async (req) => {
@@ -48,7 +53,10 @@ serve(async (req) => {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(token);
 
     if (authError || !user) {
       throw new Error('Authentication failed');
@@ -68,9 +76,7 @@ serve(async (req) => {
       .single();
 
     const hasAdminAccess =
-      profile?.role === 'admin' ||
-      profile?.role === 'employer' ||
-      ADMIN_USER_IDS.includes(user.id);
+      profile?.role === 'admin' || profile?.role === 'employer' || ADMIN_USER_IDS.includes(user.id);
 
     if (!hasAdminAccess) {
       console.log('[ADMIN-STRIPE-STATS] Access denied for user:', user.id, 'role:', profile?.role);
@@ -107,34 +113,42 @@ serve(async (req) => {
       }
     }
 
+    // Fetch all trialing subscriptions from Stripe
+    const trialingSubscriptions: Stripe.Subscription[] = [];
+    hasMore = true;
+    startingAfter = undefined;
+
+    while (hasMore) {
+      const batch = await stripe.subscriptions.list({
+        status: 'trialing',
+        limit: 100,
+        expand: ['data.customer', 'data.items.data.price'],
+        ...(startingAfter && { starting_after: startingAfter }),
+      });
+
+      trialingSubscriptions.push(...batch.data);
+      hasMore = batch.has_more;
+      if (batch.data.length > 0) {
+        startingAfter = batch.data[batch.data.length - 1].id;
+      }
+    }
+
     // Fetch canceled subscriptions (last 30 days for churn tracking)
-    const thirtyDaysAgo = Math.floor(Date.now() / 1000) - (30 * 24 * 60 * 60);
+    const thirtyDaysAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60;
     const canceledSubscriptions = await stripe.subscriptions.list({
       status: 'canceled',
       limit: 100,
       created: { gte: thirtyDaysAgo },
     });
 
-    // Calculate tier counts and MRR from live Stripe data
-    const tierCounts = {
-      founder: 0,
-      apprentice: 0,
-      electrician: 0,
-      employer: 0,
-      unknown: 0,
-    };
-
-    let mrr = 0;
-    const subscriptionDetails: any[] = [];
-
-    for (const sub of activeSubscriptions) {
+    // Helper: extract tier and monthly amount from a subscription
+    const classifySub = (sub: Stripe.Subscription) => {
       const customer = sub.customer as Stripe.Customer;
       const priceItem = sub.items.data[0];
       const priceId = priceItem.price.id;
       const priceAmount = (priceItem.price.unit_amount || 0) / 100;
       const interval = priceItem.price.recurring?.interval;
 
-      // Determine tier from price ID or amount
       let tier = 'unknown';
       let monthlyAmount = priceAmount;
 
@@ -142,7 +156,6 @@ serve(async (req) => {
         tier = PRICE_TIER_MAP[priceId].tier;
         monthlyAmount = PRICE_TIER_MAP[priceId].amount;
       } else {
-        // Infer tier from price amount
         if (priceAmount <= 5 || (interval === 'year' && priceAmount <= 50)) {
           tier = 'founder';
           monthlyAmount = interval === 'year' ? priceAmount / 12 : priceAmount;
@@ -155,10 +168,7 @@ serve(async (req) => {
         }
       }
 
-      tierCounts[tier as keyof typeof tierCounts]++;
-      mrr += monthlyAmount;
-
-      subscriptionDetails.push({
+      return {
         subscriptionId: sub.id,
         customerId: customer?.id,
         customerEmail: customer?.email || 'N/A',
@@ -169,14 +179,59 @@ serve(async (req) => {
         monthlyAmount,
         interval,
         status: sub.status,
+        trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000).toISOString() : null,
         created: new Date(sub.created * 1000).toISOString(),
-      });
+      };
+    };
+
+    // Calculate tier counts and MRR from live Stripe data
+    const tierCounts = {
+      founder: 0,
+      apprentice: 0,
+      electrician: 0,
+      employer: 0,
+      unknown: 0,
+    };
+
+    let mrr = 0;
+    const subscriptionDetails: ReturnType<typeof classifySub>[] = [];
+
+    for (const sub of activeSubscriptions) {
+      const detail = classifySub(sub);
+      tierCounts[detail.tier as keyof typeof tierCounts]++;
+      mrr += detail.monthlyAmount;
+      subscriptionDetails.push(detail);
+    }
+
+    // Calculate trialing tier counts and projected MRR
+    const trialingTierCounts = {
+      founder: 0,
+      apprentice: 0,
+      electrician: 0,
+      employer: 0,
+      unknown: 0,
+    };
+
+    let projectedMrr = 0;
+    const trialingDetails: ReturnType<typeof classifySub>[] = [];
+
+    // De-duplicate trialing subs by customer ID (some customers have multiple trials)
+    const seenTrialingCustomers = new Set<string>();
+    for (const sub of trialingSubscriptions) {
+      const detail = classifySub(sub);
+      if (seenTrialingCustomers.has(detail.customerId)) continue;
+      seenTrialingCustomers.add(detail.customerId);
+      trialingTierCounts[detail.tier as keyof typeof trialingTierCounts]++;
+      projectedMrr += detail.monthlyAmount;
+      trialingDetails.push(detail);
     }
 
     // Fetch Supabase data for comparison
     const { data: supabaseSubscribers, error: subError } = await supabase
       .from('profiles')
-      .select('id, full_name, email, subscription_tier, subscribed, stripe_customer_id, free_access_granted')
+      .select(
+        'id, full_name, email, subscription_tier, subscribed, stripe_customer_id, free_access_granted'
+      )
       .eq('subscribed', true);
 
     const supabaseTierCounts = {
@@ -198,70 +253,94 @@ serve(async (req) => {
       }
     }
 
-    // Find discrepancies
-    const stripeCustomerIds = new Set(subscriptionDetails.map(s => s.customerId));
-    const supabaseCustomerIds = new Set((supabaseSubscribers || []).filter(u => u.stripe_customer_id).map(u => u.stripe_customer_id));
+    // Find discrepancies (include both active and trialing Stripe customers)
+    const stripeCustomerIds = new Set(
+      [...subscriptionDetails, ...trialingDetails].map((s) => s.customerId)
+    );
+    const supabaseCustomerIds = new Set(
+      (supabaseSubscribers || [])
+        .filter((u) => u.stripe_customer_id)
+        .map((u) => u.stripe_customer_id)
+    );
 
-    const inStripeNotSupabase = subscriptionDetails.filter(s => !supabaseCustomerIds.has(s.customerId));
-    const inSupabaseNotStripe = (supabaseSubscribers || []).filter(u => u.stripe_customer_id && !stripeCustomerIds.has(u.stripe_customer_id) && !u.free_access_granted);
+    const inStripeNotSupabase = subscriptionDetails.filter(
+      (s) => !supabaseCustomerIds.has(s.customerId)
+    );
+    const inSupabaseNotStripe = (supabaseSubscribers || []).filter(
+      (u) =>
+        u.stripe_customer_id &&
+        !stripeCustomerIds.has(u.stripe_customer_id) &&
+        !u.free_access_granted
+    );
 
     const response = {
       stripe: {
         activeSubscriptions: activeSubscriptions.length,
+        trialingSubscriptions: trialingDetails.length,
         canceledLast30Days: canceledSubscriptions.data.length,
         tierCounts,
+        trialingTierCounts,
         mrr: Math.round(mrr * 100) / 100,
+        projectedMrr: Math.round((mrr + projectedMrr) * 100) / 100,
         // Include breakdown by actual price amount
-        subscriptionsByPrice: subscriptionDetails.reduce((acc, sub) => {
-          const key = `£${sub.priceAmount}/${sub.interval}`;
-          acc[key] = (acc[key] || 0) + 1;
-          return acc;
-        }, {} as Record<string, number>),
+        subscriptionsByPrice: subscriptionDetails.reduce(
+          (acc, sub) => {
+            const key = `£${sub.priceAmount}/${sub.interval}`;
+            acc[key] = (acc[key] || 0) + 1;
+            return acc;
+          },
+          {} as Record<string, number>
+        ),
       },
       supabase: {
         subscribedUsers: (supabaseSubscribers || []).length,
         tierCounts: supabaseTierCounts,
-        withStripeId: (supabaseSubscribers || []).filter(u => u.stripe_customer_id).length,
-        withoutStripeId: (supabaseSubscribers || []).filter(u => !u.stripe_customer_id && !u.free_access_granted).length,
+        withStripeId: (supabaseSubscribers || []).filter((u) => u.stripe_customer_id).length,
+        withoutStripeId: (supabaseSubscribers || []).filter(
+          (u) => !u.stripe_customer_id && !u.free_access_granted
+        ).length,
       },
       discrepancies: {
         inStripeNotSupabase: inStripeNotSupabase.length,
         inSupabaseNotStripe: inSupabaseNotStripe.length,
         details: {
-          stripeOnly: inStripeNotSupabase.map(s => ({
+          stripeOnly: inStripeNotSupabase.map((s) => ({
             email: s.customerEmail,
             tier: s.tier,
             amount: `£${s.priceAmount}`,
           })),
-          supabaseOnly: inSupabaseNotStripe.map(u => ({
+          supabaseOnly: inSupabaseNotStripe.map((u) => ({
             email: u.email,
             name: u.full_name,
             tier: u.subscription_tier,
           })),
         },
       },
-      // Full subscription list for detailed view
+      // Full subscription lists for detailed view
       subscriptions: subscriptionDetails,
+      trialingList: trialingDetails,
       generatedAt: new Date().toISOString(),
     };
 
     console.log('[ADMIN-STRIPE-STATS] Generated stats:', {
       stripeActive: response.stripe.activeSubscriptions,
+      stripeTrialing: response.stripe.trialingSubscriptions,
       stripeMRR: response.stripe.mrr,
+      projectedMRR: response.stripe.projectedMrr,
       supabaseSubscribed: response.supabase.subscribedUsers,
-      discrepancies: response.discrepancies.inStripeNotSupabase + response.discrepancies.inSupabaseNotStripe,
+      discrepancies:
+        response.discrepancies.inStripeNotSupabase + response.discrepancies.inSupabaseNotStripe,
     });
 
-    return new Response(
-      JSON.stringify(response),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
-  } catch (error: any) {
+    return new Response(JSON.stringify(response), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (error: unknown) {
     console.error('[ADMIN-STRIPE-STATS] Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    const message = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

@@ -67,6 +67,7 @@ interface OnlineUser {
 interface StripeStats {
   stripe: {
     activeSubscriptions: number;
+    trialingSubscriptions: number;
     canceledLast30Days: number;
     tierCounts: {
       founder: number;
@@ -75,7 +76,15 @@ interface StripeStats {
       employer: number;
       unknown: number;
     };
+    trialingTierCounts: {
+      founder: number;
+      apprentice: number;
+      electrician: number;
+      employer: number;
+      unknown: number;
+    };
     mrr: number;
+    projectedMrr: number;
   };
   discrepancies: {
     inStripeNotSupabase: number;
@@ -530,7 +539,13 @@ export default function AdminDashboard() {
           >
             <CardContent className="p-3 sm:p-3 text-center">
               <Clock className="h-5 w-5 text-orange-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold">{stats?.trialUsers?.toLocaleString()}</p>
+              <p className="text-2xl sm:text-xl font-bold">
+                {(
+                  stripeStats?.stripe.trialingSubscriptions ??
+                  stats?.trialUsers ??
+                  0
+                ).toLocaleString()}
+              </p>
               <p className="text-xs text-muted-foreground">Trial</p>
             </CardContent>
           </Card>
