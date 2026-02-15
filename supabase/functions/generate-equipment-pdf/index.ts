@@ -98,10 +98,21 @@ serve(async (req) => {
       pdf.paragraph(record.notes);
     }
 
+    // Signatures
+    pdf.section('Signatures');
+    pdf.signatureBlock([
+      {
+        role: 'Responsible Person',
+        name: record.assigned_to || undefined,
+        date: fmtDate(record.updated_at || record.created_at),
+      },
+    ]);
+
     // Footer
     pdf.footnote(
       `This document was generated electronically by Elec-Mate. Equipment Ref: ${recordId}`
     );
+    pdf.auditFooter(recordId);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
     const pdfBytes = await pdf.toBuffer();

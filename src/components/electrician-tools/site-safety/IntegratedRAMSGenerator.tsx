@@ -29,6 +29,8 @@ import {
 } from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
 import { generateRAMSPDF } from '@/utils/rams-pdf';
+import { SignaturePad } from './common/SignaturePad';
+import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { HazardSelect } from './common/HazardSelect';
 import { RiskSelect } from './common/RiskSelect';
 import { RiskMatrix } from './common/RiskMatrix';
@@ -95,6 +97,16 @@ const IntegratedRAMSGenerator: React.FC = () => {
     estimatedDuration: '',
     riskLevel: 'medium',
   });
+
+  // Signature state for assessor, reviewer, approver
+  const [signatures, setSignatures] = useState({
+    assessor: { name: '', date: '', signatureDataUrl: '' },
+    reviewer: { name: '', date: '', signatureDataUrl: '' },
+    approver: { name: '', date: '', signatureDataUrl: '' },
+  });
+
+  // Evidence photos
+  const [photos, setPhotos] = useState<string[]>([]);
 
   const steps = [
     { id: 'project', title: 'Project Details', icon: Building },
@@ -207,6 +219,12 @@ const IntegratedRAMSGenerator: React.FC = () => {
         companyName: 'Professional Electrical Services',
         documentReference: `RAMS-${Date.now()}`,
         reviewDate: methodData.reviewDate,
+        signOff: {
+          preparedBy: signatures.assessor,
+          reviewedBy: signatures.reviewer,
+          approvedBy: signatures.approver,
+        },
+        photos,
       });
 
       toast({
@@ -612,6 +630,14 @@ const IntegratedRAMSGenerator: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Evidence Photos */}
+      <SafetyPhotoCapture
+        photos={photos}
+        onPhotosChange={setPhotos}
+        maxPhotos={10}
+        label="Site Evidence Photos"
+      />
     </div>
   );
 
@@ -661,6 +687,85 @@ const IntegratedRAMSGenerator: React.FC = () => {
                 </ul>
               </div>
             )}
+
+            {/* Electronic Signatures */}
+            <div className="space-y-4">
+              <h4 className="text-foreground font-semibold">Electronic Signatures</h4>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <SignaturePad
+                  label="Assessed By"
+                  name={signatures.assessor.name}
+                  date={signatures.assessor.date}
+                  signatureDataUrl={signatures.assessor.signatureDataUrl || undefined}
+                  onNameChange={(name) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      assessor: { ...prev.assessor, name },
+                    }))
+                  }
+                  onDateChange={(date) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      assessor: { ...prev.assessor, date },
+                    }))
+                  }
+                  onSignatureChange={(signatureDataUrl) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      assessor: { ...prev.assessor, signatureDataUrl },
+                    }))
+                  }
+                />
+                <SignaturePad
+                  label="Reviewed By"
+                  name={signatures.reviewer.name}
+                  date={signatures.reviewer.date}
+                  signatureDataUrl={signatures.reviewer.signatureDataUrl || undefined}
+                  onNameChange={(name) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      reviewer: { ...prev.reviewer, name },
+                    }))
+                  }
+                  onDateChange={(date) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      reviewer: { ...prev.reviewer, date },
+                    }))
+                  }
+                  onSignatureChange={(signatureDataUrl) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      reviewer: { ...prev.reviewer, signatureDataUrl },
+                    }))
+                  }
+                />
+                <SignaturePad
+                  label="Approved By"
+                  name={signatures.approver.name}
+                  date={signatures.approver.date}
+                  signatureDataUrl={signatures.approver.signatureDataUrl || undefined}
+                  onNameChange={(name) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      approver: { ...prev.approver, name },
+                    }))
+                  }
+                  onDateChange={(date) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      approver: { ...prev.approver, date },
+                    }))
+                  }
+                  onSignatureChange={(signatureDataUrl) =>
+                    setSignatures((prev) => ({
+                      ...prev,
+                      approver: { ...prev.approver, signatureDataUrl },
+                    }))
+                  }
+                />
+              </div>
+            </div>
 
             <div className="flex gap-4">
               <Button
