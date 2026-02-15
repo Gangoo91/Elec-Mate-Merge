@@ -143,7 +143,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* Quick Stats */}
         <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
           <Card
-            className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-elec-yellow/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
+            className="relative overflow-hidden backdrop-blur-xl bg-elec-yellow/[0.08] border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
             onClick={() => onNavigate('students')}
           >
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow/50" />
@@ -158,7 +158,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
             </CardContent>
           </Card>
           <Card
-            className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-info/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
+            className="relative overflow-hidden backdrop-blur-xl bg-info/[0.08] border-info/20 hover:border-info/40 hover:bg-info/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
             onClick={() => onNavigate('tutors')}
           >
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-info via-blue-400 to-info/50" />
@@ -173,7 +173,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
             </CardContent>
           </Card>
           <Card
-            className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-success/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
+            className="relative overflow-hidden backdrop-blur-xl bg-success/[0.08] border-success/20 hover:border-success/40 hover:bg-success/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation"
             onClick={() => onNavigate('cohorts')}
           >
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-success via-green-400 to-success/50" />
@@ -188,7 +188,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
             </CardContent>
           </Card>
           {studentsAtRisk > 0 && (
-            <Card className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-warning/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
+            <Card className="relative overflow-hidden backdrop-blur-xl bg-warning/[0.08] border-warning/20 hover:border-warning/40 hover:bg-warning/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-warning via-orange-400 to-warning/50" />
               <CardContent className="p-3 flex items-center gap-2">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300">
@@ -202,7 +202,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
             </Card>
           )}
           {overdueILPs > 0 && (
-            <Card className="relative overflow-hidden backdrop-blur-xl bg-elec-dark/60 border-white/10 hover:border-destructive/30 shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
+            <Card className="relative overflow-hidden backdrop-blur-xl bg-destructive/[0.08] border-destructive/20 hover:border-destructive/40 hover:bg-destructive/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-destructive via-red-400 to-destructive/50" />
               <CardContent className="p-3 flex items-center gap-2">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-destructive/20 to-destructive/5 border border-destructive/20 shadow-lg shadow-destructive/5 group-hover:scale-110 transition-transform duration-300">
@@ -285,7 +285,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* Staff Management */}
         <motion.div variants={staggerItem}>
           <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
+            <span className="w-1.5 h-6 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
             Staff
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -309,7 +309,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* Students & Cohorts */}
         <motion.div variants={staggerItem}>
           <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
+            <span className="w-1.5 h-6 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
             Students & Groups
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -342,7 +342,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* Employers */}
         <motion.div variants={staggerItem}>
           <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
+            <span className="w-1.5 h-6 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
             Employer Partners
           </h2>
           <CollegeFeatureTile
