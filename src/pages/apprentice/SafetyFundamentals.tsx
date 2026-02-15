@@ -1,238 +1,206 @@
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { CheckCircle, ChevronRight, AlertTriangle } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, AlertTriangle, CheckCircle } from "lucide-react";
+interface Section {
+  title: string;
+  slug: string;
+  icon: string;
+  colour: string;
+  border: string;
+  readTime: string;
+}
+
+const sections: Section[] = [
+  {
+    title: 'Safe Isolation',
+    slug: 'safe-isolation',
+    icon: '🔒',
+    colour: 'text-red-400',
+    border: 'border-red-500/30',
+    readTime: '12 min read',
+  },
+  {
+    title: 'PPE & Equipment',
+    slug: 'ppe-equipment',
+    icon: '🦺',
+    colour: 'text-blue-400',
+    border: 'border-blue-500/30',
+    readTime: '10 min read',
+  },
+  {
+    title: 'Working at Height',
+    slug: 'working-at-height',
+    icon: '🪜',
+    colour: 'text-orange-400',
+    border: 'border-orange-500/30',
+    readTime: '10 min read',
+  },
+  {
+    title: 'Emergency Procedures',
+    slug: 'emergency-procedures',
+    icon: '🚨',
+    colour: 'text-red-400',
+    border: 'border-red-500/30',
+    readTime: '12 min read',
+  },
+  {
+    title: 'Risk Assessment & RAMS',
+    slug: 'risk-assessment',
+    icon: '📋',
+    colour: 'text-green-400',
+    border: 'border-green-500/30',
+    readTime: '10 min read',
+  },
+  {
+    title: 'Site Safety Rules',
+    slug: 'site-safety-rules',
+    icon: '🏗',
+    colour: 'text-purple-400',
+    border: 'border-purple-500/30',
+    readTime: '10 min read',
+  },
+];
 
 const SafetyFundamentals = () => {
-  const safetyRules = [
-    {
-      rule: "ALWAYS Isolate and Test",
-      description: "Turn off power, lock off, test the circuit is dead",
-      why: "Electricity can kill - there are no second chances with this",
-      steps: ["Turn off at source", "Lock off and tag", "Test with approved tester", "Test tester is working"]
-    },
-    {
-      rule: "Never Work Alone on Live Systems", 
-      description: "If you must work live, have someone qualified with you",
-      why: "Someone needs to be able to help if things go wrong",
-      steps: ["Get permission from supervisor", "Use proper PPE", "Have rescue procedures ready", "Emergency contact ready"]
-    },
-    {
-      rule: "Inspect Tools Before Use",
-      description: "Check for damage, proper ratings, and test dates",
-      why: "Damaged tools can cause injury or death",
-      steps: ["Visual inspection", "Check test dates", "Verify voltage rating", "Test operation"]
-    }
-  ];
-
-  const ppe = [
-    {
-      item: "Safety Boots",
-      purpose: "Protection from falling objects, electrical hazards",
-      standard: "Must be rated for electrical work"
-    },
-    {
-      item: "Hard Hat",
-      purpose: "Head protection from impact and electrical arc",
-      standard: "Class E (electrical) rating required"
-    },
-    {
-      item: "Hi-Vis Clothing",
-      purpose: "Visibility on site, especially around machinery",
-      standard: "Class 2 or 3 depending on risk assessment"
-    },
-    {
-      item: "Safety Glasses",
-      purpose: "Eye protection from debris and arc flash",
-      standard: "Impact rated, side protection recommended"
-    }
-  ];
-
-  const emergencyProcedures = [
-    {
-      situation: "Electric Shock",
-      action: "DO NOT touch the person directly",
-      steps: [
-        "Switch off power immediately if safe to do so",
-        "If you can't switch off, use non-conductive material to move victim",
-        "Call 999 immediately",
-        "Start CPR if trained and needed",
-        "Keep victim warm and still"
-      ]
-    },
-    {
-      situation: "Electrical Fire",
-      action: "DO NOT use water",
-      steps: [
-        "Switch off power if safe to do so",
-        "Use CO2 or dry powder extinguisher",
-        "Call fire brigade (999)",
-        "Evacuate area if fire spreads",
-        "Never turn your back on electrical fire"
-      ]
-    }
-  ];
+  const navigate = useNavigate();
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Safety Fundamentals</h1>
-        <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
-          Critical safety information for electrical work - your life depends on following these rules
-        </p>
+    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
+      {/* Header */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <h1 className="text-2xl font-bold tracking-tight text-white">
+          Safety Fundamentals
+        </h1>
       </div>
 
-      <Card className="border-red-500/50 bg-card">
-        <CardHeader>
+      {/* Critical Warning */}
+      <Card className="border-red-500/30 bg-red-500/10">
+        <CardContent className="p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">Critical Safety Warning</CardTitle>
+            <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
+            <h2 className="text-lg font-semibold text-red-400">
+              Electricity Can Kill
+            </h2>
           </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white text-center text-lg">
-            <strong>Electricity can kill.</strong> These aren't just guidelines - they're the difference 
-            between going home safely and not going home at all. Never compromise on safety, no matter 
-            what anyone tells you.
+          <p className="text-white text-sm leading-relaxed">
+            These are not just guidelines — they are the difference between going
+            home safely and not going home at all. As an apprentice electrician, safety
+            is your{' '}
+            <span className="font-bold text-red-400">number one priority</span>.
+            Never compromise on safety, no matter what anyone tells you. You have the
+            legal right to refuse unsafe work.
           </p>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Non-Negotiable Safety Rules</CardTitle>
+      {/* Intro Card */}
+      <Card className="border-blue-500/20 bg-white/5">
+        <CardContent className="p-4 space-y-4">
+          <h2 className="text-lg font-semibold text-white">
+            Your Safety Knowledge Base
+          </h2>
+          <p className="text-white text-sm leading-relaxed">
+            This guide covers everything you need to know about staying safe on site
+            as an electrical apprentice. From safe isolation procedures to emergency
+            response, risk assessment to PPE requirements — this is your go-to
+            reference for safety on the job.
+          </p>
+
+          {/* Quick Facts */}
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+            <h3 className="text-blue-400 font-semibold text-sm mb-3">
+              Key Safety Facts
+            </h3>
+            <ul className="space-y-2">
+              {[
+                'Around 30 electrical deaths at work in the UK over the past 5 years',
+                'Safe isolation prevents the majority of electrical accidents',
+                'You must NEVER work on live systems without formal authorisation',
+                'PPE is your last line of defence — not your first',
+                'Every worker has a legal duty to report unsafe conditions',
+                'RIDDOR requires reporting of serious workplace incidents to the HSE',
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-sm text-white"
+                >
+                  <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {safetyRules.map((rule, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <h4 className="font-semibold text-white text-lg">{rule.rule}</h4>
-                  <Badge variant="destructive">Critical</Badge>
-                </div>
-                
-                <p className="text-white mb-4">{rule.description}</p>
-                
-                <div className="bg-card border border-red-500/30 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-white">
-                    <strong className="text-red-300">Why this matters:</strong> {rule.why}
-                  </p>
-                </div>
-                
+        </CardContent>
+      </Card>
+
+      {/* Section Header */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
+      </div>
+
+      {/* Section Cards */}
+      <div className="space-y-2">
+        {sections.map((section) => (
+          <button
+            key={section.slug}
+            onClick={() =>
+              navigate(
+                `/apprentice/safety-fundamentals/${section.slug}`
+              )
+            }
+            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
+              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
+          >
+            <span className="text-xl flex-shrink-0">{section.icon}</span>
+            <div className="flex-1 min-w-0">
+              <span className={`font-medium text-sm ${section.colour}`}>
+                {section.title}
+              </span>
+              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+          </button>
+        ))}
+      </div>
+
+      {/* Emergency Contacts Quick Reference */}
+      <Card className="border-red-500/20 bg-red-500/5">
+        <CardContent className="p-4 space-y-3">
+          <h3 className="text-sm font-semibold text-red-400">
+            Emergency Numbers — Save These
+          </h3>
+          <div className="space-y-2">
+            {[
+              { label: 'Emergency Services', number: '999', note: 'Life-threatening emergencies' },
+              { label: 'HSE Incident Contact Centre', number: '0345 300 9923', note: 'Report serious incidents' },
+              { label: 'National Gas Emergency', number: '0800 111 999', note: 'If you hit a gas pipe' },
+              { label: 'Electrical Safety First', number: '020 3463 5100', note: 'Electrical safety advice' },
+            ].map((contact) => (
+              <div key={contact.label} className="flex items-center justify-between py-1">
                 <div>
-                  <h5 className="font-medium text-white mb-2">Steps to follow:</h5>
-                  <ol className="space-y-1">
-                    {rule.steps.map((step, stepIndex) => (
-                      <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
-                        <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
+                  <p className="text-white text-sm font-medium">{contact.label}</p>
+                  <p className="text-white text-xs">{contact.note}</p>
                 </div>
+                <span className="text-red-400 font-bold text-sm">{contact.number}</span>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Personal Protective Equipment (PPE)</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {ppe.map((item, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{item.item}</h4>
-                <p className="text-sm text-white mb-2">{item.purpose}</p>
-                <div className="bg-elec-yellow/10 p-2 rounded">
-                  <p className="text-xs text-white">
-                    <strong className="text-elec-yellow">Standard:</strong> {item.standard}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Emergency Procedures</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {emergencyProcedures.map((emergency, index) => (
-              <div key={index} className="border border-red-500/30 rounded-lg p-6 bg-card">
-                <div className="mb-4">
-                  <h4 className="font-semibold text-white text-lg mb-2">{emergency.situation}</h4>
-                  <p className="text-red-300 font-medium">{emergency.action}</p>
-                </div>
-                
-                <ol className="space-y-2">
-                  {emergency.steps.map((step, stepIndex) => (
-                    <li key={stepIndex} className="text-sm text-white flex items-start gap-2">
-                      <span className="text-red-400 font-medium">{stepIndex + 1}.</span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Key Safety Contacts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <h4 className="font-semibold text-white mb-2">Emergency Services</h4>
-              <p className="text-2xl font-bold text-red-400">999</p>
-              <p className="text-sm text-white">Life-threatening emergencies</p>
-            </div>
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <h4 className="font-semibold text-white mb-2">HSE Emergency</h4>
-              <p className="text-lg font-bold text-orange-400">0300 790 6787</p>
-              <p className="text-sm text-white">Serious workplace incidents</p>
-            </div>
-            <div className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-              <h4 className="font-semibold text-white mb-2">Site First Aid</h4>
-              <p className="text-lg font-bold text-elec-yellow">Check Site Notice</p>
-              <p className="text-sm text-white">Site-specific emergency contacts</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-green-500/50 bg-card">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">Your Safety Responsibility</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            You have the right and responsibility to refuse unsafe work. No job is worth your life 
-            or long-term health. If something doesn't feel right, stop and ask. Experienced 
-            electricians will respect you more for taking safety seriously than for taking risks 
-            to save time.
+      {/* Footer */}
+      <Card className="border-white/10 bg-white/5">
+        <CardContent className="p-4">
+          <p className="text-white text-xs leading-relaxed">
+            Safety information based on BS 7671:2018+A2:2022, the Health and Safety
+            at Work Act 1974, the Electricity at Work Regulations 1989, HSE Guidance
+            Note GS38, and current industry best practice. Always follow your
+            employer's specific safety procedures and risk assessments. If in doubt,
+            stop work and ask your supervisor.
           </p>
         </CardContent>
       </Card>
