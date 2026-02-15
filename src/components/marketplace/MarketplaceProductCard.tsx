@@ -1,4 +1,14 @@
-import { ExternalLink, Tag, Package, CheckCircle2, ShoppingCart, Flame, Zap, Timer } from 'lucide-react';
+import {
+  ExternalLink,
+  Tag,
+  Package,
+  CheckCircle2,
+  ShoppingCart,
+  Flame,
+  Zap,
+  Timer,
+  Bookmark,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
@@ -7,6 +17,8 @@ import { cn } from '@/lib/utils';
 interface MarketplaceProductCardProps {
   product: MarketplaceProduct;
   className?: string;
+  onSave?: (product: MarketplaceProduct) => void;
+  isSaved?: boolean;
 }
 
 // Safe price formatting helper
@@ -15,16 +27,24 @@ const formatPrice = (price: number | null | undefined): string => {
   return price.toFixed(2);
 };
 
-const calculateSavings = (regular: number | null | undefined, current: number | null | undefined): string | null => {
+const calculateSavings = (
+  regular: number | null | undefined,
+  current: number | null | undefined
+): string | null => {
   if (!regular || !current || regular <= current) return null;
   return (regular - current).toFixed(2);
 };
 
 /**
  * Mobile-first product card for marketplace grid
- * Based on ToolCard.tsx pattern with 150px images
+ * Merged brand+title with line-clamp-3, consistent flex layout
  */
-export function MarketplaceProductCard({ product, className }: MarketplaceProductCardProps) {
+export function MarketplaceProductCard({
+  product,
+  className,
+  onSave,
+  isSaved = false,
+}: MarketplaceProductCardProps) {
   const savings = calculateSavings(product.regular_price, product.current_price);
 
   // Stock status info
@@ -37,7 +57,7 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
     } else if (status.includes('out')) {
       return { text: 'Out of Stock', color: 'text-red-500', bgColor: 'bg-red-500/20' };
     }
-    return { text: 'Check Stock', color: 'text-muted-foreground', bgColor: 'bg-muted' };
+    return { text: 'Check Stock', color: 'text-white', bgColor: 'bg-muted' };
   };
 
   // Deal badge type
@@ -49,7 +69,11 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
     } else if (product.discount_percentage >= 20) {
       return { icon: Zap, text: 'Flash Sale', className: 'bg-orange-500 text-white' };
     } else {
-      return { icon: Tag, text: `${product.discount_percentage}% off`, className: 'bg-green-500 text-white' };
+      return {
+        icon: Tag,
+        text: `${product.discount_percentage}% off`,
+        className: 'bg-green-500 text-white',
+      };
     }
   };
 
@@ -67,12 +91,14 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
     edmundson: 'bg-yellow-500',
   };
 
+  // Merged brand + product name
+  const displayTitle = product.brand ? `${product.brand} ${product.name}` : product.name;
+
   return (
     <div
       className={cn(
-        'group relative bg-card rounded-xl border border-border/50 overflow-hidden touch-manipulation',
-        'transition-all duration-200 hover:border-primary/60 hover:shadow-lg',
-        'active:scale-[0.98] active:shadow-sm', // Native app press feedback
+        'group relative flex flex-col bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden touch-manipulation',
+        'transition-colors active:bg-white/[0.06]',
         className
       )}
     >
@@ -82,7 +108,7 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
           <img
             src={product.image_url}
             alt={product.name}
-            className="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-contain p-3"
             loading="lazy"
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
@@ -90,16 +116,21 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-muted">
-            <Package className="h-12 w-12 text-muted-foreground" />
+            <Package className="h-12 w-12 text-white" />
           </div>
         )}
 
-        {/* Hover gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-active:opacity-100 transition-opacity duration-200" />
 
         {/* Deal badge - top right */}
         {dealBadge && (
-          <Badge className={cn('absolute top-2 right-2 text-xs font-semibold shadow-md', dealBadge.className)}>
+          <Badge
+            className={cn(
+              'absolute top-2 right-2 text-xs font-semibold shadow-md',
+              dealBadge.className
+            )}
+          >
             <dealBadge.icon className="h-3 w-3 mr-1" />
             {dealBadge.text}
           </Badge>
@@ -115,10 +146,32 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
           {product.supplier_name}
         </Badge>
 
+        {/* Save/bookmark button - bottom right */}
+        {onSave && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onSave(product);
+            }}
+            className={cn(
+              'absolute bottom-2 right-2 h-8 w-8 rounded-full flex items-center justify-center touch-manipulation',
+              'transition-all duration-200 shadow-md',
+              isSaved
+                ? 'bg-elec-yellow text-black'
+                : 'bg-black/50 text-white hover:bg-black/70'
+            )}
+          >
+            <Bookmark className={cn('h-4 w-4', isSaved && 'fill-current')} />
+          </button>
+        )}
+
         {/* Low stock indicator - bottom */}
         {stockInfo.text === 'Low Stock' && (
-          <div className="absolute bottom-2 left-2 right-2">
-            <Badge variant="outline" className="w-full justify-center bg-orange-500/90 text-white border-orange-500 text-xs">
+          <div className={cn('absolute bottom-2', onSave ? 'left-2 right-12' : 'left-2 right-2')}>
+            <Badge
+              variant="outline"
+              className="w-full justify-center bg-orange-500/90 text-white border-orange-500 text-xs"
+            >
               <Timer className="h-3 w-3 mr-1" />
               Only few left!
             </Badge>
@@ -126,44 +179,27 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
         )}
       </div>
 
-      {/* Content Section */}
-      <div className="p-3 space-y-2">
-        {/* Product name - 2 lines max */}
-        <h3 className="font-medium text-sm leading-tight line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
-          {product.name}
+      {/* Content Section - flex-1 to fill remaining space */}
+      <div className="flex-1 flex flex-col p-3 space-y-2">
+        {/* Product name - merged brand + title, 3 lines max */}
+        <h3 className="font-medium text-sm leading-tight text-white line-clamp-4 min-h-[4.5rem]">
+          {displayTitle}
         </h3>
 
-        {/* Brand */}
-        {product.brand && (
-          <p className="text-xs text-muted-foreground truncate">
-            {product.brand}
-          </p>
-        )}
-
-        {/* Category badge */}
-        {product.category && (
-          <Badge variant="secondary" className="text-xs">
-            {product.category}
-          </Badge>
-        )}
-
-        {/* Price section - prominent */}
-        <div className="space-y-1 pt-1 border-t border-border/50">
+        {/* Price section - prominent, pushed to bottom via flex */}
+        <div className="flex-1" />
+        <div className="space-y-1 pt-1 border-t border-white/[0.08]">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold text-elec-yellow">
               £{formatPrice(product.current_price)}
             </span>
-            <span className="text-xs text-muted-foreground">inc. VAT</span>
+            <span className="text-xs text-white">inc. VAT</span>
           </div>
 
           {product.is_on_sale && savings && (
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-muted-foreground line-through">
-                £{formatPrice(product.regular_price)}
-              </span>
-              <span className="text-green-500 font-medium">
-                Save £{savings}
-              </span>
+              <span className="text-white line-through">£{formatPrice(product.regular_price)}</span>
+              <span className="text-green-500 font-medium">Save £{savings}</span>
             </div>
           )}
         </div>
@@ -171,9 +207,7 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
         {/* Stock status */}
         <div className="flex items-center gap-1">
           <CheckCircle2 className={cn('h-3 w-3', stockInfo.color)} />
-          <span className={cn('text-xs font-medium', stockInfo.color)}>
-            {stockInfo.text}
-          </span>
+          <span className={cn('text-xs font-medium', stockInfo.color)}>{stockInfo.text}</span>
         </div>
 
         {/* CTA Button - h-11 minimum touch target */}

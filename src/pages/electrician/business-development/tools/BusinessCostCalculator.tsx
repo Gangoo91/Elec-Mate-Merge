@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useToast } from "@/hooks/use-toast";
-import { Calculator, Building, Download, Lightbulb, TrendingUp } from "lucide-react";
-import { Helmet } from "react-helmet";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useToast } from '@/hooks/use-toast';
+import { Calculator, Building, Download, Lightbulb, TrendingUp } from 'lucide-react';
+import { Helmet } from 'react-helmet';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
 
 // Enhanced components
-import BusinessTypeSelector from "@/components/business-calculator/BusinessTypeSelector";
-import InteractiveInputs from "@/components/business-calculator/InteractiveInputs";
-import BusinessAnalytics from "@/components/business-calculator/BusinessAnalytics";
-import ScenarioComparison from "@/components/business-calculator/ScenarioComparison";
-import ProgressIndicator from "@/components/business-calculator/ProgressIndicator";
-import MobileOptimizedLayout from "@/components/business-calculator/MobileOptimizedLayout";
+import BusinessTypeSelector from '@/components/business-calculator/BusinessTypeSelector';
+import InteractiveInputs from '@/components/business-calculator/InteractiveInputs';
+import BusinessAnalytics from '@/components/business-calculator/BusinessAnalytics';
+import ScenarioComparison from '@/components/business-calculator/ScenarioComparison';
+import ProgressIndicator from '@/components/business-calculator/ProgressIndicator';
+import MobileOptimizedLayout from '@/components/business-calculator/MobileOptimizedLayout';
 
 interface StartupInputs extends Record<string, number> {
   tools: number;
@@ -39,10 +39,10 @@ interface MonthlyInputs extends Record<string, number> {
 
 const BusinessCostCalculator = () => {
   const { toast } = useToast();
-  const [businessType, setBusinessType] = useState("sole-trader");
+  const [businessType, setBusinessType] = useState('sole-trader');
   const [currentStep, setCurrentStep] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
-  
+
   const [startupInputs, setStartupInputs] = useState<StartupInputs>({
     tools: 0,
     testEquipment: 0,
@@ -66,27 +66,27 @@ const BusinessCostCalculator = () => {
 
   const [calculated, setCalculated] = useState(false);
 
-  const STORAGE_KEY = "business_cost_scenarios";
+  const STORAGE_KEY = 'business_cost_scenarios';
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--dropdown-z", "9999");
+    document.documentElement.style.setProperty('--dropdown-z', '9999');
   }, []);
 
-  const stepLabels = ["Business Type", "Startup Costs", "Monthly Costs", "Analysis"];
+  const stepLabels = ['Business Type', 'Startup Costs', 'Monthly Costs', 'Analysis'];
   const completedSteps = [
-    businessType !== "",
-    Object.values(startupInputs).some(v => v > 0),
-    Object.values(monthlyInputs).some(v => v > 0),
-    calculated
+    businessType !== '',
+    Object.values(startupInputs).some((v) => v > 0),
+    Object.values(monthlyInputs).some((v) => v > 0),
+    calculated,
   ];
 
   const updateStartupInput = (field: string, value: number) => {
-    setStartupInputs(prev => ({ ...prev, [field]: value }));
+    setStartupInputs((prev) => ({ ...prev, [field]: value }));
     setCalculated(false);
   };
 
   const updateMonthlyInput = (field: string, value: number) => {
-    setMonthlyInputs(prev => ({ ...prev, [field]: value }));
+    setMonthlyInputs((prev) => ({ ...prev, [field]: value }));
     setCalculated(false);
   };
 
@@ -103,40 +103,37 @@ const BusinessCostCalculator = () => {
       monthlyInputs,
       totals: { totalStartup, totalMonthly, yearOneTotal },
     };
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     localStorage.setItem(STORAGE_KEY, JSON.stringify([payload, ...existing].slice(0, 20)));
 
     toast({
-      title: "Calculation Complete",
-      description: "Your enhanced business analysis is ready!",
-      variant: "success"
+      title: 'Calculation Complete',
+      description: 'Your enhanced business analysis is ready!',
+      variant: 'success',
     });
   };
   // Calculate totals
   const totalStartup = Object.values(startupInputs).reduce((sum, value) => sum + value, 0);
   const totalMonthly = Object.values(monthlyInputs).reduce((sum, value) => sum + value, 0);
-  const yearOneTotal = totalStartup + (totalMonthly * 12);
+  const yearOneTotal = totalStartup + totalMonthly * 12;
 
   const currentScenario = {
     businessType,
     totalStartup,
     totalMonthly,
-    yearOneTotal
+    yearOneTotal,
   };
 
   const sections = [
     {
-      id: "business-type",
-      title: "Choose Business Structure",
+      id: 'business-type',
+      title: 'Choose Business Structure',
       icon: <Building className="h-5 w-5" />,
       content: (
         <div className="space-y-6">
-          <BusinessTypeSelector
-            selectedType={businessType}
-            onTypeChange={setBusinessType}
-          />
+          <BusinessTypeSelector selectedType={businessType} onTypeChange={setBusinessType} />
           <div className="text-center">
-            <Button 
+            <Button
               onClick={() => setCurrentSection(1)}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
@@ -145,11 +142,11 @@ const BusinessCostCalculator = () => {
           </div>
         </div>
       ),
-      isRequired: true
+      isRequired: true,
     },
     {
-      id: "inputs",
-      title: "Cost Planning",
+      id: 'inputs',
+      title: 'Cost Planning',
       icon: <Calculator className="h-5 w-5" />,
       content: (
         <div className="space-y-6">
@@ -161,7 +158,7 @@ const BusinessCostCalculator = () => {
             onMonthlyChange={updateMonthlyInput}
           />
           <div className="text-center space-x-4">
-            <Button 
+            <Button
               onClick={calculateCosts}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
               disabled={totalStartup === 0 && totalMonthly === 0}
@@ -172,11 +169,11 @@ const BusinessCostCalculator = () => {
           </div>
         </div>
       ),
-      isRequired: true
+      isRequired: true,
     },
     {
-      id: "analytics",
-      title: "Business Analytics",
+      id: 'analytics',
+      title: 'Business Analytics',
       icon: <TrendingUp className="h-5 w-5" />,
       content: (
         <BusinessAnalytics
@@ -185,18 +182,14 @@ const BusinessCostCalculator = () => {
           businessType={businessType}
           calculated={calculated}
         />
-      )
+      ),
     },
     {
-      id: "scenarios",
-      title: "Scenario Comparison",
+      id: 'scenarios',
+      title: 'Scenario Comparison',
       icon: <Lightbulb className="h-5 w-5" />,
-      content: (
-        <ScenarioComparison
-          currentScenario={currentScenario}
-        />
-      )
-    }
+      content: <ScenarioComparison currentScenario={currentScenario} />,
+    },
   ];
 
   return (
@@ -217,52 +210,54 @@ const BusinessCostCalculator = () => {
           <SmartBackButton />
         </header>
 
-      <WhyThisMatters
-        points={[
-          "Clarifies true start-up and monthly running costs to set realistic budgets.",
-          "Reveals Year‑1 cash needs and working capital so you don’t run short.",
-          "Highlights structure impacts (sole trader vs ltd) on costs and planning."
-        ]}
-      />
+        <WhyThisMatters
+          points={[
+            'Clarifies true start-up and monthly running costs to set realistic budgets.',
+            "Reveals Year‑1 cash needs and working capital so you don't run short.",
+            'Highlights structure impacts (sole trader vs ltd) on costs and planning.',
+          ]}
+        />
 
-      <ProgressIndicator
-        currentStep={currentStep}
-        totalSteps={4}
-        stepLabels={stepLabels}
-        completedSteps={completedSteps}
-      />
+        <ProgressIndicator
+          currentStep={currentStep}
+          totalSteps={4}
+          stepLabels={stepLabels}
+          completedSteps={completedSteps}
+        />
 
-      <MobileOptimizedLayout
-        sections={sections}
-        currentSectionIndex={currentSection}
-        onSectionChange={setCurrentSection}
-      />
+        <MobileOptimizedLayout
+          sections={sections}
+          currentSectionIndex={currentSection}
+          onSectionChange={setCurrentSection}
+        />
 
-      {calculated && (
-        <Card className="border-elec-yellow/20 bg-elec-card mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Download className="h-5 w-5 text-elec-yellow" />
-              Export & Next Steps
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button 
-                variant="outline"
-                className="border border-muted/40 hover:bg-muted/50"
-                onClick={() => toast({ title: "Export Feature", description: "PDF export coming soon!" })}
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export Business Plan
-              </Button>
-              <Badge variant="secondary" className="px-4 py-2">
-                Analysis Complete
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+        {calculated && (
+          <Card className="border-elec-yellow/20 bg-elec-card mt-8">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="h-5 w-5 text-elec-yellow" />
+                Export & Next Steps
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Button
+                  variant="outline"
+                  className="border border-muted/40 hover:bg-muted/50"
+                  onClick={() =>
+                    toast({ title: 'Export Feature', description: 'PDF export coming soon!' })
+                  }
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Export Business Plan
+                </Button>
+                <Badge variant="secondary" className="px-4 py-2">
+                  Analysis Complete
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </main>
     </div>
   );

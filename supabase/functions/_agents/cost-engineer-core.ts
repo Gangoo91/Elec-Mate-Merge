@@ -7,25 +7,29 @@
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import { createLogger } from '../_shared/logger.ts';
-import { formatTradePricingPrompt, validatePricing, validateTimescales } from '../_shared/uk-trade-pricing-2025.ts';
+import {
+  formatTradePricingPrompt,
+  validatePricing,
+  validateTimescales,
+} from '../_shared/uk-trade-pricing-2025.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
 // ===== PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
-  ELECTRICIAN_RATE_PER_HOUR: 45.00,
-  APPRENTICE_RATE_PER_HOUR: 25.00,
+  ELECTRICIAN_RATE_PER_HOUR: 45.0,
+  APPRENTICE_RATE_PER_HOUR: 25.0,
   MATERIAL_MARKUP_PERCENT: 12,
-  VAT_RATE: 20
+  VAT_RATE: 20,
 };
 
 const AUTO_OVERHEADS_2025 = {
-  perJobDay: 35.00,
+  perJobDay: 35.0,
   certification: {
-    niceicPerCircuit: 2.50,
+    niceicPerCircuit: 2.5,
     buildingControl: 250,
-    eicr: 0
-  }
+    eicr: 0,
+  },
 };
 
 const REGIONAL_MULTIPLIERS: Record<string, number> = {
@@ -36,10 +40,10 @@ const REGIONAL_MULTIPLIERS: Record<string, number> = {
   yorkshire: 1.02,
   wales: 0.98,
   southwest: 1.05,
-  eastMidlands: 1.00,
-  westMidlands: 1.00,
+  eastMidlands: 1.0,
+  westMidlands: 1.0,
   northeast: 0.95,
-  other: 1.00
+  other: 1.0,
 };
 
 // ===== INTERFACES =====
@@ -109,11 +113,11 @@ export async function generateCostEstimate(
   request: CostEngineerRequest
 ): Promise<CostEstimate> {
   const startTime = Date.now();
-  
+
   console.log('💷 Cost Engineer START', {
     query: request.query.substring(0, 100),
     region: request.region,
-    projectType: request.projectContext?.projectType
+    projectType: request.projectContext?.projectType,
   });
 
   // STEP 1: Extract keywords
@@ -123,7 +127,7 @@ export async function generateCostEstimate(
   // STEP 2: Generate embedding for query
   const logger = createLogger('cost-engineer-core');
   const embedding = await generateEmbedding(request.query);
-  
+
   // STEP 3: Parallel RAG searches
   const ragStart = Date.now();
   const [pricingResults, practicalWork] = await Promise.all([
@@ -137,34 +141,28 @@ export async function generateCostEstimate(
     searchPracticalWorkIntelligence(supabase, {
       query: request.query,
       tradeFilter: 'installer',
-      matchCount: 20
-    })
+      matchCount: 20,
+    }),
   ]);
 
   const ragTime = Date.now() - ragStart;
   console.log(`⚡ RAG complete in ${ragTime}ms:`, {
     pricingHits: pricingResults.length,
-    practicalWorkHits: practicalWork.results.length
+    practicalWorkHits: practicalWork.results.length,
   });
 
   // STEP 4: Call OpenAI for cost estimation
   const aiStart = Date.now();
-  const costEstimate = await callCostEstimationAI(
-    request,
-    {
-      pricing: pricingResults,
-      practicalWork: practicalWork.results,
-      keywords: Array.from(keywords)
-    }
-  );
+  const costEstimate = await callCostEstimationAI(request, {
+    pricing: pricingResults,
+    practicalWork: practicalWork.results,
+    keywords: Array.from(keywords),
+  });
   const aiTime = Date.now() - aiStart;
 
   // STEP 5: Calculate profitability if requested
   if (!request.skipProfitability) {
-    costEstimate.profitability = calculateProfitability(
-      costEstimate,
-      request.businessSettings
-    );
+    costEstimate.profitability = calculateProfitability(costEstimate, request.businessSettings);
   }
 
   const totalTime = Date.now() - startTime;
@@ -177,13 +175,13 @@ async function generateEmbedding(text: string): Promise<number[]> {
   const response = await fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       model: 'text-embedding-3-small',
-      input: text
-    })
+      input: text,
+    }),
   });
 
   if (!response.ok) {
@@ -196,23 +194,37 @@ async function generateEmbedding(text: string): Promise<number[]> {
 
 function extractCostKeywords(query: string, projectContext?: any): Set<string> {
   const keywords = new Set<string>();
-  
+
   // Base cost keywords
   const baseKeywords = [
-    'cable', 'socket', 'light', 'consumer', 'unit', 'board',
-    'mcb', 'rcbo', 'rcd', 'protection', 'installation',
-    'labour', 'material', 'cost', 'price', 'rewire'
+    'cable',
+    'socket',
+    'light',
+    'consumer',
+    'unit',
+    'board',
+    'mcb',
+    'rcbo',
+    'rcd',
+    'protection',
+    'installation',
+    'labour',
+    'material',
+    'cost',
+    'price',
+    'rewire',
   ];
-  
-  baseKeywords.forEach(kw => keywords.add(kw));
+
+  baseKeywords.forEach((kw) => keywords.add(kw));
 
   // Extract from query
-  const queryWords = query.toLowerCase()
+  const queryWords = query
+    .toLowerCase()
     .replace(/[^\w\s]/g, ' ')
     .split(/\s+/)
-    .filter(w => w.length > 3);
-  
-  queryWords.forEach(w => keywords.add(w));
+    .filter((w) => w.length > 3);
+
+  queryWords.forEach((w) => keywords.add(w));
 
   // Project type keywords
   if (projectContext?.projectType) {
@@ -227,25 +239,47 @@ function extractCostKeywords(query: string, projectContext?: any): Set<string> {
  */
 function detectProjectType(query: string): 'domestic' | 'commercial' | 'industrial' {
   const q = query.toLowerCase();
-  
+
   // Commercial indicators
-  if (q.includes('restaurant') || (q.includes('kitchen') && q.includes('commercial')) ||
-      q.includes('cold room') || q.includes('3-phase') || q.includes('3 phase') ||
-      q.includes('extraction') || q.includes('emergency lighting') ||
-      q.includes('bar') || q.includes('café') || q.includes('cafe') ||
-      q.includes('shop') || q.includes('office') || q.includes('warehouse') ||
-      q.includes('retail') || q.includes('gym') || q.includes('hotel')) {
+  if (
+    q.includes('restaurant') ||
+    (q.includes('kitchen') && q.includes('commercial')) ||
+    q.includes('cold room') ||
+    q.includes('3-phase') ||
+    q.includes('3 phase') ||
+    q.includes('extraction') ||
+    q.includes('emergency lighting') ||
+    q.includes('bar') ||
+    q.includes('café') ||
+    q.includes('cafe') ||
+    q.includes('shop') ||
+    q.includes('office') ||
+    q.includes('warehouse') ||
+    q.includes('retail') ||
+    q.includes('gym') ||
+    q.includes('hotel')
+  ) {
     return 'commercial';
   }
-  
+
   // Industrial indicators
-  if (q.includes('factory') || q.includes('industrial') || q.includes('manufacturing') ||
-      q.includes('plant') || q.includes('production') || q.includes('workshop') ||
-      q.includes('cnc') || q.includes('welding') || q.includes('compressor') ||
-      q.includes('conveyor') || q.includes('crane') || q.includes('spray booth')) {
+  if (
+    q.includes('factory') ||
+    q.includes('industrial') ||
+    q.includes('manufacturing') ||
+    q.includes('plant') ||
+    q.includes('production') ||
+    q.includes('workshop') ||
+    q.includes('cnc') ||
+    q.includes('welding') ||
+    q.includes('compressor') ||
+    q.includes('conveyor') ||
+    q.includes('crane') ||
+    q.includes('spray booth')
+  ) {
     return 'industrial';
   }
-  
+
   return 'domestic';
 }
 
@@ -255,9 +289,9 @@ async function callCostEstimationAI(
 ): Promise<CostEstimate> {
   // Detect project type from query if not specified
   const projectType = request.projectContext?.projectType || detectProjectType(request.query);
-  
+
   console.log(`🏗️ Detected project type: ${projectType}`);
-  
+
   // Get accurate trade pricing prompt
   const tradePricingPrompt = formatTradePricingPrompt();
 
@@ -275,14 +309,17 @@ KNOWLEDGE BASE PROVIDED:
 ⚠️ CRITICAL: Use the practical work timing data below to ensure realistic labour hours. These are based on real UK electrician job data.
 
 RAG TIMING BENCHMARKS:
-${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
-  const durationHours = pw.typical_duration_minutes 
-    ? (pw.typical_duration_minutes / 60).toFixed(1) 
-    : (pw.duration_hours || 'N/A');
-  const teamSize = pw.team_size || 1;
-  const taskName = pw.primary_topic || pw.activity_description || 'Task';
-  return `  • ${taskName}: ${durationHours} hours (${teamSize} person${teamSize > 1 ? 's' : ''})`;
-}).join('\n')}
+${ragContext.practicalWork
+  .slice(0, 8)
+  .map((pw: any, i: number) => {
+    const durationHours = pw.typical_duration_minutes
+      ? (pw.typical_duration_minutes / 60).toFixed(1)
+      : pw.duration_hours || 'N/A';
+    const teamSize = pw.team_size || 1;
+    const taskName = pw.primary_topic || pw.activity_description || 'Task';
+    return `  • ${taskName}: ${durationHours} hours (${teamSize} person${teamSize > 1 ? 's' : ''})`;
+  })
+  .join('\n')}
 
 💡 CROSS-REFERENCE your labour estimates against these benchmarks. If your estimate differs by >30%, explain why in valueEngineering.
 
@@ -335,27 +372,35 @@ RULES:
 
   const userPrompt = `Generate cost estimate for: ${request.query}
 
-${request.projectContext ? `
+${
+  request.projectContext
+    ? `
 PROJECT DETAILS:
 - Type: ${request.projectContext.projectType || 'domestic'}
 - Name: ${request.projectContext.projectName || 'N/A'}
 - Client: ${request.projectContext.clientInfo || 'N/A'}
 - Additional: ${request.projectContext.additionalInfo || 'N/A'}
-` : ''}
+`
+    : ''
+}
 
 PRICING INTELLIGENCE (Top 12):
-${ragContext.pricing.slice(0, 12).map((p: any, i: number) => 
-  `${i + 1}. ${p.item_name}: £${p.base_cost} (${p.wholesaler})`
-).join('\n')}
+${ragContext.pricing
+  .slice(0, 12)
+  .map((p: any, i: number) => `${i + 1}. ${p.item_name}: £${p.base_cost} (${p.wholesaler})`)
+  .join('\n')}
 
 PRACTICAL WORK INTELLIGENCE (Top 8):
-${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
-  const durationHours = pw.typical_duration_minutes 
-    ? (pw.typical_duration_minutes / 60).toFixed(1) 
-    : (pw.duration_hours || 'N/A');
-  const teamSize = pw.team_size || 1;
-  return `${i + 1}. ${pw.primary_topic || pw.activity_description || 'Task'} - ${durationHours}hrs (${teamSize} person team)`;
-}).join('\n')}`;
+${ragContext.practicalWork
+  .slice(0, 8)
+  .map((pw: any, i: number) => {
+    const durationHours = pw.typical_duration_minutes
+      ? (pw.typical_duration_minutes / 60).toFixed(1)
+      : pw.duration_hours || 'N/A';
+    const teamSize = pw.team_size || 1;
+    return `${i + 1}. ${pw.primary_topic || pw.activity_description || 'Task'} - ${durationHours}hrs (${teamSize} person team)`;
+  })
+  .join('\n')}`;
 
   console.log('🤖 Calling OpenAI for cost estimation (max 5 min timeout)...');
   console.log('📊 Prompt size:', systemPrompt.length + userPrompt.length, 'chars');
@@ -372,19 +417,19 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
         response_format: { type: 'json_object' },
-        max_completion_tokens: 12000
+        max_completion_tokens: 16000,
       }),
-      signal: controller.signal
+      signal: controller.signal,
     });
   } catch (fetchError: any) {
     clearTimeout(timeoutId);
@@ -419,17 +464,39 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     throw new Error(`OpenAI refused: ${message.refusal}`);
   }
 
-  const content = message.content;
+  let content = message.content;
 
   if (!content || content.trim().length === 0) {
     if (data.choices[0].finish_reason === 'length') {
-      throw new Error('Response too long - try simplifying your query or breaking it into smaller estimates');
+      throw new Error(
+        'Response too long - try simplifying your query or breaking it into smaller estimates'
+      );
     }
     throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
   }
 
+  // If truncated (finish_reason: length) but we have partial content, try to salvage it
+  if (data.choices[0].finish_reason === 'length' && content.trim().length > 0) {
+    console.warn('⚠️ Response truncated (finish_reason: length), attempting to repair JSON...');
+    // Try closing any open JSON structures
+    let repaired = content.trim();
+    const openBraces = (repaired.match(/\{/g) || []).length;
+    const closeBraces = (repaired.match(/\}/g) || []).length;
+    const openBrackets = (repaired.match(/\[/g) || []).length;
+    const closeBrackets = (repaired.match(/\]/g) || []).length;
+    // Close any trailing incomplete string
+    if (repaired.lastIndexOf('"') > repaired.lastIndexOf(':')) {
+      repaired += '"';
+    }
+    for (let i = 0; i < openBrackets - closeBrackets; i++) repaired += ']';
+    for (let i = 0; i < openBraces - closeBraces; i++) repaired += '}';
+    content = repaired;
+  }
+
   console.log(`✅ OpenAI response: ${content.length} chars`);
-  console.log(`📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`);
+  console.log(
+    `📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`
+  );
 
   // Parse JSON
   let parsedEstimate;
@@ -449,7 +516,7 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     if (!parsedEstimate.valueEngineering) {
       parsedEstimate.valueEngineering = [];
     }
-    pricingWarnings.forEach(warning => {
+    pricingWarnings.forEach((warning) => {
       if (!parsedEstimate.valueEngineering.includes(warning)) {
         parsedEstimate.valueEngineering.push(warning);
       }
@@ -464,7 +531,7 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     if (!parsedEstimate.valueEngineering) {
       parsedEstimate.valueEngineering = [];
     }
-    timescaleWarnings.forEach(warning => {
+    timescaleWarnings.forEach((warning) => {
       if (!parsedEstimate.valueEngineering.includes(warning)) {
         parsedEstimate.valueEngineering.push(warning);
       }
@@ -476,21 +543,23 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     console.warn('⚠️ No upsells returned by AI - adding fallback');
     parsedEstimate.upsells = [
       {
-        opportunity: "Surge protection device",
+        opportunity: 'Surge protection device',
         price: 180,
         winRate: 45,
         isHot: false,
-        timing: "During quote discussion",
-        script: "I'd recommend adding surge protection to your consumer unit for £180. It protects all your expensive appliances from voltage spikes - especially important with all the electronics we have these days."
+        timing: 'During quote discussion',
+        script:
+          "I'd recommend adding surge protection to your consumer unit for £180. It protects all your expensive appliances from voltage spikes - especially important with all the electronics we have these days.",
       },
       {
-        opportunity: "USB charging sockets",
+        opportunity: 'USB charging sockets',
         price: 120,
         winRate: 55,
         isHot: false,
-        timing: "When discussing sockets",
-        script: "While we're upgrading sockets, I can install USB charging points for £120. Much more convenient than using plug adapters, and they're very popular right now."
-      }
+        timing: 'When discussing sockets',
+        script:
+          "While we're upgrading sockets, I can install USB charging points for £120. Much more convenient than using plug adapters, and they're very popular right now.",
+      },
     ];
   }
 
@@ -503,12 +572,12 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
       depositPercent: 30,
       depositAmount: depositAmount,
       balanceAmount: balanceAmount,
-      terms: "30% deposit before work starts, balance on completion",
-      lateFeePolicy: "Interest charged at 4% above base rate after 30 days",
+      terms: '30% deposit before work starts, balance on completion',
+      lateFeePolicy: 'Interest charged at 4% above base rate after 30 days',
       paymentMilestones: [
-        { stage: "Deposit", percentage: 30, amount: depositAmount, trigger: "Before work starts" },
-        { stage: "Completion", percentage: 70, amount: balanceAmount, trigger: "On completion" }
-      ]
+        { stage: 'Deposit', percentage: 30, amount: depositAmount, trigger: 'Before work starts' },
+        { stage: 'Completion', percentage: 70, amount: balanceAmount, trigger: 'On completion' },
+      ],
     };
   }
 
@@ -516,11 +585,11 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
   if (!parsedEstimate.complexity) {
     console.warn('⚠️ No complexity returned by AI - adding fallback');
     const totalHours = parsedEstimate.labour?.totalHours || 8;
-    
+
     // Calculate rating based on hours: 1-8hrs=Low, 9-24hrs=Moderate, 25-48hrs=Moderate-High, 49+hrs=High
     let rating = 1;
     let label = 'Low';
-    
+
     if (totalHours <= 8) {
       rating = Math.min(2, Math.max(1, Math.ceil(totalHours / 4)));
       label = 'Low';
@@ -534,13 +603,13 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
       rating = Math.min(10, Math.max(7, Math.ceil(totalHours / 10)));
       label = totalHours > 80 ? 'Very High' : 'High';
     }
-    
+
     parsedEstimate.complexity = {
       rating: rating,
       label: label,
       factors: ['Based on estimated labour hours', `${totalHours} total hours required`],
       estimatedHours: totalHours,
-      reasoning: `Complexity rating of ${rating}/10 (${label}) estimated from ${totalHours} hours of total labour time.`
+      reasoning: `Complexity rating of ${rating}/10 (${label}) estimated from ${totalHours} hours of total labour time.`,
     };
   }
 
@@ -549,28 +618,28 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     console.warn('⚠️ No riskAssessment returned by AI - adding fallback');
     parsedEstimate.riskAssessment = {
       risks: [
-        { 
-          title: 'Unforeseen site conditions', 
-          severity: 'medium', 
-          likelihood: 'medium', 
-          mitigation: 'Allow contingency time and budget for unexpected issues', 
-          contingencyPercent: 5 
+        {
+          title: 'Unforeseen site conditions',
+          severity: 'medium',
+          likelihood: 'medium',
+          mitigation: 'Allow contingency time and budget for unexpected issues',
+          contingencyPercent: 5,
         },
-        { 
-          title: 'Access difficulties', 
-          severity: 'low', 
-          likelihood: 'medium', 
-          mitigation: 'Pre-survey site access and confirm arrangements with client', 
-          contingencyPercent: 2 
+        {
+          title: 'Access difficulties',
+          severity: 'low',
+          likelihood: 'medium',
+          mitigation: 'Pre-survey site access and confirm arrangements with client',
+          contingencyPercent: 2,
         },
-        { 
-          title: 'Existing installation issues', 
-          severity: 'medium', 
-          likelihood: 'medium', 
-          mitigation: 'Conduct thorough inspection before quoting final price', 
-          contingencyPercent: 3 
-        }
-      ]
+        {
+          title: 'Existing installation issues',
+          severity: 'medium',
+          likelihood: 'medium',
+          mitigation: 'Conduct thorough inspection before quoting final price',
+          contingencyPercent: 3,
+        },
+      ],
     };
   }
 
@@ -582,21 +651,21 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
         'Isolate electrical supply and verify dead before work starts',
         'Verify safe access to work areas',
         'Confirm asbestos survey if building pre-2000',
-        'Check existing earthing system adequacy'
+        'Check existing earthing system adequacy',
       ],
       important: [
         'Clear work area of furniture and obstructions',
         'Arrange parking for van near property',
         'Confirm client or keyholder available during work',
-        'Ensure adequate lighting in work areas'
+        'Ensure adequate lighting in work areas',
       ],
       documentation: [
         'Electrical Installation Certificate (EIC) required on completion',
         'Part P Building Regulations notification if applicable',
         'Test certificates and schedules',
         'Manufacturer warranties for installed equipment',
-        'Public liability insurance certificate if requested'
-      ]
+        'Public liability insurance certificate if requested',
+      ],
     };
   }
 
@@ -604,82 +673,81 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
     console.warn('⚠️ No pipeline returned by AI - adding fallback');
     parsedEstimate.pipeline = [
       {
-        opportunity: "EV Charger Installation",
-        description: "7kW home charger with app control",
-        timeframe: "6-12 months",
+        opportunity: 'EV Charger Installation',
+        description: '7kW home charger with app control',
+        timeframe: '6-12 months',
         estimatedValue: 1200,
-        priority: "medium",
-        trigger: "When they mention new electric car",
-        timing: "6-12 months"
-      }
+        priority: 'medium',
+        trigger: 'When they mention new electric car',
+        timing: '6-12 months',
+      },
     ];
   }
 
   return parsedEstimate;
 }
 
-function calculateProfitability(
-  costEstimate: CostEstimate,
-  businessSettings?: any
-): any {
+function calculateProfitability(costEstimate: CostEstimate, businessSettings?: any): any {
   // IMPORTANT: Labour rate (£45/hr) ALREADY includes overheads
   // Don't double-count by adding overheads separately!
-  
+
   const jobDuration = costEstimate.timescales?.totalDays || 1;
   const materialsTotal = costEstimate.summary.materialsSubtotal;
   const labourTotal = costEstimate.summary.labourSubtotal;
-  
+
   // Calculate 5% contingency for materials & labour
   const contingency = (materialsTotal + labourTotal) * 0.05;
-  
+
   // Base Quote = Your absolute minimum (materials + labour + contingency)
   // This covers all costs because labour rate already includes overheads
   const baseQuote = materialsTotal + labourTotal + contingency;
-  
+
   // SIMPLIFIED: 2 pricing tiers only - Standard and Busy Period
-  const standardMargin = 0.20;  // 20% profit - your normal healthy margin
-  const busyMargin = 0.35;      // 35% profit - when demand is high
-  
+  const standardMargin = 0.2; // 20% profit - your normal healthy margin
+  const busyMargin = 0.35; // 35% profit - when demand is high
+
   const result = {
-    directCosts: { 
-      materials: materialsTotal, 
-      labour: labourTotal, 
+    directCosts: {
+      materials: materialsTotal,
+      labour: labourTotal,
       contingency: contingency,
-      total: materialsTotal + labourTotal + contingency
+      total: materialsTotal + labourTotal + contingency,
     },
     breakEvenPoint: baseQuote, // ADD: What frontend expects for "Your Minimum Quote"
     baseQuote: {
       subtotal: baseQuote,
-      vat: baseQuote * 0.20,
-      total: baseQuote * 1.20,
-      explanation: 'Your minimum quote - covers materials, labour, and contingency. Labour rate already includes your overheads.'
+      vat: baseQuote * 0.2,
+      total: baseQuote * 1.2,
+      explanation:
+        'Your minimum quote - covers materials, labour, and contingency. Labour rate already includes your overheads.',
     },
     quoteTiers: {
       standard: {
         margin: standardMargin,
         subtotal: baseQuote * (1 + standardMargin),
-        vat: (baseQuote * (1 + standardMargin)) * 0.20,
-        total: (baseQuote * (1 + standardMargin)) * 1.20,
+        vat: baseQuote * (1 + standardMargin) * 0.2,
+        total: baseQuote * (1 + standardMargin) * 1.2,
         profit: baseQuote * standardMargin,
-        price: (baseQuote * (1 + standardMargin)) * 1.20,
-        explanation: 'Standard 20% profit - healthy business margin for normal periods'
+        price: baseQuote * (1 + standardMargin) * 1.2,
+        explanation: 'Standard 20% profit - healthy business margin for normal periods',
       },
       busy: {
         margin: busyMargin,
         subtotal: baseQuote * (1 + busyMargin),
-        vat: (baseQuote * (1 + busyMargin)) * 0.20,
-        total: (baseQuote * (1 + busyMargin)) * 1.20,
+        vat: baseQuote * (1 + busyMargin) * 0.2,
+        total: baseQuote * (1 + busyMargin) * 1.2,
         profit: baseQuote * busyMargin,
-        price: (baseQuote * (1 + busyMargin)) * 1.20,
-        explanation: 'Busy Period 35% profit - when you\'re in high demand'
-      }
+        price: baseQuote * (1 + busyMargin) * 1.2,
+        explanation: "Busy Period 35% profit - when you're in high demand",
+      },
     },
-    recommendedQuote: {  // ADD: Default recommendation for frontend
+    recommendedQuote: {
+      // ADD: Default recommendation for frontend
       tier: 'standard',
-      amount: (baseQuote * (1 + standardMargin)) * 1.20
-    }
+      amount: baseQuote * (1 + standardMargin) * 1.2,
+    },
   };
-  
+
   return result;
 }
 

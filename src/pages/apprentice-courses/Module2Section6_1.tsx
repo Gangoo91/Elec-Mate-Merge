@@ -1,104 +1,118 @@
-import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Zap, Calculator, Gauge, Plug, AlertTriangle, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { PowerQuickCalc } from "@/components/apprentice-courses/PowerQuickCalc";
-import { FormulaList } from "@/components/apprentice-courses/FormulaList";
+import useSEO from '@/hooks/useSEO';
+import { ArrowLeft, Zap, Calculator, Gauge, Plug, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { PowerQuickCalc } from '@/components/apprentice-courses/PowerQuickCalc';
+import { FormulaList } from '@/components/apprentice-courses/FormulaList';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which formula defines electrical power in a circuit?",
-    options: ["P = V / I", "P = V × I", "P = V + I", "P = V − I"],
+    question: 'Which formula defines electrical power in a circuit?',
+    options: ['P = V / I', 'P = V × I', 'P = V + I', 'P = V − I'],
     correctAnswer: 1,
-    explanation: "Power is the rate of energy transfer. In simple form, P = V × I (watts).",
+    explanation: 'Power is the rate of energy transfer. In simple form, P = V × I (watts).',
   },
   {
     id: 2,
-    question: "A 230 V kettle draws 10 A. Approximately what is its power?",
-    options: ["230 W", "2.3 kW", "23 kW", "0.23 kW"],
+    question: 'A 230 V kettle draws 10 A. Approximately what is its power?',
+    options: ['230 W', '2.3 kW', '23 kW', '0.23 kW'],
     correctAnswer: 1,
-    explanation: "P = V × I = 230 × 10 = 2300 W = 2.3 kW.",
+    explanation: 'P = V × I = 230 × 10 = 2300 W = 2.3 kW.',
   },
   {
     id: 3,
-    question: "For AC, which statement is true about power factor (pf)?",
+    question: 'For AC, which statement is true about power factor (pf)?',
     options: [
-      "pf only affects current, not power",
-      "Real power P = V × I × pf",
-      "pf is always 1",
-      "pf only applies to DC",
+      'pf only affects current, not power',
+      'Real power P = V × I × pf',
+      'pf is always 1',
+      'pf only applies to DC',
     ],
     correctAnswer: 1,
-    explanation: "In AC, real power P (kW) = voltage × current × power factor.",
+    explanation: 'In AC, real power P (kW) = voltage × current × power factor.',
   },
   {
     id: 4,
-    question: "What power is dissipated as heat in a 10 Ω resistor with 5 A flowing?",
-    options: ["25 W", "50 W", "100 W", "250 W"],
+    question: 'What power is dissipated as heat in a 10 Ω resistor with 5 A flowing?',
+    options: ['25 W', '50 W', '100 W', '250 W'],
     correctAnswer: 3,
-    explanation: "Using P = I²R = 5² × 10 = 25 × 10 = 250 W.",
+    explanation: 'Using P = I²R = 5² × 10 = 25 × 10 = 250 W.',
   },
   {
     id: 5,
-    question: "A 2 kW heater on 230 V draws about…",
-    options: ["0.87 A", "8.7 A", "87 A", "0.087 A"],
+    question: 'A 2 kW heater on 230 V draws about…',
+    options: ['0.87 A', '8.7 A', '87 A', '0.087 A'],
     correctAnswer: 1,
-    explanation: "I ≈ P / V = 2000 / 230 ≈ 8.7 A.",
+    explanation: 'I ≈ P / V = 2000 / 230 ≈ 8.7 A.',
   },
   {
     id: 6,
-    question: "In a 3-phase 400 V system, a motor draws 10 A at pf = 0.8. What is the approximate real power?",
-    options: ["2.3 kW", "4.0 kW", "5.5 kW", "6.9 kW"],
+    question:
+      'In a 3-phase 400 V system, a motor draws 10 A at pf = 0.8. What is the approximate real power?',
+    options: ['2.3 kW', '4.0 kW', '5.5 kW', '6.9 kW'],
     correctAnswer: 2,
-    explanation: "P ≈ √3 × 400 × 10 × 0.8 ≈ 5.5 kW.",
+    explanation: 'P ≈ √3 × 400 × 10 × 0.8 ≈ 5.5 kW.',
   },
   {
     id: 7,
     question: "A 1.5 kW heater runs for 4 hours. At 28 p/kWh, what's the cost?",
-    options: ["£0.42", "£1.12", "£1.68", "£4.20"],
+    options: ['£0.42', '£1.12', '£1.68', '£4.20'],
     correctAnswer: 2,
-    explanation: "Energy = 1.5 × 4 = 6 kWh; Cost = 6 × £0.28 = £1.68.",
+    explanation: 'Energy = 1.5 × 4 = 6 kWh; Cost = 6 × £0.28 = £1.68.',
   },
   {
     id: 8,
-    question: "230 V is applied across a 115 Ω resistor. Approximately what power is dissipated?",
-    options: ["115 W", "230 W", "460 W", "920 W"],
+    question: '230 V is applied across a 115 Ω resistor. Approximately what power is dissipated?',
+    options: ['115 W', '230 W', '460 W', '920 W'],
     correctAnswer: 2,
-    explanation: "P = V²/R = 230² / 115 ≈ 52900 / 115 ≈ 460 W.",
+    explanation: 'P = V²/R = 230² / 115 ≈ 52900 / 115 ≈ 460 W.',
   },
 ];
 
 const Module2Section6_1: React.FC = () => {
   useSEO(
-    "Electrical Power (Watts) – Module 2 (2.6.1)",
-    "Plain-English guide to electrical power in watts: P=VI, AC/DC, power factor, UK examples, simple calculations and BS 7671 context."
+    'Electrical Power (Watts) – Module 2 (2.6.1)',
+    'Plain-English guide to electrical power in watts: P=VI, AC/DC, power factor, UK examples, simple calculations and BS 7671 context.'
   );
 
   const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Electrical Power (Watts) – Module 2 (2.6.1)",
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Electrical Power (Watts) – Module 2 (2.6.1)',
     description:
-      "Plain-English guide to electrical power in watts: P=VI, AC/DC, power factor, UK examples, simple calculations and BS 7671 context.",
-    articleSection: "Electrical Fundamentals",
-    inLanguage: "en-GB",
+      'Plain-English guide to electrical power in watts: P=VI, AC/DC, power factor, UK examples, simple calculations and BS 7671 context.',
+    articleSection: 'Electrical Fundamentals',
+    inLanguage: 'en-GB',
     isAccessibleForFree: true,
   };
 
   const faqs = [
-    { q: "What is a watt?", a: "A watt (W) is a unit of power – the rate of using or producing energy. 1 W = 1 joule per second." },
-    { q: "Do AC and DC use the same formula?", a: "Yes, P = V × I, but for AC you use RMS values and include power factor: P = V × I × pf." },
-    { q: "What’s kW vs kWh?", a: "kW is power (rate). kWh is energy used over time. A 2 kW heater running for 1 hour uses 2 kWh." },
+    {
+      q: 'What is a watt?',
+      a: 'A watt (W) is a unit of power – the rate of using or producing energy. 1 W = 1 joule per second.',
+    },
+    {
+      q: 'Do AC and DC use the same formula?',
+      a: 'Yes, P = V × I, but for AC you use RMS values and include power factor: P = V × I × pf.',
+    },
+    {
+      q: "What's kW vs kWh?",
+      a: 'kW is power (rate). kWh is energy used over time. A 2 kW heater running for 1 hour uses 2 kWh.',
+    },
   ];
 
   const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   };
 
   return (
@@ -106,7 +120,11 @@ const Module2Section6_1: React.FC = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -129,7 +147,8 @@ const Module2Section6_1: React.FC = () => {
             What is Electrical Power? (Watts Explained)
           </h1>
           <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-            A practical, BS 7671-aligned guide to watts, kW and kWh with simple examples you can use on site
+            A practical, BS 7671-aligned guide to watts, kW and kWh with simple examples you can use
+            on site
           </p>
         </div>
 
@@ -140,7 +159,9 @@ const Module2Section6_1: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li>Power is how fast energy is used or produced. More watts = more energy per second.</li>
+                <li>
+                  Power is how fast energy is used or produced. More watts = more energy per second.
+                </li>
                 <li>P = V × I. For AC, use RMS values and include power factor (pf).</li>
                 <li>kW is thousands of watts; kWh is energy over time (used for billing).</li>
               </ul>
@@ -148,9 +169,17 @@ const Module2Section6_1: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Nameplates show W or kW. High W usually means higher current on 230 V.</li>
-                <li><strong>Use:</strong> Estimate I ≈ P / V to sanity‑check cable size and protective device.</li>
-                <li><strong>Check:</strong> For motors/LED drivers, consider power factor and inrush.</li>
+                <li>
+                  <strong>Spot:</strong> Nameplates show W or kW. High W usually means higher
+                  current on 230 V.
+                </li>
+                <li>
+                  <strong>Use:</strong> Estimate I ≈ P / V to sanity‑check cable size and protective
+                  device.
+                </li>
+                <li>
+                  <strong>Check:</strong> For motors/LED drivers, consider power factor and inrush.
+                </li>
               </ul>
             </div>
           </div>
@@ -165,7 +194,9 @@ const Module2Section6_1: React.FC = () => {
             <li>Apply AC real power with power factor: P = V × I × pf (RMS).</li>
             <li>Estimate current from known power and voltage to inform basic design checks.</li>
             <li>Evaluate simple energy use and running cost from kWh and tariff.</li>
-            <li>Relate decisions to BS 7671 guidance on maximum demand, cable sizing and protection.</li>
+            <li>
+              Relate decisions to BS 7671 guidance on maximum demand, cable sizing and protection.
+            </li>
           </ul>
         </section>
 
@@ -175,43 +206,47 @@ const Module2Section6_1: React.FC = () => {
 
           {/* Key formulas */}
           <section className="mb-6">
-            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Calculator className="w-5 h-5 text-elec-yellow" /> Key formulas</h3>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-elec-yellow" /> Key formulas
+            </h3>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">General</p>
                 <FormulaList
                   items={[
-                    { text: "P = V × I" },
-                    { text: "1 kW = 1000 W" },
-                    { text: "Energy (kWh) = kW × time (h)" },
+                    { text: 'P = V × I' },
+                    { text: '1 kW = 1000 W' },
+                    { text: 'Energy (kWh) = kW × time (h)' },
                   ]}
                 />
               </div>
               <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-2">With resistance</p>
-                <FormulaList
-                  items={[
-                    { text: "P = I²R" },
-                    { text: "P = V² / R" },
-                  ]}
-                />
-                <p className="text-xs text-white mt-2">Heaters are near unity pf; motors/LED drivers may not be.</p>
+                <FormulaList items={[{ text: 'P = I²R' }, { text: 'P = V² / R' }]} />
+                <p className="text-xs text-white mt-2">
+                  Heaters are near unity pf; motors/LED drivers may not be.
+                </p>
               </div>
             </div>
-            <p className="mt-3 text-sm text-white"><strong>AC note:</strong> For single‑phase AC, real power P (kW) = V (V) × I (A) × pf ÷ 1000 using RMS values.</p>
+            <p className="mt-3 text-sm text-white">
+              <strong>AC note:</strong> For single‑phase AC, real power P (kW) = V (V) × I (A) × pf
+              ÷ 1000 using RMS values.
+            </p>
           </section>
 
           <InlineCheck
             id="ic-power-formulas"
             question="Which formula gives power from voltage and resistance in a resistive circuit?"
-            options={["P = V × I", "P = V² / R", "P = I² / V", "P = R / V"]}
+            options={['P = V × I', 'P = V² / R', 'P = I² / V', 'P = R / V']}
             correctIndex={1}
             explanation="When resistance is known, use P = V² / R (or P = I²R if current is known)."
           />
-          
+
           {/* AC power and power factor */}
           <section className="mb-6">
-            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Gauge className="w-5 h-5 text-elec-yellow" /> AC power and power factor (quick view)</h3>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2">
+              <Gauge className="w-5 h-5 text-elec-yellow" /> AC power and power factor (quick view)
+            </h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Use RMS values for V and I. Real power P (kW) = V × I × pf ÷ 1000.</li>
               <li>Apparent power S (kVA) = V × I ÷ 1000; S ≥ P when pf &lt; 1.</li>
@@ -222,7 +257,7 @@ const Module2Section6_1: React.FC = () => {
           <InlineCheck
             id="ic-ac-pf"
             question="For the same real power on AC, lowering power factor does what to current?"
-            options={["Decreases current", "No change", "Increases current", "Makes current zero"]}
+            options={['Decreases current', 'No change', 'Increases current', 'Makes current zero']}
             correctIndex={2}
             explanation="P = V × I × pf, so if pf decreases, I must increase for the same P."
           />
@@ -230,59 +265,92 @@ const Module2Section6_1: React.FC = () => {
           {/* Try it: Quick calculator */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Try it: Quick calculator</h3>
-            <p className="text-sm text-white mb-3">Estimate power or current quickly for single‑phase or three‑phase (uses RMS values and pf).</p>
+            <p className="text-sm text-white mb-3">
+              Estimate power or current quickly for single‑phase or three‑phase (uses RMS values and
+              pf).
+            </p>
             <PowerQuickCalc />
           </section>
-          
+
           {/* Three‑phase basics */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Three‑phase basics (UK 400/230 V)</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-              <li>Typical LV: 400/230 V, 50 Hz. Line‑to‑line V<sub>L</sub> = 400 V; line‑to‑neutral V<sub>Ph</sub> = 230 V.</li>
-              <li>Balanced load real power: P(kW) ≈ √3 × V<sub>L</sub>(V) × I(A) × pf ÷ 1000.</li>
-              <li>Apparent power: S(kVA) ≈ √3 × V<sub>L</sub> × I ÷ 1000.</li>
+              <li>
+                Typical LV: 400/230 V, 50 Hz. Line‑to‑line V<sub>L</sub> = 400 V; line‑to‑neutral V
+                <sub>Ph</sub> = 230 V.
+              </li>
+              <li>
+                Balanced load real power: P(kW) ≈ √3 × V<sub>L</sub>(V) × I(A) × pf ÷ 1000.
+              </li>
+              <li>
+                Apparent power: S(kVA) ≈ √3 × V<sub>L</sub> × I ÷ 1000.
+              </li>
               <li>Per‑phase currents are equal when loads are balanced.</li>
             </ul>
-            <p className="mt-2 text-sm text-white"><strong>Example:</strong> 400 V 3φ motor, 16 A, pf 0.9 → P ≈ 1.732 × 400 × 16 × 0.9 ≈ 9.98 kW.</p>
+            <p className="mt-2 text-sm text-white">
+              <strong>Example:</strong> 400 V 3φ motor, 16 A, pf 0.9 → P ≈ 1.732 × 400 × 16 × 0.9 ≈
+              9.98 kW.
+            </p>
           </section>
-          
+
           {/* Worked examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples</h3>
             <ul className="space-y-4 text-xs sm:text-sm text-white">
               <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                    1
+                  </div>
                   <div>
                     <p className="font-medium">Kettle current</p>
-                    <p><strong>Given:</strong> P = 2.3 kW on 230 V. <strong>Find I</strong></p>
-                    <p><strong>I ≈ P/V</strong> = 2300 / 230 ≈ 10 A. Choose cable/device to suit and allow diversity where applicable.</p>
+                    <p>
+                      <strong>Given:</strong> P = 2.3 kW on 230 V. <strong>Find I</strong>
+                    </p>
+                    <p>
+                      <strong>I ≈ P/V</strong> = 2300 / 230 ≈ 10 A. Choose cable/device to suit and
+                      allow diversity where applicable.
+                    </p>
                   </div>
                 </div>
               </li>
               <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                    2
+                  </div>
                   <div>
                     <p className="font-medium">Motor real power</p>
-                    <p><strong>Given:</strong> V = 230 V, I = 8 A, pf = 0.8. <strong>Find P</strong></p>
-                    <p><strong>P = V × I × pf</strong> = 230 × 8 × 0.8 ≈ 1472 W ≈ 1.47 kW.</p>
+                    <p>
+                      <strong>Given:</strong> V = 230 V, I = 8 A, pf = 0.8. <strong>Find P</strong>
+                    </p>
+                    <p>
+                      <strong>P = V × I × pf</strong> = 230 × 8 × 0.8 ≈ 1472 W ≈ 1.47 kW.
+                    </p>
                   </div>
                 </div>
               </li>
               <li className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+                  <div className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                    3
+                  </div>
                   <div>
                     <p className="font-medium">Heat loss in a resistor</p>
-                    <p><strong>Given:</strong> I = 5 A through 10 Ω. <strong>Find P(loss)</strong></p>
-                    <p><strong>P = I²R</strong> = 25 × 10 = 250 W of heat at the component – check rating and cooling.</p>
+                    <p>
+                      <strong>Given:</strong> I = 5 A through 10 Ω. <strong>Find P(loss)</strong>
+                    </p>
+                    <p>
+                      <strong>P = I²R</strong> = 25 × 10 = 250 W of heat at the component – check
+                      rating and cooling.
+                    </p>
                   </div>
                 </div>
               </li>
             </ul>
           </section>
-          
+
           {/* UK household examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Everyday UK examples (typical)</h3>
@@ -319,41 +387,73 @@ const Module2Section6_1: React.FC = () => {
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-white mt-3">Always verify nameplate ratings. Consider start currents and power factor for motors and electronic supplies.</p>
+            <p className="text-xs text-white mt-3">
+              Always verify nameplate ratings. Consider start currents and power factor for motors
+              and electronic supplies.
+            </p>
           </section>
-          
+
           {/* Energy and running cost */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Energy and running cost</h3>
             <div className="space-y-2 text-xs sm:text-sm text-white">
-              <p><strong>Energy (kWh)</strong> = kW × time (h). Cost ≈ kWh × tariff.</p>
-              <p><strong>Example:</strong> A 2 kW heater for 3 h/day over 5 days → 2 × 3 × 5 = 30 kWh. At 30 p/kWh ≈ £9.00. Tariffs vary—check your supplier.</p>
-              <p><strong>Tip:</strong> For intermittent loads, consider duty cycle when estimating energy.</p>
+              <p>
+                <strong>Energy (kWh)</strong> = kW × time (h). Cost ≈ kWh × tariff.
+              </p>
+              <p>
+                <strong>Example:</strong> A 2 kW heater for 3 h/day over 5 days → 2 × 3 × 5 = 30
+                kWh. At 30 p/kWh ≈ £9.00. Tariffs vary—check your supplier.
+              </p>
+              <p>
+                <strong>Tip:</strong> For intermittent loads, consider duty cycle when estimating
+                energy.
+              </p>
             </div>
           </section>
-          
+
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
-            <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Plug className="w-5 h-5 text-elec-yellow" /> Safety and BS 7671 context (guidance)</h3>
+            <h3 className="font-medium text-white mb-2 flex items-center gap-2">
+              <Plug className="w-5 h-5 text-elec-yellow" /> Safety and BS 7671 context (guidance)
+            </h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-              <li>Higher power often means higher current: check cable sizing, voltage drop and Zs after design changes (Appendix 4 guidance).</li>
-              <li>Assess maximum demand/diversity (Part 3) and protective device selection (Part 4).</li>
+              <li>
+                Higher power often means higher current: check cable sizing, voltage drop and Zs
+                after design changes (Appendix 4 guidance).
+              </li>
+              <li>
+                Assess maximum demand/diversity (Part 3) and protective device selection (Part 4).
+              </li>
               <li>Document and test in line with Part 6 inspection and testing requirements.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div
+              className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4"
+              role="alert"
+            >
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
+              <p className="text-white text-sm">
+                Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and
+                BS 7671.
+              </p>
             </div>
           </section>
-          
+
           {/* Common mistakes */}
           <section>
             <h3 className="font-medium text-white mb-2">Common mistakes (avoid)</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
               <li>Confusing power (kW) with energy (kWh) when estimating running costs.</li>
-              <li>Ignoring power factor on AC motors/drives—current will be higher than P/V when pf &lt; 1.</li>
-              <li>Using nameplate input power as output power for motors; check efficiency and pf.</li>
-              <li>Overlooking cable sizing, volt drop and protective device coordination when power increases.</li>
+              <li>
+                Ignoring power factor on AC motors/drives—current will be higher than P/V when pf
+                &lt; 1.
+              </li>
+              <li>
+                Using nameplate input power as output power for motors; check efficiency and pf.
+              </li>
+              <li>
+                Overlooking cable sizing, volt drop and protective device coordination when power
+                increases.
+              </li>
             </ul>
           </section>
         </section>
@@ -370,11 +470,21 @@ const Module2Section6_1: React.FC = () => {
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-3">Essential Formulas</h3>
                 <div className="space-y-2 text-xs sm:text-sm text-white">
-                  <p><strong>Basic:</strong> P = V × I</p>
-                  <p><strong>Resistive:</strong> P = I²R = V²/R</p>
-                  <p><strong>AC Real:</strong> P = V × I × pf</p>
-                  <p><strong>3-Phase:</strong> P = √3 × VL × IL × pf</p>
-                  <p><strong>Current Est:</strong> I ≈ P/V (single-phase)</p>
+                  <p>
+                    <strong>Basic:</strong> P = V × I
+                  </p>
+                  <p>
+                    <strong>Resistive:</strong> P = I²R = V²/R
+                  </p>
+                  <p>
+                    <strong>AC Real:</strong> P = V × I × pf
+                  </p>
+                  <p>
+                    <strong>3-Phase:</strong> P = √3 × VL × IL × pf
+                  </p>
+                  <p>
+                    <strong>Current Est:</strong> I ≈ P/V (single-phase)
+                  </p>
                 </div>
               </div>
               <div className="bg-card border border-border/30 rounded-lg p-4">
@@ -389,7 +499,7 @@ const Module2Section6_1: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Quick Reference Tables */}
             <div className="space-y-4">
               <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
@@ -426,7 +536,9 @@ const Module2Section6_1: React.FC = () => {
           <div className="space-y-6">
             {/* Scenario 1: Kitchen Upgrade */}
             <div className="border border-white/10 rounded-lg p-4 bg-elec-yellow/5">
-              <h3 className="font-semibold text-white mb-3">Scenario 1: Kitchen Upgrade - Load Assessment</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Scenario 1: Kitchen Upgrade - Load Assessment
+              </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Client Request:</p>
@@ -449,13 +561,18 @@ const Module2Section6_1: React.FC = () => {
               </div>
               <div className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                 <p className="font-medium text-elec-yellow mb-1">Solution:</p>
-                <p className="text-white">40A circuit adequate with diversity, but recommend separate 20A circuit for new appliances to avoid overloading and provide flexibility.</p>
+                <p className="text-white">
+                  40A circuit adequate with diversity, but recommend separate 20A circuit for new
+                  appliances to avoid overloading and provide flexibility.
+                </p>
               </div>
             </div>
 
             {/* Scenario 2: Workshop Motor */}
             <div className="border border-white/10 rounded-lg p-4 bg-transparent">
-              <h3 className="font-semibold text-white mb-3">Scenario 2: Workshop Motor - Starting Issues</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Scenario 2: Workshop Motor - Starting Issues
+              </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Problem:</p>
@@ -478,13 +595,18 @@ const Module2Section6_1: React.FC = () => {
               </div>
               <div className="mt-3 p-3 border border-border/30 rounded text-sm">
                 <p className="font-medium text-elec-yellow mb-1">Solution:</p>
-                <p className="text-white">Install soft-starter to limit starting current to 2-3× full load, or check if supply cable needs upgrading. Consider star-delta starter for fixed loads.</p>
+                <p className="text-white">
+                  Install soft-starter to limit starting current to 2-3× full load, or check if
+                  supply cable needs upgrading. Consider star-delta starter for fixed loads.
+                </p>
               </div>
             </div>
 
             {/* Scenario 3: LED Retrofit */}
             <div className="border border-white/10 rounded-lg p-4 bg-elec-yellow/5">
-              <h3 className="font-semibold text-white mb-3">Scenario 3: Office LED Retrofit - Power Savings</h3>
+              <h3 className="font-semibold text-white mb-3">
+                Scenario 3: Office LED Retrofit - Power Savings
+              </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Current Setup:</p>
@@ -507,7 +629,10 @@ const Module2Section6_1: React.FC = () => {
               </div>
               <div className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                 <p className="font-medium text-elec-yellow mb-1">Benefits:</p>
-                <p className="text-white">Annual saving: 4.2kW × 3000h × £0.30/kWh = £3,780. Reduced circuit loading allows future expansion without rewiring.</p>
+                <p className="text-white">
+                  Annual saving: 4.2kW × 3000h × £0.30/kWh = £3,780. Reduced circuit loading allows
+                  future expansion without rewiring.
+                </p>
               </div>
             </div>
           </div>
@@ -515,22 +640,46 @@ const Module2Section6_1: React.FC = () => {
 
         {/* Real‑world scenario */}
         <section className="mb-10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Power Factor in Practice</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+            Power Factor in Practice
+          </h2>
           <div className="space-y-3 text-xs sm:text-sm text-white">
-            <p><strong>Job:</strong> Fit a 2 kW panel heater and a small 0.75 kW single‑phase extractor (pf 0.8) in a utility room.</p>
+            <p>
+              <strong>Job:</strong> Fit a 2 kW panel heater and a small 0.75 kW single‑phase
+              extractor (pf 0.8) in a utility room.
+            </p>
             <ol className="list-decimal pl-6 space-y-2">
-              <li><strong>Estimate currents:</strong> Heater I ≈ 2000/230 ≈ 8.7 A. Fan input P ≈ 750/eff. If efficiency ≈ 0.85, input ≈ 882 W → I ≈ 882/(230×0.8) ≈ 4.8 A.</li>
-              <li><strong>Demand:</strong> Consider simultaneity—heater and fan may run together → ≈ 13.5 A. Apply diversity as appropriate to the circuit design (BS 7671 Part 3 guidance).</li>
-              <li><strong>Cable/device:</strong> Select protective device and cable per Appendix 4 (current‑carrying capacity, volt drop, installation method). Check Zs and disconnection times.</li>
-              <li><strong>Energy/cost:</strong> Heater 2 kW for 4 h/day over 5 days → 40 kWh. At 28 p/kWh ≈ £11.20/week (illustrative).</li>
-              <li><strong>Documentation:</strong> Test, record and update schedules in line with Part 6.</li>
+              <li>
+                <strong>Estimate currents:</strong> Heater I ≈ 2000/230 ≈ 8.7 A. Fan input P ≈
+                750/eff. If efficiency ≈ 0.85, input ≈ 882 W → I ≈ 882/(230×0.8) ≈ 4.8 A.
+              </li>
+              <li>
+                <strong>Demand:</strong> Consider simultaneity—heater and fan may run together → ≈
+                13.5 A. Apply diversity as appropriate to the circuit design (BS 7671 Part 3
+                guidance).
+              </li>
+              <li>
+                <strong>Cable/device:</strong> Select protective device and cable per Appendix 4
+                (current‑carrying capacity, volt drop, installation method). Check Zs and
+                disconnection times.
+              </li>
+              <li>
+                <strong>Energy/cost:</strong> Heater 2 kW for 4 h/day over 5 days → 40 kWh. At 28
+                p/kWh ≈ £11.20/week (illustrative).
+              </li>
+              <li>
+                <strong>Documentation:</strong> Test, record and update schedules in line with Part
+                6.
+              </li>
             </ol>
           </div>
         </section>
 
         {/* FAQ */}
         <section className="mb-10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+            Frequently Asked Questions
+          </h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
               <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
@@ -548,15 +697,30 @@ const Module2Section6_1: React.FC = () => {
             <li>Power (W/kW) is the rate of energy use; energy (kWh) is power over time.</li>
             <li>Core formulas: P = V × I, P = I²R, P = V²/R; for AC include power factor.</li>
             <li>Estimate current from power to support quick cable and device checks.</li>
-            <li>Relate selections to BS 7671: maximum demand, cable sizing, protection and verification.</li>
+            <li>
+              Relate selections to BS 7671: maximum demand, cable sizing, protection and
+              verification.
+            </li>
           </ul>
           <div className="mt-4">
             <h3 className="font-medium text-white mb-2">Quick checklist</h3>
             <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Identify power (W/kW) on the nameplate and estimate current (I ≈ P/V).</li>
-              <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> For AC motors/drivers, check power factor and starting current.</li>
-              <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Confirm cable sizing, voltage drop and protective device ratings.</li>
-              <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Re‑test and record to BS 7671 after modifications.</li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Identify power (W/kW)
+                on the nameplate and estimate current (I ≈ P/V).
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> For AC motors/drivers,
+                check power factor and starting current.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Confirm cable sizing,
+                voltage drop and protective device ratings.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Re‑test and record to
+                BS 7671 after modifications.
+              </li>
             </ul>
           </div>
         </section>
@@ -569,17 +733,38 @@ const Module2Section6_1: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to=".."><ArrowLeft className="w-4 h-4 mr-2" />Back to Section 2.6</Link>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            asChild
+          >
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Section 2.6
+            </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section6/6-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section6/6-2">
+              Next
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
 
         {/* Structured data */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       </main>
     </div>
   );

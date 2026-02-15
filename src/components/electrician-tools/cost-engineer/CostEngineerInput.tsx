@@ -1,19 +1,15 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ChevronDown, Lightbulb, MapPin, User, FileText, Zap } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { StickySubmitButton } from "@/components/agents/shared/StickySubmitButton";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { CostEngineerHero } from "./premium/CostEngineerHero";
-import { ProjectTypeSelector } from "./premium/ProjectTypeSelector";
-import { BusinessSettings } from "./BusinessSettingsDialog";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ChevronDown, Lightbulb, MapPin, User, FileText, Zap } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { CostEngineerHero } from './premium/CostEngineerHero';
+import { ProjectTypeSelector } from './premium/ProjectTypeSelector';
+import { BusinessSettings } from './BusinessSettingsDialog';
 
 interface CostEngineerInputProps {
   prompt: string;
@@ -40,67 +36,79 @@ const MAX_CHARS = 2000;
 const EXAMPLE_PROJECTS = [
   // DOMESTIC
   {
-    title: "Consumer Unit Replacement",
-    description: "Replace existing consumer unit with 18-way dual RCD board, including AFDD protection for socket circuits. Install new earth bonding to water and gas, test all circuits, provide EIC certification. Property is a 3-bedroom semi-detached house with cavity walls.",
+    title: 'Consumer Unit Replacement',
+    description:
+      'Replace existing consumer unit with 18-way dual RCD board, including AFDD protection for socket circuits. Install new earth bonding to water and gas, test all circuits, provide EIC certification. Property is a 3-bedroom semi-detached house with cavity walls.',
     type: 'domestic' as const,
   },
   {
-    title: "Full House Rewire",
-    description: "Complete rewire of 4-bedroom Victorian terraced house including new consumer unit, first and second fix wiring, LED downlights throughout, dimmer switches in living areas, USB sockets in bedrooms, outdoor socket for garden, smart doorbell installation, and full certification.",
+    title: 'Full House Rewire',
+    description:
+      'Complete rewire of 4-bedroom Victorian terraced house including new consumer unit, first and second fix wiring, LED downlights throughout, dimmer switches in living areas, USB sockets in bedrooms, outdoor socket for garden, smart doorbell installation, and full certification.',
     type: 'domestic' as const,
   },
   {
-    title: "Kitchen & Utility Rewire",
-    description: "Rewire kitchen and utility room for new appliances. Install dedicated circuits for oven, hob, dishwasher, washing machine, and tumble dryer. Add 6x double sockets, under-cabinet LED lighting, extractor fan, and update consumer unit with RCD protection.",
+    title: 'Kitchen & Utility Rewire',
+    description:
+      'Rewire kitchen and utility room for new appliances. Install dedicated circuits for oven, hob, dishwasher, washing machine, and tumble dryer. Add 6x double sockets, under-cabinet LED lighting, extractor fan, and update consumer unit with RCD protection.',
     type: 'domestic' as const,
   },
   {
-    title: "EV Charger Installation",
-    description: "Install 7kW home EV charger in garage with dedicated 32A supply from consumer unit. Run 10mm² armoured cable underground, install isolator, commission charger, provide EIC certification and OLEV grant application support.",
+    title: 'EV Charger Installation',
+    description:
+      'Install 7kW home EV charger in garage with dedicated 32A supply from consumer unit. Run 10mm² armoured cable underground, install isolator, commission charger, provide EIC certification and OLEV grant application support.',
     type: 'domestic' as const,
   },
   // COMMERCIAL
   {
-    title: "Office Space Fit-Out",
-    description: "Full electrical installation for 200m² open-plan office including new distribution board, CAT6 data cabling to 20 workstations, LED panel lighting with daylight sensors, emergency lighting, fire alarm system, access control, and testing & certification.",
+    title: 'Office Space Fit-Out',
+    description:
+      'Full electrical installation for 200m² open-plan office including new distribution board, CAT6 data cabling to 20 workstations, LED panel lighting with daylight sensors, emergency lighting, fire alarm system, access control, and testing & certification.',
     type: 'commercial' as const,
   },
   {
-    title: "Retail Shop Refurbishment",
-    description: "Electrical refurbishment of 150m² retail unit. Install LED track lighting, display spotlights, till point power, security system pre-wiring, external shop sign illumination, emergency lighting, and 3-phase supply upgrade for air conditioning.",
+    title: 'Retail Shop Refurbishment',
+    description:
+      'Electrical refurbishment of 150m² retail unit. Install LED track lighting, display spotlights, till point power, security system pre-wiring, external shop sign illumination, emergency lighting, and 3-phase supply upgrade for air conditioning.',
     type: 'commercial' as const,
   },
   {
-    title: "Restaurant Kitchen Installation",
-    description: "Commercial kitchen electrical installation including 3-phase distribution board, dedicated circuits for commercial ovens, fryers, dishwasher, extraction system, walk-in fridge, ambient lighting, emergency lighting, and full NICEIC certification.",
+    title: 'Restaurant Kitchen Installation',
+    description:
+      'Commercial kitchen electrical installation including 3-phase distribution board, dedicated circuits for commercial ovens, fryers, dishwasher, extraction system, walk-in fridge, ambient lighting, emergency lighting, and full NICEIC certification.',
     type: 'commercial' as const,
   },
   {
-    title: "Office Block Lighting Upgrade",
-    description: "Replace 200x fluorescent fittings with LED panels across 5 floors. Install presence detection, daylight harvesting, central lighting control system, emergency lighting upgrades, and provide energy savings report and EPC improvement documentation.",
+    title: 'Office Block Lighting Upgrade',
+    description:
+      'Replace 200x fluorescent fittings with LED panels across 5 floors. Install presence detection, daylight harvesting, central lighting control system, emergency lighting upgrades, and provide energy savings report and EPC improvement documentation.',
     type: 'commercial' as const,
   },
   // INDUSTRIAL
   {
-    title: "Workshop 3-Phase Installation",
-    description: "Install 3-phase supply to 500m² workshop including new 200A distribution board, 6x 32A commando sockets, overhead LED high-bay lighting, welding bay with 63A supply, air compressor circuit, machine tool power, and emergency stop system.",
+    title: 'Workshop 3-Phase Installation',
+    description:
+      'Install 3-phase supply to 500m² workshop including new 200A distribution board, 6x 32A commando sockets, overhead LED high-bay lighting, welding bay with 63A supply, air compressor circuit, machine tool power, and emergency stop system.',
     type: 'industrial' as const,
   },
   {
-    title: "Warehouse Lighting & Power",
-    description: "Complete electrical installation for 1000m² warehouse including LED high-bay lighting with PIR control, loading bay 3-phase sockets, forklift charging stations, roller shutter door controls, fire alarm system, and full testing & certification.",
+    title: 'Warehouse Lighting & Power',
+    description:
+      'Complete electrical installation for 1000m² warehouse including LED high-bay lighting with PIR control, loading bay 3-phase sockets, forklift charging stations, roller shutter door controls, fire alarm system, and full testing & certification.',
     type: 'industrial' as const,
   },
   {
-    title: "Factory Machinery Installation",
-    description: "Install power supplies for new CNC machinery including 125A 3-phase distribution board, armoured cable runs, machine isolators, emergency stop circuits, control panel wiring, and commissioning with machinery manufacturers.",
+    title: 'Factory Machinery Installation',
+    description:
+      'Install power supplies for new CNC machinery including 125A 3-phase distribution board, armoured cable runs, machine isolators, emergency stop circuits, control panel wiring, and commissioning with machinery manufacturers.',
     type: 'industrial' as const,
   },
   {
-    title: "Cold Storage Unit Electrical",
-    description: "Electrical installation for cold storage facility including 3-phase refrigeration supplies, LED cold store lighting, defrost controls, temperature monitoring system, backup generator changeover panel, and alarm system for temperature monitoring.",
+    title: 'Cold Storage Unit Electrical',
+    description:
+      'Electrical installation for cold storage facility including 3-phase refrigeration supplies, LED cold store lighting, defrost controls, temperature monitoring system, backup generator changeover panel, and alarm system for temperature monitoring.',
     type: 'industrial' as const,
-  }
+  },
 ];
 
 export const CostEngineerInput = ({
@@ -120,7 +128,7 @@ export const CostEngineerInput = ({
   isProcessing,
   businessSettings,
   onOpenSettings,
-  hasConfiguredSettings
+  hasConfiguredSettings,
 }: CostEngineerInputProps) => {
   const [showOptionalDetails, setShowOptionalDetails] = useState(false);
   const [showExamples, setShowExamples] = useState(false);
@@ -133,13 +141,13 @@ export const CostEngineerInput = ({
 
   const canGenerate = prompt.trim().length >= 100;
 
-  const handleExampleSelect = (example: typeof EXAMPLE_PROJECTS[0]) => {
+  const handleExampleSelect = (example: (typeof EXAMPLE_PROJECTS)[0]) => {
     onPromptChange(example.description);
     onProjectTypeChange(example.type);
     setShowExamples(false);
   };
 
-  const filteredExamples = EXAMPLE_PROJECTS.filter(ex => ex.type === projectType);
+  const filteredExamples = EXAMPLE_PROJECTS.filter((ex) => ex.type === projectType);
 
   return (
     <div className="space-y-3 pb-24 sm:pb-6">
@@ -170,14 +178,10 @@ export const CostEngineerInput = ({
         {/* Description Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium text-white/70">
-              Job Description
-            </Label>
-            <span className={cn(
-              "text-xs font-medium tabular-nums",
-              getCharCountColor()
-            )}>
-              {charCount}{charCount >= 100 ? ' ✓' : '/100'}
+            <Label className="text-sm font-medium text-white">Job Description</Label>
+            <span className={cn('text-xs font-medium tabular-nums', getCharCountColor())}>
+              {charCount.toLocaleString()}/{MAX_CHARS.toLocaleString()}
+              {charCount >= 100 ? ' ✓' : ''}
             </span>
           </div>
 
@@ -192,9 +196,7 @@ export const CostEngineerInput = ({
             disabled={isProcessing}
           />
 
-          <p className="text-xs text-white/40">
-            100+ characters for accurate pricing
-          </p>
+          <p className="text-xs text-white">100+ characters recommended for accurate pricing</p>
         </div>
       </motion.div>
 
@@ -216,10 +218,12 @@ export const CostEngineerInput = ({
                   {filteredExamples.length}
                 </span>
               </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
-                showExamples && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white/40 transition-transform duration-200',
+                  showExamples && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
 
             <CollapsibleContent>
@@ -231,12 +235,8 @@ export const CostEngineerInput = ({
                     disabled={isProcessing}
                     className="w-full p-3 bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-elec-yellow/30 rounded-xl transition-all text-left touch-manipulation"
                   >
-                    <h4 className="text-sm font-medium text-white mb-1">
-                      {example.title}
-                    </h4>
-                    <p className="text-xs text-white/40 line-clamp-2">
-                      {example.description}
-                    </p>
+                    <h4 className="text-sm font-medium text-white mb-1">{example.title}</h4>
+                    <p className="text-xs text-white/40 line-clamp-2">{example.description}</p>
                   </button>
                 ))}
               </div>
@@ -263,10 +263,12 @@ export const CostEngineerInput = ({
                   +Accuracy
                 </span>
               </div>
-              <ChevronDown className={cn(
-                "h-4 w-4 text-white/40 transition-transform duration-200",
-                showOptionalDetails && "rotate-180"
-              )} />
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white/40 transition-transform duration-200',
+                  showOptionalDetails && 'rotate-180'
+                )}
+              />
             </CollapsibleTrigger>
 
             <CollapsibleContent>
@@ -318,9 +320,7 @@ export const CostEngineerInput = ({
 
                 {/* Additional Notes */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-white/50">
-                    Additional Notes
-                  </Label>
+                  <Label className="text-xs font-medium text-white/50">Additional Notes</Label>
                   <Textarea
                     value={additionalInfo}
                     onChange={(e) => onAdditionalInfoChange(e.target.value)}
