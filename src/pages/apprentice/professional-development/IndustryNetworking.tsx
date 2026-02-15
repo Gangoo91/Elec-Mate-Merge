@@ -1,202 +1,478 @@
+import { Card, CardContent } from '@/components/ui/card';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { CheckCircle } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Users, Calendar, MapPin, ExternalLink, Star, Zap, Heart, Building } from "lucide-react";
+const professionalBodies = [
+  {
+    name: 'IET (Institution of Engineering and Technology)',
+    cost: '£200–£400/year',
+    members: '150,000+ members',
+    description:
+      'The leading professional body for electrical and electronic engineers in the UK. Offers EngTech, IEng, and CEng professional registration, CPD tracking, and access to technical resources.',
+    benefits: [
+      'Professional registration (EngTech/IEng/CEng)',
+      'CPD tracking and recording',
+      'Technical resources and publications',
+      'Local network events across the UK',
+    ],
+    recommended: true,
+  },
+  {
+    name: 'JIB (Joint Industry Board)',
+    cost: 'Via employer (no individual fee)',
+    members: 'Industry-wide grading body',
+    description:
+      'The JIB sets grading, pay rates, and working conditions for the UK electrical contracting industry. Your JIB grade (Apprentice, Electrician, Approved Electrician, Technician) directly determines your minimum pay rate and is recognised by every major contractor.',
+    benefits: [
+      'Industry-standard grading and pay rates',
+      'ECS (Electrotechnical Certification Scheme) card',
+      'Recognition across all major contractors',
+      'Dispute resolution and welfare benefits',
+    ],
+    recommended: true,
+  },
+  {
+    name: "ECA (Electrical Contractors' Association)",
+    cost: '£300–£800/year',
+    members: 'Industry representation',
+    description:
+      "The UK's leading trade association for electrical contractors. Provides business support, industry representation, and training opportunities for member companies.",
+    benefits: [
+      'Industry lobbying and representation',
+      'Business support and advice',
+      'Training course discounts',
+      'Contract and legal templates',
+    ],
+    recommended: false,
+  },
+  {
+    name: 'NICEIC',
+    cost: '£500–£1,500/year',
+    members: 'Consumer trust brand',
+    description:
+      'While primarily a competent person scheme, NICEIC membership also provides networking opportunities, technical support, and industry credibility that opens doors.',
+    benefits: [
+      'Strong consumer brand recognition',
+      'Technical helpline support',
+      'Industry events and training',
+      'Contractor search directory listing',
+    ],
+    recommended: true,
+  },
+  {
+    name: 'NAPIT',
+    cost: '£400–£1,200/year',
+    members: 'Multi-trade network',
+    description:
+      'Multi-trade competent person scheme and professional body. Good for networking across electrical, plumbing, and heating disciplines.',
+    benefits: [
+      'Cross-trade networking',
+      'Certification schemes',
+      'Online training resources',
+      'Annual conference and events',
+    ],
+    recommended: false,
+  },
+  {
+    name: 'REA (Renewable Energy Association)',
+    cost: '£500–£2,000/year',
+    members: 'Green energy sector',
+    description:
+      'The voice of the UK renewable energy industry. Essential for electricians specialising in solar, wind, battery storage, and EV charging.',
+    benefits: [
+      'Green energy industry insights',
+      'Policy updates and consultations',
+      'Sustainability networking events',
+      'Market intelligence reports',
+    ],
+    recommended: false,
+  },
+];
+
+const industryEvents = [
+  {
+    name: 'Electrical Industry Awards',
+    frequency: 'Annual',
+    location: 'London',
+    cost: '£100–£500',
+    description:
+      "The UK's premier electrical industry awards ceremony. Excellent networking with industry leaders, manufacturers, and contractors.",
+  },
+  {
+    name: 'IET Local Networks',
+    frequency: 'Monthly',
+    location: 'UK-wide',
+    cost: 'Free for members',
+    description:
+      'Regular local technical talks, seminars, and networking events run by IET volunteers across the UK. Great for meeting local professionals.',
+  },
+  {
+    name: 'ElecTech Live',
+    frequency: 'Annual',
+    location: 'Various',
+    cost: '£200–£800',
+    description:
+      'Major electrical trade exhibition showcasing new products, technologies, and training opportunities. Hands-on demos and CPD sessions.',
+  },
+  {
+    name: 'Renewable Energy Events',
+    frequency: 'Annual',
+    location: 'Birmingham NEC',
+    cost: '£500–£1,500',
+    description:
+      'Dedicated renewable energy exhibitions covering solar, wind, battery storage, and EV infrastructure. Essential for green energy specialists.',
+  },
+  {
+    name: 'ECA Industry Conference',
+    frequency: 'Annual',
+    location: 'Various',
+    cost: 'Free for ECA members',
+    description:
+      'Annual conference covering industry trends, regulation changes, and business development. Strong networking with electrical contractors and industry figures.',
+  },
+];
+
+const onlineCommunities = [
+  {
+    name: 'LinkedIn',
+    members: '150,000+ UK electricians',
+    cost: 'Free',
+    description:
+      'The primary professional networking platform. Join electrical industry groups, follow key companies, and share your work to build your professional profile.',
+  },
+  {
+    name: 'ElectriciansForums.net',
+    members: '100,000+ members',
+    cost: 'Free',
+    description:
+      "The largest UK electricians' forum. Technical discussions, career advice, regulation queries, and a supportive community of professionals.",
+  },
+  {
+    name: 'IET Communities',
+    members: '20,000+ members',
+    cost: 'IET membership',
+    description:
+      'Online discussion forums run by the IET covering technical topics, career development, and industry news. Moderated by qualified professionals.',
+  },
+  {
+    name: 'Facebook Trade Groups',
+    members: 'Variable',
+    cost: 'Free',
+    description:
+      'Informal but active groups like "Electricians UK" and "Spark\'s Corner." Good for quick advice, job leads, and product recommendations.',
+  },
+];
+
+const linkedInTips = [
+  {
+    tip: 'Professional Headline',
+    detail:
+      'Use a clear headline like "Qualified Electrician | 18th Edition | NICEIC Registered" — profiles with good headlines get 3x more views.',
+  },
+  {
+    tip: 'Complete Your Profile',
+    detail:
+      'Add all qualifications, experience, and a professional photo. Complete profiles receive 40x more opportunities than incomplete ones.',
+  },
+  {
+    tip: 'Share Your Work',
+    detail:
+      'Post photos of completed projects (with client permission). Visual content gets 10x more engagement and builds your reputation.',
+  },
+  {
+    tip: 'Engage Daily',
+    detail:
+      'Comment on industry posts, congratulate connections on achievements, and share useful content. Consistent engagement grows your network 5x faster.',
+  },
+];
+
+const networkingTips = [
+  {
+    tip: 'Carry Business Cards',
+    detail:
+      'Even as an apprentice, a simple business card with your name, qualifications, and contact details makes you memorable. Hand them out at every event you attend.',
+  },
+  {
+    tip: 'Ask Questions',
+    detail:
+      'At events and talks, always ask a question. It shows you are engaged, helps you learn, and gives speakers a reason to remember you. Follow up afterwards.',
+  },
+  {
+    tip: 'Volunteer at Events',
+    detail:
+      'Offer to help set up at IET local network events or trade shows. You meet organisers and speakers directly — and they remember the people who helped.',
+  },
+  {
+    tip: 'Connect Suppliers',
+    detail:
+      'Build relationships with electrical wholesaler reps. They know which companies are hiring, which projects are starting, and can introduce you to decision-makers.',
+  },
+  {
+    tip: 'Follow Up Fast',
+    detail:
+      'Send a LinkedIn connection request or email within 24 hours of meeting someone. Reference something specific from your conversation. Speed shows professionalism.',
+  },
+];
+
+const mentorshipProgrammes = [
+  {
+    name: 'IET Mentor Scheme',
+    duration: '12 months',
+    cost: 'Free for IET members',
+    description:
+      'Structured mentoring programme matching you with experienced engineers. Covers career planning, professional registration, and technical development.',
+  },
+  {
+    name: 'ECA Apprentice Mentoring',
+    duration: 'Flexible',
+    cost: 'Free',
+    description:
+      'Informal mentoring through ECA member companies. Connects apprentices with experienced electricians for guidance and support.',
+  },
+  {
+    name: 'Women in Engineering',
+    duration: '6–12 months',
+    cost: 'Usually free',
+    description:
+      'Dedicated mentoring programmes for women in engineering and electrical trades. Run by the IET, WES, and industry partners.',
+  },
+  {
+    name: 'JTL Mentoring Support',
+    duration: 'Throughout apprenticeship',
+    cost: 'Free',
+    description:
+      'JTL training officers provide ongoing mentoring and support throughout your apprenticeship. They visit your workplace, check your progress, and help resolve any issues.',
+  },
+];
 
 const IndustryNetworking = () => {
-  const quickStats = [
-    { label: "Key Organisations", value: "4", icon: Building, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
-    { label: "Networking Tips", value: "4", icon: Users, color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" },
-    { label: "Event Types", value: "3+", icon: Calendar, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" },
-    { label: "Career Impact", value: "High", icon: Star, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" }
-  ];
-
-  const networkingOpportunities = [
-    {
-      title: "ECA (Electrical Contractors' Association)",
-      type: "Trade Association",
-      description: "UK's leading trade association for electrical contractors",
-      benefits: ["Industry updates", "Training opportunities", "Business support", "Networking events"],
-      website: "www.eca.co.uk"
-    },
-    {
-      title: "IET (Institution of Engineering and Technology)",
-      type: "Professional Body",
-      description: "Professional body for electrical and electronic engineers",
-      benefits: ["Professional recognition", "CPD tracking", "Technical resources", "Local events"],
-      website: "www.theiet.org"
-    },
-    {
-      title: "JIB (Joint Industry Board)",
-      type: "Industry Standards",
-      description: "Sets standards for the electrical contracting industry",
-      benefits: ["Grading cards", "Industry standards", "Career progression", "Training routes"],
-      website: "www.jib.org.uk"
-    },
-    {
-      title: "Local Electrical Groups",
-      type: "Regional Networks",
-      description: "Regional and local electrical contractor groups",
-      benefits: ["Local connections", "Job opportunities", "Knowledge sharing", "Support network"],
-      website: "Various locations"
-    }
-  ];
-
-  const networkingTips = [
-    {
-      title: "Attend Industry Events",
-      description: "Trade shows, conferences, and training events are great for meeting professionals"
-    },
-    {
-      title: "Join Online Communities",
-      description: "LinkedIn groups, forums, and social media electrical communities"
-    },
-    {
-      title: "Volunteer for Projects",
-      description: "Charity work and community projects build connections and reputation"
-    },
-    {
-      title: "Maintain Relationships",
-      description: "Follow up with contacts and nurture professional relationships over time"
-    }
-  ];
-
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-purple-500/20 rounded-2xl mb-4">
-          <Users className="h-8 w-8 sm:h-10 sm:w-10 text-purple-400" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Industry Networking
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Build connections and advance your career through professional networks. Your network is your net worth in this industry.
-        </p>
+    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
+      {/* Header */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <h1 className="text-2xl font-bold tracking-tight text-white">Industry Networking</h1>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        {quickStats.map((stat, index) => (
-          <Card key={index} className={`${stat.border} bg-gradient-to-br ${stat.bg}`}>
-            <CardContent className="p-4 text-center">
-              <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
-              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white">{stat.label}</p>
+      {/* Intro */}
+      <Card className="border-orange-500/20 bg-white/5">
+        <CardContent className="p-4">
+          <p className="text-white text-sm leading-relaxed">
+            Your network is your net worth in this industry. The connections you make as an
+            apprentice can become lifelong professional relationships — opening doors to jobs,
+            partnerships, and opportunities you would never find on your own.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Professional Bodies */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-orange-400" />
+        <h2 className="text-base font-semibold text-white">Professional Bodies</h2>
+      </div>
+
+      <div className="space-y-3">
+        {professionalBodies.map((body) => (
+          <Card key={body.name} className="border-orange-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="font-semibold text-orange-400 text-sm">{body.name}</h3>
+                {body.recommended && (
+                  <span className="text-xs font-medium text-white bg-orange-500/20 border border-orange-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
+                    Recommended
+                  </span>
+                )}
+              </div>
+              <p className="text-white text-sm leading-relaxed">{body.description}</p>
+              <div className="flex items-center gap-3 text-xs text-white">
+                <span>{body.cost}</span>
+                <span>·</span>
+                <span>{body.members}</span>
+              </div>
+              <ul className="space-y-1">
+                {body.benefits.map((benefit) => (
+                  <li key={benefit} className="flex items-start gap-2 text-sm text-white">
+                    <CheckCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Networking Opportunities */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {networkingOpportunities.map((org, index) => (
-          <Card key={index} className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5 hover:border-blue-500/40 transition-all">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle className="text-lg text-white">{org.title}</CardTitle>
-                  <span className="text-sm text-blue-400">{org.type}</span>
+      {/* Industry Events */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-blue-400" />
+        <h2 className="text-base font-semibold text-white">Industry Events</h2>
+      </div>
+
+      <div className="space-y-3">
+        {industryEvents.map((event) => (
+          <Card key={event.name} className="border-blue-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-2">
+              <h3 className="font-semibold text-blue-400 text-sm">{event.name}</h3>
+              <p className="text-white text-sm leading-relaxed">{event.description}</p>
+              <div className="flex items-center gap-3 text-xs text-white">
+                <span>{event.frequency}</span>
+                <span>·</span>
+                <span>{event.location}</span>
+                <span>·</span>
+                <span>{event.cost}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Online Communities */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-green-400" />
+        <h2 className="text-base font-semibold text-white">Online Communities</h2>
+      </div>
+
+      <div className="space-y-3">
+        {onlineCommunities.map((community) => (
+          <Card key={community.name} className="border-green-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-green-400 text-sm">{community.name}</h3>
+                <span className="text-xs font-medium text-white bg-green-500/20 border border-green-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
+                  {community.cost}
+                </span>
+              </div>
+              <p className="text-white text-sm leading-relaxed">{community.description}</p>
+              <p className="text-white text-xs">{community.members}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* LinkedIn Strategy */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-purple-400" />
+        <h2 className="text-base font-semibold text-white">LinkedIn Strategy</h2>
+      </div>
+
+      <div className="space-y-3">
+        {linkedInTips.map((item) => (
+          <Card key={item.tip} className="border-purple-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-1">
+              <h3 className="font-semibold text-purple-400 text-sm">{item.tip}</h3>
+              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Actionable Networking Tips */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-blue-400" />
+        <h2 className="text-base font-semibold text-white">Networking Tips That Work</h2>
+      </div>
+
+      <div className="space-y-3">
+        {networkingTips.map((item) => (
+          <Card key={item.tip} className="border-blue-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-1">
+              <h3 className="font-semibold text-blue-400 text-sm">{item.tip}</h3>
+              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Mentorship Programmes */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+        <h2 className="text-base font-semibold text-white">Mentorship Programmes</h2>
+      </div>
+
+      <div className="space-y-3">
+        {mentorshipProgrammes.map((programme) => (
+          <Card key={programme.name} className="border-yellow-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-2">
+              <h3 className="font-semibold text-yellow-400 text-sm">{programme.name}</h3>
+              <p className="text-white text-sm leading-relaxed">{programme.description}</p>
+              <div className="flex items-center gap-3 text-xs text-white">
+                <span>{programme.duration}</span>
+                <span>·</span>
+                <span>{programme.cost}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Networking Action Plan */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-orange-400" />
+        <h2 className="text-base font-semibold text-white">Networking Action Plan</h2>
+      </div>
+
+      <div className="space-y-3">
+        {[
+          {
+            step: 1,
+            title: 'Start Online',
+            detail:
+              'Create or update your LinkedIn profile this week. Join 2–3 electrical industry groups and start engaging with posts. Follow the IET, ECA, and key industry figures.',
+          },
+          {
+            step: 2,
+            title: 'Attend an Event',
+            detail:
+              'Find a local IET talk, trade show, or ECA branch meeting within the next month. Go with the goal of meeting 3 new people and exchanging contact details.',
+          },
+          {
+            step: 3,
+            title: 'Build Relationships',
+            detail:
+              'Follow up with everyone you meet within 48 hours. Connect on LinkedIn, send a brief message, and look for ways to help them. Networking is about giving, not just taking.',
+          },
+          {
+            step: 4,
+            title: 'Get Your ECS Card',
+            detail:
+              'If you do not already have one, apply for your ECS card through the JIB. It is the industry-standard proof of your qualifications and is required on most commercial sites.',
+          },
+        ].map((item) => (
+          <Card key={item.step} className="border-orange-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center flex-shrink-0">
+                  <span className="text-orange-400 font-bold text-sm">{item.step}</span>
                 </div>
-                <ExternalLink className="h-4 w-4 text-white" />
+                <h3 className="font-semibold text-orange-400 text-sm">{item.title}</h3>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-white">{org.description}</p>
-              <div>
-                <h4 className="font-semibold mb-2 text-white">Key Benefits:</h4>
-                <ul className="space-y-1">
-                  {org.benefits.map((benefit, idx) => (
-                    <li key={idx} className="text-sm text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="pt-2 border-t border-white/10">
-                <p className="text-sm text-white">{org.website}</p>
-              </div>
+              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Networking Tips */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Zap className="h-5 w-5" />
-            Networking Tips for Apprentices
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {networkingTips.map((tip, index) => (
-              <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-elec-yellow/30 transition-all">
-                <h3 className="font-semibold mb-2 text-elec-yellow">{tip.title}</h3>
-                <p className="text-sm text-white">{tip.description}</p>
-              </div>
-            ))}
-          </div>
+      {/* ROI Tip */}
+      <Card className="border-orange-500/20 bg-orange-500/5">
+        <CardContent className="p-4 space-y-2">
+          <h3 className="font-semibold text-orange-400 text-sm">The ROI of Networking</h3>
+          <p className="text-white text-sm leading-relaxed">
+            Industry surveys consistently show that 60–70% of job opportunities are never advertised
+            publicly. They are filled through referrals and personal connections. Investing time in
+            networking is not optional — it is one of the most effective career development
+            activities you can do. Even 30 minutes a week on LinkedIn can transform your career
+            opportunities within a year.
+          </p>
         </CardContent>
       </Card>
 
-      {/* Upcoming Events */}
-      <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-400">
-            <Calendar className="h-5 w-5" />
-            Upcoming Industry Events
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white mb-4">
-            Check these websites regularly for upcoming events, training sessions, and networking opportunities:
+      {/* Footer */}
+      <Card className="border-white/10 bg-white/5">
+        <CardContent className="p-4">
+          <p className="text-white text-xs leading-relaxed">
+            Professional body information based on current UK membership rates and benefits. Costs
+            and offerings may change — check directly with each organisation for the latest details.
           </p>
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
-              <MapPin className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white">Electrical Trade Shows & Exhibitions</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
-              <Users className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white">Local ECA Branch Meetings</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-lg">
-              <Calendar className="h-4 w-4 text-purple-400" />
-              <span className="text-sm text-white">IET Technical Talks and Seminars</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Journey Card */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <Heart className="h-5 w-5" />
-            Building Your Network
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-white leading-relaxed">
-            Networking isn't just about finding jobs - it's about building relationships that support your entire career. The connections you make as an apprentice can become lifelong professional relationships and friendships.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { text: "Be genuine", icon: Heart },
-              { text: "Give before you take", icon: Users },
-              { text: "Stay in touch", icon: Calendar }
-            ].map((tip, index) => (
-              <div key={index} className="flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
-                <tip.icon className="h-4 w-4 text-green-400" />
-                <span className="text-white text-sm">{tip.text}</span>
-              </div>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>

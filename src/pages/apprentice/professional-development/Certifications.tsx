@@ -1,317 +1,437 @@
+import { Card, CardContent } from '@/components/ui/card';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { CheckCircle } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Award, Clock, CheckCircle, Star, ExternalLink, Zap, Shield } from "lucide-react";
+const coreCertifications = [
+  {
+    title: '18th Edition BS 7671 (Wiring Regulations)',
+    provider: 'City & Guilds 2382 / EAL',
+    cost: '£400–£600',
+    duration: '3–5 days',
+    validity: 'Current — update required when new edition published (expected mid-2030s)',
+    renewalRequired: false,
+    prerequisites: 'No formal prerequisites — but basic electrical knowledge strongly recommended',
+    description:
+      'The foundation of all UK electrical work. Covers the requirements of BS 7671:2018+A2:2022 for the design, erection, and verification of electrical installations. Mandatory for anyone carrying out electrical work.',
+  },
+  {
+    title: 'AM2 Practical Assessment',
+    provider: 'JTL / NET',
+    cost: '£300–£450',
+    duration: '1 day',
+    validity: 'Lifetime — no renewal required',
+    renewalRequired: false,
+    prerequisites: 'Completion of Level 3 Electrical Installation apprenticeship or equivalent',
+    description:
+      'End-point practical assessment for electrical apprenticeships. Tests real-world installation skills including wiring, termination, and safe isolation under timed conditions.',
+  },
+  {
+    title: 'Part P Building Regulations',
+    provider: 'Various providers',
+    cost: '£200–£350',
+    duration: '1–2 days',
+    validity: 'Lifetime knowledge — scheme membership renewed annually',
+    renewalRequired: false,
+    prerequisites: '18th Edition certificate recommended',
+    description:
+      'Understanding of the building regulations governing electrical work in dwellings. Required knowledge for domestic electrical installers in England and Wales.',
+  },
+  {
+    title: '2391 Inspection & Testing',
+    provider: 'City & Guilds 2391-52',
+    cost: '£900–£1,400',
+    duration: '5–7 days',
+    validity: 'No expiry — CPD required',
+    renewalRequired: false,
+    prerequisites: '18th Edition certificate + 2–3 years practical experience recommended',
+    description:
+      'Qualification for initial verification and periodic inspection of electrical installations. Essential for producing EICRs and electrical installation certificates. A qualification, not a licence — does not expire.',
+  },
+  {
+    title: 'PAT Testing (In-Service Inspection & Testing)',
+    provider: 'City & Guilds 2377 / EAL',
+    cost: '£200–£400',
+    duration: '1–2 days',
+    validity: 'No expiry — CPD recommended',
+    renewalRequired: false,
+    prerequisites: 'Basic electrical knowledge — no formal prerequisites',
+    description:
+      'Portable appliance testing qualification covering visual inspection, earth continuity, insulation resistance, and functional checks. Widely required in commercial and industrial environments. Good entry-level certification with steady demand.',
+  },
+];
+
+const specialistCategories = [
+  {
+    category: 'Electric Vehicle Charging',
+    growth: '45%',
+    certs: [
+      {
+        name: 'City & Guilds 2919 (EV Charging)',
+        cost: '£400–£600',
+        duration: '2 days',
+      },
+      {
+        name: 'Smart Charging & Load Management',
+        cost: '£300–£500',
+        duration: '1 day',
+      },
+      {
+        name: 'EV Infrastructure Certification',
+        cost: '£500–£800',
+        duration: '2–3 days',
+        note: 'Note: The OZEV Electric Vehicle Homecharge Scheme (EVHS) closed in March 2024. Current EV certification focuses on IET Code of Practice for EV Charging Equipment Installation.',
+      },
+    ],
+  },
+  {
+    category: 'Battery Storage (BESS)',
+    growth: '42%',
+    certs: [
+      {
+        name: 'MCS Approved Battery Storage',
+        cost: '£600–£1,000',
+        duration: '3 days',
+      },
+      {
+        name: 'G99/G100 Grid Connection',
+        cost: '£400–£600',
+        duration: '1–2 days',
+      },
+    ],
+  },
+  {
+    category: 'Heat Pumps',
+    growth: '38%',
+    certs: [
+      {
+        name: 'MCS Approved Heat Pump Installation',
+        cost: '£800–£1,200',
+        duration: '3–5 days',
+      },
+      {
+        name: 'F-Gas Handling Certification',
+        cost: '£500–£800',
+        duration: '2–3 days',
+      },
+    ],
+  },
+  {
+    category: 'Solar PV',
+    growth: 'Established',
+    certs: [
+      {
+        name: 'Solar PV Installation',
+        cost: '£800–£1,200',
+        duration: '5 days',
+      },
+      {
+        name: 'City & Guilds 2399 (PV Design)',
+        cost: '£600–£900',
+        duration: '3 days',
+      },
+    ],
+  },
+  {
+    category: 'Fire Detection & Alarm Systems',
+    growth: '20%',
+    certs: [
+      {
+        name: 'BS 5839 Fire Detection & Alarm (FD&A)',
+        cost: '£600–£1,000',
+        duration: '3–5 days',
+      },
+      {
+        name: 'Emergency Lighting (BS 5266)',
+        cost: '£400–£700',
+        duration: '2–3 days',
+      },
+      {
+        name: 'Fire Alarm Commissioning & Maintenance',
+        cost: '£500–£800',
+        duration: '2–3 days',
+        note: 'Required for commercial and industrial fire alarm maintenance contracts. Strong demand from facilities management companies.',
+      },
+    ],
+  },
+  {
+    category: 'High Voltage',
+    growth: 'Premium rates',
+    certs: [
+      {
+        name: 'HV Switching Operations',
+        cost: '£2,000–£3,500',
+        duration: '3–5 days',
+      },
+      {
+        name: 'HV Cable Jointing',
+        cost: '£3,500–£5,500',
+        duration: '5–10 days',
+      },
+    ],
+  },
+  {
+    category: 'Data Centres',
+    growth: '35%',
+    certs: [
+      {
+        name: 'CDCDP (Certified Data Centre Design Professional)',
+        cost: '£2,000–£3,500',
+        duration: '5 days',
+      },
+      {
+        name: 'UPS Systems & Power Distribution',
+        cost: '£800–£1,500',
+        duration: '3 days',
+      },
+      {
+        name: 'Raised Floor & Containment Systems',
+        cost: '£500–£800',
+        duration: '2 days',
+        note: 'Data centres are one of the fastest-growing sectors in the UK. Hyperscale facilities along the M4/M62 corridors are creating thousands of specialist electrical roles.',
+      },
+    ],
+  },
+  {
+    category: 'Industrial & Automation',
+    growth: 'Steady',
+    certs: [
+      {
+        name: 'PLC Programming (Siemens/AB)',
+        cost: '£1,500–£3,000',
+        duration: '5 days',
+      },
+      {
+        name: 'Motor Control Systems',
+        cost: '£800–£1,200',
+        duration: '3 days',
+      },
+    ],
+  },
+];
+
+const competentPersonSchemes = [
+  {
+    name: 'NICEIC',
+    cost: '£500–£900/year',
+    description:
+      'The most widely recognised competent person scheme in the UK. Offers Domestic Installer and Approved Contractor registration. Rigorous assessment process builds strong customer trust.',
+    benefits: [
+      'High consumer recognition',
+      'Self-certification of Part P work',
+      'Technical helpline',
+      'Regular assessment ensures standards',
+    ],
+  },
+  {
+    name: 'NAPIT',
+    cost: '£400–£750/year',
+    description:
+      'Multi-trade competent person scheme offering registration across electrical, plumbing, heating, and ventilation. Competitive pricing with comprehensive support.',
+    benefits: [
+      'Multi-trade registration options',
+      'Self-certification of Part P work',
+      'Online reporting portal',
+      'Training and CPD support',
+    ],
+  },
+  {
+    name: 'Stroma',
+    cost: '£400–£650/year',
+    description:
+      'Competent person scheme covering electrical, gas, and building control certification. Formerly separate schemes now consolidated under the Stroma brand. Good option for multi-skilled installers.',
+    benefits: [
+      'Electrical, gas, and building control',
+      'Self-certification of Part P work',
+      'Competitive annual fees',
+      'Combined multi-discipline registration',
+    ],
+  },
+];
 
 const Certifications = () => {
-  const quickStats = [
-    { label: "Essential Certs", value: "3", icon: CheckCircle, color: "text-red-400", bg: "from-red-500/10 to-red-500/5", border: "border-red-500/30" },
-    { label: "Specialist Areas", value: "4", icon: Star, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
-    { label: "Advanced Quals", value: "2", icon: Award, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" },
-    { label: "Career Focus", value: "100%", icon: Zap, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" }
-  ];
-
-  const essentialCertifications = [
-    {
-      title: "18th Edition IET Wiring Regulations (BS 7671)",
-      provider: "City & Guilds / EAL",
-      duration: "3 days",
-      validity: "Updates every 3-5 years",
-      level: "Essential",
-      description: "Current wiring regulations - mandatory for all electrical work",
-      cost: "£300-500"
-    },
-    {
-      title: "PAT Testing (Portable Appliance Testing)",
-      provider: "Various providers",
-      duration: "1 day",
-      validity: "3 years",
-      level: "Essential",
-      description: "Test and inspect portable electrical equipment",
-      cost: "£150-250"
-    },
-    {
-      title: "Inspection & Testing (2391-52)",
-      provider: "City & Guilds",
-      duration: "5 days",
-      validity: "5 years",
-      level: "Essential",
-      description: "Initial verification and periodic inspection of electrical installations",
-      cost: "£600-800"
-    }
-  ];
-
-  const specialistCertifications = [
-    {
-      title: "Solar PV Installation",
-      provider: "NICEIC / NAPIT",
-      duration: "5 days",
-      validity: "5 years",
-      level: "Specialist",
-      description: "Design and install photovoltaic systems",
-      cost: "£800-1200"
-    },
-    {
-      title: "EV Charging Point Installation",
-      provider: "NICEIC / NAPIT",
-      duration: "2 days",
-      validity: "3 years",
-      level: "Specialist",
-      description: "Install electric vehicle charging equipment",
-      cost: "£400-600"
-    },
-    {
-      title: "Smart Meters (SMETS)",
-      provider: "Various providers",
-      duration: "10 days",
-      validity: "5 years",
-      level: "Specialist",
-      description: "Install and maintain smart metering systems",
-      cost: "£1000-1500"
-    },
-    {
-      title: "Fire Alarm Systems (BS 5839)",
-      provider: "FIA / BAFE",
-      duration: "5 days",
-      validity: "3 years",
-      level: "Specialist",
-      description: "Design, install and maintain fire detection systems",
-      cost: "£700-1000"
-    }
-  ];
-
-  const advancedCertifications = [
-    {
-      title: "HNC/HND Electrical Engineering",
-      provider: "Colleges / Universities",
-      duration: "2-3 years part-time",
-      validity: "Lifetime",
-      level: "Advanced",
-      description: "Higher National qualification for career progression",
-      cost: "£3000-6000"
-    },
-    {
-      title: "IET Membership (MIET)",
-      provider: "Institution of Engineering & Technology",
-      duration: "Application process",
-      validity: "Annual renewal",
-      level: "Professional",
-      description: "Professional membership and recognition",
-      cost: "£150/year"
-    }
-  ];
-
-  const getLevelBadge = (level: string) => {
-    const levelConfig = {
-      Essential: { color: 'bg-red-500/20 text-red-400 border-red-500/30', label: 'Essential' },
-      Specialist: { color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', label: 'Specialist' },
-      Advanced: { color: 'bg-purple-500/20 text-purple-400 border-purple-500/30', label: 'Advanced' },
-      Professional: { color: 'bg-green-500/20 text-green-400 border-green-500/30', label: 'Professional' }
-    };
-
-    const config = levelConfig[level as keyof typeof levelConfig] || levelConfig.Essential;
-    return <Badge className={config.color} variant="outline">{config.label}</Badge>;
-  };
-
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <Award className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Professional Certifications
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Industry certifications and qualifications for electrical professionals. Plan your certification journey for career success.
-        </p>
+    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
+      {/* Header */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <h1 className="text-2xl font-bold tracking-tight text-white">
+          Certifications & Qualifications
+        </h1>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        {quickStats.map((stat, index) => (
-          <Card key={index} className={`${stat.border} bg-gradient-to-br ${stat.bg}`}>
-            <CardContent className="p-4 text-center">
-              <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
-              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white">{stat.label}</p>
+      {/* Intro */}
+      <Card className="border-yellow-500/20 bg-white/5">
+        <CardContent className="p-4">
+          <p className="text-white text-sm leading-relaxed">
+            The right certifications open doors to higher pay, specialist work, and career
+            progression. This guide covers everything from essential qualifications to specialist
+            certifications and competent person scheme membership.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Core Certifications */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+        <h2 className="text-base font-semibold text-white">Core Certifications</h2>
+      </div>
+
+      <div className="space-y-3">
+        {coreCertifications.map((cert) => (
+          <Card key={cert.title} className="border-yellow-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-3">
+              <h3 className="font-semibold text-yellow-400 text-sm">{cert.title}</h3>
+              <p className="text-white text-sm leading-relaxed">{cert.description}</p>
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-xs font-semibold">Provider:</span>
+                  <span className="text-white text-xs">{cert.provider}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-xs font-semibold">Cost:</span>
+                  <span className="text-white text-xs">{cert.cost}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-xs font-semibold">Duration:</span>
+                  <span className="text-white text-xs">{cert.duration}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-xs font-semibold">Validity:</span>
+                  <span className="text-white text-xs">{cert.validity}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-white text-xs font-semibold flex-shrink-0">
+                    Prerequisites:
+                  </span>
+                  <span className="text-white text-xs">{cert.prerequisites}</span>
+                </div>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Essential Certifications */}
-      <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-red-500/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-red-400">
-            <CheckCircle className="h-5 w-5" />
-            Essential Certifications
-          </CardTitle>
-          <p className="text-sm text-white">
-            These certifications are required for most electrical work in the UK
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {essentialCertifications.map((cert, index) => (
-              <Card key={index} className="border-white/10 bg-white/5">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white">{cert.provider}</p>
-                    </div>
-                    {getLevelBadge(cert.level)}
-                  </div>
-                  <p className="text-sm text-white mb-3">{cert.description}</p>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                    <div>
-                      <span className="text-white">Duration:</span>
-                      <div className="font-medium text-white">{cert.duration}</div>
-                    </div>
-                    <div>
-                      <span className="text-white">Validity:</span>
-                      <div className="font-medium text-white">{cert.validity}</div>
-                    </div>
-                    <div>
-                      <span className="text-white">Cost:</span>
-                      <div className="font-medium text-elec-yellow">{cert.cost}</div>
-                    </div>
-                    <div className="flex items-center">
-                      <Button size="sm" variant="outline" className="text-xs border-white/20 text-white hover:bg-white/10">
-                        Find Providers
-                        <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Specialist Certifications */}
-      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-400">
-            <Star className="h-5 w-5" />
-            Specialist Certifications
-          </CardTitle>
-          <p className="text-sm text-white">
-            Expand your expertise into high-demand specialist areas
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {specialistCertifications.map((cert, index) => (
-              <Card key={index} className="border-white/10 bg-white/5">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white">{cert.provider}</p>
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-blue-400" />
+        <h2 className="text-base font-semibold text-white">Specialist Certifications</h2>
+      </div>
+
+      <div className="space-y-3">
+        {specialistCategories.map((cat) => (
+          <Card key={cat.category} className="border-blue-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-blue-400 text-sm">{cat.category}</h3>
+                <span className="text-xs font-medium text-white bg-blue-500/20 border border-blue-500/30 rounded-full px-2 py-0.5">
+                  {cat.growth} growth
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                {cat.certs.map((cert) => (
+                  <div
+                    key={cert.name}
+                    className="p-3 bg-white/5 border border-white/10 rounded-lg space-y-1"
+                  >
+                    <p className="text-white text-sm font-medium">{cert.name}</p>
+                    <div className="flex items-center gap-3 text-xs text-white">
+                      <span>{cert.cost}</span>
+                      <span>·</span>
+                      <span>{cert.duration}</span>
                     </div>
-                    {getLevelBadge(cert.level)}
+                    {'note' in cert && cert.note && (
+                      <p className="text-white text-xs leading-relaxed mt-1">{cert.note}</p>
+                    )}
                   </div>
-                  <p className="text-sm text-white mb-3">{cert.description}</p>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-white">Duration:</span>
-                      <span className="font-medium text-white">{cert.duration}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white">Cost:</span>
-                      <span className="font-medium text-elec-yellow">{cert.cost}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Competent Person Schemes */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-green-400" />
+        <h2 className="text-base font-semibold text-white">Competent Person Schemes</h2>
+      </div>
+
+      <div className="space-y-3">
+        {competentPersonSchemes.map((scheme) => (
+          <Card key={scheme.name} className="border-green-500/20 bg-white/5">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-green-400">{scheme.name}</h3>
+                <span className="text-xs font-medium text-white bg-green-500/20 border border-green-500/30 rounded-full px-2 py-0.5">
+                  {scheme.cost}
+                </span>
+              </div>
+              <p className="text-white text-sm leading-relaxed">{scheme.description}</p>
+              <ul className="space-y-1">
+                {scheme.benefits.map((benefit) => (
+                  <li key={benefit} className="flex items-start gap-2 text-sm text-white">
+                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Certification Planning Strategy */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-purple-400" />
+        <h2 className="text-base font-semibold text-white">Certification Planning Strategy</h2>
+      </div>
+
+      <Card className="border-purple-500/20 bg-white/5">
+        <CardContent className="p-4 space-y-3">
+          <ul className="space-y-2">
+            {[
+              'Start with core certifications — 18th Edition and AM2 are your foundation',
+              'Add the 2391 once you have 2–3 years of practical experience',
+              'Consider PAT Testing early — it is quick, affordable, and in steady demand',
+              'Choose specialist certifications based on your local market demand',
+              'Fire alarm (BS 5839) and emergency lighting (BS 5266) are valuable additions for commercial work',
+              'Check if your employer will fund training — many will cover all or part of the cost',
+              'Book courses well in advance — popular ones fill up months ahead',
+              'Keep a CPD log of all training and development activities',
+              'Join a competent person scheme once you are working independently',
+            ].map((tip) => (
+              <li key={tip} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                {tip}
+              </li>
             ))}
-          </div>
+          </ul>
         </CardContent>
       </Card>
 
-      {/* Advanced Qualifications */}
-      <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-purple-400">
-            <Award className="h-5 w-5" />
-            Advanced Qualifications
-          </CardTitle>
-          <p className="text-sm text-white">
-            Higher level qualifications for career advancement and professional recognition
+      {/* Certification Order Guide */}
+      <Card className="border-yellow-500/20 bg-yellow-500/5">
+        <CardContent className="p-4 space-y-2">
+          <h3 className="font-semibold text-yellow-400 text-sm">Recommended Certification Order</h3>
+          <p className="text-white text-sm leading-relaxed">
+            Year 1–3: 18th Edition + AM2 + Part P. Year 3–5: 2391 + PAT Testing + first specialist
+            cert (EV, Solar, or Fire Alarm). Year 5+: Advanced specialisms (BESS, HV, Data Centres,
+            PLC) + competent person scheme. This gives you the widest range of opportunities while
+            building on solid foundations.
           </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {advancedCertifications.map((cert, index) => (
-              <Card key={index} className="border-white/10 bg-white/5">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="font-semibold text-white mb-1">{cert.title}</h3>
-                      <p className="text-sm text-white">{cert.provider}</p>
-                    </div>
-                    {getLevelBadge(cert.level)}
-                  </div>
-                  <p className="text-sm text-white mb-3">{cert.description}</p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
-                    <div>
-                      <span className="text-white">Duration:</span>
-                      <div className="font-medium text-white">{cert.duration}</div>
-                    </div>
-                    <div>
-                      <span className="text-white">Cost:</span>
-                      <div className="font-medium text-elec-yellow">{cert.cost}</div>
-                    </div>
-                    <div className="flex items-center">
-                      <Button size="sm" variant="outline" className="text-xs border-white/20 text-white hover:bg-white/10">
-                        Learn More
-                        <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </CardContent>
       </Card>
 
-      {/* Certification Tips */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-elec-yellow">
-            <Clock className="h-5 w-5" />
-            Certification Planning Tips
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <h3 className="font-semibold mb-2 text-elec-yellow">Plan Ahead</h3>
-              <p className="text-sm text-white">
-                Many courses book up months in advance. Plan your certification journey early.
-              </p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <h3 className="font-semibold mb-2 text-elec-yellow">Check Employer Support</h3>
-              <p className="text-sm text-white">
-                Many employers will fund training. Check what support is available before booking.
-              </p>
-            </div>
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-              <h3 className="font-semibold mb-2 text-elec-yellow">Stay Current</h3>
-              <p className="text-sm text-white">
-                Regulations change regularly. Keep track of when your certifications need renewal.
-              </p>
-            </div>
-          </div>
+      {/* Footer */}
+      <Card className="border-white/10 bg-white/5">
+        <CardContent className="p-4">
+          <p className="text-white text-xs leading-relaxed">
+            Certification costs and durations are indicative and vary by provider and location.
+            Check with approved training providers for current pricing. Validity information is
+            correct as of BS 7671:2018+A2:2022.
+          </p>
         </CardContent>
       </Card>
     </div>
