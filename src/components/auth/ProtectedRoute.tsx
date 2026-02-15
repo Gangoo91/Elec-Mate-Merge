@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -21,16 +20,25 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const isCheckoutPage = location.pathname === '/checkout-trial';
   const isPaymentPage = location.pathname === '/payment-success';
 
+  // If subscription_end is past and no Stripe customer, treat as expired
+  const isExpiredWithoutStripe =
+    profile?.subscribed &&
+    !profile?.stripe_customer_id &&
+    profile?.subscription_end &&
+    new Date(profile.subscription_end) < new Date();
+
   // Check profile directly as fallback - this prevents flash during refresh
-  const hasProfileAccess = profile?.subscribed || profile?.free_access_granted;
+  const hasProfileAccess =
+    (profile?.subscribed && !isExpiredWithoutStripe) || profile?.free_access_granted;
 
   // User can access if they have an active subscription (including Stripe trialing)
-  const canAccess = isDevelopment
-    || isSubscribed
-    || hasProfileAccess
-    || isSubscriptionPage
-    || isCheckoutPage
-    || isPaymentPage;
+  const canAccess =
+    isDevelopment ||
+    isSubscribed ||
+    hasProfileAccess ||
+    isSubscriptionPage ||
+    isCheckoutPage ||
+    isPaymentPage;
 
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
@@ -38,11 +46,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Show loading indicator during initial authentication and first subscription check
-  if (isLoading || (user && !profile) || (profile && !hasCompletedInitialCheck && !hasProfileAccess)) {
+  if (
+    isLoading ||
+    (user && !profile) ||
+    (profile && !hasCompletedInitialCheck && !hasProfileAccess)
+  ) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />
-
       </div>
     );
   }

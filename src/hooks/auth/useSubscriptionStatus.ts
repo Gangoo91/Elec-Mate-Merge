@@ -42,8 +42,16 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   // IMPORTANT: Don't reset state when profile is null to prevent flash
   useEffect(() => {
     if (profile) {
+      // If subscribed but no Stripe customer and subscription_end is past, treat as expired
+      const isExpiredWithoutStripe =
+        profile.subscribed &&
+        !profile.stripe_customer_id &&
+        profile.subscription_end &&
+        new Date(profile.subscription_end) < new Date();
+
       // Check both subscribed AND free_access_granted for beta testers
-      const isUserSubscribed = profile.subscribed || profile.free_access_granted || false;
+      const isUserSubscribed =
+        (profile.subscribed && !isExpiredWithoutStripe) || profile.free_access_granted || false;
 
       // Skip update if isSubscribed value hasn't actually changed
       // This prevents unnecessary re-renders during scroll events

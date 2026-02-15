@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +30,8 @@ import {
   Zap,
   Play,
   Pause,
+  RotateCcw,
+  Timer,
   CheckCircle2,
   Circle,
   Target,
@@ -66,6 +68,10 @@ export default function AdminFounders() {
   const [showProspectList, setShowProspectList] = useState(false);
   const [confirmSendBatch, setConfirmSendBatch] = useState(false);
   const [confirmSendTest, setConfirmSendTest] = useState(false);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [autoSending, setAutoSending] = useState(false);
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [lastBatchResult, setLastBatchResult] = useState<{
     sent: number;
     failed: number;
@@ -121,7 +127,7 @@ export default function AdminFounders() {
   const sendBatchMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.functions.invoke('founder-final-push', {
-        body: { action: 'send_batch', batchSize: 5 },
+        body: { action: 'send_batch', batchSize: 7 },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -135,19 +141,77 @@ export default function AdminFounders() {
       if (data.remaining > 0) {
         toast({
           title: `Batch sent! (${data.sent} emails)`,
-          description: `${data.remaining} remaining`,
+          description: `${data.remaining} remaining — next batch in 10s`,
         });
+        // Start auto-send countdown
+        if (autoSending) {
+          setCountdown(10);
+        }
       } else {
         setIsSending(false);
+        setAutoSending(false);
+        setCountdown(0);
         toast({
           title: 'All emails sent!',
-          description: `Campaign complete - ${status?.sent || 0 + data.sent} emails delivered`,
+          description: `Campaign complete - all emails delivered`,
         });
       }
     },
     onError: (error: Error) => {
       haptic.error();
       setIsSending(false);
+      setAutoSending(false);
+      setCountdown(0);
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Countdown timer — auto-sends next batch when it hits 0
+  useEffect(() => {
+    if (countdown > 0) {
+      countdownRef.current = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(countdownRef.current!);
+            countdownRef.current = null;
+            // Fire next batch
+            sendBatchMutation.mutate();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current);
+        countdownRef.current = null;
+      }
+    };
+  }, [countdown > 0]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset campaign mutation
+  const resetCampaignMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke('founder-final-push', {
+        body: { action: 'reset_campaign' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      setConfirmReset(false);
+      setLastBatchResult(null);
+      queryClient.invalidateQueries({ queryKey: ['founder-final-push-status'] });
+      toast({
+        title: 'Campaign reset!',
+        description: `${data.reset} invites ready to re-send`,
+      });
+    },
+    onError: (error: Error) => {
+      haptic.error();
       toast({ title: 'Error', description: error.message, variant: 'destructive' });
     },
   });
@@ -155,6 +219,7 @@ export default function AdminFounders() {
   const handleStartCampaign = () => {
     setConfirmSendBatch(false);
     setIsSending(true);
+    setAutoSending(true);
     sendBatchMutation.mutate();
   };
 
@@ -164,6 +229,12 @@ export default function AdminFounders() {
 
   const handlePause = () => {
     setIsSending(false);
+    setAutoSending(false);
+    setCountdown(0);
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
+    }
   };
 
   const handleRefresh = () => {
@@ -254,7 +325,7 @@ export default function AdminFounders() {
                 <Zap className="h-6 w-6 text-yellow-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-foreground">Send in Batches of 5</h3>
+                <h3 className="font-semibold text-foreground">Send in Batches of 7</h3>
                 <p className="text-sm text-muted-foreground">
                   {remainingCount > 0
                     ? `${remainingCount} emails left to send`
@@ -271,27 +342,29 @@ export default function AdminFounders() {
                     onClick={() => setConfirmSendBatch(true)}
                   >
                     <Play className="h-6 w-6" />
-                    {sentCount > 0 ? 'Continue Sending' : 'Start Campaign'}
+                    {sentCount > 0 ? 'Continue Sending' : 'Start Auto-Send'}
                   </Button>
                 ) : (
                   <div className="space-y-3">
-                    <Button
-                      className="w-full h-14 gap-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold touch-manipulation rounded-xl shadow-lg text-lg"
-                      onClick={handleSendNextBatch}
-                      disabled={sendBatchMutation.isPending}
-                    >
-                      {sendBatchMutation.isPending ? (
-                        <>
-                          <Loader2 className="h-6 w-6 animate-spin" />
-                          Sending batch...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-6 w-6" />
-                          Send Next 5
-                        </>
-                      )}
-                    </Button>
+                    {sendBatchMutation.isPending ? (
+                      <div className="w-full h-14 gap-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl shadow-lg text-lg flex items-center justify-center">
+                        <Loader2 className="h-6 w-6 animate-spin" />
+                        Sending batch...
+                      </div>
+                    ) : countdown > 0 ? (
+                      <div className="w-full h-14 gap-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl shadow-lg text-lg flex items-center justify-center">
+                        <Timer className="h-6 w-6" />
+                        Next batch in {countdown}s...
+                      </div>
+                    ) : (
+                      <Button
+                        className="w-full h-14 gap-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold touch-manipulation rounded-xl shadow-lg text-lg"
+                        onClick={handleSendNextBatch}
+                      >
+                        <Send className="h-6 w-6" />
+                        Send Next 7
+                      </Button>
+                    )}
                     <Button
                       variant="outline"
                       className="w-full h-12 gap-2 border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/10 font-semibold touch-manipulation rounded-xl"
@@ -305,10 +378,31 @@ export default function AdminFounders() {
                 )}
               </div>
             ) : (
-              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
-                <CheckCircle2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                <p className="text-green-400 font-semibold">Campaign Complete!</p>
-                <p className="text-sm text-muted-foreground">All 52 emails have been sent</p>
+              <div className="space-y-3">
+                <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
+                  <CheckCircle2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
+                  <p className="text-green-400 font-semibold">Campaign Complete!</p>
+                  <p className="text-sm text-muted-foreground">
+                    All {totalProspects} emails have been sent
+                  </p>
+                </div>
+                <Button
+                  className="w-full h-12 gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold touch-manipulation rounded-xl"
+                  onClick={() => setConfirmReset(true)}
+                  disabled={resetCampaignMutation.isPending}
+                >
+                  {resetCampaignMutation.isPending ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Resetting...
+                    </>
+                  ) : (
+                    <>
+                      <RotateCcw className="h-5 w-5" />
+                      Reset & Resend All
+                    </>
+                  )}
+                </Button>
               </div>
             )}
           </CardContent>
@@ -570,8 +664,8 @@ export default function AdminFounders() {
                 Start Campaign?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                This will send emails to {remainingCount} prospects in batches of 5. You can pause
-                at any time between batches.
+                This will send emails to {remainingCount} prospects in batches of 7 with a 10-second
+                pause between each batch. You can pause at any time.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -584,6 +678,36 @@ export default function AdminFounders() {
               >
                 <Play className="h-4 w-4 mr-2" />
                 Start Sending
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Confirm Reset Dialog */}
+        <AlertDialog open={confirmReset} onOpenChange={setConfirmReset}>
+          <AlertDialogContent className="rounded-2xl">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+                  <RotateCcw className="h-5 w-5 text-orange-400" />
+                </div>
+                Reset Campaign?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This will reset all sent flags so every prospect receives the email again. People
+                who already have accounts will still be filtered out automatically.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="h-11 touch-manipulation rounded-xl">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="h-11 touch-manipulation rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold"
+                onClick={() => resetCampaignMutation.mutate()}
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Reset & Resend
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
