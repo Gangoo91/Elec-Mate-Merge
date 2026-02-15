@@ -433,7 +433,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                 </div>
 
                 {/* Times */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-white mb-1">Start Time</label>
                     <Input

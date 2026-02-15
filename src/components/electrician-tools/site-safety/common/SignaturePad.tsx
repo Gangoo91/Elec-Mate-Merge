@@ -167,7 +167,7 @@ export const SignaturePad: React.FC<SignaturePadProps> = ({
                 type="date"
                 value={date}
                 onChange={(e) => onDateChange(e.target.value)}
-                className="bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+                className="h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-foreground focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]"
               />
               <Button
                 type="button"

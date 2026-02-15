@@ -89,7 +89,9 @@ export default function UserManagementSheet({
 }: UserManagementSheetProps) {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
-  const [selectedTier, setSelectedTier] = useState<string>('Employer');
+  const [selectedTier, setSelectedTier] = useState<string>(
+    user?.subscription_tier || 'Employer'
+  );
   const [expiresOption, setExpiresOption] = useState<string>('7days');
   const [customExpiry, setCustomExpiry] = useState<string>('');
   const [reason, setReason] = useState<string>('');
@@ -663,81 +665,84 @@ export default function UserManagementSheet({
                   {user.free_access_granted ? 'Manage Free Access' : 'Grant Free Access'}
                 </h4>
 
-                {!user.free_access_granted && (
-                  <>
-                    {/* Tier Selection */}
-                    <div className="space-y-2">
-                      <Label>Subscription Tier</Label>
-                      <Select value={selectedTier} onValueChange={setSelectedTier}>
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Apprentice">
-                            <div className="flex items-center gap-2">
-                              <GraduationCap className="h-4 w-4 text-yellow-400" />
-                              Apprentice - £4.99/mo
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="Electrician">
-                            <div className="flex items-center gap-2">
-                              <Zap className="h-4 w-4 text-yellow-400" />
-                              Electrician - £9.99/mo
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="Employer">
-                            <div className="flex items-center gap-2">
-                              <Building2 className="h-4 w-4 text-blue-400" />
-                              Employer - £29.99/mo
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Expiry Selection */}
-                    <div className="space-y-2">
-                      <Label>Access Duration</Label>
-                      <Select value={expiresOption} onValueChange={setExpiresOption}>
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="7days">1 week (Free trial)</SelectItem>
-                          <SelectItem value="30days">30 days</SelectItem>
-                          <SelectItem value="90days">90 days</SelectItem>
-                          <SelectItem value="1year">1 year</SelectItem>
-                          <SelectItem value="never">Never expires</SelectItem>
-                          <SelectItem value="custom">Custom date</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {expiresOption === 'custom' && (
-                      <div className="space-y-2">
-                        <Label>Expiry Date</Label>
-                        <Input
-                          type="date"
-                          value={customExpiry}
-                          onChange={(e) => setCustomExpiry(e.target.value)}
-                          className="h-11 touch-manipulation"
-                          min={new Date().toISOString().split('T')[0]}
-                        />
-                      </div>
-                    )}
-
-                    {/* Reason */}
-                    <div className="space-y-2">
-                      <Label>Reason (optional)</Label>
-                      <Input
-                        value={reason}
-                        onChange={(e) => setReason(e.target.value)}
-                        placeholder="e.g., Beta tester, Competition winner"
-                        className="h-11 touch-manipulation"
-                      />
-                    </div>
-                  </>
+                {user.free_access_granted && user.free_access_expires_at && (
+                  <div className="flex items-center gap-2 text-sm text-white bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
+                    <Clock className="h-4 w-4 text-amber-400 shrink-0" />
+                    Current access expires {format(new Date(user.free_access_expires_at), 'PPP')}
+                  </div>
                 )}
+
+                {/* Tier Selection */}
+                <div className="space-y-2">
+                  <Label>Subscription Tier</Label>
+                  <Select value={selectedTier} onValueChange={setSelectedTier}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Apprentice">
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="h-4 w-4 text-yellow-400" />
+                          Apprentice - £4.99/mo
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="Electrician">
+                        <div className="flex items-center gap-2">
+                          <Zap className="h-4 w-4 text-yellow-400" />
+                          Electrician - £9.99/mo
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="Employer">
+                        <div className="flex items-center gap-2">
+                          <Building2 className="h-4 w-4 text-blue-400" />
+                          Employer - £29.99/mo
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Expiry Selection */}
+                <div className="space-y-2">
+                  <Label>Access Duration</Label>
+                  <Select value={expiresOption} onValueChange={setExpiresOption}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="7days">1 week (Free trial)</SelectItem>
+                      <SelectItem value="30days">30 days</SelectItem>
+                      <SelectItem value="90days">90 days</SelectItem>
+                      <SelectItem value="1year">1 year</SelectItem>
+                      <SelectItem value="never">Never expires</SelectItem>
+                      <SelectItem value="custom">Custom date</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {expiresOption === 'custom' && (
+                  <div className="space-y-2">
+                    <Label>Expiry Date</Label>
+                    <Input
+                      type="date"
+                      value={customExpiry}
+                      onChange={(e) => setCustomExpiry(e.target.value)}
+                      className="h-11 touch-manipulation"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                )}
+
+                {/* Reason */}
+                <div className="space-y-2">
+                  <Label>Reason (optional)</Label>
+                  <Input
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    placeholder="e.g., Beta tester, Competition winner"
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
               </div>
             ) : (
               <div className="rounded-xl bg-amber-500/10 border border-amber-500/30 p-4">
@@ -751,26 +756,38 @@ export default function UserManagementSheet({
 
           {/* Footer Actions */}
           <SheetFooter className="p-4 border-t border-border gap-2">
-            {/* Show Revoke for any admin-granted access (free_access_granted OR subscribed without Stripe) */}
             {user.free_access_granted || (user.subscribed && !user.stripe_customer_id) ? (
-              <Button
-                variant="destructive"
-                className="flex-1 h-12 touch-manipulation"
-                onClick={() => revokeMutation.mutate()}
-                disabled={isLoading}
-              >
-                {revokeMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Revoking...
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-4 w-4 mr-2" />
-                    Revoke Access
-                  </>
-                )}
-              </Button>
+              <>
+                <Button
+                  className="flex-1 h-12 touch-manipulation bg-yellow-600 hover:bg-yellow-700"
+                  onClick={() => grantMutation.mutate()}
+                  disabled={isLoading}
+                >
+                  {grantMutation.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    <>
+                      <Gift className="h-4 w-4 mr-2" />
+                      Update Access
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="destructive"
+                  className="h-12 touch-manipulation px-4"
+                  onClick={() => revokeMutation.mutate()}
+                  disabled={isLoading}
+                >
+                  {revokeMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <XCircle className="h-4 w-4" />
+                  )}
+                </Button>
+              </>
             ) : !user.subscribed ? (
               <Button
                 className="flex-1 h-12 touch-manipulation bg-yellow-600 hover:bg-yellow-700"

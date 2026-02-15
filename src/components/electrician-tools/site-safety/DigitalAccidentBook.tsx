@@ -558,7 +558,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           <div className="space-y-4">
             <h3 className="text-base font-bold text-white">Incident Details</h3>
             <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <Label className="text-white text-sm">Date of Incident *</Label>
                   <Input
@@ -787,7 +787,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
 
               {form.time_off_work && (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <Label className="text-white text-sm">Days Off</Label>
                     <Input

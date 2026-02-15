@@ -351,7 +351,7 @@ const RAMSGenerator: React.FC = () => {
                 type="date"
                 value={ramsData.date}
                 onChange={(e) => updateProjectInfo({ date: e.target.value })}
-                className="mt-1 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+                className="mt-1 h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-foreground focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]"
               />
             </div>
           </div>

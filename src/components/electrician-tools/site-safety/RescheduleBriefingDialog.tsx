@@ -164,7 +164,7 @@ export const RescheduleBriefingDialog = ({
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className="h-11 touch-manipulation"
+              className="h-11 text-base touch-manipulation"
             />
           </div>
 

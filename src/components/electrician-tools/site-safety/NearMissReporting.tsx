@@ -841,7 +841,7 @@ export const NearMissReporting: React.FC = () => {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, incident_date: e.target.value }))
                   }
-                  className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.incident_date ? 'border-red-500' : ''}`}
+                  className={`h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-white [color-scheme:dark] ${errors.incident_date ? 'border-red-500' : ''}`}
                 />
                 {errors.incident_date && (
                   <p className="text-xs text-red-400">{errors.incident_date}</p>
@@ -857,7 +857,7 @@ export const NearMissReporting: React.FC = () => {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, incident_time: e.target.value }))
                   }
-                  className={`h-14 text-base bg-[#1a1a1a] border-white/10 text-white ${errors.incident_time ? 'border-red-500' : ''}`}
+                  className={`h-11 text-base touch-manipulation bg-elec-dark/50 border-white/30 text-white [color-scheme:dark] ${errors.incident_time ? 'border-red-500' : ''}`}
                 />
                 {errors.incident_time && (
                   <p className="text-xs text-red-400">{errors.incident_time}</p>

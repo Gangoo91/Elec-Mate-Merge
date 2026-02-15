@@ -1306,21 +1306,29 @@ export default function AdminUsers() {
                 {/* Subscription Actions */}
                 {selectedUser?.free_access_granted ||
                 (selectedUser?.subscribed && !selectedUser?.stripe_customer_id) ? (
-                  <Button
-                    variant="destructive"
-                    className="w-full h-12 touch-manipulation rounded-xl"
-                    onClick={() =>
-                      selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)
-                    }
-                    disabled={revokeSubscriptionMutation.isPending}
-                  >
-                    {revokeSubscriptionMutation.isPending ? (
-                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    ) : (
-                      <XCircle className="h-5 w-5 mr-2" />
-                    )}
-                    Revoke Access
-                  </Button>
+                  <div className="flex gap-2 w-full">
+                    <Button
+                      className="flex-1 h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"
+                      onClick={() => selectedUser && openGrantSheet(selectedUser)}
+                    >
+                      <Gift className="h-5 w-5 mr-2" />
+                      Manage Access
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      className="h-12 touch-manipulation rounded-xl px-4"
+                      onClick={() =>
+                        selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)
+                      }
+                      disabled={revokeSubscriptionMutation.isPending}
+                    >
+                      {revokeSubscriptionMutation.isPending ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <XCircle className="h-5 w-5" />
+                      )}
+                    </Button>
+                  </div>
                 ) : !selectedUser?.subscribed ? (
                   <Button
                     className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"

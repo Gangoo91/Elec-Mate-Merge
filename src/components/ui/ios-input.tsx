@@ -1,42 +1,57 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Eye, EyeOff, Check, AlertCircle } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface IOSInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string
-  error?: string
-  hint?: string
-  icon?: React.ReactNode
-  success?: boolean
-  floatingLabel?: boolean
-  compact?: boolean
+  label: string;
+  error?: string;
+  hint?: string;
+  icon?: React.ReactNode;
+  success?: boolean;
+  floatingLabel?: boolean;
+  compact?: boolean;
 }
 
 const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
-  ({ label, error, hint, icon, success, floatingLabel = false, compact = false, className, type, value, ...props }, ref) => {
-    const [isFocused, setIsFocused] = React.useState(false)
-    const [showPassword, setShowPassword] = React.useState(false)
-    const [hasValue, setHasValue] = React.useState(!!value)
-    const isPasswordType = type === "password"
-    const inputType = isPasswordType && showPassword ? "text" : type
+  (
+    {
+      label,
+      error,
+      hint,
+      icon,
+      success,
+      floatingLabel = false,
+      compact = false,
+      className,
+      type,
+      value,
+      ...props
+    },
+    ref
+  ) => {
+    const [isFocused, setIsFocused] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [hasValue, setHasValue] = React.useState(!!value);
+    const isPasswordType = type === 'password';
+    const inputType = isPasswordType && showPassword ? 'text' : type;
 
     React.useEffect(() => {
-      setHasValue(!!value && String(value).length > 0)
-    }, [value])
+      setHasValue(!!value && String(value).length > 0);
+    }, [value]);
 
-    const shouldFloatLabel = floatingLabel && (isFocused || hasValue)
-    const inputHeight = compact ? "h-12" : "h-14"
+    const shouldFloatLabel = floatingLabel && (isFocused || hasValue);
+    const inputHeight = compact ? 'h-11' : 'h-11';
 
     return (
-      <div className={compact ? "space-y-1" : "space-y-1.5"}>
+      <div className={compact ? 'space-y-1' : 'space-y-1.5'}>
         {/* Standard label */}
         {!floatingLabel && (
           <label
             className={cn(
-              "block font-medium transition-colors duration-200",
-              compact ? "text-xs" : "text-sm",
-              error ? "text-elec-yellow" : isFocused ? "text-elec-yellow" : "text-white/70"
+              'block font-medium transition-colors duration-200',
+              compact ? 'text-xs' : 'text-sm',
+              error ? 'text-elec-yellow' : isFocused ? 'text-elec-yellow' : 'text-white'
             )}
           >
             {label}
@@ -54,18 +69,18 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 x: shouldFloatLabel ? (icon ? -28 : 0) : 0,
                 scale: shouldFloatLabel ? 0.85 : 1,
                 color: error
-                  ? "hsl(47, 100%, 50%)"
+                  ? 'hsl(47, 100%, 50%)'
                   : isFocused
-                    ? "hsl(47, 100%, 50%)"
+                    ? 'hsl(47, 100%, 50%)'
                     : shouldFloatLabel
-                      ? "rgba(255, 255, 255, 0.7)"
-                      : "rgba(255, 255, 255, 0.4)"
+                      ? 'rgba(255, 255, 255, 0.7)'
+                      : 'rgba(255, 255, 255, 0.4)',
               }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               className={cn(
-                "absolute top-1/2 -translate-y-1/2 pointer-events-none font-medium origin-left",
-                compact ? "text-sm" : "text-base",
-                icon ? "left-11" : "left-4"
+                'absolute top-1/2 -translate-y-1/2 pointer-events-none font-medium origin-left',
+                compact ? 'text-sm' : 'text-base',
+                icon ? 'left-11' : 'left-4'
               )}
             >
               {label}
@@ -76,8 +91,8 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
           {icon && (
             <div
               className={cn(
-                "absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-200",
-                error ? "text-elec-yellow" : isFocused ? "text-elec-yellow" : "text-white/40"
+                'absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-200',
+                error ? 'text-elec-yellow' : isFocused ? 'text-elec-yellow' : 'text-white/40'
               )}
             >
               {icon}
@@ -90,47 +105,47 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
             type={inputType}
             value={value}
             className={cn(
-              "w-full rounded-xl transition-all duration-200",
+              'w-full rounded-xl transition-all duration-200',
               inputHeight,
-              icon ? "pl-11 pr-4" : "px-4",
-              isPasswordType && "pr-12",
+              icon ? 'pl-11 pr-4' : 'px-4',
+              isPasswordType && 'pr-12',
               // Typography
-              compact ? "text-sm" : "text-base",
-              "text-white placeholder:text-white/35",
+              compact ? 'text-sm' : 'text-base',
+              'text-white placeholder:text-white/35',
               // Clean dark background - subtle and professional
-              "bg-white/[0.04] border",
+              'bg-white/[0.04] border',
               // Border states - subtle gold accents
               error
-                ? "border-elec-yellow/50 focus:border-elec-yellow"
+                ? 'border-elec-yellow/50 focus:border-elec-yellow'
                 : success
-                  ? "border-green-500/40"
+                  ? 'border-green-500/40'
                   : isFocused
-                    ? "border-elec-yellow/60"
-                    : "border-white/[0.12] hover:border-white/20",
+                    ? 'border-elec-yellow/60'
+                    : 'border-white/[0.12] hover:border-white/20',
               // Focus ring - subtle
-              isFocused && !error && "ring-1 ring-elec-yellow/20",
-              error && "ring-1 ring-elec-yellow/15",
-              success && "ring-1 ring-green-500/15",
+              isFocused && !error && 'ring-1 ring-elec-yellow/20',
+              error && 'ring-1 ring-elec-yellow/15',
+              success && 'ring-1 ring-green-500/15',
               // Focus state
-              "focus:outline-none focus:bg-white/[0.06]",
+              'focus:outline-none focus:bg-white/[0.06]',
               // Touch - native app feel
-              "touch-manipulation",
+              'touch-manipulation',
               // Selection
-              "selection:bg-elec-yellow/30",
+              'selection:bg-elec-yellow/30',
               className
             )}
-            placeholder={floatingLabel ? "" : props.placeholder}
+            placeholder={floatingLabel ? '' : props.placeholder}
             onFocus={(e) => {
-              setIsFocused(true)
-              props.onFocus?.(e)
+              setIsFocused(true);
+              props.onFocus?.(e);
             }}
             onBlur={(e) => {
-              setIsFocused(false)
-              props.onBlur?.(e)
+              setIsFocused(false);
+              props.onBlur?.(e);
             }}
             onChange={(e) => {
-              setHasValue(e.target.value.length > 0)
-              props.onChange?.(e)
+              setHasValue(e.target.value.length > 0);
+              props.onChange?.(e);
             }}
             {...props}
           />
@@ -187,20 +202,17 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              className={cn(
-                "text-xs",
-                error ? "text-elec-yellow" : "text-white/50"
-              )}
+              className={cn('text-xs', error ? 'text-elec-yellow' : 'text-white/50')}
             >
               {error || hint}
             </motion.p>
           )}
         </AnimatePresence>
       </div>
-    )
+    );
   }
-)
+);
 
-IOSInput.displayName = "IOSInput"
+IOSInput.displayName = 'IOSInput';
 
-export { IOSInput }
+export { IOSInput };
