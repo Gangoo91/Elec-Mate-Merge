@@ -4,7 +4,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
-import * as exifr from 'exifr';
 
 export interface UploadProgress {
   status: 'idle' | 'compressing' | 'uploading' | 'saving' | 'complete' | 'error';
@@ -179,17 +178,9 @@ export function useSafetyPhotoUpload() {
   );
 
   // Extract GPS from image EXIF data
-  const extractGPS = useCallback(async (file: File): Promise<{ lat?: number; lng?: number }> => {
-    try {
-      const data = await exifr.parse(file, { gps: true });
-      if (data?.latitude && data?.longitude) {
-        return { lat: data.latitude, lng: data.longitude };
-      }
-      return {};
-    } catch {
-      console.warn('Failed to extract GPS from EXIF');
-      return {};
-    }
+  const extractGPS = useCallback(async (_file: File): Promise<{ lat?: number; lng?: number }> => {
+    // exifr breaks the vite-plugin-pwa Rollup build — fall back to browser geolocation
+    return {};
   }, []);
 
   // Get current location
