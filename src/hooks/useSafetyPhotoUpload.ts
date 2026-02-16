@@ -180,7 +180,7 @@ export function useSafetyPhotoUpload() {
   // Extract GPS from image EXIF data
   const extractGPS = useCallback(async (file: File): Promise<{ lat?: number; lng?: number }> => {
     try {
-      const exifr = await import('exifr');
+      const exifr = await import(/* @vite-ignore */ 'exifr');
       const data = await exifr.default.parse(file, { gps: true });
       if (data?.latitude && data?.longitude) {
         return { lat: data.latitude, lng: data.longitude };

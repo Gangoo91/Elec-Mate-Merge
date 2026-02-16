@@ -141,7 +141,6 @@ export function useJobFinancial(jobId: string | undefined) {
         variation_orders: (variations || []) as VariationOrder[],
       } as JobFinancialWithJob;
     },
-    enabled: !!jobId,
   });
 }
 
